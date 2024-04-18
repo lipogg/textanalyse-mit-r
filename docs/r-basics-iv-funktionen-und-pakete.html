@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 R Basics IV: Funktionen und Pakete | Einführung in R: Programmieren für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 R Basics IV: Funktionen und Pakete | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/einfuehrung-in-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 R Basics IV: Funktionen und Pakete | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-basics-iii-kontrollstrukturen.html"/>
+<link rel="next" href="textanalyse-i-korpus-tokens-daten-und-dateien.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#was-ist-r-überhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatorpräzedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html"><i class="fa fa-check"></i><b>2</b> R Basics II: Datenstrukturen</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#grundlegende-begriffe-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektoren"><i class="fa fa-check"></i><b>2.2</b> Vektoren</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#sets-mengen"><i class="fa fa-check"></i><b>2.2.1</b> Sets (Mengen)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#named-vectors"><i class="fa fa-check"></i><b>2.2.2</b> Named Vectors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#faktoren"><i class="fa fa-check"></i><b>2.2.3</b> Faktoren</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-vektoren"><i class="fa fa-check"></i><b>2.2.4</b> Zugriffsoperationen auf Vektoren</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektorisierung"><i class="fa fa-check"></i><b>2.2.5</b> Vektorisierung</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#listen"><i class="fa fa-check"></i><b>2.3</b> Listen</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-listen"><i class="fa fa-check"></i><b>2.3.1</b> Zugriffsoperationen auf Listen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-vektoren-vs-benannte-vektoren-vs-faktoren-vs-listen"><i class="fa fa-check"></i><b>2.4</b> Auf einen Blick: Vektoren vs benannte Vektoren vs Faktoren vs Listen</a></li>
+<li class="chapter" data-level="2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#matrizen"><i class="fa fa-check"></i><b>2.5</b> Matrizen</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-matrizen"><i class="fa fa-check"></i><b>2.5.1</b> Zugriffsoperationen auf Matrizen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#arrays"><i class="fa fa-check"></i><b>2.6</b> Arrays</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-arrays"><i class="fa fa-check"></i><b>2.6.1</b> Zugriffsoperationen auf Arrays</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#dataframes"><i class="fa fa-check"></i><b>2.7</b> Dataframes</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-dataframes"><i class="fa fa-check"></i><b>2.7.1</b> Zugriffsoperationen auf Dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes"><i class="fa fa-check"></i><b>2.8</b> Auf einen Blick: Matrizen vs Arrays vs Dataframes</a></li>
+<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen"><i class="fa fa-check"></i><b>2.9</b> Datenstrukturen untersuchen</a></li>
+<li class="chapter" data-level="2.10" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.10</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
+<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
+<li class="chapter" data-level="2.12" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
+<li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.1</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.2</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.3</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.4</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.5</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.1</b> Was sind Funktionen?</a></li>
+<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.2</b> Funktionen definieren</a></li>
+<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.3</b> Funktionen aufrufen</a></li>
+<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.4</b> Funktionen verstehen</a></li>
+<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.5</b> Wozu werden Funktionen verwendet?</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.6</b> Schleifen ersetzen mithilfe von Funktionen</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.6.1</b> Die Apply-Funktionen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.7</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
+<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.8</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
+<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.9</b> Was sind Pakete?</a></li>
+<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.10</b> Pakete installieren</a></li>
+<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.11</b> Pakete laden</a></li>
+<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.12</b> Wozu werden Pakete verwendet?</a></li>
+<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.13</b> Welche Pakete gibt es denn alles?</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
+<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
+<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.3</b> Überblick: Textanalyse mit Quanteda</a></li>
+<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.4</b> Textdateien einlesen</a></li>
+<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.5</b> Quanteda corpus-Objekte</a></li>
+<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda tokens-Objekte</a></li>
+<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda DFM-Objekte</a></li>
+<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.8</b> Daten schreiben</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#was-sind-reguläre-ausdrücke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
+<li class="chapter" data-level="6.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#reguläre-ausdrücke-in-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
+<li class="chapter" data-level="6.2.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
+<li class="chapter" data-level="6.3.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
+<li class="chapter" data-level="6.3.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-für-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
+<li class="chapter" data-level="" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#weiterführende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
+<li class="chapter" data-level="7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
+<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
+<li class="chapter" data-level="7.4" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
+<li class="chapter" data-level="7.5" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
+<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
+<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
+<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
+<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-preprocessing"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und Preprocessing</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#token-häufigkeitsanalyse"><i class="fa fa-check"></i><b>8.3</b> Token-Häufigkeitsanalyse</a></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.5</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.6</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.7</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keyness-analyse"><i class="fa fa-check"></i><b>8.8</b> Keyness-Analyse</a></li>
+<li class="chapter" data-level="8.9" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#tf-idf"><i class="fa fa-check"></i><b>8.9</b> TF-IDF</a></li>
+<li class="chapter" data-level="8.10" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#exkurs-lexikalische-vielfalt"><i class="fa fa-check"></i><b>8.10</b> Exkurs: Lexikalische Vielfalt</a></li>
+<li class="chapter" data-level="8.11" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#recap-und-ausblick"><i class="fa fa-check"></i><b>8.11</b> Recap und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
+<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
+<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
+<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
+<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
+<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
+<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>10</b> Named Entity Recognition</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.1</b> Korpus einlesen</a></li>
+<li class="chapter" data-level="10.2" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.2</b> Beispiel mit SpaCy / Spacyr</a></li>
+<li class="chapter" data-level="10.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit Flair / FlaiR</a></li>
+<li class="chapter" data-level="10.4" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.4</b> Vergleich und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>11</b> Exkurs: XML, TEI und XPath</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>11.1</b> Was ist XML? Was ist TEI?</a></li>
+<li class="chapter" data-level="11.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>11.2</b> Aufbau von XML-TEI Dokumenten</a></li>
+<li class="chapter" data-level="11.3" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wohlgeformtheit-und-validität"><i class="fa fa-check"></i><b>11.3</b> Wohlgeformtheit und Validität</a></li>
+<li class="chapter" data-level="11.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>11.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
+<li class="chapter" data-level="11.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>11.5</b> Was ist XPath?</a></li>
+<li class="chapter" data-level="11.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>11.6</b> Basics XPath Syntax</a></li>
+<li class="chapter" data-level="" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#weiterführende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>12</b> Arbeit mit XML-TEI-Dokumenten</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>12.1</b> Beispiel Dramenanalyse</a></li>
+<li class="chapter" data-level="12.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>12.2</b> Beispiel Geomapping</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>12.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
+<li class="chapter" data-level="12.2.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-über-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>12.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
+<li class="chapter" data-level="12.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>12.2.3</b> Koordinaten auf Karte abbilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in R: Programmieren für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-basics-iv-funktionen-und-pakete" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> R Basics IV: Funktionen und Pakete<a href="r-basics-iv-funktionen-und-pakete.html#r-basics-iv-funktionen-und-pakete" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Wir haben im Laufe der vergangenen Stunden bereits einige Funktionen kennengelernt, zum Beispiel die Ausgabe-Funktion <code>print()</code>, die Funktion <code>c()</code> zum Erstellen von Vektoren oder die Funktion <code>paste()</code> zum Verketten von character-Objekten.</p>
+<div id="was-sind-funktionen" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Was sind Funktionen?<a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Funktionen sind wiederverwendbare Abfolgen von Anweisungen. Sie sind also Codeabschnitte, die mithilfe eines Namens wiederholt ausgeführt werden können. Das Prinzip ist also ein bisschen ähnlich wie Variablen, mit dem Unterschied, dass man mithilfe von Funktionsnamen auf Anweisungen zugreifen kann, während man mithilfe von Variablennamen auf Objekte zugreifen kann. Im Grunde sind Funktionsnamen aber auch zugleich Variablennamen, weil in R Funktionen auch Objekte sind (-&gt; Grundbegriffe: alles in R ist ein Objekt).</p>
+<p>Jede Funktion besteht aus vier Komponenten:</p>
+<ul>
+<li>Name (“name”)</li>
+<li>Parameter (“formals”: formale Parameter)</li>
+<li>Körper (“body”)</li>
+<li>Umgebung (“environemnt”)</li>
+</ul>
+<p>Funktionen <strong>werden aufgerufen</strong>. Beim Funktionsaufruf werden ihnen <strong>Argumente übergeben</strong>. Welche Argumente eine Funktion annehmen kann, wird in der Funktionsdefinition mithilfe von <strong>formalen Parametern</strong> festgelegt. Für Argumente sagt man deswegen auch manchmal <strong>tatsächliche Parameter</strong>. Funktionen <strong>geben immer einen Wert zurück</strong>, der heißt dann <strong>Rückgabewert</strong>. Der Rückgabewert kann in einer Funktionsdefinition mithilfe des <strong>Schlüsselworts <code>return</code></strong> festgelegt werden.</p>
+</div>
+<div id="funktionen-definieren" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Funktionen definieren<a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Funktionsdefinitionen</strong> haben in R die allgemeine Form:</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb355-1" tabindex="-1"></a>mache_irgendwas <span class="ot">&lt;-</span> <span class="cf">function</span>(Parameter_1, Parameter_2, ...) {</span>
+<span id="cb355-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb355-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb355-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb355-3" tabindex="-1"></a>  <span class="fu">return</span>(Rückgabewert) </span>
+<span id="cb355-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb355-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Achtung: zwischen dem Schlüsselwort <code>function</code> und der runden Klammer steht KEIN Leerzeichen, anders als bei Kontrollstrukturen.</p>
+<ul>
+<li>mache_irgendwas ist der <strong>Funktionsname</strong>.</li>
+<li>Die Funktions<strong>parameter</strong> heißen Parameter_1 und Parameter_2. Dabei handelt es sich um Variablennamen, die nur innerhalb der Funktionsdefinition verwendet werden und als Platzhalter für die Argumente dienen, die der Funktion beim Funktionsaufruf übergeben werden. Die formalen Parameter sind also ein bisschen ähnlich wie die Laufvariablen in for-Schleifen, die auch nur Platzhalter für die Elemente aus einem iterierbaren Objekt waren.</li>
+<li>Genau wie bei Kontrollstrukturen ist auch bei Funktionen der Funktions<strong>körper</strong> alles, was zwischen den geschweiften Klammern steht, also ein Anweisungsblock und eine <code>return</code>-Anweisung. Im Anweisungsblock stehen irgendwelche Anweisungen, die irgendetwas mit den Parametern der Funktion machen, also im Grunde Verarbeitungsschritte für die Funktionsparameter. Im Laufe der Verarbeitung wird irgendeine Variable definiert, die das “Endergebnis” der Verarbeitung zwischenspeichert. Diese Variable wird dann mithilfe der return-Anweisung zurückgegeben, wenn die Funktion aufgerufen wird. Die <code>return</code>-Anweisung definiert also, welche Variable die Funktion als Rückgabewert beim Funktionsaufruf zurückgeben soll.</li>
+<li>Die Funktions<strong>umgebung</strong> ist in der Funktionsdefinition nicht direkt sichtbar. Funktionsumgebungen lernen wir erst etwas später kennen und ignorieren sie erst einmal.</li>
+</ul>
+<div class="tip">
+<p>Style Tip</p>
+<p>Für Funktionsnamen gelten fast die selben Konventionen wie für Variablennamen: Wickham empfiehlt, Funktionsnamen in Kleinbuchstaben zu schreiben und einen Unterstrich zu verwenden, um mehrere Wörter voneinander abzutrennen. Allerdings sollten Variablennamen immer irgendeine Operation beschreiben, während Variablennamen in der Regel Substantive sind. Dabei kann es sich auch um eine logische Operation handeln: <code>ist_ungerade()</code> wäre zum Beispiel ein passender Funktionsname für eine Funktion, die überprüft, ob ihr Argument eine ungerade Zahl ist.</p>
+</div>
+<p>Ein Beispiel:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb356-1" tabindex="-1"></a>increment_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb356-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb356-2" tabindex="-1"></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb356-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb356-3" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb356-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb356-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was macht die Funktion <code>increment_value()</code>?</li>
+<li>Was ist der Körper der Funktion <code>increment_value()</code>?</li>
+<li>Was sind die formalen Parameter?</li>
+<li>Was ist der Rückgabewert?</li>
+</ul>
+</div>
+<p>Anders als in anderen Programmiersprachen kann in R bei einer Funktionsdefinition die <code>return()</code>-Anweisung auch weggelassen werden. Dann wird automatisch der Ausdruck als Rückgabewert zurückgegeben, der im Funktionskörper zuletzt evaluiert wurde:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb357-1" tabindex="-1"></a><span class="co"># x + 1 wird &quot;implizit&quot; als Rückgabewert zurückgegeben, wenn die return-Anweisung fehlt</span></span>
+<span id="cb357-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb357-2" tabindex="-1"></a>increment_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb357-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb357-3" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb357-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb357-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Am Anfang empfiehlt es sich aber, den Rückgabewert immer explizit mit <code>return()</code> anzugeben.</p>
+<p>Manchmal ist es sinnvoll, bei der Funktionsdefinition einen Default-Wert für einen oder mehrere Parameter anzugeben:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb358-1" tabindex="-1"></a><span class="co"># Funktion mit Default-Wert für einen Parameter</span></span>
+<span id="cb358-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb358-2" tabindex="-1"></a>add_values <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y=</span><span class="dv">10</span>) {</span>
+<span id="cb358-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb358-3" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
+<span id="cb358-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb358-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Dieser Default-Wert wird dann beim Funktionsaufruf eingesetzt, falls kein Wert für den Parameter festgelegt wird.</p>
+</div>
+<div id="funktionen-aufrufen" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Funktionen aufrufen<a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Funktionsaufurfe</strong> haben in R die allgemeine Form:</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb359-1" tabindex="-1"></a><span class="fu">mache_irgendwas</span>(Argument_1, Argument_2, ...)</span></code></pre></div>
+<p>Wenn eine Funktion aufgerufen wird, dann werden die formalen Parameter aus der Funktionsdefinition durch die Argumente (also die tatsächlichen Parameter) ersetzt. Die Verarbeitungsschritte, die im Funktionskörper für die formalen Parameter definiert sind, werden dann mit den Argumenten ausgeführt.</p>
+<p>Bisher haben wir bereits oft Funktionen aufgerufen und ihnen Argumente übergeben. Zum Beispiel:</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb360-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hallo&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Hallo&quot;</code></pre>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb362-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb362-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb362-2" tabindex="-1"></a><span class="fu">paste0</span>(tiere[<span class="dv">1</span>], <span class="st">&quot;e&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Hunde&quot;</code></pre>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb364-1" tabindex="-1"></a><span class="fu">length</span>(tiere)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>Wenn wir die Funktion <code>increment_value()</code>, die wir vorhin definiert haben, aufrufen wollen, gehen wir genauso vor:</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb366-1" tabindex="-1"></a><span class="fu">increment_value</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>Wenn eine Funktion aufgerufen wird, für deren Parameter in der Funktionsdefinition ein Standardwert festgelegt wurde, dann ist die Angabe eines Werts für diesen Parameter beim Funktionsaufruf optional:</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb368-1" tabindex="-1"></a><span class="co"># addiert 2 mit dem Standardwert 10</span></span>
+<span id="cb368-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb368-2" tabindex="-1"></a><span class="fu">add_values</span>(<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 12</code></pre>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb370-1" tabindex="-1"></a><span class="co"># addiert 2 mit 5</span></span>
+<span id="cb370-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb370-2" tabindex="-1"></a><span class="fu">add_values</span>(<span class="dv">2</span>, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Welche Argumente werden den Funktionen <code>print()</code>, <code>c()</code>, <code>paste0()</code>, <code>length()</code>, <code>increment_value()</code> und <code>add_values</code> jeweils beim Funktionsaufruf übergeben?</li>
+</ul>
+</div>
+<p>In R sind Funktionen auch Objekte. Das heißt, dass eine Funtion als Argument einer anderen Funktion übergeben werden kann.</p>
+</div>
+<div id="funktionen-verstehen" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Funktionen verstehen<a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Alle Funktionen sind in R gut dokumentiert. Wir haben die offizielle Dokumentation zu einzelnen Funktionen bereits mithilfe des <code>?</code>-Operators aufgerufen. Funktionen sind in der R-Dokumentation immer nach demselben Schema dokumentiert: <strong>Description</strong> ist eine kurze Beschreibung davon, was die Funktion macht. Unter <strong>Usage</strong> steht, wir die Funktion aufgerufen werden kann. <strong>Arguments</strong> erläutert, welche Argumente der Funktion beim Funktionsaufruf übergeben werden können, und <strong>Value</strong> beschreibt den Rückgabewert, also welchen Datentyp der Wert hat, der von der Funktion nach der Ausführung aller Anweisungen im Funktionskörper zurückgegeben wird.</p>
+<div class="float">
+<img src="images/r_docs.png" alt="Beispiel: Dokumentationsseite zur Funktion typeof()" />
+<div class="figcaption">Beispiel: Dokumentationsseite zur Funktion typeof()</div>
+</div>
+</div>
+<div id="wozu-werden-funktionen-verwendet" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Wozu werden Funktionen verwendet?<a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Allgemein werden Funktionen verwendet…</p>
+<ul>
+<li>…um bestimmte Verarbeitungsschritte zu wiederholen, ohne Code ständig kopieren zu müssen.</li>
+<li>…um den Code weniger fehleranfällig zu machen: Wenn man den Code kopiert, kopiert man auch mögliche Fehler</li>
+<li>…um den Code effizienter zu machen: Wenn Funktionen verwendet werden, um Schleifen zu ersetzen, macht das den Code effizienter, das heißt, der Computer braucht weniger lange, um dieselben Berechnungen auszuführen</li>
+</ul>
+<p>Beispiel: Wir wollen herausfinden, wie oft jedes Wort in den Songtexten eine:r Künstler:in vorkommt. Dazu haben wir uns die folgende for-Schleife ausgedacht:</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-1" tabindex="-1"></a>lyrics <span class="ot">&lt;-</span> <span class="st">&quot;My mind won&#39;t let me rest Voice in my head I hear what it said I can&#39;t trust a thing If I picked up and left How fast did you forget? Resting while I&#39;m inside your presence I don&#39;t want to think nothing bad This time I won&#39;t This time I won&#39;t&quot;</span></span>
+<span id="cb372-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-2" tabindex="-1"></a></span>
+<span id="cb372-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-3" tabindex="-1"></a>lyrics_vec <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(lyrics, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb372-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-4" tabindex="-1"></a></span>
+<span id="cb372-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-5" tabindex="-1"></a>lyrics_freq <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb372-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-6" tabindex="-1"></a></span>
+<span id="cb372-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-7" tabindex="-1"></a><span class="cf">for</span> (word <span class="cf">in</span> lyrics_vec) {</span>
+<span id="cb372-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">names</span>(lyrics_freq))) { </span>
+<span id="cb372-9"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-9" tabindex="-1"></a>    lyrics_freq[word] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb372-10"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb372-11"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-11" tabindex="-1"></a>    lyrics_freq[word] <span class="ot">&lt;-</span> lyrics_freq[word] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb372-12"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-12" tabindex="-1"></a>  }</span>
+<span id="cb372-13"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-13" tabindex="-1"></a>}</span>
+<span id="cb372-14"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-14" tabindex="-1"></a></span>
+<span id="cb372-15"><a href="r-basics-iv-funktionen-und-pakete.html#cb372-15" tabindex="-1"></a><span class="fu">print</span>(lyrics_freq)</span></code></pre></div>
+<pre><code>##       My     mind    won&#39;t      let       me     rest    Voice       in 
+##        1        1        3        1        1        1        1        1 
+##       my     head        I     hear     what       it     said    can&#39;t 
+##        1        1        6        1        1        1        1        1 
+##    trust        a    thing       If   picked       up      and     left 
+##        1        1        1        1        1        1        1        1 
+##      How     fast      did      you  forget?  Resting    while      I&#39;m 
+##        1        1        1        1        1        1        1        1 
+##   inside     your presence    don&#39;t     want       to    think  nothing 
+##        1        1        1        1        1        1        1        1 
+##      bad     This     time 
+##        1        2        2</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was macht die Funktion <code>strsplit()</code>? Welche Datenstruktur gibt die Funktion als Rückgabewert zurück? Gebt <code>?strsplit</code> ein und schaut nach.</li>
+<li>Was passiert in jedem Schleifendurchlauf?</li>
+<li>Der named vector <code>lyrics_vec</code> enthält dasselbe Wort zweimal, wenn es einmal groß- und einmal kleingeschrieben wird, zum Beispiel “My” und “my”. In der letzten Stunde haben wir eine Funktion kennengelernt, die alle Großbuchstaben in einem Wort in Kleinbuchstaben umwandelt. Wie hieß die Funktion? Und wie könnten wir die Funktion verwenden, um unsere for-Schleife zu verbessern?</li>
+</ul>
+</div>
+<p>Um die Arbeitsschritte mit mehreren Liedern auszuführen, sähe unser Code so aus:</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-1" tabindex="-1"></a>lyrics_gc <span class="ot">&lt;-</span> <span class="st">&quot;My mind won&#39;t let me rest Voice in my head I hear what it said I can&#39;t trust a thing If I picked up and left How fast did you forget? Resting while I&#39;m inside your presence I don&#39;t want to think nothing bad This time I won&#39;t This time I won&#39;t&quot;</span></span>
+<span id="cb374-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-2" tabindex="-1"></a></span>
+<span id="cb374-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-3" tabindex="-1"></a>lyrics_gc_vec<span class="ot">&lt;-</span> <span class="fu">strsplit</span>(lyrics_gc, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb374-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-4" tabindex="-1"></a></span>
+<span id="cb374-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-5" tabindex="-1"></a>lyrics_gc_freq <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb374-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-6" tabindex="-1"></a></span>
+<span id="cb374-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-7" tabindex="-1"></a><span class="cf">for</span> (word <span class="cf">in</span> lyrics_gc_vec) {</span>
+<span id="cb374-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">names</span>(lyrics_gc_freq))) { </span>
+<span id="cb374-9"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-9" tabindex="-1"></a>    lyrics_gc_freq[word] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb374-10"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb374-11"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-11" tabindex="-1"></a>    lyrics_gc_freq[word] <span class="ot">&lt;-</span> lyrics_gc_freq[word] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb374-12"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-12" tabindex="-1"></a>  }</span>
+<span id="cb374-13"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-13" tabindex="-1"></a>}</span>
+<span id="cb374-14"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-14" tabindex="-1"></a></span>
+<span id="cb374-15"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-15" tabindex="-1"></a><span class="fu">print</span>(lyrics_gc_freq)</span>
+<span id="cb374-16"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-16" tabindex="-1"></a></span>
+<span id="cb374-17"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-17" tabindex="-1"></a>lyrics_dd <span class="ot">&lt;-</span> <span class="st">&quot;I&#39;m dreamin&#39;, ay Truth be told I got the hardest ahead, yeah But I said I never let it get to my head I be in space, in a daze, while you tellin me things I see your face but I never really heard you say it Red light, green light, either I&#39;ma go New place, corner store Ain&#39;t that close anymore Yeah let me get the greens, I&#39;ll be home by four If you wanna pour up, then I need me a four&quot;</span></span>
+<span id="cb374-18"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-18" tabindex="-1"></a></span>
+<span id="cb374-19"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-19" tabindex="-1"></a>lyrics_dd_vec <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(lyrics_dd, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb374-20"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-20" tabindex="-1"></a></span>
+<span id="cb374-21"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-21" tabindex="-1"></a>lyrics_dd_freq <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb374-22"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-22" tabindex="-1"></a></span>
+<span id="cb374-23"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-23" tabindex="-1"></a><span class="cf">for</span> (word <span class="cf">in</span> lyrics_dd_vec) {</span>
+<span id="cb374-24"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-24" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">names</span>(lyrics_dd_freq))) { </span>
+<span id="cb374-25"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-25" tabindex="-1"></a>    lyrics_dd_freq[word] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb374-26"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-26" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb374-27"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-27" tabindex="-1"></a>    lyrics_dd_freq[word] <span class="ot">&lt;-</span> lyrics_dd_freq[word] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb374-28"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-28" tabindex="-1"></a>  }</span>
+<span id="cb374-29"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-29" tabindex="-1"></a>}</span>
+<span id="cb374-30"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-30" tabindex="-1"></a></span>
+<span id="cb374-31"><a href="r-basics-iv-funktionen-und-pakete.html#cb374-31" tabindex="-1"></a><span class="fu">print</span>(lyrics_dd_freq)</span></code></pre></div>
+<p>In der Lösung oben haben wir die for-Schleife einfach kopiert und manuell die Variable <code>lyrics_gc</code> durch die Variable <code>lyrics_dd</code> ersetzt. Das geht bei zwei verschiedenen Liedtexten zwar noch, aber was, wenn wir drei, fünf oder zehn verschiedene Liedtexte haben? Dann produzieren wir extrem viel unnötigen und unübersichtlichen Code, der vielleicht auch noch drei, fünf oder zehnmal denselben Fehler enthält. Eine bessere Lösung ist deswegen hier die Verwendung einer Funktion: die for-Schleife kann damit für alle Liedtexte, die in R als character repräsentiert werden, verallgemeinert werden:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-1" tabindex="-1"></a>lyrics_to_frequencies <span class="ot">&lt;-</span> <span class="cf">function</span>(lyrics) {</span>
+<span id="cb375-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-2" tabindex="-1"></a>  lyrics_vec <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(lyrics, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb375-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-3" tabindex="-1"></a></span>
+<span id="cb375-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-4" tabindex="-1"></a>  lyrics_freq <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb375-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-5" tabindex="-1"></a></span>
+<span id="cb375-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-6" tabindex="-1"></a>  <span class="cf">for</span> (word <span class="cf">in</span> lyrics_vec) {</span>
+<span id="cb375-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-7" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">names</span>(lyrics_freq))) { </span>
+<span id="cb375-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-8" tabindex="-1"></a>      lyrics_freq[word] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb375-9"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-9" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb375-10"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-10" tabindex="-1"></a>      lyrics_freq[word] <span class="ot">&lt;-</span> lyrics_freq[word] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb375-11"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-11" tabindex="-1"></a>    }</span>
+<span id="cb375-12"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-12" tabindex="-1"></a>  }</span>
+<span id="cb375-13"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-13" tabindex="-1"></a>  <span class="fu">return</span>(lyrics_freq)</span>
+<span id="cb375-14"><a href="r-basics-iv-funktionen-und-pakete.html#cb375-14" tabindex="-1"></a>}</span></code></pre></div>
+<p>Die Funktion kann dann mit wechselndem Input aufgerufen werden:</p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-1" tabindex="-1"></a>lyrics_gc <span class="ot">&lt;-</span> <span class="st">&quot;My mind won&#39;t let me rest Voice in my head I hear what it said I can&#39;t trust a thing If I picked up and left How fast did you forget? Resting while I&#39;m inside your presence I don&#39;t want to think nothing bad This time I won&#39;t This time I won&#39;t&quot;</span></span>
+<span id="cb376-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-2" tabindex="-1"></a>lyrics_dd <span class="ot">&lt;-</span> <span class="st">&quot;I&#39;m dreamin&#39;, ay Truth be told I got the hardest ahead, yeah But I said I never let it get to my head I be in space, in a daze, while you tellin me things I see your face but I never really heard you say it Red light, green light, either I&#39;ma go New place, corner store Ain&#39;t that close anymore Yeah let me get the greens, I&#39;ll be home by four If you wanna pour up, then I need me a four&quot;</span></span>
+<span id="cb376-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-3" tabindex="-1"></a></span>
+<span id="cb376-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-4" tabindex="-1"></a>lyrics_gc_freq <span class="ot">&lt;-</span> <span class="fu">lyrics_to_frequencies</span>(lyrics_gc)</span>
+<span id="cb376-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-5" tabindex="-1"></a>lyrics_dd_freq <span class="ot">&lt;-</span> <span class="fu">lyrics_to_frequencies</span>(lyrics_dd)</span>
+<span id="cb376-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb376-6" tabindex="-1"></a><span class="fu">print</span>(lyrics_gc_freq)</span></code></pre></div>
+<pre><code>##       My     mind    won&#39;t      let       me     rest    Voice       in 
+##        1        1        3        1        1        1        1        1 
+##       my     head        I     hear     what       it     said    can&#39;t 
+##        1        1        6        1        1        1        1        1 
+##    trust        a    thing       If   picked       up      and     left 
+##        1        1        1        1        1        1        1        1 
+##      How     fast      did      you  forget?  Resting    while      I&#39;m 
+##        1        1        1        1        1        1        1        1 
+##   inside     your presence    don&#39;t     want       to    think  nothing 
+##        1        1        1        1        1        1        1        1 
+##      bad     This     time 
+##        1        2        2</code></pre>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb378-1" tabindex="-1"></a><span class="fu">print</span>(lyrics_dd_freq)</span></code></pre></div>
+<pre><code>##       I&#39;m dreamin&#39;,        ay     Truth        be      told         I       got 
+##         1         1         1         1         3         1         7         1 
+##       the   hardest    ahead,      yeah       But      said     never       let 
+##         2         1         1         1         1         1         2         2 
+##        it       get        to        my      head        in    space,         a 
+##         2         2         1         1         1         2         1         2 
+##     daze,     while       you    tellin        me    things       see      your 
+##         1         1         3         1         3         1         1         1 
+##      face       but    really     heard       say       Red    light,     green 
+##         1         1         1         1         1         1         2         1 
+##    either      I&#39;ma        go       New    place,    corner     store     Ain&#39;t 
+##         1         1         1         1         1         1         1         1 
+##      that     close   anymore      Yeah   greens,      I&#39;ll      home        by 
+##         1         1         1         1         1         1         1         1 
+##      four        If     wanna      pour       up,      then      need 
+##         2         1         1         1         1         1         1</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Angenommen, wir wollen die Funktion <code>lyrics_to_frequencies()</code> auf 20 verschiedene Liedtexte anwenden. Dann würden wir den Funktionsaufruf zwanzig Mal kopieren. Dieses Vorgehen ist nicht schön, denn so können sich wieder Fehler einschleichen. Wie könnte man das Problem lösen? Welches Vorgehen wäre eleganter?<br />
+</li>
+</ul>
+</div>
+</div>
+<div id="schleifen-ersetzen-mithilfe-von-funktionen" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Schleifen ersetzen mithilfe von Funktionen<a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Am Ende der letzten Einheit habe ich bereits darauf hingewiesen, dass Schleifen in R viel weniger verwendet werden als in anderen Programmiersprachen. Das liegt daran, dass Schleifen in R oft durch Funktionen ersetzt werden, die im Allgemeinen effizienter sind als Schleifen. Das Prinzip, das das ermöglicht, haben wir bereits kennengelernt: Es heißt “Vektorisierung” und beschreibt einen Mechanismus, bei dem Operationen direkt auf alle Elemente eines Vektors angewandt weren.</p>
+<div class="tip">
+<p>Vektorisierte Funktionen</p>
+<p>Man sagt, dass eine Funktion “vektorisiert” ist, wenn eine Funktion in der Lage ist, direkt einen Vektor oder ein Objekt mit einer anderen Datenstruktur zu bearbeiten. Anders formuliert: Vektorisierte Funktionen können elementweise Operationen auf Vektoren durchführen. Solche Funktionen nehmen einen Vektor oder eben eine andere Datenstruktur als Argumente an und geben als Rückgabewert oft ein Objekt mit derselben Datenstruktur zurück.</p>
+</div>
+<p>Tatsächlich haben wir bereits eine Funktion kennengelernt, welche auf Vektorisierung zurückgreift, um genau das zu machen, was wir in unserem Beispiel mit den Liedtexten mühsam mithilfe einer for-Schleife und später mithilfe unserer selbst definierten Funktion <code>lyrics_to_frequencies()</code> erreicht haben: die <code>table()</code>-Funktion.</p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-1" tabindex="-1"></a>lyrics <span class="ot">&lt;-</span> <span class="st">&quot;My mind won&#39;t let me rest Voice in my head I hear what it said I can&#39;t trust a thing If I picked up and left How fast did you forget? Resting while I&#39;m inside your presence I don&#39;t want to think nothing bad This time I won&#39;t This time I won&#39;t&quot;</span></span>
+<span id="cb380-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-2" tabindex="-1"></a></span>
+<span id="cb380-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-3" tabindex="-1"></a>lyrics_vec <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(lyrics, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb380-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-4" tabindex="-1"></a></span>
+<span id="cb380-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-5" tabindex="-1"></a>lyrics_freq <span class="ot">&lt;-</span> <span class="fu">table</span>(lyrics_vec)</span>
+<span id="cb380-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb380-6" tabindex="-1"></a><span class="fu">print</span>(lyrics_freq)</span></code></pre></div>
+<pre><code>## lyrics_vec
+##        a      and      bad    can&#39;t      did    don&#39;t     fast  forget? 
+##        1        1        1        1        1        1        1        1 
+##     head     hear      How        I      I&#39;m       If       in   inside 
+##        1        1        1        6        1        1        1        1 
+##       it     left      let       me     mind       my       My  nothing 
+##        1        1        1        1        1        1        1        1 
+##   picked presence     rest  Resting     said    thing    think     This 
+##        1        1        1        1        1        1        1        2 
+##     time       to    trust       up    Voice     want     what    while 
+##        2        1        1        1        1        1        1        1 
+##    won&#39;t      you     your 
+##        3        1        1</code></pre>
+<p>Zur Erinnerung: Die <code>table()</code>-Funktion wandelt ihr Argument zunächst automatisch in einen Faktor um und erstellt daraus eine Häufigkeitstabelle.</p>
+<p>Auch andere for-Schleifen aus der letzten Stunde können durch eine Funktion ersetzt werden. Am Ende der letzten Stunde haben wir uns beispielsweise die folgende for-Schleife angesehen, welche eine Änderung an den Elementen eines Vektors <code>tiere</code> vornimmt und die geänderten Werte einem neuen Vektor <code>tiere_neu</code> zuweist:</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb382-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-2" tabindex="-1"></a>tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># leeren Vektor erstellen</span></span>
+<span id="cb382-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-3" tabindex="-1"></a></span>
+<span id="cb382-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb382-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-5" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
+<span id="cb382-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-6" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb382-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-7" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb382-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb382-9"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-9" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
+<span id="cb382-10"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-10" tabindex="-1"></a>  }</span>
+<span id="cb382-11"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-11" tabindex="-1"></a>  <span class="co"># Wert der Variable tier als neues Element dem Vektor tiere_neu hinzufügen</span></span>
+<span id="cb382-12"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-12" tabindex="-1"></a>  tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>(tiere_neu, tier)</span>
+<span id="cb382-13"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-13" tabindex="-1"></a>}</span>
+<span id="cb382-14"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-14" tabindex="-1"></a></span>
+<span id="cb382-15"><a href="r-basics-iv-funktionen-und-pakete.html#cb382-15" tabindex="-1"></a><span class="fu">print</span>(tiere_neu)</span></code></pre></div>
+<pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
+<p>Dasselbe kann mithilfe der Funktion <code>ifelse()</code> in einer einzigen Zeile erreicht werden:</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb384-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb384-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb384-2" tabindex="-1"></a>tiere_neu <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(tiere <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>, <span class="fu">tolower</span>(tiere), <span class="fu">toupper</span>(tiere))</span></code></pre></div>
+<p>Die Funktion <code>ifelse()</code> greift genau wie die <code>table()</code>-Funktion unter der Motorhaube auf Vektorisierung zurück: Wenn der Ausdruck <code>tiere == "Hund"</code> ausgewertet wird, wird ein Vektor erstellt, dessen Elemente den Wert <code>TRUE</code> für jedes Element im Vektor <code>tiere</code>, das dem Wert <code>"Hund"</code> entspricht, hat, und <code>FALSE</code> sonst. Der zweite Parameter der Funktion <code>ifelse</code>, in unserem Fall <code>tolower(tiere)</code>, legt fest, was mit den Elementen, für die Vergleichsoperation zu <code>TRUE</code> evaluiert wurde, passieren soll. Der dritte Parameter (<code>toupper(tiere)</code>) legt fest, was mit den Elementen, die zu <code>FALSE</code> ausgewertet wurden, passieren soll.</p>
+<p>Auch unsere for-Schleife zur Erstellung eines Vektors mit langen Wörtern können wir ersetzen, indem wir die Funktion <code>nchar()</code> vektorisiert wird, also indem ihr ein Vektor als Argument übergeben wird. Anstelle mithilfe einer if-Anweisung zu überprüfen, ob die Zeichenanzahl eines Wortes im Vektor <code>woerter</code> größer als 20 ist, wird die Funktion <code>which()</code> verwendet. Diese Funktion kann ebenfalls vektorisiert werden, also mit einem Vektor als Argument aufgerufen werden. Ihr Rückgabewert ist ein Vektor mit den Indizes der Elemente, für die der Ausdruck <code>wortlaengen &gt; 20</code> zu <code>TRUE</code> evaluiert wurde.</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-1" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Netzwerkdurchsetzungsgesetz&quot;</span>, <span class="st">&quot;Abfallverzeichnisverordnung&quot;</span>, <span class="st">&quot;Haftpflichtversicherung&quot;</span>, <span class="st">&quot;Antivirenprogramm&quot;</span>)</span>
+<span id="cb385-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-2" tabindex="-1"></a>wortlaengen <span class="ot">&lt;-</span> <span class="fu">nchar</span>(woerter)</span>
+<span id="cb385-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-3" tabindex="-1"></a>indizes <span class="ot">&lt;-</span> <span class="fu">which</span>(wortlaengen <span class="sc">&gt;</span> <span class="dv">20</span>)</span>
+<span id="cb385-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-4" tabindex="-1"></a>lange_woerter <span class="ot">&lt;-</span> wortlaengen[indizes]</span>
+<span id="cb385-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-5" tabindex="-1"></a><span class="fu">names</span>(lange_woerter) <span class="ot">&lt;-</span> woerter[indizes]</span>
+<span id="cb385-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb385-6" tabindex="-1"></a>lange_woerter</span></code></pre></div>
+<pre><code>## Netzwerkdurchsetzungsgesetz Abfallverzeichnisverordnung 
+##                          27                          27 
+##     Haftpflichtversicherung 
+##                          23</code></pre>
+<div class="tip">
+<p>Pro Tipp</p>
+<p>Viele Funktionen nehmen nicht nur Vektoren als Argumente an, sondern auch Listen oder andere Datenstrukturen. Welchen Datentyp oder welche Datenstruktur ein Objekt haben muss, damit eine Funktion auf das Objekt angewendet werden kann, erfahrt ihr in der Funktionsdokumentation unter “Arguments” in den R Hilfeseiten.</p>
+</div>
+<p>Die Möglichkeit, in vielen Fällen for-Schleifen durch Funktionen, die Vektoren oder andere Datenstrukturen als Argumente annehmen, zu ersetzen, macht R Code häufig kürzer und in vielen Fällen auch effizienter als zum Beispiel Python Code. Am Anfang kann dieser Vorteil aber vor allem verwirren. Deswegen ist es besonders am Anfang komplett in Ordnung und sogar empfehlenswert, erst einmal Schleifen zu verwenden, und diese erst später durch eine geeignete Funktion auszutauschen. Durch das Erstellen der Schleife könnt ihr euch besser in die Aufgabe und die notwendigen Verarbeitungsschritte zur Lösung der Aufgabe eindenken.</p>
+<div id="die-apply-funktionen" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Die Apply-Funktionen<a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nicht jede Funktion kann allerdings vektorisiert werden, also nicht jede Funktion nimmt einen Vektor oder eine andere Datenstruktur als Argument an. In diesem Fall können spezielle Funktionen verwendet werden, die eine andere Funktion und einen Vektor oder eine Liste als Argument annehmen und diese Funktion auf jedes Element des Vektors (oder der Liste) anwenden.</p>
+<p>Diese Funktionen heißen <code>lapply()</code>, <code>sapply()</code>, <code>vapply()</code> und <code>mapply()</code>.</p>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Was ist der Unterschied zwischen den verschiedenen Apply-Funktionen? Sucht nach den Funktionen in den R-Hilfeseiten und vergleicht Argumente und Rückgabewerte der Funktionen.</li>
+</ul>
+</div>
+<p>Ein Beispiel: Angenommen, wir hätten die folgende (fragwürdige) Funktion definiert, die erkennen soll, ob eine Stadt in Deutschland eine Großstadt ist und eine entsprechende Nachricht zurückgibt.</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-1" tabindex="-1"></a>ist_grossstadt <span class="ot">&lt;-</span> <span class="cf">function</span>(stadt) {</span>
+<span id="cb387-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-2" tabindex="-1"></a>  grossstaedte <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;Frankfurt&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
+<span id="cb387-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-3" tabindex="-1"></a>  <span class="cf">if</span> (stadt <span class="sc">%in%</span> grossstaedte) {</span>
+<span id="cb387-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-4" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">paste</span>(stadt, <span class="st">&quot;ist eine Großstadt&quot;</span>))</span>
+<span id="cb387-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-5" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb387-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-6" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">paste</span>(stadt, <span class="st">&quot;ist keine Großstadt&quot;</span>))</span>
+<span id="cb387-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-7" tabindex="-1"></a>  }</span>
+<span id="cb387-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb387-8" tabindex="-1"></a>}</span></code></pre></div>
+<p>Die Funktion ist so definiert, dass sie nur auf einzelne Zeichenketten angewandt werden kann, nicht auf character-Vektoren. Beim Versuch, die Funktion mit einem Vektor als Argument auszuführen, wird eine Fehlermeldung ausgegeben.</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb388-1" tabindex="-1"></a><span class="fu">ist_grossstadt</span>(<span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Bremen&quot;</span>)) <span class="co"># produziert Fehlermeldung</span></span></code></pre></div>
+<pre><code>## Error in if (stadt %in% grossstaedte) {: the condition has length &gt; 1</code></pre>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb390-1" tabindex="-1"></a><span class="fu">ist_grossstadt</span>(<span class="st">&quot;Berlin&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Berlin ist eine Großstadt&quot;</code></pre>
+<p>Um die Funktion trotzdem auf einen Vektor anzuwenden, kann die Funktion <code>lapply()</code> eingesetzt werden:</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb392-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Bremen&quot;</span>), ist_grossstadt)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Berlin ist eine Großstadt&quot;
+## 
+## [[2]]
+## [1] &quot;Bremen ist keine Großstadt&quot;</code></pre>
+<p>Im Fall unserer Beispielfunktion <code>ist_grosstadt()</code> wäre es natürlich auch möglich (und eleganter), die Funktion direkt so zu definieren, dass sie auch auf Vektoren angewandt werden kann. Aber das ist nicht immer so einfach möglich.</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-1" tabindex="-1"></a>ist_grossstadt <span class="ot">&lt;-</span> <span class="cf">function</span>(stadt) {</span>
+<span id="cb394-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-2" tabindex="-1"></a>  grossstaedte <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;Frankfurt&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
+<span id="cb394-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-3" tabindex="-1"></a>  rueckgabewert <span class="ot">&lt;-</span> stadt <span class="sc">%in%</span> grossstaedte</span>
+<span id="cb394-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-4" tabindex="-1"></a>  <span class="fu">return</span>(rueckgabewert)</span>
+<span id="cb394-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-5" tabindex="-1"></a>}</span>
+<span id="cb394-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-6" tabindex="-1"></a></span>
+<span id="cb394-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb394-7" tabindex="-1"></a><span class="fu">ist_grossstadt</span>(<span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Bremen&quot;</span>))</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Warum kann die Funktion <code>ist_grossstadt()</code> auch auf Vektoren angewandt werden, wenn der Ausdruck <code>stadt %in% grossstaedte</code> außerhalb einer if-Anweisung evaluiert wird? Was ist anders, wenn der Ausdruck Teil einer if-Anweisung ist?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="gültigkeit-der-funktionsargumente-überprüfen" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Gültigkeit der Funktionsargumente überprüfen<a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In den Beispielfunktionen, die wir uns bisher angesehen haben, haben wir immer angenommen, dass ein gültiger Wert als Argument übergeben wird. Beim Versuch, die <code>ist_grossstadt()</code>-Funktion auf einen Vektor anzuwenden haben wir aber gesehen, dass beim Ausführen einer Funktion mit ungültigen Argumenten Fehler entstehen können.</p>
+<p>Deswegen ist es oft sinnvoll, im Funktionskörper zu überprüfen, ob die gewählten Argumente gültig sind. Wenn dies nicht der Fall ist, kann eine spezielle Funktion mit dem Namen <code>stop()</code> verwendet werden, um die Ausführung der Funktion abzubrechen und eine Fehlermeldung auszugeben:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-1" tabindex="-1"></a>ist_grossstadt <span class="ot">&lt;-</span> <span class="cf">function</span>(stadt) {</span>
+<span id="cb396-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-2" tabindex="-1"></a>  grossstaedte <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;Frankfurt&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
+<span id="cb396-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.character</span>(stadt)) {</span>
+<span id="cb396-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-4" tabindex="-1"></a>    rueckgabewert <span class="ot">&lt;-</span> stadt <span class="sc">%in%</span> grossstaedte</span>
+<span id="cb396-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-5" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb396-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-6" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Ungültiges Argument: Keine Zeichenkette&quot;</span>)</span>
+<span id="cb396-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-7" tabindex="-1"></a>  }</span>
+<span id="cb396-8"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-8" tabindex="-1"></a>  <span class="fu">return</span>(rueckgabewert)</span>
+<span id="cb396-9"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-9" tabindex="-1"></a>}</span>
+<span id="cb396-10"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-10" tabindex="-1"></a></span>
+<span id="cb396-11"><a href="r-basics-iv-funktionen-und-pakete.html#cb396-11" tabindex="-1"></a><span class="fu">ist_grossstadt</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Error in ist_grossstadt(c(1, 2)): Ungültiges Argument: Keine Zeichenkette</code></pre>
+</div>
+<div id="funktionsumgebung-und-sichtbarkeitsbereich-von-variablen" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Funktionsumgebung und Sichtbarkeitsbereich von Variablen<a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wenn wir Variablen erstellt haben, sind wir immer davon ausgegangen, dass diese im gesammten Programm mithilfe des Namens abrufbar sind. Wenn wir selbst eine Funktion definieren, und dabei eine Variable erstellen, dann ist die Variable im restlichen Programm jedoch im Normalfall nicht abrufbar, sie “existiert” sozusagen nur in der Funktion und ist im restlichen Programm nicht sichtbar.</p>
+<p>Ein Beispiel:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb398-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb398-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-3" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb398-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-4" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb398-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-5" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb398-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-6" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(x, y))</span>
+<span id="cb398-7"><a href="r-basics-iv-funktionen-und-pakete.html#cb398-7" tabindex="-1"></a>}</span></code></pre></div>
+<p>Beim Funktionsaufruf werden die Variablen <code>x</code> und <code>y</code> aus dem Funktionskörper zurückgegeben:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb399-1" tabindex="-1"></a><span class="fu">beispiel</span>()</span></code></pre></div>
+<pre><code>## [1] 4 5</code></pre>
+<p>Aber die Variablen <code>x</code> und <code>y</code> aus dem Funktionskörper können nicht unabhängig von der Funktion abgerufen werden. Sie existieren nur in der Funktion selbst:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb401-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(x, y))</span></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<p>Für Variablen, die innerhalb einer Funktion definiert sind, sagt man deswegen auch “lokale Variablen” und für Variablen, die außerhalb von Funktionen definiert sind, “globale Variablen”.</p>
+<p>Aber Achtung: Wenn im Funktionskörper eine Variable verwendet wird, für die im Funktionskörper oder beim Funktionsaufruf kein Wert festgelegt wird, dann wird beim Funktionsaufruf außerhalb der Funktion nach dieser Variable gesucht:</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb403-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-2" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb403-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-3" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb403-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-4" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(x, y))</span>
+<span id="cb403-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-5" tabindex="-1"></a>}</span>
+<span id="cb403-6"><a href="r-basics-iv-funktionen-und-pakete.html#cb403-6" tabindex="-1"></a><span class="fu">beispiel</span>()</span></code></pre></div>
+<pre><code>## [1] 2 1</code></pre>
+<p>Der Bereich “außerhalb der Funktion” ist im Grunde genau das, was wir eingangs “Funktionsumgebung” genannt haben. In diesem Beispiel wird in der Funktionsdefinition nur eine lokale Variable <code>y</code> definiert. Wenn die Funktion <code>beispiel()</code> später aufgerufen wird, sucht R nach einer Definition für <code>x</code>. Da in der Funktion keine lokale Variable <code>x</code> definiert wurde, sucht R in der Funktionsumgebung (die in diesem Fall die globale Umgebung ist, wo die Funktion definiert wurde) und findet die globale Variable <code>x</code>.</p>
+<p>Wenn der Wert der Variable <code>x</code> sich im Programmverlauf ändert, dann wird beim Funktionsaufruf der Wert eingesetzt, den die Variable zum Zeitpunkt des Funktionsaufrufs angenommen hat:</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb405-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb405-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb405-2" tabindex="-1"></a><span class="fu">beispiel</span>()</span></code></pre></div>
+<pre><code>## [1] 4 1</code></pre>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb407-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">6</span> </span>
+<span id="cb407-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb407-2" tabindex="-1"></a><span class="fu">beispiel</span>()</span></code></pre></div>
+<pre><code>## [1] 6 1</code></pre>
+</div>
+<div id="was-sind-pakete" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> Was sind Pakete?<a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>“An R package is a collection of functions, data, and documentation that extends the capabilities of base R.” (Wickham 2017)</p>
+</blockquote>
+<p>Mit “base R” sind alle in R vordefinierten Funktionen, Datentypen und -strukturen, Operatoren, etc. gemeint.</p>
+<p>Pakete (engl. Packages) werden also verwendet, um auf bestimmte Funktionalitäten zuzugreifen, die in R nicht vordefiniert sind und die andere R-Nutzer:innen definiert und veröffentlicht haben. Um darauf zuzugreifen, müssen R Pakete zuerst installiert und danach geladen werden.</p>
+<p>Die Funktionen, die wir bisher kennengelernt haben, waren alle in R vordefiniert. Wir mussten deswegen kein Paket installieren und laden, um sie zu nutzen. In den R Dokumentationsseiten kann man in R vordefinierte Funktionen daran erkennen, dass neben dem Funktionsnamen in der linken oberen Ecke der Dokumentationsseite das Wort “base” steht. Das steht für “base R”, es handelt sich also um eine R-Basisfunktion. Bei Funktionen aus Paketen steht dort entsprechend der Paketname.</p>
+<div class="float">
+<img src="images/r_docs_package.png" alt="Paketname auf einer R Dokumentationsseite: “base” steht für alle in R vordefinierten Funktionen" />
+<div class="figcaption">Paketname auf einer R Dokumentationsseite: “base” steht für alle in R vordefinierten Funktionen</div>
+</div>
+</div>
+<div id="pakete-installieren" class="section level2 hasAnchor" number="4.10">
+<h2><span class="header-section-number">4.10</span> Pakete installieren<a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R Pakete können mithilfe der Funktion <code>install.packages()</code> installiert werden. Die Funktion nimmt entweder einen einzelnen Paketnamen als Argument oder einen character-Vektor, der mehrere Paketnamen enthält.</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb409-1" tabindex="-1"></a><span class="co"># Paket installieren</span></span>
+<span id="cb409-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb409-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;quanteda&quot;</span>)</span>
+<span id="cb409-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb409-3" tabindex="-1"></a><span class="co"># mehrere Pakete gleichzeitig installieren</span></span>
+<span id="cb409-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb409-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;quanteda&quot;</span>, <span class="st">&quot;readtext&quot;</span>))</span></code></pre></div>
+<p>Achtung: Manchmal wird auf der Konsole (RStudio Fenster R Console) bei der Installation von Paketen eine Meldung der Art “Do you want to install from sources the package which needs compilation? (Yes/no/cancel)” ausgegeben. In diesem Fall müsst ihr einfach no eingeben und auf Enter drücken.</p>
+</div>
+<div id="pakete-laden" class="section level2 hasAnchor" number="4.11">
+<h2><span class="header-section-number">4.11</span> Pakete laden<a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Installierte Pakete müssen immer am Anfang eines R Skripts geladen werden, bevor sie verwendet werden können:</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb410-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb410-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb410-2" tabindex="-1"></a><span class="fu">library</span>(readtext)</span></code></pre></div>
+</div>
+<div id="wozu-werden-pakete-verwendet" class="section level2 hasAnchor" number="4.12">
+<h2><span class="header-section-number">4.12</span> Wozu werden Pakete verwendet?<a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R Pakete werden wir im Rahmen dieses Seminars vor allem dazu verwenden, um auf <strong>zusätzliche Funktionen</strong> zuzugreifen, die in R nicht vordefiniert sind, die also nicht zu den R-Basisfunktionen gehören.</p>
+<p>Das Paket quanteda, das wir vorhin installiert haben, bietet zum Beispiel eine Funktion, die character, die aus mehreren Wörtern bestehen, automatisch in sogenannte Tokens umwandelt (was das ist, lernen wir in der Sitzung zur Textanalyse):</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb411-1" tabindex="-1"></a>lyrics <span class="ot">&lt;-</span> <span class="st">&quot;My mind won&#39;t let me rest Voice in my head I hear what it said I can&#39;t trust a thing If I picked up and left How fast did you forget? Resting while I&#39;m inside your presence I don&#39;t want to think nothing bad This time I won&#39;t This time I won&#39;t&quot;</span></span>
+<span id="cb411-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb411-2" tabindex="-1"></a></span>
+<span id="cb411-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb411-3" tabindex="-1"></a><span class="co"># Funktionsaufruf der Funktion tokens() aus dem Paket quanteda. Die beiden Doppelpunkte kennzeichnen, dass die Funktion tokens() aus dem Paket quanteda gemeint ist, und nicht irgendeine andere Funktion aus einem anderen Paket, die vielleicht zufällig denselben Namen hat.</span></span>
+<span id="cb411-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb411-4" tabindex="-1"></a>lyrics_toks <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">tokens</span>(lyrics)</span>
+<span id="cb411-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb411-5" tabindex="-1"></a><span class="fu">print</span>(lyrics_toks)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;My&quot;       &quot;mind&quot;     &quot;won&#39;t&quot;    &quot;let&quot;      &quot;me&quot;       &quot;rest&quot;    
+##  [7] &quot;Voice&quot;    &quot;in&quot;       &quot;my&quot;       &quot;head&quot;     &quot;I&quot;        &quot;hear&quot;    
+## [13] &quot;what&quot;     &quot;it&quot;       &quot;said&quot;     &quot;I&quot;        &quot;can&#39;t&quot;    &quot;trust&quot;   
+## [19] &quot;a&quot;        &quot;thing&quot;    &quot;If&quot;       &quot;I&quot;        &quot;picked&quot;   &quot;up&quot;      
+## [25] &quot;and&quot;      &quot;left&quot;     &quot;How&quot;      &quot;fast&quot;     &quot;did&quot;      &quot;you&quot;     
+## [31] &quot;forget&quot;   &quot;?&quot;        &quot;Resting&quot;  &quot;while&quot;    &quot;I&#39;m&quot;      &quot;inside&quot;  
+## [37] &quot;your&quot;     &quot;presence&quot; &quot;I&quot;        &quot;don&#39;t&quot;    &quot;want&quot;     &quot;to&quot;      
+## [43] &quot;think&quot;    &quot;nothing&quot;  &quot;bad&quot;      &quot;This&quot;     &quot;time&quot;     &quot;I&quot;       
+## [49] &quot;won&#39;t&quot;    &quot;This&quot;     &quot;time&quot;     &quot;I&quot;        &quot;won&#39;t&quot;</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Im Kapitel 4.5 haben wir die Funktion <code>strsplit()</code> verwendet, um den Songtext <code>lyrics</code> in seine Bestandteile aufzuteilen. Dabei haben wir das Leerzeichen als Trennzeichen zwischen den Wörtern festgelegt. Dadurch wurden Satzzeichen allerdings nicht als einzelne Zeichen erkannt, zum Beispiel bei “forget?”. Wie teilt die Funktion <code>tokens()</code> den Songtext auf? Welche Bestandteile werden dabei erkannt?</li>
+</ul>
+</div>
+<p>Pakete können aber zum Beispiel auch <strong>zusätzliche Datenstrukturen</strong> enthalten. Die quanteda-<code>tokens()</code>-Funktion, die wir gerade ausgetestet haben, erstellt beispielsweise ein sogenanntes “tokens”-Objekt (schauen wir uns noch an):</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb413-1" tabindex="-1"></a><span class="fu">typeof</span>(lyrics_toks)</span></code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb415-1" tabindex="-1"></a><span class="fu">class</span>(lyrics_toks)</span></code></pre></div>
+<pre><code>## [1] &quot;tokens&quot;</code></pre>
+<p>Ein Paket, das keine zusätzliche Datenstruktur, sondern einen <strong>zusätzlichen Operator</strong> zur Verfügung stellt, ist daneben das Paket magrittr.</p>
+<p>Dieses Paket ermöglicht es, den sogenannten <strong>Pipe-Operator</strong> zu verwenden. Der Pipe-Operator kann verwendet werden, um mehrere Funktionsaufrufe miteinander zu verketten. Wenn dasselbe Objekt nacheinander durch verschiedene Funktionen bearbeitet wird, wäre ohne den Pipe-Operator entweder eine Folge von Anweisungen der folgenden Art notwendig:</p>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb417-1" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="st">&quot;Hallo, wie geht es dir&quot;</span></span>
+<span id="cb417-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb417-2" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="fu">paste0</span>(satz, <span class="st">&quot;?&quot;</span>)</span>
+<span id="cb417-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb417-3" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(satz, <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<p>Oder verschachtelte Funktionsaufrufe der Art:</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb418-1" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="st">&quot;Hallo, wie geht es dir&quot;</span></span>
+<span id="cb418-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb418-2" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(<span class="fu">paste0</span>(satz, <span class="st">&quot;?&quot;</span>), <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<p>Mit dem Pipe-Operator können solche aufeinanderfolgenden oder verschachtelten Funktionsaufrufe vereinfacht werden. Um den Operator zu verwenden, muss zunächst das Paket magrittr installiert und geladen werden:</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb419-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb420-1" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code></pre></div>
+<p>Jetzt kann der Pipe-Operator verwendet werden:</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb421-1" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="st">&quot;Hallo, wie geht es dir&quot;</span></span>
+<span id="cb421-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb421-2" tabindex="-1"></a></span>
+<span id="cb421-3"><a href="r-basics-iv-funktionen-und-pakete.html#cb421-3" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> satz <span class="sc">%&gt;%</span></span>
+<span id="cb421-4"><a href="r-basics-iv-funktionen-und-pakete.html#cb421-4" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">&quot;?&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb421-5"><a href="r-basics-iv-funktionen-und-pakete.html#cb421-5" tabindex="-1"></a>  <span class="fu">strsplit</span>(<span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<p>Der Ausdruck <code>x %&gt;% f</code> ist also äquivalent zu <code>f(x)</code>. Der Pipe-Operator ist in R sehr weit verbreitet und wir werden immer wieder darauf zurückgreifen. Ihr solltet euch erst einmal nur merken, dass der Pipe-Operator ein zusätzlicher Operator ist, der ermöglicht, Funktionsaufrufe zu verketten.</p>
+<div class="tip">
+<p>Das Tidyverse</p>
+<p>Verschiedene R Pakete folgen verschiedenen Philosophien oder Designprinzipien, wie guter Code aussehen sollte, und welche Datenstrukturen für welche Aufgaben verwendet werden sollten. Deswegen sind Pakete, die denselben Prinzipien folgen und dieselben Datenstrukturen verwenden untereinander kompatibler und Code, der mithilfe von Funktionen aus verschiedenen Paketen geschrieben ist, unterscheidet sich mitunter stark von Code, der nur R-Basisfunktionen nutzt.</p>
+<p>Das sogenannte <a href="https://www.tidyverse.org/">Tidyverse</a> ist eine Sammlung von R Paketen, die alle denselben Designprinzipien folgen und dieselben Datenstrukturen verwenden. Auch das Paket <code>magrittr</code> ist Teil des Tidyverse. Innerhalb des Tidyverse wird stets der Pipe-Operator verwendet, um Funktionsaufrufe zu verketten, und es gibt für viele R Base Funktionen eigene Tidyverse-Funktionen, die dasselbe machen, aber auf eine Weise, die mit den Prinzipien des Tidyverse übereinstimmt. Beispielsweise gibt es im Tidyverse anstelle der apply-Funktionen eine Reihe von Tidyverse-Funktionen, die genau wie die apply-Funktionen nicht vektorisierte Funktionen vektorisieren (die map-Funktionen). Wir werden in diesem Seminar nicht das gesamte Tidyverse behandeln, aber später werden wir die beiden Tidyverse-Pakete <code>ggplot2</code> und <code>stringr</code> kennenlernen.</p>
+</div>
+<p>Zuletzt solltet ihr wissen, dass manche Pakete sogar komplette <strong>Datensätze oder Korpora</strong> (lernen wir noch) enthalten, die zusammen mit dem Rest des Pakets heruntergeladen werden.</p>
+<p>Quanteda stellt beispielsweise zu Testzwecken ein komplettes Korpus aus Reden von US-Präsidenten zur Verfügung:</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="r-basics-iv-funktionen-und-pakete.html#cb422-1" tabindex="-1"></a><span class="co"># Einen Datensatz kann man laden, indem man einfach den Namen des Datensatzes eingibt. Die Funktion head() gibt die ersten fünf Zeilen eines Dataframes aus. Die Funktion summary() gibt einen Dataframe mit Metadaten zu einem bestimmten Objekt zurück. Wenn Funktionsaufrufe verschachtelt werden, wird immer zuerst die innere Funktion ausgeführt, und dann die äußere.</span></span>
+<span id="cb422-2"><a href="r-basics-iv-funktionen-und-pakete.html#cb422-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(quanteda<span class="sc">::</span>data_corpus_inaugural))</span></code></pre></div>
+<pre><code>##              Text Types Tokens Sentences Year  President FirstName
+## 1 1789-Washington   625   1537        23 1789 Washington    George
+## 2 1793-Washington    96    147         4 1793 Washington    George
+## 3      1797-Adams   826   2577        37 1797      Adams      John
+## 4  1801-Jefferson   717   1923        41 1801  Jefferson    Thomas
+## 5  1805-Jefferson   804   2380        45 1805  Jefferson    Thomas
+## 6    1809-Madison   535   1261        21 1809    Madison     James
+##                   Party
+## 1                  none
+## 2                  none
+## 3            Federalist
+## 4 Democratic-Republican
+## 5 Democratic-Republican
+## 6 Democratic-Republican</code></pre>
+<div class="tip">
+<p>Style Tip</p>
+<p>Wickham empfiehlt, im Code zwischen R base-Funktionen und Funktionen aus Paketen zu unterscheiden, indem beim Aufruf von Funktionen aus Paketen der Name des Pakets mitgenannt wird, also:</p>
+<p><code>quanteda::tokens("Dieser Satz soll in Tokens zerlegt werden")</code></p>
+<p>statt nur:</p>
+<p><code>tokens("Dieser Satz soll in Tokens zerlegt werden")</code></p>
+</div>
+</div>
+<div id="welche-pakete-gibt-es-denn-alles" class="section level2 hasAnchor" number="4.13">
+<h2><span class="header-section-number">4.13</span> Welche Pakete gibt es denn alles?<a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wenn ihr nach einer bestimmten Funktionalität sucht, dann empfiehlt es sich, zunächst auf der Seite <a href="https://rdrr.io/">https://rdrr.io/</a> nach einem Stichwort zu suchen. Diese Seite durchsucht verschiedene Online-Plattformen, auf denen R Nutzer:innen ihre Pakete veröffentlicht haben. Die offizielle Veröffentlichungsplattform für R Pakete heißt CRAN. Die Funktion <code>install.packages()</code> installiert deswegen per Default nur Pakete, die über CRAN veröffentlicht wurden.</p>
+<p>Wir haben ja vorhin eine Funktion increment_value() definiert, die zu einer beliebigen Zahl 1 addiert. Diese Operation nennt man auch “Inkrementieren”.
+Das Inkrementieren ist eine Operation, die sehr viele Menschen sehr oft verwenden. Wir können uns deswegen sicher sein, dass schon ein:e ander:e R Nutzer:in diese Funktion definiert hat und im Rahmen von einem R Paket veröffentlicht hat. Und tatsächlich: Wenn wir auf <a href="https://rdrr.io/">https://rdrr.io/</a> nach “increment” suchen, werden direkt mehrere Pakete vorgeschlagen, die eine “increment”-Funktion enthalten. Es haben also schon einige R Nutzer:innen Inkrementierungsfunktionen definiert und im Rahmen von Paketen anderen Nutzer:innen bereitgestellt. Die increment_value()-Funktion von vorhin würden wir also in der Praxis eigentlich nicht selbst defnieren, sondern stattdessen aus einem Paket installieren.</p>
+<p>Zu den meisten Paketen gibt es eigene Dokumentationsseiten, die von den R Nutzer:innen gepflegt werden, die die Pakete entwickelt haben. Um zu verstehen, welche Funktionalitäten ein bestimmtes Paket zur Verfügung stellt, solltet ihr euch die Dokumentationsseiten zu dem Paket durchlesen.</p>
+<ul>
+<li>Dokumentationsseiten zum Paket quanteda: <a href="https://quanteda.io/">https://quanteda.io/</a></li>
+<li>Dokumentationsseiten zum Paket magrittr: <a href="https://magrittr.tidyverse.org/">https://magrittr.tidyverse.org/</a></li>
+</ul>
+<p>Unter dem Menüpunkt “Reference” auf den quanteda-Seiten findet ihr zum Beispiel eine Liste aller Datensätze und Funktionen, welche das Paket zur Verfügung stellt.</p>
+<div class="tip">
+<p>Dependencies</p>
+<p>Fast alle R Pakete nutzen selbst Funktionen aus anderen Paketen. Zum Beispiel gibt es auch außerhalb des Tidyverse Pakete, welche in ihren Funktionsdefinitionen den Pipe-Operator verwenden und dazu auf das <code>magrittr</code>-Paket zurückgreifen. Wenn ein Paket A auf Funktionalitäten aus einem anderen Paket B zurückgreift, dann nennt man das Paket B eine “Dependency” von Paket A. Wenn ihr ein Paket installiert, wird deswegen oft automatisch eine Reihe weiterer Pakete installiert. Das sind die Dependencies des Pakets, das ihr installieren wollt.</p>
+</div>
+</div>
+<div id="quellen-3" class="section level2 unnumbered hasAnchor">
+<h2>Quellen<a href="r-basics-iv-funktionen-und-pakete.html#quellen-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Venables, W.N. and Smith, D.M. and the R Core Team. An Introduction to R, <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf</a></li>
+<li>Wickham, Hadley. The Tidyverse Style Guide, <a href="https://style.tidyverse.org/">https://style.tidyverse.org/</a></li>
+<li>Riepl, Wolf. R-Code beschleunigen: Schleifen vs. Vektorisierung vs. Lookup-Tables, <a href="https://statistik-dresden.de/archives/15332">https://statistik-dresden.de/archives/15332</a></li>
+<li>Wickham, Hadley and Grolemund, Garrett (2017). R for Data Science: Functions, <a href="https://r4ds.had.co.nz/functions.html">https://r4ds.had.co.nz/functions.html</a></li>
+<li>Wickham, Hadley. Advanced R. Chapter 6: Functions. Function Components, <a href="https://adv-r.hadley.nz/functions.html#fun-components">https://adv-r.hadley.nz/functions.html#fun-components</a></li>
+<li>Wickham, Hadley. Advanced R. Chapter 6: Functions. Lexical Scoping, <a href="https://adv-r.hadley.nz/functions.html#lexical-scoping">https://adv-r.hadley.nz/functions.html#lexical-scoping</a></li>
+<li>Wickham, Hadley and Grolemund, Garrett (2017). R for Data Science: Iteration. The Map Functions, <a href="https://r4ds.had.co.nz/iteration.html#the-map-functions">https://r4ds.had.co.nz/iteration.html#the-map-functions</a></li>
+<li>Benoit, Kenneth and Watanabe, Kohei. Quanteda 4.0.0: Reference, <a href="https://quanteda.io/reference/index.html">https://quanteda.io/reference/index.html</a></li>
+<li>Benoit, Kenneth and Watanabe, Kohei. Quanteda: Quantitative Analysis of Textual Data, <a href="https://quanteda.io">https://quanteda.io</a></li>
+<li>Wickham, Hadley and Grolemund, Garrett (2017). R for Data Science: Pipes, <a href="https://r4ds.had.co.nz/pipes.html">https://r4ds.had.co.nz/pipes.html</a></li>
+<li>Bache, Stefan Milton and Wickham, Hadley. Magrittr 2.0.3 Dokumentation, <a href="https://magrittr.tidyverse.org/">https://magrittr.tidyverse.org/</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-basics-iii-kontrollstrukturen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

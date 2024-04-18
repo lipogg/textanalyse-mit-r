@@ -1,0 +1,14 @@
+book_filename: "textanalyse-mit-r"
+delete_merged_file: true
+repo: https://github.com/lipogg/textanalyse-mit-r
+rmd_files: ["index.Rmd",
+            "00-motivation.Rmd",
+            "00-seminarplan.Rmd",
+            "00-lernziele.Rmd",
+            "00-organisation.Rmd",
+            "00-hilfe.Rmd",
+            "01-installation.Rmd",
+            "01-rstudio.Rmd",
+            "02-R-Basics-1.Rmd"]
+new_session: yes
+output_dir: "docs"

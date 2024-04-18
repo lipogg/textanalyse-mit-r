@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7 Textanalyse II: Preprocessing | Einführung in R: Programmieren für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7 Textanalyse II: Preprocessing | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/einfuehrung-in-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Textanalyse II: Preprocessing | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exkurs-reguläre-ausdrücke.html"/>
+<link rel="next" href="textanalyse-iii-wortfrequenzanalysen.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#was-ist-r-überhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatorpräzedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html"><i class="fa fa-check"></i><b>2</b> R Basics II: Datenstrukturen</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#grundlegende-begriffe-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektoren"><i class="fa fa-check"></i><b>2.2</b> Vektoren</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#sets-mengen"><i class="fa fa-check"></i><b>2.2.1</b> Sets (Mengen)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#named-vectors"><i class="fa fa-check"></i><b>2.2.2</b> Named Vectors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#faktoren"><i class="fa fa-check"></i><b>2.2.3</b> Faktoren</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-vektoren"><i class="fa fa-check"></i><b>2.2.4</b> Zugriffsoperationen auf Vektoren</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektorisierung"><i class="fa fa-check"></i><b>2.2.5</b> Vektorisierung</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#listen"><i class="fa fa-check"></i><b>2.3</b> Listen</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-listen"><i class="fa fa-check"></i><b>2.3.1</b> Zugriffsoperationen auf Listen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-vektoren-vs-benannte-vektoren-vs-faktoren-vs-listen"><i class="fa fa-check"></i><b>2.4</b> Auf einen Blick: Vektoren vs benannte Vektoren vs Faktoren vs Listen</a></li>
+<li class="chapter" data-level="2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#matrizen"><i class="fa fa-check"></i><b>2.5</b> Matrizen</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-matrizen"><i class="fa fa-check"></i><b>2.5.1</b> Zugriffsoperationen auf Matrizen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#arrays"><i class="fa fa-check"></i><b>2.6</b> Arrays</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-arrays"><i class="fa fa-check"></i><b>2.6.1</b> Zugriffsoperationen auf Arrays</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#dataframes"><i class="fa fa-check"></i><b>2.7</b> Dataframes</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-dataframes"><i class="fa fa-check"></i><b>2.7.1</b> Zugriffsoperationen auf Dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes"><i class="fa fa-check"></i><b>2.8</b> Auf einen Blick: Matrizen vs Arrays vs Dataframes</a></li>
+<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen"><i class="fa fa-check"></i><b>2.9</b> Datenstrukturen untersuchen</a></li>
+<li class="chapter" data-level="2.10" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.10</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
+<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
+<li class="chapter" data-level="2.12" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
+<li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.1</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.2</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.3</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.4</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.5</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.1</b> Was sind Funktionen?</a></li>
+<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.2</b> Funktionen definieren</a></li>
+<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.3</b> Funktionen aufrufen</a></li>
+<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.4</b> Funktionen verstehen</a></li>
+<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.5</b> Wozu werden Funktionen verwendet?</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.6</b> Schleifen ersetzen mithilfe von Funktionen</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.6.1</b> Die Apply-Funktionen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.7</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
+<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.8</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
+<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.9</b> Was sind Pakete?</a></li>
+<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.10</b> Pakete installieren</a></li>
+<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.11</b> Pakete laden</a></li>
+<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.12</b> Wozu werden Pakete verwendet?</a></li>
+<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.13</b> Welche Pakete gibt es denn alles?</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
+<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
+<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.3</b> Überblick: Textanalyse mit Quanteda</a></li>
+<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.4</b> Textdateien einlesen</a></li>
+<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.5</b> Quanteda corpus-Objekte</a></li>
+<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda tokens-Objekte</a></li>
+<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda DFM-Objekte</a></li>
+<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.8</b> Daten schreiben</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#was-sind-reguläre-ausdrücke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
+<li class="chapter" data-level="6.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#reguläre-ausdrücke-in-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
+<li class="chapter" data-level="6.2.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
+<li class="chapter" data-level="6.3.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
+<li class="chapter" data-level="6.3.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-für-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
+<li class="chapter" data-level="" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#weiterführende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
+<li class="chapter" data-level="7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
+<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
+<li class="chapter" data-level="7.4" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
+<li class="chapter" data-level="7.5" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
+<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
+<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
+<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
+<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-preprocessing"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und Preprocessing</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#token-häufigkeitsanalyse"><i class="fa fa-check"></i><b>8.3</b> Token-Häufigkeitsanalyse</a></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.5</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.6</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.7</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keyness-analyse"><i class="fa fa-check"></i><b>8.8</b> Keyness-Analyse</a></li>
+<li class="chapter" data-level="8.9" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#tf-idf"><i class="fa fa-check"></i><b>8.9</b> TF-IDF</a></li>
+<li class="chapter" data-level="8.10" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#exkurs-lexikalische-vielfalt"><i class="fa fa-check"></i><b>8.10</b> Exkurs: Lexikalische Vielfalt</a></li>
+<li class="chapter" data-level="8.11" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#recap-und-ausblick"><i class="fa fa-check"></i><b>8.11</b> Recap und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
+<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
+<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
+<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
+<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
+<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
+<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>10</b> Named Entity Recognition</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.1</b> Korpus einlesen</a></li>
+<li class="chapter" data-level="10.2" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.2</b> Beispiel mit SpaCy / Spacyr</a></li>
+<li class="chapter" data-level="10.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit Flair / FlaiR</a></li>
+<li class="chapter" data-level="10.4" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.4</b> Vergleich und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>11</b> Exkurs: XML, TEI und XPath</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>11.1</b> Was ist XML? Was ist TEI?</a></li>
+<li class="chapter" data-level="11.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>11.2</b> Aufbau von XML-TEI Dokumenten</a></li>
+<li class="chapter" data-level="11.3" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wohlgeformtheit-und-validität"><i class="fa fa-check"></i><b>11.3</b> Wohlgeformtheit und Validität</a></li>
+<li class="chapter" data-level="11.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>11.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
+<li class="chapter" data-level="11.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>11.5</b> Was ist XPath?</a></li>
+<li class="chapter" data-level="11.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>11.6</b> Basics XPath Syntax</a></li>
+<li class="chapter" data-level="" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#weiterführende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>12</b> Arbeit mit XML-TEI-Dokumenten</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>12.1</b> Beispiel Dramenanalyse</a></li>
+<li class="chapter" data-level="12.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>12.2</b> Beispiel Geomapping</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>12.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
+<li class="chapter" data-level="12.2.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-über-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>12.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
+<li class="chapter" data-level="12.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>12.2.3</b> Koordinaten auf Karte abbilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in R: Programmieren für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="textanalyse-ii-preprocessing" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Textanalyse II: Preprocessing<a href="textanalyse-ii-preprocessing.html#textanalyse-ii-preprocessing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Im Kapitel “Textanalyse I” haben wir bereits die grundlegenden Quanteda-Objekte kennengelernt: korpus-Objekte, tokens-Objekte und DFM-Objekte. Bei der Erstellung des tokens-Objekts wurden die Texte tokenisiert, also in einzelne Tokens zerlegt. Vor und/oder nach der Tokenisierung erfolgen häufig noch weitere Operationen zur Bereinigung und Vorbereitung der Texte, die wir im folgenden kennenlernen werden. Solche Operationen zur Vorbereitung und Bereinigung von Texten zur Analyse werden allgemein <strong>Preprocessing</strong> genannt. Dazu gehören z.B. die Entfernung von Satzzeichen und von bestimmten Wörtern, die sehr häufig vorkommen (sogenannte “Stoppwörter”), die Umwandlung aller Tokens in Kleinbuchstaben, die sogenannte “Lemmatisierung” der Texte oder die manuelle Bereinigung einzelner Tokens mithilfe von speziellen Ausdrücken, die sich “Reguläre Ausdrücke” (oder engl. “Regular Expressions”) nennen. Im Folgenden schauen wir uns diese und einige weitere Preprocessing-Schritte am Beispiel unseres Korpus deutschsprachiger belletristischer Texte an.</p>
+<p>Welche Preprocessing-Schritte im Einzelnen durchgeführt werden, hängt vom Kontext, von der Qualität der Texte und von der Forschungsfrage ab. Für manche Forschungsfragen kann es z.B. interessant sein, manche Stoppwörter beizubehalten oder zusätzliche Wörter zu entfernen. In anderen Fällen soll dagegen vielleicht mit den Grundformen der Wörter (Lemma) gearbeitet werden; die Texte müssen also “lemmatisiert” werden.</p>
+<div id="tokenisieren-und-segmentieren" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Tokenisieren und segmentieren<a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon kennengelernt. Wir schauen uns als Beispiel wieder den Beispielsatz aus dem letzten Übungsblatt an, mit ein paar Zusätzen:</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="textanalyse-ii-preprocessing.html#cb509-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb509-2"><a href="textanalyse-ii-preprocessing.html#cb509-2" tabindex="-1"></a></span>
+<span id="cb509-3"><a href="textanalyse-ii-preprocessing.html#cb509-3" tabindex="-1"></a>beispiel_1 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme&quot;</span></span>
+<span id="cb509-4"><a href="textanalyse-ii-preprocessing.html#cb509-4" tabindex="-1"></a></span>
+<span id="cb509-5"><a href="textanalyse-ii-preprocessing.html#cb509-5" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1)</span>
+<span id="cb509-6"><a href="textanalyse-ii-preprocessing.html#cb509-6" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
+##  [5] &quot;Mr&quot;             &quot;.&quot;              &quot;Robert&quot;         &quot;De&quot;            
+##  [9] &quot;Niro&quot;           &quot;und&quot;            &quot;das&quot;            &quot;ist&quot;           
+## [13] &quot;meine&quot;          &quot;Telefonnummer&quot;  &quot;:&quot;              &quot;0164-452954322&quot;
+## [17] &quot;.&quot;              &quot;Meine&quot;          &quot;E-Mail-Adresse&quot; &quot;ist&quot;           
+## [21] &quot;niro@gmail.com&quot; &quot;und&quot;            &quot;ich&quot;            &quot;bin&quot;           
+## [25] &quot;geboren&quot;        &quot;am&quot;             &quot;02-04-1965&quot;     &quot;.&quot;             
+## [29] &quot;#callme&quot;</code></pre>
+<p>In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird?</p>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="textanalyse-ii-preprocessing.html#cb511-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
+<span id="cb511-2"><a href="textanalyse-ii-preprocessing.html#cb511-2" tabindex="-1"></a></span>
+<span id="cb511-3"><a href="textanalyse-ii-preprocessing.html#cb511-3" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2)</span>
+<span id="cb511-4"><a href="textanalyse-ii-preprocessing.html#cb511-4" tabindex="-1"></a></span>
+<span id="cb511-5"><a href="textanalyse-ii-preprocessing.html#cb511-5" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
+##  [5] &quot;Mr&quot;             &quot;.&quot;              &quot;Robert&quot;         &quot;De&quot;            
+##  [9] &quot;Niro&quot;           &quot;und&quot;            &quot;das&quot;            &quot;ist&quot;           
+## [13] &quot;meine&quot;          &quot;Telefonnummer&quot;  &quot;:&quot;              &quot;0164&quot;          
+## [17] &quot;/&quot;              &quot;452954322&quot;      &quot;.&quot;              &quot;Meine&quot;         
+## [21] &quot;E-Mail-Adresse&quot; &quot;ist&quot;            &quot;niro@gmail.com&quot; &quot;und&quot;           
+## [25] &quot;ich&quot;            &quot;bin&quot;            &quot;geboren&quot;        &quot;am&quot;            
+## [29] &quot;02&quot;             &quot;/&quot;              &quot;04&quot;             &quot;/&quot;             
+## [33] &quot;1965&quot;           &quot;.&quot;              &quot;#callme&quot;</code></pre>
+<p>Dann werden die Telefonnummer und das Geburtsdatum nicht mehr als Sinneinheiten erkannt. In diesem Fall gibt es zwei Möglichkeiten: Entweder die Tokenisierungsregeln werden angepasst, oder die Tokens, die falsch erkannt werden, werden vor dem Tokenisieren so bearbeitet, dass sie nach den bestehenden Tokenisierungsregeln als Sinneinheit erkannt werden. Die manuelle Anpassung der Tokenisierungsregeln ist recht komplex und würde den Rahmen etwas sprengen; ihr könnt allerdings bei Interesse <a href="https://quanteda.io/reference/tokenize_custom.html">hier</a> nachlesen, wie das geht. Wir schauen uns stattdessen an, wie die Tokens so bearbeitet werden können, dass sie richtig erkannt werden. In unserem Beispiel geht das ganz einfach mit der R-Basisfunktion <code>gsub()</code>:</p>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="textanalyse-ii-preprocessing.html#cb513-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;/&quot;</span>, <span class="st">&quot;-&quot;</span>, beispiel_2)</span>
+<span id="cb513-2"><a href="textanalyse-ii-preprocessing.html#cb513-2" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2) </span>
+<span id="cb513-3"><a href="textanalyse-ii-preprocessing.html#cb513-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
+##  [5] &quot;Mr&quot;             &quot;.&quot;              &quot;Robert&quot;         &quot;De&quot;            
+##  [9] &quot;Niro&quot;           &quot;und&quot;            &quot;das&quot;            &quot;ist&quot;           
+## [13] &quot;meine&quot;          &quot;Telefonnummer&quot;  &quot;:&quot;              &quot;0164-452954322&quot;
+## [17] &quot;.&quot;              &quot;Meine&quot;          &quot;E-Mail-Adresse&quot; &quot;ist&quot;           
+## [21] &quot;niro@gmail.com&quot; &quot;und&quot;            &quot;ich&quot;            &quot;bin&quot;           
+## [25] &quot;geboren&quot;        &quot;am&quot;             &quot;02-04-1965&quot;     &quot;.&quot;             
+## [29] &quot;#callme&quot;</code></pre>
+<p>Wenn dagegen aus irgendeinem Grund die Telefonnummer und das Geburtsdatum nicht als Sinneinheit behandelt werden sollen, sondern die Zeichen jeweils eigene Tokens bilden sollen, kann dagegen einfach beim Aufruf der <code>tokens()</code>-Funktion das zusätzliche Argument <code>split_hyphens</code> übergeben werden:</p>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="textanalyse-ii-preprocessing.html#cb515-1" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">split_tags =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">TRUE</span> )</span>
+<span id="cb515-2"><a href="textanalyse-ii-preprocessing.html#cb515-2" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
+##  [5] &quot;Mr&quot;             &quot;.&quot;              &quot;Robert&quot;         &quot;De&quot;            
+##  [9] &quot;Niro&quot;           &quot;und&quot;            &quot;das&quot;            &quot;ist&quot;           
+## [13] &quot;meine&quot;          &quot;Telefonnummer&quot;  &quot;:&quot;              &quot;0164&quot;          
+## [17] &quot;-&quot;              &quot;452954322&quot;      &quot;.&quot;              &quot;Meine&quot;         
+## [21] &quot;E&quot;              &quot;-&quot;              &quot;Mail&quot;           &quot;-&quot;             
+## [25] &quot;Adresse&quot;        &quot;ist&quot;            &quot;niro@gmail.com&quot; &quot;und&quot;           
+## [29] &quot;ich&quot;            &quot;bin&quot;            &quot;geboren&quot;        &quot;am&quot;            
+## [33] &quot;02&quot;             &quot;-&quot;              &quot;04&quot;             &quot;-&quot;             
+## [37] &quot;1965&quot;           &quot;.&quot;              &quot;#&quot;              &quot;callme&quot;</code></pre>
+<p>Zeichenketten können nicht nur wie bisher in Wörter und andere Äußerungen zerlegt werden. Manchmal ist es sinnvoll, Texte in kleinere oder größere Einheiten zu zerlegen, also z.B. in einzelne Zeichen oder einzelne Sätze. Wenn Texte in größere Segmente zerlegt werden, nennt man diese Operation <strong>Segmentieren</strong> (oder engl. “chunking”). Dazu kann ebenfalls die Funktion <code>tokens()</code> verwendet werden, mit dem zusätzlichen Argument <code>what = "character"</code> bzw. <code>what = "sentence"</code>:</p>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="textanalyse-ii-preprocessing.html#cb517-1" tabindex="-1"></a><span class="co"># Segmentieren auf Satzebene</span></span>
+<span id="cb517-2"><a href="textanalyse-ii-preprocessing.html#cb517-2" tabindex="-1"></a>beispiel_segments <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;sentence&quot;</span>)</span>
+<span id="cb517-3"><a href="textanalyse-ii-preprocessing.html#cb517-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_segments, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+## [1] &quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.&quot;
+## [2] &quot;Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme&quot;</code></pre>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="textanalyse-ii-preprocessing.html#cb519-1" tabindex="-1"></a><span class="co"># Tokenisieren auf Zeichenebene</span></span>
+<span id="cb519-2"><a href="textanalyse-ii-preprocessing.html#cb519-2" tabindex="-1"></a>beispiel_chars <span class="ot">&lt;-</span>  <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;character&quot;</span>)</span>
+<span id="cb519-3"><a href="textanalyse-ii-preprocessing.html#cb519-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_chars, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##   [1] &quot;H&quot; &quot;a&quot; &quot;l&quot; &quot;l&quot; &quot;o&quot; &quot;m&quot; &quot;e&quot; &quot;i&quot; &quot;n&quot; &quot;N&quot; &quot;a&quot; &quot;m&quot; &quot;e&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot; &quot;M&quot; &quot;r&quot;
+##  [19] &quot;.&quot; &quot;R&quot; &quot;o&quot; &quot;b&quot; &quot;e&quot; &quot;r&quot; &quot;t&quot; &quot;D&quot; &quot;e&quot; &quot;N&quot; &quot;i&quot; &quot;r&quot; &quot;o&quot; &quot;u&quot; &quot;n&quot; &quot;d&quot; &quot;d&quot; &quot;a&quot;
+##  [37] &quot;s&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot; &quot;m&quot; &quot;e&quot; &quot;i&quot; &quot;n&quot; &quot;e&quot; &quot;T&quot; &quot;e&quot; &quot;l&quot; &quot;e&quot; &quot;f&quot; &quot;o&quot; &quot;n&quot; &quot;n&quot; &quot;u&quot;
+##  [55] &quot;m&quot; &quot;m&quot; &quot;e&quot; &quot;r&quot; &quot;:&quot; &quot;0&quot; &quot;1&quot; &quot;6&quot; &quot;4&quot; &quot;-&quot; &quot;4&quot; &quot;5&quot; &quot;2&quot; &quot;9&quot; &quot;5&quot; &quot;4&quot; &quot;3&quot; &quot;2&quot;
+##  [73] &quot;2&quot; &quot;.&quot; &quot;M&quot; &quot;e&quot; &quot;i&quot; &quot;n&quot; &quot;e&quot; &quot;E&quot; &quot;-&quot; &quot;M&quot; &quot;a&quot; &quot;i&quot; &quot;l&quot; &quot;-&quot; &quot;A&quot; &quot;d&quot; &quot;r&quot; &quot;e&quot;
+##  [91] &quot;s&quot; &quot;s&quot; &quot;e&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot; &quot;n&quot; &quot;i&quot; &quot;r&quot; &quot;o&quot; &quot;@&quot; &quot;g&quot; &quot;m&quot; &quot;a&quot; &quot;i&quot; &quot;l&quot; &quot;.&quot; &quot;c&quot;
+## [109] &quot;o&quot; &quot;m&quot; &quot;u&quot; &quot;n&quot; &quot;d&quot; &quot;i&quot; &quot;c&quot; &quot;h&quot; &quot;b&quot; &quot;i&quot; &quot;n&quot; &quot;g&quot; &quot;e&quot; &quot;b&quot; &quot;o&quot; &quot;r&quot; &quot;e&quot; &quot;n&quot;
+## [127] &quot;a&quot; &quot;m&quot; &quot;0&quot; &quot;2&quot; &quot;-&quot; &quot;0&quot; &quot;4&quot; &quot;-&quot; &quot;1&quot; &quot;9&quot; &quot;6&quot; &quot;5&quot; &quot;.&quot; &quot;#&quot; &quot;c&quot; &quot;a&quot; &quot;l&quot; &quot;l&quot;
+## [145] &quot;m&quot; &quot;e&quot;</code></pre>
+<p>Da Tokenisieren eine komplexe Operation ist, dauert es je nach Anzahl und Länge der Texte lange, bis der Computer ein komplettes Korpus tokenisiert hat. Wenn die <code>tokens()</code>-Funktion mit dem zusätzlichen Argument <code>verbose = TRUE</code> aufgerufen wird, werden beim Ausführen der Funktion Updates zu jedem Bearbeitungsschritt auf der Konsole ausgegeben:</p>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="textanalyse-ii-preprocessing.html#cb521-1" tabindex="-1"></a><span class="fu">tokens</span>(beispiel_1, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;  &quot;mein&quot;   &quot;Name&quot;   &quot;ist&quot;    &quot;Mr&quot;     &quot;.&quot;      &quot;Robert&quot; &quot;De&quot;    
+##  [9] &quot;Niro&quot;   &quot;und&quot;    &quot;das&quot;    &quot;ist&quot;   
+## [ ... and 17 more ]</code></pre>
+</div>
+<div id="reguläre-ausdrücke-im-preprocessing" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Reguläre Ausdrücke im Preprocessing<a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass bei der Tokenisierung manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit <code>-</code>), aber andere nicht (z.B. Telefonnummern mit <code>/</code>, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion <code>gsub()</code> alle Schrägstriche gegen Trennstriche ausgetauscht. Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. “regular expressions”) verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel “Exkurs: Reguläre Ausdrücke”. In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.</p>
+<p>Um Zeichenketten nach Mustern zu durchsuchen, nutzen wir in R spezielle Funktionen, die die Suche mithilfe von regulären Ausdrücken ermöglichen:</p>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="textanalyse-ii-preprocessing.html#cb523-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="st">&quot;In den alten Zeiten [1], wo das Wünschen noch geholfen hat, lebte ein König [2], dessen Töchter waren alle schön, aber die jüngste Tochter [3] war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien.&quot;</span></span>
+<span id="cb523-2"><a href="textanalyse-ii-preprocessing.html#cb523-2" tabindex="-1"></a></span>
+<span id="cb523-3"><a href="textanalyse-ii-preprocessing.html#cb523-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Tochter&quot;</span>, froschkoenig)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="textanalyse-ii-preprocessing.html#cb525-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;T(o|ö)chter&quot;</span>, froschkoenig)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="textanalyse-ii-preprocessing.html#cb527-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;T(o|ö)chter&quot;</span>, froschkoenig)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1]  89 132
+## attr(,&quot;match.length&quot;)
+## [1] 7 7</code></pre>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="textanalyse-ii-preprocessing.html#cb529-1" tabindex="-1"></a><span class="fu">regmatches</span>(froschkoenig, <span class="fu">gregexpr</span>(<span class="st">&quot;T(o|ö)chter&quot;</span>, froschkoenig))</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Töchter&quot; &quot;Tochter&quot;</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Was machen die verschiedenen Funktionen?</li>
+</ul>
+</div>
+<p>Der Beispieltext <code>froschkoenig</code> enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen.</p>
+<p>Die bereits bekannte Funktion <code>gsub()</code> kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (<code>+</code>) Zahl zwischen 0 und 9 (<code>[0-9]</code>) innerhalb von eckigen Klammern (<code>\\[</code> oder <code>\\]</code>) sucht und durch einen leeren String (<code>""</code>) austauscht:</p>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="textanalyse-ii-preprocessing.html#cb531-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; </span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]&quot;</span>, <span class="st">&quot;&quot;</span>, froschkoenig)</span>
+<span id="cb531-2"><a href="textanalyse-ii-preprocessing.html#cb531-2" tabindex="-1"></a>froschkoenig</span></code></pre></div>
+<pre><code>## [1] &quot;In den alten Zeiten, wo das Wünschen noch geholfen hat, lebte ein König, dessen Töchter waren alle schön, aber die jüngste Tochter war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien.&quot;</code></pre>
+<p>Die eckige Klammer steht in einem Regex-Ausdruck für Zeichenklassen (s. “Exkurs: Reguläre Ausdrücke”). Die doppelten \\ werden verwendet, damit die eckige Klammer nicht als Regex-Symbol erkannt wird, sondern als ganz normales Satzzeichen.</p>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was passiert, wenn man die \\ weglässt?</li>
+<li>Was passiert, wenn man das Leerzeichen am Anfang des regulären Ausdrucks <code>" \\[[1-9]+\\]"</code> weglässt?</li>
+</ul>
+</div>
+<p>Da die Ausgabe von Ergebnissen durch Kombination der R-base-Funktionen <code>regmatches()</code> und <code>gregexpr()</code> etwas kompliziert ist (s.o.), gibt es das Paket <code>stringr</code>, welches Funktionen für die Suche und Bearbeitung von Zeichenketten mithilfe von regulären Ausdrücken bereitstellt (mehr dazu unter “Exkurs: Reguläre Ausdrücke”).</p>
+</div>
+<div id="satzzeichen-zahlen-und-sonderzeichen-entfernen" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Satzzeichen, Zahlen und Sonderzeichen entfernen<a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Für viele Analysemethoden spielen nur Wörter im eigentlichen Sinne eine Rolle. Satzzeichen, Zahlen und Sonderzeichen werden deswegen häufig beim Preprocessing entfernt. Dieser Vorbereitungsschritt ist so verbreitet, dass die Entwickler:innen des Pakets quanteda Parameter für die <code>tokens()</code>-Funktion definiert haben, die steuern, ob bei der Tokenisierung diese Zeichen direkt entfernt werden sollen oder nicht.</p>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="textanalyse-ii-preprocessing.html#cb533-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb533-2"><a href="textanalyse-ii-preprocessing.html#cb533-2" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;In&quot;       &quot;den&quot;      &quot;alten&quot;    &quot;Zeiten&quot;   &quot;wo&quot;       &quot;das&quot;     
+##  [7] &quot;Wünschen&quot; &quot;noch&quot;     &quot;geholfen&quot; &quot;hat&quot;      &quot;lebte&quot;    &quot;ein&quot;     
+## [ ... and 32 more ]</code></pre>
+</div>
+<div id="stoppwörter-entfernen" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Stoppwörter entfernen<a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wenn Texte zur Analyse als “Bag of Words” repräsentiert werden sollen, dann spielt die Reihenfolge der einzelnen Worte keine Rolle und Funktionswörter wie Artikel, Konjunktionen, Präpositionen u.ä. sind außerhalb des Satzzusammenhangs für diese Analysemethoden häufig nicht von Interesse. Zugleich kommen diese Wörter aber deutlich häufiger vor als “bedeutungstragende” Wörter. Solche Wörter werden deswegen häufig beim Preprocessing entfernt. Dabei werden sogenannte Stoppwortlisten verwendet: Alle Tokens, die in der Liste vorkommen, werden nach dem Tokenisieren entfernt. Die Funktionen zum Tokenisieren und zum Entfernen der Stoppwörter kann in Quanteda mithilfe des Pipe-Operators verkettet werden:</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="textanalyse-ii-preprocessing.html#cb535-1" tabindex="-1"></a><span class="co"># Funktion tokens_remove() zum entfernen der Stoppwörter verwenden </span></span>
+<span id="cb535-2"><a href="textanalyse-ii-preprocessing.html#cb535-2" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig) <span class="sc">%&gt;%</span></span>
+<span id="cb535-3"><a href="textanalyse-ii-preprocessing.html#cb535-3" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">&quot;de&quot;</span>))</span>
+<span id="cb535-4"><a href="textanalyse-ii-preprocessing.html#cb535-4" tabindex="-1"></a><span class="fu">print</span>(froschkoenig_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;alten&quot;       &quot;Zeiten&quot;      &quot;,&quot;           &quot;Wünschen&quot;    &quot;geholfen&quot;   
+##  [6] &quot;,&quot;           &quot;lebte&quot;       &quot;König&quot;       &quot;,&quot;           &quot;Töchter&quot;    
+## [11] &quot;schön&quot;       &quot;,&quot;           &quot;jüngste&quot;     &quot;Tochter&quot;     &quot;schön&quot;      
+## [16] &quot;,&quot;           &quot;Sonne&quot;       &quot;selber&quot;      &quot;,&quot;           &quot;vieles&quot;     
+## [21] &quot;gesehen&quot;     &quot;,&quot;           &quot;verwunderte&quot; &quot;oft&quot;         &quot;Gesicht&quot;    
+## [26] &quot;schien&quot;      &quot;.&quot;</code></pre>
+<p>Beim Aufruf der Funktion <code>tokens_remove()</code> wird mithilfe des Arguments <code>pattern = stopwords("de")</code> eine Stoppwortliste mit deutschen Stoppwörtern übergeben. Welche Wörter die <code>tokens_remove()</code>-Funktion entfernt, hängt also davon ab, welche Stoppwörter auf dieser Liste stehen. Der <a href="https://quanteda.io/reference/stopwords.html">Funktionsdokumentation</a> können wir entnehmen, dass die Stoppwortliste einem weiteren R Paket entnommen wird. Die Liste deutscher Stoppwörter ist demzufolge:
+<a href="http://snowball.tartarus.org/algorithms/german/stop.txt" class="uri">http://snowball.tartarus.org/algorithms/german/stop.txt</a></p>
+<p>Eine Stoppwortliste ist also im Grunde nur eine Plaintextdatei, in der in jeder Zeile ein Wort steht. Anstelle der vordefinierten Stoppwortliste kann auch eine eigene Stoppwortliste eingelesen werden. Dazu kann entweder eine Liste komplett selbst erstellt werden, oder es wird zunächst eine Stoppwortliste heruntergeladen und dann angepasst, zum Beispiel:</p>
+<ul>
+<li><a href="https://github.com/solariz/german_stopwords" class="uri">https://github.com/solariz/german_stopwords</a></li>
+<li><a href="https://github.com/stopwords-iso/stopwords-de/blob/master/stopwords-de.txt" class="uri">https://github.com/stopwords-iso/stopwords-de/blob/master/stopwords-de.txt</a></li>
+</ul>
+<p>Die Liste kann angepasst werden, indem einfach Wörter in der Plaintext-Datei hinzugefügt oder entfernt werden.</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="textanalyse-ii-preprocessing.html#cb537-1" tabindex="-1"></a><span class="co"># Eigene Stoppwortliste einlesen</span></span>
+<span id="cb537-2"><a href="textanalyse-ii-preprocessing.html#cb537-2" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;stopwords.txt&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>) </span>
+<span id="cb537-3"><a href="textanalyse-ii-preprocessing.html#cb537-3" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;stopwords.txt&quot;</span>) </span>
+<span id="cb537-4"><a href="textanalyse-ii-preprocessing.html#cb537-4" tabindex="-1"></a>custom_stopwords</span>
+<span id="cb537-5"><a href="textanalyse-ii-preprocessing.html#cb537-5" tabindex="-1"></a><span class="co"># Importierte Stoppwortliste and die tokens_remove()-Funktion übergeben</span></span>
+<span id="cb537-6"><a href="textanalyse-ii-preprocessing.html#cb537-6" tabindex="-1"></a>ger_new <span class="ot">&lt;-</span> ger_toks <span class="sc">%&gt;%</span> </span>
+<span id="cb537-7"><a href="textanalyse-ii-preprocessing.html#cb537-7" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> custom_stopwords, <span class="at">padding=</span>F)</span>
+<span id="cb537-8"><a href="textanalyse-ii-preprocessing.html#cb537-8" tabindex="-1"></a>ger_new</span></code></pre></div>
+</div>
+<div id="groß--und-kleinschreibung-anpassen" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Groß- und Kleinschreibung anpassen<a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir haben bereits gesehen, dass dasselbe Wort groß- und kleingeschrieben als zwei verschiedene Types gezählt wird. Dieses Verhalten ist bei der Analyse oft nicht gewünscht, da die unterschiedliche Schreibweise meist nicht als inhaltlich bedeutungstragend angesehen wird. Beim Preprocessing kann deswegen zusätzlich der gesamte Text in Kleinbuchstaben umgewandelt werden:</p>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="textanalyse-ii-preprocessing.html#cb538-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> froschkoenig <span class="sc">%&gt;%</span> </span>
+<span id="cb538-2"><a href="textanalyse-ii-preprocessing.html#cb538-2" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb538-3"><a href="textanalyse-ii-preprocessing.html#cb538-3" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>()</span>
+<span id="cb538-4"><a href="textanalyse-ii-preprocessing.html#cb538-4" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;in&quot;       &quot;den&quot;      &quot;alten&quot;    &quot;zeiten&quot;   &quot;wo&quot;       &quot;das&quot;     
+##  [7] &quot;wünschen&quot; &quot;noch&quot;     &quot;geholfen&quot; &quot;hat&quot;      &quot;lebte&quot;    &quot;ein&quot;     
+## [ ... and 32 more ]</code></pre>
+</div>
+<div id="stemming" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Stemming<a href="textanalyse-ii-preprocessing.html#stemming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>“a simpler version of lemmatization in which we mainly just strip suffixes from the end of the word”</p>
+</blockquote>
+<p>Quelle: <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf">Jurafsky/Martin 2023, S. 2</a></p>
+<p>Beim Stemming werden Wörter auf ihren Wortstamm reduziert, indem Wortendungen nach bestimmten Regeln entfernt werden. Das Stemming schauen wir uns nur äußerst kurz an, denn in der Praxis lohnt es sich selten, dieses Verfahren anzuwenden. Zum Stemming kann die quanteda-Funktion <code>tokens_wordstem()</code> verwendet werden:</p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="textanalyse-ii-preprocessing.html#cb540-1" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
+<span id="cb540-2"><a href="textanalyse-ii-preprocessing.html#cb540-2" tabindex="-1"></a></span>
+<span id="cb540-3"><a href="textanalyse-ii-preprocessing.html#cb540-3" tabindex="-1"></a>beispiel_stem <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">tokens_wordstem</span>(<span class="fu">tokens</span>(beispiel), <span class="at">language=</span><span class="st">&quot;ger&quot;</span>)</span>
+<span id="cb540-4"><a href="textanalyse-ii-preprocessing.html#cb540-4" tabindex="-1"></a><span class="fu">print</span>(beispiel_stem, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Tokens consisting of 1 document.
+## text1 :
+##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Nam&quot;            &quot;ist&quot;           
+##  [5] &quot;Mr&quot;             &quot;.&quot;              &quot;Robert&quot;         &quot;De&quot;            
+##  [9] &quot;Niro&quot;           &quot;und&quot;            &quot;das&quot;            &quot;ist&quot;           
+## [13] &quot;mein&quot;           &quot;Telefonnumm&quot;    &quot;:&quot;              &quot;0164-452954322&quot;
+## [17] &quot;.&quot;              &quot;Mein&quot;           &quot;E-Mail-Adress&quot;  &quot;ist&quot;           
+## [21] &quot;niro@gmail.com&quot; &quot;und&quot;            &quot;ich&quot;            &quot;bin&quot;           
+## [25] &quot;gebor&quot;          &quot;am&quot;             &quot;02&quot;             &quot;/&quot;             
+## [29] &quot;04&quot;             &quot;/&quot;              &quot;1965&quot;           &quot;.&quot;             
+## [33] &quot;#callm&quot;</code></pre>
+</div>
+<div id="lemmatisierung" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Lemmatisierung<a href="textanalyse-ii-preprocessing.html#lemmatisierung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>“the task of determining that two words have the same root, despite their surface differences”</p>
+</blockquote>
+<p>Quelle: <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf">Jurafsky/Martin 2023, S. 2</a></p>
+<p>Lemmatisierung (engl. lemmatization) hat im Grunde dasselbe Ziel wie Stemming: Bei der Lemmatisierung werden Wörter auf ihre Grundform reduziert. Dazu werden jedoch komplexere Algorithmen angewandt, sodass auch Grundformen erkannt werden, die durch die einfache Entfernung von Endungen nicht richtig gebildet würden.</p>
+<div id="methode-1-lemmatisierung-mit-lexikon" class="section level3 hasAnchor" number="7.7.1">
+<h3><span class="header-section-number">7.7.1</span> Methode 1: Lemmatisierung mit Lexikon<a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Diese Methode kann zur Lemmatisierung englischsprachiger Texte angewandt werden.</p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="textanalyse-ii-preprocessing.html#cb542-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lexicon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="textanalyse-ii-preprocessing.html#cb543-1" tabindex="-1"></a><span class="fu">library</span>(lexicon)</span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="textanalyse-ii-preprocessing.html#cb544-1" tabindex="-1"></a>beispiel_engl <span class="ot">&lt;-</span> <span class="st">&quot;Hello I went swimming yesterday&quot;</span></span>
+<span id="cb544-2"><a href="textanalyse-ii-preprocessing.html#cb544-2" tabindex="-1"></a></span>
+<span id="cb544-3"><a href="textanalyse-ii-preprocessing.html#cb544-3" tabindex="-1"></a>beispiel_lemmatized_2 <span class="ot">&lt;-</span> <span class="fu">tokens_replace</span>(<span class="fu">tokens</span>(beispiel_engl), <span class="at">pattern =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>token, <span class="at">replacement =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>lemma)</span>
+<span id="cb544-4"><a href="textanalyse-ii-preprocessing.html#cb544-4" tabindex="-1"></a><span class="fu">print</span>(beispiel_lemmatized_2, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span>
+<span id="cb544-5"><a href="textanalyse-ii-preprocessing.html#cb544-5" tabindex="-1"></a></span>
+<span id="cb544-6"><a href="textanalyse-ii-preprocessing.html#cb544-6" tabindex="-1"></a><span class="co"># dasselbe geht auch mit der Funktion dfm_replace()</span></span></code></pre></div>
+</div>
+<div id="methode-2-lemmatisierung-mit-udpipe" class="section level3 hasAnchor" number="7.7.2">
+<h3><span class="header-section-number">7.7.2</span> Methode 2: Lemmatisierung mit UDPipe<a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Diese Methode kann zur Lemmatisierung auch von deutsch- und anderssprachigen Texten angewandt werden. Das Verfahren ist ausführlich dokumentiert in den UDPipe-Dokumentationsseiten: <a href="https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html" class="uri">https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html</a>. In der Sitzung zum fortgeschrittenen Preprocessing werden wir noch einmal darauf zurückkommen und erarbeiten uns in diesem Abschnitt nur ein grundlegendes Verständnis der Lemmatisierung mithilfe des R Pakets <code>udpipe</code>. Zunächst muss das Paket <code>udpipe</code> installiert und geladen werden. Anschließend muss ein sogenanntes Sprachmodell heruntergeladen und eingelesen werden. Die <code>udpipe</code>-Sprachmodelle sind statistische Modelle, die auf einem bestimmten Datensatz “trainiert” wurden, also zum Beispiel auf einem Korpus deutschsprachiger Texte, die mit linguistischen Annotationen versehen wurden. Auf der Grundlage der Trainingsdaten können danach Bestandteile wie Wörter und Satzzeichen auch in unbekannten Texten erkannt werden: Zum Beispiel Wortarten, Grundformen und syntaktische Beziehungen. Genau das passiert, wenn wir einer udpipe-Funktion wie <code>udpipe()</code> oder <code>udpipe_annotate()</code> auf unser Beispielkorpus anwenden.</p>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="textanalyse-ii-preprocessing.html#cb545-1" tabindex="-1"></a><span class="co"># 0. Vorbereitung</span></span>
+<span id="cb545-2"><a href="textanalyse-ii-preprocessing.html#cb545-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;udpipe&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="textanalyse-ii-preprocessing.html#cb546-1" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
+<span id="cb546-2"><a href="textanalyse-ii-preprocessing.html#cb546-2" tabindex="-1"></a></span>
+<span id="cb546-3"><a href="textanalyse-ii-preprocessing.html#cb546-3" tabindex="-1"></a><span class="co"># Deutsches Sprachmodell herunterladen und laden</span></span>
+<span id="cb546-4"><a href="textanalyse-ii-preprocessing.html#cb546-4" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_download_model</span>(<span class="st">&quot;german&quot;</span>)</span>
+<span id="cb546-5"><a href="textanalyse-ii-preprocessing.html#cb546-5" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_load_model</span>(ud_model)</span></code></pre></div>
+<p>Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werden können, also mit denen die Wörter in einem Text auf ihre Grundformen reduziert werden können. Die Funktion <code>udpipe()</code> gibt direkt einen Dataframe zurück (s.u.). Die Funktion <code>udpipe_annotate()</code> gibt eine Liste zurück, die in einem folgenden Schritt in einen Dataframe umgewandelt werden kann. Beide Funktionen lemmatisieren den Text nicht nur, sondern tokenisieren ihn auch und führen weitere Verarbeitungsschritte durch, auf die wir an dieser Stelle nicht weiter eingehen. Die Funktion <code>udpipe_annotate()</code> erlaubt es, mithilfe verschiedener Funktionsparameter festzulegen, welche dieser Verarbeitungsschritte beim Aufruf der Funktion durchgeführt werden sollen.</p>
+<p>Wir betrachten zunächst wieder unseren Beispielsatz:</p>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="textanalyse-ii-preprocessing.html#cb547-1" tabindex="-1"></a><span class="co"># 1. Mit Beispieltext</span></span>
+<span id="cb547-2"><a href="textanalyse-ii-preprocessing.html#cb547-2" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="textanalyse-ii-preprocessing.html#cb548-1" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">udpipe</span>(beispiel, ud_model)</span>
+<span id="cb548-2"><a href="textanalyse-ii-preprocessing.html#cb548-2" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen </span></span></code></pre></div>
+<pre><code>##   doc_id paragraph_id sentence_id
+## 1   doc1            1           1
+## 2   doc1            1           1
+## 3   doc1            1           1
+## 4   doc1            1           1
+## 5   doc1            1           1
+## 6   doc1            1           1
+##                                                                                  sentence
+## 1 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 2 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 3 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 4 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 5 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 6 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+##   start end term_id token_id  token  lemma  upos   xpos
+## 1     1   5       1        1  Hallo  hallo     X    ITJ
+## 2     7  10       2        2   mein   mein   DET PPOSAT
+## 3    12  15       3        3   Name   Name  NOUN     NN
+## 4    17  19       4        4    ist   sein   AUX  VVFIN
+## 5    21  23       5        5    Mr.    Mr. PROPN     NE
+## 6    25  30       6        6 Robert Robert PROPN     NE
+##                                                   feats head_token_id  dep_rel
+## 1                                                  &lt;NA&gt;             3      dep
+## 2             Case=Nom|Gender=Masc|Number=Sing|Poss=Yes             3 det:poss
+## 3                      Case=Nom|Gender=Masc|Number=Sing             5    nsubj
+## 4 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin             5      cop
+## 5                      Case=Nom|Gender=Masc|Number=Sing             0     root
+## 6                      Case=Nom|Gender=Masc|Number=Sing             5     nmod
+##   deps misc
+## 1 &lt;NA&gt; &lt;NA&gt;
+## 2 &lt;NA&gt; &lt;NA&gt;
+## 3 &lt;NA&gt; &lt;NA&gt;
+## 4 &lt;NA&gt; &lt;NA&gt;
+## 5 &lt;NA&gt; &lt;NA&gt;
+## 6 &lt;NA&gt; &lt;NA&gt;</code></pre>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="textanalyse-ii-preprocessing.html#cb550-1" tabindex="-1"></a>beispiel_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, beispiel, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb550-2"><a href="textanalyse-ii-preprocessing.html#cb550-2" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(beispiel_annotated)</span>
+<span id="cb550-3"><a href="textanalyse-ii-preprocessing.html#cb550-3" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen</span></span></code></pre></div>
+<pre><code>##   doc_id paragraph_id sentence_id
+## 1   doc1            1           1
+## 2   doc1            1           1
+## 3   doc1            1           1
+## 4   doc1            1           1
+## 5   doc1            1           1
+## 6   doc1            1           1
+##                                                                                  sentence
+## 1 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 2 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 3 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 4 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 5 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+## 6 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.
+##   token_id  token  lemma  upos   xpos
+## 1        1  Hallo  hallo     X    ITJ
+## 2        2   mein   mein   DET PPOSAT
+## 3        3   Name   Name  NOUN     NN
+## 4        4    ist   sein   AUX  VVFIN
+## 5        5    Mr.    Mr. PROPN     NE
+## 6        6 Robert Robert PROPN     NE
+##                                                   feats head_token_id dep_rel
+## 1                                                  &lt;NA&gt;          &lt;NA&gt;    &lt;NA&gt;
+## 2             Case=Nom|Gender=Masc|Number=Sing|Poss=Yes          &lt;NA&gt;    &lt;NA&gt;
+## 3                      Case=Nom|Gender=Masc|Number=Sing          &lt;NA&gt;    &lt;NA&gt;
+## 4 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin          &lt;NA&gt;    &lt;NA&gt;
+## 5                      Case=Nom|Gender=Masc|Number=Sing          &lt;NA&gt;    &lt;NA&gt;
+## 6                      Case=Nom|Gender=Masc|Number=Sing          &lt;NA&gt;    &lt;NA&gt;
+##   deps misc
+## 1 &lt;NA&gt; &lt;NA&gt;
+## 2 &lt;NA&gt; &lt;NA&gt;
+## 3 &lt;NA&gt; &lt;NA&gt;
+## 4 &lt;NA&gt; &lt;NA&gt;
+## 5 &lt;NA&gt; &lt;NA&gt;
+## 6 &lt;NA&gt; &lt;NA&gt;</code></pre>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="textanalyse-ii-preprocessing.html#cb552-1" tabindex="-1"></a><span class="co">#View(beispiel_df)</span></span>
+<span id="cb552-2"><a href="textanalyse-ii-preprocessing.html#cb552-2" tabindex="-1"></a><span class="co"># ?udpipe_annotate</span></span></code></pre></div>
+<p>Beachtet Zeile 29: Hier wurde das Token “am” in zwei Lemmata aufgeteilt: “an” und “der”. Dieses Verhalten müssen wir bei der Weiterverarbeitung der Lemmata beachten!</p>
+<p>Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten:</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="textanalyse-ii-preprocessing.html#cb553-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb553-2"><a href="textanalyse-ii-preprocessing.html#cb553-2" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb553-3"><a href="textanalyse-ii-preprocessing.html#cb553-3" tabindex="-1"></a>ger_texte <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;korpus/*.txt&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, <span class="at">dvsep =</span> <span class="st">&quot;_&quot;</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">&quot;Autor_in&quot;</span>, <span class="st">&quot;Titel&quot;</span>, <span class="st">&quot;Jahr&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb553-4"><a href="textanalyse-ii-preprocessing.html#cb553-4" tabindex="-1"></a>ger_korpus <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">corpus</span>(ger_texte)</span>
+<span id="cb553-5"><a href="textanalyse-ii-preprocessing.html#cb553-5" tabindex="-1"></a>kafka_korpus <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(ger_korpus, Autor <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span></code></pre></div>
+<p>Anschließend können wir die Funktion <code>udpipe_annotate()</code> auf unser Kafka-Korpus anwenden:</p>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="textanalyse-ii-preprocessing.html#cb554-1" tabindex="-1"></a><span class="co"># 3. Mit Korpus zur Weiterverarbeitung in quanteda</span></span>
+<span id="cb554-2"><a href="textanalyse-ii-preprocessing.html#cb554-2" tabindex="-1"></a>kafka_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, kafka_korpus, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>, <span class="at">doc_id =</span> kafka_korpus<span class="sc">$</span>Titel)</span>
+<span id="cb554-3"><a href="textanalyse-ii-preprocessing.html#cb554-3" tabindex="-1"></a>kafka_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(kafka_annotated)</span></code></pre></div>
+<p>Da bei der Lemmatisierung Tokens wie “am” in zwei Lemmata aufgeteilt werden (“an” und “dem”), gibt es im Dataframe <code>kafka_df</code> einige Zeilen, in denen in der Spalte <code>lemma</code> der Wert <code>NA</code> steht. Außerdem fällt auf, dass es einige Zeilen gibt, in denen zwei mögliche Lemmata angegeben werden, die mit einem <code>|</code> getrennt sind, zum Beispiel fallen|fällen. Diese Zeilen sollten zunächst bereinigt werden und es muss entschieden werden, welche Variante die richtige ist.</p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="textanalyse-ii-preprocessing.html#cb555-1" tabindex="-1"></a><span class="co"># Zeilen mit NA-Werten entfernen</span></span>
+<span id="cb555-2"><a href="textanalyse-ii-preprocessing.html#cb555-2" tabindex="-1"></a>kafka_cleaned_df <span class="ot">&lt;-</span> kafka_df[<span class="sc">!</span><span class="fu">is.na</span>(kafka_df), ]</span>
+<span id="cb555-3"><a href="textanalyse-ii-preprocessing.html#cb555-3" tabindex="-1"></a><span class="co"># Überall die zweite Variante in der Spalte `lemma` löschen: Hier muss jedoch ggf. im Einzelfall entschieden werden, welche Variante richtig ist!</span></span>
+<span id="cb555-4"><a href="textanalyse-ii-preprocessing.html#cb555-4" tabindex="-1"></a>kafka_cleaned_df<span class="sc">$</span>lemma <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">|.*&quot;</span>, <span class="st">&quot;&quot;</span>, kafka_cleaned_df<span class="sc">$</span>lemma)</span></code></pre></div>
+<p>Wir haben jetzt einen bereinigten Dataframe <code>kafka_cleaned_df</code>, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte <code>lemma</code> vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Dazu kombinieren wir die Lemmata aus jedem der Texte in einer einzigen Zeile, sodass wir einen Dataframe mit einer Zeile je Text erhalten, der in einer neuen Spalte “text” einen character Vektor mit den Lemmata aus diesem Text enthält. Ein Dataframe mit dieser Struktur ist kompatibel mit der Quanteda-<code>corpus()</code>-Funktion. Um unseren Dataframe zu bearbeiten, verwenden wir die Funktionen <code>group_by()</code> und <code>summarise()</code> aus dem Paket <code>dplyr</code>:</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="textanalyse-ii-preprocessing.html#cb556-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb556-2"><a href="textanalyse-ii-preprocessing.html#cb556-2" tabindex="-1"></a><span class="co"># Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmas zu einem zusammenhängenden Text zusammengefügt werden </span></span>
+<span id="cb556-3"><a href="textanalyse-ii-preprocessing.html#cb556-3" tabindex="-1"></a>kafka_grouped <span class="ot">&lt;-</span> kafka_cleaned_df <span class="sc">%&gt;%</span> </span>
+<span id="cb556-4"><a href="textanalyse-ii-preprocessing.html#cb556-4" tabindex="-1"></a>  <span class="fu">group_by</span>(doc_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb556-5"><a href="textanalyse-ii-preprocessing.html#cb556-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(lemma, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)) </span>
+<span id="cb556-6"><a href="textanalyse-ii-preprocessing.html#cb556-6" tabindex="-1"></a><span class="fu">View</span>(kafka_grouped)</span>
+<span id="cb556-7"><a href="textanalyse-ii-preprocessing.html#cb556-7" tabindex="-1"></a><span class="co"># In quanteda-Korpus Objekt umwandeln</span></span>
+<span id="cb556-8"><a href="textanalyse-ii-preprocessing.html#cb556-8" tabindex="-1"></a>kafka_lemmatized <span class="ot">&lt;-</span> <span class="fu">corpus</span>(kafka_grouped)</span>
+<span id="cb556-9"><a href="textanalyse-ii-preprocessing.html#cb556-9" tabindex="-1"></a><span class="co"># Korpus-Objekt mit den lemmatisierten Texten speichern</span></span>
+<span id="cb556-10"><a href="textanalyse-ii-preprocessing.html#cb556-10" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_lemmatized, <span class="at">file=</span><span class="st">&quot;kafka_lemmatized.rds&quot;</span>)</span></code></pre></div>
+<p>Mit dem Objekt <code>kafka_lemmatized</code> könnte jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wir werden uns diesen Code und auch den Dataframe <code>kafka_df</code> in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen.</p>
+</div>
+</div>
+<div id="quellen-5" class="section level2 unnumbered hasAnchor">
+<h2>Quellen<a href="textanalyse-ii-preprocessing.html#quellen-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Jurafsky, Daniel und Martin, James H. (2023), <em>Speech and Language Processing. Chapter 2: Regular Expressions, Text Normalization, Edit Distance</em>, <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf" class="uri">https://web.stanford.edu/~jurafsky/slp3/2.pdf</a>.</li>
+<li>ForText (2016), Glossar: Preprocessing, <a href="https://fortext.net/ueber-fortext/glossar/preprocessing" class="uri">https://fortext.net/ueber-fortext/glossar/preprocessing</a>.</li>
+<li>Jünger, J. and Gärtner, C. (2023), <em>Computational Methods für die Sozial- und Geisteswissenschaften. Kapitel 9: Textanalyse,</em> S. 361-364, <a href="https://doi.org/10.1007/978-3-658-37747-2_9" class="uri">https://doi.org/10.1007/978-3-658-37747-2_9</a>.</li>
+<li>Hase, Valerie (2021), <em>Text as Data Methods in R - Applications for Automated Analyses of News Content. Tutorial 11: Preprocessing</em>, <a href="https://bookdown.org/valerie_hase/TextasData_HS2021/tutorial-11-preprocessing.html" class="uri">https://bookdown.org/valerie_hase/TextasData_HS2021/tutorial-11-preprocessing.html</a>.</li>
+<li>Welbers, Kasper (2020), Text Analysis in R. Part 1: Preprocessing, <a href="https://www.youtube.com/watch?v=O6CGXnxPHok" class="uri">https://www.youtube.com/watch?v=O6CGXnxPHok</a>.</li>
+<li>Wijffels, Jan (2023), <em>UDPipe Natural Language Processing - Text Annotation</em>, <a href="https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html" class="uri">https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html</a>.</li>
+<li>Van Atteweldt, Wouter et al. (2022). <em>Computational Analysis of Communication. Ch. 10.3.4: Linguistic Preprocessing</em>, <a href="https://cssbook.net/content/chapter10.html#sec-nlp" class="uri">https://cssbook.net/content/chapter10.html#sec-nlp</a>.</li>
+<li>Desagulier, Guillaume (2017). <em>Corpus Linguistics and Statistics with R. Ch. 4.4. Regular Expressions</em>, pp. 73-82, <a href="https://doi.org/10.1007/978-3-319-64572-8" class="uri">https://doi.org/10.1007/978-3-319-64572-8</a>.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exkurs-reguläre-ausdrücke.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textanalyse-iii-wortfrequenzanalysen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

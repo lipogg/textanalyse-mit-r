@@ -1,0 +1,8 @@
+r-basics-i-datentypen-variablen-und-operatoren
+grundlegende-begriffe
+style-guide
+kommentare
+datentypen
+operatoren
+variablen
+operatorpräzedenz

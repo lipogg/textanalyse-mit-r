@@ -1,0 +1,48 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+/* Custom info box; see https://github.com/rstudio4edu/rstudio4edu-book/blob/40af722e126d917687a4631f81353c0005aa6ba4/assets/style.css */
+
+
+div.task {
+  border: 4px #aed6d963;
+  border-style: solid;
+  padding: 1em;
+  margin: 1em 0;
+  padding-left: 100px;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  min-height: 120px;
+  color: #2ea8b3;
+  background-color: #fcfcfc;
+  background-image: url("../images/rubikscube.svg");
+}
+
+div.tip {
+  border: 4px #aed6d963;
+  border-style: solid;
+  padding: 1em;
+  margin: 1em 0;
+  padding-left: 100px;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  min-height: 120px;
+  color: #2ea8b3;
+  background-color: #fcfcfc;
+  background-image: url("../images/lightbulb.svg");
+}

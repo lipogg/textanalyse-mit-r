@@ -1,0 +1,65 @@
+# Seminarplan {-} 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+library(knitr)
+
+no <- c("1","2","3, 4","5","6","7","8","9","10","11","12","13","14")
+datum <- c("16.4.","23.4.","30.4., 7.5.","14.5.","21.5.",
+           "28.5.","4.6.","11.6.",
+           "18.6.","25.6.","2.7.",
+           "9.7.","16.7.")
+thema <- c("Einstieg", 
+           "R Basics I: Datentypen, Variablen und Operatoren", 
+           "R Basics II: Datenstrukturen", 
+           "R Basics III: Kontrollstrukturen", 
+           "R Basics IV: Funktionen und Pakete", 
+           "R Basics Wiederholung",
+           "Textanalyse mit Quanteda I: Korpus, Tokens, Daten und Dateien", 
+           "Textanalyse mit Quanteda II: Preprocessing und Reguläre Ausdrücke", 
+           "Textanalyse mit Quanteda III: Wortfrequenzanalysen", 
+           "Part of Speech Tagging und Dependency Parsing mit UDPipe",  
+           "Textanalyse Wiederholung", 
+           "Named Entity Recognition", 
+           "Arbeit mit XML-TEI Dateien: XML, TEI und XPath")
+df <- data.frame(no, datum, thema)
+names(df)[1] <- "Sitzung Nr."
+names(df)[2] <- "Datum"
+names(df)[3] <- "Thema"
+kable(df)
+
+
+```
+
+\
+Die Sitzung am 11.6. findet ONLINE statt.
+\
+Der Seminarplan ist erst einmal vorläufig. Je nach Lerntempo und Interessen werden wir das ein oder andere Thema mehr oder weniger vertiefen. Die Inhalte bauen grundsätzlich aufeinander auf: Zunächst beschäftigen wir uns mit sogenannten "unstrukturierten" Daten und später mit "(semi-)strukturierten" Daten. Nach einem Einstieg in R steigen wir in die Arbeit mit "rohem Text", also Plaintext-Dateien, als Beispiel für unstrukturierte Daten ein und erarbeiten Grundkonzepte der quantitativen Textanalyse. Dabei werden wir auch diskutieren, was "geisteswissenschaftliche Daten" eigentlich sind. Danach behandeln wir zwei verschiedene Verfahren, wie Texte in R im Hinblick auf bestimmte Textinformationen strukturiert (man sagt auch "annotiert") werden können: das automatisierte Erkennen von Wortarten (Part of Speech Tagging) und von "Entitäten" wie Personennamen und Ortsnamen (Named Entity Recognition).
+Zuletzt widmen wir uns XML-TEI-Dateien als Beispiel für die Analyse (semi-)strukturierter Textdaten. XML-TEI ist ein in den Digital Humanities weit verbreiteter Standard zur digitalen Darstellung von Texten, beispielsweise literarsichen Werken, archivalischen Quellen oder wissenschaftlichen Arbeiten. Mithilfe von XML-TEI können Textinformationen, zum Beispiel Metadaten und bestimmte Bestandteile des Textes, strukturiert dargestellt werden. Die vorgestellten Verfahren können wir natürlich in der kurzen Zeit nur sehr, sehr oberflächlich behandeln. Das Ziel ist es, dass ihr am Ende des Semesters Grundkonzepte des Programmierens in R und grundlegende Anwendungen der Programmiersprache im Bereich der Textanalyse kennt und euch die Fertigkeiten erarbeitet habt, fortgeschrittenere Themen eigenständig weiter zu vertiefen. 
+
+Da wir viele Themen besprechen werden, erfordert dieses Seminar ein hohes Maß an Motivation und Durchhaltevermögen. Jede Woche wird es Übungsaufgaben geben. Die Bearbeitung der Übungsaufgaben ist verpflichtend und insbesondere zur Vor- und Nachbereitung der Einstiegssitzungen essentiell, denn sonst wird es sehr schwierig sein, später mitzukommen. Die Lernkurve ist demenstprechend steil: 
+
+\
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(plotly)
+library(dplyr)
+
+sitzung <- c(1:14)
+inhalte <- c(2, 12, 22, 31, 37, 46, 52, 55, 58, 60, 62, 65, 67, 69)
+
+fig <- plot_ly(df, 
+               x = ~sitzung, 
+               y = ~inhalte, 
+               type = "scatter", 
+               mode="lines") %>%
+  layout(title = "Lernkurve für dieses Seminar",
+         xaxis = list(title = "Sitzung Nr."),
+         yaxis = list(title = "Erlernte Inhalte"))
+
+fig
+
+
+```

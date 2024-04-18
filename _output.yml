@@ -1,0 +1,12 @@
+bookdown::gitbook:
+  css: assets/style.css
+  split_by: chapter
+  config:
+    toc_depth: 4
+    toc:
+      collapse: section
+      before: |
+        <li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    sharing: null

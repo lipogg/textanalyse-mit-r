@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 R Basics I: Datentypen, Variablen und Operatoren | Textanalyse mit R für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 R Basics I: Datentypen, Variablen und Operatoren | Textanalyse mit R für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/change-this" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 R Basics I: Datentypen, Variablen und Operatoren | Textanalyse mit R für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="orientierung-im-rstudio.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#was-ist-r-überhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatorpräzedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Textanalyse mit R für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-basics-i-datentypen-variablen-und-operatoren" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> R Basics I: Datentypen, Variablen und Operatoren<a href="r-basics-i-datentypen-variablen-und-operatoren.html#r-basics-i-datentypen-variablen-und-operatoren" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="grundlegende-begriffe" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Grundlegende Begriffe<a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="6%" />
+<col width="91%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Begriff</th>
+<th align="left">Englische Entsprechung</th>
+<th align="left">Definition (im R-Kontext)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Objekt</td>
+<td align="left">Object</td>
+<td align="left">Alles: Funktionen, Variablen, Datenstrukturen,..</td>
+</tr>
+<tr class="even">
+<td align="left">Anweisung</td>
+<td align="left">Statement</td>
+<td align="left">Syntaktische Einheit, die Aktionen beschreibt, die von einem Computer ausgeführt werden können. Wenn die Anweisung ausgeführt wird, wird die Aktion veranlasst und der Zustand des Speichers wird geändert.</td>
+</tr>
+<tr class="odd">
+<td align="left">Zuweisung</td>
+<td align="left">Assignment</td>
+<td align="left">Besondere Art von Anweisung, bei der einer Variable ein bestimmter Wert zugeordnet wird. Dabei wird ein Name festgelegt, der fortan für diesen Wert und für den Speicherplatz, in dem der Wert gespeichert wird, steht.</td>
+</tr>
+<tr class="even">
+<td align="left">Ausdruck</td>
+<td align="left">Expression</td>
+<td align="left">Syntaktische Einheit, die zu einem Wert evaluiert (ausgewertet) werden kann. Ein Ausdruck ist immer Teil einer Anweisung. Ausdrücke stehen auf der rechten Seite von Zuweisungen: x &lt;- Ausdruck. Ausdrücke haben immer einen Typ, der dem Datentyp des Werts entspricht, zu dem sie evaluiert werden, z.B. 3 == 4 ist ein Ausdruck vom Typ boolean.</td>
+</tr>
+<tr class="odd">
+<td align="left">Aussage</td>
+<td align="left">Proposition</td>
+<td align="left">In der Aussagenlogik ein sprachliches Gebilde, von dem es sinnvoll ist zu sagen, dass es entweder wahr oder falsch ist (Aristoteles). Im R-Kontext ein Ausdruck, der entweder zu TRUE oder zu FALSE evaluiert werden kann.</td>
+</tr>
+<tr class="even">
+<td align="left">Auswerten</td>
+<td align="left">Evaluate</td>
+<td align="left">Der Computer liest einen Ausdruck und wertet diesen aus: Er berechnet etwas und liefert einen Wert.</td>
+</tr>
+<tr class="odd">
+<td align="left">Ausführen</td>
+<td align="left">Execute</td>
+<td align="left">Der Computer liest eine Anweisung und führt diese aus: Er macht etwas und ändert den Zustand des Speichers.</td>
+</tr>
+<tr class="even">
+<td align="left">Ausgeben</td>
+<td align="left">Output/Print</td>
+<td align="left">Das Ergebnis einer Berechnung oder die Ausgabe einer Funktion wird auf der Konsole angezeigt.</td>
+</tr>
+</tbody>
+</table>
+<p>Die Definitionen sind angelehnt an Venables et al. (2023), Wickham (2019) und Reussner (2016).</p>
+</div>
+<div id="style-guide" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Style Guide<a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Anders als beispielsweise in Python gibt es in R keinen allgemein anerkannten “Coding Style”, also keine über die Syntaxregeln hinausgehenden Vorgaben, wie Code am besten geschrieben wird. Es gibt allerdings einige breit akzeptierte Empfehlungen. Wir richten uns in diesem Kurs nach dem “Tidyverse Style Guide” von Hadley Wickham: <a href="https://style.tidyverse.org/" class="uri">https://style.tidyverse.org/</a>.</p>
+</div>
+<div id="kommentare" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Kommentare<a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um den eigenen Code für andere verständlicher zu gestalten und sich selbst an seinen Code zu erinnern, sollte man diesen immer gut kommentieren.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb1-1" tabindex="-1"></a><span class="co"># Das ist ein Kommentar </span></span></code></pre></div>
+</div>
+<div id="datentypen" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Datentypen<a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>In R ist ganz grundsätzlich alles ein Objekt</strong>: ein Wort, eine Zahl, ein Vektor, eine Liste, eine Variable und sogar Funktionen (lernen wir alles später), all das wird in R als Objekt behandelt.</p>
+<p>Wie auch in der realen Welt haben verschiedene Objekte verschiedene Eigenschaften und sie können für verschiedene Zwecke und auf verschiedene Weise verwendet werden. Das hängt davon ab, um was für eine Art Objekt es sich handelt: ein Objekt vom Typ “Lampe” kann man anschalten und ausschalten, mathematische Objekte wie Zahlen kann man addieren und dividieren, ein Auto kann fahren, parken oder tanken. In R haben wir es natürlich nicht mit realen Objekten zu tun, sondern eigentlich mit “Datenobjekten”.</p>
+<p>In R gibt es <strong>vier grundlegende Datentypen</strong> (und zwei, die wir jetzt erstmal ignorieren):</p>
+<ul>
+<li><strong>character</strong> (auch “character string”): Zeichenkette</li>
+<li><strong>integer</strong>: Ganzzahl</li>
+<li><strong>numeric</strong> (auch “double”): Gleitkommazahl</li>
+<li><strong>logical</strong> (auch “boolean”): Boolescher Wahrheitswert</li>
+</ul>
+<p>Character ist kurz für “character string”; in anderen Programmiersprachen heißt dieser Datentyp daher oft “string”. In R wird jeder Ausdruck, der von Anführungszeichen umgeben ist, als Zeichenkette (character) interpretiert. Double ist, ähnlich wie bei character und string, der allgemeine Name für den Datentyp numeric. Der Default-Datentyp für Zahlen ist in R numeric. Um eine Zahl als Integer zu definieren, kann ein großes <code>L</code> an die Zahl angefügt werden. Logical steht für die beiden Werte <code>TRUE</code> und <code>FALSE</code>. Sie werden auch als Boolesche Wahrheitswerte bezeichnet (-&gt; kennt ihr ggf. aus der Aussagenlogik). Für “Datentyp” kann man auch kurz “Typ” sagen.</p>
+<p>Ein paar Beispiele:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-1" tabindex="-1"></a><span class="dv">2</span></span>
+<span id="cb2-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-2" tabindex="-1"></a><span class="dv">2</span><span class="dt">L</span></span>
+<span id="cb2-3"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-3" tabindex="-1"></a><span class="dv">345682389</span> </span>
+<span id="cb2-4"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-4" tabindex="-1"></a><span class="fl">4.6</span> <span class="co"># Punkt statt Komma!</span></span>
+<span id="cb2-5"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-5" tabindex="-1"></a><span class="st">&quot;4.6&quot;</span></span>
+<span id="cb2-6"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-6" tabindex="-1"></a><span class="cn">TRUE</span></span>
+<span id="cb2-7"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-7" tabindex="-1"></a><span class="cn">FALSE</span></span>
+<span id="cb2-8"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-8" tabindex="-1"></a><span class="st">&quot;Hello World&quot;</span> <span class="co"># Anführungszeichen!</span></span>
+<span id="cb2-9"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-9" tabindex="-1"></a><span class="st">&quot;Ein ganz langer Satz! Mit mehreren Satzzeichen. Und einer Zahl: 34.&quot;</span></span>
+<span id="cb2-10"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb2-10" tabindex="-1"></a><span class="st">&quot; &quot;</span></span></code></pre></div>
+<p>Den Datentyp eines Objekts könnt ihr z.B. mit der Funktion <code>typeof()</code> abfragen. Wenn ihr jede Zeile nacheinander in ein R Skript kopiert und ausführt, wird auf der Konsole (Fenster Console im RStudio) der Wert ausgegeben, der hier von <code>#&gt;</code> angeführt wird.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb3-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb5-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="dv">2</span><span class="dt">L</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb7-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fl">4.6</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb9-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="st">&quot;Hello World&quot;</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb11-1" tabindex="-1"></a><span class="fu">typeof</span>(<span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;logical&quot;</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Ist ” ” auch ein Zeichen?</li>
+<li>Haben 4.6 und “4.6” denselben Datentyp?</li>
+<li>Welchen Datentyp hat der Satz “Ein ganz langer Satz! …”?</li>
+</ul>
+</div>
+<div class="tip">
+<p>Style Tip:</p>
+<p>Für Zeichenketten können einfache oder doppelte Anführungszeichen verwendet werden. Wickham empfiehlt, für Zeichenketten doppelte Anführungszeichen zu verwenden, außer, wenn diese selbst Anführungszeichen beinhalten, hier werden beide Anführungszeichen wie folgt kombiniert: ‘Text mit “Anführungszeichen”’.</p>
+</div>
+</div>
+<div id="operatoren" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Operatoren<a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese Objekte auf verschiedene Weise mithilfe von Operatoren manipuliert werden.</p>
+<ul>
+<li><strong>Arithmetische Operatoren</strong> sind aus der Schulmathematik bekannt.
+Es handelt sich dabei um Operatoren wie <code>-</code>, <code>+</code>, <code>*</code>, <code>/</code> sowie <code>%%</code> und <code>%/%</code>.
+Beachtet, dass der Divisionsoperator <code>/</code> nur für numerics definiert ist. Für die Division
+zweier integers wird ein spezieller Divisionsoperator, <code>%/%</code>, verwendet.
+<code>%%</code> ist der modulo Operator, damit kann bei einer Division der Rest berechnet werden.
+<code>^</code> oder <code>**</code> wird zum Exponieren verwendet.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb13-1" tabindex="-1"></a><span class="dv">5</span><span class="sc">+</span><span class="dv">4</span> </span></code></pre></div>
+<pre><code>#&gt; [1] 9</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb15-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">/</span><span class="dv">5</span></span></code></pre></div>
+<pre><code>#&gt; [1] 2</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb17-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">%%</span><span class="dv">5</span></span></code></pre></div>
+<pre><code>#&gt; [1] 0</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb19-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>#&gt; [1] 100</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb21-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">**</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>#&gt; [1] 100</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was passiert, wenn wir <code>"Hallo" + "Welt"</code> ausführen?</li>
+<li>Welche Datentypen in R erlauben arithmetische Operationen?</li>
+</ul>
+</div>
+<ul>
+<li><p><strong>Logische Operatoren</strong> ermöglichen es, Werte zu vergleichen und die Richtigkeit einer
+logischen Aussage zu überpüfen. Die <strong>Vergleichsoperatoren</strong> <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> sind allgemein bekannt. Außerdem sind folgende Operatoren wichtig:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>==</td>
+<td>genau gleich</td>
+</tr>
+<tr class="even">
+<td>!=</td>
+<td>ungleich</td>
+</tr>
+<tr class="odd">
+<td>!x</td>
+<td>nicht x</td>
+</tr>
+<tr class="even">
+<td>x ⎮ y</td>
+<td>x oder y</td>
+</tr>
+<tr class="odd">
+<td>x &amp; y</td>
+<td>x und y</td>
+</tr>
+<tr class="even">
+<td>x ⎮⎮ y</td>
+<td>x oder y in Kontrollstrukturen</td>
+</tr>
+<tr class="odd">
+<td>x &amp;&amp; y</td>
+<td>x und y Kontrollstrukturen</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<p>Beispiele:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb23-1" tabindex="-1"></a><span class="sc">-</span><span class="dv">5</span> <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">10</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb25-1" tabindex="-1"></a><span class="dv">5</span> <span class="sc">&gt;=</span> <span class="dv">5</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb27-1" tabindex="-1"></a><span class="dv">3</span> <span class="sc">!=</span> <span class="dv">5</span> </span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb29-1" tabindex="-1"></a><span class="st">&quot;Hallo&quot;</span> <span class="sc">!=</span> <span class="st">&quot;Hello&quot;</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb31-1" tabindex="-1"></a><span class="dv">3</span> <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="st">&quot;c&quot;</span> <span class="sc">==</span> <span class="st">&quot;c&quot;</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb33-1" tabindex="-1"></a><span class="dv">3</span> <span class="sc">==</span> <span class="dv">3</span> <span class="sc">|</span> <span class="st">&quot;c&quot;</span> <span class="sc">==</span> <span class="st">&quot;a&quot;</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb35-1" tabindex="-1"></a><span class="st">&quot;Eine Rose ist eine Pflanze&quot;</span> <span class="sc">==</span> <span class="st">&quot;Eine Rose ist keine Pflanze&quot;</span> </span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Warum wird der Ausdruck <code>3 == 3 &amp; "c" == "c"</code> zu <code>TRUE</code> evaluiert?</li>
+<li>Warum wird auch der Ausdruck <code>3 == 3 | "c" == "a"</code> zu <code>TRUE</code> evaluiert?</li>
+<li>Was passiert im letzten Beispiel?</li>
+</ul>
+</div>
+<p>Der Wahrheitswert, zu dem ein Ausdruck mit einem logischen Operator in R evaluiert wird, lässt sich aus einer sogenannten Wahrheitstabelle ablesen. Für zwei Ausdrücke A und B und die logischen Operatoren <code>&amp;</code> und <code>|</code> lassen sich die folgenden Kombinationen als Wahrheitstabelle darstellen:</p>
+<div style="display: flex; justify-content: center;">
+<p><img src="images/logisches_und.png" width="40%" style="margin-right: 20px;">
+<img src="images/logisches_oder.png" width="40%"></p>
+</div>
+<div class="task">
+<p>Verständnisfragen:</p>
+<p>A sei der Ausdruck <code>3 == 3 &amp; "c" == "c"</code> und B sei der Ausdruck <code>-5 &lt; -10</code>.</p>
+<ul>
+<li>Ist <code>A &amp; B</code> wahr oder falsch?</li>
+<li>Ist <code>A | B</code> wahr oder falsch?</li>
+</ul>
+</div>
+<p>In Kontrollstrukturen (lernen wir noch) werden anstelle von <code>&amp;</code> und <code>|</code> die beiden Operatoren <code>&amp;&amp;</code> und <code>||</code> verwendet. Das hat den Grund, dass die Objekte in einem Ausdruck mit <code>&amp;</code>und <code>|</code> bei “elementweise” ausgewertet werden. Bei der Auswertung von Ausdrücken mit <code>&amp;&amp;</code> und <code>||</code> wird dagegen nur das erste Element ausgewertet. Dieses Verhalten heißt deswegen auch “lazy evaluation”. Das Verhalten ist bei einfachen Ausdrücken nicht bemerkbar, aber es wird relevant, wenn die Operatoren auf Datenstrukturen anstelle von einzelnen Werten wie bisher angewendet werden. Für die beiden Operatoren <code>&amp;&amp;</code> und <code>||</code> sind die Wahrheitstabellen also nur dann zu den Wahrheitstabellen der Operatoren <code>&amp;</code> und <code>|</code> analog, wenn einzelne Werte verglichen werden. Darauf werden wir in der kommenden Stunde noch einmal zurückkommen, wenn wir Objekte kennengelernt haben, die aus mehreren Elementen bestehen.</p>
+<p>Im nächsten Abschnitt werden wir einen weiteren Operator kennenlernen, den
+sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=</code>. Daneben gibt es die <strong>Zugriffsoperatoren</strong> <code>[]</code>, <code>[[]]</code>, <code>[:]</code> und <code>$</code>, mit denen Operationen auf Datenstrukturen ausgeführt werden können. Diese Operatoren lernen wir in der nächsten Stunde kennen, wenn wir uns mit Datenstrukturen beschäftigen.</p>
+</div>
+<div id="variablen" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Variablen<a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Angenommen, wir wollen den Wert, der ausgegeben wird, wenn der Ausdruck <code>3 == 3 &amp; "c" == "c"</code> evaluiert wird, im Programmverlauf noch einmal verwenden. Dann wäre es unpraktisch, wenn wir jedes Mal den gesamten Ausdruck kopieren müssten. Wenn wir später die 3 durch eine 4 ersetzen, müssten wir dann alle Stellen finden, wo derselbe Ausdruck vorkommt, und überall die Änderung vornehmen. So entstehen schnell Fehler.</p>
+<p>Aus diesem Grund gibt es Variablen. Variablen ermöglichen, einen bestimmten Wert im Verlauf des Programms mehrmals zu verwenden, ohne ihn jedes Mal neu berechnen oder eingeben zu müssen. Werte können mithilfe der <strong>Zuweisungsoperatoren</strong> <code>&lt;-</code> und <code>=</code> einer Variable “zugewiesen” werden. <strong>Das heißt, dass ein Name festgelegt wird, der fortan für diesen Wert und für den Speicherplatz, in dem der Wert gespeichert wird, steht.</strong> Man kann alternativ auch sagen, dass ein Wert “an einen Namen gebunden” wird, oder andersherum, dass der Name einen bestimmten Wert “referenziert”. Eine Zuweisung folgt in R dem Schema <code>Name &lt;- Wert</code>.</p>
+<p>So kann mithilfe des Variablennamens auf den damit verknüpften Wert zugegriffen werden, selbst dann, wenn sich der Wert im Programmverlauf verändert hat. <strong>Variablen sind also sowas wie Platzhalter für Werte eines Datentyps.</strong></p>
+<p>Bei der Benennung von Variablen sollten bestimmte <strong>Regeln und die Konventionen</strong> aus unserem Style Guide eingehalten werden:</p>
+<ul>
+<li>Variablennamen dürfen kein Leerzeichen enthalten (Regel!).</li>
+<li>Variablennamen dürfen keine Sonderzeichen außer Punkte und Unterstriche enthalten (Regel!).</li>
+<li>Zwei Wörter oder ein Wort und eine Zahl können mit Unterstrich, Punkt, oder camelCase getrennt werden. Wickhams Empfehlung ist hier die Verwendung des Unterstrichs.</li>
+<li>Variablen dürfen nicht mit einer Zahl oder einem Unterstrich anfangen (Regel!).</li>
+<li>R ist “case sensitive”, das heißt: die Variable <code>baum</code> ist nicht dasselbe wie die Variable <code>Baum</code>!</li>
+<li>Mit dem Zuweisungsoperator <code>&lt;-</code> bzw. <code>=</code> kann ein Wert einem Namen zugewiesen werden. <code>&lt;-</code> und <code>=</code> sind gleichbedeutend; Wickham empfiehlt aber die Verwendung des Operators <code>&lt;-</code>.</li>
+</ul>
+<p>Beim Ausführen einer Zuweisung wird nichts auf dem Bildschirm (auf der Rstudio Konsole) ausgegeben. Nach der Zuweisung können Werte, die einer Variable zugeordnet sind, mithilfe der Funktion <code>print()</code> auf dem Bildschirm ausgegeben werden. Alternativ kann auch einfach der Variablennamen erneut eingegeben und ausgeführt werden.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-1" tabindex="-1"></a><span class="co"># Zuweisungen</span></span>
+<span id="cb37-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-2" tabindex="-1"></a>zahl <span class="ot">&lt;-</span> <span class="dv">454</span></span>
+<span id="cb37-3"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-3" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="st">&quot;Eine Rose ist eine Pflanze&quot;</span></span>
+<span id="cb37-4"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-4" tabindex="-1"></a>satz_2 <span class="ot">&lt;-</span> <span class="st">&quot;Eine zweite Rose ist auch eine Pflanze&quot;</span></span>
+<span id="cb37-5"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-5" tabindex="-1"></a>noch_ein_satz <span class="ot">&lt;-</span> <span class="st">&quot;Noch eine Rose&quot;</span></span>
+<span id="cb37-6"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb37-6" tabindex="-1"></a>Satz <span class="ot">&lt;-</span> <span class="st">&quot;Eine Rose ist keine Pflanze&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb38-1" tabindex="-1"></a><span class="co"># Variable Satz auf dem Bildschirm ausgeben </span></span>
+<span id="cb38-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb38-2" tabindex="-1"></a><span class="fu">print</span>(Satz)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Eine Rose ist keine Pflanze&quot;</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb40-1" tabindex="-1"></a><span class="co"># Variable satz auf dem Bildschirm ausgeben</span></span>
+<span id="cb40-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb40-2" tabindex="-1"></a><span class="fu">print</span>(satz)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Eine Rose ist eine Pflanze&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb42-1" tabindex="-1"></a><span class="co"># Variable satz ohne die print()-Funktion auf dem Bildschirm ausgeben</span></span>
+<span id="cb42-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb42-2" tabindex="-1"></a>satz</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Eine Rose ist eine Pflanze&quot;</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb44-1" tabindex="-1"></a><span class="co"># Der Variable satz einen neuen Wert zuweisen</span></span>
+<span id="cb44-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb44-2" tabindex="-1"></a>satz <span class="ot">&lt;-</span> <span class="st">&quot;Ein Apfel ist keine Pflanze&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb45-1" tabindex="-1"></a><span class="co"># Variable satz erneut ausgeben</span></span>
+<span id="cb45-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb45-2" tabindex="-1"></a><span class="fu">print</span>(satz)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Ein Apfel ist keine Pflanze&quot;</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb47-1" tabindex="-1"></a><span class="co"># hier werden die Variablen satz und Satz aus dem Beispiel oben verglichen</span></span>
+<span id="cb47-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb47-2" tabindex="-1"></a>satz <span class="sc">==</span> Satz </span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Welchen Datentyp hat die Variable <code>zahl</code>?</li>
+<li>Warum wird das erste Mal, dass die Anweisung <code>print(satz)</code> ausgeführt wird, ein anderer Wert ausgegeben, als beim zweiten Mal?</li>
+<li>Warum wird der Ausdruck <code>satz == Satz</code> zu <code>FALSE</code> evaluiert?</li>
+<li>Warum ist es nicht korrekt zu sagen, dass bei der Zuweisung ein Wert in einer Variable gespeichert wird?</li>
+<li>Wie könn die Ausdrücke <code>1 &gt; 2 &amp; 1 &lt; 4</code>, <code>1 &gt; 2 &amp;&amp; 1 &lt; 4</code> und <code>1 == 1 &amp;&amp; 1 &lt; 4</code> mithilfe von Variablen so umgeschrieben werden, dass sich die Zahl 1 nicht wiederholt?</li>
+<li>Was passiert, wenn <code>23 -&gt; zahl</code> ausgeführt wird?</li>
+</ul>
+</div>
+<p>Nicht nur einzelne Werte können Variablen zugewiesen werden, sondern auch ganze Ausdrücke. In der nächsten Stunde werden wir außerdem sehen, dass auch Datenstrukturen Variablen zugewiesen werden können.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb49-1" tabindex="-1"></a><span class="co"># Ausdrücke als Variablen  </span></span>
+<span id="cb49-2"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb49-2" tabindex="-1"></a>aussage_1 <span class="ot">&lt;-</span> <span class="st">&quot;c&quot;</span> <span class="sc">==</span> <span class="st">&quot;c&quot;</span></span>
+<span id="cb49-3"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb49-3" tabindex="-1"></a>aussage_2 <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">5</span></span>
+<span id="cb49-4"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb49-4" tabindex="-1"></a>aussage_1 <span class="sc">==</span> <span class="sc">!</span>aussage_2</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was passiert in diesem Beispiel?</li>
+<li>Welcher Wert wird den Variablen <code>aussage_1</code> und <code>aussage_2</code> zugewiesen?</li>
+</ul>
+</div>
+<div class="tip">
+<p>Gut zu wissen:</p>
+<p>Eine Zuweisung ist eine Art von Anweisung: Sie beschreibt eine bestimmte Aktion, die vom Computer ausgeführt wird und die den Zustand des Speichers ändert. Deswegen sagt man, dass <strong>Anweisungen ausgeführt</strong> werden, während <strong>Ausdrücke ausgewertet</strong> werden.</p>
+</div>
+</div>
+<div id="operatorpräzedenz" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Operatorpräzedenz<a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatorpräzedenz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir haben bereits einige Beispiele für Ausdrücke kennengelernt, die mehrere Operatoren beinhalten. Wie auch bei arithmetischen Operatoren gibt es bei allen anderen Operatoren eine festgelegte Reihenfolge, in der diese Operatoren ausgewertet werden, wenn sie im selben Ausdruck vorkommen und sich einen Operanden teilen. Für die bisher bekannten Operatoren gilt die folgende Rangfolge:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Rang</th>
+<th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>$</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>[], [[]]</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>^</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>[:]</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>*, /</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>+, -</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>&lt;, &gt;, &lt;=, &gt;=, ==, !=</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>!</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>&amp;, &amp;&amp;</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>⎮, ⎮⎮</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>&lt;-</td>
+</tr>
+</tbody>
+</table>
+<p>Wenn die Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden.</p>
+<p>Beispiele:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb51-1" tabindex="-1"></a><span class="dv">4</span><span class="sc">+</span><span class="dv">10</span> <span class="sc">&gt;</span> <span class="dv">3</span><span class="sc">+</span><span class="dv">5</span><span class="sc">*</span><span class="dv">2</span> </span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb53-1" tabindex="-1"></a><span class="dv">4</span><span class="sc">+</span><span class="dv">10</span> <span class="sc">&gt;</span> (<span class="dv">3</span><span class="sc">+</span><span class="dv">5</span>)<span class="sc">*</span><span class="dv">2</span> </span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb55-1" tabindex="-1"></a><span class="cn">FALSE</span> <span class="sc">&amp;</span> <span class="cn">TRUE</span> <span class="sc">==</span> <span class="cn">FALSE</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb57-1" tabindex="-1"></a>(<span class="cn">FALSE</span> <span class="sc">&amp;</span> <span class="cn">TRUE</span>) <span class="sc">==</span> <span class="cn">FALSE</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+</div>
+<div id="quellen" class="section level2 unnumbered hasAnchor">
+<h2>Quellen<a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Venables, W.N. and Smith, D.M. and the R Core Team (2023). An Introduction to R, <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf</a></li>
+<li>Wickham, Hadley. The Tidyverse Style Guide, <a href="https://style.tidyverse.org/">https://style.tidyverse.org/</a></li>
+<li>Wickham, Hadley (2019). Advanced R. Chapter 2: Names and Values, <a href="https://adv-r.hadley.nz/names-values.html">https://adv-r.hadley.nz/names-values.html</a></li>
+<li>Reussner, Ralf H. Mitschnitt zur Vorlesung “Programmieren” im WiSe 2015/2016. 02: Typen und Variablen, <a href="https://www.youtube.com/watch?v=POe41EL2EgU">https://www.youtube.com/watch?v=POe41EL2EgU</a></li>
+<li>R 4.3.0 Documentation. Operator Syntax and Precedence, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Syntax.html">https://stat.ethz.ch/R-manual/R-devel/library/base/html/Syntax.html</a></li>
+<li>Wickham, Hadley (2019). Advanced R. Chapter 4: Subsetting, <a href="https://adv-r.hadley.nz/subsetting.html">https://adv-r.hadley.nz/subsetting.html</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="orientierung-im-rstudio.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

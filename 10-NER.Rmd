@@ -1,0 +1,239 @@
+```{r setup, include=FALSE}
+options(width = 9999)
+```
+
+# Named Entity Recognition
+
+> "A **named entity** is, roughly speaking, anything that can be referred to with a proper name: a person, a location, an organization. The task of **named entity recognition (NER)** is to find spans of text that constitute proper names and tag the type of the entity. Four entity tags are most common: **PER** (person), **LOC** (location), **ORG** (organization), or **GPE** (geo-political entity). However, the term **named entity** is commonly extended to include things that aren’t entities per se, including dates, times, and other kinds of temporal expressions, and even numerical expressions like prices."
+([Jurafsky/Martin 2023, Ch.8, S.6](https://web.stanford.edu/~jurafsky/slp3/8.pdf))
+
+
+
+## Korpus einlesen 
+
+```{r}
+library(readtext)
+marx_test <- readtext(file="./data/marx_briefe/Marx_Engels_London_25-1-1868.txt")
+
+marx_briefe <- readtext(file="./data/marx_briefe/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Von", "An", "Ort", "Datum"), encoding = "UTF-8")
+
+```
+
+## Beispiel mit SpaCy / Spacyr
+
+Python Setup 
+
+```{r eval=FALSE}
+install.packages("spacyr")
+library("spacyr")
+
+spacy_install(version = "apple")
+```
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+library("spacyr")
+reticulate::use_python("./nlp-env/bin/python")
+reticulate::use_condaenv("nlp-env")
+
+```
+
+Sprachmodell herunterladen und initialisieren
+
+```{r eval=FALSE}
+spacy_download_langmodel("de_core_news_lg")
+```
+```{r warning=FALSE}
+spacy_initialize(model = "de_core_news_lg")
+```
+
+Jetzt können wir beginnen: 
+
+```{r}
+results <- spacy_parse(marx_test, lemma = FALSE, entity = TRUE)
+results_entities <- entity_extract(results)
+results_entities # View(results_entities)
+```
+
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/ner_spacy_results.png")
+```
+
+Quelle: https://megadigital.bbaw.de/briefe/detail.xql?id=M0000533.
+
+
+```{r}
+# Spalte doc_id des readtext-Dataframes ist per Default Dateiname; das ersetzen wir durch das Datum 
+marx_briefe$doc_id <- marx_briefe$Datum
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+results_briefe <- spacy_parse(marx_briefe, lemma = FALSE, entity = TRUE)
+
+briefe_entities <- entity_extract(results_briefe)
+briefe_entities
+
+briefe_pers <- briefe_entities[briefe_entities$entity_type == "PER",]
+briefe_pers
+```
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+
+marx_pers_plot <- ggplot(briefe_pers, aes(x = doc_id, y = entity)) +
+  geom_point() +
+  theme(axis.text.y = element_text(size=3), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
+  labs(x = "Brief", y = "Person")
+
+library(plotly)
+ggplotly(marx_pers_plot)
+
+```
+
+```{r eval=FALSE}
+spacy_finalize()
+
+```
+
+* Spacyr Dokumentationsseite: 
+* Spacyr Tutorial: https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html
+* Spacy Dokumentationsseiten: https://spacy.io/usage
+* Spacy Sprachmodelle: https://spacy.io/usage/models und https://spacy.io/models/de#de_core_news_lg
+
+## Beispiel mit Flair / FlaiR
+
+
+```{r eval=FALSE}
+install.packages("reticulate")
+```
+
+```{r eval=FALSE}
+reticulate::use_python("/Path/to/python") # >= 3.10!
+reticulate::py_config() # Einstellungen überprüfen 
+```
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("davidycliao/flaiR") # force=TRUE
+```
+
+
+```{r warning=FALSE, message=FALSE}
+library(flaiR)
+```
+
+```{r}
+tagger_ner <- load_tagger_ner("de-ner-large")
+results <- get_entities(text=marx_test$text, doc_ids=marx_test$doc_id, tagger_ner)
+results
+
+```
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/ner_flair_results.png")
+```
+
+Quelle: https://megadigital.bbaw.de/briefe/detail.xql?id=M0000533.
+
+
+```{r attr.output='style="max-height: 200px;"'}
+results_briefe <- get_entities(text=marx_briefe$text, doc_ids=marx_briefe$Datum, tagger_ner)
+results_briefe # View(results_briefe)
+
+results_pers <- results_briefe[results_briefe$tag == "PER",]
+results_pers
+```
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+
+marx_pers_plot <- ggplot(results_pers, aes(x = doc_id, y = entity)) +
+  geom_point() +
+  theme(axis.text.y = element_text(size=3), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
+  labs(x = "Brief", y = "Person")
+
+library(plotly)
+ggplotly(marx_pers_plot)
+```
+
+
+
+```{r echo=FALSE}
+
+spacy_finalize()
+
+```
+
+* FlaiR Dokumentationsseite: https://github.com/davidycliao/flaiR
+* Flair Dokumentationsseiten: https://flairnlp.github.io/docs/intro und  https://github.com/flairNLP/flair
+* Flair-Sprachmodelle: https://flairnlp.github.io/docs/tutorial-basics/tagging-entities#list-of-ner-models und  https://huggingface.co/flair/ner-german-large
+* ConLL 2003 Datensatz: https://huggingface.co/datasets/conll2003 und https://www.clips.uantwerpen.be/conll2003/ner/
+
+## Vergleich und Ausblick
+
+Neben Spacyr und FlaiR gibt es noch weitere Pakete, die es erlauben, Named Entity Recognition in R durchzuführen. Dazu zählt zum Beispiel das Paket nametagger, das von demselben Personenkreis entwickelt wurde, die auch UDPipe entwickelt haben, und verschiedene Pakete, die es erlauben, das an der Universität Stanford entwickelte NER-System CoreNLP zu verwenden (laut [Dokumentationsseite](https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran) wird CoreNLP von den R Paketen [CleanNLP](https://github.com/statsmaths/cleanNLP), [NLP](https://cran.r-project.org/web/packages/NLP/) und [CoreNLP](https://cran.r-project.org/web/packages/coreNLP/) unterstützt). Das Paket CleanNLP  erlaubt, verschiedene Natural Language Processing Pipelines aus R heraus zu verwenden und diese in einem "Tidy" Datenformat abzubilden (mehr dazu [hier](https://arxiv.org/pdf/1703.09570.pdf)).
+
+Nametagger unterstützt aktuell nur NER für englischsprachige Dokumente (siehe [diesen Beitrag](https://bookdown.org/morleyjamesweston/MCM4TM/named-entity-recognition.html#basic-machine-learning-approaches) für ein Anwendungsbeispiel), und während CoreNLP für moderne deutschsprachige Texte [sehr gute Ergebnisse erzielt](https://github.com/MaviccPRP/ger_ner_evals), wurde gezeigt, dass Flair für historsiche Dokumente bessere Ergebnisse erreichen kann (zum Beispiel [hier](https://hal.science/hal-04056513/document) und [hier](https://digital.lib.washington.edu/researchworks/bitstream/handle/1773/44844/Holmes_washington_0250O_20778.pdf)).
+
+Aber für die Out-of-the-Box NER Modelle gilt genauso wie für die Modelle für das POS Tagging und Dependency Parsing: Auch, wenn in Einzelfällen Modelle, die auf modernen (Zeitungs-)texten trainiert sind, bei der NER historischer Dokumente brauchbare Ergebnisse liefern können, sind sie nicht für historische Dokumente und oft auch nicht für andere Textgattungen gemacht. Deswegen gibt es in den Digital Humanities zahlreiche Bestrebungen, eigene Modelle speziell zur Named Entity Recognition verschiedener historischer Textkorpora zu entwickeln. Ein paar Beispiele: 
+
+* https://openhumanitiesdata.metajnl.com/articles/10.5334/johd.48
+* https://arxiv.org/pdf/2205.15575.pdf 
+* https://huggingface.co/dbmdz
+* https://huggingface.co/hmbyt5-preliminary/byt5-small-historic-multilingual
+* https://huggingface.co/hmbert/flair-hipe-2022-newseye-de
+
+Die Übertragbarkeit dieser Modelle auf andere historische Perioden und Texte ist jedoch begrenzt und die Performance selbst dieser hochspezialisierten Modelle liegt momentan noch unter der für moderne Texte ([Ehrmann et al. 2023](https://dl.acm.org/doi/full/10.1145/3604931)). Historische Briefe und andere Texte, die besonders kurz und umgangssprachlich sind, stellen eine zusätzliche Herausforderung dar (z.B. [Jiang et al. 2022]( 	
+https://doi.org/10.48550/arXiv.2201.07281
+)) Named Entity Recognition für historische Texte bleibt also wohl auch in den nächsten Jahren ein Forschungsthema.  
+
+Einen hervorragenden Überblick über Probleme und den Forschungsstand bei der Named Entity Recognition für historische Dokumente bieten: 
+
+* Ehrmann, Maud et al. (2023). Named Entity Recognition and Classification in Historical Documents: A Survey, in: ACM Computing Survey Vol. 56 / 2, pp. 1-47,  https://doi.org/10.1145/3604931. 
+
+Aber trotz dieser Schwierigkeiten ist Named Entity Recognition eine wichtige Methode: NER kann, sofern die Ergebnisse brauchbar sind, nicht nur zur Textanalyse verwendet werden, sondern zum Beispiel auch dazu, Dokumente im Rahmen einer digitalen Edition mit Metainformationen anzureichern und zu verknüpfen ([Beispiel 1](https://grandtourdig.hypotheses.org/949), [Beispiel 2](https://hal.sorbonne-universite.fr/hal-01396037/document)), oder aber auch zum Geomapping, also dem Hinzufügen von Metainformationen auf Karten ( [Beispiel](https://towardsdatascience.com/quick-guide-to-entity-recognition-and-geocoding-with-r-c0a915932895)).
+
+
+## Quellen {-}
+
+- Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. Chapter 8.3: Named Entities and Named Entity Tagging*, https://web.stanford.edu/~jurafsky/slp3/8.pdf.
+- Benoit, Kenneth und Matsuo, Akitaka (2023). *A Guide to Using Spacyr*, https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html. 
+- Explosion AI, SpaCy Dokumentationsseiten, https://spacy.io/.
+- Explosion AI, SpaCy Dokumentationsseiten: Models & Languages, https://spacy.io/usage/models. 
+- Liao, David, FlaiR: An R Wrapper for Accessing Flair NLP Library, https://davidycliao.github.io/flaiR/ und https://github.com/davidycliao/flaiR?tab=readme-ov-file#performing-nlp-tasks-in-r. 
+- Akbik, Alan, Flair Dokumentationsseiten, https://flairnlp.github.io/.
+- Akbik, Alan, Flair Dokumentationsseiten: Flair Embeddings, https://flairnlp.github.io/docs/tutorial-embeddings/flair-embeddings. 
+- Stanford Natural Language Prcessing Group (ed.). *CoreNLP. Using CoreNLP within Other Programming Languages and Packages: R (CRAN)*, https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran.
+- Arnold, Taylor (2017). *A Tidy Data Model for Natural Language Processing Using cleanNLP*, in: The R Journal Vol. 9/2, pp. 248-267, https://arxiv.org/pdf/1703.09570.pdf.
+- Arnold, Taylor. CleanNLP Documentation, https://statsmaths.github.io/cleanNLP/ und https://cran.r-project.org/web/packages/cleanNLP/. 
+- Charles Univ. Prague (ed.). *LinPipe Design and Philosophy*, https://ufal.mff.cuni.cz/linpipe/design und https://github.com/ufal/linpipe. 
+- Charles Univ. Prague (ed.). *NameTag 2 Models*, https://ufal.mff.cuni.cz/nametag/2/models.
+- BNOSAC. Nametagger R Package, https://github.com/bnosac/nametagger. 
+- Arnold, Taylor. CleanNLP: A Tidy Data Model for Natural Language Processing, https://statsmaths.github.io/cleanNLP/. 
+- Stanford Natural Language Processing Group. Using CoreNLP within Other Programming Languages and Packages, https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran. 
+- Super User (2018). *A Comparison Between SpaCy and UDPipe for Natural Language Processing for R Users*, https://www.r-bloggers.com/2018/02/a-comparison-between-spacy-and-udpipe-for-natural-language-processing-for-r-users/
+- The HashTag Magazine (2023). *Uncover the Subtleties of Language - Flair is the new Advanced AI*, https://hashtagmagazine.medium.com/uncover-the-subtleties-of-language-flair-is-the-new-advanced-ai-307e22218178. 
+- CodeTrade (2023). *The Battle of the NLP Libraries: Flair vs SpaCy*, https://www.codetrade.io/blog/the-battle-of-the-nlp-libraries-flair-vs-spacy/. 
+- Reticulate 1.34 Documentation: Python Version Configuration, https://rstudio.github.io/reticulate/articles/versions.html.
+- Ehrmann, Maud et al. (2023). *Named Entity Recognition and Classification in Historical Documents: A Survey*, in: ACM Computing Survey Vol. 56 / 2, pp. 1-47,  https://doi.org/10.1145/3604931. 
+- Bizon Monroc, Claire et al. (2022). *A Commprehensive Study of Open-source Libraries for Named Entity Recognition on Handwritten Historical Documents*, in: International Workshop on Document Analysis Systems, https://hal.science/hal-04056513. 
+- Schweter, Stefan und Baiter, Johannes (2019). *Towards Robust Named Entity Recognition for Historic German*, in: Proceedings of the 4th Workshop on Representation Learning for NLP, pp. 96-103, https://aclanthology.org/W19-4312, und https://github.com/dbmdz/historic-ner.
+- Jiang, Hang et al. (2022). *Annotating the Tweebank Corpus on Named Entity Recognition and Building NLP Models for Social Media Analysis*,  	
+https://doi.org/10.48550/arXiv.2201.07281. 
+- Hiippala, Tuomo (2021). *Applied Language Technology: NLP for the Humanities. Word Embeddings in SpaCy*, in: Proceeedings of the Fifth Workshop on Teaching NLP. Association of Computational Linguistics, pp. 46-48, https://applied-language-technology.mooc.fi/html/notebooks/part_iii/05_embeddings_continued.html und https://aclanthology.org/2021.teachingnlp-1.5/. 
+- Hugging Face, Using SpaCy at Hugging Face, https://huggingface.co/docs/hub/spacy. 
+- Hugging Face, Using Flair at Hugging Face, https://huggingface.co/docs/hub/flair.
+- Flair, ner-multi, https://huggingface.co/flair/ner-multi.
+- SpaCy, Multi-language, https://spacy.io/models/xx.
+- Akbik, Alan, Blythe, Duncan und Vollgraf, Roland (2018). *Contextual String Embeddings for Sequence Labeling*, in: Proceedings of the 27th International Conference on Computational Linguistics, pp. 1638–1649, https://aclanthology.org/C18-1139/.
+- Honnibal, Matthew (2018). *Spacy's Entity Recognition Model: Incremental Parsing with Bloom Embeddings & Residual CNNs*, https://spacy.io/universe/project/video-spacys-ner-model.
+- Explosion AI, SpaCy Dokumentationsseiten: Library Architecture, https://spacy.io/api. 
+- Applied Language Technology (2021). *Contextual Word Embeddings in SpaCy*, https://www.youtube.com/watch?v=fAeW1D37h90.
+- Zeman, Daniel and Rosa, Rudolf (2021). *Contextual Word Embeddings*, https://www.youtube.com/watch?v=J9uSXZTW5Oc, und https://ufal.mff.cuni.cz/courses/npfl120#lectures. 
+- Ghassemi, Mohammad (2021). *NLP Lecture 4(a) - Simple Word Embeddings*, https://www.youtube.com/watch?v=LGJSZCvBT3g  und https://github.com/deskool/nlp-class
+- Herremans, Dorien (2022), Word Embeddings, https://www.youtube.com/watch?v=QldIe6N5-Lc. 
+- Mei, Ted (2020). *From Static Embedding to Contextualized Embedding*, https://ted-mei.medium.com/from-static-embedding-to-contextualized-embedding-fe604886b2bc. 
+- Ethayarajh, Kawin (2020). *BERT, ELMo, & GPT-2: How Contextual are Contextualized Word Representations?*,  https://ai.stanford.edu/blog/contextual/.
+- Chang, Ting-Yun und Chen, Yun-Nung (2019). *What Does This Word Mean? Explaining Contextualized Embeddings with Natural Language Definition*, in: Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processingand the 9th International Joint Conference on Natural Language Processing, pp. 6064–6070, https://aclanthology.org/D19-1627/.

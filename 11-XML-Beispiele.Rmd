@@ -1,0 +1,401 @@
+```{r setup, include=FALSE}
+options(width = 9999)
+```
+
+# Arbeit mit XML-TEI-Dokumenten
+
+Wir haben in den letzten Wochen verschiedene Analyse- und Datenextraktionsmethoden für Plaintext-Dateien als Beispiel für unstrukturierte Textdaten kennengelernt. Dabei haben wir einige Schwierigkeiten identifiziert, die beim programmatischen Zugriff auf solche Texte entstehen: Beispielsweise konnten wir bei der Märchenanalyse nicht zwischen Erzähltexten und Sprechtexten unterscheiden und bei Verfahren wie dem POS-Tagging und der Named Entity Recognition mussten wir eine gewisse Anzahl an Fehlern berücksichtigen. 
+In den letzten beiden Sitzungen werden wir uns mit Texten beschäftigen, die bereits durch menschliche Annotator:innen mit Metainformationen versehen wurden, und zwar sogenannte XML-TEI Dateien (s. Exkurs XML, TEI und XPath). Heute werden wir uns mit einem in XML-TEI ausgezeichneten Drama beschäftigen, und zwar "Die Räuber" von Friedrich Schiller. [So](https://dracor.org/api/v1/corpora/ger/plays/schiller-die-raeuber/tei) sieht das Drama im XML-TEI-Format aus. Das Drama kann über das [Dramen-Korpus DraCor](https://dracor.org/ger/schiller-die-raeuber#downloads) im XML-TEI-Format heruntergeladen werden. In der nächsten Woche steht ein Reisetagebuch aus dem 19. Jahrhundert im Mittelpunkt. Das Tagebuch wurde von Christian Gottfried Ehrenberg verfasst und dokumentiert eine Reise von Alexander von Humboldt. [So](https://edition-humboldt.de/H0016785.xml) sieht das Tagebuch im XML-TEI Format aus. Das Reisetagebuch kann über die Seiten der [edition humboldt digital](https://edition-humboldt.de/themen/detail.xql?id=H0016785&l=de) im XML-TEI-Format heruntergeladen werden. 
+
+Wie sind diese Dateien entstanden? Zur Auszeichnung von Texten in XML-TEI, sowie zur Erstellung und Bearbeitung von XML-Dateien können spezialisierte Programme wie der [oXygen XML Editor](https://www.zedat.fu-berlin.de/Benutzerservice/OXygenXMLEditor) verwendet werden. Um mit XML-TEI Dateien in R zu arbeiten, können Pakete installiert werden, die Funktionen speziell zum Einlesen, Erstellen, Bearbeiten und Schreiben von XML-Dateien enthalten und die auch die Suche in XML-Dateien mithilfe von XPath-Ausdrücken unterstützen. Eines dieser Pakete ist [`xml2`](https://cran.r-project.org/web/packages/xml2/xml2.pdf), mit dem wir uns in dieser Stunde beschäftigen werden.
+
+Die in diesem Kapitel vorgestellten  Anwendungsbeispiele sollen in die Arbeit mit XML-TEI-Dateien einführen und  illustrieren, dass der händische Annotationsprozess, der XML-TEI Dateien zugrunde liegt, viele neue Fragestellungen eröffnet und beantwortbar macht, die eine Analyse desselben Textes im Plaintext-Format nicht liefern könnte.
+
+## Beispiel Dramenanalyse
+
+Unser erstes Beispiel widmet sich dem durch das DraCor-Projekt in XML-TEI ausgezeichneten Drama "Die Räuber". Zunächst betrachten wir die Datei im Browser (Firefox) oder in einem Editor. Dazu könnt ihr entweder einfach [diesen Link](https://dracor.org/api/v1/corpora/ger/plays/schiller-die-raeuber/tei) aufrufen. Ladet die Datei außerdem über [diesen Link](https://dracor.org/ger/schiller-die-raeuber#downloads) herunter. 
+
+:::task
+Verständnisfragen:
+
+- Welche Elemente gibt es? Welche Bestandteile des Textes wurden ausgezeichnet? 
+- Welche Fragestellungen könnten wir mit diesen Informationen stellen?
+ 
+:::
+
+Wir werden im Folgenden das XML-TEI-Dokument einlesen und die Frage untersuchen, welcher Charakter in unserem Drama wie viel spricht. Dazu müssen wir die Sprechtexte und die IDs der Charaktere, die sprechen, extrahieren. Die Charaktere werden mit dem Attribut `who` des Elements `sp` eindeutig identifiziert. Die Sprechtexte der Charaktere sind als `p`-Elemente ausgezeichnet, die Kindelemente des jeweiligen sp-Elements sind. Manche p-Elemente enthalten außerdem selbst Kindelemente, die wie im Fall der `stage`-Elemente selbst Texte enthalten. Das müssen wir später bei unserem Vorgehen berücksichtigen. 
+
+```{r eval=FALSE}
+install.packages("xml2")
+```
+```{r warning=FALSE, message=FALSE}
+library(xml2)
+library(ggplot2)
+```
+
+Zunächst lesen wir die Datei ein. Dazu verwenden wir eine Einlesefunktion aus dem Paket xml2, die speziell zum Einlesen von XML-Dateien vorgesehen ist: 
+
+```{r}
+# XML-TEI Datei einlesen
+xml_file <- read_xml("./data/ger000008-schiller-die-raeuber.tei.xml")
+```
+
+Den Dokumentationsseiten des Pakets können wir entnehmen, dass mithilfe der Funktionen `xml_find_all()` und `xml_find_first()` nach XML-Elementen gesucht werden kann. Wenn wir allerdings die Funktion `xml_find_all()` anwenden, bekommen wir ein leeres "Nodeset" zurück: 
+
+```{r attr.output='style="max-height: 200px;"'}
+# Misserfolg: Suche nach allen sp-Elementen
+sp_elements <- xml_find_all(xml_file, "//sp") 
+sp_elements # Empty Nodeset - hat nicht funktioniert!
+
+```
+
+Warum ist das so? Viele XML-Dokumente verwenden sogenannte Namespaces, um Konflikte zwischen Elementnamen zu vermeiden, also um zu kennzeichnen, das ein Elementname beispielsweise dem TEI-Schema entnommen ist, und ein anderes, aber vielleicht gleichnamiges Element einem anderen Schema. Wenn XPath-Abfragen ausgeführt werden, ohne diese Namespaces zu berücksichtigen oder explizit in die Abfrage einzubeziehen, kann dies dazu führen, dass die gesuchten Elemente nicht gefunden werden. Durch das Entfernen der Namespaces mit `xml_ns_strip(xml_file)` wird das Dokument so modifiziert, dass alle Elemente als Teil des Standard-Namespaces behandelt werden, wodurch die XPath-Abfrage erfolgreich die Elemente findet. Da in unserem Dokument nur der TEI-Namespace verwendet wird (kann mit `xml_ns(xml_file)` überprüft werden), können wir den Namespace einfach entfernen und müssen nicht zwischen verschiedenen Namespaces unterscheiden: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+# Namespace entfernen
+xml_file <- xml_ns_strip(xml_file)
+# ?xml_ns_strip
+# Alternativ Namespace angeben mit ns = xml_ns(xml_file)
+
+# Erfolg: Suche nach allen sp-Elementen
+sp_elements <- xml_find_all(xml_file, "//sp") 
+sp_elements # Hat funktioniert!
+```
+
+Die Suche hat einen Vektor `sp_elements` mit XML-Elementen geliefert, die alle Sprechtexte enthalten. Wir können nun eine for-Schleife definieren, die über diesen Vektor iteriert. In jedem Schleifendurchlauf wird zuerst den Wert des Attributs `who` extrahiert, danach alle stage-Elemente (also Bühnenanweisungen), die sich innerhalb des sp-Elements befinden (wir wissen ja: stage-Elemente sind Kindelemente der p-Elemente, und die p-Elemente sind wiederum Kindelemente der sp-Elemente), und alle speaker-Elemente. Anschließend werden alle p-Elemente gesucht. Der Sprechtext wird mit `xml_text()` extrahiert und im selben Schritt zusammengefügt (denn manche Sprechtexte bestehen aus mehreren p-Elementen). Zuletzt werden der Sprechername und der Sprechtext als neue Zeile an den Dataframe speakers_df angefügt. 
+
+```{r}
+# Leeren Dataframe erstellen
+speakers_df <- data.frame(speaker = character(), 
+                          text = character(), 
+                          stringsAsFactors = FALSE)
+
+# Über den Vektor mit den sp-Elementen iterieren, Sprechtexte extrahieren und dem Dataframe hinzufügen
+for (sp in sp_elements) {
+  # Speaker extrahieren
+  speaker_id <- xml_attr(sp, "who")
+  
+  # Sprechtexte extrahieren: Dabei erst stage-Elemente entfernen
+  stage_elems <- xml_find_all(sp, ".//stage")
+  xml_replace(stage_elems, "")
+  speaker_elem <- xml_find_first(sp, ".//speaker")
+  xml_replace(speaker_elem, "")
+  texts <- xml_find_all(sp, ".//p") 
+  spoken_text <- paste(xml_text(texts), collapse=" ") # Sprechtexte zusammenführen
+  
+  # Ergebnisse an den DataFrame anhängen
+  speakers_df <- rbind(speakers_df, data.frame(speaker = speaker_id, text = spoken_text, stringsAsFactors = FALSE))
+}
+```
+```{r attr.output='style="max-height: 200px;"'}
+speakers_df # View(speakers_df)
+```
+
+Wir haben also jetzt einen Dataframe, der chronologisch alle Charaktere und deren Sprechtexte enthält. Um herauszufinden, aus wie vielen Tokens der Sprechtext der Charaktere insgesamt besteht, müssen wir zunächst die einzelnen Sprechtexte zu einer langen Zeichenkette zusammenfügen. Wir müssen also den Dataframe so umformen, dass jede Zeile einem Charakter entspricht und in der Spalte `text` der gesamte Sprechtext dieses Charakters steht. Eine ähnliche Operation haben wir bereits in der Sitzung zum Preprocessing kennengelernt, und zwar im Abschnitt 7.7 "Lemmatisierung":
+
+```{r eval = FALSE}
+kafka_grouped <- kafka_cleaned_df %>%
+  group_by(doc_id) %>% 
+  summarise(text = paste(lemma, collapse = " ")) 
+```
+
+Zur Erinnerung: Dieser Code hat für jede der Dokumenten-IDs in der Spalte `doc_id` in dem Dataframe `kafka_cleaned_df` die Lemmata zu einer einzigen Zeichenkette zusammengefügt. 
+
+Wir wollen mit unserem Dataframe speakers_df etwas ganz ähnliches machen, nämlich für jeden Charakter in der Spalte `speaker` den Sprechtext in der Spalte `text` in einer Zeichenkette zusammenfassen:
+
+```{r warning=FALSE, message=FALSE, attr.output='style="max-height: 200px;"'}
+# Dataframe so umformen, dass jede Zeile einem Charakter entspricht und in der Spalte text der gesamte Sprechtext dieses Charakters steht
+
+library(dplyr)
+
+speakers_total <- speakers_df %>%
+  group_by(speaker) %>%
+  summarise(text = paste(text, collapse="\n"))
+speakers_total # View(speakers_total)
+```
+
+Die Tokenanzahl können wir mithilfe von quanteda und der `summary()`-Funktion berechnen, genau so wie im [Abschnitt 8.3 auf der Kurswebsite](https://lipogg.github.io/einfuehrung-in-r/textanalyse-iii-wortfrequenzanalysen.html#token-h%C3%A4ufigkeitsanalyse): 
+
+```{r warning=FALSE, message=FALSE,  attr.output='style="max-height: 200px;"'}
+
+# Tokenanzahl für alle Charaktere berechnen mithilfe von quanteda und der summary()-Funktion
+library(quanteda)
+speakers_cor <- corpus(speakers_total)
+speakers_summary <- summary(speakers_cor)
+speakers_summary # View(speakers_summary)
+```
+
+Dieser Dataframe ist jedoch zum Vergleich der Tokenanzahl nicht sehr übersichtlich und wir sortieren den Dataframe absteigend nach der Spalte `Tokens`: Dazu können wir die R-Basisfunktion `order()` verwenden, die wir bereits aus den Abschnitten 8.10 und 9.4.2 kennen, und zwar im Code `lexdiv[order(lexdiv$TTR, decreasing=TRUE),]` und `substantive_freqs[order(-substantive_freqs$freq), ]`. Im ersten Fall wurde die absteigende Sortierung mit dem Argument `decreasing=TRUE` festgelegt; im zweiten Fall wurde stattdessen einfach ein Minuszeichen vor die zu sortierende Spalte gefügt. Das hat denselben Effekt.  
+
+
+```{r attr.output='style="max-height: 200px;"'}
+# Dataframe nach der Spalte Tokens absteigend sortieren
+speakers_sorted <- speakers_summary[order(-speakers_summary$Tokens),]
+speakers_sorted
+
+```
+
+Dem Dataframe können wir nun entnehmen (wenn wir etwas nach rechts scrollen), dass Franz von Moor, Karl von Moor, Spiegelberg und Amalia die längsten Sprechtexte besitzen; sie sprechen also im Drama "Die Räuber" am längsten. 
+
+Fragen wie "Wer spricht am meisten?", "Wer spricht wann?", aber auch "Welche Charaktere treten in welchen Szenen gemeinsam auf?" sind in der Dramenanalyse so grundlegend, dass die beiden Linguisten Nils Reiter und Janis Pagel ein eigenes R Paket entwickelt haben, um genau solche Analysen zu erleichtern. Für in XML-TEI codierte Dramen stellt das Paket eine Reihe von Funktionen zur Analyse und Visualisierung bereit. Das Paket wurde im Rahmen des Forschungsprojekts QuaDramA - Quantitative Drama Analysis an den Universitäten Köln und Stuttgart entwickelt. Mehr Informationen zum Forschungsprojekt findet ihr hier: https://quadrama.github.io/. Das Paket selbst ist [hier](https://CRAN.R-project.org/package=DramaAnalysis) dokumentiert. Es gibt außerdem [dieses](https://quadrama.github.io/DramaAnalysis/tutorial/3/) Tutorial zur Arbeit mit dem Paket.
+
+Welche Dramen können mit DramaAnalysis analysiert werden? Grundsätzlich alle Dramen, die nach den Vorgaben der Online-Repositories [GerDraCor](https://dracor.org/ger), [TextGrid](https://textgridrep.org/search?filter=work.genre%3adrama) oder [théâtre classique](https://www.theatre-classique.fr/) in XML-TEI ausgezeichnet sind. Man nennt solche projektspezifischen, über TEI hinausgehenden Auszeichnungskonventionen auch manchmal XML-TEI "Dialekte". Das Drama "Emilia Galotti" sieht beispielsweise als XML-TEI-Dokument so aus: [https://textgridlab.org/1.0/tgcrud-public/rest/textgrid:rksp.0/data](https://textgridlab.org/1.0/tgcrud-public/rest/textgrid:rksp.0/data).
+
+Allerdings können die XML-TEI-Dokumente nicht einfach so mithilfe des Pakets DramaAnalysis analyisert werden. Die XML-TEI Dateien müssen zunächst durch eine Preprocessing-"Pipeline" laufen, also sie müssen mehrere, von den Entwicklern des Pakets definierete Vorverarbeitungsschritte durchlaufen. Anweisungen dazu finden sich auf:  https://github.com/quadrama/DramaNLP. 
+
+Für eine Auswahl von Dramen aus dem TextGrid-Repositorium haben die Entwickler des Pakets diese Vorverarbeitungsschritte bereits vorgenommen. Diese Dramen sind bei der Verwendung des Pakets vorinstalliert. Das vorinstallierte Korpus dramatischer Texte ist nach dem Forschungsprojekt benannt und heißt quadrama-Korpus.
+
+Das, was wir gerade mit vielen Zeilen Code herausgefunden haben, kann mithilfe des Pakets DramaAnalysis in nur zwei Codezeilen herausgefunden werden: 
+
+```{r eval=FALSE}
+install.packages("DramaAnalysis")
+```
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+library(DramaAnalysis)
+# quadrama Korpus installieren: Das enthält die TextGrid IDs
+installData("qd")
+# Stück "Die Räuber" laden und  Variable d zuweisen
+d <- loadDrama("qd:v0fv.0")
+# Sprechtexte: Wer redet wie viel? 
+# https://quadrama.github.io/DramaAnalysis/tutorial/3/who-how-much.html
+charstats <- characterStatistics(d)
+# Dataframe nach Spalte tokens absteigend sortieren
+charstats_sorted <- charstats[order(-charstats$tokens),]
+charstats_sorted
+```
+
+Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html
+
+Neben DramaAnalysis bietet auch DraCor die Möglichkeit, direkt vorgefilterte Daten herunterzuladen, so zum Beispiel nur die Sprechtexte der Charaktere, oder nur Informationen zum gemeinsamen Auftreten von Charakteren im Drama. 
+
+Zur Analyse von Stücken speziell aus den DraCor-Korpora gibt es zusätzlich auch ein eigenes R Paket, [rdracor](https://github.com/dracor-org/rdracor), das wir uns aber im Rahmen dieses Seminars nicht weiter ansehen werden. 
+
+
+:::task
+Verständnisfragen:
+
+- Welche anderen Forschungsfragen lassen sich mithilfe des Pakets `DramaAnalysis` beantworten? 
+- Welche Funktionen stellt das Paket `rdracor` bereit?
+ 
+:::
+
+
+## Beispiel Geomapping
+
+Unser zweites Beispiel widmet sich dem Reisetagebuch eines der Reisebegleiter Alexander von Humboldts während seiner Reise durch das Russische (bzw. eigentlich Russländische) Reich. Das Tagebuch wurde durch das Projekt edition humboldt digital in XML-TEI ausgezeichnet. Zunächst betrachten wir wieder die Datei im [Browser](https://edition-humboldt.de/H0016785.xml) und laden die Datei [hier](https://edition-humboldt.de/themen/detail.xql?id=H0016785&l=de) herunter. Im Folgenden wollen wir alle Orte, die der Autor erwähnt, extrahieren und auf einer Karte visualisieren. Dieser Vorgang nennt sich auch "Geomapping" und ist eine beliebte Methode insbesondere in den digitalen Geschichtswissenschaften. Wir gehen dabei wie folgt vor: Zunächst extrahieren wir die Links zu Ortsangaben in der Datenbank [Geonames](https://www.geonames.org/) aus den placeName-Elementen in der XML-TEI Datei. Diese Links enthalten eine ID, die wir nutzen können, um Metadaten zu dem entsprechenden Ort über eine sogenannte Anwendungsprogrammierschnittstelle, oder kurz API, abzufragen. Über diese Schnittstelle können wir die Metadaten direkt in unsere Sitzung im RStudio importieren und weiterverarbeiten. Die Längen- und Breitengrade zu jedem Ort können anschließend dazu genutzt werden, um die Orte auf einer Karte abzubilden. Zur Darstellung der Karte werden wir das bereits bekannte Paket ggplot2 verwenden. 
+
+### Geoname-IDs aus der XML-TEI-Datei extrahieren
+
+Zunächst lesen wir also das XML-TEI-Tagebuch ein und extrahieren die Geoname-IDs.
+
+```{r eval=FALSE}
+install.packages(c("xml2", "sf", "httr"))
+```
+
+```{r warning=FALSE, message=FALSE}
+library(xml2)
+library(sf)
+library(httr)
+library(ggplot2)
+library(plotly)
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+# XML-TEI Datei einlesen
+xml_file <- read_xml("./data/H0016785.xml")
+
+# Namespace entfernen
+xml_file <- xml_ns_strip(xml_file)
+
+# Alle placeName-Elemente auswählen
+places <- xml_find_all(xml_file, "//placeName") 
+places
+
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+# Textinhalt der ref-Attribute der placeName-Elemente extrahieren
+places_refs <- xml_attr(places, "ref")
+places_refs # character vector
+
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+# Ref-Attribut besteht aus zwei Links: Zeichenkette aufsplitten
+refs_list <- strsplit(places_refs, " ")
+length(refs_list)
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+
+# Nur den zweiten Link extrahieren 
+geonames_uris <- c()
+for (ref in refs_list) {
+  geonames_uris <- c(geonames_uris, ref[2])
+}
+
+# oder so 
+geonames_uris <- sapply(refs_list, function(x) x[2])
+
+geonames_uris 
+
+length(geonames_uris)
+
+```
+
+```{r}
+# NAs rausfiltern
+geonames_uris <- geonames_uris[!is.na(geonames_uris)] 
+
+```
+
+```{r attr.output='style="max-height: 200px;"'}
+
+# Geonames-ID aus den Links extrahieren
+# Entweder so...
+geonames_ids <- gsub("https://www.geonames.org/", "", geonames_uris)
+
+# ...oder so
+library(stringr)
+geonames_ids <- str_extract(geonames_uris, "[0-9]+")
+geonames_ids <- str_extract(geonames_uris, "\\d+")
+geonames_ids 
+
+```
+
+### Koordinaten über die Geonames-API abrufen 
+
+Warum haben wir im vorigen Abschnitt einen Vektor mit Geonames-IDs erstellt? Jede Geonames-ID steht für einen Ortseintrag in der Geonames-Datenbank. Mit den IDs können wir über eine sogenannte API automatisch Informationen über die Orte aus der Geonames-Datenbank abrufen. API steht für "Application Programming Interface" und kann auf Deutsch als Anwendungsprogrammierschnittstelle übersetzt werden. Im Grunde handelt es sich dabei um eine Sammlung von URLs, die nicht für Menschen für die Ansicht im Browser vorgesehen sind, sondern für Maschinen, und zwar zum Transport von Datenobjekten oder Metadaten. 
+
+Wie die Schnittstelle verwendet werden kann, ist dokumentiert unter https://www.geonames.org/export/web-services.html. Der für uns relevante Abschnitt ist "get geoNames for geoNameId". Diesem Abschnitt können wir entnehmen, dass wir Metadaten zu einem Ort in der Datenbank über eine spezielle URL abrufen können, welche nach dem Muster  `http://api.geonames.org/get?geonameId=geoname_id&username=irgendein_username` aufgebaut sein muss.   
+
+```{r}
+
+# Leeren Dataframe erstellen
+site_data <- data.frame(
+  name = character(),
+  fcl = character(),
+  latitude = numeric(),
+  longitude = numeric(),
+  stringsAsFactors = FALSE  # Um sicherzustellen, dass Zeichenketten nicht in Faktoren umgewandelt werden
+)
+```
+
+```{r eval=FALSE}
+username = "dein_username"
+
+for (geoname_id in geonames_ids) {
+  request_url <- paste0("http://api.geonames.org/get?geonameId=", geoname_id, "&username=", username)
+  response <- GET(request_url)
+  xml_content <- read_xml(content(response, "text"))
+  # Ortsname
+  name <- xml_text(xml_find_first(xml_content, "//name"))
+  # Feature Code: P für city, village...: <fcl>P</fcl>
+  fcl <- xml_text(xml_find_first(xml_content, "//fcl"))
+  # Breitengrad
+  latitude <- xml_content %>%
+    xml_find_first("//lat") %>%
+    xml_text() %>%
+    as.numeric()
+  # Längengrad
+  longitude <- xml_content %>%
+    xml_find_first("//lng") %>%
+    xml_text() %>%
+    as.numeric()
+  # Dem Dataframe hinzufügen 
+  site_data <- rbind(site_data, data.frame(name = name, fcl=fcl, latitude = latitude, longitude = longitude, stringsAsFactors = FALSE))
+  Sys.sleep(2) # Nächste Abfrage um 2 Sekunden verzögern 
+}
+
+View(site_data)
+
+# Dataframe im RDS-Format speichern
+saveRDS(site_data, file="./data/humboldt_data.RDS")
+
+```
+
+```{r echo=FALSE}
+site_data <- readRDS("./data/humboldt_data.RDS")
+
+```
+
+
+```{r}
+
+# Dataframe nur nach Orten filtern (fcl=="P")
+site_data <- site_data[site_data$fcl == "P", ]
+length(site_data$name)
+
+# NAs herausfiltern
+site_data <- site_data[!is.na(site_data$name),] 
+length(site_data$name)
+
+```
+
+
+### Koordinaten auf Karte abbilden 
+
+Um die Koordinaten auf eine Karte zu plotten, brauchen wir natürlich zuletzt auch eine Karte. Wir verwenden für dieses Beispiel die folgende historische Karte des Russländischen Reichs von 1897:
+
+* Sablin, Ivan et al. (2015). "Transcultural Empire: Geographic Information System of the 1897 and 1926 General Censuses in the Russian Empire and Soviet Union", https://doi.org/10.11588/data/10064, heiDATA, V3.
+
+Die Karte liegt als sogenannte Shapefile vor, ein Dateiformat, das erlaubt, geografische Daten durch geometrische Formen zu repräsentieren, die auf einer Karte die Lage, Form und Größe geografischer Objekte darstellen. Jedes der geometrischen Elemente in dem Shapefile ist mit Attributen (Metainformationen) zu dem geografischen Objekt verknüpft. Die Karte des russischen Reichs ist  beispielsweise mit Informationen aus dem Zensus von 1897 verknüpft, darunter Sprachen und Bevölkerungszahl in verschiedenen administrativen Einheiten des Reichs. Diese Daten sind in verschiedene Dateien aufgeteilt: Die Datei mit der Dateiendung .shp enthält die geometrischen Daten zu dem geografischen Objekt, und die Datei mit der Dateiendung .dbf die Attribute. Für unsere Zwecke benötigen wir nur die geometrischen Daten ohne die Attribute. 
+
+Zunächst muss die shp-Datei eingelesen werden. Dazu verwenden wir die Funktion `st_read()` aus dem Paket sf. Diese Funktion erstellt ein Objekt vom Typ "sf" (siehe [Funktionsdokumentation](https://r-spatial.github.io/sf/reference/st_read.html)). Das ist eine spezielle Datenstruktur, die das Paket sf verwendet, um geografische Objekte darzustellen. Ein sf-Objekt bildet die Daten aus dem Shapefile nach dem "simple features"-Standard ab, ein internationaler Standard, der festlegt, wie geografische Objekte als geometriche Formen repräsentiert werden können. 
+
+```{r message=FALSE, results=FALSE, warning=FALSE}
+# Shapefile einlesen
+shp_path <- "./data/shapefiles_1897/1897RussianEmpire.shp"
+map_data <- st_read(shp_path)
+```
+
+Um die Karte mit ggplot2 zu visualisieren, müssen die eingelesenen Daten der Funktion `ggplot()` als Argument übergeben werden. Mit `geom_sf()` wird eine Ebene erstellt, die die eingelesenen Daten als geometrisches Objekt nach dem "simple features"-Standard abbildet. Die Koordinaten zu den Orten, die wir auf der Karte abbilden wollen, werden zuletzt der Funktion `geom_point()` übergeben.
+
+```{r}
+print(map_data)
+
+
+# Wir verwenden diese Karte, um unsere Koordinaten darauf zu plotten 
+humboldt_map <- ggplot(data = map_data) +
+  geom_sf() +
+  geom_point(data = site_data, aes(x = longitude, y = latitude, text=name), size = 0.8, 
+             shape = 21, fill = "darkred") + # shape = 20, color = "darkred"
+  theme_minimal() +
+  ggtitle("Russisch-Sibirische Reise 1829") 
+humboldt_map
+```
+
+Unsere Karte können wir mit einer manuell erstellten Karte der tatsächlichen Reiseroute vergleichen:
+
+![](images/humboldt_reise.png){ width=98% }
+
+Quelle: [Oliver Lubrich und Thomas Nehrlich 2021](https://www.peterlang.com/document/1111773).
+
+Genau wie andere ggplot-Objekte können wir auch unser Kartenobjekt mit plotly in eine interaktive Karte umwandeln: 
+
+
+```{r}
+ggplotly(humboldt_map)
+```
+
+:::task
+Verständnisfrage:
+
+- Ist es uns gelungen, die Reiseroute auf der Grundlage der Ortsangaben in den Tagebucheinträgen nachzuzeichnen? 
+- Warum enthält unsere Karte auch Orte, die ganz offensichtlich nicht zur Reiseroute gehören (wie z.B. Beijing)?
+- Welche anderen Forschungsfragen ließen sich auf der Grundlage der XML-TEI-Datei beantworten? Welche weiteren Informationen könnten wir der Karte hinzufügen?  
+ 
+:::
+
+## Quellen {-}
+
+* Dokumentationsseiten zum Paket xml2 (2023). https://cran.r-project.org/web/packages/xml2/xml2.pdf.
+* Reiter, Nils und Pagel, Janis (2018). DramaAnalysis. Ch. 6: Who's Talking How Much?, https://quadrama.github.io/DramaAnalysis/tutorial/3/who-how-much.html.  
+* GeoNames Web Services Documentation: get geoNames for geoNameId,   https://www.geonames.org/export/web-services.html.
+* Sablin, Ivan et al. (2015). "Transcultural Empire: Geographic Information System of the 1897 and 1926 General Censuses in the Russian Empire and Soviet Union", https://doi.org/10.11588/data/10064, heiDATA, V3.
+* Lubrich, Oliver und Nehrlich, Thomas (2021). Karte der russisch-sibirischen Reise 1829, in: Alexander von Humboldt: Die russischen Schriften, Berlin u.a.: Peter Lang. 
+* Pebesma, Edzer. Dokumentationsseiten zum Paket sf: Read Simple Features or Layers from File or Database, https://r-spatial.github.io/sf/reference/st_read.html. 
+* Pebesma, Edzer. Dokumentationsseiten zum Paket sf: Simple Features for R, https://r-spatial.github.io/sf/articles/sf1.html. 
+* Moreno, Mel and Basille, Mathieu (2018). Drawing Beautiful Maps Programmatically with R, sf and ggplot2 - Part 2: Layers, https://r-spatial.org/r/2018/10/25/ggplot2-sf-2.html. 
+* Esri (2021). Was ist ein Shapefile?, https://desktop.arcgis.com/de/arcmap/latest/manage-data/shapefiles/what-is-a-shapefile.htm.  

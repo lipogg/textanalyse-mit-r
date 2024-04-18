@@ -1,0 +1,564 @@
+```{r setup, include=FALSE}
+options(width = 9999)
+```
+
+
+# POS Tagging und Dependency Parsing
+
+In der letzten Stunde haben wir untersucht, inwieweit die Betrachtung einfacher Worthäufigkeiten dabei helfen kann zu untersuchen, wie verschiedene Märchencharaktere in einem Beispielkorpus beschrieben werden. Dabei haben wir bemerkt, dass die Interpretation von N-Grammen wie "schöne_Königstochter", Kollokationen, oder Kookkurrenzen wie "schön Königstochter" unter anderem deswegen schwierig ist, weil wir nicht mit Sicherheit sagen können, dass sich "schön" tatsächlich auf "Königstochter" bezieht. Auch konnten wir die untersuchten Wortpaare nicht in einem größeren Maßstab mit anderen Wortpaaren vergleichen, weil sich unter den gefundendenen Wortpaaren viele für unsere Fragestellung uninteressante Wortpaare befunden haben (wie z.B. "die Königstochter", "es war"). Interessanter wäre ein zielgerichteter Vergleich verschiedener Adjektiv-Substantiv-Paare. Um Wortpaare für einen gezielteren Vergleich zu filtern, muss aber zum einen bekannt sein, um welche Wortarten es sich handelt, und es muss zum anderen sichergestellt werden, dass die Adjektive sich auch tatsächlich auf die Substantive beziehen. 
+
+In dieser Woche werden wir uns zwei Verfahren ansehen, mit denen die Wortart und die syntaktische Beziehung von Wörtern zueinander identifiziert werden können: Part of Speech Tagging und Dependency Parsing. Zur Extraktion dieser Daten verwenden wir das Paket UDPipe. Zuletzt werden wir beide Verfahren auf unser Märchenkorpus anwenden und diskutieren, inwieweit wir mithilfe dieser Verfahren unsere Fragestellung beantworten können.
+ 
+## Recap UDPipe
+
+In der Sitzung zum Preprocessing haben wir das Paket UDPipe bereits kennengelernt und UDPipe-Funktionen zur Lemmatisierung unseres Beispielkorpus verwendet. Die Funktion `udpipe()` erzeugt einen Dataframe, der neben den Lemmata auch weitere Spalten mit Daten zu den Tokens in unserem Korpus enthält, zum Beispiel `upos`, `xpos` und `dep_rel`. Zur Erinnerung:  
+
+```{r eval=FALSE}
+install.packages("udpipe")
+
+library(udpipe)
+
+# Deutsches Sprachmodell herunterladen und laden
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,}
+library(udpipe)
+ud_model <- udpipe_load_model("./models/german-gsd-ud-2.5-191206.udpipe")
+
+```
+
+```{r warning=FALSE, message=FALSE, attr.output='style="max-height: 200px;"'}
+
+beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
+
+beispiel_df <- udpipe(beispiel, ud_model)
+head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen 
+#View(beispiel_df)
+
+```
+
+Tatsächlich führt die Funktion `udpipe()` nicht nur eine Lemmatisierung durch, sondern auch Part of Speech Tagging und Dependency Parsing, und der Dataframe, den die Funktion zurückgibt, enthält die Ergebnisse dieser Verfahren. In den folgenden beiden Abschnitten werden wir uns deswegen etwas genauer mit diesen Daten beschäftigen.  Im Abschnitt "Part of Speech Tagging mit UDPipe" betrachten wir zunächst die beiden Spalten `upos` und `xpos`:
+
+* `upos`: The universal parts of speech tag of the token.
+* `xpos`: The treebank-specific parts of speech tag of the token. 
+
+Im Abschnitt "Dependency Parsing mit UDPipe" geht es um die Spalten `head_token_id` und `dep_rel`: 
+
+* `head_token_id`: Indicating what is the token_id of the head of the token, indicating to which other token in the sentence it is related. 
+* `dep_rel`: The type of relation the token has with the head_token_id.
+
+Die Definitionen sind aus der  [Dokumentationsseite zur Funktion `udpipe()`](https://www.rdocumentation.org/packages/udpipe/versions/0.8.11/topics/udpipe) entnommen.
+
+## Part of Speech Tagging mit UDpipe 
+
+**Parts of Speech** (kurz **POS**) sind auf Deutsch Wortarten, also die verschiedenen syntaktischen Kategorien in einer Sprache. **Part of Speech Tagging** ist ein Verfahren, bei dem jedem Wort in einem Korpus ein "Tag", also ein Kürzel, zugeordnet wird, das seine Wortart beschreibt. Daniel Jurafsky und James Martin definieren POS Tagging als "taking a sequence of words and assigning each word a part of speech like NOUN or VERB" ([Jurafsky/Martin 2023, Ch.8, S.1](https://web.stanford.edu/~jurafsky/slp3/8.pdf)). Oder formal definiert: 
+
+> "Part-of-speech tagging is the process of assigning a part-of-speech to each word in a text. The input is a sequence `x_1`, `x_2`, ..., `x_n` of (tokenized) words and a tagset, and the output is a sequence `y_1`, `y_2`, ..., `y_n` of tags, each output `y_i` corresponding exactly to one input `x_i`, as shown in the intuition in Fig. 8.3." ([Jurafsky/Martin 2023, Ch.8, S.4](https://web.stanford.edu/~jurafsky/slp3/8.pdf))
+
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/jurafsky-martin_pos_tagging.png")
+```
+
+Quelle: [Jurafsky/Martin 2023, Ch.8, S.5](https://web.stanford.edu/~jurafsky/slp3/8.pdf).
+
+Die Funktion `udpipe()` gibt einen Dataframe zurück, der zu jedem Wort einen solchen "Part of Speech Tag" enthält. Die POS Tags befinden sich in den Spalten `upos` und `xpos`. Laut der Dokumentationsseite zur Funktion `udpipe()` besteht der Unterschied darin, dass die `upos` Tags "universell" sind und die `xpos` Tags "treebank-specific" sind (s.o.). Aber was bedeutet das? 
+
+* `upos` (Universal Part of Speech Tags): Diese Tags basieren auf einem universellen Tagset, das über verschiedene Sprachen hinweg standardisiert ist. Sie repräsentieren allgemeine Wortarten wie Nomen, Verben, Adjektive usw.
+* `xpos` (Treebank-Specific Part of Speech Tags): Diese Tags sind spezifisch für die Sprache und die sogenannte Treebank (dazu gleich mehr), die zum Erzeugen der POS Tags verwendet wurde. XPOS-Tags enthalten detailliertere Informationen über Wortarten und können zusätzliche grammatische Merkmale enthalten, die in UPOS-Tags nicht enthalten sind.
+
+Zum Verständnis dieser Definition müssen wir natürlich erst einmal klären, was "Treebanks" sind. **Treebanks** sind Datensätze, die Informationen sowohl über die Wortarten (POS-Tags) als auch über die syntaktischen Abhängigkeiten zwischen Wörtern (Dependency Parsing) in einem Textkorpus enthalten (s. [Jurafsky/Martin 2023: Ch.17, S.1](https://web.stanford.edu/~jurafsky/slp3/17.pdf)). Eine Treebank kann man sich also als ein Textkorpus vorstellen, das um verschiedene Metainformationen ergänzt wurde. Wie wir bereits am Beispiel der UPOS und XPOS Tags gesehen haben, können Wortarten und die syntaktische Struktur von Sätzen entweder **sprachspezifisch oder sprachübergreifend** beschrieben werden. Die Sammlung der Kürzel, die zur Beschreibung der Wörter und ihrer Beziehung zueinander verwendet werden (also z.B. NOUN, ADV, nsubj, obj), nennt sich Tagset.
+
+Auf der Grundlage einer Treebank kann dann ein Sprachmodell trainiert werden, also ein statistisches Modell, das auf der Grundlage der in der Treebank bereitgestellten Metainformationen ein neues, noch unbekanntes Textkorpus mit denselben Metainformationen beschreiben kann. Beim Aufruf der Funktion `udpipe()` im Beispiel oben haben wir mit dem Argument `ud_model` das Sprachmodell angegeben, das zum POS Tagging und Dependency Parsing unseres Beispielkorpus verwendet werden sollte. Das Sprachmodell haben wir zuvor mit `udpipe_download_model("german")` heruntergeladen und mit `udpipe_load_model(ud_model)` in die aktuelle Sitzung geladen. Das Modell wird beim Aufruf der Funktion `udpipe_download_model()` automatisch von der Seite https://universaldependencies.org/ heruntergeladen. Dabei handelt es sich um den Webauftritt des  **Universal Dependencies (UD)** Projekts. Das Projekt hat zum Ziel, einheitliche Richtlinien für die Annotation syntaktischer Strukturen und Wortarten über verschiedene Sprachen hinweg zu schaffen und sammelt Treebanks und darauf basierende Sprachmodelle für mittlerweile etwa 100 verschiedene Sprachen. Das Projekt hat außerdem ein sprachübergreifendes Tagset zur Beschreibung von Wortarten und der syntaktischen Beziehung von Wörtern zueinander entwickelt, also genau das Tagset, aus dem die Tags (Kürzel) in der Spalte `upos` stammen. Einen Überblick über alle unterstützten Sprachen und Modelle findet sich unter https://universaldependencies.org/. Zum "Taggen" deutschsprachiger Texte bietet UDPipe vier verschiedene Sprachmodelle zur Auswahl, die alle auf verschiedenen Textkorpora trainiert wurden (dazu gleich mehr). Wenn die Funktion `udpipe_download_model()` mit dem Argument "german" aufgerufen wird, wird per Default ein Modell mit dem Namen "german-gsd" heruntergeladen. Dazu gleich mehr. 
+
+Die Zuordnung von Tags zu Wörtern in einem Satz kann natürlich uneindeutig sein, zum Beispiel beim Taggen der Sätze "Im Garten gibt es Eichen und *Buchen*" und "*Buchen* wir gleich einen Termin?". Jurafsky und Martin schreiben deswegen: "Tagging is a disambiguation task; words are ambiguous —have more than one ambiguous
+possible part-of-speech—and the goal is to find the correct tag for the situation." ([Jurafsky/Martin 2023: Ch.8, S.4](https://web.stanford.edu/~jurafsky/slp3/8.pdf)). Für eine ausführlichere Diskussion zum Thema  **Genauigkeit und Ambiguität** beim POS-Tagging siehe [Jurafsky/Martin 2023: Ch.8, S.5](https://web.stanford.edu/~jurafsky/slp3/8.pdf) sowie [Ch.17, S.9-11](https://web.stanford.edu/~jurafsky/slp3/17.pdf). Die verschiedenen Modelle können deswegen, wenn sie zum Taggen neuer Textkorpora verwendet werden, verschiedene Genauigkeiten haben, also sie können die Wortarten der Wörter in neuen Texten mit unterschiedlichem Erfolg erkennen. Um vergleichen zu können, wie gut die verschiedenen Modelle Wortarten und die syntaktische Struktur in neuen, unbekannten Texten erkennen können, haben die Entwickler:innen des Pakets udpipe Testergebnisse mit dem Anteil der Wörter, die in einem Testkorpus korrekt erkannt wurden, bereitgestellt. Einen Überblick über die Ergebnisse findet ihr  [hier](https://ufal.mff.cuni.cz/udpipe/2/models#universal_dependencies_212_models). Für das Sprachmodell German GSD in der Version 2.12 (german-gsd-ud-2.12-230717), das wir verwenden, wird eine Genauigkeit von 96.16 (UPOS) und 97.53 (XPOS) angegeben. Das Modell german-hdt-ud-2.12-230717 erreicht dagegen 98.55 (UPOS) und 98.46 (XPOS). 
+
+Allerdings sind die offiziellen Angaben zur Performance der Modelle nicht das einzige Kriterium, nach dem entschieden werden sollte, welches Modell zur Bestimmung der Wortarten verwendet werden sollte. Ein weiteres **Auswahlkriterium** ist die Größe der Treebank, die zum Trainieren des Modells verwendet wurde, denn die  Ergebnisse werden genauer, je größer das Trainingskorpus ist. Die Art und der thematische Fokus der Texte, auf denen das Modell trainiert wurden, spielen ebenfalls eine Rolle: Je ähnlicher das Testkorpus zum Analysekorpus ist, desto besser. Dem [GSD-Modell](https://universaldependencies.org/treebanks/de_gsd/index.html) liegt eine Treebank mit dem Namen TIGER zugrunde, eine annotierte (also mit Metainformationen versehene) Sammlung von Artikeln der Frankfurter Rundschau mit breitem thematischen Fokus. Dem [Modell HDT](https://universaldependencies.org/treebanks/de_hdt/index.html) liegt dagegen die Hamburg Dependency Treebank zugrunde, eine große Sammlung von Artikeln mit zumeist technischem Inhalt der Online-Publikation heise.de. Daneben gibt es das [LIT-Modell]((https://universaldependencies.org/treebanks/de_lit/index.html)), welches auf einem vergleichsweise kleinen Korpus literaturgeschichtlicher Texte vornehmlich aus der Romantik trainiert wurde sowie [PUD](https://universaldependencies.org/treebanks/de_pud/index.html), welches auf dem kleinsten Korpus aus Nachrichten- und Wikipediaartikeln trainiert wurde. Ein Vergleich der vier Modelle für deutschsprachige Texte findet sich unter https://universaldependencies.org/treebanks/de-comparison.html.
+
+Für unsere Märchentexte ist keines der Sprachmodelle ideal, aber wir können zumindest das bestmögliche auswählen: Am besten geeignet ist ein Sprachmodell, das auf vergleichsweise vielen Texten mit dem zumindest thematisch breiteren Fokus trainiert wurde. Aus diesem Grund wählen wir trotz der etwas schlechteren Erkennungsraten das gsd-Modell. Wie bereits erläutert wird dieses Modell automatisch mit "udpipe_download_model("german")" heruntergeladen. Die Dokumentation zum GSD-Modell findet ihr [hier](https://universaldependencies.org/treebanks/de_gsd/index.html). 
+
+
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+library(udpipe)
+
+test <- "Die Königstochter war so schön wie die Sonne."
+```
+
+```{r eval=FALSE}
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,}
+library(udpipe)
+ud_model <- udpipe_load_model("./models/german-gsd-ud-2.5-191206.udpipe")
+
+```
+
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+udpipe(test, ud_model)
+
+```
+
+:::task
+Verständnisfragen:
+
+- Was bedeuten die Kürzel in der Spalte `upos`? 
+- Was bedeuten die Kürzel in der Spalte `xpos`? 
+
+:::
+
+Zur Interpretation der POS-Tags in den Spalten `upos` und `xpos` können z.B. folgende Ressourcen verwendet werden:  
+
+XPOS: 
+
+- Überblick mit Definitionen zu den XPOS Tags: https://www.linguistik.hu-berlin.de/de/institut/professuren/korpuslinguistik/mitarbeiter-innen/hagen/STTS_Tagset_Tiger
+- Hintergrund zur TIGER Treebank: https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/tiger/
+- Details zum Tagset: https://www.ims.uni-stuttgart.de/documents/ressourcen/korpora/tiger-corpus/annotation/tiger_scheme-syntax.pdf
+
+
+UPOS: 
+
+- Überblick mit Definitionen zu den UPOS Tags: https://universaldependencies.org/u/pos/index.html. 
+- Vergleich deutschsprachiger Treebanks und Sprachmodelle:  https://universaldependencies.org/treebanks/de-comparison.html 
+- Dokumentationsseite zum Modell German GSD: https://universaldependencies.org/treebanks/de_gsd/index.html 
+
+## Dependency Parsing mit UDPipe
+
+Die im Abschnitt "Part of Speech Tagging mit UDPipe" vorgestellten UDPipe-Modelle werden nicht nur zum Bestimmen von Wortarten (POS Tagging), sondern auch zur Bestimmung der syntaktischen Relation von Wörtern zueinander verwendet (**Dependency Parsing**). Diese Informationen werden als Kürzel in den Spalten `head_token_id` und `dep_rel` abgebildet. `dep_rel` beschreibt die syntaktische Beziehung von zwei Wörtern zueinander. `head_token_id` gibt an, welche Richtung diese Beziehung hat. Diese Spalte enthält die ID des übergeordneten Tokens ("head"), von dem das aktuelle Token abhängt ("dependent"). Das bedeutet, das "Head" ist das Token, von dem das "Dependent" in der syntaktischen Struktur des Satzes abhängt. Jurafsky und Martin beschreiben das wie folgt: 
+
+>"The traditional linguistic notion of **grammatical relation** provides the basis for the binary relations that comprise these dependency structures. The arguments to these relations consist of a **head** and a **dependent**. The head plays the role of the central organizing word, and the dependent as a kind of modifier. The head-dependent relationship is made explicit by directly linking heads to the words that are immediately dependent on them.
+In addition to specifying the head-dependent pairs, dependency grammars allow
+us to classify the kinds of grammatical relations, or grammatical function that the dependent plays with respect to its head. These include familiar notions such as subject, direct object and indirect object."
+
+Quelle: [Jurafsky/Martin 2023: Ch.18, S.2](https://web.stanford.edu/~jurafsky/slp3/18.pdf).
+
+Dependency Parsing funktioniert ähnlich wie POS-Tagging: Dabei annotieren Linguist:innen manuell ein Textkorpus und fügen Informationen zur syntaktischen Relation der Wörter hinzu, und dieser Datensatz wird dann zur Erkennung der syntaktischen Relationen in neuen Texten verwendet. Die Treebanks des Universal Dependencies Projekts enthalten neben den POS Tags auch Informationen zur zur syntaktischen Struktur eines Korpus. Die folgenden Abbildungen zeigen beispielhaft, wie die Beziehung zwischen den Wörtern in Sätzen auf verschiedenen Sprachen dargestellt werden kann.  **Im Kontext des Universal Dependencies Projekts ist "Head" das Wort, von dem der Pfeil ausgeht; "Dependent" ist das Wort, auf das der Pfeil zeigt.** Im zweiten Beispiel ist "Ekaitzak" (storm) das Subjekt des Satzes (im UDpipe-Dataframe stände unter `dep_rel` das Kürzel "nsubj"). Head von "Ekaitzak" ist das Verb "hondoratu" (sunk); "Ekaitzak" ist also dessen Dependent. Das Verb "hondoratu" (sunk) ist "root" des Satzes, also das zentrale Wort, von dem alle anderen Satzelemente abhängen.
+
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/jurafsky-martin_dependency_trees.png")
+```
+
+Quelle: [Jurafsky/Martin 2023: Ch.18, S.5](https://web.stanford.edu/~jurafsky/slp3/18.pdf).
+ 
+Der Entwickler von UDPipe hat ein weiteres R Paket, textplot, entwickelt, welches dazu dient, die syntaktischen Beziehungen, welche mithilfe von UDPipe identifiziert wurden, zu visualisieren. **Das textplot-Paket verwendet eine alternative Pfeilrichtung: Hier ist "Dependent" das Wort, von dem der Pfeil ausgeht und "Head" ist das Wort, auf das der Pfeil zeigt.** Das folgende Beipsiel zeigt, wie Dependencies unter Verwendung des GSD-Modells mithilfe des textplot-Pakets dargestellt werden (Quelle: https://corpling.hypotheses.org/4178):  
+
+```{r message=FALSE, warning=FALSE}
+library(udpipe)
+
+test <- "Die Königstochter war so schön wie die Sonne."
+```
+```{r eval=FALSE}
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,}
+ud_model <- udpipe_load_model("./models/german-gsd-ud-2.5-191206.udpipe")
+
+```
+
+```{r message=FALSE, warning=FALSE}
+x <- udpipe(test, ud_model)
+
+```
+
+```{r message=FALSE, warning=FALSE}
+library(textplot)
+textplot_dependencyparser(x, size = 4)  
+```
+
+Die Pfeilrichtung kann also mitunter verschieden sein; die Bedeutung ist jedoch dieselbe. 
+
+:::task
+Verständnisfrage:
+
+Betrachtet die Beziehung zwischen den Wörtern "Königstochter" und "schön". 
+
+* Welches Wort ist "Head"? 
+* Welches Wort ist "Dependent"? 
+* Was bedeutet "nsubj"?
+
+Gleicht eure Ergebnisse mit den Werten in den Spalten `head_token_id` und `dep_rel` ab (der Dataframe befindet sich im Abschnitt 9.2). 
+
+:::
+
+## Beispielanalyse: Märchen
+
+### Korpus einlesen und Preprocessing
+
+```{r warning=FALSE, message=FALSE}
+
+library(readtext)
+library(quanteda)
+library(quanteda.textplots)
+library(udpipe)
+library(ggplot2)
+library(plotly)
+
+```
+
+```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+maerchen_alle <- readtext("data/maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
+```
+
+```{r eval=FALSE}
+# Arbeitsverzeichnis setzen
+setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
+
+# Märchen von 1857 und 1812/15 einlesen und Informationen aus dem Dateinamen extrahieren
+maerchen_alle <- readtext("maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
+```
+
+```{r}
+# Quanteda-corpus-Objekt erstellen
+maerchen_corpus_alle <- corpus(maerchen_alle) 
+
+# Teilkorpus extrahieren
+maerchen_corpus <- corpus_subset(maerchen_corpus_alle, Jahr == 1857)
+
+# Quanteda tokens-Objekt erstellen ohne weiteres Preprocessing
+maerchen_toks_raw <- tokens(maerchen_corpus)
+```
+
+```{r eval=FALSE}
+# UDPipe Modell herunterladen und laden: Per Default ist das UD_German-GSD, wenn nur "german" angegeben wird
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+```
+
+```{r error=TRUE}
+# Dieser Code produziert eine Fehlermeldung: udpipe() kann nicht auf bereits tokenisiertes Objekt angewandt werden
+x <- udpipe(maerchen_toks_raw, ud_model)
+
+```
+
+Beim Versuch, die Funktion `udpipe()` auf unser Quanteda tokens-Objekt anzuwenden, bekommen wir eine Fehlermeldung, die uns mitteilt, dass `udpipe()` nicht auf ein bereits tokenisiertes Objekt angewandt werden kann. In den [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) können wir nachlesen, wie wir POS Tagging und Dependency Parsing für ein bereits tokenisiertes Korpus durchführen können: Anstelle der Funktion `udpipe()` muss dafür die Funktion `udpipe_annotate()` verwendet werden, und zwar mit den Argumenten `tagger="default"` (für das POS Tagging),  `parser="default"` (für das Dependency Parsing) und `tokenizer = "vertical"` (damit die Tokens beibehalten werden). Die [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) geben außerdem die folgende Codezeile (die mit sapply()) zur Vorbereitung des Tokens-Objekts für die Annotation mit udpipe an:  
+
+```{r eval=FALSE}
+# Quanteda tokens-Objekt für die Verarbeitung mit der Funktion udpipe_annotate() vorbereiten
+maerchen_txt <- sapply(maerchen_toks_raw, FUN=function(x) paste(x, collapse = "\n"))
+
+# Lemmatisierung, POS-Tagging und Dependency Parsing mit udpipe_annotate()
+maerchen_annotated <- udpipe_annotate(ud_model, maerchen_txt, tagger="default", parser="default", tokenizer = "vertical", doc_id = maerchen_toks_raw$Titel)
+
+# Annotiertes Korpus zwischenspeichern
+saveRDS(maerchen_annotated, file="data/maerchen_annotated.rds")
+```
+
+Die Annotation eines gesamten Korpus dauert je nach Rechenleistung des Computers sehr lange. Es ist deswegen ratsam, das annotierte Korpus zwischenzuspeichern, damit es nicht für jede RStudio Sitzung neu erzeugt werden muss. Wir speichern unser Objekt `maerchen_annotated` als RDS-Datei, ein R-internes Datenformat, das zum Zwischenspeichern von R-Objekten verwendet werden kann (s. [Abschnitt 5.8](file:///Users/lipogg/Desktop/LV_Einfuehrung_WS2324/einfuehrung-in-r/docs/textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben)). RDS-Dateien können in eine R Sitzung eingelesen werden mit: 
+
+
+```{r}
+# So kann das annotierte Korpus eingelesen werden 
+maerchen_annotated <- readRDS(file="data/maerchen_annotated.rds")
+
+```
+
+Zuletzt muss das annotierte Korpus noch in einen Dataframe umgewandelt werden:
+
+```{r attr.output='style="max-height: 200px;"'}
+# In Dataframe umwandeln
+maerchen_df <- as.data.frame(maerchen_annotated)
+maerchen_df # View(maerchen_df) im RStudio
+```
+
+### Analyse mit POS Tags
+
+Mithilfe der POS Tags in der Spalte `upos` können wir zum Beispiel eine **Token-Häufigkeitsanalyse auf bestimmte Wortarten eingrenzen**. Wir wiederholen beispielhaft die Token-Häufigkeitsanalyse aus der vergangenen Woche für alle Substantive in unserem Märchenkorpus:
+
+```{r}
+# Auf Lemmata zugreifen, die Substantive sind
+substantive <- maerchen_df$lemma[maerchen_df$upos == "NOUN"]
+# Wie viele Substantive gibt es?  
+length(substantive)
+# Quanteda-DFM erstellen 
+substantive_dfm <- dfm(substantive)
+# 100 häufigste Substantive
+top_substantive <- topfeatures(substantive_dfm, n=100)
+
+# Substantive-Wordcloud
+set.seed(100)
+textplot_wordcloud(substantive_dfm,  
+                   min_count = 6, 
+                   random_order = FALSE, 
+                   rotation = .25,
+)
+
+```
+
+Es können auch ganz ohne Quanteda mithilfe der udpipe-Funktion `document_term_frequencies()` die Substantive und ihre Vorkommen je Text als Dataframe dargestellt werden: 
+
+```{r attr.output='style="max-height: 200px;"'}
+# Auf alle Zeilen zugreifen, in denen in der Spalte upos "NOUN" steht: Also Dataframe nach Substantiven filtern
+substantive_df <- maerchen_df[maerchen_df$upos == "NOUN",]
+# Häufigkeiten der Lemmata mit Vergleich der Texte untereinander 
+substantive_freqs <- document_term_frequencies(substantive_df, document = "doc_id", term = "lemma")
+substantive_freqs
+```
+
+
+:::task
+Verständnisfrage:
+
+- Was ist der Unterschied zwischen den beiden Zugriffsoperationen `maerchen_df$lemma[maerchen_df$upos == "NOUN"]` und `maerchen_df[maerchen_df$upos == "NOUN",]`?
+
+:::
+
+Das Objekt `substantive_freqs` lässt sich allerdings nicht mit der Quanteda-Funktionen weiter verarbeiten. Aber da es sich um einen Dataframe handelt, können ggplot2-Funktionen verwendet werden, um die Worthäufigkeiten grafisch darzustellen. Denn wie aus der letzten Stunde bekannt ist, erwarten ggplot2-Funktionen als Argument stets einen Dataframe.
+Im Folgenden soll eine Überblicksdarstellung über die 50 häufigsten Substantive erstellt werden. Das Objekt `substantive_freqs` enthält die Häufigkeiten der Tokens je Text; uns interessieren jedoch die Häufigkeiten der Tokens über das gesamte Korpus hinweg. Um das zu erreichen, bearbeiten wir zunächst den Dataframe `substantive_df` so, dass die Funktion  `document_term_frequencies()` die Gesamthäufigkeiten der Tokens berechnet anstelle der Häufigkeiten je Text. Die Funktion `document_term_frequencies()` erwartet ein Argument `document`. Wenn hier die Spalte `doc_id` mit den Titeln der Märchen angegeben wird, dann werden die Häufigkeiten für jedes Märchen in der Spalte `doc_id` separat bestimmt. Um stattdessen die Häufigkeiten für alle Märchen zu erhalten, müssen wir eine Spalte angeben, die für jedes Märchen den selben Wert enthält. So eine Spalte gibt es im Dataframe `substantive_df` noch nicht, aber wir können uns das Prinzip der Vektorisierung zunutze machne, um ganz leicht eine neue Spalte zu erstellen, die in jeder Zeile den selben Wert enthält. Wir nennen die Spalte `group` und wählen `all`, um zu signalisieren, dass die Häufigkeiten für alle Texte berechnet werden. Die Benennung der Spalte und der Werte ist aber beliebig, wichtig ist nur, dass für jedes Märchen derselbe Wert steht. 
+
+
+```{r}
+# Neue Spalte group erstellen mit demselben Wert für alle Märchen
+substantive_df$group <- "all"
+# Häufigkeiten der Lemmata über alle Texte hinweg für das gesamte Korpus
+substantive_freqs <- document_term_frequencies(substantive_df, document = "group", term = "lemma")
+# Absteigend ordnen
+freqs_sorted <- substantive_freqs[order(-substantive_freqs$freq), ]
+# 50 häufigste Tokens auswählen
+freqs_filtered <- freqs_sorted[1:50]
+# 50 häufigste Tokens plotten 
+ggplot(freqs_filtered, aes(x = freq, y = reorder(term, freq))) +
+  geom_point() +
+  theme(axis.text.y = element_text(vjust = 0.5, hjust=1, size=4)) + 
+  labs(x = "Feature", y = "Frequency")
+
+```
+
+Das Objekt `substantive_freqs` könnten wir außerdem  weiterverwenden, um TF-IDF-Werte zu erhalten, und zwar mit `document_term_frequencies_statistics(substantive_freqs)` (zu TF-IDF siehe Abschnitt 8.9 aus der vergangenen Woche). 
+
+Mithilfe der POS Tags können wir außerdem  **Kookkurrenzen von Wörtern bestimmter Wortarten bestimmen**, zum Beispiel Kookkurrenzen von Adjektiven und Substantiven. 
+
+Das Paket UDPipe bietet eine eigene Funktion, um Kookkurrenzen zu extrahieren, `occurrence()`. Während Kookkurrenzen in Quanteda als Feature Co-Occurrence Matrix (FCM) abgebildet werden, werden sie in UDPipe als Dataframe repräsentiert. Die Funktion `occurrence()` erlaubt es, die Kookkurrenzen direkt nach den mithilfe der Funktion `udpipe_annotate()` extrahierten POS Tags zu filtern. Dazu kann der Parameter `relevant` verwendet werden.
+
+
+```{r attr.output='style="max-height: 200px;"'}
+# Alle Kookkurrenzen von Adjektiven und Substantiven, Adjektiven und Adjektiven oder Substantiven und Substantiven
+maerchen_cooc <- cooccurrence(maerchen_df$lemma, relevant = maerchen_df$upos %in% c("NOUN", "ADJ"), skipgram = 5)
+maerchen_cooc
+```
+
+Die Kookkurrenzen können danach mithilfe von regulären Ausdrücken weiter gefiltert werden. Beispielsweise kann wie folgt auf alle Kookkurrenzen zugegriffen werden, die ein Token mit der Zeichenkette "schön" enthalten: 
+
+
+```{r attr.output='style="max-height: 200px;"'}
+maerchen_cooc[grepl("schön", maerchen_cooc$term1), ]
+
+maerchen_cooc[grepl("schön", maerchen_cooc$term2), ]
+```
+
+Es können mit UDPipe mithilfe der Funktion `keywords_collocation()` auch Kollokationen bestimmt werden, aber da diese Funktion andere Assoziationsmaße nutzt als die Quanteda-Funktion  `textstat_collocations()` werden wir diese Funktion nicht im Detail besprechen.
+
+### Analyse mit Dependency Relations
+
+Mithilfe der POS-Tags, dem Kürzel in der Spalte `dep_rel` und der `head_token_id` des Tokens, von dem ein Token abhängt, können wir **untersuchen, welche Wörter bestimmter Wortarten sich syntaktisch aufeinander beziehen**. Im Folgenden werden wir verschiedene  Adjektiv-Substantiv-Paare vergleichen, die sich auch tatsächlich syntaktisch aufeinander beziehen. Die [UDPipe-Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc7.html#option-6-use-dependency-parsing-output-to-get-the-nominal-subject-and-the-adjective-of-it) schlagen das folgende Vorgehen vor: 
+
+```{r attr.output='style="max-height: 200px;"'}
+stats <- merge(maerchen_df, maerchen_df, 
+               by.x = c("doc_id", "paragraph_id", "sentence_id", "head_token_id"),
+               by.y = c("doc_id", "paragraph_id", "sentence_id", "token_id"),
+               all.x = TRUE, all.y = FALSE, 
+               suffixes = c("", "_parent"), sort = FALSE)
+stats
+```
+
+Was macht dieser Code? Dem Dataframe `maerchen_df` werden einige Spalten mit weiteren Informationen hinzugefügt. Genauer gesagt wird jedem Token durch Abgleich der Werte in den Spalten `doc_id`, `paragraph_id`, `sentence_id`, `token_id` und `head_token_id` sein "Head"-Token zugeordnet, also das Token, von dem das aktuelle Token syntaktisch abhängt.  Die Metainformationen zu dem so identifizierten Head-Token werden an den ursprünglichen Dataframe  `maerchen_df` angehängt. Die Spalten, die die Informationen zum Head-Token enthalten, werden dabei jeweils mit dem Zusatz "_parent" benannt, also `token_parent`, `lemma_parent`, `upos_parent`, usw. Anschließend kann der Dataframe nach Werten in den Spalten `upos` und `upos_parent` gefiltert werden. 
+
+Aber Achtung: Beim Filtern des Dataframes müssen wir alle verschiedenen Beziehungen berücksichtigen, in denen die gesuchten Wörter zueinander stehen können. Das lässt sich an einigen Beispielsätzen verdeutlichen: 
+
+"Die Königstochter war so schön wie die Sonne."
+
+* Head von "Königstochter" ist "schön" (s. Spalte `head_token_id`)
+* `dep_rel` von "Königstochter" ist `nsubj`, "schön" ist `root` 
+
+"Die schöne Königstochter ging in den Wald."
+
+* Head von "schön" ist "Königstochter", aber Head von "Königstochter" ist "ging"
+* `dep_rel` von "Königstochter" ist `nsubj`, von "schön" `amod`
+
+"Der König hatte eine schöne Königstochter."
+
+* Head von "Königstochter" ist "schön"
+* `dep_rel` von "Königstochter" ist `obj`, von "schön" `amod` 
+
+Nachdem alle Head-Tokens der neuen Spalte `upos_parent` hinzugefügt wurden (s.o.), haben wir also im Grunde zwei Fälle: Entweder "schön" steht in der Spalte `upos` und "Königstochter" in der Spalte `upos_parent`, oder andersherum; in diesem Fall ist `dep_rel` von "Königstochter" `nsubj`.
+
+Im folgenden Beispiel wird die R-Base-Funktion `subset()` verwendet, um den Dataframe `stats` zu filtern, und zwar nach allen Zeilen, in denen in der Spalte `upos` "ADJ" steht, und in der Spalte `upos_parent` "NOUN", und andersherum. Der gefilterte Dataframe `stats_filtered` enthält also alle Adjektiv-Substantiv-Paare, die in einer syntaktischen Beziehung zueinander stehen. Darunter auch alle Kombinationen von "schön" und "Königstochter".   
+
+```{r attr.output='style="max-height: 200px;"'}
+# Filter für den ersten Fall: "schön" steht in der Spalte upos
+first_case <- subset(stats, upos %in% c("ADJ") & upos_parent %in% c("NOUN"))
+# Filter für den zweiten Fall: "schön" steht in der Spalte upos_parent
+second_case <- subset(stats, dep_rel %in% "nsubj" & upos %in% c("NOUN") & upos_parent %in% c("ADJ"))
+# Dataframes first_case und second_case kombinieren: 
+stats_filtered <- rbind(first_case, second_case)
+
+stats_filtered # View(stats_filtered) im RStudio
+```
+
+Dem gefilterten Dataframe wird zuletzt eine neue Spalte `term` hinzugefügt, welche das Adjektiv-Substantiv-Paar enthält: 
+
+```{r attr.output='style="max-height: 200px;"'}
+# Für die Spalte stats-filtered nehmen wir Lemmata, damit hier auch "Töchter" auftaucht, nicht nur "Tochter"
+stats_filtered$term <- paste(stats_filtered$lemma_parent, stats_filtered$lemma, sep = " ")
+stats_filtered # View(stats_filtered) im RStudio
+```
+
+Anschließend kann die UDPipe-Funktion `txt_freq()` verwendet werden, um eine Häufigkeitstabelle für die so identifizierten Wortpaare zu generieren: 
+
+```{r attr.output='style="max-height: 200px;"'}
+# Häufigste Adjektiv-Substantiv-Paare allgemein
+stats_freq <- txt_freq(stats_filtered$term)
+stats_freq
+# ?txt_freq
+
+```
+
+Die Häufigkeiten können in einem simplen Säulendiagramm visualisiert werden. 
+
+```{r}
+# Nur Wortpaare anzeigen, die mindestens 10 Mal vorkommen
+stats_freq_filtered <- stats_freq[stats_freq$freq >= 10,]
+# Säulendiagramm erstellen 
+alle_plot <- ggplot(stats_freq_filtered, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare", y = "Anzahl")
+ggplotly(alle_plot)
+```
+
+Dasselbe können wir schließlich für verschiedene Tokens durchführen, die uns in Bezug auf unsere Fragestellung interessieren. In der Übungsaufgabe 10 habt ihr euch N-Gramme und Kookkurrenzen mit den Tokens "sohn" und "schön" angesehen. Im Vergleich mit den Tochter-Tokens gab es zwar deutlich weniger N-Gramme mit "sohn" und "schön", aber dafür deutlich mehr und sogar erstaunlich viele Kookkurrenzen mit "sohn" und "schön". Die einfachen Token-Häufigkeitsanalysen haben jedoch keine Information darüber geliefert, ob die Kookkurrenzen tatsächlich inhaltlich aussagekräftig sind; ob also "schön" tatsächlich zur Beschreibung von Charakteren verwendet wurde. Diese Frage können wir jetzt klären, indem wir Wortpaare mit "schön" und "tochter" und Wortpaare mit "schön" und "sohn", bei denen sich die Wörter syntaktisch aufeinander beziehen, vergleichen. 
+
+```{r attr.output='style="max-height: 200px;"'}
+# Adjektiv-Substantiv Paare mit Tochter
+stats_subset <- stats_filtered[grepl("(t|T)ochter", stats_filtered$token_parent), ] # kann nur token_parent sein, weil das das Substantiv ist
+stats_freq <- txt_freq(stats_subset$term)
+stats_freq
+```
+```{r}
+tochter_plot <- ggplot(stats_freq, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare mit Tochter-Tokens", y = "Anzahl")
+ggplotly(tochter_plot)
+```
+```{r attr.output='style="max-height: 200px;"'}
+# Adjektiv-Substantiv Paare mit Sohn
+stats_subset <- stats_filtered[grepl("(s|S)ohn", stats_filtered$token_parent), ] # kann nur token_parent sein, weil das das Substantiv ist
+stats_freq <- txt_freq(stats_subset$term)
+stats_freq
+```
+```{r}
+sohn_plot <- ggplot(stats_freq, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare mit Sohn-Tokens", y = "Anzahl")
+ggplotly(sohn_plot)
+
+```
+
+:::task
+Verständnisfragen:
+
+- Was zeigen die beiden Diagramme? 
+- Wie können wir diese Daten in Bezug auf unsere Fragestellung deuten? 
+
+:::
+
+Wir können in einem nächsten Schritt außerdem Adjektiv-Substantiv-Paare mit "schön", "häßlich" oder auch anderen Märchen-Charakteren wie "König" und "Königin" mit den Tochter- und Sohn-Wortpaaren vergleichen: 
+
+```{r}
+# Adjektiv-Substantiv Paare mit schön
+stats_subset <- stats_filtered[grepl("schön", stats_filtered$token), ] # kann nur token sein, weil das die Adjektive sind
+stats_freq <- txt_freq(stats_subset$term)
+schoen_plot <- ggplot(stats_freq, aes(x = key, y = freq)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, size=4)) +
+  labs(x = "Adjektiv-Substantiv Paare mit schön-Tokens", y = "Anzahl")
+ggplotly(schoen_plot)
+
+# Adjektiv-Substantiv Paare mit häßlich
+stats_subset <- stats_filtered[grepl("häßlich", stats_filtered$token), ] # kann nur token sein, weil das die Adjektive sind
+stats_freq <- txt_freq(stats_subset$term)
+schoen_plot <- ggplot(stats_freq, aes(x = key, y = freq)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare mit schön-Tokens", y = "Anzahl")
+ggplotly(schoen_plot)
+
+# Adjektiv-Substantiv Paare mit König
+# Hier filtern wir mit ==, weil wir nur exakt das Token König wollen, nicht etwa "Königin" etc. 
+stats_subset <- stats_filtered[stats_filtered$token_parent == "König", ] # kann nur token_parent sein, weil das die Substantive sind
+stats_freq <- txt_freq(stats_subset$term)
+koenig_plot <- ggplot(stats_freq, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare mit König-Tokens", y = "Anzahl")
+ggplotly(koenig_plot)
+
+# Adjektiv-Substantiv Paare mit Königin
+# Hier filtern wir mit ==, weil wir nur exakt das Token König wollen, nicht etwa "Königin" etc. 
+stats_subset <- stats_filtered[stats_filtered$token_parent == "Königin", ] # kann nur token_parent sein, weil das die Substantive sind
+stats_freq <- txt_freq(stats_subset$term)
+koenigin_plot <- ggplot(stats_freq, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Adjektiv-Substantiv Paare mit Königin-Tokens", y = "Anzahl")
+ggplotly(koenigin_plot)
+```
+
+Zuletzt könnten wir noch weitere Aspekte mit demselben Verfahren untersuchen: Wir könnten zum Beispiel vergleichen, welche Verben verschiedenen Charakteren zugeschrieben werden, oder welche Tokens in einem Satz eher als Subjekt und eher als Objekt vorkommen. 
+
+```{r}
+
+# Verb-Substantiv Paare mit "Tochter": Diesmal wird auch die Spalte dep_rel zum Filtern verwendet
+stats_filtered <- subset(stats, dep_rel %in% "nsubj" & upos %in% c("NOUN") & upos_parent %in% c("AUX", "VERB"))
+View(stats_filtered)
+stats_filtered$term <- paste(stats_filtered$lemma_parent, stats_filtered$lemma, sep = " ")
+stats_subset <- stats_filtered[grepl("(t|T)ochter", stats_filtered$token), ] # kann nur token sein, weil das das Substantiv ist
+stats_freq <- txt_freq(stats_subset$term)
+# Visualisieren
+verben_plot <- ggplot(stats_freq, aes(x = key, y = freq)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, size=4)) +
+  labs(x = "Verb-Substantiv Paare mit Tochter-Tokens", y = "Anzahl")
+# ggplotly(verben_plot)
+```
+
+UDPipe bietet daneben einige Funktionen zur automatischen Extraktion von Schlüsselwörtern und relevanten Wortpaaren wie beispielsweise `keywords_rake()`. Mehr dazu [hier](https://bnosac.github.io/udpipe/docs/doc7.html#option-4-rapid-automatic-keyword-extraction-rake). Es lohnt sich also ein Blick in die Dokumentationsseiten des Pakets UDPipe unter  https://bnosac.github.io/udpipe/en/ und https://cran.r-project.org/web/packages/udpipe/udpipe.pdf.
+
+## Fazit 
+
+Bei der Interpretation der Ergebnisse sollten wir die Performance des gewählten Modells sowie die Art und Qualität der Texte in unserem Korpus berücksichtigen. Die Ergebnisse waren nicht fehlerfrei und wir können davon ausgehen, dass die Ergebnisse der Verfahren für unsere Märchentexte um einiges schlechter sein werden als die angegebenen Prozentzahlen für das Testkorpus, da unsere Texte sich im Inhalt, in der Textgattung und auch im historischen Kontext von den Texten aus dem Trainingskorpus unterscheiden. Genau aus diesem Grund gibt es in den Digital Humanities viele Bestrebungen, domänenspezifische Modelle zu entwickeln, um die Ergebnisse für historische und literarische Texte zu verbessern. 
+
+Trotzdem zeigt unsere Beispielanalyse deutlich, dass beispielsweise (Königs-)Töchter in den Märchen mit anderen Adjektiven beschrieben werden als (Königs-)Söhne, und die Schönheit (oder Hässlichkeit) der Königstöchter ein Merkmal zu sein scheint, das immer wieder beschrieben wird. Diese Erkenntnis ist natürlich etwas banal, aber an einem banalen Fall zeigen sich hoffentlich besonders gut die Stärken, Schwachstellen und Fallstricke verschiedener Methoden der Textanalyse mit R. Es ist dabei hoffentlich etwas deutlich geworden, wie geisteswissenschaftliche Fragestellungen in die Logik einer Programmiersprache übersetzt werden können. Und es zeigt sich auch, dass der quantitative  Zugriff auch dabei helfen kann, neue Fragestellungen zu generieren: Warum wird so häufig das Alter der Könige erwähnt? Was hat die goldene Farbe von Haaren, Äpfeln, Pferden, und anderen Tieren oder Objekten in den Märchen zu bedeuten? Und warum ist König der bei weitem am häufigsten erwähnte Charakter in den Märchen? 
+
+Unsere Analyse hat aber immer noch einige Einschränkungen: sind die Königstochter oder der Königssohn wirklich Charaktere, die aus der Erzählperspektive als schön beschrieben werden, oder beschreibt vielleicht ein anderer Charakter die Königstochter als schön? Wie verhält es sich mit Textstellen, an denen eine  Königstochter als “nicht schön” beschrieben wird? Zumindest die letzte Frage ließe sich mithilfe der in diesem Kapitel vorgestellten Verfahren beantworten, nämlich indem geschaut wird, ob ein “nicht” sich syntaktisch auf das “schön” bezieht. Aber die Identifizierung von Sprechtexten gegenüber Erzähltext ist nicht mehr so leicht zu automatisieren. Textkorpora können deswegen manuell oder halbautomatisiert mit weiteren Metainformationan zur Struktur des Textes annotiert werden. Für die Annotation solcher Metainformationen hat sich in den Digital Humanities ein Standard durchgesetzt, der sich XML-TEI nennt. Damit werden wir uns in der übernächsten Woche beschäftigen. In der kommenden Woche betrachten wir zunächst, wie weitere Informationen aus Texten extrahiert werden können, und zwar sogenannte Named Entities, oder "benannte Entitäten". Mithilfe von einem Verfahren, das sich Named Entity Recognition nennt, können Entitäten wie Personennamen, Orte oder Organisationen erkannt und extrahiert werden.
+
+
+## Quellen {-}
+
+- Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. Chapter 8: Sequence Labeling for Parts of Speech and Named Entities*, https://web.stanford.edu/~jurafsky/slp3/8.pdf. 
+Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. Chapter 17.3: Treebanks*, https://web.stanford.edu/~jurafsky/slp3/17.pdf.
+Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. Chapter 18: Dependency Parsing*, https://web.stanford.edu/~jurafsky/slp3/18.pdf.
+- Wijffels, Jan (2023), *UDPipe Natural Language Processing - Text Annotation*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html.
+- Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3.4: Linguistic Preprocessing*, https://cssbook.net/content/chapter10.html#sec-nlp.
+- Desagulier, Guillaume (2022). *Dependency Parsing in R with UDPipe*, https://corpling.hypotheses.org/4178. 
+- Biemann, Chris, Heyer, Gerhard und Quasthoff, Uwe (2013). Wissensrohstoff Text. Eine Einführung in das Text Mining. Kap. 2.3: Syntaktische Repräsentationen, https://doi.org/10.1007/978-3-658-35969-0_2.  
+- Ghassemi, Mohammad (2021). *NLP Lecture 7 - Constituency Parsing*, https://www.youtube.com/watch?v=pXTrY2GPMn0&list=PLr9TFf9GjancAHiiP5cqGmYsZad99Uf_h. 
+- Ghassemi, Mohammad (2021). *NLP Lecture 7(d) - Dependency Parsing*, https://www.youtube.com/watch?v=2jLk93iIyrw. 
+- Charles University Prague (ed.), *UDPipe 2 Models. Model Performance*, https://ufal.mff.cuni.cz/udpipe/2/models#universal_dependencies_212_models.
+- Welbers, Kasper (2020). Text Analysis in R. Part 1b: Advanced Preprocessing, https://www.youtube.com/watch?v=tQoCjVat6UE.
+- BNOSAC (2020). *NLP with R and UDPipe. Basic Analytical Use Cases I: UDPipe - Basic Analytics*,  https://bnosac.github.io/udpipe/docs/doc5.html.
+- BNOSAC (2020). *NLP with R and UDPipe. Basic Analytical Use Cases III: An Overview of Keyword Extraction Techniques*,  https://bnosac.github.io/udpipe/docs/doc7.html. 
+- Universal Dependencies Contributors (2021). *UD for German*, https://universaldependencies.org/de/index.html.
+- Universal Dependencies Contributors (2022).  *Comparison of German Treebanks*,  https://universaldependencies.org/treebanks/de-comparison.html. 
+- Universal Dependencies Contributors (2022). *UD German GSD*, https://universaldependencies.org/treebanks/de_gsd/index.html. 
+- Universal Dependencies Contributors (2022). *Universal POS Tags*, https://universaldependencies.org/u/pos/index.html. 
+- Caughlin, David (2023). *R for HR. Ch. 17: Joining (Merging) Data*, https://rforhr.com/join.html. 
+

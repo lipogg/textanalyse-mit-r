@@ -1,0 +1,17 @@
+# Book build output
+_book
+_bookdown_files
+
+# R and R Studio related files
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Rapp.history
+einfuehrung-in-r.rds
+
+# Conda environment for Spacy and Flair setup 
+nlp-env/
+
+# Language models
+models/

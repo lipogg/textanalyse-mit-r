@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Textanalyse I: Korpus, Tokens, Daten und Dateien | Einführung in R: Programmieren für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Textanalyse I: Korpus, Tokens, Daten und Dateien | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/einfuehrung-in-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Textanalyse I: Korpus, Tokens, Daten und Dateien | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-basics-iv-funktionen-und-pakete.html"/>
+<link rel="next" href="exkurs-reguläre-ausdrücke.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#was-ist-r-überhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatorpräzedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html"><i class="fa fa-check"></i><b>2</b> R Basics II: Datenstrukturen</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#grundlegende-begriffe-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektoren"><i class="fa fa-check"></i><b>2.2</b> Vektoren</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#sets-mengen"><i class="fa fa-check"></i><b>2.2.1</b> Sets (Mengen)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#named-vectors"><i class="fa fa-check"></i><b>2.2.2</b> Named Vectors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#faktoren"><i class="fa fa-check"></i><b>2.2.3</b> Faktoren</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-vektoren"><i class="fa fa-check"></i><b>2.2.4</b> Zugriffsoperationen auf Vektoren</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektorisierung"><i class="fa fa-check"></i><b>2.2.5</b> Vektorisierung</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#listen"><i class="fa fa-check"></i><b>2.3</b> Listen</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-listen"><i class="fa fa-check"></i><b>2.3.1</b> Zugriffsoperationen auf Listen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-vektoren-vs-benannte-vektoren-vs-faktoren-vs-listen"><i class="fa fa-check"></i><b>2.4</b> Auf einen Blick: Vektoren vs benannte Vektoren vs Faktoren vs Listen</a></li>
+<li class="chapter" data-level="2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#matrizen"><i class="fa fa-check"></i><b>2.5</b> Matrizen</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-matrizen"><i class="fa fa-check"></i><b>2.5.1</b> Zugriffsoperationen auf Matrizen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#arrays"><i class="fa fa-check"></i><b>2.6</b> Arrays</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-arrays"><i class="fa fa-check"></i><b>2.6.1</b> Zugriffsoperationen auf Arrays</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#dataframes"><i class="fa fa-check"></i><b>2.7</b> Dataframes</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-dataframes"><i class="fa fa-check"></i><b>2.7.1</b> Zugriffsoperationen auf Dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes"><i class="fa fa-check"></i><b>2.8</b> Auf einen Blick: Matrizen vs Arrays vs Dataframes</a></li>
+<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen"><i class="fa fa-check"></i><b>2.9</b> Datenstrukturen untersuchen</a></li>
+<li class="chapter" data-level="2.10" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.10</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
+<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
+<li class="chapter" data-level="2.12" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
+<li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.1</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.2</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.3</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.4</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.5</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.1</b> Was sind Funktionen?</a></li>
+<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.2</b> Funktionen definieren</a></li>
+<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.3</b> Funktionen aufrufen</a></li>
+<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.4</b> Funktionen verstehen</a></li>
+<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.5</b> Wozu werden Funktionen verwendet?</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.6</b> Schleifen ersetzen mithilfe von Funktionen</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.6.1</b> Die Apply-Funktionen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.7</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
+<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.8</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
+<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.9</b> Was sind Pakete?</a></li>
+<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.10</b> Pakete installieren</a></li>
+<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.11</b> Pakete laden</a></li>
+<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.12</b> Wozu werden Pakete verwendet?</a></li>
+<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.13</b> Welche Pakete gibt es denn alles?</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
+<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
+<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.3</b> Überblick: Textanalyse mit Quanteda</a></li>
+<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.4</b> Textdateien einlesen</a></li>
+<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.5</b> Quanteda corpus-Objekte</a></li>
+<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda tokens-Objekte</a></li>
+<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda DFM-Objekte</a></li>
+<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.8</b> Daten schreiben</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#was-sind-reguläre-ausdrücke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
+<li class="chapter" data-level="6.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#reguläre-ausdrücke-in-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
+<li class="chapter" data-level="6.2.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
+<li class="chapter" data-level="6.3.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
+<li class="chapter" data-level="6.3.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-für-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
+<li class="chapter" data-level="" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#weiterführende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
+<li class="chapter" data-level="7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
+<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
+<li class="chapter" data-level="7.4" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
+<li class="chapter" data-level="7.5" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
+<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
+<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
+<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
+<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-preprocessing"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und Preprocessing</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#token-häufigkeitsanalyse"><i class="fa fa-check"></i><b>8.3</b> Token-Häufigkeitsanalyse</a></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.5</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.6</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.7</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keyness-analyse"><i class="fa fa-check"></i><b>8.8</b> Keyness-Analyse</a></li>
+<li class="chapter" data-level="8.9" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#tf-idf"><i class="fa fa-check"></i><b>8.9</b> TF-IDF</a></li>
+<li class="chapter" data-level="8.10" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#exkurs-lexikalische-vielfalt"><i class="fa fa-check"></i><b>8.10</b> Exkurs: Lexikalische Vielfalt</a></li>
+<li class="chapter" data-level="8.11" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#recap-und-ausblick"><i class="fa fa-check"></i><b>8.11</b> Recap und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
+<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
+<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
+<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
+<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
+<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
+<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>10</b> Named Entity Recognition</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.1</b> Korpus einlesen</a></li>
+<li class="chapter" data-level="10.2" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.2</b> Beispiel mit SpaCy / Spacyr</a></li>
+<li class="chapter" data-level="10.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit Flair / FlaiR</a></li>
+<li class="chapter" data-level="10.4" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.4</b> Vergleich und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>11</b> Exkurs: XML, TEI und XPath</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>11.1</b> Was ist XML? Was ist TEI?</a></li>
+<li class="chapter" data-level="11.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>11.2</b> Aufbau von XML-TEI Dokumenten</a></li>
+<li class="chapter" data-level="11.3" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wohlgeformtheit-und-validität"><i class="fa fa-check"></i><b>11.3</b> Wohlgeformtheit und Validität</a></li>
+<li class="chapter" data-level="11.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>11.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
+<li class="chapter" data-level="11.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>11.5</b> Was ist XPath?</a></li>
+<li class="chapter" data-level="11.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>11.6</b> Basics XPath Syntax</a></li>
+<li class="chapter" data-level="" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#weiterführende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>12</b> Arbeit mit XML-TEI-Dokumenten</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>12.1</b> Beispiel Dramenanalyse</a></li>
+<li class="chapter" data-level="12.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>12.2</b> Beispiel Geomapping</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>12.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
+<li class="chapter" data-level="12.2.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-über-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>12.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
+<li class="chapter" data-level="12.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>12.2.3</b> Koordinaten auf Karte abbilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in R: Programmieren für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="textanalyse-i-korpus-tokens-daten-und-dateien" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Textanalyse I: Korpus, Tokens, Daten und Dateien<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textanalyse-i-korpus-tokens-daten-und-dateien" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="was-sind-eigentlich-daten" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Was sind eigentlich Daten?<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>Most of my colleagues in literary and cultural studies would not necessarily speak of their objects of study as “data.” If you ask them what it is they are studying, they would rather speak of books, paintings and movies; of drama and crime fiction, of still lives and action painting; of German expressionist movies and romantic comedy. […] However, in the humanities just as in other areas of research, we are increasingly dealing with “data.”</p>
+</blockquote>
+<p>Quelle: Christoph Schöch (2013). <a href="http://journalofdigitalhumanities.org/2-3/big-smart-clean-messy-data-in-the-humanities/">Clean? Smart? Messy? Data in the Humanities, in: Journal of Digital Humanities 2, no. 3</a></p>
+<p>In den Geisteswissenschaften wird der Begriff “Daten” kaum verwendet, aber in den Digital Humanities allgemein und besonders in der Textanalyse sind “Daten” allgegenwärtig. Auch in diesem Seminar haben wir bereits “Datentypen” und “Datenstrukturen” kennengelernt. Aber was sind denn eigentlich <em>geisteswissenschaftliche</em> Daten? Und was sind <em>Text</em>daten, oder anders formuliert: Wie wird eine Textdatei zu Daten, die in R repräsentiert, bearbeitet und ausgewertet werden können? Um uns dem Begriff anzunähern, betrachten wir zwei Passagen aus Christoph Schöchs Aufsatz <a href="(http://journalofdigitalhumanities.org/2-3/big-smart-clean-messy-data-in-the-humanities/)">“Big? Smart? Clean? Messy? Data in the Humanities”</a> (2013).</p>
+<p>Schöch fasst zunächst Diskussionen zur Begriffsbestimmung in den Digital Humanities zusammen:</p>
+<blockquote>
+<p>Some practitioners of digital humanities, notably Joanna Drucker, have argued that the term “data” is actually inadequate. And indeed, the term’s etymology seems problematic in the context of the humanities: it comes from the Latin datum, which means “that which is given.” This means it carries with it the meaning of an observer-independent fact which cannot be challenged in itself. Johanna Drucker prefers to speak of “capta” instead of data, literally “that which has been captured or gathered”, underlining the idea that even the very act of capturing data in the first place is oriented by certain goals, done with specific instruments, and driven by a specific attention to a small part of what could have been captured given different goals and instruments. In other words, capturing data is not passively accepting what is given, but actively constructing what one is interested in.</p>
+</blockquote>
+<p>Und schlägt dann eine eigene Definition für den Begriff “Daten” vor:</p>
+<blockquote>
+<p>Data in the humanities could be considered a digital, selectively constructed, machine-actionable abstraction representing some aspects of a given object of humanistic inquiry.</p>
+</blockquote>
+<p><strong>Geisteswissenschaftliche Daten</strong> sind also erst einmal ganz allgemein <strong>“digitale Abstraktionen”, die Aspekte eines (Forschungs-)Objekts repräsentieren</strong>. Sie sind dabei nicht einfach “gegeben”, sondern sie werden aktiv von Forscher:innen im Hinblick auf eine bestimmte Fragestellung konstruiert und mithilfe von ganz konkreten Methoden nach bestimmten Regeln gesammelt.</p>
+<p>Je nachdem, wie die so gesammelten Daten organisiert sind, kann zwischen <strong>strukturierten</strong> und <strong>unstrukturierten Daten</strong> unterschieden werden:</p>
+<blockquote>
+<p>Structured data is typically held in a database in which all key/value pairs have identifiers and clear relations and which follow an explicit data model. Plain text is a typical example of unstructured data, in which the boundaries of individual items, the relations between items, and the meaning of items, are mostly implicit. Data held in XML files is an example of semi-structured data, which can be more or less strictly constrained by the absence or presence of a more or less precise schema.</p>
+</blockquote>
+<p>Zusätzlich kann zwischen <strong>Daten</strong> und <strong>Metadaten</strong> unterschieden werden:</p>
+<blockquote>
+<p>[…] “data” refers to the part of a file or dataset which contains the actual representation of an object of inquiry, while the term “metadata” refers to data about that data: metadata explicitly describes selected aspects of a dataset, such as the time of its creation, or the way it was collected, or what entity external to the dataset it is supposed to represent.</p>
+</blockquote>
+<p>Aber was sind denn ganz konkret die Daten, mit denen wir bei der Textanalyse zu tun haben? Sind diese Daten strukturiert, unstrukturiert oder semi-strukturiert? Und was sind “Metadaten” von Textdaten?</p>
+</div>
+<div id="korpus-tokens-und-types" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Korpus, Tokens und Types<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In der Übungsaufgabe zur heutigen Sitzung habt ihr euch bereits die Begriffe “Korpus”, “Token”, “Type” und “Document-Term-Matrix” erarbeitet, und seid dabei zu folgenden Definitionen gelangt:</p>
+<ul>
+<li><strong>Korpus</strong>: Texte oder andere Objekte, die auf eine bestimmte Weise mit einem Forschungsziel oder im Hinblick auf einen bestimmten Aspekt gesammelt wurden. Bei Textkorpora kann das beispielsweise die Textsorte, Epoche oder Autor:in sein (s. <a href="https://fortext.net/ueber-fortext/glossar/korpus">forText</a>). “Eine nach bestimmten Regeln geordnete und nach Auswahlkriterien zusammengestellte Sammlung von Texten” (<a href="https://d-nb.info/1188242121/34">Riebling 2019, S. 152</a>).</li>
+<li><strong>Tokens</strong>: Vorkomnisse von Wörtern oder Äußerungen in Texten (s. <a href="https://fortext.net/ueber-fortext/glossar/type-token">forText</a>)</li>
+<li><strong>Types</strong>: Typen von Wörtern oder Äußerungen in Texten (s. <a href="https://fortext.net/ueber-fortext/glossar/type-token">forText</a>)</li>
+<li><strong>Document-Term-Matrix</strong> (oder <strong>Document-Feature-Matrix</strong>): Eine numerische Repräsentation eines Textkorpus als Matrix, bei der jede Zeile einem Satz oder Text (“document”) entspricht, und jede Spalte einem Token oder Type (“term” bzw. “feature”). In den Zellen wird angezeigt, ob bzw. wie häufig jedes Token oder Type in einem Dokument vorkommt (s. <a href="https://doi.org/10.1007/978-3-658-37747-2_9">Jünger/Gärtner 2023</a>; <a href="https://cssbook.net/content/chapter10.html#sec-dtm">Van Atteveldt 2022</a>).</li>
+</ul>
+<div class="tip">
+<p>Achtung</p>
+<p>Es heißt “<strong>das</strong> Korpus” und nicht “der Korpus”.</p>
+</div>
+<p>Wie verhalten sich also die Begriffe “Korpus”, “Tokens” und “Types” zum Begriff der Daten?</p>
+<p>Textkorpora liegen zunächst als <strong>Dateien</strong> vor, z.B. als PDF-Dateien, XML-Dateien oder Plaintext-Dateien. Diese Dateien selbst sind noch keine Daten. Damit der Text in R analysiert werden kann, muss der Computer den Text aus den Dateien einlesen können, und das geht nur, wenn der Text in maschinenlesbarer Form vorliegt. Plaintext-Dateien (also Dateien mit der Dateiendung .txt) und XML-Dateien (lernen wir noch) sind zum Beispiel immer maschinenlesbar, während ein Foto eines Textes oder ein Text, der eingescant und als PDF-Datei gespeichert wurde, nicht maschinenlesbar sind. Um solche Texte maschinenlesbar zu machen, müssen komplexe Verfahren der optischen Zeichenerkennung (OCR) angewandt werden. In diesem Seminar werden wir ausschließlich mit bereits maschinenlesbaren Texten arbeiten, und zwar mit Plaintext- und XML-Dateien.</p>
+<p>Ein Korpus kann direkt aus Plaintext- oder XML-Dateien in R eingelesen werden. Beim <strong>Einlesen</strong> von Plaintext-Dateien können <strong>Metadaten</strong> zu jedem Text aus dem Dateinamen extrahiert werden, zum Beispiel der Name der Autor:in, das Publikationsjahr und der Titel eines Textes. Der Text selbst repräsentiert die eigentlichen Daten, die noch unstrukturiert vorliegen: In einem Korpus von Texten verschiedener Autor:innen können wir zum Beispiel davon ausgehen, dass sich das verwendete Vokabular unterscheidet oder dass vielleicht ein:e Autor:in im Schnitt kürzere Sätze schreibt als ein:e andere:r, aber diese Merkmale sind implizit und liegen nicht in strukturierter Form vor. Welche Merkmale oder Aspekte uns interessieren, hängt wiederum von der Auswahl der Texte und unserer Forschungsfrage ab; wir finden also diese Merkmale nicht einfach als “Daten” vor.
+Wenn Texte dagegen aus XML-Dateien eingelesen werden, ist der Text bereits vor dem Einlesen teilweise strukturiert (oder “semi-strukturiert”) und mit Metainformationen versehen. Darauf kommen wir in der Sitzung zu XML-TEI noch einmal zurück.</p>
+<div class="tip">
+<p>Unicode und Encodings</p>
+<p>Text wird im Computer eigentlich als Abfolge von Zeichen abgebildet, und jedes Zeichen wird im Computer durch eine Zahlenfolge repräsentiert. Wie genau diese Folge aussieht, hängt davon ab, welche Kodierung (Encoding) dazu verwendet wird.
+Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem lateinischen Alphabet repräsentiert werden können. Heutzutage gibt es mit Unicode einen international anerkannten Standard-Zeichensatz. Dieser Zeichensatz ordnet nicht nur allen Zeichen im lateinischen Alphabet, sondern allen Zeichen in allen Schriftsprachen und sogar Symbolen wie Emojis einen einzigartigen Zahlenwert zu. Solche Unicode-Zahlenwerte heißen “Codepunkte”. Zeichenketten, die als Unicode-Codepunkte repräsentiert werden, können mithilfe von Kodierungen wie UTF-8 in Zahlenfolgen, die nur aus Nullen und Einsen bestehen (Bytes) umgewandelt werden.</p>
+<p>Beim Einlesen und Speichern von Dateien muss in R auf die Wahl des richtigen Encodings geachtet werden, insbesondere beim Umgang mit nicht-lateinischen Schriften. Das werden wir später in der Praxis genauer betrachten.</p>
+</div>
+<p>Text wird im Computer also als Abfolge von Zeichen abgebildet. In R ist eine Abfolge von Zeichen ein Objekt vom Typ character. Wie wir bereits gesehen haben, kann aber auf Zeichen in R nicht einzeln zugegriffen werden. Verschiedene Wörter bilden dieselbe Zeichenkette und können nicht unterschieden werden. Deswegen wird Text tokenisiert: Das <strong>Tokenisieren</strong>, also das Zerlegen des Textes in sinnvolle Einheiten (Tokens), ermöglicht zum einen den Zugriff auf einzelne Wörter oder Äußerungen im Text, und zum anderen deren quantitative Auswertung.</p>
+<p>Was genau eine Einheit (also ein Wort oder eine Äußerung) in einem Text bildet, ist jedoch <strong>kontextabhängig</strong>: In einem Korpus von Social Media Posts zum Beispiel hat das Rautezeichen eine besondere Bedeutung und Raute-Wortkombinationen wie #digitalhumanities bilden ein Token. Aber das Rautezeichen kann in einem anderen Kontext etwas ganz anderes bedeuten; zum Beispiel kommt es auch in URLs vor, um Ankerelemente zu kennzeichnen. Ein Punkt kann das Ende eines Satzes kennzeichnen, oder er ist Teil eines Titels wie Prof. oder Mr. Nach welchen Regeln ein Text tokenisiert werden soll und was dabei als Token gezählt wird, hängt nicht zuletzt auch von der Forschungsfrage ab. In seinem Werk <a href="https://press.uchicago.edu/ucp/books/book/chicago/E/bo28465405.html">“Enumerations: Data and Literary Study”</a> hat Andrew Piper beispielsweise ein ganzes Kapitel einer quantitativen Analyse der Bedeutung von Satzzeichen in der Lyrik gewidment: Ein Satzzeichen ist für eine solche Analyse offensichtlich ein sehr wichtiges Token. In anderen Analysen spielen Satzzeichen dagegen gar keine Rolle. Schon beim Tokenisieren treffen Forscher:innen also aktive Entscheidungen, wie Textdaten strukturiert und repräsentiert werden: sie konstruieren die Daten und finden sie nicht einfach vor.</p>
+<p>In R kann ein tokenisierter Text als spezieller Vektor dargestellt werden, bei dem jedes Token ein Element bildet. Im quanteda-Kontext wird dazu ein <strong>tokens-Objekt</strong> verwendet: Ein tokens-Objekt bildet ein tokenisiertes Korpus im Grunde als eine Liste von Vektoren ab, wobei jedes Element der Liste einem Dokument aus dem Korpus entspricht. Die Reihenfolge der Tokens ist für alle Texte in einem tokens-Objekt beibehalten. Es handelt sich dabei lediglich um eine <strong>Repräsentation von Texten als Abfolge von Tokens</strong> (also als <strong>“string of words”</strong>).</p>
+<p>Ein weiterer Abstraktionsschritt ist die numerische <strong>Repräsentation von Texten als Ansammlung von Tokens ohne festgelegte Reihenfolge</strong> (also als <strong>“bag of words”</strong>). Wie wir bereits gesehen haben, kann eine <strong>Document-Term-Matrix (DTM)</strong> verwendet werden, um ein Korpus auf diese Weise darzustellen. Die Textdaten liegen als DTM strukturiert vor: Die Beziehung zwischen Dokumenten und Tokens (oder Types) ist durch die Spalten und Zeilen klar definiert und wird durch die Angabe, ob bzw. wie oft jedes Token vorkommt, zusätzlich quantifiziert.</p>
+</div>
+<div id="überblick-textanalyse-mit-quanteda" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Überblick: Textanalyse mit Quanteda<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Im Kapitel IV: Funktionen und Pakete haben wir bereits das Paket <code>quanteda</code> kennengelernt. Das Paket quanteda bietet eine Vielzahl Funktionen zur quantitativen Analyse von Text sowie spezialisierte Datenstrukturen und sogar Datensätze.</p>
+<p>Bevor wir ganz praktisch in die Textanalyse mit quanteda einsteigen, verschaffen wir uns einen theoretischen Überblick über das Vorgehen:</p>
+<p>Zur Textanalyse mit quanteda wird gewöhnlich zunächst ein Korpus aus Plaintext-Dateien im RStudio eingelesen. Die Texte werden dann mithilfe verschiedener Funktionen in quanteda-Datenobjekte umgewandelt: In ein quanteda corpus-Objekt, tokens-Objekt und/oder in eine Document Feature Matrix (DFM). Für verschiedene Arten von Analysen verwendet man verschiedene Arten von Objekten. Grundsätzlich wird dabei zwischen Bag-of-Words und String-of-Words Methoden unterschieden, also zwischen Methoden, bei denen die Reihenfolge der Tokens beibehalten wird (<strong>String-of-Words</strong>) und jenen, bei denen die Reihenfolge keine Rolle spielt (<strong>Bag-of-Words</strong>). Bei String-of-Words Methoden werden Texte also als Abfolge von Wörtern behandelt, und bei Bag-of-Words-Methoden als Ansammlung von Wörtern. Da ein tokens-Objekt in quanteda Texte als Abfolge von Wörtern repräsentiert, werden für Analysen, bei denen die Reihenfolge der Tokens eine Rolle spielt, quanteda tokens-Objekte verwendet. Wenn die Reihenfolge keine Rolle spielt, wird eine DFM verwendet, da eine DFM Texte als Ansammlung von Wörtern repräsentiert.</p>
+<p>Die folgende Überblicksdarstellung illustriert, welche quanteda-Objekte für welche Analysemethoden verwendet werden können:</p>
+<div class="float">
+<img src="images/quanteda_workflow.png" alt="Quelle: https://tutorials.quanteda.io/basic-operations/workflow/" />
+<div class="figcaption">Quelle: <a href="https://tutorials.quanteda.io/basic-operations/workflow/" class="uri">https://tutorials.quanteda.io/basic-operations/workflow/</a></div>
+</div>
+<p>Um auf die quanteda-Funktionen zugreifen zu können, müssen neben dem Paket quanteda weitere Pakete installiert werden. Weil die Pakete alle zusammengehören, werden diese “Unterpakete” auch Module genannt:</p>
+<ul>
+<li>quanteda: contains all of the core natural language processing and textual data management functions</li>
+<li>quanteda.textmodels: contains all of the text models and supporting functions, namely the textmodel_*() functions</li>
+<li>quanteda.textstats: statistics for textual data, namely the textstat_*() functions</li>
+<li>quanteda.textplots: plots for textual data, namely the textplot_*() functions</li>
+</ul>
+<p>In der heutigen Stunde werden wir die grundlegenden quanteda-Funktionen und quanteda-Datenstrukturen kennenlernen. Als Beispiel dient uns ein Korpus deutschsprachiger belletristischer Texte aus dem späten 19. und frühen 20. Jahrhundert. Zunächst werden wir das Korpus einlesen, danach werden wir quanteda corpus- und tokens-Objekte und zuletzt eine DFM erstellen.</p>
+</div>
+<div id="textdateien-einlesen" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Textdateien einlesen<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um Dateien in R einzulesen, muss zuerst das Arbeitsverzeichnis gesetzt werden. Das heißt, dass wir dem Computer mitteilen müssen, in welchem Ordner auf unserem Computer sich die Dateien befinden, die wir einlesen wollen. Um das Arbeitsverzeichnis zu setzen, gibt es mehrere Möglichkeiten:</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb424-1" tabindex="-1"></a><span class="co"># Arbeitsverzeichnis setzen</span></span>
+<span id="cb424-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb424-2" tabindex="-1"></a></span>
+<span id="cb424-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb424-3" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/gast/R-Seminar&quot;</span>) <span class="co"># Setzt hier euren eigenen Pfad ein</span></span>
+<span id="cb424-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb424-4" tabindex="-1"></a><span class="co"># Backslashes für Windows:</span></span>
+<span id="cb424-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb424-5" tabindex="-1"></a><span class="co"># setwd(&quot;C:\Users\gast\R-Seminar&quot;)</span></span></code></pre></div>
+<p>Alternativ kann das Arbeitsverzeichnis auch über den Tab “Files” im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf “More” und “Set As Working Directory”.</p>
+<p>Wenn wir das Arbeitsverzeichnis gesetzt haben, können wir die Dateien einlesen. Auch hier gibt es mehrere Möglichkeiten: Zum Einlesen von Dateien können entweder R-Basisfunktionen verwendet werden oder Funktionen aus einem R Paket. Die Entwickler:innen von quanteda empfehlen, zum Einlesen eines Textkorpus die Funktion <code>readtext()</code> aus dem Paket readtext zu verwenden. Beim Einlesen der Texte mithilfe der <code>readtext()</code>-Funktion können direkt Metadaten aus den Dateinamen extrahiert werden, im Beispiel unten Autor:innennamen, Titel und Publikationsjahre der Texte. Diese Metadaten auf Dokumentenebene heißen im readtext- und quanteda-Kontext dann “docvars”. Wir vergleichen im Folgenden die verschiedenen Einlesefunktionen:</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-1" tabindex="-1"></a><span class="co"># 1. R base Funktionen - Beispiele </span></span>
+<span id="cb425-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-2" tabindex="-1"></a></span>
+<span id="cb425-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-3" tabindex="-1"></a><span class="co"># multi-purpose Funktion &quot;scan&quot;</span></span>
+<span id="cb425-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-4" tabindex="-1"></a>kafka_1 <span class="ot">&lt;-</span> <span class="fu">scan</span>(<span class="st">&quot;kafka_verwandlung_1915.txt&quot;</span>, <span class="at">what=</span><span class="st">&quot;character&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb425-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-5" tabindex="-1"></a><span class="co"># Alternative nur für Textdateien: readLines</span></span>
+<span id="cb425-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-6" tabindex="-1"></a>kafka_2 <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;kafka_verwandlung_1915.txt&quot;</span>)</span>
+<span id="cb425-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-7" tabindex="-1"></a></span>
+<span id="cb425-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-8" tabindex="-1"></a><span class="co"># 2. Paket readtext </span></span>
+<span id="cb425-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-9" tabindex="-1"></a></span>
+<span id="cb425-10"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-10" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readtext&quot;</span>)</span>
+<span id="cb425-11"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-11" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb425-12"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-12" tabindex="-1"></a></span>
+<span id="cb425-13"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-13" tabindex="-1"></a><span class="co"># einen Text einlesen und einer Variable zuweisen</span></span>
+<span id="cb425-14"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-14" tabindex="-1"></a>kafka_3 <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="st">&quot;kafka_verwandlung_1915.txt&quot;</span>)</span>
+<span id="cb425-15"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-15" tabindex="-1"></a><span class="co"># zwei Texte einlesen </span></span>
+<span id="cb425-16"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-16" tabindex="-1"></a>kafka_3 <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="fu">c</span>(<span class="st">&quot;kafka_verwandlung_1915.txt&quot;</span>, <span class="st">&quot;kafka_prozess_1925.txt&quot;</span>))</span>
+<span id="cb425-17"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-17" tabindex="-1"></a>kafka_3</span>
+<span id="cb425-18"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-18" tabindex="-1"></a><span class="co"># alle Texte in einem Ordner einlesen </span></span>
+<span id="cb425-19"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-19" tabindex="-1"></a>ein_korpus <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;korpus/*.txt&quot;</span>)</span>
+<span id="cb425-20"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-20" tabindex="-1"></a>ein_korpus</span>
+<span id="cb425-21"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-21" tabindex="-1"></a><span class="co"># Texte in einem Unterordner einlesen </span></span>
+<span id="cb425-22"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-22" tabindex="-1"></a>noch_ein_korpus <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;Unterordner/*.txt&quot;</span>) <span class="co"># oder /Unterordner/*.txt</span></span>
+<span id="cb425-23"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-23" tabindex="-1"></a>noch_ein_korpus</span>
+<span id="cb425-24"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-24" tabindex="-1"></a><span class="co"># Texte in einem Ordner einlesen und Metadaten aus den Dateinamen extrahieren</span></span>
+<span id="cb425-25"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-25" tabindex="-1"></a>ger_texte <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;korpus/*.txt&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, <span class="at">dvsep =</span> <span class="st">&quot;_&quot;</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">&quot;Autor_in&quot;</span>, <span class="st">&quot;Titel&quot;</span>, <span class="st">&quot;Jahr&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb425-26"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-26" tabindex="-1"></a>ger_texte</span>
+<span id="cb425-27"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-27" tabindex="-1"></a></span>
+<span id="cb425-28"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-28" tabindex="-1"></a><span class="co"># Vergleich</span></span>
+<span id="cb425-29"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-29" tabindex="-1"></a><span class="fu">typeof</span>(kafka_1) <span class="co">#scan</span></span>
+<span id="cb425-30"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-30" tabindex="-1"></a><span class="fu">typeof</span>(kafka_2) <span class="co">#readLines</span></span>
+<span id="cb425-31"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-31" tabindex="-1"></a><span class="fu">typeof</span>(kafka_3) <span class="co">#readtext</span></span>
+<span id="cb425-32"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb425-32" tabindex="-1"></a><span class="fu">class</span>(kafka_3)</span></code></pre></div>
+<p>Beachtet, dass die Funktion <code>typeof()</code> angibt, wie ein Objekt intern in R gespeichert ist. Das muss immer eine der grundlegenden R Datenstrukturen sein, die wir in Kapitel II kennengelernt haben. Die Funktion <code>class()</code> dagegen gibt an, wie ein Objekt in R behandelt wird: Das heißt, auch wenn manche Pakete ihre eigenen Datenstrukturen definieren und festlegen, welche Eigenschaften diese haben und Funktionen darauf angewendet werden können, müssen diese Datenstrukturen irgendwie wieder als R Datenstrukturen interpretiert werden, damit sie gespeichert werden können. Während das Objekt <code>kafka_3</code> also intern als Liste gespeichert ist, handelt es sich dabei eigentlich um einen Dataframe, und ganz genau gesagt um ein readtext-Objekt. Das Objekt teilt also Eigenschaften mit R Dataframes, aber es hat auch weitere spezielle Eigenschaften von readtext-Objekten, und es gibt Funktionen, die nur auf genau diese Art von Objekt angewendet werden können.</p>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Was ist der Unterschied zwischen den Objekten, die wir mit <code>readLines()</code>, <code>scan()</code> und <code>readtext()</code> erstellt haben?</li>
+<li>Welche anderen Unterschiede könnt ihr den R-Dokumentationsseiten zu den Funktionen entnehmen?</li>
+</ul>
+</div>
+<p>Bereits nach dem Einlesen können wir uns einen Überblick über das Korpus verschaffen. Dabei können auch die beim Einlesen aus den Dateinamen extrahierten Metadaten zu den einzelnen Texten abgefragt werden.</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-1" tabindex="-1"></a><span class="co"># Alle Texte mit Publikationsjahr 1912 auswählen </span></span>
+<span id="cb426-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-2" tabindex="-1"></a>ger_texte<span class="sc">$</span>doc_id[ger_texte<span class="sc">$</span>Jahr <span class="sc">==</span> <span class="dv">1912</span>]</span>
+<span id="cb426-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-3" tabindex="-1"></a><span class="co"># Wie viele Texte gibt es aus dem Jahr 1912? </span></span>
+<span id="cb426-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-4" tabindex="-1"></a><span class="fu">length</span>(ger_texte<span class="sc">$</span>doc_id[ger_texte<span class="sc">$</span>Jahr <span class="sc">==</span> <span class="dv">1912</span>])</span>
+<span id="cb426-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-5" tabindex="-1"></a><span class="co"># Häufigkeitstabelle der Publikationsjahre</span></span>
+<span id="cb426-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb426-6" tabindex="-1"></a><span class="fu">table</span>(ger_texte<span class="sc">$</span>Jahr)</span></code></pre></div>
+</div>
+<div id="quanteda-corpus-objekte" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Quanteda corpus-Objekte<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ein Quanteda corpus-Objekt enthält die eingelesenen Texte selbst, sowie Metadaten auf Dokument- und Korpusebene.</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb427-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb427-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb427-2" tabindex="-1"></a></span>
+<span id="cb427-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb427-3" tabindex="-1"></a><span class="co"># quanteda-Korpusobkjekt erstellen</span></span>
+<span id="cb427-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb427-4" tabindex="-1"></a>ger_korpus <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">corpus</span>(ger_texte)</span>
+<span id="cb427-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb427-5" tabindex="-1"></a>ger_korpus</span></code></pre></div>
+<p>Die Funktion <code>str()</code> kann verwendet werden, um einen Überblick über die Struktur des Objekts zu erhalten. Da ein Quanteda corpus-Objekt neben den Texten selbst auch Metadaten enthält, gibt die <code>str()</code>-Funktion einen Überblick über alle Metadaten. Die Metadaten der einzelnen Dokumente (z.B. Dateinamen, ggf. mithilfe der readtext-Funktion extrahierte docvars) können unter <code>attr(*, "docvars")</code> eingesehen werden. <code>attr(*, "meta")</code> beschreibt dagegen alle Metadaten auf Korpusebene (z.B. Informationen zu Ort und Zeit der Erstellung des corpus-Objekts).</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb428-1" tabindex="-1"></a><span class="fu">str</span>(ger_korpus)</span></code></pre></div>
+<p>Mit der Funktion <code>summary()</code> können Informationen zu den Texten selbst abgerufen werden. Die Funktion berechnet für jeden Text in einem Korpus die Anzahl der Tokens, der Types und der Sätze und bietet so einen ersten Überblick über das Korpus.</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb429-1" tabindex="-1"></a><span class="co"># Weitere Informationen abrufen mit der summary()-Funktion</span></span>
+<span id="cb429-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb429-2" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">summary</span>(ger_korpus, <span class="dv">109</span>) </span>
+<span id="cb429-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb429-3" tabindex="-1"></a>ger_info</span>
+<span id="cb429-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb429-4" tabindex="-1"></a>?summary</span></code></pre></div>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Warum haben wir der <code>summary()</code>-Funktion beim Aufruf 109 als zusätzliches Argument übergeben?</li>
+</ul>
+</div>
+<p>Die <code>summary()</code>-Funktion gibt einen Dataframe zurück. Es können deswegen alle Zugriffsoperationen und Funktionen auf das Objekt <code>ger_info</code> angewendet werden, die auf Dataframes angewendet werden können:</p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-1" tabindex="-1"></a><span class="co"># Minimum und Maximum der Spalten Jahr und Tokens</span></span>
+<span id="cb430-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-2" tabindex="-1"></a><span class="fu">range</span>(ger_info<span class="sc">$</span>Jahr) </span>
+<span id="cb430-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-3" tabindex="-1"></a><span class="fu">range</span>(ger_info<span class="sc">$</span>Tokens) </span>
+<span id="cb430-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-4" tabindex="-1"></a><span class="co"># Anzahl der verschiedenen Autor:innen </span></span>
+<span id="cb430-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-5" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(ger_info<span class="sc">$</span>Autor_in)) </span>
+<span id="cb430-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-6" tabindex="-1"></a><span class="co"># Gesamtzahl der Tokens im ger_korpus Korpus</span></span>
+<span id="cb430-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-7" tabindex="-1"></a><span class="fu">sum</span>(ger_info<span class="sc">$</span>Tokens) </span>
+<span id="cb430-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-8" tabindex="-1"></a></span>
+<span id="cb430-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-9" tabindex="-1"></a><span class="co"># Titel des Textes mit den meisten Tokens</span></span>
+<span id="cb430-10"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-10" tabindex="-1"></a>ger_info<span class="sc">$</span>Titel[ger_info<span class="sc">$</span>Tokens <span class="sc">==</span> <span class="fu">max</span>(ger_info<span class="sc">$</span>Tokens)]</span>
+<span id="cb430-11"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-11" tabindex="-1"></a><span class="co"># Autor:in des Textes mit den meisten Tokens</span></span>
+<span id="cb430-12"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-12" tabindex="-1"></a>ger_info<span class="sc">$</span>Autor_in[ger_info<span class="sc">$</span>Tokens <span class="sc">==</span> <span class="fu">max</span>(ger_info<span class="sc">$</span>Tokens)]</span>
+<span id="cb430-13"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-13" tabindex="-1"></a><span class="co"># Titel des Textes mit einer Tokenanzahl zwischen 250000 und 300000</span></span>
+<span id="cb430-14"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb430-14" tabindex="-1"></a>ger_info<span class="sc">$</span>Titel[ger_info<span class="sc">$</span>Tokens <span class="sc">&gt;=</span> <span class="dv">250000</span> <span class="sc">&amp;</span> ger_info<span class="sc">$</span>Tokens <span class="sc">&lt;=</span> <span class="dv">300000</span>]</span></code></pre></div>
+<p>Mithilfe von R-base-Funktionen können Daten auch visualisiert werden, zum Beispiel als <strong>Histogramm</strong> (Funktion <code>hist()</code>) oder als <strong>Boxplot</strong> (Funktion <code>boxplot()</code>). Die R-base-Funktionen sind jedoch nur für sehr einfache Visualisierungen geeignet. Mehr Anpassungsmöglichkeiten und ein moderneres Design bietet das auf die Datenvisualisierung spezialisierte Paket <code>ggplot2</code>, das wir in der übernächsten Stunde kennenlernen werden.</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb431-1" tabindex="-1"></a><span class="co"># Histogramm: Anzahl der Tokens je Text</span></span>
+<span id="cb431-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb431-2" tabindex="-1"></a><span class="fu">hist</span>(ger_info<span class="sc">$</span>Tokens)</span>
+<span id="cb431-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb431-3" tabindex="-1"></a><span class="co"># Boxplot: Median, mittlere 50% (Interquartilsabstand), Ausreißer </span></span>
+<span id="cb431-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb431-4" tabindex="-1"></a><span class="fu">boxplot</span>(ger_info<span class="sc">$</span>Tokens)</span></code></pre></div>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Wie kann man diese Funktionen anpassen? Schaut in die R-Hilfeseiten</li>
+<li>Fügt eine Beschriftung für die x und y-Achsen hinzu, indem ihr der Funktion die zusätzlichen Argumente ylab=“…” und xlab=“…” übergebt.</li>
+<li>Fügt einen Titel mithilfe des Arguments main=“…” hinzu.</li>
+<li>Was sind die drei längsten Werke in unserem Korpus?</li>
+</ul>
+</div>
+<p>Oft ist bei der Textanalyse der Vergleich zwischen verschiedenen Teilkorpora oder Unterkorpora von Interesse, beispielsweise, wenn die Texte verschiedener Autor:innen verglichen werden sollen. Ein <strong>Teilkorpus</strong> kann unkompliziert nach dem Einlesen der Texte erstellt werden:</p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-1" tabindex="-1"></a><span class="co"># Teilkorpus aus Kafka-Texten erstellen mit R Base-Funktionen</span></span>
+<span id="cb432-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-2" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(ger_korpus<span class="sc">$</span>Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>))</span>
+<span id="cb432-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-3" tabindex="-1"></a><span class="fu">which</span>(ger_korpus<span class="sc">$</span>Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>) <span class="co"># gibt aus 39 40 41 42 43 44 45 46 47 48 49</span></span>
+<span id="cb432-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-4" tabindex="-1"></a>ger_korpus[<span class="dv">39</span><span class="sc">:</span><span class="dv">49</span>] </span>
+<span id="cb432-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-5" tabindex="-1"></a></span>
+<span id="cb432-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-6" tabindex="-1"></a><span class="co"># Teilkorpus aus Kafka-Texten erstellen: the quanteda way </span></span>
+<span id="cb432-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-7" tabindex="-1"></a>kafka_korpus <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(ger_korpus, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span>
+<span id="cb432-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-8" tabindex="-1"></a>kafka_korpus</span>
+<span id="cb432-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-9" tabindex="-1"></a></span>
+<span id="cb432-10"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-10" tabindex="-1"></a><span class="co"># Teilkorpus erstellen und Korpusinformationen zusammenfassen in einer Zeile</span></span>
+<span id="cb432-11"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-11" tabindex="-1"></a>kafka_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">corpus_subset</span>(ger_korpus, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>))</span>
+<span id="cb432-12"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-12" tabindex="-1"></a><span class="co"># Wir können auch stattdessen den Dataframe ger_info nach Kafka-Texten filtern: </span></span>
+<span id="cb432-13"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-13" tabindex="-1"></a>kafka_summary <span class="ot">&lt;-</span> ger_info[ger_info<span class="sc">$</span>Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>,]</span>
+<span id="cb432-14"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-14" tabindex="-1"></a></span>
+<span id="cb432-15"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-15" tabindex="-1"></a><span class="co"># Wie viele Texte umfasst das Kafka-Korpus?</span></span>
+<span id="cb432-16"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb432-16" tabindex="-1"></a><span class="fu">View</span>(kafka_summary) </span></code></pre></div>
+</div>
+<div id="quanteda-tokens-objekte" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Quanteda tokens-Objekte<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ein Quanteda tokens-Objekt bildet ein tokenisiertes Korpus als eine Liste von Vektoren ab, wobei jedes Element der Liste einem Dokument aus dem Korpus entspricht. Die Reihenfolge der Tokens ist für alle Texte in einem tokens-Objekt beibehalten.</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-1" tabindex="-1"></a><span class="co"># quanteda-Tokensobjekt erstellen </span></span>
+<span id="cb433-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-2" tabindex="-1"></a>ger_toks <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">tokens</span>(ger_korpus)</span>
+<span id="cb433-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-3" tabindex="-1"></a></span>
+<span id="cb433-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-4" tabindex="-1"></a><span class="co"># Print-Funktion muss für quanteda-Objekte angepasst werden: http://quanteda.io/reference/print-quanteda.html</span></span>
+<span id="cb433-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-5" tabindex="-1"></a><span class="fu">print</span>(ger_toks[<span class="dv">1</span>]) <span class="co"># wird nicht komplett angezeigt</span></span>
+<span id="cb433-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb433-6" tabindex="-1"></a><span class="fu">print</span>(ger_toks[<span class="dv">1</span>], <span class="at">max_ntoken =</span> <span class="dv">200</span>) <span class="co"># 200 Tokens anzeigen</span></span></code></pre></div>
+<p>Auch ein tokens-Objekt kann mithilfe der Funktion <code>str()</code> untersucht werden. Quanteda tokens-Objekte enthalten neben den Tokens selbst dieselben Metadaten wie quanteda corpus-Objekte.</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb434-1" tabindex="-1"></a><span class="fu">str</span>(ger_toks)</span></code></pre></div>
+<p>Und genau wie von einem Quanteda corpus-Objekt lässt sich auch eine Auswahl bestimmter Texte von einem tokens-Objekt bilden:</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb435-1" tabindex="-1"></a><span class="co"># Tokens-Objekt nach Kafka-Texten filtern</span></span>
+<span id="cb435-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb435-2" tabindex="-1"></a>kafka_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_subset</span>(ger_toks, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span>
+<span id="cb435-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb435-3" tabindex="-1"></a>kafka_tokens</span></code></pre></div>
+</div>
+<div id="quanteda-dfm-objekte" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Quanteda DFM-Objekte<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Für die meisten Analysemethoden wird eine sogenannte Document-Feature-Matrix (DFM) verwendet. Wie wir bereits gesehen haben, ist eine DFM eine Matrix, deren Spalten “Features” und deren Zeilen Dokumente repräsentieren. In unserem Fall sind die Features Tokens und die Dokumente sind die Texte des Korpus.</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb436-1" tabindex="-1"></a><span class="co"># DFM erstellen</span></span>
+<span id="cb436-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb436-2" tabindex="-1"></a>kafka_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(kafka_tokens)</span>
+<span id="cb436-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb436-3" tabindex="-1"></a>kafka_dfm</span>
+<span id="cb436-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb436-4" tabindex="-1"></a><span class="co"># Gesamte dfm anzeigen</span></span>
+<span id="cb436-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb436-5" tabindex="-1"></a><span class="fu">print</span>(kafka_dfm, <span class="at">max_ndoc =</span> <span class="dv">200</span>)</span></code></pre></div>
+</div>
+<div id="daten-schreiben" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Daten schreiben<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Alle Objekte, die wir bisher erstellt haben, existieren nur in unserer RStudio Umgebung. Es gibt verschiedene Möglichkeiten, diese Objekte zu speichern.
+Wenn Objekte in einem eigenen Ordner (=“Verzeichnis”) gespeichert werden sollen, kann dieser direkt aus R heraus erstellt werden:</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb437-1" tabindex="-1"></a><span class="co"># Neuen Ordner erstellen: falls bereits ein Ordner &quot;output&quot; existiert, wird dieser gelöscht</span></span>
+<span id="cb437-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb437-2" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;output&quot;</span>, <span class="at">recursive =</span> T) </span>
+<span id="cb437-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb437-3" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;output&quot;</span>) </span>
+<span id="cb437-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb437-4" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/output&quot;</span>))</span>
+<span id="cb437-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb437-5" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<p>Tabellarische Daten (Dataframes) können zum Beispiel in csv-Dateien gespeichert werden:</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-1" tabindex="-1"></a><span class="co"># Dataframe in csv-Datei schreiben</span></span>
+<span id="cb438-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-2" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>)</span>
+<span id="cb438-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-3" tabindex="-1"></a><span class="co"># Können wir verhindern, dass die Zeilenindizes als eigene Spalte gespeichert werden? </span></span>
+<span id="cb438-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-4" tabindex="-1"></a>?write.csv2</span>
+<span id="cb438-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-5" tabindex="-1"></a><span class="co"># Ja, mit dem Parameter row.names:</span></span>
+<span id="cb438-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb438-6" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel quanteda tokens-Objekte oder auch der ger_info Dataframe, können außerdem in R-internen Datenformaten gespeichert werden:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-1" tabindex="-1"></a><span class="co"># R-interne Datenformate: R Objekte speichern und laden</span></span>
+<span id="cb439-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-2" tabindex="-1"></a></span>
+<span id="cb439-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-3" tabindex="-1"></a><span class="co"># rds: Ein Objekt in einer Datei speichern</span></span>
+<span id="cb439-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-4" tabindex="-1"></a><span class="fu">saveRDS</span>(ger_info, <span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
+<span id="cb439-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-5" tabindex="-1"></a><span class="fu">saveRDS</span>(ger_toks, <span class="at">file=</span><span class="st">&quot;ger_toks.rds&quot;</span>)</span>
+<span id="cb439-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-6" tabindex="-1"></a></span>
+<span id="cb439-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-7" tabindex="-1"></a><span class="co"># RData und rda : Mehrere Objekte in einer Datei speichern </span></span>
+<span id="cb439-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-8" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
+<span id="cb439-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb439-9" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
+<p>RDS-, RDA- und RData-Dateien können später eingelesen werden mit:</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb440-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
+<span id="cb440-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb440-2" tabindex="-1"></a>ger_toks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;ger_toks.rds&quot;</span>)</span>
+<span id="cb440-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb440-3" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
+<span id="cb440-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb440-4" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
+<p>Und csv-Dateien könne eingelesen werden mit:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb441-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="at">file=</span><span class="st">&quot;ger_info.csv&quot;</span>)</span></code></pre></div>
+<p>Um Änderungen zu speichern, die wir ggf. an den eingelesenen Texten vorgenommen haben, können wir diese einfach in eine neue Textdatei schreiben:</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-1" tabindex="-1"></a><span class="co"># Textdateien Zeile für Zeile schreiben:</span></span>
+<span id="cb442-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-2" tabindex="-1"></a><span class="fu">writeLines</span>(kafka_1, <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>)</span>
+<span id="cb442-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-3" tabindex="-1"></a><span class="co"># Alternativ mit write.table: Funktioniert auch für Textdateien!</span></span>
+<span id="cb442-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-4" tabindex="-1"></a><span class="fu">write.table</span>(kafka_1, </span>
+<span id="cb442-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-5" tabindex="-1"></a>            <span class="at">file =</span> <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>, </span>
+<span id="cb442-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-6" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
+<span id="cb442-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-7" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb442-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb442-8" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="quellen-4" class="section level2 unnumbered hasAnchor">
+<h2>Quellen<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Schöch, Christoph (2013). <em>Clean? Smart? Messy? Data in the Humanities</em>, in: Journal of Digital Humanities 2, no. 3, <a href="http://journalofdigitalhumanities.org/2-3/big-smart-clean-messy-data-in-the-humanities/" class="uri">http://journalofdigitalhumanities.org/2-3/big-smart-clean-messy-data-in-the-humanities/</a>.</li>
+<li>ForText (2016), Glossar: Type/Token, <a href="https://fortext.net/ueber-fortext/glossar/type-token" class="uri">https://fortext.net/ueber-fortext/glossar/type-token</a>.</li>
+<li>ForText (2016), Glossar: Korpus, <a href="https://fortext.net/ueber-fortext/glossar/korpus" class="uri">https://fortext.net/ueber-fortext/glossar/korpus</a>.</li>
+<li>Jünger, J. and Gärtner, C. (2023). <em>Computational Methods für die Sozial- und Geisteswissenschaften. Kapitel 9: Textanalyse,</em> S. 356-359, <a href="https://doi.org/10.1007/978-3-658-37747-2_9" class="uri">https://doi.org/10.1007/978-3-658-37747-2_9</a>.</li>
+<li>Riebling, Jan Rasmus (2019). <em>Methode und Methodologie quantitativer Textanalyse. Kapitel 5: Text und Token,</em> S. 125-160, <a href="https://d-nb.info/1188242121/34" class="uri">https://d-nb.info/1188242121/34</a>.</li>
+<li>Lukes, David (2016). How Computers Handle Text: A Gentle but Thorough Introduction to Unicode, <a href="https://dlukes.github.io/unicode.html" class="uri">https://dlukes.github.io/unicode.html</a>.</li>
+<li>Van Atteveldt, Wouter, Trilling, Damian und Arcila Calderón, Carlos (2022). <em>Computational Analysis of Communication. Chapter 9: Processing Text</em>,
+<a href="https://cssbook.net/content/chapter09.html" class="uri">https://cssbook.net/content/chapter09.html</a>.</li>
+<li>Van Atteveldt, Wouter, Trilling, Damian und Arcila Calderón, Carlos (2022). <em>Computational Analysis of Communication. Chapter 5.2.2: Encodings and Dialects</em>,
+<a href="https://cssbook.net/content/chapter05.html#sec-encodings" class="uri">https://cssbook.net/content/chapter05.html#sec-encodings</a>.</li>
+<li>Quanteda-Website: <a href="https://quanteda.io/" class="uri">https://quanteda.io/</a></li>
+<li>Quanteda Tutorials: <a href="https://tutorials.quanteda.io/" class="uri">https://tutorials.quanteda.io/</a></li>
+<li>Quanteda Quick Start Guide: <a href="https://quanteda.io/articles/quickstart.html" class="uri">https://quanteda.io/articles/quickstart.html</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-basics-iv-funktionen-und-pakete.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exkurs-reguläre-ausdrücke.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

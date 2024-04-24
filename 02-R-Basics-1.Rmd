@@ -292,7 +292,7 @@ Wir haben bereits einige Beispiele für Ausdrücke kennengelernt, die mehrere Op
   | 10 | ⎮, ⎮⎮ |
   | 11 | <- |
 
-Wenn die Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden. 
+Wenn diese Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden. 
 
 Beispiele: 
 
@@ -305,6 +305,11 @@ FALSE & TRUE == FALSE
 
 ```
 
+Wenn zwei Operatoren in einem Ausdruck denselben Rang haben und einen Operanden teilen, wird der Ausdruck nach der sogenannten **Assoziativität** der Operatoren ausgewertet: wenn ein Operator linksassoziativ ist, dann heißt dass, dass ein Ausdruck von links nach rechts ausgewertet wird. Wenn ein Operator rechtsassoziativ ist, wird ein Ausdruck von rechts nach links ausgewertet. In R sind fast alle Operatoren linksassoziativ; nur der Potenzierungsoperator und der Zuweisungsoperartor sind rechtsassoziativ.  
+
+Linksassoziatitvität: ((4+5)+6)+1 = (9+6)+1 = 15+1 = 16
+
+Rechtsassoziativität: 3\*\*(4\*\*5) = 3**1024 = eine sehr lange Zahl
 
 ## Quellen {-}
 

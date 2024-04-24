@@ -543,7 +543,7 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 </tr>
 </tbody>
 </table>
-<p>Wenn die Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden.</p>
+<p>Wenn diese Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden.</p>
 <p>Beispiele:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb51-1" tabindex="-1"></a><span class="dv">4</span><span class="sc">+</span><span class="dv">10</span> <span class="sc">&gt;</span> <span class="dv">3</span><span class="sc">+</span><span class="dv">5</span><span class="sc">*</span><span class="dv">2</span> </span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
@@ -553,6 +553,9 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <pre><code>#&gt; [1] FALSE</code></pre>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#cb57-1" tabindex="-1"></a>(<span class="cn">FALSE</span> <span class="sc">&amp;</span> <span class="cn">TRUE</span>) <span class="sc">==</span> <span class="cn">FALSE</span></span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
+<p>Wenn zwei Operatoren in einem Ausdruck denselben Rang haben und einen Operanden teilen, wird der Ausdruck nach der sogenannten <strong>Assoziativität</strong> der Operatoren ausgewertet: wenn ein Operator linksassoziativ ist, dann heißt dass, dass ein Ausdruck von links nach rechts ausgewertet wird. Wenn ein Operator rechtsassoziativ ist, wird ein Ausdruck von rechts nach links ausgewertet. In R sind fast alle Operatoren linksassoziativ; nur der Potenzierungsoperator und der Zuweisungsoperartor sind rechtsassoziativ.</p>
+<p>Linksassoziatitvität: ((4+5)+6)+1 = (9+6)+1 = 15+1 = 16</p>
+<p>Rechtsassoziativität: 3**(4**5) = 3**1024 = eine sehr lange Zahl</p>
 </div>
 <div id="quellen" class="section level2 unnumbered hasAnchor">
 <h2>Quellen<a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen" class="anchor-section" aria-label="Anchor link to header"></a></h2>

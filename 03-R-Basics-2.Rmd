@@ -232,6 +232,9 @@ einkauf <- c("Apfel"=4, "Banane"=3, "Erdbeere"=20, "Apfel"=5)
 # Zugriff auf das Element mit dem Namen "Erdbeere": Hier müssen die Anführungszeichen wieder explizit angegeben werden (zur Erinnerung: Schlüssel sind immer character!)
 einkauf["Erdbeere"]
 
+# Zugriff auf den Wert ohne den Namen
+einkauf[["Erdbeere"]]
+
 # Zugriff auf alle Elemente mit dem Namen "Apfel": 
 einkauf["Apfel"]
 

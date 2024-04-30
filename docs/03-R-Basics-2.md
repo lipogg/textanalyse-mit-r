@@ -344,6 +344,15 @@ einkauf["Erdbeere"]
 ```
 
 ```r
+# Zugriff auf den Wert ohne den Namen
+einkauf[["Erdbeere"]]
+```
+
+```
+#> [1] 20
+```
+
+```r
 # Zugriff auf alle Elemente mit dem Namen "Apfel": 
 einkauf["Apfel"]
 ```
@@ -1269,7 +1278,7 @@ print(temperature_data_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      24      24      11
+#>      12      17      24
 ```
 
 ```r
@@ -1281,25 +1290,25 @@ print(temperature_data_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  24 24 27 23 25 28 23
-#>   Hamburg 24 19 30 29 12 15 23
-#>   München 11 14 29 27 19 28 26
+#>   Berlin  12 10 24 10 12 13 18
+#>   Hamburg 17 21 12 13 25 21 26
+#>   München 24 25 22 25 23 22 15
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  18 23 25 25 20 26 23
-#>   Hamburg 17 24 26 24 30 28 11
-#>   München 30 11 21 16 28 23 25
+#>   Berlin  22 11 30 17 19 26 25
+#>   Hamburg 11 20 29 13 20 16 27
+#>   München 29 11 17 13 15 29 24
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  24 25 21 18 18 15 18
-#>   Hamburg 19 25 11 25 29 16 18
-#>   München 25 14 16 20 28 11 28
+#>   Berlin  17 26 26 21 26 28 16
+#>   Hamburg 27 16 25 28 12 11 23
+#>   München 14 21 17 10 16 16 15
 ```
 
 ```r
@@ -1312,13 +1321,13 @@ print(morning_temperature_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     24      30      19
-#> Di     24      29      28
-#> Mi     11      23      15
-#> Do     24      29      28
-#> Fr     19      27      23
-#> Sa     14      25      23
-#> So     27      12      26
+#> Mo     12      12      23
+#> Di     17      22      13
+#> Mi     24      10      21
+#> Do     10      13      22
+#> Fr     21      25      18
+#> Sa     25      12      26
+#> So     24      25      15
 ```
 
 ```r
@@ -1333,13 +1342,13 @@ print(morning_temperature_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     24      24      11
-#> Di     24      19      14
-#> Mi     27      30      29
-#> Do     23      29      27
-#> Fr     25      12      19
-#> Sa     28      15      28
-#> So     23      23      26
+#> Mo     12      17      24
+#> Di     10      21      25
+#> Mi     24      12      22
+#> Do     10      13      25
+#> Fr     12      25      23
+#> Sa     13      21      22
+#> So     18      26      15
 ```
 
 ```r
@@ -1352,13 +1361,13 @@ print(morning_temperature_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     24      24      11 Morgen Celsius
-#> Di     24      19      14 Morgen Celsius
-#> Mi     27      30      29 Morgen Celsius
-#> Do     23      29      27 Morgen Celsius
-#> Fr     25      12      19 Morgen Celsius
-#> Sa     28      15      28 Morgen Celsius
-#> So     23      23      26 Morgen Celsius
+#> Mo     12      17      24 Morgen Celsius
+#> Di     10      21      25 Morgen Celsius
+#> Mi     24      12      22 Morgen Celsius
+#> Do     10      13      25 Morgen Celsius
+#> Fr     12      25      23 Morgen Celsius
+#> Sa     13      21      22 Morgen Celsius
+#> So     18      26      15 Morgen Celsius
 ```
 
 ```r
@@ -1379,13 +1388,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     24      24      11 Morgen Celsius      24
-#> Di     24      19      14 Morgen Celsius      24
-#> Mi     27      30      29 Morgen Celsius      30
-#> Do     23      29      27 Morgen Celsius      29
-#> Fr     25      12      19 Morgen Celsius      25
-#> Sa     28      15      28 Morgen Celsius      28
-#> So     23      23      26 Morgen Celsius      26
+#> Mo     12      17      24 Morgen Celsius      24
+#> Di     10      21      25 Morgen Celsius      25
+#> Mi     24      12      22 Morgen Celsius      24
+#> Do     10      13      25 Morgen Celsius      25
+#> Fr     12      25      23 Morgen Celsius      25
+#> Sa     13      21      22 Morgen Celsius      22
+#> So     18      26      15 Morgen Celsius      26
 ```
 
 ```r
@@ -1396,13 +1405,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     24      24      11 Morgen Celsius    75.2
-#> Di     24      19      14 Morgen Celsius    75.2
-#> Mi     27      30      29 Morgen Celsius    86.0
-#> Do     23      29      27 Morgen Celsius    84.2
-#> Fr     25      12      19 Morgen Celsius    77.0
-#> Sa     28      15      28 Morgen Celsius    82.4
-#> So     23      23      26 Morgen Celsius    78.8
+#> Mo     12      17      24 Morgen Celsius    75.2
+#> Di     10      21      25 Morgen Celsius    77.0
+#> Mi     24      12      22 Morgen Celsius    75.2
+#> Do     10      13      25 Morgen Celsius    77.0
+#> Fr     12      25      23 Morgen Celsius    77.0
+#> Sa     13      21      22 Morgen Celsius    71.6
+#> So     18      26      15 Morgen Celsius    78.8
 ```
 
 ```r
@@ -1414,13 +1423,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     24      24      11 Morgen Celsius               75.2
-#> Di     24      19      14 Morgen Celsius               75.2
-#> Mi     27      30      29 Morgen Celsius               86.0
-#> Do     23      29      27 Morgen Celsius               84.2
-#> Fr     25      12      19 Morgen Celsius               77.0
-#> Sa     28      15      28 Morgen Celsius               82.4
-#> So     23      23      26 Morgen Celsius               78.8
+#> Mo     12      17      24 Morgen Celsius               75.2
+#> Di     10      21      25 Morgen Celsius               77.0
+#> Mi     24      12      22 Morgen Celsius               75.2
+#> Do     10      13      25 Morgen Celsius               77.0
+#> Fr     12      25      23 Morgen Celsius               77.0
+#> Sa     13      21      22 Morgen Celsius               71.6
+#> So     18      26      15 Morgen Celsius               78.8
 ```
 
 ```r

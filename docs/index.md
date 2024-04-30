@@ -10,7 +10,7 @@ description: |
   This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
   set in the _output.yml file.
 link-citations: yes
-github-repo: lipogg/change-this
+github-repo: lipogg/textanalyse-mit-r
 ---
 
 # Über diesen Kurs {-}

@@ -21,7 +21,7 @@ Bisher haben wir Variablen als Platzhalter für Werte vom Typ character, integer
 
 Eigentlich haben wir in der letzten Stunde schon Vektoren kennengelernt. Denn in R ist jeder einzelne Wert zugleich ein Vektor der Länge 1. **Vektoren sind nämlich im Grunde Sequenzen verschiedener Werte desselben Datentyps.** Die Werte innerhalb eines Vektors werden **Elemente** genannt. Jedes Element in einem Vektor hat eine Position (auch "**Index**" genannt). Über diesen Index kann auf jedes Element einzeln zugegriffen werden. Der Zugriff auf Elemente des Vektors erfolgt mithilfe von eckigen Klammern (s.u.). 
 
-<img src="images/vektor.png" width="482" />
+<img src="images/vektor.png" width="964" />
 
 Vektoren können mithilfe von bestimmten Funktionen (lernen wir noch) erstellt werden. Wenn bei der Erstellung bekannt ist,welchen Datentyp die Elemente haben sollen, können die Funktionen `character()` oder `numeric()` zur Erstellung verwendet werden: 
 
@@ -172,9 +172,9 @@ length(unique(c("Apfel", "Banane", "Erdbeere", "Apfel")))
 
 ### Named Vectors
 
-Neben den "einfachen" Vektoren gibt es noch sogenannte **benannte Vektoren** oder **named vectors**. Das sind Vektoren, bei dem jedem Element nicht nur eine Indexposition, sondern auch ein Name zugeordnet ist. 
+Neben den "einfachen" Vektoren gibt es noch sogenannte **benannte Vektoren** oder **named vectors**. **Das sind Vektoren, bei dem jedem Element nicht nur eine Indexposition, sondern auch ein Name zugeordnet ist.** 
 
-<img src="images/named_vector.png" width="605" />
+<img src="images/named_vector.png" width="964" />
 
 Um einen named vector zu erstellen, wird ebenfalls die Funktion `c()` verwendet. Den Elementen wird bei der Erstellung des Vektors aber ein Name (oder "Schlüssel") zugeordnet. Dieser muss ein character sein. Beachtet, dass bei der Zuweisung von Namen innerhalb von Funktionen anstelle des Zuweisungsoperators `<-` der Operator `=` verwendet wird: 
 
@@ -192,9 +192,9 @@ einkauf <- c(Apfel=4, Banane=3, Erdbeere=20)
 
 Da R ursprünglich für die Statistik entwickelt wurde, haben sich die Entwickler:innen der Programmiersprache überlegt, dass es praktisch wäre, wenn es eine Datenstruktur speziell für kategorische (auch "kategoriale") Daten gäbe. Kategorische Daten sind Daten, die in bestimmte Kategorien oder Gruppen fallen, also beispielsweise Farben, Regionen, Beschäftigungsstatus. Speziell zur Organisation solcher Daten gibt es in R Faktoren. **Ein Faktor ist eine spezielle Art von Vektor, der kategorische Daten repräsentiert.** 
 
-<img src="images/factor.png" width="602" />
+<img src="images/factor.png" width="968" />
 
-Faktoren werden mithilfe der Funktion `factor()` erstellt. Faktoren werden stets aus bereits existierenden Vektoren erstellt, beispielsweise aus dem named vector `named_vec` und aus einem Vektor `vec`, den wir neu erstellen: 
+Faktoren werden mithilfe der Funktion `factor()` erstellt. Faktoren werden stets aus bereits existierenden Vektoren erstellt, beispielsweise aus dem Vektor `fruechte`, den wir hier noch einmal neu erstellen: 
 
 
 ```r
@@ -235,7 +235,7 @@ table(factor(fruechte))
 #>        2        1        1
 ```
 
-Tatsächlich wandelt die Funktion table() automatisch den Vektor in einen Faktor um, wenn das Argument kein Faktor ist. Wenn wir herausfinden wollen, wie oft jeder Wert in einem Vektor vorkommt, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die table-Funktion direkt auf den Vektor anwenden:
+Tatsächlich wandelt die Funktion `table()` automatisch den Vektor in einen Faktor um. Wenn wir herausfinden wollen, wie oft jeder Wert in einem Vektor vorkommt, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die `table()`-Funktion direkt auf den Vektor anwenden:
 
 
 ```r
@@ -248,13 +248,13 @@ table(fruechte)
 #>        2        1        1
 ```
 
-Wie wir gesehen haben, greifen Funktionen wie `table()` unter der Motorhaube auf dieses Konzept zurück und wandeln einen Vektor automatisch in einen Faktor um. Auch in anderen Kontexten werden Faktoren oft automatisch erstellt. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn selbst, wenn wir in der Praxis nicht unbedingt viel mit Faktoren arbeiten werden und selten Faktoren selbst erstellen, spielen Faktoren in R beim Umgang mit kategorialen Daten eine große Rolle und sind zum Verständnis von manchen Funktionen wichtig. 
+Wie wir gesehen haben, greifen Funktionen wie `table()` unter der Motorhaube auf Faktoren zurück und wandeln einen Vektor automatisch in einen Faktor um. Auch in anderen Kontexten werden Faktoren oft automatisch erstellt. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn selbst, wenn wir in der Praxis nicht unbedingt viel mit Faktoren arbeiten werden und selten Faktoren selbst erstellen, spielen Faktoren in R beim Umgang mit kategorialen Daten eine große Rolle und sind zum Verständnis von manchen Funktionen wichtig. 
 
 
 
 ### Zugriffsoperationen auf Vektoren 
 
-Den Zugriff auf ein Element oder mehrere Elemente in einer Datenstruktur nennt man auch **Indexierung**. Dabei wird mithilfe von einem **Zugriffsoperator** über den Index oder den Namen (Schlüssel) eines Elements zugegriffen. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `leckere_fruechte` an: 
+Den Zugriff auf ein Element oder mehrere Elemente in einer Datenstruktur nennt man auch **Indexierung**. Dabei wird mithilfe von einem **Zugriffsoperator** über den Index oder den Namen (Schlüssel) eines Elements zugegriffen. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `fruechte` an, den wir hier erneut erstellen: 
 
 
 ```r
@@ -408,7 +408,7 @@ Verständnisfragen:
 
 ### Vektorisierung 
 
-Auf Vektoren können auch die bereits bekannten Operatoren angewendet werden. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element der beiden Operanden angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
+Auf Vektoren können auch die bereits bekannten Operatoren angewendet werden. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element des Vektors angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
 
 Auf Vektoren vom Typ numeric oder integer (also Vektoren, deren Elemente alle numerics oder integers sind) können die arithmetischen Operatoren angewandt werden, zum Beispiel: 
 
@@ -442,7 +442,7 @@ vec_1 + 5
 #> [1] 6 7 8
 ```
 
-Daneben können auch Vergleichsoperatoren und logische Operatoren auf Vektoren angewandt werden:
+Daneben können auch Vergleichsoperatoren und logische Operatoren auf Vektoren angewandt werden, und es können sogar zwei Vektoren elementweise verglichen werden:
 
 
 
@@ -503,159 +503,178 @@ Verständnisfragen:
 
 **Listen enthalten wie Vektoren eine Sequenz verschiedener Werte.** Im Abschnitt zu Vektoren haben wir bereits gelernt, dass diese Werte auch Elemente genannt werden. **Anders als bei Vektoren können die Elemente einer Liste aber verschiedene Datentypen haben. Ähnlich wie bei benannten Vektoren kann man den Elementen einer Liste einen Namen (wird manchmal auch Schlüssel genannt) zuordnen, über den auf den Wert zugegriffen werden kann.** 
 
-<img src="images/liste-neu.png" width="382" />
+<img src="images/liste.png" width="724" />
 
-Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren (named vectors) müssen die Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
+Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren (also named vectors) müssen die Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
 
 
 ```r
 # Liste erstellen 
- hanna <- list(Name="Hanna", Alter=14, Haustier="Hund")
+einkauf_liste <- list(frucht="Apfel", anzahl=20, vorraetig=FALSE)
 
-# Liste ausgeben
-print(hanna)
+# Liste ausgeben 
+print(einkauf_liste)
 ```
 
 ```
-#> $Name
-#> [1] "Hanna"
+#> $frucht
+#> [1] "Apfel"
 #> 
-#> $Alter
-#> [1] 14
+#> $anzahl
+#> [1] 20
 #> 
-#> $Haustier
-#> [1] "Hund"
+#> $vorraetig
+#> [1] FALSE
 ```
 
-Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt: 
+Die einzelnen Elemente müssen dabei nicht unbedingt benannt werden, das heißt, der Code oben könnte genausogut so aussehen:  
+
+```r
+einkauf_liste <- list("Apfel", 20, FALSE)
+```
+
+Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt. 
 
 
 ```r
 # Liste von Vektoren erstellen: 
-liste_von_vektoren <- list(Namen = c("Hanna", "James", "Lin"),
-              Alter = c(14, 19, 20),
-              Haustier = c("Hund", "Katze", "Hund")
+liste_von_vektoren <- list(frucht = c("Apfel", "Erdbeere", "Banane"),
+                           anzahl = c(20, 32, 0),
+                           vorraetig = c(TRUE, TRUE, FALSE)
               )
 print(liste_von_vektoren)
 ```
 
 ```{style="max-height: 150px;"}
-#> $Namen
-#> [1] "Hanna" "James" "Lin"  
+#> $frucht
+#> [1] "Apfel"    "Erdbeere" "Banane"  
 #> 
-#> $Alter
-#> [1] 14 19 20
+#> $anzahl
+#> [1] 20 32  0
 #> 
-#> $Haustier
-#> [1] "Hund"  "Katze" "Hund"
+#> $vorraetig
+#> [1]  TRUE  TRUE FALSE
 ```
 
 ```r
 # Liste von Listen erstellen: 
-liste_von_listen <- list(Hanna = list(14, "Hund"),
-              James = list(19, "Katze"),
-              Lin = list(20, "Hund")
+liste_von_listen <- list(Apfel = list(20, FALSE),
+                         Erdbeere = list(32, FALSE),
+                         Banane = list(0, TRUE)
 )
 print(liste_von_listen)
 ```
 
 ```{style="max-height: 150px;"}
-#> $Hanna
-#> $Hanna[[1]]
-#> [1] 14
-#> 
-#> $Hanna[[2]]
-#> [1] "Hund"
-#> 
-#> 
-#> $James
-#> $James[[1]]
-#> [1] 19
-#> 
-#> $James[[2]]
-#> [1] "Katze"
-#> 
-#> 
-#> $Lin
-#> $Lin[[1]]
+#> $Apfel
+#> $Apfel[[1]]
 #> [1] 20
 #> 
-#> $Lin[[2]]
-#> [1] "Hund"
+#> $Apfel[[2]]
+#> [1] FALSE
+#> 
+#> 
+#> $Erdbeere
+#> $Erdbeere[[1]]
+#> [1] 32
+#> 
+#> $Erdbeere[[2]]
+#> [1] FALSE
+#> 
+#> 
+#> $Banane
+#> $Banane[[1]]
+#> [1] 0
+#> 
+#> $Banane[[2]]
+#> [1] TRUE
 ```
+
+Schematisch sieht eine Liste von Vektoren in etwa so aus: 
+
+<img src="images/liste_von_vektoren.png" width="1204" />
+
+Das Bild illustriert auch, wie auf die Elemente in einer Liste von Vektoren zugegriffen werden kann. Der Zugriff auf Elemente in einer Liste ist nämlich etwas komplizierter als bei einem Vektor. Darum geht es im folgenden Abschnitt. 
 
 ### Zugriffsoperationen auf Listen
 
 
 ```r
 # Auf Elemente über den Index zugreifen
-hanna[[1]]
+einkauf_liste[[1]]
 ```
 
-```
-#> [1] "Hanna"
+```{style="max-height: 150px;"}
+#> [1] "Apfel"
 ```
 
 ```r
 # Auf Elemente über den Namen (Schlüssel) zugreifen - Option 1 
-hanna$Name
+einkauf_liste$frucht
 ```
 
-```
-#> [1] "Hanna"
+```{style="max-height: 150px;"}
+#> NULL
 ```
 
 ```r
 # Auf Elemente über den Namen (Schlüssel) zugreifen - Option 2
-hanna[["Name"]]
+einkauf_liste[["frucht"]]
 ```
 
-```
-#> [1] "Hanna"
-```
-
-```r
-# Auf das erste Element der ersten Liste in einer Liste von Listen über den Index zugreifen 
-liste_von_listen[[1]][1]
-```
-
-```
-#> [[1]]
-#> [1] 14
+```{style="max-height: 150px;"}
+#> NULL
 ```
 
 ```r
-# Auf das erste Element der ersten Liste in einer Liste von Listen über den Schlüssel zugreifen
-liste_von_listen[["Hanna"]][1]
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Index zugreifen 
+liste_von_vektoren[[1]][1]
 ```
 
+```{style="max-height: 150px;"}
+#> [1] "Apfel"
 ```
-#> [[1]]
-#> [1] 14
+
+```r
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 1
+liste_von_vektoren[["frucht"]][1]
+```
+
+```{style="max-height: 150px;"}
+#> [1] "Apfel"
+```
+
+```r
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 2
+liste_von_vektoren$frucht[1]
+```
+
+```{style="max-height: 150px;"}
+#> [1] "Apfel"
 ```
 
 ```r
 # Listen kombinieren mit der Funktion c()
-emma <- list(Name="Emma", Alter=23, Haustier="Katze")
-personen <- c(hanna, emma) 
+einkauf_bananen <- list(frucht="Banane", anzahl=0, vorraetig=FALSE)
+einkauf_gesamt <- c(einkauf_liste, einkauf_bananen) 
 ```
 
 :::task
 Verständnisfragen:
 
-- Um welche Datenstruktur handelt es sich bei dem Objekt `personen`? 
-- Was ist der Datentyp der Elemente des Objekts `personen`? 
+- Um welche Datenstruktur handelt es sich bei dem Objekt `einkauf_gesamt`? 
+- Was ist der Datentyp der Elemente des Objekts `einkauf_gesamt`? 
 - Was ist der Unterschied zwischen Listen und Named Vectors? 
 :::
 
 
-Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `personen` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
+Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `einkauf_gesamt` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
 
 
 ```r
 # Mit der Funktion c() kann man KEINE Liste erstellen
-emma <- c(Name="Emma", Alter=23, Haustier="Katze")
-typeof(emma)
+einkauf_bananen <- c(frucht="Banane", anzahl=0, vorraetig=FALSE)
+typeof(einkauf_bananen)
 ```
 
 ```
@@ -676,7 +695,7 @@ avg_rainfall <- c(50, 40, 45, 60, 55, 70, 80, 75, 70, 65, 55, 50)
 print(weather_conditions)
 ```
 
-```
+```{style="max-height: 150px;"}
 #>  [1] "sonnig"     "bewölkt"    "sonnig"     "regnerisch" "bewölkt"   
 #>  [6] "sonnig"     "regnerisch" "bewölkt"    "bewölkt"    "sonnig"    
 #> [11] "bewölkt"    "regnerisch"
@@ -686,7 +705,7 @@ print(weather_conditions)
 print(avg_rainfall)
 ```
 
-```
+```{style="max-height: 150px;"}
 #>  [1] 50 40 45 60 55 70 80 75 70 65 55 50
 ```
 
@@ -698,7 +717,7 @@ weather_conditions_named <- c(Jan="sonnig", Feb="bewölkt", Mar="sonnig", Apr="r
 print(weather_conditions_named)
 ```
 
-```
+```{style="max-height: 150px;"}
 #>          Jan          Feb          Mar          Apr          Mai          Jun 
 #>     "sonnig"    "bewölkt"     "sonnig" "regnerisch"    "bewölkt"     "sonnig" 
 #>          Jul          Aug          Sep          Okt          Nov          Dez 
@@ -715,7 +734,7 @@ weather_table <- table(weather_factor)
 print(weather_table)
 ```
 
-```
+```{style="max-height: 150px;"}
 #> weather_factor
 #>     sonnig    bewölkt regnerisch 
 #>          4          5          3
@@ -730,7 +749,7 @@ weather_list <- list(Condition=weather_conditions,
 print(weather_list)
 ```
 
-```
+```{style="max-height: 150px;"}
 #> $Condition
 #>  [1] "sonnig"     "bewölkt"    "sonnig"     "regnerisch" "bewölkt"   
 #>  [6] "sonnig"     "regnerisch" "bewölkt"    "bewölkt"    "sonnig"    
@@ -762,7 +781,7 @@ weather_list <- list(Januar=list(50, "sonnig"),
 print(weather_list)
 ```
 
-```
+```{style="max-height: 150px;"}
 #> $Januar
 #> $Januar[[1]]
 #> [1] 50
@@ -862,103 +881,251 @@ print(weather_list)
 
 ## Matrizen
 
-**Eine Matrix ist in R im Grunde eine Kombination mehrerer Vektoren in Spalten und Zeilen. Formell ausgedrückt: In einer Matrix kann jede Spalte und jede Zeile als Vektor aufgefasst werden. Das heißt, dass jedes Element in einer Matrix denselben Datentyp hat, eben genau wie bei Vektoren.** Wenn beispielsweise alle Elemente den Typ character haben, spricht man auch von einer character-Matrix. Zusätzlich haben Matrizen eine **Dimension**, die mithilfe der Funktion `dim()` abgefragt werden kann. Die Dimension einer Matrix ist die Anzahl ihrer Zeilen und Spalten. Die Matrix unten hat beispielsweise die Dimension 3x3: Sie hat drei Zeilen und drei Spalten.
+**Eine Matrix ist in R im Grunde eine Kombination mehrerer Vektoren in Spalten und Zeilen. Formell ausgedrückt: In einer Matrix kann jede Spalte und jede Zeile als Vektor aufgefasst werden. Das heißt, dass jedes Element in einer Matrix denselben Datentyp hat, eben genau wie bei Vektoren.** Wenn beispielsweise alle Elemente den Typ character haben, spricht man auch von einer character-Matrix. Zusätzlich haben Matrizen eine **Dimension**, die mithilfe der Funktion `dim()` abgefragt werden kann. Die Dimension einer Matrix ist die Anzahl ihrer Zeilen und Spalten. Die Matrix unten hat beispielsweise die Dimension 2x3: Sie hat zwei Zeilen und drei Spalten.
 
-<img src="images/matrix.png" width="442" />
+<img src="images/matrix.png" width="964" />
 
-Da Matrizen aus Vektoren bestehen, können Matrizen erstellt werden, indem mehrere Vektoren kombiniert werden, beispielsweise mit der Funktion `cbind()`. Es ist aber auch möglich, eine Matrix aus einem einzelnen Vektor mithilfe der Funktion `matrix()` zu erstellen. Dabei wird bei der Erstellung der Matrix mithilfe des Arguments (lernen wir noch) `ncol` festgelegt, in wie viele Spalten die Elemente des Vektors organisiert werden sollen:  
+Da Matrizen aus Vektoren bestehen, können Matrizen erstellt werden, indem mehrere Vektoren kombiniert werden, oder, indem ein einzelner Vektor in verschiedene Spalten aufgeteilt wird. Dabei wird bei der Erstellung der Matrix mithilfe dem Zusatz  `ncol` festgelegt, in wie viele Spalten die Elemente des Vektors organisiert werden sollen. 
+
+Wir betrachten zunächst ein ganz simples Beispiel:  
 
 
 ```r
-# Matrix erstellen mit Funktionen matrix()
-autos <- matrix(c("Fiat", "Mercedes", "BMW", "Ford", "Volvo", "Audi"), ncol = 3)
-print(autos)
+# Matrix aus einem einzigen Vektor erstellen mit der Funktion matrix() 
+fruechte <- matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), ncol = 3)
+print(fruechte)
 ```
 
 ```
-#>      [,1]       [,2]   [,3]   
-#> [1,] "Fiat"     "BMW"  "Volvo"
-#> [2,] "Mercedes" "Ford" "Audi"
+#>      [,1]     [,2]     [,3]      
+#> [1,] "Apfel"  "Banane" "Birne"   
+#> [2,] "Orange" "Kiwi"   "Erdbeere"
 ```
 
 ```r
 # Dimension einer Matrix ausgeben lassen
-dim(autos)
+dim(fruechte) # Dimension ist 2 x 3
 ```
 
 ```
 #> [1] 2 3
 ```
 
+Die Matrix `fruechte` ist jedoch nicht sehr informativ. Häufig haben die Spalten und Zeilen einer Matrix eine Bedeutung, sodass es sinnvoll ist, die Zeilen und/oder Spalten zu benennen. Wenn die Matrix wie im Beispiel oben aus einem einzelnen Vektor erstellt wird, können direkt beim Erstellen der Matrix die Zeilen- und Spaltennamen angegeben werden. In unserem Beispiel macht es nicht so viel Sinn, auch den Zeilen eine Bedeutung zu geben. Deswegen verwenden wir in der Funktion `list()` innerhalb der Funktion `matrix()` hier den Wert `NULL` (siehe dazu den Abschnitt "Fehlende und ungültige Werte in Datenstrukturen"). Wenn Zeilennamen festgelegt werden sollen, kann `NULL` einfach durch einen Vektor mit den Zeilennamen ausgetauscht werden.
+Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen haben oder nicht: 
+
+
 ```r
-# Matrix erstellen mit der Funktion cbind()
-fruechte_1 <- c("Apfel", "Orange", "Birne")
-fruechte_2 <- c("Grapefruit", "Banane", "Kiwi") 
-fruechte_mat <- cbind(fruechte_1, fruechte_2)
-fruechte_mat # statt print() kann man auch einfach den Variablennamen wiederholen
+# Matrix erstellen und direkt Namen für die Spalten festlegen 
+# Achtung: die Dimension ist jetzt 3 x 2 !
+
+matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
+      ncol = 2, 
+      dimnames = list(NULL,
+                      c("nicht_vorraetig", "vorraetig")))
 ```
 
 ```
-#>      fruechte_1 fruechte_2  
-#> [1,] "Apfel"    "Grapefruit"
-#> [2,] "Orange"   "Banane"    
-#> [3,] "Birne"    "Kiwi"
+#>      nicht_vorraetig vorraetig 
+#> [1,] "Apfel"         "Kiwi"    
+#> [2,] "Orange"        "Birne"   
+#> [3,] "Banane"        "Erdbeere"
 ```
+
+```r
+# Matrix erstellen, Namen für einzelne Spalten festlegen, und Spalten insgesamt benennen
+matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
+      ncol = 2, 
+      dimnames = list(NULL,
+                      "Vorratsstatus" = c("nicht_vorraetig", "vorraetig")))
+```
+
+```
+#>       Vorratsstatus
+#>        nicht_vorraetig vorraetig 
+#>   [1,] "Apfel"         "Kiwi"    
+#>   [2,] "Orange"        "Birne"   
+#>   [3,] "Banane"        "Erdbeere"
+```
+
+Wenn Matrizen aus mehreren Vektoren erstellt werden, sind die Spalten- bzw. Zeilennamen automatisch die Namen der Vektoren, aus denen die Matrix erstellt wurde. Um Matrizen aus bereits existierenden Vektoren zu erstellen, kann entweder die Funktion `rbind()` oder die Funktion `cbind()` verwendet werden. `rbind()` fügt die Vektoren als Zeilen, also übereinander, zusammen. `cbind()` fügt die Vektoren als Spalten, also nebeneinander, zusammen.  
+
+
+```r
+# Matrix zeilenweise erstellen mit der Funktion rbind()
+nicht_vorraetig <- c("Banane", "Orange", "Birne")
+vorraetig <- c("Apfel", "Erbeere", "Kiwi") 
+fruechte_einkauf <- rbind(nicht_vorraetig, vorraetig)
+fruechte_einkauf
+```
+
+```
+#>                 [,1]     [,2]      [,3]   
+#> nicht_vorraetig "Banane" "Orange"  "Birne"
+#> vorraetig       "Apfel"  "Erbeere" "Kiwi"
+```
+
+```r
+# Matrix spaltenweise erstellen mit der Funktion cbind()
+nicht_vorraetig <- c("Banane", "Orange", "Birne")
+vorraetig <- c("Apfel", "Erbeere", "Kiwi") 
+fruechte_einkauf <- cbind(nicht_vorraetig, vorraetig)
+fruechte_einkauf 
+```
+
+```
+#>      nicht_vorraetig vorraetig
+#> [1,] "Banane"        "Apfel"  
+#> [2,] "Orange"        "Erbeere"
+#> [3,] "Birne"         "Kiwi"
+```
+
+Matrizen können auch in Dataframes umgewandelt werden und umgekehrt. Das behandeln wir im Abschnitt "Dataframes". 
 
 ### Zugriffsoperationen auf Matrizen 
 
 
 ```r
 # Zugriff auf Zeile 1
-autos[1,]
+fruechte[1,]
 ```
 
 ```
-#> [1] "Fiat"  "BMW"   "Volvo"
+#> [1] "Apfel"  "Banane" "Birne"
 ```
 
 ```r
 # Zugriff auf Spalte 1
-autos[,1]
+fruechte[,1]
 ```
 
 ```
-#> [1] "Fiat"     "Mercedes"
+#> [1] "Apfel"  "Orange"
 ```
 
 ```r
 # Zugriff auf das Element in Zeile 1 und Spalte 2
-autos[1,2]
+fruechte[1,2]
 ```
 
 ```
-#> [1] "BMW"
+#> [1] "Banane"
 ```
 
 ```r
-# Spalten (um)benennen
-colnames(autos) <- c("rot", "blau", "gelb")
-
-# Zeilen (um)benennen
-rownames(autos) <- c("neu", "gebraucht")
-
-# Zugriff auf Spalte mit dem Namen "rot"
-autos[, "rot"]
+# Zugriff auf Spalte mit dem Namen "vorraetig"
+fruechte_einkauf[, "vorraetig"]
 ```
 
 ```
-#>        neu  gebraucht 
-#>     "Fiat" "Mercedes"
+#> [1] "Apfel"   "Erbeere" "Kiwi"
 ```
 
+```r
+# Zeilen nachträglich (um)benennen
+rownames(fruechte_einkauf) <- c("kuehlschrank", "vorratskammer", "regal")
+fruechte_einkauf
+```
 
+```
+#>               nicht_vorraetig vorraetig
+#> kuehlschrank  "Banane"        "Apfel"  
+#> vorratskammer "Orange"        "Erbeere"
+#> regal         "Birne"         "Kiwi"
+```
+
+```r
+# Zugriff auf Zeile mit dem Namen "kuehlschrank"
+fruechte_einkauf["kuehlschrank", ]
+```
+
+```
+#> nicht_vorraetig       vorraetig 
+#>        "Banane"         "Apfel"
+```
+
+```r
+# Spalten nachträglich (um)benennen
+colnames(fruechte_einkauf) <- c("vorhanden", "nicht_vorhanden")
+```
+
+Da Matrizen aus Vektoren bestehen, können wie auf Vektoren  auch auf Matrizen die bereits bekannten Operatoren angewendet werden. Dabei wird wieder der Mechanismus der Vektorisierung aktiviert: Wenn Operatoren auf Matrizen angewandt werden, wird die Operation automatisch elementweise auf jedes Element der Matrix angewandt: 
+
+
+```r
+mat_1 <- matrix(c(1, 1, 2, 2), ncol=2)
+mat_1 + 2
+```
+
+```
+#>      [,1] [,2]
+#> [1,]    3    4
+#> [2,]    3    4
+```
+
+```r
+# Das geht auch mit zwei Matrizen 
+mat_2 <- matrix(c(4, 4, 4, 4), ncol=2)
+mat_1 + mat_2
+```
+
+```
+#>      [,1] [,2]
+#> [1,]    5    6
+#> [2,]    5    6
+```
+
+Matrizen können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
+
+
+```r
+# Matrizen zeilenweise kombinieren
+mat_3 <- rbind(mat_1, mat_2)
+mat_3
+```
+
+```
+#>      [,1] [,2]
+#> [1,]    1    2
+#> [2,]    1    2
+#> [3,]    4    4
+#> [4,]    4    4
+```
+
+```r
+# Matrizen spaltenweise kombinieren
+mat_4 <- cbind(mat_1, mat_2)
+mat_4
+```
+
+```
+#>      [,1] [,2] [,3] [,4]
+#> [1,]    1    2    4    4
+#> [2,]    1    2    4    4
+```
+
+Eine Voraussetzung dafür, dass Matrizen kombiniert werden können, ist, dass sie dieselbe Anzahl von Zeilen und Spalten (also dieselbe Dimension) haben. Die beiden Matrizen `mat_3` und `mat_4` haben beispielsweise umgekehrte Dimensionen: `mat_3` ist eine 4x2-Matrix, und `mat_4` ist eine 2x4-Matrix. Wenn die beiden Matrizen kombiniert werden sollen, müssen sie erst in dieselbe Form gebracht werden. Das geht ganz einfach mithilfe der Funktion `t()`. Das `t` steht dabei für "Transponieren". 
+
+
+```r
+# Matrix mat_3 transponieren
+mat_3t <- t(mat_3)
+# Matrix mat_4 und transponierte Matrix kombinieren: 
+cbind(mat_3t, mat_4)
+```
+
+```
+#>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+#> [1,]    1    1    4    4    1    2    4    4
+#> [2,]    2    2    4    4    1    2    4    4
+```
 
 Die folgenden Beispiele illustrieren nochmal die Eigenschaften von Matrizen: 
 
 
 ```r
 # Matrix ist eine character-Matrix
-typeof(fruechte_mat) # character
+typeof(fruechte_einkauf) # character
 ```
 
 ```
@@ -967,7 +1134,7 @@ typeof(fruechte_mat) # character
 
 ```r
 # Jedes Element hat den Datentyp character
-typeof(fruechte_mat[1,1]) # character
+typeof(fruechte_einkauf[1,1]) # character
 ```
 
 ```
@@ -977,9 +1144,9 @@ typeof(fruechte_mat[1,1]) # character
 :::task
 Verständnisfragen:
 
-- Welche Dimension hat die Matrix `fruechte_mat`? 
-- Welchen Datentyp haben die Elemente der Matrix `autos`? 
-- Wie kann man eine Matrix mit zwei Spalten erstellen? 
+- Welche Dimension hat die Matrix `fruechte_einkauf`? 
+- Welchen Datentyp haben die Elemente der Matrix `fruechte_einkauf`? 
+- Wie kann man eine Matrix mit fünf Spalten erstellen? 
 :::
 
 
@@ -1060,7 +1227,7 @@ autos_array[1,2,1]
 
 Dataframes werden zur Darstellung tabellarischer Daten verwendet. Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können. Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden. 
 
-<img src="images/dataframe.png" width="628" />
+<img src="images/dataframe.png" width="1004" />
 
 Weil die Spalten eines Dataframes Vektoren sind, kann man Dataframes "spaltenweise" erstellen. Dazu erstellt man zunächst entweder einen Vektor für jede Spalte und kombiniert diese dann mithilfe der Funktion `data.frame()` in ein Dataframe-Objekt: 
 
@@ -1278,7 +1445,7 @@ print(temperature_data_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      12      17      24
+#>      14      26      22
 ```
 
 ```r
@@ -1290,25 +1457,25 @@ print(temperature_data_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  12 10 24 10 12 13 18
-#>   Hamburg 17 21 12 13 25 21 26
-#>   München 24 25 22 25 23 22 15
+#>   Berlin  14 17 18 12 28 12 18
+#>   Hamburg 26 29 15 22 16 18 21
+#>   München 22 19 14 30 25 27 10
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  22 11 30 17 19 26 25
-#>   Hamburg 11 20 29 13 20 16 27
-#>   München 29 11 17 13 15 29 24
+#>   Berlin  27 10 15 13 27 21 27
+#>   Hamburg 27 25 12 13 24 19 25
+#>   München 11 13 16 26 12 24 27
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  17 26 26 21 26 28 16
-#>   Hamburg 27 16 25 28 12 11 23
-#>   München 14 21 17 10 16 16 15
+#>   Berlin  12 21 26 13 11 19 23
+#>   Hamburg 20 19 19 22 22 18 17
+#>   München 30 26 30 11 28 27 15
 ```
 
 ```r
@@ -1321,13 +1488,13 @@ print(morning_temperature_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     12      12      23
-#> Di     17      22      13
-#> Mi     24      10      21
-#> Do     10      13      22
-#> Fr     21      25      18
-#> Sa     25      12      26
-#> So     24      25      15
+#> Mo     14      15      25
+#> Di     26      14      12
+#> Mi     22      12      18
+#> Do     17      22      27
+#> Fr     29      30      18
+#> Sa     19      28      21
+#> So     18      16      10
 ```
 
 ```r
@@ -1342,13 +1509,13 @@ print(morning_temperature_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     12      17      24
-#> Di     10      21      25
-#> Mi     24      12      22
-#> Do     10      13      25
-#> Fr     12      25      23
-#> Sa     13      21      22
-#> So     18      26      15
+#> Mo     14      26      22
+#> Di     17      29      19
+#> Mi     18      15      14
+#> Do     12      22      30
+#> Fr     28      16      25
+#> Sa     12      18      27
+#> So     18      21      10
 ```
 
 ```r
@@ -1361,13 +1528,13 @@ print(morning_temperature_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     12      17      24 Morgen Celsius
-#> Di     10      21      25 Morgen Celsius
-#> Mi     24      12      22 Morgen Celsius
-#> Do     10      13      25 Morgen Celsius
-#> Fr     12      25      23 Morgen Celsius
-#> Sa     13      21      22 Morgen Celsius
-#> So     18      26      15 Morgen Celsius
+#> Mo     14      26      22 Morgen Celsius
+#> Di     17      29      19 Morgen Celsius
+#> Mi     18      15      14 Morgen Celsius
+#> Do     12      22      30 Morgen Celsius
+#> Fr     28      16      25 Morgen Celsius
+#> Sa     12      18      27 Morgen Celsius
+#> So     18      21      10 Morgen Celsius
 ```
 
 ```r
@@ -1388,13 +1555,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     12      17      24 Morgen Celsius      24
-#> Di     10      21      25 Morgen Celsius      25
-#> Mi     24      12      22 Morgen Celsius      24
-#> Do     10      13      25 Morgen Celsius      25
-#> Fr     12      25      23 Morgen Celsius      25
-#> Sa     13      21      22 Morgen Celsius      22
-#> So     18      26      15 Morgen Celsius      26
+#> Mo     14      26      22 Morgen Celsius      26
+#> Di     17      29      19 Morgen Celsius      29
+#> Mi     18      15      14 Morgen Celsius      18
+#> Do     12      22      30 Morgen Celsius      30
+#> Fr     28      16      25 Morgen Celsius      28
+#> Sa     12      18      27 Morgen Celsius      27
+#> So     18      21      10 Morgen Celsius      21
 ```
 
 ```r
@@ -1405,13 +1572,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     12      17      24 Morgen Celsius    75.2
-#> Di     10      21      25 Morgen Celsius    77.0
-#> Mi     24      12      22 Morgen Celsius    75.2
-#> Do     10      13      25 Morgen Celsius    77.0
-#> Fr     12      25      23 Morgen Celsius    77.0
-#> Sa     13      21      22 Morgen Celsius    71.6
-#> So     18      26      15 Morgen Celsius    78.8
+#> Mo     14      26      22 Morgen Celsius    78.8
+#> Di     17      29      19 Morgen Celsius    84.2
+#> Mi     18      15      14 Morgen Celsius    64.4
+#> Do     12      22      30 Morgen Celsius    86.0
+#> Fr     28      16      25 Morgen Celsius    82.4
+#> Sa     12      18      27 Morgen Celsius    80.6
+#> So     18      21      10 Morgen Celsius    69.8
 ```
 
 ```r
@@ -1423,13 +1590,13 @@ morning_temperature_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     12      17      24 Morgen Celsius               75.2
-#> Di     10      21      25 Morgen Celsius               77.0
-#> Mi     24      12      22 Morgen Celsius               75.2
-#> Do     10      13      25 Morgen Celsius               77.0
-#> Fr     12      25      23 Morgen Celsius               77.0
-#> Sa     13      21      22 Morgen Celsius               71.6
-#> So     18      26      15 Morgen Celsius               78.8
+#> Mo     14      26      22 Morgen Celsius               78.8
+#> Di     17      29      19 Morgen Celsius               84.2
+#> Mi     18      15      14 Morgen Celsius               64.4
+#> Do     12      22      30 Morgen Celsius               86.0
+#> Fr     28      16      25 Morgen Celsius               82.4
+#> Sa     12      18      27 Morgen Celsius               80.6
+#> So     18      21      10 Morgen Celsius               69.8
 ```
 
 ```r

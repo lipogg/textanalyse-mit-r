@@ -125,7 +125,7 @@ length(unique(c("Apfel", "Banane", "Erdbeere", "Apfel")))
 
 ### Named Vectors
 
-Neben den "einfachen" Vektoren gibt es noch sogenannte **benannte Vektoren** oder **named vectors**. Das sind Vektoren, bei dem jedem Element nicht nur eine Indexposition, sondern auch ein Name zugeordnet ist. 
+Neben den "einfachen" Vektoren gibt es noch sogenannte **benannte Vektoren** oder **named vectors**. **Das sind Vektoren, bei dem jedem Element nicht nur eine Indexposition, sondern auch ein Name zugeordnet ist.** 
 
 ```{r, echo = FALSE, out.width = NULL}
 knitr::include_graphics("images/named_vector.png")
@@ -150,7 +150,7 @@ Da R ursprünglich für die Statistik entwickelt wurde, haben sich die Entwickle
 knitr::include_graphics("images/factor.png")
 ```
 
-Faktoren werden mithilfe der Funktion `factor()` erstellt. Faktoren werden stets aus bereits existierenden Vektoren erstellt, beispielsweise aus dem named vector `named_vec` und aus einem Vektor `vec`, den wir neu erstellen: 
+Faktoren werden mithilfe der Funktion `factor()` erstellt. Faktoren werden stets aus bereits existierenden Vektoren erstellt, beispielsweise aus dem Vektor `fruechte`, den wir hier noch einmal neu erstellen: 
 
 ```{r}
 fruechte <- c("Apfel", "Banane", "Erdbeere", "Apfel")
@@ -173,19 +173,19 @@ Mithilfe von Faktoren können wir viel einfacher herausfinden, wie oft jeder Wer
 table(factor(fruechte)) 
 ```
 
-Tatsächlich wandelt die Funktion table() automatisch den Vektor in einen Faktor um, wenn das Argument kein Faktor ist. Wenn wir herausfinden wollen, wie oft jeder Wert in einem Vektor vorkommt, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die table-Funktion direkt auf den Vektor anwenden:
+Tatsächlich wandelt die Funktion `table()` automatisch den Vektor in einen Faktor um. Wenn wir herausfinden wollen, wie oft jeder Wert in einem Vektor vorkommt, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die `table()`-Funktion direkt auf den Vektor anwenden:
 
 ```{r}
 table(fruechte) 
 ```
 
-Wie wir gesehen haben, greifen Funktionen wie `table()` unter der Motorhaube auf dieses Konzept zurück und wandeln einen Vektor automatisch in einen Faktor um. Auch in anderen Kontexten werden Faktoren oft automatisch erstellt. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn selbst, wenn wir in der Praxis nicht unbedingt viel mit Faktoren arbeiten werden und selten Faktoren selbst erstellen, spielen Faktoren in R beim Umgang mit kategorialen Daten eine große Rolle und sind zum Verständnis von manchen Funktionen wichtig. 
+Wie wir gesehen haben, greifen Funktionen wie `table()` unter der Motorhaube auf Faktoren zurück und wandeln einen Vektor automatisch in einen Faktor um. Auch in anderen Kontexten werden Faktoren oft automatisch erstellt. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn selbst, wenn wir in der Praxis nicht unbedingt viel mit Faktoren arbeiten werden und selten Faktoren selbst erstellen, spielen Faktoren in R beim Umgang mit kategorialen Daten eine große Rolle und sind zum Verständnis von manchen Funktionen wichtig. 
 
 
 
 ### Zugriffsoperationen auf Vektoren 
 
-Den Zugriff auf ein Element oder mehrere Elemente in einer Datenstruktur nennt man auch **Indexierung**. Dabei wird mithilfe von einem **Zugriffsoperator** über den Index oder den Namen (Schlüssel) eines Elements zugegriffen. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `leckere_fruechte` an: 
+Den Zugriff auf ein Element oder mehrere Elemente in einer Datenstruktur nennt man auch **Indexierung**. Dabei wird mithilfe von einem **Zugriffsoperator** über den Index oder den Namen (Schlüssel) eines Elements zugegriffen. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `fruechte` an, den wir hier erneut erstellen: 
 
 ```{r}
 fruechte <- c("Apfel", "Banane", "Erdbeere", "Apfel")
@@ -272,7 +272,7 @@ Verständnisfragen:
 
 ### Vektorisierung 
 
-Auf Vektoren können auch die bereits bekannten Operatoren angewendet werden. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element der beiden Operanden angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
+Auf Vektoren können auch die bereits bekannten Operatoren angewendet werden. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element des Vektors angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
 
 Auf Vektoren vom Typ numeric oder integer (also Vektoren, deren Elemente alle numerics oder integers sind) können die arithmetischen Operatoren angewandt werden, zum Beispiel: 
 
@@ -289,7 +289,7 @@ Wird ein Vektor nicht mit einem anderen Vektor, sondern mit einem einzelnen Wert
 vec_1 + 5
 ``` 
 
-Daneben können auch Vergleichsoperatoren und logische Operatoren auf Vektoren angewandt werden:
+Daneben können auch Vergleichsoperatoren und logische Operatoren auf Vektoren angewandt werden, und es können sogar zwei Vektoren elementweise verglichen werden:
 
 
 ```{r}
@@ -323,74 +323,90 @@ Verständnisfragen:
 **Listen enthalten wie Vektoren eine Sequenz verschiedener Werte.** Im Abschnitt zu Vektoren haben wir bereits gelernt, dass diese Werte auch Elemente genannt werden. **Anders als bei Vektoren können die Elemente einer Liste aber verschiedene Datentypen haben. Ähnlich wie bei benannten Vektoren kann man den Elementen einer Liste einen Namen (wird manchmal auch Schlüssel genannt) zuordnen, über den auf den Wert zugegriffen werden kann.** 
 
 ```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("images/liste-neu.png")
+knitr::include_graphics("images/liste.png")
 ```
 
-Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren (named vectors) müssen die Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
+Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren (also named vectors) müssen die Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
 
 ```{r}
 # Liste erstellen 
- hanna <- list(Name="Hanna", Alter=14, Haustier="Hund")
+einkauf_liste <- list(frucht="Apfel", anzahl=20, vorraetig=FALSE)
 
-# Liste ausgeben
-print(hanna)
+# Liste ausgeben 
+print(einkauf_liste)
 
 ```
 
-Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt: 
+Die einzelnen Elemente müssen dabei nicht unbedingt benannt werden, das heißt, der Code oben könnte genausogut so aussehen:  
+```{r}
+
+einkauf_liste <- list("Apfel", 20, FALSE)
+```
+
+Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt. 
 
 ```{r attr.output='style="max-height: 150px;"'}
 # Liste von Vektoren erstellen: 
-liste_von_vektoren <- list(Namen = c("Hanna", "James", "Lin"),
-              Alter = c(14, 19, 20),
-              Haustier = c("Hund", "Katze", "Hund")
+liste_von_vektoren <- list(frucht = c("Apfel", "Erdbeere", "Banane"),
+                           anzahl = c(20, 32, 0),
+                           vorraetig = c(TRUE, TRUE, FALSE)
               )
 print(liste_von_vektoren)
 
 # Liste von Listen erstellen: 
-liste_von_listen <- list(Hanna = list(14, "Hund"),
-              James = list(19, "Katze"),
-              Lin = list(20, "Hund")
+liste_von_listen <- list(Apfel = list(20, FALSE),
+                         Erdbeere = list(32, FALSE),
+                         Banane = list(0, TRUE)
 )
 print(liste_von_listen)
 
 ```
 
+Schematisch sieht eine Liste von Vektoren in etwa so aus: 
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/liste_von_vektoren.png")
+```
+
+Das Bild illustriert auch, wie auf die Elemente in einer Liste von Vektoren zugegriffen werden kann. Der Zugriff auf Elemente in einer Liste ist nämlich etwas komplizierter als bei einem Vektor. Darum geht es im folgenden Abschnitt. 
+
 ### Zugriffsoperationen auf Listen
 
-```{r}
+```{r attr.output='style="max-height: 150px;"'}
 # Auf Elemente über den Index zugreifen
-hanna[[1]]
+einkauf_liste[[1]]
 # Auf Elemente über den Namen (Schlüssel) zugreifen - Option 1 
-hanna$Name
+einkauf_liste$frucht
 # Auf Elemente über den Namen (Schlüssel) zugreifen - Option 2
-hanna[["Name"]]
-# Auf das erste Element der ersten Liste in einer Liste von Listen über den Index zugreifen 
-liste_von_listen[[1]][1]
-# Auf das erste Element der ersten Liste in einer Liste von Listen über den Schlüssel zugreifen
-liste_von_listen[["Hanna"]][1]
+einkauf_liste[["frucht"]]
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Index zugreifen 
+liste_von_vektoren[[1]][1]
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 1
+liste_von_vektoren[["frucht"]][1]
+# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 2
+liste_von_vektoren$frucht[1]
 
 # Listen kombinieren mit der Funktion c()
-emma <- list(Name="Emma", Alter=23, Haustier="Katze")
-personen <- c(hanna, emma) 
+einkauf_bananen <- list(frucht="Banane", anzahl=0, vorraetig=FALSE)
+einkauf_gesamt <- c(einkauf_liste, einkauf_bananen) 
 ```
 
 :::task
 Verständnisfragen:
 
-- Um welche Datenstruktur handelt es sich bei dem Objekt `personen`? 
-- Was ist der Datentyp der Elemente des Objekts `personen`? 
+- Um welche Datenstruktur handelt es sich bei dem Objekt `einkauf_gesamt`? 
+- Was ist der Datentyp der Elemente des Objekts `einkauf_gesamt`? 
 - Was ist der Unterschied zwischen Listen und Named Vectors? 
 :::
 
 
-Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `personen` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
+Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `einkauf_gesamt` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
 
 ```{r}
 
 # Mit der Funktion c() kann man KEINE Liste erstellen
-emma <- c(Name="Emma", Alter=23, Haustier="Katze")
-typeof(emma)
+einkauf_bananen <- c(frucht="Banane", anzahl=0, vorraetig=FALSE)
+typeof(einkauf_bananen)
 ```
 
 
@@ -398,7 +414,7 @@ typeof(emma)
 
 In diesem Abschnitt werden die Unterschiede zwischen einfachen Vektoren, benannten Vektoren, Faktoren und Listen anhand eines Beispiels illustriert. Das Beispiel illustriert, wie Daten zu Wetterbedingungen für jeden Monat eines Jahres mithilfe der verschiedenen Datenstrukturen organisiert werden können. 
 
-```{r}
+```{r attr.output='style="max-height: 150px;"'}
 # Vektor: Ein einfacher Vektor, der die Wetterbedingungen für jeden Monat eines Jahres speichert.
 weather_conditions <- c("sonnig", "bewölkt", "sonnig", "regnerisch", "bewölkt", "sonnig",
                         "regnerisch", "bewölkt", "bewölkt", "sonnig", "bewölkt", "regnerisch")
@@ -446,69 +462,144 @@ print(weather_list)
 
 ## Matrizen
 
-**Eine Matrix ist in R im Grunde eine Kombination mehrerer Vektoren in Spalten und Zeilen. Formell ausgedrückt: In einer Matrix kann jede Spalte und jede Zeile als Vektor aufgefasst werden. Das heißt, dass jedes Element in einer Matrix denselben Datentyp hat, eben genau wie bei Vektoren.** Wenn beispielsweise alle Elemente den Typ character haben, spricht man auch von einer character-Matrix. Zusätzlich haben Matrizen eine **Dimension**, die mithilfe der Funktion `dim()` abgefragt werden kann. Die Dimension einer Matrix ist die Anzahl ihrer Zeilen und Spalten. Die Matrix unten hat beispielsweise die Dimension 3x3: Sie hat drei Zeilen und drei Spalten.
+**Eine Matrix ist in R im Grunde eine Kombination mehrerer Vektoren in Spalten und Zeilen. Formell ausgedrückt: In einer Matrix kann jede Spalte und jede Zeile als Vektor aufgefasst werden. Das heißt, dass jedes Element in einer Matrix denselben Datentyp hat, eben genau wie bei Vektoren.** Wenn beispielsweise alle Elemente den Typ character haben, spricht man auch von einer character-Matrix. Zusätzlich haben Matrizen eine **Dimension**, die mithilfe der Funktion `dim()` abgefragt werden kann. Die Dimension einer Matrix ist die Anzahl ihrer Zeilen und Spalten. Die Matrix unten hat beispielsweise die Dimension 2x3: Sie hat zwei Zeilen und drei Spalten.
 
 ```{r, echo = FALSE, out.width = NULL}
 knitr::include_graphics("images/matrix.png")
 ```
 
-Da Matrizen aus Vektoren bestehen, können Matrizen erstellt werden, indem mehrere Vektoren kombiniert werden, beispielsweise mit der Funktion `cbind()`. Es ist aber auch möglich, eine Matrix aus einem einzelnen Vektor mithilfe der Funktion `matrix()` zu erstellen. Dabei wird bei der Erstellung der Matrix mithilfe des Arguments (lernen wir noch) `ncol` festgelegt, in wie viele Spalten die Elemente des Vektors organisiert werden sollen:  
+Da Matrizen aus Vektoren bestehen, können Matrizen erstellt werden, indem mehrere Vektoren kombiniert werden, oder, indem ein einzelner Vektor in verschiedene Spalten aufgeteilt wird. Dabei wird bei der Erstellung der Matrix mithilfe dem Zusatz  `ncol` festgelegt, in wie viele Spalten die Elemente des Vektors organisiert werden sollen. 
+
+Wir betrachten zunächst ein ganz simples Beispiel:  
 
 ```{r}
-# Matrix erstellen mit Funktionen matrix()
-autos <- matrix(c("Fiat", "Mercedes", "BMW", "Ford", "Volvo", "Audi"), ncol = 3)
-print(autos)
+# Matrix aus einem einzigen Vektor erstellen mit der Funktion matrix() 
+fruechte <- matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), ncol = 3)
+print(fruechte)
 # Dimension einer Matrix ausgeben lassen
-dim(autos)
+dim(fruechte) # Dimension ist 2 x 3
+```
 
-# Matrix erstellen mit der Funktion cbind()
-fruechte_1 <- c("Apfel", "Orange", "Birne")
-fruechte_2 <- c("Grapefruit", "Banane", "Kiwi") 
-fruechte_mat <- cbind(fruechte_1, fruechte_2)
-fruechte_mat # statt print() kann man auch einfach den Variablennamen wiederholen
+Die Matrix `fruechte` ist jedoch nicht sehr informativ. Häufig haben die Spalten und Zeilen einer Matrix eine Bedeutung, sodass es sinnvoll ist, die Zeilen und/oder Spalten zu benennen. Wenn die Matrix wie im Beispiel oben aus einem einzelnen Vektor erstellt wird, können direkt beim Erstellen der Matrix die Zeilen- und Spaltennamen angegeben werden. In unserem Beispiel macht es nicht so viel Sinn, auch den Zeilen eine Bedeutung zu geben. Deswegen verwenden wir in der Funktion `list()` innerhalb der Funktion `matrix()` hier den Wert `NULL` (siehe dazu den Abschnitt "Fehlende und ungültige Werte in Datenstrukturen"). Wenn Zeilennamen festgelegt werden sollen, kann `NULL` einfach durch einen Vektor mit den Zeilennamen ausgetauscht werden.
+Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen haben oder nicht: 
+
+```{r}
+
+# Matrix erstellen und direkt Namen für die Spalten festlegen 
+# Achtung: die Dimension ist jetzt 3 x 2 !
+
+matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
+      ncol = 2, 
+      dimnames = list(NULL,
+                      c("nicht_vorraetig", "vorraetig")))
+
+# Matrix erstellen, Namen für einzelne Spalten festlegen, und Spalten insgesamt benennen
+matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
+      ncol = 2, 
+      dimnames = list(NULL,
+                      "Vorratsstatus" = c("nicht_vorraetig", "vorraetig")))
 
 ```
+
+Wenn Matrizen aus mehreren Vektoren erstellt werden, sind die Spalten- bzw. Zeilennamen automatisch die Namen der Vektoren, aus denen die Matrix erstellt wurde. Um Matrizen aus bereits existierenden Vektoren zu erstellen, kann entweder die Funktion `rbind()` oder die Funktion `cbind()` verwendet werden. `rbind()` fügt die Vektoren als Zeilen, also übereinander, zusammen. `cbind()` fügt die Vektoren als Spalten, also nebeneinander, zusammen.  
+
+```{r}
+
+# Matrix zeilenweise erstellen mit der Funktion rbind()
+nicht_vorraetig <- c("Banane", "Orange", "Birne")
+vorraetig <- c("Apfel", "Erbeere", "Kiwi") 
+fruechte_einkauf <- rbind(nicht_vorraetig, vorraetig)
+fruechte_einkauf
+
+# Matrix spaltenweise erstellen mit der Funktion cbind()
+nicht_vorraetig <- c("Banane", "Orange", "Birne")
+vorraetig <- c("Apfel", "Erbeere", "Kiwi") 
+fruechte_einkauf <- cbind(nicht_vorraetig, vorraetig)
+fruechte_einkauf 
+
+```
+
+Matrizen können auch in Dataframes umgewandelt werden und umgekehrt. Das behandeln wir im Abschnitt "Dataframes". 
 
 ### Zugriffsoperationen auf Matrizen 
 
 ```{r}
 # Zugriff auf Zeile 1
-autos[1,]
+fruechte[1,]
 
 # Zugriff auf Spalte 1
-autos[,1]
+fruechte[,1]
 
 # Zugriff auf das Element in Zeile 1 und Spalte 2
-autos[1,2]
+fruechte[1,2]
 
-# Spalten (um)benennen
-colnames(autos) <- c("rot", "blau", "gelb")
+# Zugriff auf Spalte mit dem Namen "vorraetig"
+fruechte_einkauf[, "vorraetig"]
 
-# Zeilen (um)benennen
-rownames(autos) <- c("neu", "gebraucht")
+# Zeilen nachträglich (um)benennen
+rownames(fruechte_einkauf) <- c("kuehlschrank", "vorratskammer", "regal")
+fruechte_einkauf
 
-# Zugriff auf Spalte mit dem Namen "rot"
-autos[, "rot"]
+# Zugriff auf Zeile mit dem Namen "kuehlschrank"
+fruechte_einkauf["kuehlschrank", ]
+
+# Spalten nachträglich (um)benennen
+colnames(fruechte_einkauf) <- c("vorhanden", "nicht_vorhanden")
+
 
 ```
 
+Da Matrizen aus Vektoren bestehen, können wie auf Vektoren  auch auf Matrizen die bereits bekannten Operatoren angewendet werden. Dabei wird wieder der Mechanismus der Vektorisierung aktiviert: Wenn Operatoren auf Matrizen angewandt werden, wird die Operation automatisch elementweise auf jedes Element der Matrix angewandt: 
 
+```{r}
+
+mat_1 <- matrix(c(1, 1, 2, 2), ncol=2)
+mat_1 + 2
+
+# Das geht auch mit zwei Matrizen 
+mat_2 <- matrix(c(4, 4, 4, 4), ncol=2)
+mat_1 + mat_2
+
+```
+
+Matrizen können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
+
+```{r}
+# Matrizen zeilenweise kombinieren
+mat_3 <- rbind(mat_1, mat_2)
+mat_3
+
+# Matrizen spaltenweise kombinieren
+mat_4 <- cbind(mat_1, mat_2)
+mat_4
+ 
+```
+
+Eine Voraussetzung dafür, dass Matrizen kombiniert werden können, ist, dass sie dieselbe Anzahl von Zeilen und Spalten (also dieselbe Dimension) haben. Die beiden Matrizen `mat_3` und `mat_4` haben beispielsweise umgekehrte Dimensionen: `mat_3` ist eine 4x2-Matrix, und `mat_4` ist eine 2x4-Matrix. Wenn die beiden Matrizen kombiniert werden sollen, müssen sie erst in dieselbe Form gebracht werden. Das geht ganz einfach mithilfe der Funktion `t()`. Das `t` steht dabei für "Transponieren". 
+
+```{r}
+# Matrix mat_3 transponieren
+mat_3t <- t(mat_3)
+# Matrix mat_4 und transponierte Matrix kombinieren: 
+cbind(mat_3t, mat_4)
+
+```
 
 Die folgenden Beispiele illustrieren nochmal die Eigenschaften von Matrizen: 
 
 ```{r}
 # Matrix ist eine character-Matrix
-typeof(fruechte_mat) # character
+typeof(fruechte_einkauf) # character
 # Jedes Element hat den Datentyp character
-typeof(fruechte_mat[1,1]) # character
+typeof(fruechte_einkauf[1,1]) # character
 ```
 
 :::task
 Verständnisfragen:
 
-- Welche Dimension hat die Matrix `fruechte_mat`? 
-- Welchen Datentyp haben die Elemente der Matrix `autos`? 
-- Wie kann man eine Matrix mit zwei Spalten erstellen? 
+- Welche Dimension hat die Matrix `fruechte_einkauf`? 
+- Welchen Datentyp haben die Elemente der Matrix `fruechte_einkauf`? 
+- Wie kann man eine Matrix mit fünf Spalten erstellen? 
 :::
 
 

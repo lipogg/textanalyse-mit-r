@@ -330,7 +330,7 @@ Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten V
 
 ```{r}
 # Liste erstellen 
-einkauf_liste <- list(frucht="Apfel", anzahl=20, vorraetig=FALSE)
+einkauf_liste <- list(frucht="Apfel", anzahl=20, vorraetig=TRUE)
 
 # Liste ausgeben 
 print(einkauf_liste)
@@ -340,7 +340,7 @@ print(einkauf_liste)
 Die einzelnen Elemente müssen dabei nicht unbedingt benannt werden, das heißt, der Code oben könnte genausogut so aussehen:  
 ```{r}
 
-einkauf_liste <- list("Apfel", 20, FALSE)
+list("Apfel", 20, TRUE)
 ```
 
 Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt. 
@@ -373,7 +373,9 @@ Das Bild illustriert auch, wie auf die Elemente in einer Liste von Vektoren zuge
 ### Zugriffsoperationen auf Listen
 
 ```{r attr.output='style="max-height: 150px;"'}
-# Auf Elemente über den Index zugreifen
+# Auf Elemente und ihre Namen über den Index zugreifen
+einkauf_liste[1]
+# Auf Elemente ohne Namen über den Index zugreifen
 einkauf_liste[[1]]
 # Auf Elemente über den Namen (Schlüssel) zugreifen - Option 1 
 einkauf_liste$frucht

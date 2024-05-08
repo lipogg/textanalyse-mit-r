@@ -941,8 +941,8 @@ Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen
 # Achtung: die Dimension ist jetzt 3 x 2 !
 
 matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+       ncol = 2, 
+       dimnames = list(NULL,
                       c("nicht_vorraetig", "vorraetig")))
 ```
 
@@ -956,8 +956,8 @@ matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"),
 ```r
 # Matrix erstellen, Namen für einzelne Spalten festlegen, und Spalten insgesamt benennen
 matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+       ncol = 2, 
+       dimnames = list(NULL,
                       "Vorratsstatus" = c("nicht_vorraetig", "vorraetig")))
 ```
 
@@ -1278,8 +1278,8 @@ print(df)
 ```r
 # Dataframe aus Vektoren erstellen: Variante 2
 fruechte_df <- data.frame(frucht = c("Apfel", "Erdbeere", "Banane"),
-                anzahl = c(20, 32, 0),
-                vorraetig = c(TRUE, TRUE, FALSE)
+                          anzahl = c(20, 32, 0),
+                          vorraetig = c(TRUE, TRUE, FALSE)
                  )
 print(fruechte_df)
 ```
@@ -1317,8 +1317,8 @@ Dataframes können auch aus Matrizen erstellt werden, zum Beispiel aus unserer M
 ```r
 # Dataframe aus Matrix erstellen 
 fruechte_einkauf <- matrix(c("Birne", "Orange", "Banane", "Kiwi", "Apfel", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+                           ncol = 2, 
+                           dimnames = list(NULL,
                       c("nicht_vorraetig", "vorraetig")))
 
 fruechte_df <- as.data.frame(fruechte_einkauf)
@@ -1513,15 +1513,29 @@ fruechte_df$frucht[fruechte_df$anzahl < 20]
 #> [1] "Birne"  "Orange" "Banane" "Kiwi"
 ```
 
-Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können. 
+```r
+# Spalte entfernen: hier auskommentiert, da wir die Spalte für unser Beispiel behalten wollen
+# fruechte_df$anzahl <- NULL 
+```
+
+Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können, zum Beispiel: 
+
+
+```r
+fruechte_df$anzahl * 3
+```
+
+```
+#> [1]  0  0  0 15 60 96
+```
 
 Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
 
 
 ```r
 neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
-                anzahl = c(20, 15, 0),
-                vorraetig = c(TRUE, TRUE, FALSE)
+                            anzahl = c(20, 15, 0),
+                            vorraetig = c(TRUE, TRUE, FALSE)
                  )
 
 # Dataframes zeilenweise kombinieren
@@ -1564,9 +1578,9 @@ Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert wer
 ```r
 # Dataframes kombinieren und dabei gleiche Spalten zusammenfügen
 neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
-                anzahl = c(20, 15, 0),
-                vorraetig = c(TRUE, TRUE, FALSE), 
-                preis = c(2.49, 1.49, .99)
+                            anzahl = c(20, 15, 0),
+                            vorraetig = c(TRUE, TRUE, FALSE), 
+                            preis = c(2.49, 1.49, .99)
                  )
 merge(fruechte_df, neue_fruechte, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
 ```
@@ -1613,7 +1627,7 @@ print(temperature_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      21      13      17
+#>      16      22      10
 ```
 
 ```r
@@ -1625,25 +1639,25 @@ print(temperature_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  21 15 18 16 17 13 20
-#>   Hamburg 13 23 15 30 15 10 29
-#>   München 17 17 16 23 26 14 20
+#>   Berlin  16 28 16 26 15 28 23
+#>   Hamburg 22 16 18 29 22 16 20
+#>   München 10 13 29 15 16 23 27
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  11 13 27 14 14 18 27
-#>   Hamburg 17 19 19 21 23 11 17
-#>   München 26 28 22 10 12 29 28
+#>   Berlin  28 25 27 29 23 28 28
+#>   Hamburg 18 24 13 22 25 13 14
+#>   München 24 18 26 30 25 24 17
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  29 28 18 26 19 21 24
-#>   Hamburg 17 22 30 21 29 15 20
-#>   München 30 21 29 12 18 30 11
+#>   Berlin  30 19 18 16 13 24 25
+#>   Hamburg 15 26 22 25 19 25 14
+#>   München 17 30 23 22 16 25 14
 ```
 
 ```r
@@ -1656,13 +1670,13 @@ print(morning_temp_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     21      15      26
-#> Di     13      16      13
-#> Mi     17      16      10
-#> Do     15      30      14
-#> Fr     23      23      20
-#> Sa     17      17      29
-#> So     18      15      20
+#> Mo     16      18      16
+#> Di     22      29      28
+#> Mi     10      26      16
+#> Do     28      29      23
+#> Fr     16      15      23
+#> Sa     13      15      20
+#> So     16      22      27
 ```
 
 ```r
@@ -1677,13 +1691,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     21      13      17
-#> Di     15      23      17
-#> Mi     18      15      16
-#> Do     16      30      23
-#> Fr     17      15      26
-#> Sa     13      10      14
-#> So     20      29      20
+#> Mo     16      22      10
+#> Di     28      16      13
+#> Mi     16      18      29
+#> Do     26      29      15
+#> Fr     15      22      16
+#> Sa     28      16      23
+#> So     23      20      27
 ```
 
 ```r
@@ -1696,13 +1710,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     21      13      17 Morgen Celsius
-#> Di     15      23      17 Morgen Celsius
-#> Mi     18      15      16 Morgen Celsius
-#> Do     16      30      23 Morgen Celsius
-#> Fr     17      15      26 Morgen Celsius
-#> Sa     13      10      14 Morgen Celsius
-#> So     20      29      20 Morgen Celsius
+#> Mo     16      22      10 Morgen Celsius
+#> Di     28      16      13 Morgen Celsius
+#> Mi     16      18      29 Morgen Celsius
+#> Do     26      29      15 Morgen Celsius
+#> Fr     15      22      16 Morgen Celsius
+#> Sa     28      16      23 Morgen Celsius
+#> So     23      20      27 Morgen Celsius
 ```
 
 ```r
@@ -1723,13 +1737,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     21      13      17 Morgen Celsius      21
-#> Di     15      23      17 Morgen Celsius      23
-#> Mi     18      15      16 Morgen Celsius      18
-#> Do     16      30      23 Morgen Celsius      30
-#> Fr     17      15      26 Morgen Celsius      26
-#> Sa     13      10      14 Morgen Celsius      14
-#> So     20      29      20 Morgen Celsius      29
+#> Mo     16      22      10 Morgen Celsius      22
+#> Di     28      16      13 Morgen Celsius      28
+#> Mi     16      18      29 Morgen Celsius      29
+#> Do     26      29      15 Morgen Celsius      29
+#> Fr     15      22      16 Morgen Celsius      22
+#> Sa     28      16      23 Morgen Celsius      28
+#> So     23      20      27 Morgen Celsius      27
 ```
 
 ```r
@@ -1740,13 +1754,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     21      13      17 Morgen Celsius    69.8
-#> Di     15      23      17 Morgen Celsius    73.4
-#> Mi     18      15      16 Morgen Celsius    64.4
-#> Do     16      30      23 Morgen Celsius    86.0
-#> Fr     17      15      26 Morgen Celsius    78.8
-#> Sa     13      10      14 Morgen Celsius    57.2
-#> So     20      29      20 Morgen Celsius    84.2
+#> Mo     16      22      10 Morgen Celsius    71.6
+#> Di     28      16      13 Morgen Celsius    82.4
+#> Mi     16      18      29 Morgen Celsius    84.2
+#> Do     26      29      15 Morgen Celsius    84.2
+#> Fr     15      22      16 Morgen Celsius    71.6
+#> Sa     28      16      23 Morgen Celsius    82.4
+#> So     23      20      27 Morgen Celsius    80.6
 ```
 
 ```r
@@ -1758,13 +1772,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     21      13      17 Morgen Celsius               69.8
-#> Di     15      23      17 Morgen Celsius               73.4
-#> Mi     18      15      16 Morgen Celsius               64.4
-#> Do     16      30      23 Morgen Celsius               86.0
-#> Fr     17      15      26 Morgen Celsius               78.8
-#> Sa     13      10      14 Morgen Celsius               57.2
-#> So     20      29      20 Morgen Celsius               84.2
+#> Mo     16      22      10 Morgen Celsius               71.6
+#> Di     28      16      13 Morgen Celsius               82.4
+#> Mi     16      18      29 Morgen Celsius               84.2
+#> Do     26      29      15 Morgen Celsius               84.2
+#> Fr     15      22      16 Morgen Celsius               71.6
+#> Sa     28      16      23 Morgen Celsius               82.4
+#> So     23      20      27 Morgen Celsius               80.6
 ```
 
 ```r
@@ -1804,12 +1818,12 @@ str(morning_temp_dataframe)
 
 ```
 #> 'data.frame':	7 obs. of  6 variables:
-#>  $ Berlin            : int  21 15 18 16 17 13 20
-#>  $ Hamburg           : int  13 23 15 30 15 10 29
-#>  $ München           : int  17 17 16 23 26 14 20
+#>  $ Berlin            : int  16 28 16 26 15 28 23
+#>  $ Hamburg           : int  22 16 18 29 22 16 20
+#>  $ München           : int  10 13 29 15 16 23 27
 #>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
 #>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
-#>  $ Maximum_Fahrenheit: num  69.8 73.4 64.4 86 78.8 57.2 84.2
+#>  $ Maximum_Fahrenheit: num  71.6 82.4 84.2 84.2 71.6 82.4 80.6
 ```
 Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
 
@@ -1892,7 +1906,7 @@ c("a", "f", "b")  %in% buchstaben
 ```r
 # Mitgliedschaftsoperator auf Elemente einer Liste anwenden
 obstpreise <- list(obst=c("Apfel", "Banane", "Orange"),
-               preise=c(2.45, 2.99, 1.99))
+                   preise=c(2.45, 2.99, 1.99))
 "Orange" %in% obstpreise$obst
 ```
 

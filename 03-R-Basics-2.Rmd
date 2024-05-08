@@ -491,14 +491,14 @@ Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen
 # Achtung: die Dimension ist jetzt 3 x 2 !
 
 matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+       ncol = 2, 
+       dimnames = list(NULL,
                       c("nicht_vorraetig", "vorraetig")))
 
 # Matrix erstellen, Namen für einzelne Spalten festlegen, und Spalten insgesamt benennen
 matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+       ncol = 2, 
+       dimnames = list(NULL,
                       "Vorratsstatus" = c("nicht_vorraetig", "vorraetig")))
 
 ```
@@ -665,8 +665,8 @@ df <- data.frame(fruechte, anzahl, vorraetig)
 print(df)
 # Dataframe aus Vektoren erstellen: Variante 2
 fruechte_df <- data.frame(frucht = c("Apfel", "Erdbeere", "Banane"),
-                anzahl = c(20, 32, 0),
-                vorraetig = c(TRUE, TRUE, FALSE)
+                          anzahl = c(20, 32, 0),
+                          vorraetig = c(TRUE, TRUE, FALSE)
                  )
 print(fruechte_df)
 
@@ -690,8 +690,8 @@ Dataframes können auch aus Matrizen erstellt werden, zum Beispiel aus unserer M
 ```{r}
 # Dataframe aus Matrix erstellen 
 fruechte_einkauf <- matrix(c("Birne", "Orange", "Banane", "Kiwi", "Apfel", "Erdbeere"), 
-      ncol = 2, 
-      dimnames = list(NULL,
+                           ncol = 2, 
+                           dimnames = list(NULL,
                       c("nicht_vorraetig", "vorraetig")))
 
 fruechte_df <- as.data.frame(fruechte_einkauf)
@@ -763,16 +763,23 @@ fruechte_df$frucht[fruechte_df$anzahl == 20]
 # Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl ein Wert kleiner als 20 steht
 fruechte_df$frucht[fruechte_df$anzahl < 20]
 
+# Spalte entfernen: hier auskommentiert, da wir die Spalte für unser Beispiel behalten wollen
+# fruechte_df$anzahl <- NULL 
+
 ```
 
-Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können. 
+Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können, zum Beispiel: 
+
+```{r}
+fruechte_df$anzahl * 3
+```
 
 Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
 
 ```{r}
 neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
-                anzahl = c(20, 15, 0),
-                vorraetig = c(TRUE, TRUE, FALSE)
+                            anzahl = c(20, 15, 0),
+                            vorraetig = c(TRUE, TRUE, FALSE)
                  )
 
 # Dataframes zeilenweise kombinieren
@@ -792,9 +799,9 @@ Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert wer
 ```{r}
 # Dataframes kombinieren und dabei gleiche Spalten zusammenfügen
 neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
-                anzahl = c(20, 15, 0),
-                vorraetig = c(TRUE, TRUE, FALSE), 
-                preis = c(2.49, 1.49, .99)
+                            anzahl = c(20, 15, 0),
+                            vorraetig = c(TRUE, TRUE, FALSE), 
+                            preis = c(2.49, 1.49, .99)
                  )
 merge(fruechte_df, neue_fruechte, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
 ```
@@ -930,7 +937,7 @@ c("a", "f", "b")  %in% buchstaben
 
 # Mitgliedschaftsoperator auf Elemente einer Liste anwenden
 obstpreise <- list(obst=c("Apfel", "Banane", "Orange"),
-               preise=c(2.45, 2.99, 1.99))
+                   preise=c(2.45, 2.99, 1.99))
 "Orange" %in% obstpreise$obst
 ```
 

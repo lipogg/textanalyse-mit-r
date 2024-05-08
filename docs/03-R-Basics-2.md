@@ -1519,14 +1519,13 @@ Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen v
 
 
 ```r
-df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
                 anzahl = c(20, 15, 0),
                 vorraetig = c(TRUE, TRUE, FALSE)
                  )
 
 # Dataframes zeilenweise kombinieren
-df_3 <- rbind(fruechte_df, df_2)
-df_3
+rbind(fruechte_df, neue_fruechte)
 ```
 
 ```
@@ -1544,8 +1543,7 @@ df_3
 
 ```r
 # Dataframes spaltenweise kombinieren
-df_4 <- cbind(fruechte_df, df_2)
-df_4
+cbind(fruechte_df, neue_fruechte)
 ```
 
 ```
@@ -1565,12 +1563,12 @@ Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert wer
 
 ```r
 # Dataframes kombinieren und dabei gleiche Spalten zusammenfügen
-df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
                 anzahl = c(20, 15, 0),
                 vorraetig = c(TRUE, TRUE, FALSE), 
                 preis = c(2.49, 1.49, .99)
                  )
-merge(fruechte_df, df_2, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
+merge(fruechte_df, neue_fruechte, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
 ```
 
 ```
@@ -1615,7 +1613,7 @@ print(temperature_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      23      24      14
+#>      21      13      17
 ```
 
 ```r
@@ -1627,25 +1625,25 @@ print(temperature_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  23 18 20 14 28 11 25
-#>   Hamburg 24 13 22 20 20 16 25
-#>   München 14 29 29 26 25 17 20
+#>   Berlin  21 15 18 16 17 13 20
+#>   Hamburg 13 23 15 30 15 10 29
+#>   München 17 17 16 23 26 14 20
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  28 19 12 28 22 15 10
-#>   Hamburg 11 29 15 11 30 22 24
-#>   München 10 16 30 15 12 11 11
+#>   Berlin  11 13 27 14 14 18 27
+#>   Hamburg 17 19 19 21 23 11 17
+#>   München 26 28 22 10 12 29 28
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  17 20 18 24 11 25 15
-#>   Hamburg 29 28 26 26 19 13 12
-#>   München 15 10 10 11 22 28 16
+#>   Berlin  29 28 18 26 19 21 24
+#>   Hamburg 17 22 30 21 29 15 20
+#>   München 30 21 29 12 18 30 11
 ```
 
 ```r
@@ -1658,13 +1656,13 @@ print(morning_temp_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     23      22      25
-#> Di     24      29      11
-#> Mi     14      14      16
-#> Do     18      20      17
-#> Fr     13      26      25
-#> Sa     29      28      25
-#> So     20      20      20
+#> Mo     21      15      26
+#> Di     13      16      13
+#> Mi     17      16      10
+#> Do     15      30      14
+#> Fr     23      23      20
+#> Sa     17      17      29
+#> So     18      15      20
 ```
 
 ```r
@@ -1679,13 +1677,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     23      24      14
-#> Di     18      13      29
-#> Mi     20      22      29
-#> Do     14      20      26
-#> Fr     28      20      25
-#> Sa     11      16      17
-#> So     25      25      20
+#> Mo     21      13      17
+#> Di     15      23      17
+#> Mi     18      15      16
+#> Do     16      30      23
+#> Fr     17      15      26
+#> Sa     13      10      14
+#> So     20      29      20
 ```
 
 ```r
@@ -1698,13 +1696,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     23      24      14 Morgen Celsius
-#> Di     18      13      29 Morgen Celsius
-#> Mi     20      22      29 Morgen Celsius
-#> Do     14      20      26 Morgen Celsius
-#> Fr     28      20      25 Morgen Celsius
-#> Sa     11      16      17 Morgen Celsius
-#> So     25      25      20 Morgen Celsius
+#> Mo     21      13      17 Morgen Celsius
+#> Di     15      23      17 Morgen Celsius
+#> Mi     18      15      16 Morgen Celsius
+#> Do     16      30      23 Morgen Celsius
+#> Fr     17      15      26 Morgen Celsius
+#> Sa     13      10      14 Morgen Celsius
+#> So     20      29      20 Morgen Celsius
 ```
 
 ```r
@@ -1725,13 +1723,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     23      24      14 Morgen Celsius      24
-#> Di     18      13      29 Morgen Celsius      29
-#> Mi     20      22      29 Morgen Celsius      29
-#> Do     14      20      26 Morgen Celsius      26
-#> Fr     28      20      25 Morgen Celsius      28
-#> Sa     11      16      17 Morgen Celsius      17
-#> So     25      25      20 Morgen Celsius      25
+#> Mo     21      13      17 Morgen Celsius      21
+#> Di     15      23      17 Morgen Celsius      23
+#> Mi     18      15      16 Morgen Celsius      18
+#> Do     16      30      23 Morgen Celsius      30
+#> Fr     17      15      26 Morgen Celsius      26
+#> Sa     13      10      14 Morgen Celsius      14
+#> So     20      29      20 Morgen Celsius      29
 ```
 
 ```r
@@ -1742,13 +1740,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     23      24      14 Morgen Celsius    75.2
-#> Di     18      13      29 Morgen Celsius    84.2
-#> Mi     20      22      29 Morgen Celsius    84.2
-#> Do     14      20      26 Morgen Celsius    78.8
-#> Fr     28      20      25 Morgen Celsius    82.4
-#> Sa     11      16      17 Morgen Celsius    62.6
-#> So     25      25      20 Morgen Celsius    77.0
+#> Mo     21      13      17 Morgen Celsius    69.8
+#> Di     15      23      17 Morgen Celsius    73.4
+#> Mi     18      15      16 Morgen Celsius    64.4
+#> Do     16      30      23 Morgen Celsius    86.0
+#> Fr     17      15      26 Morgen Celsius    78.8
+#> Sa     13      10      14 Morgen Celsius    57.2
+#> So     20      29      20 Morgen Celsius    84.2
 ```
 
 ```r
@@ -1760,13 +1758,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     23      24      14 Morgen Celsius               75.2
-#> Di     18      13      29 Morgen Celsius               84.2
-#> Mi     20      22      29 Morgen Celsius               84.2
-#> Do     14      20      26 Morgen Celsius               78.8
-#> Fr     28      20      25 Morgen Celsius               82.4
-#> Sa     11      16      17 Morgen Celsius               62.6
-#> So     25      25      20 Morgen Celsius               77.0
+#> Mo     21      13      17 Morgen Celsius               69.8
+#> Di     15      23      17 Morgen Celsius               73.4
+#> Mi     18      15      16 Morgen Celsius               64.4
+#> Do     16      30      23 Morgen Celsius               86.0
+#> Fr     17      15      26 Morgen Celsius               78.8
+#> Sa     13      10      14 Morgen Celsius               57.2
+#> So     20      29      20 Morgen Celsius               84.2
 ```
 
 ```r
@@ -1806,12 +1804,12 @@ str(morning_temp_dataframe)
 
 ```
 #> 'data.frame':	7 obs. of  6 variables:
-#>  $ Berlin            : int  23 18 20 14 28 11 25
-#>  $ Hamburg           : int  24 13 22 20 20 16 25
-#>  $ München           : int  14 29 29 26 25 17 20
+#>  $ Berlin            : int  21 15 18 16 17 13 20
+#>  $ Hamburg           : int  13 23 15 30 15 10 29
+#>  $ München           : int  17 17 16 23 26 14 20
 #>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
 #>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
-#>  $ Maximum_Fahrenheit: num  75.2 84.2 84.2 78.8 82.4 62.6 77
+#>  $ Maximum_Fahrenheit: num  69.8 73.4 64.4 86 78.8 57.2 84.2
 ```
 Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
 

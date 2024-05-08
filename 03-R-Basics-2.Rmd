@@ -770,18 +770,18 @@ Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Oper
 Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
 
 ```{r}
-df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
                 anzahl = c(20, 15, 0),
                 vorraetig = c(TRUE, TRUE, FALSE)
                  )
 
 # Dataframes zeilenweise kombinieren
-df_3 <- rbind(fruechte_df, df_2)
-df_3
+rbind(fruechte_df, neue_fruechte)
+
 
 # Dataframes spaltenweise kombinieren
-df_4 <- cbind(fruechte_df, df_2)
-df_4
+cbind(fruechte_df, neue_fruechte)
+
  
 ```
 
@@ -791,12 +791,12 @@ Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert wer
 
 ```{r}
 # Dataframes kombinieren und dabei gleiche Spalten zusammenfügen
-df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+neue_fruechte <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
                 anzahl = c(20, 15, 0),
                 vorraetig = c(TRUE, TRUE, FALSE), 
                 preis = c(2.49, 1.49, .99)
                  )
-merge(fruechte_df, df_2, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
+merge(fruechte_df, neue_fruechte, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
 ```
 Im Laufe des Semesters werden wir einige weitere Möglichkeiten kennenlernen, wie Dataframes transformiert und kombiniert werden können. 
 

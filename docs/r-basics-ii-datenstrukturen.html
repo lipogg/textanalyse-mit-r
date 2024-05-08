@@ -1105,14 +1105,13 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <pre><code>#&gt; [1] &quot;Birne&quot;  &quot;Orange&quot; &quot;Banane&quot; &quot;Kiwi&quot;</code></pre>
 <p>Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können.</p>
 <p>Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen <code>rbind()</code> und <code>cbind()</code> verwendet.</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="r-basics-ii-datenstrukturen.html#cb193-1" tabindex="-1"></a>df_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="r-basics-ii-datenstrukturen.html#cb193-1" tabindex="-1"></a>neue_fruechte <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
 <span id="cb193-2"><a href="r-basics-ii-datenstrukturen.html#cb193-2" tabindex="-1"></a>                <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">0</span>),</span>
 <span id="cb193-3"><a href="r-basics-ii-datenstrukturen.html#cb193-3" tabindex="-1"></a>                <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
 <span id="cb193-4"><a href="r-basics-ii-datenstrukturen.html#cb193-4" tabindex="-1"></a>                 )</span>
 <span id="cb193-5"><a href="r-basics-ii-datenstrukturen.html#cb193-5" tabindex="-1"></a></span>
 <span id="cb193-6"><a href="r-basics-ii-datenstrukturen.html#cb193-6" tabindex="-1"></a><span class="co"># Dataframes zeilenweise kombinieren</span></span>
-<span id="cb193-7"><a href="r-basics-ii-datenstrukturen.html#cb193-7" tabindex="-1"></a>df_3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fruechte_df, df_2)</span>
-<span id="cb193-8"><a href="r-basics-ii-datenstrukturen.html#cb193-8" tabindex="-1"></a>df_3</span></code></pre></div>
+<span id="cb193-7"><a href="r-basics-ii-datenstrukturen.html#cb193-7" tabindex="-1"></a><span class="fu">rbind</span>(fruechte_df, neue_fruechte)</span></code></pre></div>
 <pre><code>#&gt;     frucht anzahl vorraetig
 #&gt; 1    Birne      0     FALSE
 #&gt; 2   Orange      0     FALSE
@@ -1124,8 +1123,7 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 #&gt; 8  Zitrone     15      TRUE
 #&gt; 9    Mango      0     FALSE</code></pre>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="r-basics-ii-datenstrukturen.html#cb195-1" tabindex="-1"></a><span class="co"># Dataframes spaltenweise kombinieren</span></span>
-<span id="cb195-2"><a href="r-basics-ii-datenstrukturen.html#cb195-2" tabindex="-1"></a>df_4 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(fruechte_df, df_2)</span>
-<span id="cb195-3"><a href="r-basics-ii-datenstrukturen.html#cb195-3" tabindex="-1"></a>df_4</span></code></pre></div>
+<span id="cb195-2"><a href="r-basics-ii-datenstrukturen.html#cb195-2" tabindex="-1"></a><span class="fu">cbind</span>(fruechte_df, neue_fruechte)</span></code></pre></div>
 <pre><code>#&gt;     frucht anzahl vorraetig  frucht anzahl vorraetig
 #&gt; 1    Birne      0     FALSE   Apfel     20      TRUE
 #&gt; 2   Orange      0     FALSE Zitrone     15      TRUE
@@ -1136,12 +1134,12 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <p>Beachtet, dass beim Zusammenfügen der beiden Dataframes Duplikate entstehen: In dem neuen Dataframe, der mit <code>rbind()</code> erstellt wurde, gibt es zweimal “Apfel”, obwohl sich alle Werte in der Zeile wiederholen. In dem neuen Dataframe, der mit <code>cbind()</code> erstellt wurde, wiederholen sich sogar die Spalten und alle Elemente im Dataframe <code>df_2</code> werden noch einmal dupliziert. Das hat den Grund, dass <code>cbind()</code> nur Dataframes mit derselben Anzahl an Zeilen zusammenfügen kann.</p>
 <p>Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert werden und nur die neuen Zeilen und Spalten hinzugefügt werden, kann die Funktion <code>merge()</code> verwendet werden.</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="r-basics-ii-datenstrukturen.html#cb197-1" tabindex="-1"></a><span class="co"># Dataframes kombinieren und dabei gleiche Spalten zusammenfügen</span></span>
-<span id="cb197-2"><a href="r-basics-ii-datenstrukturen.html#cb197-2" tabindex="-1"></a>df_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
+<span id="cb197-2"><a href="r-basics-ii-datenstrukturen.html#cb197-2" tabindex="-1"></a>neue_fruechte <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
 <span id="cb197-3"><a href="r-basics-ii-datenstrukturen.html#cb197-3" tabindex="-1"></a>                <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">0</span>),</span>
 <span id="cb197-4"><a href="r-basics-ii-datenstrukturen.html#cb197-4" tabindex="-1"></a>                <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
 <span id="cb197-5"><a href="r-basics-ii-datenstrukturen.html#cb197-5" tabindex="-1"></a>                <span class="at">preis =</span> <span class="fu">c</span>(<span class="fl">2.49</span>, <span class="fl">1.49</span>, .<span class="dv">99</span>)</span>
 <span id="cb197-6"><a href="r-basics-ii-datenstrukturen.html#cb197-6" tabindex="-1"></a>                 )</span>
-<span id="cb197-7"><a href="r-basics-ii-datenstrukturen.html#cb197-7" tabindex="-1"></a><span class="fu">merge</span>(fruechte_df, df_2, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;frucht&quot;</span>,<span class="st">&quot;anzahl&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>), <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb197-7"><a href="r-basics-ii-datenstrukturen.html#cb197-7" tabindex="-1"></a><span class="fu">merge</span>(fruechte_df, neue_fruechte, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;frucht&quot;</span>,<span class="st">&quot;anzahl&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>), <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>#&gt;     frucht anzahl vorraetig preis
 #&gt; 1    Apfel     20      TRUE  2.49
 #&gt; 2   Banane      0     FALSE    NA
@@ -1176,44 +1174,44 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb199-8"><a href="r-basics-ii-datenstrukturen.html#cb199-8" tabindex="-1"></a>)</span>
 <span id="cb199-9"><a href="r-basics-ii-datenstrukturen.html#cb199-9" tabindex="-1"></a><span class="fu">print</span>(temperature_array[,<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Morgen&quot;</span>]) </span></code></pre></div>
 <pre><code>#&gt;  Berlin Hamburg München 
-#&gt;      23      24      14</code></pre>
+#&gt;      21      13      17</code></pre>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="r-basics-ii-datenstrukturen.html#cb201-1" tabindex="-1"></a><span class="fu">print</span>(temperature_array)</span></code></pre></div>
 <pre><code>#&gt; , , Zeit = Morgen
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  23 18 20 14 28 11 25
-#&gt;   Hamburg 24 13 22 20 20 16 25
-#&gt;   München 14 29 29 26 25 17 20
+#&gt;   Berlin  21 15 18 16 17 13 20
+#&gt;   Hamburg 13 23 15 30 15 10 29
+#&gt;   München 17 17 16 23 26 14 20
 #&gt; 
 #&gt; , , Zeit = Mittag
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  28 19 12 28 22 15 10
-#&gt;   Hamburg 11 29 15 11 30 22 24
-#&gt;   München 10 16 30 15 12 11 11
+#&gt;   Berlin  11 13 27 14 14 18 27
+#&gt;   Hamburg 17 19 19 21 23 11 17
+#&gt;   München 26 28 22 10 12 29 28
 #&gt; 
 #&gt; , , Zeit = Abend
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  17 20 18 24 11 25 15
-#&gt;   Hamburg 29 28 26 26 19 13 12
-#&gt;   München 15 10 10 11 22 28 16</code></pre>
+#&gt;   Berlin  29 28 18 26 19 21 24
+#&gt;   Hamburg 17 22 30 21 29 15 20
+#&gt;   München 30 21 29 12 18 30 11</code></pre>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="r-basics-ii-datenstrukturen.html#cb203-1" tabindex="-1"></a><span class="co"># Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb203-2"><a href="r-basics-ii-datenstrukturen.html#cb203-2" tabindex="-1"></a>morning_temp_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(temperature_array[ , , <span class="st">&quot;Morgen&quot;</span>], <span class="at">nrow =</span> <span class="dv">7</span>)</span>
 <span id="cb203-3"><a href="r-basics-ii-datenstrukturen.html#cb203-3" tabindex="-1"></a><span class="fu">rownames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>)</span>
 <span id="cb203-4"><a href="r-basics-ii-datenstrukturen.html#cb203-4" tabindex="-1"></a><span class="fu">colnames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
 <span id="cb203-5"><a href="r-basics-ii-datenstrukturen.html#cb203-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_matrix)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     23      22      25
-#&gt; Di     24      29      11
-#&gt; Mi     14      14      16
-#&gt; Do     18      20      17
-#&gt; Fr     13      26      25
-#&gt; Sa     29      28      25
-#&gt; So     20      20      20</code></pre>
+#&gt; Mo     21      15      26
+#&gt; Di     13      16      13
+#&gt; Mi     17      16      10
+#&gt; Do     15      30      14
+#&gt; Fr     23      23      20
+#&gt; Sa     17      17      29
+#&gt; So     18      15      20</code></pre>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="r-basics-ii-datenstrukturen.html#cb205-1" tabindex="-1"></a><span class="co"># Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb205-2"><a href="r-basics-ii-datenstrukturen.html#cb205-2" tabindex="-1"></a>morning_temp_dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb205-3"><a href="r-basics-ii-datenstrukturen.html#cb205-3" tabindex="-1"></a>  <span class="at">Berlin =</span> temperature_array[<span class="st">&quot;Berlin&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
@@ -1222,26 +1220,26 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb205-6"><a href="r-basics-ii-datenstrukturen.html#cb205-6" tabindex="-1"></a>)</span>
 <span id="cb205-7"><a href="r-basics-ii-datenstrukturen.html#cb205-7" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe) </span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     23      24      14
-#&gt; Di     18      13      29
-#&gt; Mi     20      22      29
-#&gt; Do     14      20      26
-#&gt; Fr     28      20      25
-#&gt; Sa     11      16      17
-#&gt; So     25      25      20</code></pre>
+#&gt; Mo     21      13      17
+#&gt; Di     15      23      17
+#&gt; Mi     18      15      16
+#&gt; Do     16      30      23
+#&gt; Fr     17      15      26
+#&gt; Sa     13      10      14
+#&gt; So     20      29      20</code></pre>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="r-basics-ii-datenstrukturen.html#cb207-1" tabindex="-1"></a><span class="co"># Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. </span></span>
 <span id="cb207-2"><a href="r-basics-ii-datenstrukturen.html#cb207-2" tabindex="-1"></a><span class="co"># Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:</span></span>
 <span id="cb207-3"><a href="r-basics-ii-datenstrukturen.html#cb207-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span>
 <span id="cb207-4"><a href="r-basics-ii-datenstrukturen.html#cb207-4" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Skala <span class="ot">&lt;-</span> <span class="st">&quot;Celsius&quot;</span></span>
 <span id="cb207-5"><a href="r-basics-ii-datenstrukturen.html#cb207-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala
-#&gt; Mo     23      24      14 Morgen Celsius
-#&gt; Di     18      13      29 Morgen Celsius
-#&gt; Mi     20      22      29 Morgen Celsius
-#&gt; Do     14      20      26 Morgen Celsius
-#&gt; Fr     28      20      25 Morgen Celsius
-#&gt; Sa     11      16      17 Morgen Celsius
-#&gt; So     25      25      20 Morgen Celsius</code></pre>
+#&gt; Mo     21      13      17 Morgen Celsius
+#&gt; Di     15      23      17 Morgen Celsius
+#&gt; Mi     18      15      16 Morgen Celsius
+#&gt; Do     16      30      23 Morgen Celsius
+#&gt; Fr     17      15      26 Morgen Celsius
+#&gt; Sa     13      10      14 Morgen Celsius
+#&gt; So     20      29      20 Morgen Celsius</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="r-basics-ii-datenstrukturen.html#cb209-1" tabindex="-1"></a><span class="co"># Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: </span></span>
 <span id="cb209-2"><a href="r-basics-ii-datenstrukturen.html#cb209-2" tabindex="-1"></a>morning_temp_matrix<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span></code></pre></div>
 <pre><code>#&gt; Warning in morning_temp_matrix$Zeit &lt;- &quot;Morgen&quot;: Coercing LHS to a list</code></pre>
@@ -1250,36 +1248,36 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb211-3"><a href="r-basics-ii-datenstrukturen.html#cb211-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="fu">pmax</span>(morning_temp_dataframe<span class="sc">$</span>Berlin, morning_temp_dataframe<span class="sc">$</span>Hamburg, morning_temp_dataframe<span class="sc">$</span>München)</span>
 <span id="cb211-4"><a href="r-basics-ii-datenstrukturen.html#cb211-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     23      24      14 Morgen Celsius      24
-#&gt; Di     18      13      29 Morgen Celsius      29
-#&gt; Mi     20      22      29 Morgen Celsius      29
-#&gt; Do     14      20      26 Morgen Celsius      26
-#&gt; Fr     28      20      25 Morgen Celsius      28
-#&gt; Sa     11      16      17 Morgen Celsius      17
-#&gt; So     25      25      20 Morgen Celsius      25</code></pre>
+#&gt; Mo     21      13      17 Morgen Celsius      21
+#&gt; Di     15      23      17 Morgen Celsius      23
+#&gt; Mi     18      15      16 Morgen Celsius      18
+#&gt; Do     16      30      23 Morgen Celsius      30
+#&gt; Fr     17      15      26 Morgen Celsius      26
+#&gt; Sa     13      10      14 Morgen Celsius      14
+#&gt; So     20      29      20 Morgen Celsius      29</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="r-basics-ii-datenstrukturen.html#cb213-1" tabindex="-1"></a><span class="co"># Wir könnten auch die Werte in Fahrenheit umwandeln </span></span>
 <span id="cb213-2"><a href="r-basics-ii-datenstrukturen.html#cb213-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
 <span id="cb213-3"><a href="r-basics-ii-datenstrukturen.html#cb213-3" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     23      24      14 Morgen Celsius    75.2
-#&gt; Di     18      13      29 Morgen Celsius    84.2
-#&gt; Mi     20      22      29 Morgen Celsius    84.2
-#&gt; Do     14      20      26 Morgen Celsius    78.8
-#&gt; Fr     28      20      25 Morgen Celsius    82.4
-#&gt; Sa     11      16      17 Morgen Celsius    62.6
-#&gt; So     25      25      20 Morgen Celsius    77.0</code></pre>
+#&gt; Mo     21      13      17 Morgen Celsius    69.8
+#&gt; Di     15      23      17 Morgen Celsius    73.4
+#&gt; Mi     18      15      16 Morgen Celsius    64.4
+#&gt; Do     16      30      23 Morgen Celsius    86.0
+#&gt; Fr     17      15      26 Morgen Celsius    78.8
+#&gt; Sa     13      10      14 Morgen Celsius    57.2
+#&gt; So     20      29      20 Morgen Celsius    84.2</code></pre>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="r-basics-ii-datenstrukturen.html#cb215-1" tabindex="-1"></a><span class="co">#... und anschließend die Spalte umbenennen </span></span>
 <span id="cb215-2"><a href="r-basics-ii-datenstrukturen.html#cb215-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum_Fahrenheit <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum</span>
 <span id="cb215-3"><a href="r-basics-ii-datenstrukturen.html#cb215-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># entfernt die ursprüngliche &quot;Maximum&quot; Spalte</span></span>
 <span id="cb215-4"><a href="r-basics-ii-datenstrukturen.html#cb215-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#&gt; Mo     23      24      14 Morgen Celsius               75.2
-#&gt; Di     18      13      29 Morgen Celsius               84.2
-#&gt; Mi     20      22      29 Morgen Celsius               84.2
-#&gt; Do     14      20      26 Morgen Celsius               78.8
-#&gt; Fr     28      20      25 Morgen Celsius               82.4
-#&gt; Sa     11      16      17 Morgen Celsius               62.6
-#&gt; So     25      25      20 Morgen Celsius               77.0</code></pre>
+#&gt; Mo     21      13      17 Morgen Celsius               69.8
+#&gt; Di     15      23      17 Morgen Celsius               73.4
+#&gt; Mi     18      15      16 Morgen Celsius               64.4
+#&gt; Do     16      30      23 Morgen Celsius               86.0
+#&gt; Fr     17      15      26 Morgen Celsius               78.8
+#&gt; Sa     13      10      14 Morgen Celsius               57.2
+#&gt; So     20      29      20 Morgen Celsius               84.2</code></pre>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="r-basics-ii-datenstrukturen.html#cb217-1" tabindex="-1"></a><span class="co"># Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. </span></span></code></pre></div>
 </div>
 <div id="datenstrukturen-untersuchen" class="section level2 hasAnchor" number="2.9">
@@ -1293,12 +1291,12 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <p>Neben <code>typeof()</code> und <code>class()</code> gibt es noch eine dritte Funktion, mit der die Datenstruktur eines Objekts untersucht werden kann. Die Funktion <code>str()</code> gibt Auskunft über die interne Struktur des Objekts:</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="r-basics-ii-datenstrukturen.html#cb222-1" tabindex="-1"></a><span class="fu">str</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt; &#39;data.frame&#39;:    7 obs. of  6 variables:
-#&gt;  $ Berlin            : int  23 18 20 14 28 11 25
-#&gt;  $ Hamburg           : int  24 13 22 20 20 16 25
-#&gt;  $ München           : int  14 29 29 26 25 17 20
+#&gt;  $ Berlin            : int  21 15 18 16 17 13 20
+#&gt;  $ Hamburg           : int  13 23 15 30 15 10 29
+#&gt;  $ München           : int  17 17 16 23 26 14 20
 #&gt;  $ Zeit              : chr  &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; ...
 #&gt;  $ Skala             : chr  &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; ...
-#&gt;  $ Maximum_Fahrenheit: num  75.2 84.2 84.2 78.8 82.4 62.6 77</code></pre>
+#&gt;  $ Maximum_Fahrenheit: num  69.8 73.4 64.4 86 78.8 57.2 84.2</code></pre>
 <p>Die Funktion <code>typeof()</code> kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden:</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="r-basics-ii-datenstrukturen.html#cb224-1" tabindex="-1"></a><span class="co"># Jedes Element hat in einer Matrix hat den Datentyp character</span></span>
 <span id="cb224-2"><a href="r-basics-ii-datenstrukturen.html#cb224-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf[<span class="dv">1</span>,<span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>

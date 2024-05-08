@@ -200,9 +200,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.7.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-dataframes"><i class="fa fa-check"></i><b>2.7.1</b> Zugriffsoperationen auf Dataframes</a></li>
 </ul></li>
 <li class="chapter" data-level="2.8" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes"><i class="fa fa-check"></i><b>2.8</b> Auf einen Blick: Matrizen vs Arrays vs Dataframes</a></li>
-<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.9</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
-<li class="chapter" data-level="2.10" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.10</b> Der Mitgliedschaftsoperator %in%</a></li>
-<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.11</b> Unveränderbarkeit von Objekten in R</a></li>
+<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen"><i class="fa fa-check"></i><b>2.9</b> Datenstrukturen untersuchen</a></li>
+<li class="chapter" data-level="2.10" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.10</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
+<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
+<li class="chapter" data-level="2.12" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
 <li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -889,13 +890,6 @@ Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen
 <pre><code>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 #&gt; [1,]    1    1    4    4    1    2    4    4
 #&gt; [2,]    2    2    4    4    1    2    4    4</code></pre>
-<p>Die folgenden Beispiele illustrieren nochmal die Eigenschaften von Matrizen:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="r-basics-ii-datenstrukturen.html#cb145-1" tabindex="-1"></a><span class="co"># Matrix ist eine character-Matrix</span></span>
-<span id="cb145-2"><a href="r-basics-ii-datenstrukturen.html#cb145-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf) <span class="co"># character</span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="r-basics-ii-datenstrukturen.html#cb147-1" tabindex="-1"></a><span class="co"># Jedes Element hat den Datentyp character</span></span>
-<span id="cb147-2"><a href="r-basics-ii-datenstrukturen.html#cb147-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf[<span class="dv">1</span>,<span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
 <ul>
@@ -912,305 +906,459 @@ Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen
 Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas anderes gemeint als in Bezug auf Matrizen. Während die Dimension einer Matrix die Anzahl ihrer Zeilen und Spalten beschreibt, hat der Dimensionsbegriff bei Arrays eine erweiterte Bedeutung. Bei einem Array bezieht sich die Dimension auf die Anzahl der “Richtungen” oder “Achsen”, in denen die Daten organisiert sind. Dies kann die Anzahl der Zeilen, Spalten, “Schichten” und weiterer Organisationsweisen in höherdimensionalen Arrays umfassen. Jede dieser “Richtungen” hat eine bestimmte Größe, das heißt eine festgelegte Anzahl von Elementen.</p>
 <p><img src="images/array.png" width="612" /></p>
 <p>Arrays werden mithilfe der Funktion <code>array()</code> erstellt:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="r-basics-ii-datenstrukturen.html#cb149-1" tabindex="-1"></a><span class="co"># Daten für das Array</span></span>
-<span id="cb149-2"><a href="r-basics-ii-datenstrukturen.html#cb149-2" tabindex="-1"></a>autos_daten <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb149-3"><a href="r-basics-ii-datenstrukturen.html#cb149-3" tabindex="-1"></a>    <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;BMW&quot;</span>, </span>
-<span id="cb149-4"><a href="r-basics-ii-datenstrukturen.html#cb149-4" tabindex="-1"></a>    <span class="st">&quot;Ford&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;Audi&quot;</span>, </span>
-<span id="cb149-5"><a href="r-basics-ii-datenstrukturen.html#cb149-5" tabindex="-1"></a>    <span class="st">&quot;Toyota&quot;</span>, <span class="st">&quot;Nissan&quot;</span>, <span class="st">&quot;Honda&quot;</span>, </span>
-<span id="cb149-6"><a href="r-basics-ii-datenstrukturen.html#cb149-6" tabindex="-1"></a>    <span class="st">&quot;Chevrolet&quot;</span>, <span class="st">&quot;GMC&quot;</span>, <span class="st">&quot;Tesla&quot;</span></span>
-<span id="cb149-7"><a href="r-basics-ii-datenstrukturen.html#cb149-7" tabindex="-1"></a>)</span>
-<span id="cb149-8"><a href="r-basics-ii-datenstrukturen.html#cb149-8" tabindex="-1"></a></span>
-<span id="cb149-9"><a href="r-basics-ii-datenstrukturen.html#cb149-9" tabindex="-1"></a><span class="co"># Erstellen eines 3D-Arrays mit 2 Zeilen, 3 Spalten und 2 &quot;Ebenen&quot; (jede Ebene ist eine separate Matrix)</span></span>
-<span id="cb149-10"><a href="r-basics-ii-datenstrukturen.html#cb149-10" tabindex="-1"></a>autos_array <span class="ot">&lt;-</span> <span class="fu">array</span>(autos_daten, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb149-11"><a href="r-basics-ii-datenstrukturen.html#cb149-11" tabindex="-1"></a></span>
-<span id="cb149-12"><a href="r-basics-ii-datenstrukturen.html#cb149-12" tabindex="-1"></a><span class="co"># Ausgabe des Arrays</span></span>
-<span id="cb149-13"><a href="r-basics-ii-datenstrukturen.html#cb149-13" tabindex="-1"></a><span class="fu">print</span>(autos_array)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="r-basics-ii-datenstrukturen.html#cb145-1" tabindex="-1"></a><span class="co"># Daten für das Array</span></span>
+<span id="cb145-2"><a href="r-basics-ii-datenstrukturen.html#cb145-2" tabindex="-1"></a>fruechte_daten <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb145-3"><a href="r-basics-ii-datenstrukturen.html#cb145-3" tabindex="-1"></a>    <span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Birne&quot;</span>, </span>
+<span id="cb145-4"><a href="r-basics-ii-datenstrukturen.html#cb145-4" tabindex="-1"></a>    <span class="st">&quot;Erbeere&quot;</span>, <span class="st">&quot;Melone&quot;</span>, <span class="st">&quot;Kiwi&quot;</span>, </span>
+<span id="cb145-5"><a href="r-basics-ii-datenstrukturen.html#cb145-5" tabindex="-1"></a>    <span class="st">&quot;Banane&quot;</span>, <span class="st">&quot;Traube&quot;</span>, <span class="st">&quot;Apfel&quot;</span>, </span>
+<span id="cb145-6"><a href="r-basics-ii-datenstrukturen.html#cb145-6" tabindex="-1"></a>    <span class="st">&quot;Papaya&quot;</span>, <span class="st">&quot;Quitte&quot;</span>, <span class="st">&quot;Mango&quot;</span></span>
+<span id="cb145-7"><a href="r-basics-ii-datenstrukturen.html#cb145-7" tabindex="-1"></a>)</span>
+<span id="cb145-8"><a href="r-basics-ii-datenstrukturen.html#cb145-8" tabindex="-1"></a></span>
+<span id="cb145-9"><a href="r-basics-ii-datenstrukturen.html#cb145-9" tabindex="-1"></a><span class="co"># Erstellen eines 3D-Arrays mit 2 Zeilen, 3 Spalten und 2 &quot;Ebenen&quot; (jede Ebene ist eine separate Matrix)</span></span>
+<span id="cb145-10"><a href="r-basics-ii-datenstrukturen.html#cb145-10" tabindex="-1"></a>fruechte_array <span class="ot">&lt;-</span> <span class="fu">array</span>(fruechte_daten, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb145-11"><a href="r-basics-ii-datenstrukturen.html#cb145-11" tabindex="-1"></a></span>
+<span id="cb145-12"><a href="r-basics-ii-datenstrukturen.html#cb145-12" tabindex="-1"></a><span class="co"># Ausgabe des Arrays</span></span>
+<span id="cb145-13"><a href="r-basics-ii-datenstrukturen.html#cb145-13" tabindex="-1"></a><span class="fu">print</span>(fruechte_array)</span></code></pre></div>
 <pre><code>#&gt; , , 1
 #&gt; 
-#&gt;      [,1]       [,2]   [,3]   
-#&gt; [1,] &quot;Fiat&quot;     &quot;BMW&quot;  &quot;Volvo&quot;
-#&gt; [2,] &quot;Mercedes&quot; &quot;Ford&quot; &quot;Audi&quot; 
+#&gt;      [,1]     [,2]      [,3]    
+#&gt; [1,] &quot;Apfel&quot;  &quot;Birne&quot;   &quot;Melone&quot;
+#&gt; [2,] &quot;Orange&quot; &quot;Erbeere&quot; &quot;Kiwi&quot;  
 #&gt; 
 #&gt; , , 2
 #&gt; 
-#&gt;      [,1]     [,2]        [,3]   
-#&gt; [1,] &quot;Toyota&quot; &quot;Honda&quot;     &quot;GMC&quot;  
-#&gt; [2,] &quot;Nissan&quot; &quot;Chevrolet&quot; &quot;Tesla&quot;</code></pre>
-<p>Die Dimension des Arrays <code>autos_array</code> lässt sich an der Länge des Vektors <code>dim=c(2, 3, 2)</code> ablesen: Da der Vektor drei Elemente hat, handelt es sich um ein dreidimensionales Array. Das erste Element des Vektors <code>dim</code> legt fest, dass jede Matrix zwei Zeilen hat, das zweite Element legt fest, dass jede Matrix drei Spalten hat, und das dritte Element legt fest, dass es zwei Matrizen gibt.</p>
+#&gt;      [,1]     [,2]     [,3]    
+#&gt; [1,] &quot;Banane&quot; &quot;Apfel&quot;  &quot;Quitte&quot;
+#&gt; [2,] &quot;Traube&quot; &quot;Papaya&quot; &quot;Mango&quot;</code></pre>
+<p>Die Dimension des Arrays <code>fruechte_array</code> lässt sich an der Länge des Vektors <code>dim=c(2, 3, 2)</code> ablesen: Da der Vektor drei Elemente hat, handelt es sich um ein dreidimensionales Array. Das erste Element des Vektors <code>dim</code> legt fest, dass jede Matrix zwei Zeilen hat, das zweite Element legt fest, dass jede Matrix drei Spalten hat, und das dritte Element legt fest, dass es zwei Matrizen gibt.</p>
 <div id="zugriffsoperationen-auf-arrays" class="section level3 hasAnchor" number="2.6.1">
 <h3><span class="header-section-number">2.6.1</span> Zugriffsoperationen auf Arrays<a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="r-basics-ii-datenstrukturen.html#cb151-1" tabindex="-1"></a><span class="co"># Zugriff auf die erste Matrix </span></span>
-<span id="cb151-2"><a href="r-basics-ii-datenstrukturen.html#cb151-2" tabindex="-1"></a>autos_array[,,<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>#&gt;      [,1]       [,2]   [,3]   
-#&gt; [1,] &quot;Fiat&quot;     &quot;BMW&quot;  &quot;Volvo&quot;
-#&gt; [2,] &quot;Mercedes&quot; &quot;Ford&quot; &quot;Audi&quot;</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="r-basics-ii-datenstrukturen.html#cb153-1" tabindex="-1"></a><span class="co"># Zugriff auf die zweite Spalte der ersten Matrix </span></span>
-<span id="cb153-2"><a href="r-basics-ii-datenstrukturen.html#cb153-2" tabindex="-1"></a>autos_array[,<span class="dv">2</span>,<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;BMW&quot;  &quot;Ford&quot;</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="r-basics-ii-datenstrukturen.html#cb155-1" tabindex="-1"></a><span class="co"># Zugriff auf das Element in der ersten Zeile und zweiten Spalte der ersten Matrix </span></span>
-<span id="cb155-2"><a href="r-basics-ii-datenstrukturen.html#cb155-2" tabindex="-1"></a>autos_array[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;BMW&quot;</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="r-basics-ii-datenstrukturen.html#cb147-1" tabindex="-1"></a><span class="co"># Zugriff auf die erste Matrix </span></span>
+<span id="cb147-2"><a href="r-basics-ii-datenstrukturen.html#cb147-2" tabindex="-1"></a>fruechte_array[,,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>#&gt;      [,1]     [,2]      [,3]    
+#&gt; [1,] &quot;Apfel&quot;  &quot;Birne&quot;   &quot;Melone&quot;
+#&gt; [2,] &quot;Orange&quot; &quot;Erbeere&quot; &quot;Kiwi&quot;</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="r-basics-ii-datenstrukturen.html#cb149-1" tabindex="-1"></a><span class="co"># Zugriff auf die zweite Spalte der ersten Matrix </span></span>
+<span id="cb149-2"><a href="r-basics-ii-datenstrukturen.html#cb149-2" tabindex="-1"></a>fruechte_array[,<span class="dv">2</span>,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;   &quot;Erbeere&quot;</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="r-basics-ii-datenstrukturen.html#cb151-1" tabindex="-1"></a><span class="co"># Zugriff auf das Element in der ersten Zeile und zweiten Spalte der ersten Matrix </span></span>
+<span id="cb151-2"><a href="r-basics-ii-datenstrukturen.html#cb151-2" tabindex="-1"></a>fruechte_array[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="r-basics-ii-datenstrukturen.html#cb153-1" tabindex="-1"></a><span class="co"># Dimensionen benennen </span></span>
+<span id="cb153-2"><a href="r-basics-ii-datenstrukturen.html#cb153-2" tabindex="-1"></a><span class="fu">dimnames</span>(fruechte_array) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb153-3"><a href="r-basics-ii-datenstrukturen.html#cb153-3" tabindex="-1"></a>  <span class="at">Vorratsstatus =</span> <span class="fu">c</span>(<span class="st">&quot;vorraetig&quot;</span>, <span class="st">&quot;nicht_vorraetig&quot;</span>),</span>
+<span id="cb153-4"><a href="r-basics-ii-datenstrukturen.html#cb153-4" tabindex="-1"></a>  <span class="at">Vorratsort =</span> <span class="fu">c</span>(<span class="st">&quot;kuehlschrank&quot;</span>, <span class="st">&quot;vorratskammer&quot;</span>, <span class="st">&quot;regal&quot;</span>),</span>
+<span id="cb153-5"><a href="r-basics-ii-datenstrukturen.html#cb153-5" tabindex="-1"></a>  <span class="at">Haus =</span> <span class="fu">c</span>(<span class="st">&quot;Wohnhaus&quot;</span>, <span class="st">&quot;Ferienhaus&quot;</span>)</span>
+<span id="cb153-6"><a href="r-basics-ii-datenstrukturen.html#cb153-6" tabindex="-1"></a>)</span>
+<span id="cb153-7"><a href="r-basics-ii-datenstrukturen.html#cb153-7" tabindex="-1"></a>fruechte_array</span></code></pre></div>
+<pre><code>#&gt; , , Haus = Wohnhaus
+#&gt; 
+#&gt;                  Vorratsort
+#&gt; Vorratsstatus     kuehlschrank vorratskammer regal   
+#&gt;   vorraetig       &quot;Apfel&quot;      &quot;Birne&quot;       &quot;Melone&quot;
+#&gt;   nicht_vorraetig &quot;Orange&quot;     &quot;Erbeere&quot;     &quot;Kiwi&quot;  
+#&gt; 
+#&gt; , , Haus = Ferienhaus
+#&gt; 
+#&gt;                  Vorratsort
+#&gt; Vorratsstatus     kuehlschrank vorratskammer regal   
+#&gt;   vorraetig       &quot;Banane&quot;     &quot;Apfel&quot;       &quot;Quitte&quot;
+#&gt;   nicht_vorraetig &quot;Traube&quot;     &quot;Papaya&quot;      &quot;Mango&quot;</code></pre>
 </div>
 </div>
 <div id="dataframes" class="section level2 hasAnchor" number="2.7">
 <h2><span class="header-section-number">2.7</span> Dataframes<a href="r-basics-ii-datenstrukturen.html#dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Dataframes werden zur Darstellung tabellarischer Daten verwendet. Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können. Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden.</p>
+<p><strong>Dataframes werden zur Darstellung tabellarischer Daten verwendet.</strong> Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: <strong>Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können.</strong> <strong>Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss</strong>: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden.</p>
 <p><img src="images/dataframe.png" width="1004" /></p>
 <p>Weil die Spalten eines Dataframes Vektoren sind, kann man Dataframes “spaltenweise” erstellen. Dazu erstellt man zunächst entweder einen Vektor für jede Spalte und kombiniert diese dann mithilfe der Funktion <code>data.frame()</code> in ein Dataframe-Objekt:</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="r-basics-ii-datenstrukturen.html#cb157-1" tabindex="-1"></a><span class="co"># Dataframe aus Vektoren erstellen: Variante 1 </span></span>
-<span id="cb157-2"><a href="r-basics-ii-datenstrukturen.html#cb157-2" tabindex="-1"></a>marke <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;BMW&quot;</span>, <span class="st">&quot;Ford&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;Audi&quot;</span>)</span>
-<span id="cb157-3"><a href="r-basics-ii-datenstrukturen.html#cb157-3" tabindex="-1"></a>farbe <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;rot&quot;</span>, <span class="st">&quot;rot&quot;</span>, <span class="st">&quot;blau&quot;</span>, <span class="st">&quot;silber&quot;</span>, <span class="st">&quot;schwarz&quot;</span>, <span class="st">&quot;silber&quot;</span>)</span>
-<span id="cb157-4"><a href="r-basics-ii-datenstrukturen.html#cb157-4" tabindex="-1"></a>jahr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1993</span>, <span class="dv">2007</span>, <span class="dv">1999</span>, <span class="dv">2010</span>, <span class="dv">2020</span>, <span class="dv">2021</span>)</span>
-<span id="cb157-5"><a href="r-basics-ii-datenstrukturen.html#cb157-5" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(marke, farbe, jahr)</span>
-<span id="cb157-6"><a href="r-basics-ii-datenstrukturen.html#cb157-6" tabindex="-1"></a><span class="fu">print</span>(df)</span></code></pre></div>
-<pre><code>#&gt;      marke   farbe jahr
-#&gt; 1     Fiat     rot 1993
-#&gt; 2 Mercedes     rot 2007
-#&gt; 3      BMW    blau 1999
-#&gt; 4     Ford  silber 2010
-#&gt; 5    Volvo schwarz 2020
-#&gt; 6     Audi  silber 2021</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="r-basics-ii-datenstrukturen.html#cb159-1" tabindex="-1"></a><span class="co"># Dataframe aus Vektoren erstellen: Variante 2</span></span>
-<span id="cb159-2"><a href="r-basics-ii-datenstrukturen.html#cb159-2" tabindex="-1"></a><span class="co"># Achtung! Hier verwenden wir jetzt den Operator = </span></span>
-<span id="cb159-3"><a href="r-basics-ii-datenstrukturen.html#cb159-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">marke =</span> <span class="fu">c</span>(<span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;BMW&quot;</span>, <span class="st">&quot;Ford&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;Audi&quot;</span>),</span>
-<span id="cb159-4"><a href="r-basics-ii-datenstrukturen.html#cb159-4" tabindex="-1"></a>                <span class="at">farbe =</span> <span class="fu">c</span>(<span class="st">&quot;rot&quot;</span>, <span class="st">&quot;rot&quot;</span>, <span class="st">&quot;blau&quot;</span>, <span class="st">&quot;silber&quot;</span>, <span class="st">&quot;schwarz&quot;</span>, <span class="st">&quot;silber&quot;</span>),</span>
-<span id="cb159-5"><a href="r-basics-ii-datenstrukturen.html#cb159-5" tabindex="-1"></a>                <span class="at">jahr =</span> <span class="fu">c</span>(<span class="dv">1993</span>, <span class="dv">2007</span>, <span class="dv">1999</span>, <span class="dv">2010</span>, <span class="dv">2020</span>, <span class="dv">2021</span>)</span>
-<span id="cb159-6"><a href="r-basics-ii-datenstrukturen.html#cb159-6" tabindex="-1"></a>                 )</span>
-<span id="cb159-7"><a href="r-basics-ii-datenstrukturen.html#cb159-7" tabindex="-1"></a><span class="fu">print</span>(df)</span></code></pre></div>
-<pre><code>#&gt;      marke   farbe jahr
-#&gt; 1     Fiat     rot 1993
-#&gt; 2 Mercedes     rot 2007
-#&gt; 3      BMW    blau 1999
-#&gt; 4     Ford  silber 2010
-#&gt; 5    Volvo schwarz 2020
-#&gt; 6     Audi  silber 2021</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="r-basics-ii-datenstrukturen.html#cb155-1" tabindex="-1"></a><span class="co"># Dataframe aus Vektoren erstellen: Variante 1 </span></span>
+<span id="cb155-2"><a href="r-basics-ii-datenstrukturen.html#cb155-2" tabindex="-1"></a>fruechte <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Erdbeere&quot;</span>, <span class="st">&quot;Banane&quot;</span>)</span>
+<span id="cb155-3"><a href="r-basics-ii-datenstrukturen.html#cb155-3" tabindex="-1"></a>anzahl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">32</span>, <span class="dv">0</span>)</span>
+<span id="cb155-4"><a href="r-basics-ii-datenstrukturen.html#cb155-4" tabindex="-1"></a>vorraetig <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb155-5"><a href="r-basics-ii-datenstrukturen.html#cb155-5" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(fruechte, anzahl, vorraetig)</span>
+<span id="cb155-6"><a href="r-basics-ii-datenstrukturen.html#cb155-6" tabindex="-1"></a><span class="fu">print</span>(df)</span></code></pre></div>
+<pre><code>#&gt;   fruechte anzahl vorraetig
+#&gt; 1    Apfel     20      TRUE
+#&gt; 2 Erdbeere     32      TRUE
+#&gt; 3   Banane      0     FALSE</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="r-basics-ii-datenstrukturen.html#cb157-1" tabindex="-1"></a><span class="co"># Dataframe aus Vektoren erstellen: Variante 2</span></span>
+<span id="cb157-2"><a href="r-basics-ii-datenstrukturen.html#cb157-2" tabindex="-1"></a>fruechte_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Erdbeere&quot;</span>, <span class="st">&quot;Banane&quot;</span>),</span>
+<span id="cb157-3"><a href="r-basics-ii-datenstrukturen.html#cb157-3" tabindex="-1"></a>                <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">32</span>, <span class="dv">0</span>),</span>
+<span id="cb157-4"><a href="r-basics-ii-datenstrukturen.html#cb157-4" tabindex="-1"></a>                <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb157-5"><a href="r-basics-ii-datenstrukturen.html#cb157-5" tabindex="-1"></a>                 )</span>
+<span id="cb157-6"><a href="r-basics-ii-datenstrukturen.html#cb157-6" tabindex="-1"></a><span class="fu">print</span>(fruechte_df)</span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig
+#&gt; 1    Apfel     20      TRUE
+#&gt; 2 Erdbeere     32      TRUE
+#&gt; 3   Banane      0     FALSE</code></pre>
 <p>Oder man erstellt eine Liste, bei der jedes Element ein Vektor ist und stellt die Liste anschließend mit der Funktion <code>as.data.frame()</code> als Dataframe dar:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="r-basics-ii-datenstrukturen.html#cb161-1" tabindex="-1"></a><span class="co"># Dataframe aus einer Liste erstellen</span></span>
-<span id="cb161-2"><a href="r-basics-ii-datenstrukturen.html#cb161-2" tabindex="-1"></a>personen <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">namen =</span> <span class="fu">c</span>(<span class="st">&quot;Hans&quot;</span>, <span class="st">&quot;Peter&quot;</span>),</span>
-<span id="cb161-3"><a href="r-basics-ii-datenstrukturen.html#cb161-3" tabindex="-1"></a>                 <span class="at">alter =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">50</span>))</span>
-<span id="cb161-4"><a href="r-basics-ii-datenstrukturen.html#cb161-4" tabindex="-1"></a>personen_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(personen, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Name&quot;</span>, <span class="st">&quot;Alter&quot;</span>))</span>
-<span id="cb161-5"><a href="r-basics-ii-datenstrukturen.html#cb161-5" tabindex="-1"></a><span class="fu">print</span>(personen_df) </span></code></pre></div>
-<pre><code>#&gt;    Name Alter
-#&gt; 1  Hans    23
-#&gt; 2 Peter    50</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="r-basics-ii-datenstrukturen.html#cb159-1" tabindex="-1"></a><span class="co"># Dataframe aus einer Liste erstellen</span></span>
+<span id="cb159-2"><a href="r-basics-ii-datenstrukturen.html#cb159-2" tabindex="-1"></a>liste_von_vektoren <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Erdbeere&quot;</span>, <span class="st">&quot;Banane&quot;</span>),</span>
+<span id="cb159-3"><a href="r-basics-ii-datenstrukturen.html#cb159-3" tabindex="-1"></a>                           <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">32</span>, <span class="dv">0</span>),</span>
+<span id="cb159-4"><a href="r-basics-ii-datenstrukturen.html#cb159-4" tabindex="-1"></a>                           <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb159-5"><a href="r-basics-ii-datenstrukturen.html#cb159-5" tabindex="-1"></a>              )</span>
+<span id="cb159-6"><a href="r-basics-ii-datenstrukturen.html#cb159-6" tabindex="-1"></a>fruechte_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(liste_von_vektoren)</span>
+<span id="cb159-7"><a href="r-basics-ii-datenstrukturen.html#cb159-7" tabindex="-1"></a><span class="fu">print</span>(fruechte_df) </span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig
+#&gt; 1    Apfel     20      TRUE
+#&gt; 2 Erdbeere     32      TRUE
+#&gt; 3   Banane      0     FALSE</code></pre>
+<p>Dataframes können auch aus Matrizen erstellt werden, zum Beispiel aus unserer Matrix <code>fruechte_einkauf</code>:</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="r-basics-ii-datenstrukturen.html#cb161-1" tabindex="-1"></a><span class="co"># Dataframe aus Matrix erstellen </span></span>
+<span id="cb161-2"><a href="r-basics-ii-datenstrukturen.html#cb161-2" tabindex="-1"></a>fruechte_einkauf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="st">&quot;Birne&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banane&quot;</span>, <span class="st">&quot;Kiwi&quot;</span>, <span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Erdbeere&quot;</span>), </span>
+<span id="cb161-3"><a href="r-basics-ii-datenstrukturen.html#cb161-3" tabindex="-1"></a>      <span class="at">ncol =</span> <span class="dv">2</span>, </span>
+<span id="cb161-4"><a href="r-basics-ii-datenstrukturen.html#cb161-4" tabindex="-1"></a>      <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>,</span>
+<span id="cb161-5"><a href="r-basics-ii-datenstrukturen.html#cb161-5" tabindex="-1"></a>                      <span class="fu">c</span>(<span class="st">&quot;nicht_vorraetig&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>)))</span>
+<span id="cb161-6"><a href="r-basics-ii-datenstrukturen.html#cb161-6" tabindex="-1"></a></span>
+<span id="cb161-7"><a href="r-basics-ii-datenstrukturen.html#cb161-7" tabindex="-1"></a>fruechte_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fruechte_einkauf)</span>
+<span id="cb161-8"><a href="r-basics-ii-datenstrukturen.html#cb161-8" tabindex="-1"></a>fruechte_df</span></code></pre></div>
+<pre><code>#&gt;   nicht_vorraetig vorraetig
+#&gt; 1           Birne      Kiwi
+#&gt; 2          Orange     Apfel
+#&gt; 3          Banane  Erdbeere</code></pre>
+<p>Allerdings sind in diesem Fall noch einige Operationen notwendig, um zusätzliche Informationen hinzuzufügen und den Dataframe in die gewünschte Form zu bringen. In einem Dataframe wäre es üblich, die Früchte in einer Spalte aufzulisten und für den Vorratsstatus wie in den Beispielen zuvor eine eigene Spalte anzulegen:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="r-basics-ii-datenstrukturen.html#cb163-1" tabindex="-1"></a><span class="co"># Dataframe mithilfe der Funktion stack() umformen </span></span>
+<span id="cb163-2"><a href="r-basics-ii-datenstrukturen.html#cb163-2" tabindex="-1"></a>fruechte_df <span class="ot">&lt;-</span> <span class="fu">stack</span>(fruechte_df)</span>
+<span id="cb163-3"><a href="r-basics-ii-datenstrukturen.html#cb163-3" tabindex="-1"></a>fruechte_df</span></code></pre></div>
+<pre><code>#&gt;     values             ind
+#&gt; 1    Birne nicht_vorraetig
+#&gt; 2   Orange nicht_vorraetig
+#&gt; 3   Banane nicht_vorraetig
+#&gt; 4     Kiwi       vorraetig
+#&gt; 5    Apfel       vorraetig
+#&gt; 6 Erdbeere       vorraetig</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="r-basics-ii-datenstrukturen.html#cb165-1" tabindex="-1"></a><span class="co"># Elemente in Spalte ind in Booleans umwandeln </span></span>
+<span id="cb165-2"><a href="r-basics-ii-datenstrukturen.html#cb165-2" tabindex="-1"></a>fruechte_df<span class="sc">$</span>ind <span class="ot">&lt;-</span> fruechte_df<span class="sc">$</span>ind <span class="sc">==</span> <span class="st">&quot;vorraetig&quot;</span></span>
+<span id="cb165-3"><a href="r-basics-ii-datenstrukturen.html#cb165-3" tabindex="-1"></a><span class="co"># Auf dieselbe Weise kann auch eine neue Spalte hinzugefügt werden </span></span>
+<span id="cb165-4"><a href="r-basics-ii-datenstrukturen.html#cb165-4" tabindex="-1"></a><span class="co"># fruechte_df$vorraetig &lt;- fruechte_df$ind == &quot;vorraetig&quot;</span></span>
+<span id="cb165-5"><a href="r-basics-ii-datenstrukturen.html#cb165-5" tabindex="-1"></a><span class="co"># Alternativ mit ifelse-Anweisung (--&gt; nächste Woche!)</span></span>
+<span id="cb165-6"><a href="r-basics-ii-datenstrukturen.html#cb165-6" tabindex="-1"></a><span class="co"># fruechte_df$ind &lt;- ifelse(fruechte_df$ind == &quot;vorraetig&quot;, TRUE, FALSE)</span></span>
+<span id="cb165-7"><a href="r-basics-ii-datenstrukturen.html#cb165-7" tabindex="-1"></a>fruechte_df</span></code></pre></div>
+<pre><code>#&gt;     values   ind
+#&gt; 1    Birne FALSE
+#&gt; 2   Orange FALSE
+#&gt; 3   Banane FALSE
+#&gt; 4     Kiwi  TRUE
+#&gt; 5    Apfel  TRUE
+#&gt; 6 Erdbeere  TRUE</code></pre>
+<p>Der Dataframe ist immer noch nicht ideal. Zum Beispiel sind die Spaltennamen nicht besonders intuitiv und sollten lieber umbenannt werden, und es fehlt noch die Spalte <code>anzahl</code> mit der Anzahl der vorrätigen Früchte.</p>
 <div id="zugriffsoperationen-auf-dataframes" class="section level3 hasAnchor" number="2.7.1">
 <h3><span class="header-section-number">2.7.1</span> Zugriffsoperationen auf Dataframes<a href="r-basics-ii-datenstrukturen.html#zugriffsoperationen-auf-dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="r-basics-ii-datenstrukturen.html#cb163-1" tabindex="-1"></a><span class="co"># Zugriff auf eine Spalte über den Namen der Spalte</span></span>
-<span id="cb163-2"><a href="r-basics-ii-datenstrukturen.html#cb163-2" tabindex="-1"></a>df<span class="sc">$</span>farbe</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;rot&quot;     &quot;rot&quot;     &quot;blau&quot;    &quot;silber&quot;  &quot;schwarz&quot; &quot;silber&quot;</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="r-basics-ii-datenstrukturen.html#cb165-1" tabindex="-1"></a><span class="co"># Zugriff auf einzelne Elemente über den Spaltennamen und den Index der Zeile</span></span>
-<span id="cb165-2"><a href="r-basics-ii-datenstrukturen.html#cb165-2" tabindex="-1"></a>df<span class="sc">$</span>farbe[<span class="dv">3</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;blau&quot;</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="r-basics-ii-datenstrukturen.html#cb167-1" tabindex="-1"></a><span class="co"># Zugriff auf Zeile 1</span></span>
-<span id="cb167-2"><a href="r-basics-ii-datenstrukturen.html#cb167-2" tabindex="-1"></a>df[<span class="dv">1</span>,]</span></code></pre></div>
-<pre><code>#&gt;   marke farbe jahr
-#&gt; 1  Fiat   rot 1993</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="r-basics-ii-datenstrukturen.html#cb169-1" tabindex="-1"></a><span class="co"># Zugriff auf Spalte 1</span></span>
-<span id="cb169-2"><a href="r-basics-ii-datenstrukturen.html#cb169-2" tabindex="-1"></a>df[,<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;Fiat&quot;     &quot;Mercedes&quot; &quot;BMW&quot;      &quot;Ford&quot;     &quot;Volvo&quot;    &quot;Audi&quot;</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="r-basics-ii-datenstrukturen.html#cb171-1" tabindex="-1"></a><span class="co"># Zugriff auf das Element in Zeile 1 und Spalte 2</span></span>
-<span id="cb171-2"><a href="r-basics-ii-datenstrukturen.html#cb171-2" tabindex="-1"></a>df[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;rot&quot;</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="r-basics-ii-datenstrukturen.html#cb173-1" tabindex="-1"></a><span class="co"># Zugriff auf Elemente in der Spalte Marke, für die gilt, dass in derselben Zeile in der Spalte Farbe der character &quot;rot&quot; steht</span></span>
-<span id="cb173-2"><a href="r-basics-ii-datenstrukturen.html#cb173-2" tabindex="-1"></a>df<span class="sc">$</span>marke[df<span class="sc">$</span>farbe <span class="sc">==</span> <span class="st">&quot;rot&quot;</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;Fiat&quot;     &quot;Mercedes&quot;</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="r-basics-ii-datenstrukturen.html#cb175-1" tabindex="-1"></a><span class="co"># Zugriff auf Elemente in der Spalte Marke, für die gilt, dass in derselben Zeile in der Spalte Jahr ein Wert größer als 2010 steht</span></span>
-<span id="cb175-2"><a href="r-basics-ii-datenstrukturen.html#cb175-2" tabindex="-1"></a>df<span class="sc">$</span>marke[df<span class="sc">$</span>jahr <span class="sc">&gt;</span> <span class="dv">2010</span>]</span></code></pre></div>
-<pre><code>#&gt; [1] &quot;Volvo&quot; &quot;Audi&quot;</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="r-basics-ii-datenstrukturen.html#cb177-1" tabindex="-1"></a><span class="co"># Spalte hinzufügen</span></span>
-<span id="cb177-2"><a href="r-basics-ii-datenstrukturen.html#cb177-2" tabindex="-1"></a>df<span class="sc">$</span>gebraucht <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb177-3"><a href="r-basics-ii-datenstrukturen.html#cb177-3" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>#&gt;      marke   farbe jahr gebraucht
-#&gt; 1     Fiat     rot 1993      TRUE
-#&gt; 2 Mercedes     rot 2007      TRUE
-#&gt; 3      BMW    blau 1999     FALSE
-#&gt; 4     Ford  silber 2010     FALSE
-#&gt; 5    Volvo schwarz 2020     FALSE
-#&gt; 6     Audi  silber 2021      TRUE</code></pre>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="r-basics-ii-datenstrukturen.html#cb179-1" tabindex="-1"></a><span class="co"># Spaltennamen kann man nachträglich ändern</span></span>
-<span id="cb179-2"><a href="r-basics-ii-datenstrukturen.html#cb179-2" tabindex="-1"></a><span class="fu">colnames</span>(personen_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Vorname&quot;</span>, <span class="st">&quot;Jahre&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="r-basics-ii-datenstrukturen.html#cb167-1" tabindex="-1"></a><span class="co"># Spalten umbenennen - Option 1</span></span>
+<span id="cb167-2"><a href="r-basics-ii-datenstrukturen.html#cb167-2" tabindex="-1"></a><span class="fu">colnames</span>(fruechte_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;frucht&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>)</span>
+<span id="cb167-3"><a href="r-basics-ii-datenstrukturen.html#cb167-3" tabindex="-1"></a><span class="co"># Spalten umbenennen - Option 2</span></span>
+<span id="cb167-4"><a href="r-basics-ii-datenstrukturen.html#cb167-4" tabindex="-1"></a><span class="co"># fruechte_df$values &lt;- fruechte_df$frucht</span></span>
+<span id="cb167-5"><a href="r-basics-ii-datenstrukturen.html#cb167-5" tabindex="-1"></a><span class="co"># fruechte_df$ind &lt;- fruechte_df$vorraetig</span></span>
+<span id="cb167-6"><a href="r-basics-ii-datenstrukturen.html#cb167-6" tabindex="-1"></a></span>
+<span id="cb167-7"><a href="r-basics-ii-datenstrukturen.html#cb167-7" tabindex="-1"></a><span class="co"># Spalte hinzufügen</span></span>
+<span id="cb167-8"><a href="r-basics-ii-datenstrukturen.html#cb167-8" tabindex="-1"></a>fruechte_df<span class="sc">$</span>anzahl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">32</span>)</span>
+<span id="cb167-9"><a href="r-basics-ii-datenstrukturen.html#cb167-9" tabindex="-1"></a>fruechte_df</span></code></pre></div>
+<pre><code>#&gt;     frucht vorraetig anzahl
+#&gt; 1    Birne     FALSE      0
+#&gt; 2   Orange     FALSE      0
+#&gt; 3   Banane     FALSE      0
+#&gt; 4     Kiwi      TRUE      5
+#&gt; 5    Apfel      TRUE     20
+#&gt; 6 Erdbeere      TRUE     32</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="r-basics-ii-datenstrukturen.html#cb169-1" tabindex="-1"></a><span class="co"># Anordnung der Spalten ändern</span></span>
+<span id="cb169-2"><a href="r-basics-ii-datenstrukturen.html#cb169-2" tabindex="-1"></a>fruechte_df <span class="ot">&lt;-</span> fruechte_df[<span class="fu">c</span>(<span class="st">&quot;frucht&quot;</span>, <span class="st">&quot;anzahl&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>)]</span>
+<span id="cb169-3"><a href="r-basics-ii-datenstrukturen.html#cb169-3" tabindex="-1"></a>fruechte_df</span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig
+#&gt; 1    Birne      0     FALSE
+#&gt; 2   Orange      0     FALSE
+#&gt; 3   Banane      0     FALSE
+#&gt; 4     Kiwi      5      TRUE
+#&gt; 5    Apfel     20      TRUE
+#&gt; 6 Erdbeere     32      TRUE</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="r-basics-ii-datenstrukturen.html#cb171-1" tabindex="-1"></a><span class="co"># Zugriff auf eine Spalte über den Namen der Spalte - Option 1</span></span>
+<span id="cb171-2"><a href="r-basics-ii-datenstrukturen.html#cb171-2" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;    &quot;Orange&quot;   &quot;Banane&quot;   &quot;Kiwi&quot;     &quot;Apfel&quot;    &quot;Erdbeere&quot;</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="r-basics-ii-datenstrukturen.html#cb173-1" tabindex="-1"></a><span class="co"># Zugriff auf eine Spalte über den Namen der Spalte - Option 2</span></span>
+<span id="cb173-2"><a href="r-basics-ii-datenstrukturen.html#cb173-2" tabindex="-1"></a>fruechte_df[[<span class="st">&quot;frucht&quot;</span>]]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;    &quot;Orange&quot;   &quot;Banane&quot;   &quot;Kiwi&quot;     &quot;Apfel&quot;    &quot;Erdbeere&quot;</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="r-basics-ii-datenstrukturen.html#cb175-1" tabindex="-1"></a><span class="co"># Zugriff auf einzelne Elemente über den Spaltennamen und den Index der Zeile</span></span>
+<span id="cb175-2"><a href="r-basics-ii-datenstrukturen.html#cb175-2" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht[<span class="dv">3</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Banane&quot;</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="r-basics-ii-datenstrukturen.html#cb177-1" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot; &quot;Kiwi&quot;</code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="r-basics-ii-datenstrukturen.html#cb179-1" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;  &quot;Orange&quot; &quot;Banane&quot; &quot;Kiwi&quot;</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="r-basics-ii-datenstrukturen.html#cb181-1" tabindex="-1"></a><span class="co"># Zugriff auf eine Spalte über die Indexposition</span></span>
+<span id="cb181-2"><a href="r-basics-ii-datenstrukturen.html#cb181-2" tabindex="-1"></a>fruechte_df[,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;    &quot;Orange&quot;   &quot;Banane&quot;   &quot;Kiwi&quot;     &quot;Apfel&quot;    &quot;Erdbeere&quot;</code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="r-basics-ii-datenstrukturen.html#cb183-1" tabindex="-1"></a><span class="co"># Zugriff auf eine Zeile</span></span>
+<span id="cb183-2"><a href="r-basics-ii-datenstrukturen.html#cb183-2" tabindex="-1"></a>fruechte_df[<span class="dv">1</span>,]</span></code></pre></div>
+<pre><code>#&gt;   frucht anzahl vorraetig
+#&gt; 1  Birne      0     FALSE</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="r-basics-ii-datenstrukturen.html#cb185-1" tabindex="-1"></a><span class="co"># Zugriff auf das Element in Zeile 1 und Spalte 2</span></span>
+<span id="cb185-2"><a href="r-basics-ii-datenstrukturen.html#cb185-2" tabindex="-1"></a>fruechte_df[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] 0</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="r-basics-ii-datenstrukturen.html#cb187-1" tabindex="-1"></a><span class="co"># Zugriff auf alle Zeilen, in denen in der Spalte anzahl der Wert 20 steht</span></span>
+<span id="cb187-2"><a href="r-basics-ii-datenstrukturen.html#cb187-2" tabindex="-1"></a>fruechte_df[fruechte_df<span class="sc">$</span>anzahl <span class="sc">==</span> <span class="dv">20</span>, ]</span></code></pre></div>
+<pre><code>#&gt;   frucht anzahl vorraetig
+#&gt; 5  Apfel     20      TRUE</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="r-basics-ii-datenstrukturen.html#cb189-1" tabindex="-1"></a><span class="co"># Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl der Wert 20 steht</span></span>
+<span id="cb189-2"><a href="r-basics-ii-datenstrukturen.html#cb189-2" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht[fruechte_df<span class="sc">$</span>anzahl <span class="sc">==</span> <span class="dv">20</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Apfel&quot;</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="r-basics-ii-datenstrukturen.html#cb191-1" tabindex="-1"></a><span class="co"># Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl ein Wert kleiner als 20 steht</span></span>
+<span id="cb191-2"><a href="r-basics-ii-datenstrukturen.html#cb191-2" tabindex="-1"></a>fruechte_df<span class="sc">$</span>frucht[fruechte_df<span class="sc">$</span>anzahl <span class="sc">&lt;</span> <span class="dv">20</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Birne&quot;  &quot;Orange&quot; &quot;Banane&quot; &quot;Kiwi&quot;</code></pre>
+<p>Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können.</p>
+<p>Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen <code>rbind()</code> und <code>cbind()</code> verwendet.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="r-basics-ii-datenstrukturen.html#cb193-1" tabindex="-1"></a>df_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
+<span id="cb193-2"><a href="r-basics-ii-datenstrukturen.html#cb193-2" tabindex="-1"></a>                <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">0</span>),</span>
+<span id="cb193-3"><a href="r-basics-ii-datenstrukturen.html#cb193-3" tabindex="-1"></a>                <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb193-4"><a href="r-basics-ii-datenstrukturen.html#cb193-4" tabindex="-1"></a>                 )</span>
+<span id="cb193-5"><a href="r-basics-ii-datenstrukturen.html#cb193-5" tabindex="-1"></a></span>
+<span id="cb193-6"><a href="r-basics-ii-datenstrukturen.html#cb193-6" tabindex="-1"></a><span class="co"># Dataframes zeilenweise kombinieren</span></span>
+<span id="cb193-7"><a href="r-basics-ii-datenstrukturen.html#cb193-7" tabindex="-1"></a>df_3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fruechte_df, df_2)</span>
+<span id="cb193-8"><a href="r-basics-ii-datenstrukturen.html#cb193-8" tabindex="-1"></a>df_3</span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig
+#&gt; 1    Birne      0     FALSE
+#&gt; 2   Orange      0     FALSE
+#&gt; 3   Banane      0     FALSE
+#&gt; 4     Kiwi      5      TRUE
+#&gt; 5    Apfel     20      TRUE
+#&gt; 6 Erdbeere     32      TRUE
+#&gt; 7    Apfel     20      TRUE
+#&gt; 8  Zitrone     15      TRUE
+#&gt; 9    Mango      0     FALSE</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="r-basics-ii-datenstrukturen.html#cb195-1" tabindex="-1"></a><span class="co"># Dataframes spaltenweise kombinieren</span></span>
+<span id="cb195-2"><a href="r-basics-ii-datenstrukturen.html#cb195-2" tabindex="-1"></a>df_4 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(fruechte_df, df_2)</span>
+<span id="cb195-3"><a href="r-basics-ii-datenstrukturen.html#cb195-3" tabindex="-1"></a>df_4</span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig  frucht anzahl vorraetig
+#&gt; 1    Birne      0     FALSE   Apfel     20      TRUE
+#&gt; 2   Orange      0     FALSE Zitrone     15      TRUE
+#&gt; 3   Banane      0     FALSE   Mango      0     FALSE
+#&gt; 4     Kiwi      5      TRUE   Apfel     20      TRUE
+#&gt; 5    Apfel     20      TRUE Zitrone     15      TRUE
+#&gt; 6 Erdbeere     32      TRUE   Mango      0     FALSE</code></pre>
+<p>Beachtet, dass beim Zusammenfügen der beiden Dataframes Duplikate entstehen: In dem neuen Dataframe, der mit <code>rbind()</code> erstellt wurde, gibt es zweimal “Apfel”, obwohl sich alle Werte in der Zeile wiederholen. In dem neuen Dataframe, der mit <code>cbind()</code> erstellt wurde, wiederholen sich sogar die Spalten und alle Elemente im Dataframe <code>df_2</code> werden noch einmal dupliziert. Das hat den Grund, dass <code>cbind()</code> nur Dataframes mit derselben Anzahl an Zeilen zusammenfügen kann.</p>
+<p>Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert werden und nur die neuen Zeilen und Spalten hinzugefügt werden, kann die Funktion <code>merge()</code> verwendet werden.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="r-basics-ii-datenstrukturen.html#cb197-1" tabindex="-1"></a><span class="co"># Dataframes kombinieren und dabei gleiche Spalten zusammenfügen</span></span>
+<span id="cb197-2"><a href="r-basics-ii-datenstrukturen.html#cb197-2" tabindex="-1"></a>df_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">frucht =</span> <span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Zitrone&quot;</span>, <span class="st">&quot;Mango&quot;</span>),</span>
+<span id="cb197-3"><a href="r-basics-ii-datenstrukturen.html#cb197-3" tabindex="-1"></a>                <span class="at">anzahl =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">0</span>),</span>
+<span id="cb197-4"><a href="r-basics-ii-datenstrukturen.html#cb197-4" tabindex="-1"></a>                <span class="at">vorraetig =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
+<span id="cb197-5"><a href="r-basics-ii-datenstrukturen.html#cb197-5" tabindex="-1"></a>                <span class="at">preis =</span> <span class="fu">c</span>(<span class="fl">2.49</span>, <span class="fl">1.49</span>, .<span class="dv">99</span>)</span>
+<span id="cb197-6"><a href="r-basics-ii-datenstrukturen.html#cb197-6" tabindex="-1"></a>                 )</span>
+<span id="cb197-7"><a href="r-basics-ii-datenstrukturen.html#cb197-7" tabindex="-1"></a><span class="fu">merge</span>(fruechte_df, df_2, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;frucht&quot;</span>,<span class="st">&quot;anzahl&quot;</span>, <span class="st">&quot;vorraetig&quot;</span>), <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>#&gt;     frucht anzahl vorraetig preis
+#&gt; 1    Apfel     20      TRUE  2.49
+#&gt; 2   Banane      0     FALSE    NA
+#&gt; 3    Birne      0     FALSE    NA
+#&gt; 4 Erdbeere     32      TRUE    NA
+#&gt; 5     Kiwi      5      TRUE    NA
+#&gt; 6    Mango      0     FALSE  0.99
+#&gt; 7   Orange      0     FALSE    NA
+#&gt; 8  Zitrone     15      TRUE  1.49</code></pre>
+<p>Im Laufe des Semesters werden wir einige weitere Möglichkeiten kennenlernen, wie Dataframes transformiert und kombiniert werden können.</p>
 <div class="task">
 <p>Verständnisfragen:</p>
 <ul>
 <li>Was gilt für alle Spalten eines Dataframes?</li>
-<li>Welchen Datentyp haben die Werte in der neuen Spalte “gebraucht”?</li>
+<li>Welchen Datentyp haben die Werte in der neuen Spalte <code>vorraetig</code>?</li>
 <li>Was passiert, wenn Werte beim Erstellen eines Dataframes fehlen? Löscht einen Wert und probiert es aus.</li>
 <li>Verwendet die Funktion <code>View()</code> um euch einen der Dataframes genauer anzusehen. Was passiert?</li>
 </ul>
 </div>
-<p>Die folgenden Beispiele illustrieren noch einmal die Eigenschaften von Dataframes:</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="r-basics-ii-datenstrukturen.html#cb180-1" tabindex="-1"></a><span class="co"># Elemente in einem Dataframe können unterschiedliche Datentypen haben</span></span>
-<span id="cb180-2"><a href="r-basics-ii-datenstrukturen.html#cb180-2" tabindex="-1"></a><span class="fu">typeof</span>(df[<span class="dv">2</span>,<span class="dv">3</span>]) <span class="co"># numeric/double</span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;double&quot;</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="r-basics-ii-datenstrukturen.html#cb182-1" tabindex="-1"></a><span class="co"># Elemente in einem Dataframe können unterschiedliche Datentypen haben</span></span>
-<span id="cb182-2"><a href="r-basics-ii-datenstrukturen.html#cb182-2" tabindex="-1"></a><span class="fu">typeof</span>(df[<span class="dv">1</span>,<span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="r-basics-ii-datenstrukturen.html#cb184-1" tabindex="-1"></a><span class="co"># Spalten sind  Vektoren</span></span>
-<span id="cb184-2"><a href="r-basics-ii-datenstrukturen.html#cb184-2" tabindex="-1"></a><span class="fu">typeof</span>(personen_df<span class="sc">$</span>Name) <span class="co"># character (vector)</span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;NULL&quot;</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="r-basics-ii-datenstrukturen.html#cb186-1" tabindex="-1"></a><span class="co"># Zeilen sind Listen</span></span>
-<span id="cb186-2"><a href="r-basics-ii-datenstrukturen.html#cb186-2" tabindex="-1"></a><span class="fu">typeof</span>(personen_df[<span class="dv">1</span>,]) <span class="co"># list </span></span></code></pre></div>
-<pre><code>#&gt; [1] &quot;list&quot;</code></pre>
 </div>
 </div>
 <div id="auf-einen-blick-matrizen-vs-arrays-vs-dataframes" class="section level2 hasAnchor" number="2.8">
 <h2><span class="header-section-number">2.8</span> Auf einen Blick: Matrizen vs Arrays vs Dataframes<a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In diesem Abschnitt werden die Unterschiede zwischen Matrizen, Arrays und Dataframes anhand eines Beispiels illustriert. Das Beispiel illustriert, wie Daten zu Temperaturmessungen in drei verschiedenen Städten an drei Tageszeiten mithilfe der verschiedenen Datenstrukturen organisiert werden können.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="r-basics-ii-datenstrukturen.html#cb188-1" tabindex="-1"></a><span class="co"># Array: Ein dreidimensionales Modell zur Speicherung von Temperaturdaten über eine Woche, gemessen zu verschiedenen Tageszeiten in verschiedenen Städten.</span></span>
-<span id="cb188-2"><a href="r-basics-ii-datenstrukturen.html#cb188-2" tabindex="-1"></a><span class="co"># Ein 3x7x3 Array erstellen für 3 Städte, 7 Tage und 3 Tageszeiten</span></span>
-<span id="cb188-3"><a href="r-basics-ii-datenstrukturen.html#cb188-3" tabindex="-1"></a>temperature_data_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">sample</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">30</span>, <span class="dv">63</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>))</span>
-<span id="cb188-4"><a href="r-basics-ii-datenstrukturen.html#cb188-4" tabindex="-1"></a><span class="fu">dimnames</span>(temperature_data_array) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb188-5"><a href="r-basics-ii-datenstrukturen.html#cb188-5" tabindex="-1"></a>  <span class="at">Stadt =</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>),</span>
-<span id="cb188-6"><a href="r-basics-ii-datenstrukturen.html#cb188-6" tabindex="-1"></a>  <span class="at">Tag =</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>),</span>
-<span id="cb188-7"><a href="r-basics-ii-datenstrukturen.html#cb188-7" tabindex="-1"></a>  <span class="at">Zeit =</span> <span class="fu">c</span>(<span class="st">&quot;Morgen&quot;</span>, <span class="st">&quot;Mittag&quot;</span>, <span class="st">&quot;Abend&quot;</span>)</span>
-<span id="cb188-8"><a href="r-basics-ii-datenstrukturen.html#cb188-8" tabindex="-1"></a>)</span>
-<span id="cb188-9"><a href="r-basics-ii-datenstrukturen.html#cb188-9" tabindex="-1"></a><span class="fu">print</span>(temperature_data_array[,<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Morgen&quot;</span>]) </span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="r-basics-ii-datenstrukturen.html#cb199-1" tabindex="-1"></a><span class="co"># Array: Ein dreidimensionales Modell zur Speicherung von Temperaturdaten über eine Woche, gemessen zu verschiedenen Tageszeiten in verschiedenen Städten.</span></span>
+<span id="cb199-2"><a href="r-basics-ii-datenstrukturen.html#cb199-2" tabindex="-1"></a><span class="co"># Ein 3x7x3 Array erstellen für 3 Städte, 7 Tage und 3 Tageszeiten</span></span>
+<span id="cb199-3"><a href="r-basics-ii-datenstrukturen.html#cb199-3" tabindex="-1"></a>temperature_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">sample</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">30</span>, <span class="dv">63</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>))</span>
+<span id="cb199-4"><a href="r-basics-ii-datenstrukturen.html#cb199-4" tabindex="-1"></a><span class="fu">dimnames</span>(temperature_array) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb199-5"><a href="r-basics-ii-datenstrukturen.html#cb199-5" tabindex="-1"></a>  <span class="at">Stadt =</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>),</span>
+<span id="cb199-6"><a href="r-basics-ii-datenstrukturen.html#cb199-6" tabindex="-1"></a>  <span class="at">Tag =</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>),</span>
+<span id="cb199-7"><a href="r-basics-ii-datenstrukturen.html#cb199-7" tabindex="-1"></a>  <span class="at">Zeit =</span> <span class="fu">c</span>(<span class="st">&quot;Morgen&quot;</span>, <span class="st">&quot;Mittag&quot;</span>, <span class="st">&quot;Abend&quot;</span>)</span>
+<span id="cb199-8"><a href="r-basics-ii-datenstrukturen.html#cb199-8" tabindex="-1"></a>)</span>
+<span id="cb199-9"><a href="r-basics-ii-datenstrukturen.html#cb199-9" tabindex="-1"></a><span class="fu">print</span>(temperature_array[,<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Morgen&quot;</span>]) </span></code></pre></div>
 <pre><code>#&gt;  Berlin Hamburg München 
-#&gt;      18      30      24</code></pre>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="r-basics-ii-datenstrukturen.html#cb190-1" tabindex="-1"></a><span class="fu">print</span>(temperature_data_array)</span></code></pre></div>
+#&gt;      23      24      14</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="r-basics-ii-datenstrukturen.html#cb201-1" tabindex="-1"></a><span class="fu">print</span>(temperature_array)</span></code></pre></div>
 <pre><code>#&gt; , , Zeit = Morgen
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  18 14 10 24 21 12 21
-#&gt;   Hamburg 30 26 22 15 30 19 25
-#&gt;   München 24 10 20 11 24 27 11
+#&gt;   Berlin  23 18 20 14 28 11 25
+#&gt;   Hamburg 24 13 22 20 20 16 25
+#&gt;   München 14 29 29 26 25 17 20
 #&gt; 
 #&gt; , , Zeit = Mittag
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  11 10 30 11 20 22 25
-#&gt;   Hamburg 18 16 21 30 21 15 28
-#&gt;   München 24 10 13 30 29 17 12
+#&gt;   Berlin  28 19 12 28 22 15 10
+#&gt;   Hamburg 11 29 15 11 30 22 24
+#&gt;   München 10 16 30 15 12 11 11
 #&gt; 
 #&gt; , , Zeit = Abend
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  18 14 21 12 23 30 16
-#&gt;   Hamburg 14 15 27 23 23 28 15
-#&gt;   München 28 29 16 24 30 29 13</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="r-basics-ii-datenstrukturen.html#cb192-1" tabindex="-1"></a><span class="co"># Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
-<span id="cb192-2"><a href="r-basics-ii-datenstrukturen.html#cb192-2" tabindex="-1"></a>morning_temperature_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(temperature_data_array[ , , <span class="st">&quot;Morgen&quot;</span>], <span class="at">nrow =</span> <span class="dv">7</span>)</span>
-<span id="cb192-3"><a href="r-basics-ii-datenstrukturen.html#cb192-3" tabindex="-1"></a><span class="fu">rownames</span>(morning_temperature_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>)</span>
-<span id="cb192-4"><a href="r-basics-ii-datenstrukturen.html#cb192-4" tabindex="-1"></a><span class="fu">colnames</span>(morning_temperature_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
-<span id="cb192-5"><a href="r-basics-ii-datenstrukturen.html#cb192-5" tabindex="-1"></a><span class="fu">print</span>(morning_temperature_matrix)</span></code></pre></div>
+#&gt;   Berlin  17 20 18 24 11 25 15
+#&gt;   Hamburg 29 28 26 26 19 13 12
+#&gt;   München 15 10 10 11 22 28 16</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="r-basics-ii-datenstrukturen.html#cb203-1" tabindex="-1"></a><span class="co"># Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
+<span id="cb203-2"><a href="r-basics-ii-datenstrukturen.html#cb203-2" tabindex="-1"></a>morning_temp_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(temperature_array[ , , <span class="st">&quot;Morgen&quot;</span>], <span class="at">nrow =</span> <span class="dv">7</span>)</span>
+<span id="cb203-3"><a href="r-basics-ii-datenstrukturen.html#cb203-3" tabindex="-1"></a><span class="fu">rownames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>)</span>
+<span id="cb203-4"><a href="r-basics-ii-datenstrukturen.html#cb203-4" tabindex="-1"></a><span class="fu">colnames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
+<span id="cb203-5"><a href="r-basics-ii-datenstrukturen.html#cb203-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_matrix)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     18      22      24
-#&gt; Di     30      20      12
-#&gt; Mi     24      24      19
-#&gt; Do     14      15      27
-#&gt; Fr     26      11      21
-#&gt; Sa     10      21      25
-#&gt; So     10      30      11</code></pre>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="r-basics-ii-datenstrukturen.html#cb194-1" tabindex="-1"></a><span class="co"># Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
-<span id="cb194-2"><a href="r-basics-ii-datenstrukturen.html#cb194-2" tabindex="-1"></a>morning_temperature_dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb194-3"><a href="r-basics-ii-datenstrukturen.html#cb194-3" tabindex="-1"></a>  <span class="at">Berlin =</span> temperature_data_array[<span class="st">&quot;Berlin&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
-<span id="cb194-4"><a href="r-basics-ii-datenstrukturen.html#cb194-4" tabindex="-1"></a>  <span class="at">Hamburg =</span> temperature_data_array[<span class="st">&quot;Hamburg&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
-<span id="cb194-5"><a href="r-basics-ii-datenstrukturen.html#cb194-5" tabindex="-1"></a>  München <span class="ot">=</span> temperature_data_array[<span class="st">&quot;München&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>]</span>
-<span id="cb194-6"><a href="r-basics-ii-datenstrukturen.html#cb194-6" tabindex="-1"></a>)</span>
-<span id="cb194-7"><a href="r-basics-ii-datenstrukturen.html#cb194-7" tabindex="-1"></a><span class="fu">print</span>(morning_temperature_dataframe) </span></code></pre></div>
+#&gt; Mo     23      22      25
+#&gt; Di     24      29      11
+#&gt; Mi     14      14      16
+#&gt; Do     18      20      17
+#&gt; Fr     13      26      25
+#&gt; Sa     29      28      25
+#&gt; So     20      20      20</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="r-basics-ii-datenstrukturen.html#cb205-1" tabindex="-1"></a><span class="co"># Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
+<span id="cb205-2"><a href="r-basics-ii-datenstrukturen.html#cb205-2" tabindex="-1"></a>morning_temp_dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb205-3"><a href="r-basics-ii-datenstrukturen.html#cb205-3" tabindex="-1"></a>  <span class="at">Berlin =</span> temperature_array[<span class="st">&quot;Berlin&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
+<span id="cb205-4"><a href="r-basics-ii-datenstrukturen.html#cb205-4" tabindex="-1"></a>  <span class="at">Hamburg =</span> temperature_array[<span class="st">&quot;Hamburg&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
+<span id="cb205-5"><a href="r-basics-ii-datenstrukturen.html#cb205-5" tabindex="-1"></a>  München <span class="ot">=</span> temperature_array[<span class="st">&quot;München&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>]</span>
+<span id="cb205-6"><a href="r-basics-ii-datenstrukturen.html#cb205-6" tabindex="-1"></a>)</span>
+<span id="cb205-7"><a href="r-basics-ii-datenstrukturen.html#cb205-7" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe) </span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     18      30      24
-#&gt; Di     14      26      10
-#&gt; Mi     10      22      20
-#&gt; Do     24      15      11
-#&gt; Fr     21      30      24
-#&gt; Sa     12      19      27
-#&gt; So     21      25      11</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="r-basics-ii-datenstrukturen.html#cb196-1" tabindex="-1"></a><span class="co"># Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. </span></span>
-<span id="cb196-2"><a href="r-basics-ii-datenstrukturen.html#cb196-2" tabindex="-1"></a><span class="co"># Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:</span></span>
-<span id="cb196-3"><a href="r-basics-ii-datenstrukturen.html#cb196-3" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span>
-<span id="cb196-4"><a href="r-basics-ii-datenstrukturen.html#cb196-4" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Skala <span class="ot">&lt;-</span> <span class="st">&quot;Celsius&quot;</span></span>
-<span id="cb196-5"><a href="r-basics-ii-datenstrukturen.html#cb196-5" tabindex="-1"></a><span class="fu">print</span>(morning_temperature_dataframe)</span></code></pre></div>
+#&gt; Mo     23      24      14
+#&gt; Di     18      13      29
+#&gt; Mi     20      22      29
+#&gt; Do     14      20      26
+#&gt; Fr     28      20      25
+#&gt; Sa     11      16      17
+#&gt; So     25      25      20</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="r-basics-ii-datenstrukturen.html#cb207-1" tabindex="-1"></a><span class="co"># Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. </span></span>
+<span id="cb207-2"><a href="r-basics-ii-datenstrukturen.html#cb207-2" tabindex="-1"></a><span class="co"># Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:</span></span>
+<span id="cb207-3"><a href="r-basics-ii-datenstrukturen.html#cb207-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span>
+<span id="cb207-4"><a href="r-basics-ii-datenstrukturen.html#cb207-4" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Skala <span class="ot">&lt;-</span> <span class="st">&quot;Celsius&quot;</span></span>
+<span id="cb207-5"><a href="r-basics-ii-datenstrukturen.html#cb207-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala
-#&gt; Mo     18      30      24 Morgen Celsius
-#&gt; Di     14      26      10 Morgen Celsius
-#&gt; Mi     10      22      20 Morgen Celsius
-#&gt; Do     24      15      11 Morgen Celsius
-#&gt; Fr     21      30      24 Morgen Celsius
-#&gt; Sa     12      19      27 Morgen Celsius
-#&gt; So     21      25      11 Morgen Celsius</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="r-basics-ii-datenstrukturen.html#cb198-1" tabindex="-1"></a><span class="co"># Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: </span></span>
-<span id="cb198-2"><a href="r-basics-ii-datenstrukturen.html#cb198-2" tabindex="-1"></a>morning_temperature_matrix<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span></code></pre></div>
-<pre><code>#&gt; Warning in morning_temperature_matrix$Zeit &lt;- &quot;Morgen&quot;: Coercing LHS to a list</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="r-basics-ii-datenstrukturen.html#cb200-1" tabindex="-1"></a><span class="co"># Auf die Werte in einem Dataframe können auch komplexere Operationen angewandt werden, und die Ergebnisse der Opterationen kann direkt im Dataframe gespeichert werden.</span></span>
-<span id="cb200-2"><a href="r-basics-ii-datenstrukturen.html#cb200-2" tabindex="-1"></a><span class="co"># Wir können zum Beispiel das Maximum für jeden Tag berechenen und eine neue Spalte &quot;Maximum&quot; für diesen Wert übertragen </span></span>
-<span id="cb200-3"><a href="r-basics-ii-datenstrukturen.html#cb200-3" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="fu">pmax</span>(morning_temperature_dataframe<span class="sc">$</span>Berlin, morning_temperature_dataframe<span class="sc">$</span>Hamburg, morning_temperature_dataframe<span class="sc">$</span>München)</span>
-<span id="cb200-4"><a href="r-basics-ii-datenstrukturen.html#cb200-4" tabindex="-1"></a>morning_temperature_dataframe</span></code></pre></div>
+#&gt; Mo     23      24      14 Morgen Celsius
+#&gt; Di     18      13      29 Morgen Celsius
+#&gt; Mi     20      22      29 Morgen Celsius
+#&gt; Do     14      20      26 Morgen Celsius
+#&gt; Fr     28      20      25 Morgen Celsius
+#&gt; Sa     11      16      17 Morgen Celsius
+#&gt; So     25      25      20 Morgen Celsius</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="r-basics-ii-datenstrukturen.html#cb209-1" tabindex="-1"></a><span class="co"># Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: </span></span>
+<span id="cb209-2"><a href="r-basics-ii-datenstrukturen.html#cb209-2" tabindex="-1"></a>morning_temp_matrix<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span></code></pre></div>
+<pre><code>#&gt; Warning in morning_temp_matrix$Zeit &lt;- &quot;Morgen&quot;: Coercing LHS to a list</code></pre>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="r-basics-ii-datenstrukturen.html#cb211-1" tabindex="-1"></a><span class="co"># Auf die Werte in einem Dataframe können auch komplexere Operationen angewandt werden, und die Ergebnisse der Opterationen kann direkt im Dataframe gespeichert werden.</span></span>
+<span id="cb211-2"><a href="r-basics-ii-datenstrukturen.html#cb211-2" tabindex="-1"></a><span class="co"># Wir können zum Beispiel das Maximum für jeden Tag berechenen und eine neue Spalte &quot;Maximum&quot; für diesen Wert übertragen </span></span>
+<span id="cb211-3"><a href="r-basics-ii-datenstrukturen.html#cb211-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="fu">pmax</span>(morning_temp_dataframe<span class="sc">$</span>Berlin, morning_temp_dataframe<span class="sc">$</span>Hamburg, morning_temp_dataframe<span class="sc">$</span>München)</span>
+<span id="cb211-4"><a href="r-basics-ii-datenstrukturen.html#cb211-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     18      30      24 Morgen Celsius      30
-#&gt; Di     14      26      10 Morgen Celsius      26
-#&gt; Mi     10      22      20 Morgen Celsius      22
-#&gt; Do     24      15      11 Morgen Celsius      24
-#&gt; Fr     21      30      24 Morgen Celsius      30
-#&gt; Sa     12      19      27 Morgen Celsius      27
-#&gt; So     21      25      11 Morgen Celsius      25</code></pre>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="r-basics-ii-datenstrukturen.html#cb202-1" tabindex="-1"></a><span class="co"># Wir könnten auch die Werte in Fahrenheit umwandeln </span></span>
-<span id="cb202-2"><a href="r-basics-ii-datenstrukturen.html#cb202-2" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> morning_temperature_dataframe<span class="sc">$</span>Maximum <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
-<span id="cb202-3"><a href="r-basics-ii-datenstrukturen.html#cb202-3" tabindex="-1"></a>morning_temperature_dataframe</span></code></pre></div>
+#&gt; Mo     23      24      14 Morgen Celsius      24
+#&gt; Di     18      13      29 Morgen Celsius      29
+#&gt; Mi     20      22      29 Morgen Celsius      29
+#&gt; Do     14      20      26 Morgen Celsius      26
+#&gt; Fr     28      20      25 Morgen Celsius      28
+#&gt; Sa     11      16      17 Morgen Celsius      17
+#&gt; So     25      25      20 Morgen Celsius      25</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="r-basics-ii-datenstrukturen.html#cb213-1" tabindex="-1"></a><span class="co"># Wir könnten auch die Werte in Fahrenheit umwandeln </span></span>
+<span id="cb213-2"><a href="r-basics-ii-datenstrukturen.html#cb213-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
+<span id="cb213-3"><a href="r-basics-ii-datenstrukturen.html#cb213-3" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     18      30      24 Morgen Celsius    86.0
-#&gt; Di     14      26      10 Morgen Celsius    78.8
-#&gt; Mi     10      22      20 Morgen Celsius    71.6
-#&gt; Do     24      15      11 Morgen Celsius    75.2
-#&gt; Fr     21      30      24 Morgen Celsius    86.0
-#&gt; Sa     12      19      27 Morgen Celsius    80.6
-#&gt; So     21      25      11 Morgen Celsius    77.0</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="r-basics-ii-datenstrukturen.html#cb204-1" tabindex="-1"></a><span class="co">#... und anschließend die Spalte umbenennen </span></span>
-<span id="cb204-2"><a href="r-basics-ii-datenstrukturen.html#cb204-2" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Maximum_Fahrenheit <span class="ot">&lt;-</span> morning_temperature_dataframe<span class="sc">$</span>Maximum</span>
-<span id="cb204-3"><a href="r-basics-ii-datenstrukturen.html#cb204-3" tabindex="-1"></a>morning_temperature_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># entfernt die ursprüngliche &quot;Maximum&quot; Spalte</span></span>
-<span id="cb204-4"><a href="r-basics-ii-datenstrukturen.html#cb204-4" tabindex="-1"></a>morning_temperature_dataframe</span></code></pre></div>
+#&gt; Mo     23      24      14 Morgen Celsius    75.2
+#&gt; Di     18      13      29 Morgen Celsius    84.2
+#&gt; Mi     20      22      29 Morgen Celsius    84.2
+#&gt; Do     14      20      26 Morgen Celsius    78.8
+#&gt; Fr     28      20      25 Morgen Celsius    82.4
+#&gt; Sa     11      16      17 Morgen Celsius    62.6
+#&gt; So     25      25      20 Morgen Celsius    77.0</code></pre>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="r-basics-ii-datenstrukturen.html#cb215-1" tabindex="-1"></a><span class="co">#... und anschließend die Spalte umbenennen </span></span>
+<span id="cb215-2"><a href="r-basics-ii-datenstrukturen.html#cb215-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum_Fahrenheit <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum</span>
+<span id="cb215-3"><a href="r-basics-ii-datenstrukturen.html#cb215-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># entfernt die ursprüngliche &quot;Maximum&quot; Spalte</span></span>
+<span id="cb215-4"><a href="r-basics-ii-datenstrukturen.html#cb215-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#&gt; Mo     18      30      24 Morgen Celsius               86.0
-#&gt; Di     14      26      10 Morgen Celsius               78.8
-#&gt; Mi     10      22      20 Morgen Celsius               71.6
-#&gt; Do     24      15      11 Morgen Celsius               75.2
-#&gt; Fr     21      30      24 Morgen Celsius               86.0
-#&gt; Sa     12      19      27 Morgen Celsius               80.6
-#&gt; So     21      25      11 Morgen Celsius               77.0</code></pre>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="r-basics-ii-datenstrukturen.html#cb206-1" tabindex="-1"></a><span class="co"># Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. </span></span></code></pre></div>
+#&gt; Mo     23      24      14 Morgen Celsius               75.2
+#&gt; Di     18      13      29 Morgen Celsius               84.2
+#&gt; Mi     20      22      29 Morgen Celsius               84.2
+#&gt; Do     14      20      26 Morgen Celsius               78.8
+#&gt; Fr     28      20      25 Morgen Celsius               82.4
+#&gt; Sa     11      16      17 Morgen Celsius               62.6
+#&gt; So     25      25      20 Morgen Celsius               77.0</code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="r-basics-ii-datenstrukturen.html#cb217-1" tabindex="-1"></a><span class="co"># Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. </span></span></code></pre></div>
 </div>
-<div id="fehlende-und-ungültige-werte-in-datenstrukturen" class="section level2 hasAnchor" number="2.9">
-<h2><span class="header-section-number">2.9</span> Fehlende und ungültige Werte in Datenstrukturen<a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="datenstrukturen-untersuchen" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Datenstrukturen untersuchen<a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Jetzt haben wir schon ganz schön viele verschiedene Datenstrukturen kennengelernt, da kommt man durcheinander. Letzte Woche haben wir bereits die <code>typeof()</code>-Funktion kennengelernt, um den Datentyp eines Werts herauszufinden. Wenn die Funktion <code>typeof()</code> auf Datenstrukturen angewandt wird, gibt die Funktion Auskunft darüber, wie die Datenstruktur im Speicher abgebildet wird. Ein Dataframe wird im Speicher zum Beispiel immer als Liste repräsentiert:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="r-basics-ii-datenstrukturen.html#cb218-1" tabindex="-1"></a><span class="fu">typeof</span>(morning_temp_dataframe)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;list&quot;</code></pre>
+<p>Aber wir haben bereits gesehen, dass sich ein Dataframe von einer einfachen Liste unterscheidet. Die Spalten in einem Dataframe müssen immer dieselbe Länge haben und auf Dataframes können andere Funktionen angewandt werden als auf Listen. Um Informationen über die Datenstruktur eines Objekts auf höherer Ebene zu erhalten, kann die Funktion <code>class()</code> verwendet werden:</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="r-basics-ii-datenstrukturen.html#cb220-1" tabindex="-1"></a><span class="fu">class</span>(morning_temp_dataframe)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;data.frame&quot;</code></pre>
+<p>Neben <code>typeof()</code> und <code>class()</code> gibt es noch eine dritte Funktion, mit der die Datenstruktur eines Objekts untersucht werden kann. Die Funktion <code>str()</code> gibt Auskunft über die interne Struktur des Objekts:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="r-basics-ii-datenstrukturen.html#cb222-1" tabindex="-1"></a><span class="fu">str</span>(morning_temp_dataframe)</span></code></pre></div>
+<pre><code>#&gt; &#39;data.frame&#39;:    7 obs. of  6 variables:
+#&gt;  $ Berlin            : int  23 18 20 14 28 11 25
+#&gt;  $ Hamburg           : int  24 13 22 20 20 16 25
+#&gt;  $ München           : int  14 29 29 26 25 17 20
+#&gt;  $ Zeit              : chr  &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; ...
+#&gt;  $ Skala             : chr  &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; ...
+#&gt;  $ Maximum_Fahrenheit: num  75.2 84.2 84.2 78.8 82.4 62.6 77</code></pre>
+<p>Die Funktion <code>typeof()</code> kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden:</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="r-basics-ii-datenstrukturen.html#cb224-1" tabindex="-1"></a><span class="co"># Jedes Element hat in einer Matrix hat den Datentyp character</span></span>
+<span id="cb224-2"><a href="r-basics-ii-datenstrukturen.html#cb224-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf[<span class="dv">1</span>,<span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>
+<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="r-basics-ii-datenstrukturen.html#cb226-1" tabindex="-1"></a><span class="co"># Jede Spalte in einem Dataframe ist ein Vektor</span></span>
+<span id="cb226-2"><a href="r-basics-ii-datenstrukturen.html#cb226-2" tabindex="-1"></a><span class="fu">typeof</span>(morning_temp_dataframe[<span class="dv">3</span>,])</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;list&quot;</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="r-basics-ii-datenstrukturen.html#cb228-1" tabindex="-1"></a><span class="co"># Jede Zeile in einem Dataframe ist eine Liste</span></span>
+<span id="cb228-2"><a href="r-basics-ii-datenstrukturen.html#cb228-2" tabindex="-1"></a><span class="fu">typeof</span>(morning_temp_dataframe[,<span class="dv">3</span>])</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;integer&quot;</code></pre>
+<p>Zuletzt gibt es eine Reihe hilfreicher Funktionen, mit denen Datenstrukturen auf bestimmte Aspekte hin untersucht werden können. <code>length()</code> liefert die Anzahl der Elemente in einer Datenstruktur; <code>nchar()</code> gibt die Anzahl der Zeichen in einer Zeichenkette aus. <code>ncol()</code> und <code>nrow()</code> geben Auskunft über die Anzahl an Spalten und Zeilen in einer Datenstruktur und die bereits bekannte Funktion <code>dim()</code> liefert die Dimension.</p>
+<div class="task">
+<p>Verständnisfragen:</p>
+<p>Untersucht die Datenstrukturen aus diesem Kapitel mithilfe der Funktionen <code>typeof()</code>, <code>class()</code>, <code>length()</code>, <code>nchar()</code>, <code>ncol()</code>, <code>nrow()</code> und <code>dim()</code>.</p>
+<ul>
+<li>Was für ein Wert wird ausgegeben, wenn <code>length()</code> auf einen Dataframe angewendet wird?</li>
+<li>Wie hängen <code>ncol()</code>, <code>nrow()</code> und <code>dim()</code> zusammen?</li>
+<li>Haben Dataframes auch eine Dimension? Ruft mit <code>?dim</code> die Dokumentation zur Funktion <code>dim()</code> auf und lest es nach.</li>
+</ul>
+</div>
+</div>
+<div id="fehlende-und-ungültige-werte-in-datenstrukturen" class="section level2 hasAnchor" number="2.10">
+<h2><span class="header-section-number">2.10</span> Fehlende und ungültige Werte in Datenstrukturen<a href="r-basics-ii-datenstrukturen.html#fehlende-und-ungültige-werte-in-datenstrukturen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bei der Arbeit mit Daten in R kommt es immer mal vor, dass Werte fehlen oder ungültig sind. In R gibt es spezielle Objekte, die in diesem Fall eingesetzt werden.</p>
-<p>Der Wert <code>NULL</code> wird eingesetzt, um die Nicht-Existenz von Daten zu signalisieren. Das haben wir gesehen, als wir mithilfe der Funktion <code>c()</code> einen leeren Vektor erstellt haben. <code>NULL</code> wird außerdem dazu verwendet, um Werte aus Listen oder Dataframes zu entfernen. Wir haben dieses Objekt beispielsweise verwendet, um die Spalte <code>Maximum</code> aus dem Dataframe <code>morning_temperature_dataframe</code> zu entfernen.</p>
+<p>Der Wert <code>NULL</code> wird eingesetzt, um die Nicht-Existenz von Daten zu signalisieren. Das haben wir gesehen, als wir mithilfe der Funktion <code>c()</code> einen leeren Vektor erstellt haben. <code>NULL</code> wird außerdem dazu verwendet, um Werte aus Listen oder Dataframes zu entfernen. Wir haben dieses Objekt beispielsweise verwendet, um die Spalte <code>Maximum</code> aus dem Dataframe <code>morning_temp_dataframe</code> zu entfernen.</p>
 <p>Daneben gibt es <code>NA</code>, was für Not Available oder “nicht verfügbar” steht und verwendet wird, um das Fehlen von erwarteten Werten in Datenstrukturen zu markieren. Dieser Wert kommt typischerweise in Dataframes zur Anwendung, wenn zu einigen Beobachtungen bestimmte Werte fehlen, zum Beispiel das Alter einer Person in einem Dataframe, der Daten zu verschiedenen Personen enthält.</p>
 <p>Zuletzt gibt es den Wert <code>NaN</code>, welcher für Not a Number oder “keine Zahl” steht und signalisiert, dass das Ergebnis einer Berechnung eine undefinierte Zahl ist oder eine Zahl, die nicht repräsentiert werden kann. Ein Beispiel ist das Ergebnis der Operation <code>0/0</code>.</p>
 </div>
-<div id="der-mitgliedschaftsoperator-in" class="section level2 hasAnchor" number="2.10">
-<h2><span class="header-section-number">2.10</span> Der Mitgliedschaftsoperator %in%<a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="der-mitgliedschaftsoperator-in" class="section level2 hasAnchor" number="2.11">
+<h2><span class="header-section-number">2.11</span> Der Mitgliedschaftsoperator %in%<a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Am Anfang haben wir Datenstrukturen als strukturierte Sammlungen von Werten (oder anderen Objekten) definiert. Um schnell herauszufinden, ob sich ein Wert in einer Datenstruktur befindet, kann ein spezieller Operator verwendet werden: der sogenannte Migliedschaftsoperator <code>%in%</code>. Dieser Operator wird auf Vektoren angewendet: Entweder auf einzelne Vektoren oder auf Vektoren innerhalb einer anderen Datenstruktur, also zum Beispiel auf die Spalten eines Dataframes oder Listenelemente, die Vektoren sind.</p>
 <p>Ein paar Beispiele:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="r-basics-ii-datenstrukturen.html#cb207-1" tabindex="-1"></a>buchstaben <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;s&quot;</span>, <span class="st">&quot;g&quot;</span>)</span>
-<span id="cb207-2"><a href="r-basics-ii-datenstrukturen.html#cb207-2" tabindex="-1"></a><span class="st">&quot;a&quot;</span> <span class="sc">%in%</span> buchstaben</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="r-basics-ii-datenstrukturen.html#cb230-1" tabindex="-1"></a>buchstaben <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;s&quot;</span>, <span class="st">&quot;g&quot;</span>)</span>
+<span id="cb230-2"><a href="r-basics-ii-datenstrukturen.html#cb230-2" tabindex="-1"></a><span class="st">&quot;a&quot;</span> <span class="sc">%in%</span> buchstaben</span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="r-basics-ii-datenstrukturen.html#cb209-1" tabindex="-1"></a><span class="co"># Es kann auch direkt nach der Mitgliedschaft mehrerer Elemente gefragt werden:</span></span>
-<span id="cb209-2"><a href="r-basics-ii-datenstrukturen.html#cb209-2" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;b&quot;</span>)  <span class="sc">%in%</span> buchstaben</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="r-basics-ii-datenstrukturen.html#cb232-1" tabindex="-1"></a><span class="co"># Es kann auch direkt nach der Mitgliedschaft mehrerer Elemente gefragt werden:</span></span>
+<span id="cb232-2"><a href="r-basics-ii-datenstrukturen.html#cb232-2" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;b&quot;</span>)  <span class="sc">%in%</span> buchstaben</span></code></pre></div>
 <pre><code>#&gt; [1] TRUE TRUE TRUE</code></pre>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="r-basics-ii-datenstrukturen.html#cb211-1" tabindex="-1"></a><span class="co"># Mitgliedschaftsoperator auf Elemente einer Liste anwenden</span></span>
-<span id="cb211-2"><a href="r-basics-ii-datenstrukturen.html#cb211-2" tabindex="-1"></a>obstpreise <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">obst=</span><span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Banane&quot;</span>, <span class="st">&quot;Orange&quot;</span>),</span>
-<span id="cb211-3"><a href="r-basics-ii-datenstrukturen.html#cb211-3" tabindex="-1"></a>               <span class="at">preise=</span><span class="fu">c</span>(<span class="fl">2.45</span>, <span class="fl">2.99</span>, <span class="fl">1.99</span>))</span>
-<span id="cb211-4"><a href="r-basics-ii-datenstrukturen.html#cb211-4" tabindex="-1"></a><span class="st">&quot;Orange&quot;</span> <span class="sc">%in%</span> obstpreise<span class="sc">$</span>obst</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="r-basics-ii-datenstrukturen.html#cb234-1" tabindex="-1"></a><span class="co"># Mitgliedschaftsoperator auf Elemente einer Liste anwenden</span></span>
+<span id="cb234-2"><a href="r-basics-ii-datenstrukturen.html#cb234-2" tabindex="-1"></a>obstpreise <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">obst=</span><span class="fu">c</span>(<span class="st">&quot;Apfel&quot;</span>, <span class="st">&quot;Banane&quot;</span>, <span class="st">&quot;Orange&quot;</span>),</span>
+<span id="cb234-3"><a href="r-basics-ii-datenstrukturen.html#cb234-3" tabindex="-1"></a>               <span class="at">preise=</span><span class="fu">c</span>(<span class="fl">2.45</span>, <span class="fl">2.99</span>, <span class="fl">1.99</span>))</span>
+<span id="cb234-4"><a href="r-basics-ii-datenstrukturen.html#cb234-4" tabindex="-1"></a><span class="st">&quot;Orange&quot;</span> <span class="sc">%in%</span> obstpreise<span class="sc">$</span>obst</span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
-<div id="unveränderbarkeit-von-objekten-in-r" class="section level2 hasAnchor" number="2.11">
-<h2><span class="header-section-number">2.11</span> Unveränderbarkeit von Objekten in R<a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="unveränderbarkeit-von-objekten-in-r" class="section level2 hasAnchor" number="2.12">
+<h2><span class="header-section-number">2.12</span> Unveränderbarkeit von Objekten in R<a href="r-basics-ii-datenstrukturen.html#unveränderbarkeit-von-objekten-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir haben in der vergangenen Woche besprochen, dass bei der Zuweisung einer Variable ein Wert zugeordnet wird, indem ein Name festgelegt wird, der fortan für diesen Wert und für den Speicherplatz, in dem er gespeichert ist, steht. Der Name ist also sowas wie eine Referenz zu diesem Wert. Aber was passiert eigentlich, wenn der Wert im Programmverlauf verändert wird?</p>
 <p>Dieser Frage gehen wir an einem Beispiel nach. Wir weisen zunächst einer Variable x einen Vektor c(1, 2, 3) als Wert zu:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="r-basics-ii-datenstrukturen.html#cb213-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="r-basics-ii-datenstrukturen.html#cb236-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span></code></pre></div>
 <p>Die folgende Grafik aus dem Buch “Advanced R” von Hadley Wickham illustriert, was bei der Zuweisungsoperation passiert:</p>
 <p><img src="images/binding-1.png" width="200" /></p>
 <p>Der Name <code>x</code> referenziert also nach der Zuweisung einen Vektor mit den Elementen 1, 2 und 3. Die graue Zahl <code>0x74b</code> steht für die Adresse des Speicherplatzes, der im Computer für das Objekt (den Vektor) “reserviert” ist.</p>
 <p>Wenn die Variable <code>x</code> einer neuen Variable <code>y</code> zugewiesen wird, dann referenziert auch der Name <code>y</code> denselben Wert, es entsteht zunächst also keine Kopie des Werts <code>c(1, 2, 3)</code>:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="r-basics-ii-datenstrukturen.html#cb214-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="r-basics-ii-datenstrukturen.html#cb237-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> x</span></code></pre></div>
 <p><img src="images/binding-2.png" width="212" /></p>
 <p>Aber was passiert mit der Variable <code>x</code>, wenn die Variable <code>y</code> verändert wird? Oder, korrekter formuliert: Welchen Wert referenziert <code>x</code>, wenn mithilfe von <code>y</code> auf den der Wert <code>c(1, 2, 3)</code> zugegriffen und ein Element verändert wird?</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="r-basics-ii-datenstrukturen.html#cb215-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb215-2"><a href="r-basics-ii-datenstrukturen.html#cb215-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> x</span>
-<span id="cb215-3"><a href="r-basics-ii-datenstrukturen.html#cb215-3" tabindex="-1"></a>y[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">4</span> </span>
-<span id="cb215-4"><a href="r-basics-ii-datenstrukturen.html#cb215-4" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="r-basics-ii-datenstrukturen.html#cb238-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb238-2"><a href="r-basics-ii-datenstrukturen.html#cb238-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> x</span>
+<span id="cb238-3"><a href="r-basics-ii-datenstrukturen.html#cb238-3" tabindex="-1"></a>y[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">4</span> </span>
+<span id="cb238-4"><a href="r-basics-ii-datenstrukturen.html#cb238-4" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>#&gt; [1] 1 2 3</code></pre>
 <p><code>y</code> wird zwar verändert, aber <code>x</code> nicht! Der Wert, der mit <code>y</code> verknüpft ist, wurde verändert, aber das ursprüngliche Objekt nicht. Stattdessen wurde ein neues Objekt erstellt, das eine Kopie des ursprünglichen Objekts mit dem veränderten Wert ist.</p>
 <p><img src="images/binding-3.png" width="200" /></p>

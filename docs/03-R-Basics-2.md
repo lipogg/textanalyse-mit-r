@@ -1141,27 +1141,6 @@ cbind(mat_3t, mat_4)
 #> [2,]    2    2    4    4    1    2    4    4
 ```
 
-Die folgenden Beispiele illustrieren nochmal die Eigenschaften von Matrizen: 
-
-
-```r
-# Matrix ist eine character-Matrix
-typeof(fruechte_einkauf) # character
-```
-
-```
-#> [1] "character"
-```
-
-```r
-# Jedes Element hat den Datentyp character
-typeof(fruechte_einkauf[1,1]) # character
-```
-
-```
-#> [1] "character"
-```
-
 :::task
 Verständnisfragen:
 
@@ -1183,70 +1162,97 @@ Arrays werden mithilfe der Funktion `array()` erstellt:
 
 ```r
 # Daten für das Array
-autos_daten <- c(
-    "Fiat", "Mercedes", "BMW", 
-    "Ford", "Volvo", "Audi", 
-    "Toyota", "Nissan", "Honda", 
-    "Chevrolet", "GMC", "Tesla"
+fruechte_daten <- c(
+    "Apfel", "Orange", "Birne", 
+    "Erbeere", "Melone", "Kiwi", 
+    "Banane", "Traube", "Apfel", 
+    "Papaya", "Quitte", "Mango"
 )
 
 # Erstellen eines 3D-Arrays mit 2 Zeilen, 3 Spalten und 2 "Ebenen" (jede Ebene ist eine separate Matrix)
-autos_array <- array(autos_daten, dim = c(2, 3, 2))
+fruechte_array <- array(fruechte_daten, dim = c(2, 3, 2))
 
 # Ausgabe des Arrays
-print(autos_array)
+print(fruechte_array)
 ```
 
 ```
 #> , , 1
 #> 
-#>      [,1]       [,2]   [,3]   
-#> [1,] "Fiat"     "BMW"  "Volvo"
-#> [2,] "Mercedes" "Ford" "Audi" 
+#>      [,1]     [,2]      [,3]    
+#> [1,] "Apfel"  "Birne"   "Melone"
+#> [2,] "Orange" "Erbeere" "Kiwi"  
 #> 
 #> , , 2
 #> 
-#>      [,1]     [,2]        [,3]   
-#> [1,] "Toyota" "Honda"     "GMC"  
-#> [2,] "Nissan" "Chevrolet" "Tesla"
+#>      [,1]     [,2]     [,3]    
+#> [1,] "Banane" "Apfel"  "Quitte"
+#> [2,] "Traube" "Papaya" "Mango"
 ```
-Die Dimension des Arrays `autos_array` lässt sich an der Länge des Vektors `dim=c(2, 3, 2)` ablesen: Da der Vektor drei Elemente hat, handelt es sich um ein dreidimensionales Array. Das erste Element des Vektors `dim` legt fest, dass jede Matrix zwei Zeilen hat, das zweite Element legt fest, dass jede Matrix drei Spalten hat, und das dritte Element legt fest, dass es zwei Matrizen gibt.
+
+Die Dimension des Arrays `fruechte_array` lässt sich an der Länge des Vektors `dim=c(2, 3, 2)` ablesen: Da der Vektor drei Elemente hat, handelt es sich um ein dreidimensionales Array. Das erste Element des Vektors `dim` legt fest, dass jede Matrix zwei Zeilen hat, das zweite Element legt fest, dass jede Matrix drei Spalten hat, und das dritte Element legt fest, dass es zwei Matrizen gibt.
 
 ### Zugriffsoperationen auf Arrays 
 
 
 ```r
 # Zugriff auf die erste Matrix 
-autos_array[,,1]
+fruechte_array[,,1]
 ```
 
 ```
-#>      [,1]       [,2]   [,3]   
-#> [1,] "Fiat"     "BMW"  "Volvo"
-#> [2,] "Mercedes" "Ford" "Audi"
+#>      [,1]     [,2]      [,3]    
+#> [1,] "Apfel"  "Birne"   "Melone"
+#> [2,] "Orange" "Erbeere" "Kiwi"
 ```
 
 ```r
 # Zugriff auf die zweite Spalte der ersten Matrix 
-autos_array[,2,1]
+fruechte_array[,2,1]
 ```
 
 ```
-#> [1] "BMW"  "Ford"
+#> [1] "Birne"   "Erbeere"
 ```
 
 ```r
 # Zugriff auf das Element in der ersten Zeile und zweiten Spalte der ersten Matrix 
-autos_array[1,2,1]
+fruechte_array[1,2,1]
 ```
 
 ```
-#> [1] "BMW"
+#> [1] "Birne"
+```
+
+```r
+# Dimensionen benennen 
+dimnames(fruechte_array) <- list(
+  Vorratsstatus = c("vorraetig", "nicht_vorraetig"),
+  Vorratsort = c("kuehlschrank", "vorratskammer", "regal"),
+  Haus = c("Wohnhaus", "Ferienhaus")
+)
+fruechte_array
+```
+
+```
+#> , , Haus = Wohnhaus
+#> 
+#>                  Vorratsort
+#> Vorratsstatus     kuehlschrank vorratskammer regal   
+#>   vorraetig       "Apfel"      "Birne"       "Melone"
+#>   nicht_vorraetig "Orange"     "Erbeere"     "Kiwi"  
+#> 
+#> , , Haus = Ferienhaus
+#> 
+#>                  Vorratsort
+#> Vorratsstatus     kuehlschrank vorratskammer regal   
+#>   vorraetig       "Banane"     "Apfel"       "Quitte"
+#>   nicht_vorraetig "Traube"     "Papaya"      "Mango"
 ```
 
 ## Dataframes
 
-Dataframes werden zur Darstellung tabellarischer Daten verwendet. Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können. Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden. 
+**Dataframes werden zur Darstellung tabellarischer Daten verwendet.** Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: **Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können.** **Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss**: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden. 
 
 <img src="images/dataframe.png" width="1004" />
 
@@ -1255,41 +1261,34 @@ Weil die Spalten eines Dataframes Vektoren sind, kann man Dataframes "spaltenwei
 
 ```r
 # Dataframe aus Vektoren erstellen: Variante 1 
-marke <- c("Fiat", "Mercedes", "BMW", "Ford", "Volvo", "Audi")
-farbe <- c("rot", "rot", "blau", "silber", "schwarz", "silber")
-jahr <- c(1993, 2007, 1999, 2010, 2020, 2021)
-df <- data.frame(marke, farbe, jahr)
+fruechte <- c("Apfel", "Erdbeere", "Banane")
+anzahl <- c(20, 32, 0)
+vorraetig <- c(TRUE, TRUE, FALSE)
+df <- data.frame(fruechte, anzahl, vorraetig)
 print(df)
 ```
 
 ```
-#>      marke   farbe jahr
-#> 1     Fiat     rot 1993
-#> 2 Mercedes     rot 2007
-#> 3      BMW    blau 1999
-#> 4     Ford  silber 2010
-#> 5    Volvo schwarz 2020
-#> 6     Audi  silber 2021
+#>   fruechte anzahl vorraetig
+#> 1    Apfel     20      TRUE
+#> 2 Erdbeere     32      TRUE
+#> 3   Banane      0     FALSE
 ```
 
 ```r
 # Dataframe aus Vektoren erstellen: Variante 2
-# Achtung! Hier verwenden wir jetzt den Operator = 
-df <- data.frame(marke = c("Fiat", "Mercedes", "BMW", "Ford", "Volvo", "Audi"),
-                farbe = c("rot", "rot", "blau", "silber", "schwarz", "silber"),
-                jahr = c(1993, 2007, 1999, 2010, 2020, 2021)
+fruechte_df <- data.frame(frucht = c("Apfel", "Erdbeere", "Banane"),
+                anzahl = c(20, 32, 0),
+                vorraetig = c(TRUE, TRUE, FALSE)
                  )
-print(df)
+print(fruechte_df)
 ```
 
 ```
-#>      marke   farbe jahr
-#> 1     Fiat     rot 1993
-#> 2 Mercedes     rot 2007
-#> 3      BMW    blau 1999
-#> 4     Ford  silber 2010
-#> 5    Volvo schwarz 2020
-#> 6     Audi  silber 2021
+#>     frucht anzahl vorraetig
+#> 1    Apfel     20      TRUE
+#> 2 Erdbeere     32      TRUE
+#> 3   Banane      0     FALSE
 ```
 
 Oder man erstellt eine Liste, bei der jedes Element ein Vektor ist und stellt die Liste anschließend mit der Funktion `as.data.frame()` als Dataframe dar: 
@@ -1297,154 +1296,304 @@ Oder man erstellt eine Liste, bei der jedes Element ein Vektor ist und stellt di
 
 ```r
 # Dataframe aus einer Liste erstellen
-personen <- list(namen = c("Hans", "Peter"),
-                 alter = c(23, 50))
-personen_df <- as.data.frame(personen, col.names = c("Name", "Alter"))
-print(personen_df) 
+liste_von_vektoren <- list(frucht = c("Apfel", "Erdbeere", "Banane"),
+                           anzahl = c(20, 32, 0),
+                           vorraetig = c(TRUE, TRUE, FALSE)
+              )
+fruechte_df <- as.data.frame(liste_von_vektoren)
+print(fruechte_df) 
 ```
 
 ```
-#>    Name Alter
-#> 1  Hans    23
-#> 2 Peter    50
+#>     frucht anzahl vorraetig
+#> 1    Apfel     20      TRUE
+#> 2 Erdbeere     32      TRUE
+#> 3   Banane      0     FALSE
 ```
+
+Dataframes können auch aus Matrizen erstellt werden, zum Beispiel aus unserer Matrix `fruechte_einkauf`: 
+
+
+```r
+# Dataframe aus Matrix erstellen 
+fruechte_einkauf <- matrix(c("Birne", "Orange", "Banane", "Kiwi", "Apfel", "Erdbeere"), 
+      ncol = 2, 
+      dimnames = list(NULL,
+                      c("nicht_vorraetig", "vorraetig")))
+
+fruechte_df <- as.data.frame(fruechte_einkauf)
+fruechte_df
+```
+
+```
+#>   nicht_vorraetig vorraetig
+#> 1           Birne      Kiwi
+#> 2          Orange     Apfel
+#> 3          Banane  Erdbeere
+```
+
+Allerdings sind in diesem Fall noch einige Operationen notwendig, um zusätzliche Informationen hinzuzufügen und den Dataframe in die gewünschte Form zu bringen. In einem Dataframe wäre es üblich, die Früchte in einer Spalte aufzulisten und für den Vorratsstatus wie in den Beispielen zuvor eine eigene Spalte anzulegen:
+
+
+```r
+# Dataframe mithilfe der Funktion stack() umformen 
+fruechte_df <- stack(fruechte_df)
+fruechte_df
+```
+
+```
+#>     values             ind
+#> 1    Birne nicht_vorraetig
+#> 2   Orange nicht_vorraetig
+#> 3   Banane nicht_vorraetig
+#> 4     Kiwi       vorraetig
+#> 5    Apfel       vorraetig
+#> 6 Erdbeere       vorraetig
+```
+
+```r
+# Elemente in Spalte ind in Booleans umwandeln 
+fruechte_df$ind <- fruechte_df$ind == "vorraetig"
+# Auf dieselbe Weise kann auch eine neue Spalte hinzugefügt werden 
+# fruechte_df$vorraetig <- fruechte_df$ind == "vorraetig"
+# Alternativ mit ifelse-Anweisung (--> nächste Woche!)
+# fruechte_df$ind <- ifelse(fruechte_df$ind == "vorraetig", TRUE, FALSE)
+fruechte_df
+```
+
+```
+#>     values   ind
+#> 1    Birne FALSE
+#> 2   Orange FALSE
+#> 3   Banane FALSE
+#> 4     Kiwi  TRUE
+#> 5    Apfel  TRUE
+#> 6 Erdbeere  TRUE
+```
+
+Der Dataframe ist immer noch nicht ideal. Zum Beispiel sind die Spaltennamen nicht besonders intuitiv und sollten lieber umbenannt werden, und es fehlt noch die Spalte `anzahl` mit der Anzahl der vorrätigen Früchte.  
 
 ### Zugriffsoperationen auf Dataframes 
 
 
 ```r
-# Zugriff auf eine Spalte über den Namen der Spalte
-df$farbe
+# Spalten umbenennen - Option 1
+colnames(fruechte_df) <- c("frucht", "vorraetig")
+# Spalten umbenennen - Option 2
+# fruechte_df$values <- fruechte_df$frucht
+# fruechte_df$ind <- fruechte_df$vorraetig
+
+# Spalte hinzufügen
+fruechte_df$anzahl <- c(0, 0, 0, 5, 20, 32)
+fruechte_df
 ```
 
 ```
-#> [1] "rot"     "rot"     "blau"    "silber"  "schwarz" "silber"
+#>     frucht vorraetig anzahl
+#> 1    Birne     FALSE      0
+#> 2   Orange     FALSE      0
+#> 3   Banane     FALSE      0
+#> 4     Kiwi      TRUE      5
+#> 5    Apfel      TRUE     20
+#> 6 Erdbeere      TRUE     32
+```
+
+```r
+# Anordnung der Spalten ändern
+fruechte_df <- fruechte_df[c("frucht", "anzahl", "vorraetig")]
+fruechte_df
+```
+
+```
+#>     frucht anzahl vorraetig
+#> 1    Birne      0     FALSE
+#> 2   Orange      0     FALSE
+#> 3   Banane      0     FALSE
+#> 4     Kiwi      5      TRUE
+#> 5    Apfel     20      TRUE
+#> 6 Erdbeere     32      TRUE
+```
+
+```r
+# Zugriff auf eine Spalte über den Namen der Spalte - Option 1
+fruechte_df$frucht
+```
+
+```
+#> [1] "Birne"    "Orange"   "Banane"   "Kiwi"     "Apfel"    "Erdbeere"
+```
+
+```r
+# Zugriff auf eine Spalte über den Namen der Spalte - Option 2
+fruechte_df[["frucht"]]
+```
+
+```
+#> [1] "Birne"    "Orange"   "Banane"   "Kiwi"     "Apfel"    "Erdbeere"
 ```
 
 ```r
 # Zugriff auf einzelne Elemente über den Spaltennamen und den Index der Zeile
-df$farbe[3]
+fruechte_df$frucht[3]
 ```
 
 ```
-#> [1] "blau"
-```
-
-```r
-# Zugriff auf Zeile 1
-df[1,]
-```
-
-```
-#>   marke farbe jahr
-#> 1  Fiat   rot 1993
+#> [1] "Banane"
 ```
 
 ```r
-# Zugriff auf Spalte 1
-df[,1]
+fruechte_df$frucht[c(1,4)]
 ```
 
 ```
-#> [1] "Fiat"     "Mercedes" "BMW"      "Ford"     "Volvo"    "Audi"
+#> [1] "Birne" "Kiwi"
+```
+
+```r
+fruechte_df$frucht[c(1:4)]
+```
+
+```
+#> [1] "Birne"  "Orange" "Banane" "Kiwi"
+```
+
+```r
+# Zugriff auf eine Spalte über die Indexposition
+fruechte_df[,1]
+```
+
+```
+#> [1] "Birne"    "Orange"   "Banane"   "Kiwi"     "Apfel"    "Erdbeere"
+```
+
+```r
+# Zugriff auf eine Zeile
+fruechte_df[1,]
+```
+
+```
+#>   frucht anzahl vorraetig
+#> 1  Birne      0     FALSE
 ```
 
 ```r
 # Zugriff auf das Element in Zeile 1 und Spalte 2
-df[1,2]
+fruechte_df[1,2]
 ```
 
 ```
-#> [1] "rot"
-```
-
-```r
-# Zugriff auf Elemente in der Spalte Marke, für die gilt, dass in derselben Zeile in der Spalte Farbe der character "rot" steht
-df$marke[df$farbe == "rot"]
-```
-
-```
-#> [1] "Fiat"     "Mercedes"
+#> [1] 0
 ```
 
 ```r
-# Zugriff auf Elemente in der Spalte Marke, für die gilt, dass in derselben Zeile in der Spalte Jahr ein Wert größer als 2010 steht
-df$marke[df$jahr > 2010]
+# Zugriff auf alle Zeilen, in denen in der Spalte anzahl der Wert 20 steht
+fruechte_df[fruechte_df$anzahl == 20, ]
 ```
 
 ```
-#> [1] "Volvo" "Audi"
-```
-
-```r
-# Spalte hinzufügen
-df$gebraucht <- c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE)
-df
-```
-
-```
-#>      marke   farbe jahr gebraucht
-#> 1     Fiat     rot 1993      TRUE
-#> 2 Mercedes     rot 2007      TRUE
-#> 3      BMW    blau 1999     FALSE
-#> 4     Ford  silber 2010     FALSE
-#> 5    Volvo schwarz 2020     FALSE
-#> 6     Audi  silber 2021      TRUE
+#>   frucht anzahl vorraetig
+#> 5  Apfel     20      TRUE
 ```
 
 ```r
-# Spaltennamen kann man nachträglich ändern
-colnames(personen_df) <- c("Vorname", "Jahre")
+# Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl der Wert 20 steht
+fruechte_df$frucht[fruechte_df$anzahl == 20]
 ```
+
+```
+#> [1] "Apfel"
+```
+
+```r
+# Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl ein Wert kleiner als 20 steht
+fruechte_df$frucht[fruechte_df$anzahl < 20]
+```
+
+```
+#> [1] "Birne"  "Orange" "Banane" "Kiwi"
+```
+
+Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können. 
+
+Dataframes können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
+
+
+```r
+df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+                anzahl = c(20, 15, 0),
+                vorraetig = c(TRUE, TRUE, FALSE)
+                 )
+
+# Dataframes zeilenweise kombinieren
+df_3 <- rbind(fruechte_df, df_2)
+df_3
+```
+
+```
+#>     frucht anzahl vorraetig
+#> 1    Birne      0     FALSE
+#> 2   Orange      0     FALSE
+#> 3   Banane      0     FALSE
+#> 4     Kiwi      5      TRUE
+#> 5    Apfel     20      TRUE
+#> 6 Erdbeere     32      TRUE
+#> 7    Apfel     20      TRUE
+#> 8  Zitrone     15      TRUE
+#> 9    Mango      0     FALSE
+```
+
+```r
+# Dataframes spaltenweise kombinieren
+df_4 <- cbind(fruechte_df, df_2)
+df_4
+```
+
+```
+#>     frucht anzahl vorraetig  frucht anzahl vorraetig
+#> 1    Birne      0     FALSE   Apfel     20      TRUE
+#> 2   Orange      0     FALSE Zitrone     15      TRUE
+#> 3   Banane      0     FALSE   Mango      0     FALSE
+#> 4     Kiwi      5      TRUE   Apfel     20      TRUE
+#> 5    Apfel     20      TRUE Zitrone     15      TRUE
+#> 6 Erdbeere     32      TRUE   Mango      0     FALSE
+```
+
+Beachtet, dass beim Zusammenfügen der beiden Dataframes Duplikate entstehen: In dem neuen Dataframe, der mit `rbind()` erstellt wurde, gibt es zweimal "Apfel", obwohl sich alle Werte in der Zeile wiederholen. In dem neuen Dataframe, der mit `cbind()` erstellt wurde, wiederholen sich sogar die Spalten und alle Elemente im Dataframe `df_2` werden noch einmal dupliziert. Das hat den Grund, dass `cbind()` nur Dataframes mit derselben Anzahl an Zeilen zusammenfügen kann. 
+
+Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert werden und nur die neuen Zeilen und Spalten hinzugefügt werden, kann die Funktion `merge()` verwendet werden. 
+
+
+```r
+# Dataframes kombinieren und dabei gleiche Spalten zusammenfügen
+df_2 <- data.frame(frucht = c("Apfel", "Zitrone", "Mango"),
+                anzahl = c(20, 15, 0),
+                vorraetig = c(TRUE, TRUE, FALSE), 
+                preis = c(2.49, 1.49, .99)
+                 )
+merge(fruechte_df, df_2, by=c("frucht","anzahl", "vorraetig"), all = TRUE)
+```
+
+```
+#>     frucht anzahl vorraetig preis
+#> 1    Apfel     20      TRUE  2.49
+#> 2   Banane      0     FALSE    NA
+#> 3    Birne      0     FALSE    NA
+#> 4 Erdbeere     32      TRUE    NA
+#> 5     Kiwi      5      TRUE    NA
+#> 6    Mango      0     FALSE  0.99
+#> 7   Orange      0     FALSE    NA
+#> 8  Zitrone     15      TRUE  1.49
+```
+Im Laufe des Semesters werden wir einige weitere Möglichkeiten kennenlernen, wie Dataframes transformiert und kombiniert werden können. 
 
 :::task
 Verständnisfragen:
 
 - Was gilt für alle Spalten eines Dataframes? 
-- Welchen Datentyp haben die Werte in der neuen Spalte "gebraucht"?
+- Welchen Datentyp haben die Werte in der neuen Spalte `vorraetig`?
 - Was passiert, wenn Werte beim Erstellen eines Dataframes fehlen? Löscht einen Wert und probiert es aus. 
 - Verwendet die Funktion `View()` um euch einen der Dataframes genauer anzusehen. Was passiert?
 :::
-
-
-Die folgenden Beispiele illustrieren noch einmal die Eigenschaften von Dataframes:
-
-
-```r
-# Elemente in einem Dataframe können unterschiedliche Datentypen haben
-typeof(df[2,3]) # numeric/double
-```
-
-```
-#> [1] "double"
-```
-
-```r
-# Elemente in einem Dataframe können unterschiedliche Datentypen haben
-typeof(df[1,1]) # character
-```
-
-```
-#> [1] "character"
-```
-
-```r
-# Spalten sind  Vektoren
-typeof(personen_df$Name) # character (vector)
-```
-
-```
-#> [1] "NULL"
-```
-
-```r
-# Zeilen sind Listen
-typeof(personen_df[1,]) # list 
-```
-
-```
-#> [1] "list"
-```
 
 
 ## Auf einen Blick: Matrizen vs Arrays vs Dataframes
@@ -1455,22 +1604,22 @@ In diesem Abschnitt werden die Unterschiede zwischen Matrizen, Arrays und Datafr
 ```r
 # Array: Ein dreidimensionales Modell zur Speicherung von Temperaturdaten über eine Woche, gemessen zu verschiedenen Tageszeiten in verschiedenen Städten.
 # Ein 3x7x3 Array erstellen für 3 Städte, 7 Tage und 3 Tageszeiten
-temperature_data_array <- array(sample(10:30, 63, replace = TRUE), dim = c(3,7,3))
-dimnames(temperature_data_array) <- list(
+temperature_array <- array(sample(10:30, 63, replace = TRUE), dim = c(3,7,3))
+dimnames(temperature_array) <- list(
   Stadt = c("Berlin", "Hamburg", "München"),
   Tag = c("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"),
   Zeit = c("Morgen", "Mittag", "Abend")
 )
-print(temperature_data_array[,"Mo", "Morgen"]) 
+print(temperature_array[,"Mo", "Morgen"]) 
 ```
 
 ```
 #>  Berlin Hamburg München 
-#>      18      30      24
+#>      23      24      14
 ```
 
 ```r
-print(temperature_data_array)
+print(temperature_array)
 ```
 
 ```
@@ -1478,158 +1627,240 @@ print(temperature_data_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  18 14 10 24 21 12 21
-#>   Hamburg 30 26 22 15 30 19 25
-#>   München 24 10 20 11 24 27 11
+#>   Berlin  23 18 20 14 28 11 25
+#>   Hamburg 24 13 22 20 20 16 25
+#>   München 14 29 29 26 25 17 20
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  11 10 30 11 20 22 25
-#>   Hamburg 18 16 21 30 21 15 28
-#>   München 24 10 13 30 29 17 12
+#>   Berlin  28 19 12 28 22 15 10
+#>   Hamburg 11 29 15 11 30 22 24
+#>   München 10 16 30 15 12 11 11
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  18 14 21 12 23 30 16
-#>   Hamburg 14 15 27 23 23 28 15
-#>   München 28 29 16 24 30 29 13
+#>   Berlin  17 20 18 24 11 25 15
+#>   Hamburg 29 28 26 26 19 13 12
+#>   München 15 10 10 11 22 28 16
 ```
 
 ```r
 # Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.
-morning_temperature_matrix <- matrix(temperature_data_array[ , , "Morgen"], nrow = 7)
-rownames(morning_temperature_matrix) <- c("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
-colnames(morning_temperature_matrix) <- c("Berlin", "Hamburg", "München")
-print(morning_temperature_matrix)
+morning_temp_matrix <- matrix(temperature_array[ , , "Morgen"], nrow = 7)
+rownames(morning_temp_matrix) <- c("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+colnames(morning_temp_matrix) <- c("Berlin", "Hamburg", "München")
+print(morning_temp_matrix)
 ```
 
 ```
 #>    Berlin Hamburg München
-#> Mo     18      22      24
-#> Di     30      20      12
-#> Mi     24      24      19
-#> Do     14      15      27
-#> Fr     26      11      21
-#> Sa     10      21      25
-#> So     10      30      11
+#> Mo     23      22      25
+#> Di     24      29      11
+#> Mi     14      14      16
+#> Do     18      20      17
+#> Fr     13      26      25
+#> Sa     29      28      25
+#> So     20      20      20
 ```
 
 ```r
 # Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.
-morning_temperature_dataframe <- data.frame(
-  Berlin = temperature_data_array["Berlin", , "Morgen"],
-  Hamburg = temperature_data_array["Hamburg", , "Morgen"],
-  München = temperature_data_array["München", , "Morgen"]
+morning_temp_dataframe <- data.frame(
+  Berlin = temperature_array["Berlin", , "Morgen"],
+  Hamburg = temperature_array["Hamburg", , "Morgen"],
+  München = temperature_array["München", , "Morgen"]
 )
-print(morning_temperature_dataframe) 
+print(morning_temp_dataframe) 
 ```
 
 ```
 #>    Berlin Hamburg München
-#> Mo     18      30      24
-#> Di     14      26      10
-#> Mi     10      22      20
-#> Do     24      15      11
-#> Fr     21      30      24
-#> Sa     12      19      27
-#> So     21      25      11
+#> Mo     23      24      14
+#> Di     18      13      29
+#> Mi     20      22      29
+#> Do     14      20      26
+#> Fr     28      20      25
+#> Sa     11      16      17
+#> So     25      25      20
 ```
 
 ```r
 # Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. 
 # Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:
-morning_temperature_dataframe$Zeit <- "Morgen"
-morning_temperature_dataframe$Skala <- "Celsius"
-print(morning_temperature_dataframe)
+morning_temp_dataframe$Zeit <- "Morgen"
+morning_temp_dataframe$Skala <- "Celsius"
+print(morning_temp_dataframe)
 ```
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     18      30      24 Morgen Celsius
-#> Di     14      26      10 Morgen Celsius
-#> Mi     10      22      20 Morgen Celsius
-#> Do     24      15      11 Morgen Celsius
-#> Fr     21      30      24 Morgen Celsius
-#> Sa     12      19      27 Morgen Celsius
-#> So     21      25      11 Morgen Celsius
+#> Mo     23      24      14 Morgen Celsius
+#> Di     18      13      29 Morgen Celsius
+#> Mi     20      22      29 Morgen Celsius
+#> Do     14      20      26 Morgen Celsius
+#> Fr     28      20      25 Morgen Celsius
+#> Sa     11      16      17 Morgen Celsius
+#> So     25      25      20 Morgen Celsius
 ```
 
 ```r
 # Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: 
-morning_temperature_matrix$Zeit <- "Morgen"
+morning_temp_matrix$Zeit <- "Morgen"
 ```
 
 ```
-#> Warning in morning_temperature_matrix$Zeit <- "Morgen": Coercing LHS to a list
+#> Warning in morning_temp_matrix$Zeit <- "Morgen": Coercing LHS to a list
 ```
 
 ```r
 # Auf die Werte in einem Dataframe können auch komplexere Operationen angewandt werden, und die Ergebnisse der Opterationen kann direkt im Dataframe gespeichert werden.
 # Wir können zum Beispiel das Maximum für jeden Tag berechenen und eine neue Spalte "Maximum" für diesen Wert übertragen 
-morning_temperature_dataframe$Maximum <- pmax(morning_temperature_dataframe$Berlin, morning_temperature_dataframe$Hamburg, morning_temperature_dataframe$München)
-morning_temperature_dataframe
+morning_temp_dataframe$Maximum <- pmax(morning_temp_dataframe$Berlin, morning_temp_dataframe$Hamburg, morning_temp_dataframe$München)
+morning_temp_dataframe
 ```
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     18      30      24 Morgen Celsius      30
-#> Di     14      26      10 Morgen Celsius      26
-#> Mi     10      22      20 Morgen Celsius      22
-#> Do     24      15      11 Morgen Celsius      24
-#> Fr     21      30      24 Morgen Celsius      30
-#> Sa     12      19      27 Morgen Celsius      27
-#> So     21      25      11 Morgen Celsius      25
+#> Mo     23      24      14 Morgen Celsius      24
+#> Di     18      13      29 Morgen Celsius      29
+#> Mi     20      22      29 Morgen Celsius      29
+#> Do     14      20      26 Morgen Celsius      26
+#> Fr     28      20      25 Morgen Celsius      28
+#> Sa     11      16      17 Morgen Celsius      17
+#> So     25      25      20 Morgen Celsius      25
 ```
 
 ```r
 # Wir könnten auch die Werte in Fahrenheit umwandeln 
-morning_temperature_dataframe$Maximum <- morning_temperature_dataframe$Maximum * 9/5 + 32
-morning_temperature_dataframe
+morning_temp_dataframe$Maximum <- morning_temp_dataframe$Maximum * 9/5 + 32
+morning_temp_dataframe
 ```
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     18      30      24 Morgen Celsius    86.0
-#> Di     14      26      10 Morgen Celsius    78.8
-#> Mi     10      22      20 Morgen Celsius    71.6
-#> Do     24      15      11 Morgen Celsius    75.2
-#> Fr     21      30      24 Morgen Celsius    86.0
-#> Sa     12      19      27 Morgen Celsius    80.6
-#> So     21      25      11 Morgen Celsius    77.0
+#> Mo     23      24      14 Morgen Celsius    75.2
+#> Di     18      13      29 Morgen Celsius    84.2
+#> Mi     20      22      29 Morgen Celsius    84.2
+#> Do     14      20      26 Morgen Celsius    78.8
+#> Fr     28      20      25 Morgen Celsius    82.4
+#> Sa     11      16      17 Morgen Celsius    62.6
+#> So     25      25      20 Morgen Celsius    77.0
 ```
 
 ```r
 #... und anschließend die Spalte umbenennen 
-morning_temperature_dataframe$Maximum_Fahrenheit <- morning_temperature_dataframe$Maximum
-morning_temperature_dataframe$Maximum <- NULL  # entfernt die ursprüngliche "Maximum" Spalte
-morning_temperature_dataframe
+morning_temp_dataframe$Maximum_Fahrenheit <- morning_temp_dataframe$Maximum
+morning_temp_dataframe$Maximum <- NULL  # entfernt die ursprüngliche "Maximum" Spalte
+morning_temp_dataframe
 ```
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     18      30      24 Morgen Celsius               86.0
-#> Di     14      26      10 Morgen Celsius               78.8
-#> Mi     10      22      20 Morgen Celsius               71.6
-#> Do     24      15      11 Morgen Celsius               75.2
-#> Fr     21      30      24 Morgen Celsius               86.0
-#> Sa     12      19      27 Morgen Celsius               80.6
-#> So     21      25      11 Morgen Celsius               77.0
+#> Mo     23      24      14 Morgen Celsius               75.2
+#> Di     18      13      29 Morgen Celsius               84.2
+#> Mi     20      22      29 Morgen Celsius               84.2
+#> Do     14      20      26 Morgen Celsius               78.8
+#> Fr     28      20      25 Morgen Celsius               82.4
+#> Sa     11      16      17 Morgen Celsius               62.6
+#> So     25      25      20 Morgen Celsius               77.0
 ```
 
 ```r
 # Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. 
 ```
 
+## Datenstrukturen untersuchen 
+
+Jetzt haben wir schon ganz schön viele verschiedene Datenstrukturen kennengelernt, da kommt man durcheinander. Letzte Woche haben wir bereits die `typeof()`-Funktion kennengelernt, um den Datentyp eines Werts herauszufinden. Wenn die Funktion `typeof()` auf Datenstrukturen angewandt wird, gibt die Funktion Auskunft darüber, wie die Datenstruktur im Speicher abgebildet wird. Ein Dataframe wird im Speicher zum Beispiel immer als Liste repräsentiert:
+
+
+```r
+typeof(morning_temp_dataframe)
+```
+
+```
+#> [1] "list"
+```
+
+Aber wir haben bereits gesehen, dass sich ein Dataframe von einer einfachen Liste unterscheidet. Die Spalten in einem Dataframe müssen immer dieselbe Länge haben und auf Dataframes können andere Funktionen angewandt werden als auf Listen. Um Informationen über die Datenstruktur eines Objekts auf höherer Ebene zu erhalten, kann die Funktion `class()` verwendet werden:  
+
+
+```r
+class(morning_temp_dataframe)
+```
+
+```
+#> [1] "data.frame"
+```
+
+Neben `typeof()` und `class()` gibt es noch eine dritte Funktion, mit der die Datenstruktur eines Objekts untersucht werden kann. Die Funktion `str()` gibt Auskunft über die interne Struktur des Objekts: 
+
+
+```r
+str(morning_temp_dataframe)
+```
+
+```
+#> 'data.frame':	7 obs. of  6 variables:
+#>  $ Berlin            : int  23 18 20 14 28 11 25
+#>  $ Hamburg           : int  24 13 22 20 20 16 25
+#>  $ München           : int  14 29 29 26 25 17 20
+#>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
+#>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
+#>  $ Maximum_Fahrenheit: num  75.2 84.2 84.2 78.8 82.4 62.6 77
+```
+Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
+
+
+```r
+# Jedes Element hat in einer Matrix hat den Datentyp character
+typeof(fruechte_einkauf[1,1]) # character
+```
+
+```
+#> [1] "character"
+```
+
+```r
+# Jede Spalte in einem Dataframe ist ein Vektor
+typeof(morning_temp_dataframe[3,])
+```
+
+```
+#> [1] "list"
+```
+
+```r
+# Jede Zeile in einem Dataframe ist eine Liste
+typeof(morning_temp_dataframe[,3])
+```
+
+```
+#> [1] "integer"
+```
+
+Zuletzt gibt es eine Reihe hilfreicher Funktionen, mit denen Datenstrukturen auf bestimmte Aspekte hin untersucht werden können. `length()` liefert die Anzahl der Elemente in einer Datenstruktur; `nchar()` gibt die Anzahl der Zeichen in einer Zeichenkette aus. `ncol()` und `nrow()` geben Auskunft über die Anzahl an Spalten und Zeilen in einer Datenstruktur und die bereits bekannte Funktion `dim()` liefert die Dimension. 
+
+:::task
+Verständnisfragen:
+
+Untersucht die Datenstrukturen aus diesem Kapitel mithilfe der Funktionen `typeof()`, `class()`,  `length()`, `nchar()`, `ncol()`, `nrow()` und `dim()`. 
+
+- Was für ein Wert wird ausgegeben, wenn `length()` auf einen Dataframe angewendet wird?
+- Wie hängen `ncol()`, `nrow()` und `dim()` zusammen?
+- Haben Dataframes auch eine Dimension? Ruft mit `?dim` die Dokumentation zur Funktion `dim()` auf und lest es nach.
+:::
+
 
 ## Fehlende und ungültige Werte in Datenstrukturen
 
 Bei der Arbeit mit Daten in R kommt es immer mal vor, dass Werte fehlen oder ungültig sind. In R gibt es spezielle Objekte, die in diesem Fall eingesetzt werden.
 
-Der Wert `NULL` wird eingesetzt, um die Nicht-Existenz von Daten zu signalisieren. Das haben wir gesehen, als wir mithilfe der Funktion `c()` einen leeren Vektor erstellt haben. `NULL` wird außerdem dazu verwendet, um Werte aus Listen oder Dataframes zu entfernen. Wir haben dieses Objekt beispielsweise verwendet, um die Spalte `Maximum` aus dem Dataframe `morning_temperature_dataframe` zu entfernen. 
+Der Wert `NULL` wird eingesetzt, um die Nicht-Existenz von Daten zu signalisieren. Das haben wir gesehen, als wir mithilfe der Funktion `c()` einen leeren Vektor erstellt haben. `NULL` wird außerdem dazu verwendet, um Werte aus Listen oder Dataframes zu entfernen. Wir haben dieses Objekt beispielsweise verwendet, um die Spalte `Maximum` aus dem Dataframe `morning_temp_dataframe` zu entfernen. 
 
 Daneben gibt es `NA`, was für Not Available oder "nicht verfügbar" steht und verwendet wird, um das Fehlen von erwarteten Werten in Datenstrukturen zu markieren. Dieser Wert kommt typischerweise in Dataframes zur Anwendung, wenn zu einigen Beobachtungen bestimmte Werte fehlen, zum Beispiel das Alter einer Person in einem Dataframe, der Daten zu verschiedenen Personen enthält. 
 

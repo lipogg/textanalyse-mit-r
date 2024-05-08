@@ -27,3 +27,4 @@ auf-einen-blick-matrizen-vs-arrays-vs-dataframes
 fehlende-und-ungültige-werte-in-datenstrukturen
 der-mitgliedschaftsoperator-in
 unveränderbarkeit-von-objekten-in-r
+datenstrukturen-untersuchen

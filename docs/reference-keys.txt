@@ -24,7 +24,14 @@ zugriffsoperationen-auf-arrays
 dataframes
 zugriffsoperationen-auf-dataframes
 auf-einen-blick-matrizen-vs-arrays-vs-dataframes
+datenstrukturen-untersuchen
 fehlende-und-ungültige-werte-in-datenstrukturen
 der-mitgliedschaftsoperator-in
 unveränderbarkeit-von-objekten-in-r
-datenstrukturen-untersuchen
+r-basics-iii-kontrollstrukturen
+bedingte-anweisungen
+verzweigungen
+while-schleifen
+for-schleifen
+schleifen-abbrechen
+grundlegende-begriffe-2

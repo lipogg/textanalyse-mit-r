@@ -476,6 +476,23 @@ Vergleicht man die Heat Map mit den Kookkurrenzen mit dem Säulendiagramm der Bi
 
 Die Bestimmung der Kookkurrenzen auf Satzebene gibt uns also weitere möglicherweise relevante Wortkombinationen. Aber genau wie bei den N-Grammen können wir auch aus den Kookkurrenzen noch nicht ableiten, dass die Töchter in den Märchen tatsächlich als "schön" beschrieben werden, denn Kookkurrenzen können auch dadurch zustande kommen, dass ein nachfolgender Satz auf den vorhergehenden Bezug nimmt, und, dass sich das Wort schön im selben Satz auf ein anderes Wort bezieht. Trotzdem kann das häufige gemeinsame Auftreten von zwei Tokens statistisch beschrieben werden und es kann untersucht werden, ob das gemeinsame Auftreten statistisch signifikant ist.   
 
+<details>
+<summary><b>Anwendungsbeispiele</b></summary>
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund</b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch. 1: From Usage to Meaning: The Foundations of Distributional Semantics, https://doi.org/10.1017/9780511783692.002 
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences, und 2.3: The Co-occurrence Matrix,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+<details>
+<summary><b>Mathematischer Hintergrund</b></summary>
+
+In diesem Abschnitt werden absolute Häufigkeiten betrachtet. 
+
+</details>
+
+
 ## Kollokationen
 
 Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" denn tatsächlich statistisch signifikant? Ist das nicht nur zufällig? Um die statistische Signifikanz von Kookkurrenzen und speziell N-Grammen zu untersuchen, werden Kollokationen bestimmt. **Der Begriff Kollokation hat verschiedene Bedeutungen und ist deswegen durchaus umstritten (s. [Evert 2009, S. 1212f.](https://doi.org/10.1515/9783110213881.2.1212)). In diesem Kontext ist mit "Kollokation" einfach das wiederholte Auftreten von Wortpaaren in einem Korpus gemeint. Genau wie bei Kookkurrenzen und N-Grammen müssen die Wörter dabei nicht in einer syntaktischen Relation zueinander stehen, sie kommen also einfach in einem defininierten Kontext (z.B. in einem Text, Satz, Segment aus 5 Tokens, ...) gemeinsam vor.** Nicht alle Kollokationen sind dabei jedoch gleich signifikant: Zum Beispiel kommt zwar "und er" in vielen Sätzen vor, aber dieses Wortpaar ist nicht unbedingt inhaltlich aufschlussreich oder für das untersuchte Korpus spezifisch. Beispiele "echter" Kollokationen sind dagegen Wortpaare wie Frohe Weihnachten, Grüß Gott oder auch Vor- Nachnamekombinationen. Eine engere Definition von Kollokationen wäre deswegen vielleicht "statistisch signifikante Kookkurrenzen". Um die Signifikanz verschiedener Kollokationen zu bestimmen, können statistische Parameter berechnet werden. **Assoziationsmaße** beschreiben dabei die Stärke der Bindung zwischen zwei Wörtern. In Quanteda geht das mit der Funktion `textstat_collocations()`: 
@@ -576,9 +593,94 @@ In unserem kleinen Beispiel konnten wir zumindest unsere ursprüngliche Beobacht
 
 Zum Abschluss betrachten wir noch drei Analysemethoden, die für andere Fragestellungen interessant sein können. Wir werden diese Methoden jedoch nicht vertiefen. 
 
+
+<details>
+<summary><b>Anwendungsbeispiele</b></summary>
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund </b></summary>
+
+1.) Berechnet manuell (das heißt mit Taschenrechner, aber ohne R) die Werte für Lambda ($\lambda$) und $z$ nach den Formeln aus der [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für das folgende Beispiel: 
+
+* Beispielsatz (unser Korpus): "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+* $K$-word target expression $x$ = "Guten Tag"
+* $K$ = 2 (weil "Guten Tag" aus zwei Wörtern besteht)
+* $z_r$ = "Guten Tag", "Tag Max", "Max Mustermann", "Mustermann wie", "wie geht", "geht es", "es Ihnen", "Ihnen Guten", "Guten Tag" 
+
+$log(n_i)$ bedeutet hier Logarithmus zur Basis $e$, also $log_e(n_i)$.
+
+Wir müssen zunächst klären, was $M$, $n_i$ und $b_i$ sind. 
+
+$M$ = $2^K$, also 4. Das sind die möglichen Werte ("possible values") für $c_i$. 
+
+$c_i$ sind die möglichen Fälle, die beim Vergleich der Wortkombination "Guten Tag" mit allen Wortkombinationen $z_r$ auftreten können: 
+ 
+- $c_1$ = (0,0) (sowohl das erste als auch das zweite Wort in x ist ungleich dem ersten und zweiten Wort in z: Beispiel "Max Mustermann")
+- $c_2$ = (1,0) (das erste Wort in $x$ ist gleich dem ersten Wort in $z$, aber das zweite Wort ist nicht gleich dem zweiten Wort: Beispiel "\underline{Guten} Abend")
+- $c_3$ = (0,1) (das zweite Wort in $x$ ist gleich dem zweiten Wort in z, aber das erste Wort ist nicht gleich dem ersten Wort: Beispiel "schönen \underline{Tag}") 
+- $c_4$ = (1,1) (beide Wörter in $x$ und $z$ sind gleich: In unserem Fall "\underline{Guten} \underline{Tag}") 
+
+$b_i$ sind die Anzahl an Einsen in den verschiedenen Fällen $c_i$. In unserem Beispiel: 
+ 
+- $b_1$ = 0 (weil $c_1$ keine 1 enthält) 
+- $b_2$ = 1 (weil $c_2$ eine 1 enthält) 
+- $b_3$ = 1 (weil $c_3$ eine 1 enthält) 
+- $b_4$ = 2 (weil $c_4$ zweimal 1 enthält)
+ 
+$n_i$ sind die Anzahl der Wortkombinationen aus $z_r$, für die der jeweilige Fall $c_i$ zutrifft, also: 
+ 
+- $n_1$ = 7 (es gibt 7 Wortkombinationen, die weder "Guten" noch "Tag" an der richtigen Stelle enthalten, z.B. "Tag Max", "Max Mustermann", "Mustermann wie", .....) 
+- $n_2$ = 0 (es gibt keine Wortkombination mit "Guten" an der ersten Stelle) 
+- $n_3$ = 0 (es gibt keine Wortkombination mit "Tag" an der zweiten Stelle) 
+- $n_4$ = 2 ("Guten Tag" kommt zweimal vor)
+
+Jedes $n_i$ wird noch mit dem "smoothing parameter" addiert (dieser soll verhindern, dass Operationen der Art $log_e(0)$ oder $0^{-1}$ notwendig werden). Der smoothing Parameter ist per Default 0.5.
+Daraus ergibt sich: $n_1$ = 7.5, $n_2$ = 0.5, $n_3$ = 0.5, $n_4$ = 2.5 
+
+Wenn wir diese Werte in die Formel einsetzen, erhalten wir: 
+
+$\lambda = ((-1)^2\*log_e(7.5)) + ((-1)^1\*log_e(0.5)) + ((-1)^1\*log_e(0.5)) + ((-1)^0\*log_e(2.5))$
+
+Und entsprechend für $z$: 
+
+$z = \frac{\lambda}{(n_1^{-1} + n_2^{-1} + n_3^){-1} + n_4^{-1})^{(\frac{1}{2})}}
+= \frac{\lambda}{(7.5^{-1} + 0.5^{-1} + 0.5^{-1} + 2.5^{-1})^{(\frac{1}{2})}}$
+
+2.) Vergleicht die berechneten Werte mit den Werten, welche die Quanteda `textstat_collocations()`-Funktion berechnet, indem ihr den folgenden Code ausführt. Stimmen die Werte überein? 
+
+```{r eval=FALSE}
+library(quanteda)
+library(quanteda.textstats)
+test <- "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+3.) Wir haben in der Stunde bereits beobachtet, dass die Gesamthäufigkeit der Tokens in einer Wortkombination die lambda- und z-Werte beeinträchtigt. Das können wir anhand der beiden Formeln etwas genauer untersuchen. Wir nehmen an, eine Wortkombination $x$ kommt nur einmal vor ($n_4$ = 1.5) und es kommen sonst 10 Wortkombinationen vor ohne irgendeines der beiden Wörter aus $x$ ($n_1$ = 10.5). Wenn eines der beiden Wörter aus der Wortkombination $x$ im Gesamtkorpus häufig vorkommt, dann wird es höhere Werte für $n_2$ oder $n_3$ geben, weil dieses Wort dann mit anderen Wörtern zusammen auftritt. 
+
+* Wie groß ist Lambda für $n_2$ = 8.5 und $n_3$ = 0.5?
+* Wie groß ist Lambda für $n_2$ = 0.5 und $n_3$ = 0.5? 
+
+Zuletzt können wir auch die Formel für die z-Statistik untersuchen. Wie wir gesehen haben, werden die z-Werte als Bruch mit Lambda im Zähler definiert. 
+
+* Wie wirkt sich ein hohes Lambda im Zähler auf den z-Wert aus? 
+* Wie wirkt sich ein niedriger Wert für Lambda auf den z-Wert aus? 
+* Wie beeinflussen die Werte im Nenner das Ergebnis? 
+
+Ohne tief in die Statistik einzusteigen, können wir also schon durch einfaches Nachrechnen nachvollziehen, warum die Gesamthäufigkeit der Tokens in einer Wortkombination einen Einfluss auf die Lambda- und z-Werte haben muss. 
+
+</details>
+
 ## Keyness-Analyse
 
-Bei einer Keyness-Analyse wird untersucht, wie häufig ein Wort in einem Korpus im Vergleich mit einem anderen Korpus vorkommt. Das Korpus kann auch ein Teilkorpus sein; das Vergleichskorpus ist dann der Rest des Korpus. Die Funktion `textstat_keyness()` berechnet, welche Tokens in einem Teilkorpus im Vergleich zum Rest des Korpus signifikant häufiger verwendet werden, als es rein  zufällig erwartet würde. Das statistische Maß kann dabei mithilfe des Parameteres `measure` festgelegt werden. In dieser Analyse vergleichen wir die Märchen in der Version von 1857 mit der ersten Version der Märchen von 1812/15. Das heißt, die Märchen von 1857 sind unser "Zielkorpus", während die Märchen von 1812/15 als unser "Referenzkorpus" fungiert. Wir verwenden das Maß Log-Likelihood (was das ist könnt ihr z.B. [hier](http://ucrel.lancs.ac.uk/llwizard.html) nachlesen oder im [Quanteda Tutorial](https://tutorials.quanteda.io/statistical-analysis/keyness/)). Wir betrachten die beiden Korpora nach Entfernung der Stoppwörter. 
+Bei einer Keyness-Analyse wird untersucht, wie häufig ein Wort in einem Korpus im Vergleich mit einem anderen Korpus vorkommt. Das Korpus kann auch ein Teilkorpus sein; das Vergleichskorpus ist dann der Rest des Korpus. Die Funktion `textstat_keyness()` berechnet, welche Tokens in einem Teilkorpus im Vergleich zum Rest des Korpus signifikant häufiger verwendet werden, als es rein zufällig erwartet würde. Das statistische Maß kann dabei mithilfe des Parameteres `measure` festgelegt werden. In dieser Analyse vergleichen wir die Märchen in der Version von 1857 mit der ersten Version der Märchen von 1812/15. Das heißt, die Märchen von 1857 sind unser "Zielkorpus", während die Märchen von 1812/15 als unser "Referenzkorpus" fungiert. Wir verwenden das Maß Log-Likelihood (was das ist könnt ihr z.B. [hier](http://ucrel.lancs.ac.uk/llwizard.html) nachlesen oder im [Quanteda Tutorial](https://tutorials.quanteda.io/statistical-analysis/keyness/)). Wir betrachten die beiden Korpora nach Entfernung der Stoppwörter. 
 
 ```{r warning=FALSE, message=FALSE}
 library(quanteda.textstats)
@@ -602,6 +704,26 @@ textplot_keyness(keyness_maerchen, n=50L, labelsize = 2)
 
 Die Darstellung zeigt, dass in den Märchen von 1857 die beiden Wörter Königstochter / Königssohn besonders häufig vorkommen im Vergleich zum Korpus von 1812/15: In den Märchen von 1812/15 wurde scheinbar das Wortpaar Prinzessin / Prinz verwendet. In diesem Beispiel weist die Keyness-Analyse also auf einen Wandel der Begriffe in den Märchen über die Zeit hin. 
 
+<details>
+<summary><b>Anwendungsbeispiele</b></summary>
+- Paul Baker und Robbie Love, Corpus Linguistics and Sexuality, https://academic.oup.com/edited-volume/42645/chapter/358158005
+</details> 
+
+<details>
+<summary><b>Theoretischer Hintergrund</b></summary>
+- Costas Gabrielatos (2018). Keyness Analysis: Nature, Metrics and Techniques, in: Taylor und Marchi, Corpus Approaches to Discourse. A Critical Review,  https://core.ac.uk/download/pdf/227092349.pdf
+</details> 
+
+<details>
+<summary><b>Mathematischer Hintergrund</b></summary>
+https://quanteda.io/reference/textstat_keyness.html
+
+PMI: 
+- Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.6: Pointwise Mutual Information (PMI), https://web.stanford.edu/~jurafsky/slp3/.
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.3.1: Co-occurrence Weighting Functions, https://doi.org/10.1017/9780511783692.003
+
+</details>
+
 ## TF-IDF
 
 Bei der Keyness-Analyse werden Worthäufigkeiten in zwei verschiedenen Korpora oder in einem Teilkorpus und einem  Restkorpus verglichen. Es kann aber auch untersucht werden, wie häufig bestimmte Tokens in einem einzelnen Dokument im Vergleich mit dem restlichen Korpus vorkommt. Dazu wird in Quanteda jedoch nicht die Funktion `textstat_keyness()` verwendet, sondern eine spezielle Document Feature Matrix. Diese DFM enthält nicht die absoluten Worthäufigkeiten, sondern sie gewichtet Wörter höher, die häufig in einem bestimmten Dokument, aber selten im gesamten Korpus vorkommen (**Term Frequency-Inverse Document Frequency**; kurz TF-IDF): 
@@ -610,8 +732,42 @@ Bei der Keyness-Analyse werden Worthäufigkeiten in zwei verschiedenen Korpora o
 dfm_tfidf(maerchen_dfm)
 ```
 
-Mehr dazu könnt ihr nachlesen unter:  https://quanteda.io/reference/dfm_tfidf.html?q=tf%20idf
- 
+Dustin Stoltz und Marshall Taylor schreiben: "We can think of *tf-idf* scores as giving us the **keywords** for a document - the set of words best summarizing the purpose or content of that text" (S. 88, Mapping Texts) (sie heben aber auch hervor, dass es daneben fortgeschrittenere Methoden gibt, Schlüsselwörter zu identifizieren, wie beispielsweise das TextRank Modell)
+
+
+<details>
+<summary><b>Anwendungsbeispiele</b></summary>
+
+- Kimmo Elo (2022). A Text Network Analysis of Discursive Changes in German, Austrian and Swiss New Year’s Speeches 2000-2021, https://www.digitalhumanities.org/dhq/vol/16/1/000598/000598.html
+- Kritik einer Arbeit, die TF-IDF auf problematische Weise anwendet: David L. Hoover (2016). Argument, Evidence, and the Limits of Digital Literary Studies, https://dhdebates.gc.cuny.edu/read/untitled/section/70f5261e-e268-4f56-928f-0c4ea30d254d.
+
+</details>
+
+<details>
+<summary><b>Theoretischer Hintergrund </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.3.1: Co-occurrence Weighting Functions, https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund</b></summary>
+
+In diesem Abschnitt betrachten wir gewichtete und normalisierte Worthäufigkeiten. 
+
+Für einen allgemeinen Einstieg in den mathematischen Hintergrund hinter TF-IDF empfehle ich: 
+- Dan Jurafsky (2022). Vectors 5 TF IDF, https://www.youtube.com/watch?v=TBUpxFw8oIA
+- Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector, https://web.stanford.edu/~jurafsky/slp3/.
+
+Um zu verstehen, wie TF-IDF-Werte in Quanteda berechnet werden, müssen wir jedoch auch die Funktionsdokumentation zu Rate ziehen, den die Formeln zur Berechnung der tf und idf Werte unterscheiden sich mitunter.  https://quanteda.io/reference/dfm_tfidf.html
+
+Warum wird der Logarithmus der Werte berechnet? 
+
+https://developers.google.com/machine-learning/data-prep/transform/normalization
+
+Weiterführend: 
+https://varieng.helsinki.fi/series/volumes/22/schutzler/index.html
+
+</details>
+
 ## Exkurs: Lexikalische Vielfalt
 
 Das Type/Token-Verhältnis (TTR) ist ein einfaches Maß für die lexikalische Vielfalt, das berechnet wird mit TTR = Types / Tokens. 
@@ -656,3 +812,5 @@ Wir haben zunächst einen häufig vorkommenden Märchencharakter ausgewählt und
 - Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3: Advanced Representation of Text*, https://cssbook.net/content/chapter10.html#sec-ngram.
 - Levshina, Natalia (2015). *How to Do Linguistics with R. Ch. 3.3: Zipf's Law and Word Frequency*, pp. 62-68, https://doi.org/10.1075/z.195.
 - Maj, Michal (2019). *Investigating Word Distribution with R - Zipf's Law*, https://www.r-bloggers.com/2019/02/investigating-words-distribution-with-r-zipfs-law/.
+- Dustin Stoltz und Marshall Taylor (2024), *Mapping Texts. Computational Text Analysis for the Social Sciences, Ch. 6: From Text to Numbers*, Oxford: Oxford Univ. Press. 
+- Dan Jurafsky und James Martin (2024). *Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector*, https://web.stanford.edu/~jurafsky/slp3/.

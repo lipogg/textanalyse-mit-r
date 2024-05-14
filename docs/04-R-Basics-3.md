@@ -3,6 +3,16 @@
 Bisher haben wir in unseren Beispielen immer einzelne Anweisungen oder Ausdrücke (-> Grundbegriffe!) betrachtet. Wir haben dabei gelernt, dass der Computer Code ausführen und auswerten kann: Beim Ausführen "macht" er etwas und ändert den Zustand des Speichers, zum Beispiel, wenn eine neue Variable erstellt wird. Beim Auswerten berechnet er etwas und liefert einen Wert, zum Beispiel, wenn eine logische Aussage überprüft wird. Der Computer kann Anweisungen aber auch wiederholen oder Anweisungen nur dann ausführen, wenn eine bestimmte Bedingung erfüllt ist. In R gibt es eine Reihe von Signalwörtern, die dem Computer mitteilen, dass eine bestimmte Abfolge von Anweisungen (=**Anweisungsblock**) wiederholt werden soll oder nur unter einer bestimmten Bedingung ausgeführt werden soll. 
 
 
+## Grundlegende Begriffe
+
+
+|Begriff     |Englische Entsprechung |Definition (im R-Kontext)                                                                                                                                                                                                                                                                                                                                                                                           |
+|:-----------|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Iteration   |Iteration              |Im Kontext von Kontrollstrukturen bezeichnet Iteration zwei Dinge: in einem allgemeinen Sinn den Prozess, bei dem Anweisungen wiederholt ausgeführt werden, und zum anderen einen einzigen Schleifendurchlauf, also das einmalige Ausführen der Anweisungen im Schleifenkörper. Wenn der Code einmal ausgeführt wird, sagt man entsprechend 'eine Iteration', für das zweimalige Ausführen 'zwei Iterationen', usw. |
+|Iterieren   |Iterate                |Wenn beschrieben werden soll, dass eine for-Schleife ein Objekt durchläuft, wird dazu häufig gesagt, dass die Schleife 'über das Objekt iteriert'.                                                                                                                                                                                                                                                                  |
+|Terminieren |Terminate              |Wenn eine Schleife terminiert bedeutet das, dass sie die Ausführung beendet; sie kommt zum Ende.                                                                                                                                                                                                                                                                                                                    |
+
+
 :::tip
 Style Tip
 

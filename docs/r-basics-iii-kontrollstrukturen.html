@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 R Basics III: Kontrollstrukturen | Einführung in R: Programmieren für die Geisteswissenschaften</title>
+  <title>3 R Basics III: Kontrollstrukturen | Textanalyse mit R für die Geisteswissenschaften</title>
   <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 R Basics III: Kontrollstrukturen | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta property="og:title" content="3 R Basics III: Kontrollstrukturen | Textanalyse mit R für die Geisteswissenschaften" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
-  <meta name="github-repo" content="lipogg/einfuehrung-in-r" />
+  <meta name="github-repo" content="lipogg/textanalyse-mit-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 R Basics III: Kontrollstrukturen | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta name="twitter:title" content="3 R Basics III: Kontrollstrukturen | Textanalyse mit R für die Geisteswissenschaften" />
   
   <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
@@ -32,7 +32,7 @@ set in the _output.yml file.</p>" />
   
   
 <link rel="prev" href="r-basics-ii-datenstrukturen.html"/>
-<link rel="next" href="r-basics-iv-funktionen-und-pakete.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -208,134 +208,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.1</b> Bedingte Anweisungen</a></li>
-<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.2</b> Verzweigungen</a></li>
-<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.3</b> while-Schleifen</a></li>
-<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.4</b> for-Schleifen</a></li>
-<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.5</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.2</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.3</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.4</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.5</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.6</b> Schleifen abbrechen</a></li>
 <li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.1</b> Was sind Funktionen?</a></li>
-<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.2</b> Funktionen definieren</a></li>
-<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.3</b> Funktionen aufrufen</a></li>
-<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.4</b> Funktionen verstehen</a></li>
-<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.5</b> Wozu werden Funktionen verwendet?</a></li>
-<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.6</b> Schleifen ersetzen mithilfe von Funktionen</a>
-<ul>
-<li class="chapter" data-level="4.6.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.6.1</b> Die Apply-Funktionen</a></li>
-</ul></li>
-<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.7</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
-<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.8</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
-<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.9</b> Was sind Pakete?</a></li>
-<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.10</b> Pakete installieren</a></li>
-<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.11</b> Pakete laden</a></li>
-<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.12</b> Wozu werden Pakete verwendet?</a></li>
-<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.13</b> Welche Pakete gibt es denn alles?</a></li>
-<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
-<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
-<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.3</b> Überblick: Textanalyse mit Quanteda</a></li>
-<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.4</b> Textdateien einlesen</a></li>
-<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.5</b> Quanteda corpus-Objekte</a></li>
-<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda tokens-Objekte</a></li>
-<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda DFM-Objekte</a></li>
-<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.8</b> Daten schreiben</a></li>
-<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#was-sind-reguläre-ausdrücke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
-<li class="chapter" data-level="6.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#reguläre-ausdrücke-in-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
-<li class="chapter" data-level="6.2.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
-<li class="chapter" data-level="6.3.2" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
-<li class="chapter" data-level="6.3.3" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#regex-für-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
-<li class="chapter" data-level="" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html#weiterführende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
-<li class="chapter" data-level="7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
-<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
-<li class="chapter" data-level="7.4" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
-<li class="chapter" data-level="7.5" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
-<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
-<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
-<ul>
-<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
-<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
-<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-preprocessing"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und Preprocessing</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#token-häufigkeitsanalyse"><i class="fa fa-check"></i><b>8.3</b> Token-Häufigkeitsanalyse</a></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4</b> Keywords in Context (KWIC)</a></li>
-<li class="chapter" data-level="8.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.5</b> N-Gramme</a></li>
-<li class="chapter" data-level="8.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.6</b> Kookkurrenzen</a></li>
-<li class="chapter" data-level="8.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.7</b> Kollokationen</a></li>
-<li class="chapter" data-level="8.8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keyness-analyse"><i class="fa fa-check"></i><b>8.8</b> Keyness-Analyse</a></li>
-<li class="chapter" data-level="8.9" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#tf-idf"><i class="fa fa-check"></i><b>8.9</b> TF-IDF</a></li>
-<li class="chapter" data-level="8.10" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#exkurs-lexikalische-vielfalt"><i class="fa fa-check"></i><b>8.10</b> Exkurs: Lexikalische Vielfalt</a></li>
-<li class="chapter" data-level="8.11" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#recap-und-ausblick"><i class="fa fa-check"></i><b>8.11</b> Recap und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
-<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
-<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
-<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
-<ul>
-<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
-<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
-<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
-<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>10</b> Named Entity Recognition</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.1</b> Korpus einlesen</a></li>
-<li class="chapter" data-level="10.2" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.2</b> Beispiel mit SpaCy / Spacyr</a></li>
-<li class="chapter" data-level="10.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit Flair / FlaiR</a></li>
-<li class="chapter" data-level="10.4" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.4</b> Vergleich und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>11</b> Exkurs: XML, TEI und XPath</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>11.1</b> Was ist XML? Was ist TEI?</a></li>
-<li class="chapter" data-level="11.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>11.2</b> Aufbau von XML-TEI Dokumenten</a></li>
-<li class="chapter" data-level="11.3" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wohlgeformtheit-und-validität"><i class="fa fa-check"></i><b>11.3</b> Wohlgeformtheit und Validität</a></li>
-<li class="chapter" data-level="11.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>11.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
-<li class="chapter" data-level="11.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>11.5</b> Was ist XPath?</a></li>
-<li class="chapter" data-level="11.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>11.6</b> Basics XPath Syntax</a></li>
-<li class="chapter" data-level="" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#weiterführende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>12</b> Arbeit mit XML-TEI-Dokumenten</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>12.1</b> Beispiel Dramenanalyse</a></li>
-<li class="chapter" data-level="12.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>12.2</b> Beispiel Geomapping</a>
-<ul>
-<li class="chapter" data-level="12.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>12.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
-<li class="chapter" data-level="12.2.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-über-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>12.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
-<li class="chapter" data-level="12.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>12.2.3</b> Koordinaten auf Karte abbilden</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -349,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in R: Programmieren für die Geisteswissenschaften</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Textanalyse mit R für die Geisteswissenschaften</a>
           </h1>
         </div>
 
@@ -360,52 +239,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r-basics-iii-kontrollstrukturen" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">3</span> R Basics III: Kontrollstrukturen<a href="r-basics-iii-kontrollstrukturen.html#r-basics-iii-kontrollstrukturen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Bisher haben wir in unseren Beispielen immer einzelne Anweisungen oder Ausdrücke (-&gt; Grundbegriffe!) betrachtet. Wir haben dabei gelernt, dass der Computer Code ausführen und auswerten kann: Beim Ausführen “macht” er etwas und ändert den Zustand des Speichers, zum Beispiel, wenn eine neue Variable erstellt wird. Beim Auswerten berechnet er etwas und liefert einen Wert, zum Beispiel, wenn eine logische Aussage überprüft wird. Der Computer kann Anweisungen aber auch wiederholen oder Anweisungen nur dann ausführen, wenn eine bestimmte Bedingung erfüllt ist. In R gibt es eine Reihe von Signalwörtern, die dem Computer mitteilen, dass eine bestimmte Abfolge von Anweisungen (=<strong>Anweisungsblock</strong>) wiederholt werden soll oder nur unter einer bestimmten Bedingung ausgeführt werden soll.</p>
+<div id="grundlegende-begriffe-2" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Grundlegende Begriffe<a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="5%" />
+<col width="92%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Begriff</th>
+<th align="left">Englische Entsprechung</th>
+<th align="left">Definition (im R-Kontext)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Iteration</td>
+<td align="left">Iteration</td>
+<td align="left">Im Kontext von Kontrollstrukturen bezeichnet Iteration zwei Dinge: in einem allgemeinen Sinn den Prozess, bei dem Anweisungen wiederholt ausgeführt werden, und zum anderen einen einzigen Schleifendurchlauf, also das einmalige Ausführen der Anweisungen im Schleifenkörper. Wenn der Code einmal ausgeführt wird, sagt man entsprechend ‘eine Iteration’, für das zweimalige Ausführen ‘zwei Iterationen’, usw.</td>
+</tr>
+<tr class="even">
+<td align="left">Iterieren</td>
+<td align="left">Iterate</td>
+<td align="left">Wenn beschrieben werden soll, dass eine for-Schleife ein Objekt durchläuft, wird dazu häufig gesagt, dass die Schleife ‘über das Objekt iteriert’.</td>
+</tr>
+<tr class="odd">
+<td align="left">Terminieren</td>
+<td align="left">Terminate</td>
+<td align="left">Wenn eine Schleife terminiert bedeutet das, dass sie die Ausführung beendet; sie kommt zum Ende.</td>
+</tr>
+</tbody>
+</table>
 <div class="tip">
 <p>Style Tip</p>
 <p>In Funktionsaufrufen, also z.B. <code>print()</code>, und in Zugriffsoperationen, also z.B. <code>var[]</code>, steht bekanntlich kein Leerzeichen vor der Klammer. Bei Kontrollstrukturen ist das anders. Hier empfiehlt Wickham, nach den Signalwörtern <code>if</code>, <code>if else</code>, <code>for</code> und <code>while</code> stets ein Leerzeichen einzufügen, also z.B. <code>if (var == 20)</code>.</p>
 </div>
-<div id="bedingte-anweisungen" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Bedingte Anweisungen<a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="bedingte-anweisungen" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Bedingte Anweisungen<a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bedingte Anweisungen, oder if-Anweisungen, haben die allgemeine Form:</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="r-basics-iii-kontrollstrukturen.html#cb297-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
-<span id="cb297-2"><a href="r-basics-iii-kontrollstrukturen.html#cb297-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb297-3"><a href="r-basics-iii-kontrollstrukturen.html#cb297-3" tabindex="-1"></a>}</span>
-<span id="cb297-4"><a href="r-basics-iii-kontrollstrukturen.html#cb297-4" tabindex="-1"></a></span>
-<span id="cb297-5"><a href="r-basics-iii-kontrollstrukturen.html#cb297-5" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
-<span id="cb297-6"><a href="r-basics-iii-kontrollstrukturen.html#cb297-6" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb297-7"><a href="r-basics-iii-kontrollstrukturen.html#cb297-7" tabindex="-1"></a>  <span class="cf">if</span> (Bedingung) {</span>
-<span id="cb297-8"><a href="r-basics-iii-kontrollstrukturen.html#cb297-8" tabindex="-1"></a>    Anweisungsblock</span>
-<span id="cb297-9"><a href="r-basics-iii-kontrollstrukturen.html#cb297-9" tabindex="-1"></a>  }</span>
-<span id="cb297-10"><a href="r-basics-iii-kontrollstrukturen.html#cb297-10" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-basics-iii-kontrollstrukturen.html#cb1-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
+<span id="cb1-2"><a href="r-basics-iii-kontrollstrukturen.html#cb1-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb1-3"><a href="r-basics-iii-kontrollstrukturen.html#cb1-3" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="r-basics-iii-kontrollstrukturen.html#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="r-basics-iii-kontrollstrukturen.html#cb1-5" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
+<span id="cb1-6"><a href="r-basics-iii-kontrollstrukturen.html#cb1-6" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb1-7"><a href="r-basics-iii-kontrollstrukturen.html#cb1-7" tabindex="-1"></a>  <span class="cf">if</span> (Bedingung) {</span>
+<span id="cb1-8"><a href="r-basics-iii-kontrollstrukturen.html#cb1-8" tabindex="-1"></a>    Anweisungsblock</span>
+<span id="cb1-9"><a href="r-basics-iii-kontrollstrukturen.html#cb1-9" tabindex="-1"></a>  }</span>
+<span id="cb1-10"><a href="r-basics-iii-kontrollstrukturen.html#cb1-10" tabindex="-1"></a>}</span></code></pre></div>
 <p>Beispiel:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="r-basics-iii-kontrollstrukturen.html#cb298-1" tabindex="-1"></a><span class="co"># Nachricht wird ausgegeben, wenn der Vektor autos ein Element mit dem Wert &quot;Mercedes&quot; enthält</span></span>
-<span id="cb298-2"><a href="r-basics-iii-kontrollstrukturen.html#cb298-2" tabindex="-1"></a></span>
-<span id="cb298-3"><a href="r-basics-iii-kontrollstrukturen.html#cb298-3" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb298-4"><a href="r-basics-iii-kontrollstrukturen.html#cb298-4" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb298-5"><a href="r-basics-iii-kontrollstrukturen.html#cb298-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
-<span id="cb298-6"><a href="r-basics-iii-kontrollstrukturen.html#cb298-6" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="r-basics-iii-kontrollstrukturen.html#cb2-1" tabindex="-1"></a><span class="co"># Nachricht wird ausgegeben, wenn der Vektor autos ein Element mit dem Wert &quot;Mercedes&quot; enthält</span></span>
+<span id="cb2-2"><a href="r-basics-iii-kontrollstrukturen.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="r-basics-iii-kontrollstrukturen.html#cb2-3" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb2-4"><a href="r-basics-iii-kontrollstrukturen.html#cb2-4" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb2-5"><a href="r-basics-iii-kontrollstrukturen.html#cb2-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
+<span id="cb2-6"><a href="r-basics-iii-kontrollstrukturen.html#cb2-6" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Ein Mercedes steht in der Garage!&quot;</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="r-basics-iii-kontrollstrukturen.html#cb300-1" tabindex="-1"></a><span class="co"># Nachricht wird ausgegeben, wenn der Wert, der dem Schlüssel &quot;Mercedes&quot; im Vektor autos zugeordnet ist, größer als 1 ist</span></span>
-<span id="cb300-2"><a href="r-basics-iii-kontrollstrukturen.html#cb300-2" tabindex="-1"></a></span>
-<span id="cb300-3"><a href="r-basics-iii-kontrollstrukturen.html#cb300-3" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Mercedes=</span><span class="dv">2</span>, <span class="at">Fiat=</span><span class="dv">1</span>, <span class="at">Volvo=</span><span class="dv">1</span>, <span class="at">BMW=</span><span class="dv">3</span>)</span>
-<span id="cb300-4"><a href="r-basics-iii-kontrollstrukturen.html#cb300-4" tabindex="-1"></a>anzahl_mercedes <span class="ot">&lt;-</span> autos[<span class="st">&quot;Mercedes&quot;</span>]</span>
-<span id="cb300-5"><a href="r-basics-iii-kontrollstrukturen.html#cb300-5" tabindex="-1"></a><span class="cf">if</span> (anzahl_mercedes <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb300-6"><a href="r-basics-iii-kontrollstrukturen.html#cb300-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_mercedes, <span class="st">&quot;Mercedes!&quot;</span>))</span>
-<span id="cb300-7"><a href="r-basics-iii-kontrollstrukturen.html#cb300-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="r-basics-iii-kontrollstrukturen.html#cb4-1" tabindex="-1"></a><span class="co"># Nachricht wird ausgegeben, wenn der Wert, der dem Schlüssel &quot;Mercedes&quot; im Vektor autos zugeordnet ist, größer als 1 ist</span></span>
+<span id="cb4-2"><a href="r-basics-iii-kontrollstrukturen.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="r-basics-iii-kontrollstrukturen.html#cb4-3" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Mercedes=</span><span class="dv">2</span>, <span class="at">Fiat=</span><span class="dv">1</span>, <span class="at">Volvo=</span><span class="dv">1</span>, <span class="at">BMW=</span><span class="dv">3</span>)</span>
+<span id="cb4-4"><a href="r-basics-iii-kontrollstrukturen.html#cb4-4" tabindex="-1"></a>anzahl_mercedes <span class="ot">&lt;-</span> autos[<span class="st">&quot;Mercedes&quot;</span>]</span>
+<span id="cb4-5"><a href="r-basics-iii-kontrollstrukturen.html#cb4-5" tabindex="-1"></a><span class="cf">if</span> (anzahl_mercedes <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb4-6"><a href="r-basics-iii-kontrollstrukturen.html#cb4-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_mercedes, <span class="st">&quot;Mercedes!&quot;</span>))</span>
+<span id="cb4-7"><a href="r-basics-iii-kontrollstrukturen.html#cb4-7" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Du hast 2 Mercedes!&quot;</code></pre>
 <div class="tip">
 <p>Mit der Funktion <code>paste()</code> können character verkettet werden. Dabei werden automatisch Leerzeichen zwischen den zu verkettenden charactern eingefügt. Wenn character ohne Leerzeichen verkettet werden sollen, kann stattdessen die Funktion <code>paste0()</code> verwendet werden.</p>
 </div>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="r-basics-iii-kontrollstrukturen.html#cb302-1" tabindex="-1"></a><span class="co"># Wenn der Vektor autos einen Schlüssel &quot;Mercedes&quot; enthält, wird überprüft, ob der Wert, der diesem Schlüssel zugeordnet ist, größer als 1 ist.</span></span>
-<span id="cb302-2"><a href="r-basics-iii-kontrollstrukturen.html#cb302-2" tabindex="-1"></a><span class="co"># Falls ja, wird eine Nachricht ausgegeben.</span></span>
-<span id="cb302-3"><a href="r-basics-iii-kontrollstrukturen.html#cb302-3" tabindex="-1"></a></span>
-<span id="cb302-4"><a href="r-basics-iii-kontrollstrukturen.html#cb302-4" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Mercedes=</span><span class="dv">2</span>, <span class="at">Fiat=</span><span class="dv">1</span>, <span class="at">Volvo=</span><span class="dv">1</span>, <span class="at">BMW=</span><span class="dv">3</span>)</span>
-<span id="cb302-5"><a href="r-basics-iii-kontrollstrukturen.html#cb302-5" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(autos)) {</span>
-<span id="cb302-6"><a href="r-basics-iii-kontrollstrukturen.html#cb302-6" tabindex="-1"></a>  anzahl_mercedes <span class="ot">&lt;-</span> autos[<span class="st">&quot;Mercedes&quot;</span>]</span>
-<span id="cb302-7"><a href="r-basics-iii-kontrollstrukturen.html#cb302-7" tabindex="-1"></a>  <span class="cf">if</span> (anzahl_mercedes <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb302-8"><a href="r-basics-iii-kontrollstrukturen.html#cb302-8" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_mercedes, <span class="st">&quot;Mercedes!&quot;</span>))</span>
-<span id="cb302-9"><a href="r-basics-iii-kontrollstrukturen.html#cb302-9" tabindex="-1"></a>  }</span>
-<span id="cb302-10"><a href="r-basics-iii-kontrollstrukturen.html#cb302-10" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="r-basics-iii-kontrollstrukturen.html#cb6-1" tabindex="-1"></a><span class="co"># Wenn der Vektor autos einen Schlüssel &quot;Mercedes&quot; enthält, wird überprüft, ob der Wert, der diesem Schlüssel zugeordnet ist, größer als 1 ist.</span></span>
+<span id="cb6-2"><a href="r-basics-iii-kontrollstrukturen.html#cb6-2" tabindex="-1"></a><span class="co"># Falls ja, wird eine Nachricht ausgegeben.</span></span>
+<span id="cb6-3"><a href="r-basics-iii-kontrollstrukturen.html#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="r-basics-iii-kontrollstrukturen.html#cb6-4" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Mercedes=</span><span class="dv">2</span>, <span class="at">Fiat=</span><span class="dv">1</span>, <span class="at">Volvo=</span><span class="dv">1</span>, <span class="at">BMW=</span><span class="dv">3</span>)</span>
+<span id="cb6-5"><a href="r-basics-iii-kontrollstrukturen.html#cb6-5" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(autos)) {</span>
+<span id="cb6-6"><a href="r-basics-iii-kontrollstrukturen.html#cb6-6" tabindex="-1"></a>  anzahl_mercedes <span class="ot">&lt;-</span> autos[<span class="st">&quot;Mercedes&quot;</span>]</span>
+<span id="cb6-7"><a href="r-basics-iii-kontrollstrukturen.html#cb6-7" tabindex="-1"></a>  <span class="cf">if</span> (anzahl_mercedes <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb6-8"><a href="r-basics-iii-kontrollstrukturen.html#cb6-8" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_mercedes, <span class="st">&quot;Mercedes!&quot;</span>))</span>
+<span id="cb6-9"><a href="r-basics-iii-kontrollstrukturen.html#cb6-9" tabindex="-1"></a>  }</span>
+<span id="cb6-10"><a href="r-basics-iii-kontrollstrukturen.html#cb6-10" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Du hast 2 Mercedes!&quot;</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
@@ -415,68 +328,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Bedingungen können auch kombiniert werden. Dazu werden einfach zwei logische Ausdrücke mithilfe der logischen Operatoren <code>&amp;&amp;</code> und <code>||</code> verknüpft:</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="r-basics-iii-kontrollstrukturen.html#cb304-1" tabindex="-1"></a><span class="co"># Beide Ausdrücke sind wahr:  die Nachricht wird ausgegeben</span></span>
-<span id="cb304-2"><a href="r-basics-iii-kontrollstrukturen.html#cb304-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb304-3"><a href="r-basics-iii-kontrollstrukturen.html#cb304-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">&amp;&amp;</span> <span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb304-4"><a href="r-basics-iii-kontrollstrukturen.html#cb304-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</span>)</span>
-<span id="cb304-5"><a href="r-basics-iii-kontrollstrukturen.html#cb304-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r-basics-iii-kontrollstrukturen.html#cb8-1" tabindex="-1"></a><span class="co"># Beide Ausdrücke sind wahr:  die Nachricht wird ausgegeben</span></span>
+<span id="cb8-2"><a href="r-basics-iii-kontrollstrukturen.html#cb8-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb8-3"><a href="r-basics-iii-kontrollstrukturen.html#cb8-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">&amp;&amp;</span> <span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb8-4"><a href="r-basics-iii-kontrollstrukturen.html#cb8-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</span>)</span>
+<span id="cb8-5"><a href="r-basics-iii-kontrollstrukturen.html#cb8-5" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="r-basics-iii-kontrollstrukturen.html#cb306-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: es passiert nichts</span></span>
-<span id="cb306-2"><a href="r-basics-iii-kontrollstrukturen.html#cb306-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb306-3"><a href="r-basics-iii-kontrollstrukturen.html#cb306-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">&amp;&amp;</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb306-4"><a href="r-basics-iii-kontrollstrukturen.html#cb306-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</span>)</span>
-<span id="cb306-5"><a href="r-basics-iii-kontrollstrukturen.html#cb306-5" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="r-basics-iii-kontrollstrukturen.html#cb307-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: die Nachricht wird ausgegeben</span></span>
-<span id="cb307-2"><a href="r-basics-iii-kontrollstrukturen.html#cb307-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb307-3"><a href="r-basics-iii-kontrollstrukturen.html#cb307-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">||</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb307-4"><a href="r-basics-iii-kontrollstrukturen.html#cb307-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes oder ein Fiat steht in der Garage!&quot;</span>)</span>
-<span id="cb307-5"><a href="r-basics-iii-kontrollstrukturen.html#cb307-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics-iii-kontrollstrukturen.html#cb10-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: es passiert nichts</span></span>
+<span id="cb10-2"><a href="r-basics-iii-kontrollstrukturen.html#cb10-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb10-3"><a href="r-basics-iii-kontrollstrukturen.html#cb10-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">&amp;&amp;</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb10-4"><a href="r-basics-iii-kontrollstrukturen.html#cb10-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</span>)</span>
+<span id="cb10-5"><a href="r-basics-iii-kontrollstrukturen.html#cb10-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics-iii-kontrollstrukturen.html#cb11-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: die Nachricht wird ausgegeben</span></span>
+<span id="cb11-2"><a href="r-basics-iii-kontrollstrukturen.html#cb11-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb11-3"><a href="r-basics-iii-kontrollstrukturen.html#cb11-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">||</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb11-4"><a href="r-basics-iii-kontrollstrukturen.html#cb11-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes oder ein Fiat steht in der Garage!&quot;</span>)</span>
+<span id="cb11-5"><a href="r-basics-iii-kontrollstrukturen.html#cb11-5" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Ein Mercedes oder ein Fiat steht in der Garage!&quot;</code></pre>
 </div>
-<div id="verzweigungen" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Verzweigungen<a href="r-basics-iii-kontrollstrukturen.html#verzweigungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="verzweigungen" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Verzweigungen<a href="r-basics-iii-kontrollstrukturen.html#verzweigungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Es wird unterschieden zwischen einfachen und mehrfachen Verzweigungen.</p>
 <p><strong>Einfache Verzweigungen</strong>, oder if-else-Anweisungen, haben die allgemeine Form:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="r-basics-iii-kontrollstrukturen.html#cb309-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
-<span id="cb309-2"><a href="r-basics-iii-kontrollstrukturen.html#cb309-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb309-3"><a href="r-basics-iii-kontrollstrukturen.html#cb309-3" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb309-4"><a href="r-basics-iii-kontrollstrukturen.html#cb309-4" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb309-5"><a href="r-basics-iii-kontrollstrukturen.html#cb309-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="r-basics-iii-kontrollstrukturen.html#cb13-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
+<span id="cb13-2"><a href="r-basics-iii-kontrollstrukturen.html#cb13-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb13-3"><a href="r-basics-iii-kontrollstrukturen.html#cb13-3" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb13-4"><a href="r-basics-iii-kontrollstrukturen.html#cb13-4" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb13-5"><a href="r-basics-iii-kontrollstrukturen.html#cb13-5" tabindex="-1"></a>}</span></code></pre></div>
 <p>Beispiel:</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="r-basics-iii-kontrollstrukturen.html#cb310-1" tabindex="-1"></a><span class="co"># Wenn der Wert, der dem Schlüssel &quot;Ibuprofen&quot; zugeordnet ist, größer 0 ist, wird eine Nachricht ausgegeben.</span></span>
-<span id="cb310-2"><a href="r-basics-iii-kontrollstrukturen.html#cb310-2" tabindex="-1"></a><span class="co"># Wenn der Wert 0 (oder im theoretischen Fall kleiner 0) ist, wird eine Warnung ausgegeben.</span></span>
-<span id="cb310-3"><a href="r-basics-iii-kontrollstrukturen.html#cb310-3" tabindex="-1"></a></span>
-<span id="cb310-4"><a href="r-basics-iii-kontrollstrukturen.html#cb310-4" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
-<span id="cb310-5"><a href="r-basics-iii-kontrollstrukturen.html#cb310-5" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
-<span id="cb310-6"><a href="r-basics-iii-kontrollstrukturen.html#cb310-6" tabindex="-1"></a></span>
-<span id="cb310-7"><a href="r-basics-iii-kontrollstrukturen.html#cb310-7" tabindex="-1"></a><span class="cf">if</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb310-8"><a href="r-basics-iii-kontrollstrukturen.html#cb310-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_ibus, <span class="st">&quot;Ibuprofen!&quot;</span>))</span>
-<span id="cb310-9"><a href="r-basics-iii-kontrollstrukturen.html#cb310-9" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb310-10"><a href="r-basics-iii-kontrollstrukturen.html#cb310-10" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Warnung: kein Ibuprofen mehr da!&quot;</span>)</span>
-<span id="cb310-11"><a href="r-basics-iii-kontrollstrukturen.html#cb310-11" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="r-basics-iii-kontrollstrukturen.html#cb14-1" tabindex="-1"></a><span class="co"># Wenn der Wert, der dem Schlüssel &quot;Ibuprofen&quot; zugeordnet ist, größer 0 ist, wird eine Nachricht ausgegeben.</span></span>
+<span id="cb14-2"><a href="r-basics-iii-kontrollstrukturen.html#cb14-2" tabindex="-1"></a><span class="co"># Wenn der Wert 0 (oder im theoretischen Fall kleiner 0) ist, wird eine Warnung ausgegeben.</span></span>
+<span id="cb14-3"><a href="r-basics-iii-kontrollstrukturen.html#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="r-basics-iii-kontrollstrukturen.html#cb14-4" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
+<span id="cb14-5"><a href="r-basics-iii-kontrollstrukturen.html#cb14-5" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
+<span id="cb14-6"><a href="r-basics-iii-kontrollstrukturen.html#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="r-basics-iii-kontrollstrukturen.html#cb14-7" tabindex="-1"></a><span class="cf">if</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb14-8"><a href="r-basics-iii-kontrollstrukturen.html#cb14-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_ibus, <span class="st">&quot;Ibuprofen!&quot;</span>))</span>
+<span id="cb14-9"><a href="r-basics-iii-kontrollstrukturen.html#cb14-9" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb14-10"><a href="r-basics-iii-kontrollstrukturen.html#cb14-10" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Warnung: kein Ibuprofen mehr da!&quot;</span>)</span>
+<span id="cb14-11"><a href="r-basics-iii-kontrollstrukturen.html#cb14-11" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Du hast 30 Ibuprofen!&quot;</code></pre>
 <p>Wenn mehr als zwei Fälle überprüft werden sollen, kann eine if-else-Anweisung mit beliebig vielen zusätzlichen bedingten Anweisungen kombiniert werden. <strong>Mehrfache Verzweigungen</strong> haben die allgemeine Form:</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="r-basics-iii-kontrollstrukturen.html#cb312-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
-<span id="cb312-2"><a href="r-basics-iii-kontrollstrukturen.html#cb312-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb312-3"><a href="r-basics-iii-kontrollstrukturen.html#cb312-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (Bedingung) {</span>
-<span id="cb312-4"><a href="r-basics-iii-kontrollstrukturen.html#cb312-4" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb312-5"><a href="r-basics-iii-kontrollstrukturen.html#cb312-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb312-6"><a href="r-basics-iii-kontrollstrukturen.html#cb312-6" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb312-7"><a href="r-basics-iii-kontrollstrukturen.html#cb312-7" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="r-basics-iii-kontrollstrukturen.html#cb313-1" tabindex="-1"></a><span class="co"># Wenn der Wert, der dem Schlüssel &quot;Ibuprofen&quot; zugeordnet ist, größer als 5 ist, wird eine Nachricht mit dem Wert ausgegeben.</span></span>
-<span id="cb313-2"><a href="r-basics-iii-kontrollstrukturen.html#cb313-2" tabindex="-1"></a><span class="co"># Wenn der Wert genau dem Integer 5 entspricht, wird eine Warnung ausgegeben.</span></span>
-<span id="cb313-3"><a href="r-basics-iii-kontrollstrukturen.html#cb313-3" tabindex="-1"></a><span class="co"># In allen anderen Fällen wird die Nachricht &quot;Achtung! Weniger als 5 Ibuprofen da!&quot; ausgegeben.</span></span>
-<span id="cb313-4"><a href="r-basics-iii-kontrollstrukturen.html#cb313-4" tabindex="-1"></a></span>
-<span id="cb313-5"><a href="r-basics-iii-kontrollstrukturen.html#cb313-5" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
-<span id="cb313-6"><a href="r-basics-iii-kontrollstrukturen.html#cb313-6" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
-<span id="cb313-7"><a href="r-basics-iii-kontrollstrukturen.html#cb313-7" tabindex="-1"></a></span>
-<span id="cb313-8"><a href="r-basics-iii-kontrollstrukturen.html#cb313-8" tabindex="-1"></a><span class="cf">if</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
-<span id="cb313-9"><a href="r-basics-iii-kontrollstrukturen.html#cb313-9" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_ibus, <span class="st">&quot;Ibuprofen!&quot;</span>))</span>
-<span id="cb313-10"><a href="r-basics-iii-kontrollstrukturen.html#cb313-10" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (anzahl_ibus <span class="sc">==</span> <span class="dv">5</span>) {</span>
-<span id="cb313-11"><a href="r-basics-iii-kontrollstrukturen.html#cb313-11" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Warnung: Nur noch 5 Ibuprofen da!&quot;</span>)</span>
-<span id="cb313-12"><a href="r-basics-iii-kontrollstrukturen.html#cb313-12" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb313-13"><a href="r-basics-iii-kontrollstrukturen.html#cb313-13" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Achtung! Weniger als 5 Ibuprofen da!&quot;</span>)</span>
-<span id="cb313-14"><a href="r-basics-iii-kontrollstrukturen.html#cb313-14" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="r-basics-iii-kontrollstrukturen.html#cb16-1" tabindex="-1"></a><span class="cf">if</span> (Bedingung) {</span>
+<span id="cb16-2"><a href="r-basics-iii-kontrollstrukturen.html#cb16-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb16-3"><a href="r-basics-iii-kontrollstrukturen.html#cb16-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (Bedingung) {</span>
+<span id="cb16-4"><a href="r-basics-iii-kontrollstrukturen.html#cb16-4" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb16-5"><a href="r-basics-iii-kontrollstrukturen.html#cb16-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb16-6"><a href="r-basics-iii-kontrollstrukturen.html#cb16-6" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb16-7"><a href="r-basics-iii-kontrollstrukturen.html#cb16-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="r-basics-iii-kontrollstrukturen.html#cb17-1" tabindex="-1"></a><span class="co"># Wenn der Wert, der dem Schlüssel &quot;Ibuprofen&quot; zugeordnet ist, größer als 5 ist, wird eine Nachricht mit dem Wert ausgegeben.</span></span>
+<span id="cb17-2"><a href="r-basics-iii-kontrollstrukturen.html#cb17-2" tabindex="-1"></a><span class="co"># Wenn der Wert genau dem Integer 5 entspricht, wird eine Warnung ausgegeben.</span></span>
+<span id="cb17-3"><a href="r-basics-iii-kontrollstrukturen.html#cb17-3" tabindex="-1"></a><span class="co"># In allen anderen Fällen wird die Nachricht &quot;Achtung! Weniger als 5 Ibuprofen da!&quot; ausgegeben.</span></span>
+<span id="cb17-4"><a href="r-basics-iii-kontrollstrukturen.html#cb17-4" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="r-basics-iii-kontrollstrukturen.html#cb17-5" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
+<span id="cb17-6"><a href="r-basics-iii-kontrollstrukturen.html#cb17-6" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
+<span id="cb17-7"><a href="r-basics-iii-kontrollstrukturen.html#cb17-7" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="r-basics-iii-kontrollstrukturen.html#cb17-8" tabindex="-1"></a><span class="cf">if</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
+<span id="cb17-9"><a href="r-basics-iii-kontrollstrukturen.html#cb17-9" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Du hast&quot;</span>, anzahl_ibus, <span class="st">&quot;Ibuprofen!&quot;</span>))</span>
+<span id="cb17-10"><a href="r-basics-iii-kontrollstrukturen.html#cb17-10" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (anzahl_ibus <span class="sc">==</span> <span class="dv">5</span>) {</span>
+<span id="cb17-11"><a href="r-basics-iii-kontrollstrukturen.html#cb17-11" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Warnung: Nur noch 5 Ibuprofen da!&quot;</span>)</span>
+<span id="cb17-12"><a href="r-basics-iii-kontrollstrukturen.html#cb17-12" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb17-13"><a href="r-basics-iii-kontrollstrukturen.html#cb17-13" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Achtung! Weniger als 5 Ibuprofen da!&quot;</span>)</span>
+<span id="cb17-14"><a href="r-basics-iii-kontrollstrukturen.html#cb17-14" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Du hast 30 Ibuprofen!&quot;</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
@@ -485,70 +398,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Achtung: Wenn zwei Bedingungen in einer Verzweigung zugleich erfüllt sind, wird nur die bedingte Anweisung ausgeführt, die zuerst überprüft wurde, die also “weiter oben” im Skript steht. Zur Illustration schauen wir uns nochmal unser Auto-Beispiel an.</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="r-basics-iii-kontrollstrukturen.html#cb315-1" tabindex="-1"></a><span class="co"># Sowohl die if-Bedingung als auch die if else-Bedingung werden zu True evaluiert. </span></span>
-<span id="cb315-2"><a href="r-basics-iii-kontrollstrukturen.html#cb315-2" tabindex="-1"></a><span class="co"># Allerdings wird die if else-Bedingung nie ausgewertet. </span></span>
-<span id="cb315-3"><a href="r-basics-iii-kontrollstrukturen.html#cb315-3" tabindex="-1"></a><span class="co"># Es wird also nur die if-Anweisung ausgeführt. </span></span>
-<span id="cb315-4"><a href="r-basics-iii-kontrollstrukturen.html#cb315-4" tabindex="-1"></a></span>
-<span id="cb315-5"><a href="r-basics-iii-kontrollstrukturen.html#cb315-5" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb315-6"><a href="r-basics-iii-kontrollstrukturen.html#cb315-6" tabindex="-1"></a></span>
-<span id="cb315-7"><a href="r-basics-iii-kontrollstrukturen.html#cb315-7" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb315-8"><a href="r-basics-iii-kontrollstrukturen.html#cb315-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
-<span id="cb315-9"><a href="r-basics-iii-kontrollstrukturen.html#cb315-9" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb315-10"><a href="r-basics-iii-kontrollstrukturen.html#cb315-10" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Fiat steht in der Garage!&quot;</span>)</span>
-<span id="cb315-11"><a href="r-basics-iii-kontrollstrukturen.html#cb315-11" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb315-12"><a href="r-basics-iii-kontrollstrukturen.html#cb315-12" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Weder ein Mercedes noch ein Fiat in der Garage.&quot;</span>)</span>
-<span id="cb315-13"><a href="r-basics-iii-kontrollstrukturen.html#cb315-13" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="r-basics-iii-kontrollstrukturen.html#cb19-1" tabindex="-1"></a><span class="co"># Sowohl die if-Bedingung als auch die if else-Bedingung werden zu True evaluiert. </span></span>
+<span id="cb19-2"><a href="r-basics-iii-kontrollstrukturen.html#cb19-2" tabindex="-1"></a><span class="co"># Allerdings wird die if else-Bedingung nie ausgewertet. </span></span>
+<span id="cb19-3"><a href="r-basics-iii-kontrollstrukturen.html#cb19-3" tabindex="-1"></a><span class="co"># Es wird also nur die if-Anweisung ausgeführt. </span></span>
+<span id="cb19-4"><a href="r-basics-iii-kontrollstrukturen.html#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="r-basics-iii-kontrollstrukturen.html#cb19-5" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb19-6"><a href="r-basics-iii-kontrollstrukturen.html#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="r-basics-iii-kontrollstrukturen.html#cb19-7" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb19-8"><a href="r-basics-iii-kontrollstrukturen.html#cb19-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
+<span id="cb19-9"><a href="r-basics-iii-kontrollstrukturen.html#cb19-9" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb19-10"><a href="r-basics-iii-kontrollstrukturen.html#cb19-10" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Fiat steht in der Garage!&quot;</span>)</span>
+<span id="cb19-11"><a href="r-basics-iii-kontrollstrukturen.html#cb19-11" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb19-12"><a href="r-basics-iii-kontrollstrukturen.html#cb19-12" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Weder ein Mercedes noch ein Fiat in der Garage.&quot;</span>)</span>
+<span id="cb19-13"><a href="r-basics-iii-kontrollstrukturen.html#cb19-13" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Ein Mercedes steht in der Garage!&quot;</code></pre>
 <p>Dieses Verhalten gilt allerdings nur für Verzweigungen, nicht jedoch für zwei if-Anweisungen, die aufeinander folgen:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="r-basics-iii-kontrollstrukturen.html#cb317-1" tabindex="-1"></a><span class="co"># Beide if-Bedingungen werden nacheinander ausgewertet. Im ersten Schleifendurchlauf</span></span>
-<span id="cb317-2"><a href="r-basics-iii-kontrollstrukturen.html#cb317-2" tabindex="-1"></a><span class="co"># werden beide zu True evaluiert und es werden beide Anweisungen ausgeführt.</span></span>
-<span id="cb317-3"><a href="r-basics-iii-kontrollstrukturen.html#cb317-3" tabindex="-1"></a></span>
-<span id="cb317-4"><a href="r-basics-iii-kontrollstrukturen.html#cb317-4" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
-<span id="cb317-5"><a href="r-basics-iii-kontrollstrukturen.html#cb317-5" tabindex="-1"></a></span>
-<span id="cb317-6"><a href="r-basics-iii-kontrollstrukturen.html#cb317-6" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb317-7"><a href="r-basics-iii-kontrollstrukturen.html#cb317-7" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
-<span id="cb317-8"><a href="r-basics-iii-kontrollstrukturen.html#cb317-8" tabindex="-1"></a>} </span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="r-basics-iii-kontrollstrukturen.html#cb21-1" tabindex="-1"></a><span class="co"># Beide if-Bedingungen werden nacheinander ausgewertet. Im ersten Schleifendurchlauf</span></span>
+<span id="cb21-2"><a href="r-basics-iii-kontrollstrukturen.html#cb21-2" tabindex="-1"></a><span class="co"># werden beide zu True evaluiert und es werden beide Anweisungen ausgeführt.</span></span>
+<span id="cb21-3"><a href="r-basics-iii-kontrollstrukturen.html#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="r-basics-iii-kontrollstrukturen.html#cb21-4" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
+<span id="cb21-5"><a href="r-basics-iii-kontrollstrukturen.html#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="r-basics-iii-kontrollstrukturen.html#cb21-6" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb21-7"><a href="r-basics-iii-kontrollstrukturen.html#cb21-7" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes steht in der Garage!&quot;</span>)</span>
+<span id="cb21-8"><a href="r-basics-iii-kontrollstrukturen.html#cb21-8" tabindex="-1"></a>} </span></code></pre></div>
 <pre><code>## [1] &quot;Ein Mercedes steht in der Garage!&quot;</code></pre>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="r-basics-iii-kontrollstrukturen.html#cb319-1" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb319-2"><a href="r-basics-iii-kontrollstrukturen.html#cb319-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Fiat steht in der Garage!&quot;</span>)</span>
-<span id="cb319-3"><a href="r-basics-iii-kontrollstrukturen.html#cb319-3" tabindex="-1"></a>} </span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="r-basics-iii-kontrollstrukturen.html#cb23-1" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Fiat&quot;</span> <span class="sc">%in%</span> autos) {</span>
+<span id="cb23-2"><a href="r-basics-iii-kontrollstrukturen.html#cb23-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Fiat steht in der Garage!&quot;</span>)</span>
+<span id="cb23-3"><a href="r-basics-iii-kontrollstrukturen.html#cb23-3" tabindex="-1"></a>} </span></code></pre></div>
 <pre><code>## [1] &quot;Ein Fiat steht in der Garage!&quot;</code></pre>
 <p>Eine spezielle Form von Verzweigung sind <strong>bedingte Ausdrücke</strong>. Diese werden verwendet, um einer Variable in Abhängigkeit von einer anderen Variable einen Wert zuzuweisen. Bedingte Ausdrücke stellen eine Kurzschreibweise für die folgende Verzweigung dar:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="r-basics-iii-kontrollstrukturen.html#cb321-1" tabindex="-1"></a><span class="co"># Kompliziert</span></span>
-<span id="cb321-2"><a href="r-basics-iii-kontrollstrukturen.html#cb321-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb321-3"><a href="r-basics-iii-kontrollstrukturen.html#cb321-3" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">2</span>) {</span>
-<span id="cb321-4"><a href="r-basics-iii-kontrollstrukturen.html#cb321-4" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb321-5"><a href="r-basics-iii-kontrollstrukturen.html#cb321-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb321-6"><a href="r-basics-iii-kontrollstrukturen.html#cb321-6" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb321-7"><a href="r-basics-iii-kontrollstrukturen.html#cb321-7" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="r-basics-iii-kontrollstrukturen.html#cb322-1" tabindex="-1"></a><span class="co"># Einfach</span></span>
-<span id="cb322-2"><a href="r-basics-iii-kontrollstrukturen.html#cb322-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb322-3"><a href="r-basics-iii-kontrollstrukturen.html#cb322-3" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">2</span>) <span class="dv">10</span> <span class="cf">else</span> <span class="dv">20</span></span>
-<span id="cb322-4"><a href="r-basics-iii-kontrollstrukturen.html#cb322-4" tabindex="-1"></a></span>
-<span id="cb322-5"><a href="r-basics-iii-kontrollstrukturen.html#cb322-5" tabindex="-1"></a><span class="co"># Alternative (macht dasselbe): Die ifelse-Funktion</span></span>
-<span id="cb322-6"><a href="r-basics-iii-kontrollstrukturen.html#cb322-6" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-basics-iii-kontrollstrukturen.html#cb25-1" tabindex="-1"></a><span class="co"># Kompliziert</span></span>
+<span id="cb25-2"><a href="r-basics-iii-kontrollstrukturen.html#cb25-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb25-3"><a href="r-basics-iii-kontrollstrukturen.html#cb25-3" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">2</span>) {</span>
+<span id="cb25-4"><a href="r-basics-iii-kontrollstrukturen.html#cb25-4" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb25-5"><a href="r-basics-iii-kontrollstrukturen.html#cb25-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb25-6"><a href="r-basics-iii-kontrollstrukturen.html#cb25-6" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb25-7"><a href="r-basics-iii-kontrollstrukturen.html#cb25-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="r-basics-iii-kontrollstrukturen.html#cb26-1" tabindex="-1"></a><span class="co"># Einfach</span></span>
+<span id="cb26-2"><a href="r-basics-iii-kontrollstrukturen.html#cb26-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb26-3"><a href="r-basics-iii-kontrollstrukturen.html#cb26-3" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">2</span>) <span class="dv">10</span> <span class="cf">else</span> <span class="dv">20</span></span>
+<span id="cb26-4"><a href="r-basics-iii-kontrollstrukturen.html#cb26-4" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="r-basics-iii-kontrollstrukturen.html#cb26-5" tabindex="-1"></a><span class="co"># Alternative (macht dasselbe): Die ifelse-Funktion</span></span>
+<span id="cb26-6"><a href="r-basics-iii-kontrollstrukturen.html#cb26-6" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div>
 </div>
-<div id="while-schleifen" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> while-Schleifen<a href="r-basics-iii-kontrollstrukturen.html#while-schleifen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="while-schleifen" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> while-Schleifen<a href="r-basics-iii-kontrollstrukturen.html#while-schleifen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>while-Schleifen werden verwendet, wenn ein Code-Block (=nur ein anderes Wort für Anweisungsblock) so lange ausgeführt werden soll, wie eine bestimmte Bedingung erfüllt ist. Die Bedingung steht im <strong>Schleifenkopf</strong> und wird überprüft, bevor der Code im <strong>Schleifenkörper</strong> ausgeführt wird. Wenn die Bedingung nicht (mehr) erfüllt ist, <strong>terminiert</strong> die Schleife. <code>while</code>-Schleifen haben die allgemeine Form:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="r-basics-iii-kontrollstrukturen.html#cb323-1" tabindex="-1"></a><span class="cf">while</span> (Bedingung) {</span>
-<span id="cb323-2"><a href="r-basics-iii-kontrollstrukturen.html#cb323-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb323-3"><a href="r-basics-iii-kontrollstrukturen.html#cb323-3" tabindex="-1"></a>} </span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-basics-iii-kontrollstrukturen.html#cb27-1" tabindex="-1"></a><span class="cf">while</span> (Bedingung) {</span>
+<span id="cb27-2"><a href="r-basics-iii-kontrollstrukturen.html#cb27-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb27-3"><a href="r-basics-iii-kontrollstrukturen.html#cb27-3" tabindex="-1"></a>} </span></code></pre></div>
 <p>Beispiel:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="r-basics-iii-kontrollstrukturen.html#cb324-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus &gt; 0 ausgewertet.</span></span>
-<span id="cb324-2"><a href="r-basics-iii-kontrollstrukturen.html#cb324-2" tabindex="-1"></a><span class="co"># Wenn der Ausdruck zu True evaluiert wird, wird die Anweisung im Schleifenkörper ausgeführt, d.h. der Wert der Variable anzahl_ibus wird um 1 verringert.</span></span>
-<span id="cb324-3"><a href="r-basics-iii-kontrollstrukturen.html#cb324-3" tabindex="-1"></a><span class="co"># Wenn die Variable anzahl_ibus den Wert 0 annimmt, wird der Ausdruck im Schleifenkopf zu False evaluiert und die Schleife terminiert.</span></span>
-<span id="cb324-4"><a href="r-basics-iii-kontrollstrukturen.html#cb324-4" tabindex="-1"></a><span class="co"># Nach dem Terminieren der Schleife wird eine Warnung ausgegeben.</span></span>
-<span id="cb324-5"><a href="r-basics-iii-kontrollstrukturen.html#cb324-5" tabindex="-1"></a></span>
-<span id="cb324-6"><a href="r-basics-iii-kontrollstrukturen.html#cb324-6" tabindex="-1"></a></span>
-<span id="cb324-7"><a href="r-basics-iii-kontrollstrukturen.html#cb324-7" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
-<span id="cb324-8"><a href="r-basics-iii-kontrollstrukturen.html#cb324-8" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
-<span id="cb324-9"><a href="r-basics-iii-kontrollstrukturen.html#cb324-9" tabindex="-1"></a></span>
-<span id="cb324-10"><a href="r-basics-iii-kontrollstrukturen.html#cb324-10" tabindex="-1"></a><span class="cf">while</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb324-11"><a href="r-basics-iii-kontrollstrukturen.html#cb324-11" tabindex="-1"></a>  anzahl_ibus <span class="ot">&lt;-</span> anzahl_ibus <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb324-12"><a href="r-basics-iii-kontrollstrukturen.html#cb324-12" tabindex="-1"></a>}</span>
-<span id="cb324-13"><a href="r-basics-iii-kontrollstrukturen.html#cb324-13" tabindex="-1"></a></span>
-<span id="cb324-14"><a href="r-basics-iii-kontrollstrukturen.html#cb324-14" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Warnung: kein Ibuprofen mehr da!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="r-basics-iii-kontrollstrukturen.html#cb28-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus &gt; 0 ausgewertet.</span></span>
+<span id="cb28-2"><a href="r-basics-iii-kontrollstrukturen.html#cb28-2" tabindex="-1"></a><span class="co"># Wenn der Ausdruck zu True evaluiert wird, wird die Anweisung im Schleifenkörper ausgeführt, d.h. der Wert der Variable anzahl_ibus wird um 1 verringert.</span></span>
+<span id="cb28-3"><a href="r-basics-iii-kontrollstrukturen.html#cb28-3" tabindex="-1"></a><span class="co"># Wenn die Variable anzahl_ibus den Wert 0 annimmt, wird der Ausdruck im Schleifenkopf zu False evaluiert und die Schleife terminiert.</span></span>
+<span id="cb28-4"><a href="r-basics-iii-kontrollstrukturen.html#cb28-4" tabindex="-1"></a><span class="co"># Nach dem Terminieren der Schleife wird eine Warnung ausgegeben.</span></span>
+<span id="cb28-5"><a href="r-basics-iii-kontrollstrukturen.html#cb28-5" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="r-basics-iii-kontrollstrukturen.html#cb28-6" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="r-basics-iii-kontrollstrukturen.html#cb28-7" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
+<span id="cb28-8"><a href="r-basics-iii-kontrollstrukturen.html#cb28-8" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
+<span id="cb28-9"><a href="r-basics-iii-kontrollstrukturen.html#cb28-9" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="r-basics-iii-kontrollstrukturen.html#cb28-10" tabindex="-1"></a><span class="cf">while</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb28-11"><a href="r-basics-iii-kontrollstrukturen.html#cb28-11" tabindex="-1"></a>  anzahl_ibus <span class="ot">&lt;-</span> anzahl_ibus <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb28-12"><a href="r-basics-iii-kontrollstrukturen.html#cb28-12" tabindex="-1"></a>}</span>
+<span id="cb28-13"><a href="r-basics-iii-kontrollstrukturen.html#cb28-13" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="r-basics-iii-kontrollstrukturen.html#cb28-14" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Warnung: kein Ibuprofen mehr da!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Warnung: kein Ibuprofen mehr da!&quot;</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
@@ -558,24 +471,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Es ist auch möglich, <code>while</code>-Schleifen und bedingte Anweisungen zu kombinieren:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="r-basics-iii-kontrollstrukturen.html#cb326-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus &gt; 0 ausgewertet.</span></span>
-<span id="cb326-2"><a href="r-basics-iii-kontrollstrukturen.html#cb326-2" tabindex="-1"></a><span class="co"># Wenn der Ausdruck zu True evaluiert wird, wird überprüft, ob der Wert dem Integer 5 entspricht.</span></span>
-<span id="cb326-3"><a href="r-basics-iii-kontrollstrukturen.html#cb326-3" tabindex="-1"></a><span class="co"># Falls ja, wird eine Warnmeldung ausgegeben.</span></span>
-<span id="cb326-4"><a href="r-basics-iii-kontrollstrukturen.html#cb326-4" tabindex="-1"></a><span class="co"># Danach wird der Wert der Variable anzahl_ibus um 1 verringert.</span></span>
-<span id="cb326-5"><a href="r-basics-iii-kontrollstrukturen.html#cb326-5" tabindex="-1"></a><span class="co"># Wenn die Variable anzahl_ibus den Wert 0 annimmt, wird der Ausdruck im Schleifenkopf zu False evaluiert und die Schleife terminiert.</span></span>
-<span id="cb326-6"><a href="r-basics-iii-kontrollstrukturen.html#cb326-6" tabindex="-1"></a><span class="co"># Nach dem Terminieren der Schleife wird eine weitere Warnung ausgegeben.</span></span>
-<span id="cb326-7"><a href="r-basics-iii-kontrollstrukturen.html#cb326-7" tabindex="-1"></a></span>
-<span id="cb326-8"><a href="r-basics-iii-kontrollstrukturen.html#cb326-8" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
-<span id="cb326-9"><a href="r-basics-iii-kontrollstrukturen.html#cb326-9" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
-<span id="cb326-10"><a href="r-basics-iii-kontrollstrukturen.html#cb326-10" tabindex="-1"></a></span>
-<span id="cb326-11"><a href="r-basics-iii-kontrollstrukturen.html#cb326-11" tabindex="-1"></a><span class="cf">while</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb326-12"><a href="r-basics-iii-kontrollstrukturen.html#cb326-12" tabindex="-1"></a>  <span class="cf">if</span> (anzahl_ibus <span class="sc">==</span> <span class="dv">5</span>) {</span>
-<span id="cb326-13"><a href="r-basics-iii-kontrollstrukturen.html#cb326-13" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;Warnung: nur noch 5 Ibuprofen da!&quot;</span>)</span>
-<span id="cb326-14"><a href="r-basics-iii-kontrollstrukturen.html#cb326-14" tabindex="-1"></a>  }</span>
-<span id="cb326-15"><a href="r-basics-iii-kontrollstrukturen.html#cb326-15" tabindex="-1"></a>  anzahl_ibus <span class="ot">&lt;-</span> anzahl_ibus <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb326-16"><a href="r-basics-iii-kontrollstrukturen.html#cb326-16" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="r-basics-iii-kontrollstrukturen.html#cb30-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus &gt; 0 ausgewertet.</span></span>
+<span id="cb30-2"><a href="r-basics-iii-kontrollstrukturen.html#cb30-2" tabindex="-1"></a><span class="co"># Wenn der Ausdruck zu True evaluiert wird, wird überprüft, ob der Wert dem Integer 5 entspricht.</span></span>
+<span id="cb30-3"><a href="r-basics-iii-kontrollstrukturen.html#cb30-3" tabindex="-1"></a><span class="co"># Falls ja, wird eine Warnmeldung ausgegeben.</span></span>
+<span id="cb30-4"><a href="r-basics-iii-kontrollstrukturen.html#cb30-4" tabindex="-1"></a><span class="co"># Danach wird der Wert der Variable anzahl_ibus um 1 verringert.</span></span>
+<span id="cb30-5"><a href="r-basics-iii-kontrollstrukturen.html#cb30-5" tabindex="-1"></a><span class="co"># Wenn die Variable anzahl_ibus den Wert 0 annimmt, wird der Ausdruck im Schleifenkopf zu False evaluiert und die Schleife terminiert.</span></span>
+<span id="cb30-6"><a href="r-basics-iii-kontrollstrukturen.html#cb30-6" tabindex="-1"></a><span class="co"># Nach dem Terminieren der Schleife wird eine weitere Warnung ausgegeben.</span></span>
+<span id="cb30-7"><a href="r-basics-iii-kontrollstrukturen.html#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="r-basics-iii-kontrollstrukturen.html#cb30-8" tabindex="-1"></a>medikamente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Ibuprofen=</span><span class="dv">30</span>, <span class="at">Paracetamol=</span><span class="dv">23</span>, <span class="at">Aspirin=</span><span class="dv">28</span>)</span>
+<span id="cb30-9"><a href="r-basics-iii-kontrollstrukturen.html#cb30-9" tabindex="-1"></a>anzahl_ibus <span class="ot">&lt;-</span> medikamente[<span class="st">&quot;Ibuprofen&quot;</span>]</span>
+<span id="cb30-10"><a href="r-basics-iii-kontrollstrukturen.html#cb30-10" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="r-basics-iii-kontrollstrukturen.html#cb30-11" tabindex="-1"></a><span class="cf">while</span> (anzahl_ibus <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb30-12"><a href="r-basics-iii-kontrollstrukturen.html#cb30-12" tabindex="-1"></a>  <span class="cf">if</span> (anzahl_ibus <span class="sc">==</span> <span class="dv">5</span>) {</span>
+<span id="cb30-13"><a href="r-basics-iii-kontrollstrukturen.html#cb30-13" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;Warnung: nur noch 5 Ibuprofen da!&quot;</span>)</span>
+<span id="cb30-14"><a href="r-basics-iii-kontrollstrukturen.html#cb30-14" tabindex="-1"></a>  }</span>
+<span id="cb30-15"><a href="r-basics-iii-kontrollstrukturen.html#cb30-15" tabindex="-1"></a>  anzahl_ibus <span class="ot">&lt;-</span> anzahl_ibus <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb30-16"><a href="r-basics-iii-kontrollstrukturen.html#cb30-16" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Warnung: nur noch 5 Ibuprofen da!&quot;</code></pre>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="r-basics-iii-kontrollstrukturen.html#cb328-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Achtung! Kein Ibuprofen mehr da!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="r-basics-iii-kontrollstrukturen.html#cb32-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Achtung! Kein Ibuprofen mehr da!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Achtung! Kein Ibuprofen mehr da!&quot;</code></pre>
 <div class="task">
 <p>Verständnisfrage:</p>
@@ -584,28 +497,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Achtung: while-Schleifen laufen unendlich lange, wenn die Abbruchbedingung nie erfüllt ist:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="r-basics-iii-kontrollstrukturen.html#cb330-1" tabindex="-1"></a><span class="co"># while (TRUE) {</span></span>
-<span id="cb330-2"><a href="r-basics-iii-kontrollstrukturen.html#cb330-2" tabindex="-1"></a><span class="co">#   print(&quot;Dies ist eine unendliche Schleife&quot;)</span></span>
-<span id="cb330-3"><a href="r-basics-iii-kontrollstrukturen.html#cb330-3" tabindex="-1"></a><span class="co">#}</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-basics-iii-kontrollstrukturen.html#cb34-1" tabindex="-1"></a><span class="co"># while (TRUE) {</span></span>
+<span id="cb34-2"><a href="r-basics-iii-kontrollstrukturen.html#cb34-2" tabindex="-1"></a><span class="co">#   print(&quot;Dies ist eine unendliche Schleife&quot;)</span></span>
+<span id="cb34-3"><a href="r-basics-iii-kontrollstrukturen.html#cb34-3" tabindex="-1"></a><span class="co">#}</span></span></code></pre></div>
 <div class="tip">
 <p>Falls ihr versehentlich doch mal eine unendliche Schleife im RStudio ausgeführt haben solltet, könnt ihr die Ausführung der Schleife im RStudio abbrechen. Dazu könnt ihr entweder auf das rote Stopp-Zeichen oben rechts im Konsole-Fenster klicken oder ihr gebt dir Tastenkombination <code>CTRL + C</code> (Mac) bzw. <code>Escape</code> (Windows) ein.</p>
 </div>
 </div>
-<div id="for-schleifen" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> for-Schleifen<a href="r-basics-iii-kontrollstrukturen.html#for-schleifen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="for-schleifen" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> for-Schleifen<a href="r-basics-iii-kontrollstrukturen.html#for-schleifen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>for</code>-Schleifen werden verwendet, um <strong>iterierbare Objekte</strong> zu durchlaufen. Listen und Vektoren sind in R iterierbar; und weil Matrizen und Dataframes aus Vektoren bzw. Listen bestehen, sind auch Matrizen und Dataframes iterierbar. Iterieren bedeutet einfach “durchlaufen”. Im Kopf der for-Schleife steht anders als bei der while-Schleife keine Bedingung, sondern es wird eine Variable festgelegt, die als Platzhalter für den Wert der Elemente des Objekts dient. Diese Variable nennt man auch <strong>Laufvariable</strong>. Die for-Schleife “durchläuft” also im Grunde das Objekt, indem in jedem Schleifendurchlauf die Laufvariable den Wert des aktuellen Elements annimmt – und das so lange, bis es keine weiteren Elemente mehr gibt. Mithilfe des Variablennamens kann im Schleifenkörper auf den Wert des aktuellen Elements zugegriffen werden. Einen Schleifendurchlauf nennt man auch eine <strong>Iteration</strong>.</p>
 <p><code>for</code>-Schleifen haben in R die allgemeine Form:</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="r-basics-iii-kontrollstrukturen.html#cb331-1" tabindex="-1"></a><span class="cf">for</span> (Element <span class="cf">in</span> Objekt) {</span>
-<span id="cb331-2"><a href="r-basics-iii-kontrollstrukturen.html#cb331-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb331-3"><a href="r-basics-iii-kontrollstrukturen.html#cb331-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-basics-iii-kontrollstrukturen.html#cb35-1" tabindex="-1"></a><span class="cf">for</span> (Element <span class="cf">in</span> Objekt) {</span>
+<span id="cb35-2"><a href="r-basics-iii-kontrollstrukturen.html#cb35-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb35-3"><a href="r-basics-iii-kontrollstrukturen.html#cb35-3" tabindex="-1"></a>}</span></code></pre></div>
 <p>Beispiel:</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="r-basics-iii-kontrollstrukturen.html#cb332-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf nimmt die Laufvariable zahl den Wert eines Elements aus dem</span></span>
-<span id="cb332-2"><a href="r-basics-iii-kontrollstrukturen.html#cb332-2" tabindex="-1"></a><span class="co"># Vektor zahlen an und es wird der aktuelle Wert der Variable zahl, addiert mit 1, ausgegeben.</span></span>
-<span id="cb332-3"><a href="r-basics-iii-kontrollstrukturen.html#cb332-3" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Netzwerkdurchsetzungsgesetz&quot;</span>, <span class="st">&quot;Abfallverzeichnisverordnung&quot;</span>, <span class="st">&quot;Haftpflichtversicherung&quot;</span>, <span class="st">&quot;Antivirenprogramm&quot;</span>)</span>
-<span id="cb332-4"><a href="r-basics-iii-kontrollstrukturen.html#cb332-4" tabindex="-1"></a></span>
-<span id="cb332-5"><a href="r-basics-iii-kontrollstrukturen.html#cb332-5" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> woerter) {</span>
-<span id="cb332-6"><a href="r-basics-iii-kontrollstrukturen.html#cb332-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(wort, <span class="fu">nchar</span>(wort)))</span>
-<span id="cb332-7"><a href="r-basics-iii-kontrollstrukturen.html#cb332-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="r-basics-iii-kontrollstrukturen.html#cb36-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf nimmt die Laufvariable zahl den Wert eines Elements aus dem</span></span>
+<span id="cb36-2"><a href="r-basics-iii-kontrollstrukturen.html#cb36-2" tabindex="-1"></a><span class="co"># Vektor zahlen an und es wird der aktuelle Wert der Variable zahl, addiert mit 1, ausgegeben.</span></span>
+<span id="cb36-3"><a href="r-basics-iii-kontrollstrukturen.html#cb36-3" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Netzwerkdurchsetzungsgesetz&quot;</span>, <span class="st">&quot;Abfallverzeichnisverordnung&quot;</span>, <span class="st">&quot;Haftpflichtversicherung&quot;</span>, <span class="st">&quot;Antivirenprogramm&quot;</span>)</span>
+<span id="cb36-4"><a href="r-basics-iii-kontrollstrukturen.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="r-basics-iii-kontrollstrukturen.html#cb36-5" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> woerter) {</span>
+<span id="cb36-6"><a href="r-basics-iii-kontrollstrukturen.html#cb36-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(wort, <span class="fu">nchar</span>(wort)))</span>
+<span id="cb36-7"><a href="r-basics-iii-kontrollstrukturen.html#cb36-7" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Netzwerkdurchsetzungsgesetz 27&quot;
 ## [1] &quot;Abfallverzeichnisverordnung 27&quot;
 ## [1] &quot;Haftpflichtversicherung 23&quot;
@@ -614,23 +527,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Mithilfe der Funktion <code>nchar()</code> kann die Anzahl der Zeichen in einer Zeichenkette (=character) bestimmt werden.</p>
 </div>
 <p>Wie while-Schleifen können auch for-Schleifen mit bedingten Anweisungen kombiniert werden:</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="r-basics-iii-kontrollstrukturen.html#cb334-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf nimmt die Laufvariable wort den Wert eines Elements aus dem Vektor woerter (s.o.) an.</span></span>
-<span id="cb334-2"><a href="r-basics-iii-kontrollstrukturen.html#cb334-2" tabindex="-1"></a><span class="co"># Zunächst wird die Zeichenanzahl des aktuellen Strings der Variable laenge als Wert zugewiesen.</span></span>
-<span id="cb334-3"><a href="r-basics-iii-kontrollstrukturen.html#cb334-3" tabindex="-1"></a><span class="co"># Dann wird geprüft, ob der Wert der Variable zeichen größer als 20 ist.</span></span>
-<span id="cb334-4"><a href="r-basics-iii-kontrollstrukturen.html#cb334-4" tabindex="-1"></a><span class="co"># Falls ja, wird der Liste lange_woerter ein Element mit dem aktuellen Wert der Variable wort als Schlüssel und der Zeichenanzahl als Wert hinzugefügt.</span></span>
-<span id="cb334-5"><a href="r-basics-iii-kontrollstrukturen.html#cb334-5" tabindex="-1"></a><span class="co"># Wenn der Vektor woerter keine weiteren Elemente mehr enthält, terminiert die Schleife.</span></span>
-<span id="cb334-6"><a href="r-basics-iii-kontrollstrukturen.html#cb334-6" tabindex="-1"></a><span class="co"># Danach wird die Liste lange_woerter ausgegeben.</span></span>
-<span id="cb334-7"><a href="r-basics-iii-kontrollstrukturen.html#cb334-7" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Netzwerkdurchsetzungsgesetz&quot;</span>, <span class="st">&quot;Abfallverzeichnisverordnung&quot;</span>, <span class="st">&quot;Haftpflichtversicherung&quot;</span>, <span class="st">&quot;Antivirenprogramm&quot;</span>)</span>
-<span id="cb334-8"><a href="r-basics-iii-kontrollstrukturen.html#cb334-8" tabindex="-1"></a>lange_woerter <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb334-9"><a href="r-basics-iii-kontrollstrukturen.html#cb334-9" tabindex="-1"></a></span>
-<span id="cb334-10"><a href="r-basics-iii-kontrollstrukturen.html#cb334-10" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> woerter) {</span>
-<span id="cb334-11"><a href="r-basics-iii-kontrollstrukturen.html#cb334-11" tabindex="-1"></a>  zeichen <span class="ot">&lt;-</span> <span class="fu">nchar</span>(wort)</span>
-<span id="cb334-12"><a href="r-basics-iii-kontrollstrukturen.html#cb334-12" tabindex="-1"></a>  <span class="cf">if</span> (zeichen <span class="sc">&gt;</span> <span class="dv">20</span>) {</span>
-<span id="cb334-13"><a href="r-basics-iii-kontrollstrukturen.html#cb334-13" tabindex="-1"></a>    lange_woerter[[wort]] <span class="ot">&lt;-</span> zeichen</span>
-<span id="cb334-14"><a href="r-basics-iii-kontrollstrukturen.html#cb334-14" tabindex="-1"></a>  }</span>
-<span id="cb334-15"><a href="r-basics-iii-kontrollstrukturen.html#cb334-15" tabindex="-1"></a>}</span>
-<span id="cb334-16"><a href="r-basics-iii-kontrollstrukturen.html#cb334-16" tabindex="-1"></a></span>
-<span id="cb334-17"><a href="r-basics-iii-kontrollstrukturen.html#cb334-17" tabindex="-1"></a><span class="fu">print</span>(lange_woerter)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="r-basics-iii-kontrollstrukturen.html#cb38-1" tabindex="-1"></a><span class="co"># In jedem Schleifendurchlauf nimmt die Laufvariable wort den Wert eines Elements aus dem Vektor woerter (s.o.) an.</span></span>
+<span id="cb38-2"><a href="r-basics-iii-kontrollstrukturen.html#cb38-2" tabindex="-1"></a><span class="co"># Zunächst wird die Zeichenanzahl des aktuellen Strings der Variable laenge als Wert zugewiesen.</span></span>
+<span id="cb38-3"><a href="r-basics-iii-kontrollstrukturen.html#cb38-3" tabindex="-1"></a><span class="co"># Dann wird geprüft, ob der Wert der Variable zeichen größer als 20 ist.</span></span>
+<span id="cb38-4"><a href="r-basics-iii-kontrollstrukturen.html#cb38-4" tabindex="-1"></a><span class="co"># Falls ja, wird der Liste lange_woerter ein Element mit dem aktuellen Wert der Variable wort als Schlüssel und der Zeichenanzahl als Wert hinzugefügt.</span></span>
+<span id="cb38-5"><a href="r-basics-iii-kontrollstrukturen.html#cb38-5" tabindex="-1"></a><span class="co"># Wenn der Vektor woerter keine weiteren Elemente mehr enthält, terminiert die Schleife.</span></span>
+<span id="cb38-6"><a href="r-basics-iii-kontrollstrukturen.html#cb38-6" tabindex="-1"></a><span class="co"># Danach wird die Liste lange_woerter ausgegeben.</span></span>
+<span id="cb38-7"><a href="r-basics-iii-kontrollstrukturen.html#cb38-7" tabindex="-1"></a>woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Netzwerkdurchsetzungsgesetz&quot;</span>, <span class="st">&quot;Abfallverzeichnisverordnung&quot;</span>, <span class="st">&quot;Haftpflichtversicherung&quot;</span>, <span class="st">&quot;Antivirenprogramm&quot;</span>)</span>
+<span id="cb38-8"><a href="r-basics-iii-kontrollstrukturen.html#cb38-8" tabindex="-1"></a>lange_woerter <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb38-9"><a href="r-basics-iii-kontrollstrukturen.html#cb38-9" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="r-basics-iii-kontrollstrukturen.html#cb38-10" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> woerter) {</span>
+<span id="cb38-11"><a href="r-basics-iii-kontrollstrukturen.html#cb38-11" tabindex="-1"></a>  zeichen <span class="ot">&lt;-</span> <span class="fu">nchar</span>(wort)</span>
+<span id="cb38-12"><a href="r-basics-iii-kontrollstrukturen.html#cb38-12" tabindex="-1"></a>  <span class="cf">if</span> (zeichen <span class="sc">&gt;</span> <span class="dv">20</span>) {</span>
+<span id="cb38-13"><a href="r-basics-iii-kontrollstrukturen.html#cb38-13" tabindex="-1"></a>    lange_woerter[[wort]] <span class="ot">&lt;-</span> zeichen</span>
+<span id="cb38-14"><a href="r-basics-iii-kontrollstrukturen.html#cb38-14" tabindex="-1"></a>  }</span>
+<span id="cb38-15"><a href="r-basics-iii-kontrollstrukturen.html#cb38-15" tabindex="-1"></a>}</span>
+<span id="cb38-16"><a href="r-basics-iii-kontrollstrukturen.html#cb38-16" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="r-basics-iii-kontrollstrukturen.html#cb38-17" tabindex="-1"></a><span class="fu">print</span>(lange_woerter)</span></code></pre></div>
 <pre><code>## $Netzwerkdurchsetzungsgesetz
 ## [1] 27
 ## 
@@ -640,14 +553,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $Haftpflichtversicherung
 ## [1] 23</code></pre>
 <p>Es muss jedoch beachtet werden, dass Elemente eines iterierbaren Objekts im Laufe einer Iteration nicht direkt verändert werden können:</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="r-basics-iii-kontrollstrukturen.html#cb336-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb336-2"><a href="r-basics-iii-kontrollstrukturen.html#cb336-2" tabindex="-1"></a></span>
-<span id="cb336-3"><a href="r-basics-iii-kontrollstrukturen.html#cb336-3" tabindex="-1"></a><span class="cf">for</span> (tier <span class="cf">in</span> tiere) {</span>
-<span id="cb336-4"><a href="r-basics-iii-kontrollstrukturen.html#cb336-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
-<span id="cb336-5"><a href="r-basics-iii-kontrollstrukturen.html#cb336-5" tabindex="-1"></a>}</span>
-<span id="cb336-6"><a href="r-basics-iii-kontrollstrukturen.html#cb336-6" tabindex="-1"></a></span>
-<span id="cb336-7"><a href="r-basics-iii-kontrollstrukturen.html#cb336-7" tabindex="-1"></a><span class="co"># Änderungen wurden nicht übernommen </span></span>
-<span id="cb336-8"><a href="r-basics-iii-kontrollstrukturen.html#cb336-8" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="r-basics-iii-kontrollstrukturen.html#cb40-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb40-2"><a href="r-basics-iii-kontrollstrukturen.html#cb40-2" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="r-basics-iii-kontrollstrukturen.html#cb40-3" tabindex="-1"></a><span class="cf">for</span> (tier <span class="cf">in</span> tiere) {</span>
+<span id="cb40-4"><a href="r-basics-iii-kontrollstrukturen.html#cb40-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb40-5"><a href="r-basics-iii-kontrollstrukturen.html#cb40-5" tabindex="-1"></a>}</span>
+<span id="cb40-6"><a href="r-basics-iii-kontrollstrukturen.html#cb40-6" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="r-basics-iii-kontrollstrukturen.html#cb40-7" tabindex="-1"></a><span class="co"># Änderungen wurden nicht übernommen </span></span>
+<span id="cb40-8"><a href="r-basics-iii-kontrollstrukturen.html#cb40-8" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;Hund&quot;    &quot;Elefant&quot; &quot;Igel&quot;    &quot;Katze&quot;</code></pre>
 <div class="tip">
 <p>Mithilfe der Funktion <code>tolower()</code> können Buchstaben in einer Zeichenkette (=character) automatisch in Kleinbuchstaben umgewandelt werden.</p>
@@ -655,19 +568,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Das liegt daran, dass die Laufvariable nur für den Wert des aktuellen Elements steht, nicht für dieses Element selbst. Die Laufvariable haben wir also eigentlich bisher als <strong>“Wertvariable”</strong> verwendet.</p>
 <p><strong>Um Elemente im Schleifendurchlauf zu verändern, muss mithilfe der Indexposition direkt auf ein Element aus dem Vektor oder der Liste zugegriffen werden</strong>, also genau so, wie wir bisher auch auf Elemente zugegriffen haben. Doch mit jedem Schleifendurchlauf nimmt die Laufvariable ja den Wert eines anderen Elements an; die Indexposition des aktuellen Elements ändert sich also fortlaufend. Um auf Elemente in einem Schleifendurchlauf zuzugreifen, brauchen wir also eine Variable, die nicht den Wert des aktuellen Elements annimmt, sondern dessen Indexposition.</p>
 <p><code>for</code>-Schleifen werden deswegen in R meist als sogennante <strong>Zählschleife</strong> verwendet. Dazu wird die Funktion <code>seq_along()</code> verwendet, die einen Integer-Vektor erstellt, der genau so lang ist, wie das Objekt, das der Funktion übergeben wird. Solche <code>for</code>-Schleifen haben die allgemeine Form:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="r-basics-iii-kontrollstrukturen.html#cb338-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(Objekt)) {</span>
-<span id="cb338-2"><a href="r-basics-iii-kontrollstrukturen.html#cb338-2" tabindex="-1"></a>  Anweisungsblock</span>
-<span id="cb338-3"><a href="r-basics-iii-kontrollstrukturen.html#cb338-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="r-basics-iii-kontrollstrukturen.html#cb42-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(Objekt)) {</span>
+<span id="cb42-2"><a href="r-basics-iii-kontrollstrukturen.html#cb42-2" tabindex="-1"></a>  Anweisungsblock</span>
+<span id="cb42-3"><a href="r-basics-iii-kontrollstrukturen.html#cb42-3" tabindex="-1"></a>}</span></code></pre></div>
 <p>Das <code>i</code> steht für <strong>iterator</strong> und dient als <strong>Zählvariable</strong>: mit jedem Schleifendurchlauf (Iteration) wird i um Eins erhöht; der Zählbeginn ist 1. In jeder Iteration wird auf das Element <code>i</code> des iterierbaren Objekts zugegriffen. Mithilfe des Iterators <code>i</code> kann also in jeder Iteration auf ein Element aus dem Objekt zugegriffen werden.</p>
 <p>Klingt kompliziert, wird aber am folgenden Beispiel direkt deutlich:</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="r-basics-iii-kontrollstrukturen.html#cb339-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb339-2"><a href="r-basics-iii-kontrollstrukturen.html#cb339-2" tabindex="-1"></a></span>
-<span id="cb339-3"><a href="r-basics-iii-kontrollstrukturen.html#cb339-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb339-4"><a href="r-basics-iii-kontrollstrukturen.html#cb339-4" tabindex="-1"></a>  tiere[i] <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tiere[i])</span>
-<span id="cb339-5"><a href="r-basics-iii-kontrollstrukturen.html#cb339-5" tabindex="-1"></a>}</span>
-<span id="cb339-6"><a href="r-basics-iii-kontrollstrukturen.html#cb339-6" tabindex="-1"></a></span>
-<span id="cb339-7"><a href="r-basics-iii-kontrollstrukturen.html#cb339-7" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen </span></span>
-<span id="cb339-8"><a href="r-basics-iii-kontrollstrukturen.html#cb339-8" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="r-basics-iii-kontrollstrukturen.html#cb43-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb43-2"><a href="r-basics-iii-kontrollstrukturen.html#cb43-2" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="r-basics-iii-kontrollstrukturen.html#cb43-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb43-4"><a href="r-basics-iii-kontrollstrukturen.html#cb43-4" tabindex="-1"></a>  tiere[i] <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tiere[i])</span>
+<span id="cb43-5"><a href="r-basics-iii-kontrollstrukturen.html#cb43-5" tabindex="-1"></a>}</span>
+<span id="cb43-6"><a href="r-basics-iii-kontrollstrukturen.html#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="r-basics-iii-kontrollstrukturen.html#cb43-7" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen </span></span>
+<span id="cb43-8"><a href="r-basics-iii-kontrollstrukturen.html#cb43-8" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;elefant&quot; &quot;igel&quot;    &quot;katze&quot;</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
@@ -681,33 +594,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Auch Zählschleifen können mit bedingten Anweisungen oder Verzweigungen kombiniert werden:</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="r-basics-iii-kontrollstrukturen.html#cb341-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb341-2"><a href="r-basics-iii-kontrollstrukturen.html#cb341-2" tabindex="-1"></a></span>
-<span id="cb341-3"><a href="r-basics-iii-kontrollstrukturen.html#cb341-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb341-4"><a href="r-basics-iii-kontrollstrukturen.html#cb341-4" tabindex="-1"></a>  <span class="cf">if</span> (tiere[i] <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
-<span id="cb341-5"><a href="r-basics-iii-kontrollstrukturen.html#cb341-5" tabindex="-1"></a>    tiere[i] <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tiere[i])</span>
-<span id="cb341-6"><a href="r-basics-iii-kontrollstrukturen.html#cb341-6" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb341-7"><a href="r-basics-iii-kontrollstrukturen.html#cb341-7" tabindex="-1"></a>    tiere[i] <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tiere[i])</span>
-<span id="cb341-8"><a href="r-basics-iii-kontrollstrukturen.html#cb341-8" tabindex="-1"></a>  }</span>
-<span id="cb341-9"><a href="r-basics-iii-kontrollstrukturen.html#cb341-9" tabindex="-1"></a>}</span>
-<span id="cb341-10"><a href="r-basics-iii-kontrollstrukturen.html#cb341-10" tabindex="-1"></a></span>
-<span id="cb341-11"><a href="r-basics-iii-kontrollstrukturen.html#cb341-11" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen </span></span>
-<span id="cb341-12"><a href="r-basics-iii-kontrollstrukturen.html#cb341-12" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="r-basics-iii-kontrollstrukturen.html#cb45-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb45-2"><a href="r-basics-iii-kontrollstrukturen.html#cb45-2" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="r-basics-iii-kontrollstrukturen.html#cb45-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb45-4"><a href="r-basics-iii-kontrollstrukturen.html#cb45-4" tabindex="-1"></a>  <span class="cf">if</span> (tiere[i] <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb45-5"><a href="r-basics-iii-kontrollstrukturen.html#cb45-5" tabindex="-1"></a>    tiere[i] <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tiere[i])</span>
+<span id="cb45-6"><a href="r-basics-iii-kontrollstrukturen.html#cb45-6" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb45-7"><a href="r-basics-iii-kontrollstrukturen.html#cb45-7" tabindex="-1"></a>    tiere[i] <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tiere[i])</span>
+<span id="cb45-8"><a href="r-basics-iii-kontrollstrukturen.html#cb45-8" tabindex="-1"></a>  }</span>
+<span id="cb45-9"><a href="r-basics-iii-kontrollstrukturen.html#cb45-9" tabindex="-1"></a>}</span>
+<span id="cb45-10"><a href="r-basics-iii-kontrollstrukturen.html#cb45-10" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="r-basics-iii-kontrollstrukturen.html#cb45-11" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen </span></span>
+<span id="cb45-12"><a href="r-basics-iii-kontrollstrukturen.html#cb45-12" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
 <p>Im Beispiel oben haben wir mehrmals <code>tiere[i]</code> verwendet. Falls wir uns irgendwann später dazu entscheiden sollten, die Variable <code>tiere</code> umzubenennen, müssten wir alle Vorkommnisse von <code>tiere[i]</code> im Schleifenkörper finden und austauschen. So entstehen schnell Fehler. Um das Problem zu umgehen, könnten wir jetzt auf die Idee kommen, eine “temporäre” Variable zu verwenden, der am Anfang jedes Schleifendurchlaufs das aktuelle Element zugewiesen wird:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="r-basics-iii-kontrollstrukturen.html#cb343-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb343-2"><a href="r-basics-iii-kontrollstrukturen.html#cb343-2" tabindex="-1"></a></span>
-<span id="cb343-3"><a href="r-basics-iii-kontrollstrukturen.html#cb343-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb343-4"><a href="r-basics-iii-kontrollstrukturen.html#cb343-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
-<span id="cb343-5"><a href="r-basics-iii-kontrollstrukturen.html#cb343-5" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
-<span id="cb343-6"><a href="r-basics-iii-kontrollstrukturen.html#cb343-6" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
-<span id="cb343-7"><a href="r-basics-iii-kontrollstrukturen.html#cb343-7" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb343-8"><a href="r-basics-iii-kontrollstrukturen.html#cb343-8" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
-<span id="cb343-9"><a href="r-basics-iii-kontrollstrukturen.html#cb343-9" tabindex="-1"></a>  }</span>
-<span id="cb343-10"><a href="r-basics-iii-kontrollstrukturen.html#cb343-10" tabindex="-1"></a>}</span>
-<span id="cb343-11"><a href="r-basics-iii-kontrollstrukturen.html#cb343-11" tabindex="-1"></a></span>
-<span id="cb343-12"><a href="r-basics-iii-kontrollstrukturen.html#cb343-12" tabindex="-1"></a><span class="co"># Änderungen wurden nicht übernommen! </span></span>
-<span id="cb343-13"><a href="r-basics-iii-kontrollstrukturen.html#cb343-13" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="r-basics-iii-kontrollstrukturen.html#cb47-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb47-2"><a href="r-basics-iii-kontrollstrukturen.html#cb47-2" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="r-basics-iii-kontrollstrukturen.html#cb47-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb47-4"><a href="r-basics-iii-kontrollstrukturen.html#cb47-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
+<span id="cb47-5"><a href="r-basics-iii-kontrollstrukturen.html#cb47-5" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb47-6"><a href="r-basics-iii-kontrollstrukturen.html#cb47-6" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb47-7"><a href="r-basics-iii-kontrollstrukturen.html#cb47-7" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb47-8"><a href="r-basics-iii-kontrollstrukturen.html#cb47-8" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
+<span id="cb47-9"><a href="r-basics-iii-kontrollstrukturen.html#cb47-9" tabindex="-1"></a>  }</span>
+<span id="cb47-10"><a href="r-basics-iii-kontrollstrukturen.html#cb47-10" tabindex="-1"></a>}</span>
+<span id="cb47-11"><a href="r-basics-iii-kontrollstrukturen.html#cb47-11" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="r-basics-iii-kontrollstrukturen.html#cb47-12" tabindex="-1"></a><span class="co"># Änderungen wurden nicht übernommen! </span></span>
+<span id="cb47-13"><a href="r-basics-iii-kontrollstrukturen.html#cb47-13" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;Hund&quot;    &quot;Elefant&quot; &quot;Igel&quot;    &quot;Katze&quot;</code></pre>
 <p>Aber wenn wir uns am Ende den Vektor <code>tiere</code> ausgeben lassen, sehen wir, dass wir den Vektor gar nicht verändert haben! Woran liegt das?</p>
 <div class="task">
@@ -719,76 +632,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Der Grund für dieses Verhalten liegt wieder in der Unveränderbarkeit der Objekte in R.</p>
 <p>Um das Problem zu beheben, gibt es verschiedene Möglichkeiten. Die Änderungen, die am Objekt <code>tier</code> vorgenommen wurden, könnten zum Beispiel am Ende der Schleife wieder dem Objekt <code>tiere[i]</code> zugewiesen werden:</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="r-basics-iii-kontrollstrukturen.html#cb345-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb345-2"><a href="r-basics-iii-kontrollstrukturen.html#cb345-2" tabindex="-1"></a></span>
-<span id="cb345-3"><a href="r-basics-iii-kontrollstrukturen.html#cb345-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb345-4"><a href="r-basics-iii-kontrollstrukturen.html#cb345-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
-<span id="cb345-5"><a href="r-basics-iii-kontrollstrukturen.html#cb345-5" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
-<span id="cb345-6"><a href="r-basics-iii-kontrollstrukturen.html#cb345-6" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
-<span id="cb345-7"><a href="r-basics-iii-kontrollstrukturen.html#cb345-7" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb345-8"><a href="r-basics-iii-kontrollstrukturen.html#cb345-8" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
-<span id="cb345-9"><a href="r-basics-iii-kontrollstrukturen.html#cb345-9" tabindex="-1"></a>  }</span>
-<span id="cb345-10"><a href="r-basics-iii-kontrollstrukturen.html#cb345-10" tabindex="-1"></a>  <span class="co"># Wert der Variable tier wieder dem Element tiere[i] zuweisen</span></span>
-<span id="cb345-11"><a href="r-basics-iii-kontrollstrukturen.html#cb345-11" tabindex="-1"></a>  tiere[i] <span class="ot">&lt;-</span> tier</span>
-<span id="cb345-12"><a href="r-basics-iii-kontrollstrukturen.html#cb345-12" tabindex="-1"></a>}</span>
-<span id="cb345-13"><a href="r-basics-iii-kontrollstrukturen.html#cb345-13" tabindex="-1"></a></span>
-<span id="cb345-14"><a href="r-basics-iii-kontrollstrukturen.html#cb345-14" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen! </span></span>
-<span id="cb345-15"><a href="r-basics-iii-kontrollstrukturen.html#cb345-15" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="r-basics-iii-kontrollstrukturen.html#cb49-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb49-2"><a href="r-basics-iii-kontrollstrukturen.html#cb49-2" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="r-basics-iii-kontrollstrukturen.html#cb49-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb49-4"><a href="r-basics-iii-kontrollstrukturen.html#cb49-4" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
+<span id="cb49-5"><a href="r-basics-iii-kontrollstrukturen.html#cb49-5" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb49-6"><a href="r-basics-iii-kontrollstrukturen.html#cb49-6" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb49-7"><a href="r-basics-iii-kontrollstrukturen.html#cb49-7" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb49-8"><a href="r-basics-iii-kontrollstrukturen.html#cb49-8" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
+<span id="cb49-9"><a href="r-basics-iii-kontrollstrukturen.html#cb49-9" tabindex="-1"></a>  }</span>
+<span id="cb49-10"><a href="r-basics-iii-kontrollstrukturen.html#cb49-10" tabindex="-1"></a>  <span class="co"># Wert der Variable tier wieder dem Element tiere[i] zuweisen</span></span>
+<span id="cb49-11"><a href="r-basics-iii-kontrollstrukturen.html#cb49-11" tabindex="-1"></a>  tiere[i] <span class="ot">&lt;-</span> tier</span>
+<span id="cb49-12"><a href="r-basics-iii-kontrollstrukturen.html#cb49-12" tabindex="-1"></a>}</span>
+<span id="cb49-13"><a href="r-basics-iii-kontrollstrukturen.html#cb49-13" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="r-basics-iii-kontrollstrukturen.html#cb49-14" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen! </span></span>
+<span id="cb49-15"><a href="r-basics-iii-kontrollstrukturen.html#cb49-15" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
 <p>Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor <code>tiere_neu()</code> hinzuzufügt werden:</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="r-basics-iii-kontrollstrukturen.html#cb347-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
-<span id="cb347-2"><a href="r-basics-iii-kontrollstrukturen.html#cb347-2" tabindex="-1"></a>tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># leeren Vektor erstellen</span></span>
-<span id="cb347-3"><a href="r-basics-iii-kontrollstrukturen.html#cb347-3" tabindex="-1"></a></span>
-<span id="cb347-4"><a href="r-basics-iii-kontrollstrukturen.html#cb347-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb347-5"><a href="r-basics-iii-kontrollstrukturen.html#cb347-5" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
-<span id="cb347-6"><a href="r-basics-iii-kontrollstrukturen.html#cb347-6" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
-<span id="cb347-7"><a href="r-basics-iii-kontrollstrukturen.html#cb347-7" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
-<span id="cb347-8"><a href="r-basics-iii-kontrollstrukturen.html#cb347-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb347-9"><a href="r-basics-iii-kontrollstrukturen.html#cb347-9" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
-<span id="cb347-10"><a href="r-basics-iii-kontrollstrukturen.html#cb347-10" tabindex="-1"></a>  }</span>
-<span id="cb347-11"><a href="r-basics-iii-kontrollstrukturen.html#cb347-11" tabindex="-1"></a>  <span class="co"># Wert der Variable tier als neues Element dem Vektor tiere_neu hinzufügen</span></span>
-<span id="cb347-12"><a href="r-basics-iii-kontrollstrukturen.html#cb347-12" tabindex="-1"></a>  tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>(tiere_neu, tier)</span>
-<span id="cb347-13"><a href="r-basics-iii-kontrollstrukturen.html#cb347-13" tabindex="-1"></a>}</span>
-<span id="cb347-14"><a href="r-basics-iii-kontrollstrukturen.html#cb347-14" tabindex="-1"></a></span>
-<span id="cb347-15"><a href="r-basics-iii-kontrollstrukturen.html#cb347-15" tabindex="-1"></a><span class="fu">print</span>(tiere_neu)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-basics-iii-kontrollstrukturen.html#cb51-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
+<span id="cb51-2"><a href="r-basics-iii-kontrollstrukturen.html#cb51-2" tabindex="-1"></a>tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># leeren Vektor erstellen</span></span>
+<span id="cb51-3"><a href="r-basics-iii-kontrollstrukturen.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="r-basics-iii-kontrollstrukturen.html#cb51-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
+<span id="cb51-5"><a href="r-basics-iii-kontrollstrukturen.html#cb51-5" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
+<span id="cb51-6"><a href="r-basics-iii-kontrollstrukturen.html#cb51-6" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb51-7"><a href="r-basics-iii-kontrollstrukturen.html#cb51-7" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb51-8"><a href="r-basics-iii-kontrollstrukturen.html#cb51-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb51-9"><a href="r-basics-iii-kontrollstrukturen.html#cb51-9" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
+<span id="cb51-10"><a href="r-basics-iii-kontrollstrukturen.html#cb51-10" tabindex="-1"></a>  }</span>
+<span id="cb51-11"><a href="r-basics-iii-kontrollstrukturen.html#cb51-11" tabindex="-1"></a>  <span class="co"># Wert der Variable tier als neues Element dem Vektor tiere_neu hinzufügen</span></span>
+<span id="cb51-12"><a href="r-basics-iii-kontrollstrukturen.html#cb51-12" tabindex="-1"></a>  tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>(tiere_neu, tier)</span>
+<span id="cb51-13"><a href="r-basics-iii-kontrollstrukturen.html#cb51-13" tabindex="-1"></a>}</span>
+<span id="cb51-14"><a href="r-basics-iii-kontrollstrukturen.html#cb51-14" tabindex="-1"></a></span>
+<span id="cb51-15"><a href="r-basics-iii-kontrollstrukturen.html#cb51-15" tabindex="-1"></a><span class="fu">print</span>(tiere_neu)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="r-basics-iii-kontrollstrukturen.html#cb349-1" tabindex="-1"></a><span class="fu">print</span>(tiere) <span class="co"># Vektor tiere ist unverändert</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="r-basics-iii-kontrollstrukturen.html#cb53-1" tabindex="-1"></a><span class="fu">print</span>(tiere) <span class="co"># Vektor tiere ist unverändert</span></span></code></pre></div>
 <pre><code>## [1] &quot;Hund&quot;    &quot;Elefant&quot; &quot;Igel&quot;    &quot;Katze&quot;</code></pre>
 </div>
-<div id="schleifen-abbrechen" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Schleifen abbrechen<a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="schleifen-abbrechen" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Schleifen abbrechen<a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Es ist zudem möglich, einen Schleifendurchlauf (Iteration) oder die gesamte Schleife abhängig von einer Bedingung frühzeitig abzubrechen. Eine <code>next</code>-Anweisung kann verwendet werden, um den aktuellen Schleifendurchlauf abzubrechen und direkt zum Schleifenkopf zu springen (= Iterationsabbruch). Eine <code>break</code>-Anweisung wird verwendet, um die Schleife komplett abzubrechen (= Schleifenabbruch). Das kann nützlich sein, wenn man fehlende Werte in einem Objekt hat und diese überspringen möchte, damit es zu keiner Fehlermeldung kommt.</p>
 <p>Die Signalworte <code>next</code> und <code>break</code> können sowohl mit while-Schleifen als auch mit for-Schleifen verwendet werden. Hier ein Beispiel mit einer for-Schleife:</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="r-basics-iii-kontrollstrukturen.html#cb351-1" tabindex="-1"></a><span class="co"># next Anweisung</span></span>
-<span id="cb351-2"><a href="r-basics-iii-kontrollstrukturen.html#cb351-2" tabindex="-1"></a></span>
-<span id="cb351-3"><a href="r-basics-iii-kontrollstrukturen.html#cb351-3" tabindex="-1"></a><span class="co"># Vektor mit NA-Werten</span></span>
-<span id="cb351-4"><a href="r-basics-iii-kontrollstrukturen.html#cb351-4" tabindex="-1"></a>beliebige_woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baum&quot;</span>, <span class="st">&quot;Wald&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Meer&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Sonne&quot;</span>)</span>
-<span id="cb351-5"><a href="r-basics-iii-kontrollstrukturen.html#cb351-5" tabindex="-1"></a></span>
-<span id="cb351-6"><a href="r-basics-iii-kontrollstrukturen.html#cb351-6" tabindex="-1"></a><span class="co"># Funktion is.na() überprüft, ob der Wert des Elements wort NA ist</span></span>
-<span id="cb351-7"><a href="r-basics-iii-kontrollstrukturen.html#cb351-7" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> beliebige_woerter) {</span>
-<span id="cb351-8"><a href="r-basics-iii-kontrollstrukturen.html#cb351-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(wort)) { </span>
-<span id="cb351-9"><a href="r-basics-iii-kontrollstrukturen.html#cb351-9" tabindex="-1"></a>    <span class="cf">next</span></span>
-<span id="cb351-10"><a href="r-basics-iii-kontrollstrukturen.html#cb351-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb351-11"><a href="r-basics-iii-kontrollstrukturen.html#cb351-11" tabindex="-1"></a>    <span class="fu">print</span>(wort)</span>
-<span id="cb351-12"><a href="r-basics-iii-kontrollstrukturen.html#cb351-12" tabindex="-1"></a>  }</span>
-<span id="cb351-13"><a href="r-basics-iii-kontrollstrukturen.html#cb351-13" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="r-basics-iii-kontrollstrukturen.html#cb55-1" tabindex="-1"></a><span class="co"># next Anweisung</span></span>
+<span id="cb55-2"><a href="r-basics-iii-kontrollstrukturen.html#cb55-2" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="r-basics-iii-kontrollstrukturen.html#cb55-3" tabindex="-1"></a><span class="co"># Vektor mit NA-Werten</span></span>
+<span id="cb55-4"><a href="r-basics-iii-kontrollstrukturen.html#cb55-4" tabindex="-1"></a>beliebige_woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baum&quot;</span>, <span class="st">&quot;Wald&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Meer&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Sonne&quot;</span>)</span>
+<span id="cb55-5"><a href="r-basics-iii-kontrollstrukturen.html#cb55-5" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="r-basics-iii-kontrollstrukturen.html#cb55-6" tabindex="-1"></a><span class="co"># Funktion is.na() überprüft, ob der Wert des Elements wort NA ist</span></span>
+<span id="cb55-7"><a href="r-basics-iii-kontrollstrukturen.html#cb55-7" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> beliebige_woerter) {</span>
+<span id="cb55-8"><a href="r-basics-iii-kontrollstrukturen.html#cb55-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(wort)) { </span>
+<span id="cb55-9"><a href="r-basics-iii-kontrollstrukturen.html#cb55-9" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb55-10"><a href="r-basics-iii-kontrollstrukturen.html#cb55-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb55-11"><a href="r-basics-iii-kontrollstrukturen.html#cb55-11" tabindex="-1"></a>    <span class="fu">print</span>(wort)</span>
+<span id="cb55-12"><a href="r-basics-iii-kontrollstrukturen.html#cb55-12" tabindex="-1"></a>  }</span>
+<span id="cb55-13"><a href="r-basics-iii-kontrollstrukturen.html#cb55-13" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Baum&quot;
 ## [1] &quot;Wald&quot;
 ## [1] &quot;Meer&quot;
 ## [1] &quot;Sonne&quot;</code></pre>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="r-basics-iii-kontrollstrukturen.html#cb353-1" tabindex="-1"></a><span class="co"># break Anweisung</span></span>
-<span id="cb353-2"><a href="r-basics-iii-kontrollstrukturen.html#cb353-2" tabindex="-1"></a></span>
-<span id="cb353-3"><a href="r-basics-iii-kontrollstrukturen.html#cb353-3" tabindex="-1"></a><span class="co"># Vektor mit NA-Werten</span></span>
-<span id="cb353-4"><a href="r-basics-iii-kontrollstrukturen.html#cb353-4" tabindex="-1"></a>beliebige_woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baum&quot;</span>, <span class="st">&quot;Wald&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Meer&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Sonne&quot;</span>)</span>
-<span id="cb353-5"><a href="r-basics-iii-kontrollstrukturen.html#cb353-5" tabindex="-1"></a></span>
-<span id="cb353-6"><a href="r-basics-iii-kontrollstrukturen.html#cb353-6" tabindex="-1"></a><span class="co"># Funktion is.na() überprüft, ob der Wert des Elements wort NA ist</span></span>
-<span id="cb353-7"><a href="r-basics-iii-kontrollstrukturen.html#cb353-7" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> beliebige_woerter) {</span>
-<span id="cb353-8"><a href="r-basics-iii-kontrollstrukturen.html#cb353-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(wort)) { </span>
-<span id="cb353-9"><a href="r-basics-iii-kontrollstrukturen.html#cb353-9" tabindex="-1"></a>    <span class="cf">break</span></span>
-<span id="cb353-10"><a href="r-basics-iii-kontrollstrukturen.html#cb353-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb353-11"><a href="r-basics-iii-kontrollstrukturen.html#cb353-11" tabindex="-1"></a>    <span class="fu">print</span>(wort)</span>
-<span id="cb353-12"><a href="r-basics-iii-kontrollstrukturen.html#cb353-12" tabindex="-1"></a>  }</span>
-<span id="cb353-13"><a href="r-basics-iii-kontrollstrukturen.html#cb353-13" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="r-basics-iii-kontrollstrukturen.html#cb57-1" tabindex="-1"></a><span class="co"># break Anweisung</span></span>
+<span id="cb57-2"><a href="r-basics-iii-kontrollstrukturen.html#cb57-2" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="r-basics-iii-kontrollstrukturen.html#cb57-3" tabindex="-1"></a><span class="co"># Vektor mit NA-Werten</span></span>
+<span id="cb57-4"><a href="r-basics-iii-kontrollstrukturen.html#cb57-4" tabindex="-1"></a>beliebige_woerter <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baum&quot;</span>, <span class="st">&quot;Wald&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Meer&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Sonne&quot;</span>)</span>
+<span id="cb57-5"><a href="r-basics-iii-kontrollstrukturen.html#cb57-5" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="r-basics-iii-kontrollstrukturen.html#cb57-6" tabindex="-1"></a><span class="co"># Funktion is.na() überprüft, ob der Wert des Elements wort NA ist</span></span>
+<span id="cb57-7"><a href="r-basics-iii-kontrollstrukturen.html#cb57-7" tabindex="-1"></a><span class="cf">for</span> (wort <span class="cf">in</span> beliebige_woerter) {</span>
+<span id="cb57-8"><a href="r-basics-iii-kontrollstrukturen.html#cb57-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(wort)) { </span>
+<span id="cb57-9"><a href="r-basics-iii-kontrollstrukturen.html#cb57-9" tabindex="-1"></a>    <span class="cf">break</span></span>
+<span id="cb57-10"><a href="r-basics-iii-kontrollstrukturen.html#cb57-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb57-11"><a href="r-basics-iii-kontrollstrukturen.html#cb57-11" tabindex="-1"></a>    <span class="fu">print</span>(wort)</span>
+<span id="cb57-12"><a href="r-basics-iii-kontrollstrukturen.html#cb57-12" tabindex="-1"></a>  }</span>
+<span id="cb57-13"><a href="r-basics-iii-kontrollstrukturen.html#cb57-13" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Baum&quot;
 ## [1] &quot;Wald&quot;</code></pre>
 <div class="tip">
@@ -812,8 +725,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="r-basics-ii-datenstrukturen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-basics-iv-funktionen-und-pakete.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="r-basics-ii-datenstrukturen.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

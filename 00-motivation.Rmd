@@ -25,8 +25,9 @@ plaintext <- url %>%
   paste(collapse = " ")
 
 cor <- corpus(plaintext)
-toks <- tokens(plaintext)
-toks_dfm <- dfm(toks, remove = stopwords('english'), remove_punct = TRUE)
+toks <- tokens(plaintext, remove_punct = TRUE) %>%
+  tokens_remove(pattern = stopwords("en"))
+toks_dfm <- dfm(toks)
 
 set.seed(100)
 textplot_wordcloud(toks_dfm, min_count=1)

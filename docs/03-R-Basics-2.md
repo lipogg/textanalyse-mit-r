@@ -316,6 +316,10 @@ fruechte[-1]
 #> [1] "Orange"   "Banane"   "Erdbeere" "Apfel"    "Birne"    "Melone"
 ```
 
+Die Zugriffsoperation `fruechte[fruechte == "Banane"]` bedarf vielleicht einer kurzen Erläuterung. Wie funktioniert diese Operation? Warum werden nur die Elemente ausgegeben, deren Wert "Banane" ist? 
+
+Zunächst wird der Ausdruck in den eckigen Klammern evaluiert, `fruechte == "Banane"`. Dabei wird der Mechanismus der Vektorisierung aktiviert, sodass der Ausdruck zu einem Vektor aus Wahrheitswerten ausgewertet wird: Wenn im Vektor `fruechte` der Wert  "Banane" steht, steht in diesem Vektor `TRUE` und sonst  `FALSE`. Danach wird die eigentliche Zugriffsoperation ausgeführt, allerdings mit dem logischen Vektor anstelle der Indices: `fruechte[c(FALSE, TRUE, FALSE, FALSE)]`. Bei einer solchen Zugriffsoperation werden alle Elemente ausgegeben, für die in dem logischen Vektor `TRUE` steht. Eine Zugriffsoperation der Art `fruechte == "Banane"`, wird deswegen auch **bedingter Zugriff** genannt. Anstelle des logischen Operators == kann hier auch ein anderer logischer Operator oder ein Vergleichsoperator stehen.  
+
 Elemente können auch direkt einer neuen Variable zugewiesen werden: 
 
 
@@ -1066,6 +1070,15 @@ fruechte_einkauf["kuehlschrank", ]
 ```
 
 ```r
+# Zugriff auf alle Elemente mit dem Wert "Banane"
+fruechte[fruechte == "Banane"]
+```
+
+```
+#> [1] "Banane"
+```
+
+```r
 # Spalten nachträglich (um)benennen
 colnames(fruechte_einkauf) <- c("vorhanden", "nicht_vorhanden")
 ```
@@ -1518,6 +1531,9 @@ fruechte_df$frucht[fruechte_df$anzahl < 20]
 # fruechte_df$anzahl <- NULL 
 ```
 
+Zugriffsoperationen der Art `fruechte_df$frucht[fruechte_df$anzahl == 20]` und `fruechte_df$frucht[fruechte_df$anzahl < 20]` sehen auf den ersten Blick unübersichtlich aus, aber hier passiert im Grunde genau dasselbe, was wir bereits vom bedingten Zugriff auf Vektoren kennen: Zunächst wird der Ausdruck in den eckigen Klammern ausgewertet. Da jede Spalte in einem Dataframe ein Vektor ist, wird dabei der Mechanismus der Vektorisierung aktiviert und der Ausdruck wird zu einem logischen Vektor aus Wahrheitswerten evaluiert. In diesem Vektor steht `TRUE`, wenn ein Element in der Spalte `fruechte_df$anzahl` genau 20 bzw. kleiner als 20 ist, und `FALSE` sonst. Mit der Zugriffsoperation `fruechte_df$frucht[]` wird dann auf alle Elemente in der Spalte `frucht` zugegriffen, für die in der Spalte `anzahl` in derselben Zeile ein Wert genau 20 bzw. kleiner 20 steht. 
+
+
 Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können, zum Beispiel: 
 
 
@@ -1627,7 +1643,7 @@ print(temperature_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      16      22      10
+#>      30      10      23
 ```
 
 ```r
@@ -1639,25 +1655,25 @@ print(temperature_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  16 28 16 26 15 28 23
-#>   Hamburg 22 16 18 29 22 16 20
-#>   München 10 13 29 15 16 23 27
+#>   Berlin  30 24 24 19 26 21 18
+#>   Hamburg 10 15 11 17 25 12 10
+#>   München 23 26 25 25 17 28 22
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  28 25 27 29 23 28 28
-#>   Hamburg 18 24 13 22 25 13 14
-#>   München 24 18 26 30 25 24 17
+#>   Berlin  25 24 11 14 12 12 15
+#>   Hamburg 29 27 11 10 24 21 17
+#>   München 29 20 27 21 28 10 28
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  30 19 18 16 13 24 25
-#>   Hamburg 15 26 22 25 19 25 14
-#>   München 17 30 23 22 16 25 14
+#>   Berlin  19 24 25 16 18 21 20
+#>   Hamburg 26 19 30 11 19 24 19
+#>   München 22 13 16 29 21 15 26
 ```
 
 ```r
@@ -1670,13 +1686,13 @@ print(morning_temp_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     16      18      16
-#> Di     22      29      28
-#> Mi     10      26      16
-#> Do     28      29      23
-#> Fr     16      15      23
-#> Sa     13      15      20
-#> So     16      22      27
+#> Mo     30      11      17
+#> Di     10      25      21
+#> Mi     23      19      12
+#> Do     24      17      28
+#> Fr     15      25      18
+#> Sa     26      26      10
+#> So     24      25      22
 ```
 
 ```r
@@ -1691,13 +1707,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     16      22      10
-#> Di     28      16      13
-#> Mi     16      18      29
-#> Do     26      29      15
-#> Fr     15      22      16
-#> Sa     28      16      23
-#> So     23      20      27
+#> Mo     30      10      23
+#> Di     24      15      26
+#> Mi     24      11      25
+#> Do     19      17      25
+#> Fr     26      25      17
+#> Sa     21      12      28
+#> So     18      10      22
 ```
 
 ```r
@@ -1710,13 +1726,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     16      22      10 Morgen Celsius
-#> Di     28      16      13 Morgen Celsius
-#> Mi     16      18      29 Morgen Celsius
-#> Do     26      29      15 Morgen Celsius
-#> Fr     15      22      16 Morgen Celsius
-#> Sa     28      16      23 Morgen Celsius
-#> So     23      20      27 Morgen Celsius
+#> Mo     30      10      23 Morgen Celsius
+#> Di     24      15      26 Morgen Celsius
+#> Mi     24      11      25 Morgen Celsius
+#> Do     19      17      25 Morgen Celsius
+#> Fr     26      25      17 Morgen Celsius
+#> Sa     21      12      28 Morgen Celsius
+#> So     18      10      22 Morgen Celsius
 ```
 
 ```r
@@ -1737,13 +1753,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     16      22      10 Morgen Celsius      22
-#> Di     28      16      13 Morgen Celsius      28
-#> Mi     16      18      29 Morgen Celsius      29
-#> Do     26      29      15 Morgen Celsius      29
-#> Fr     15      22      16 Morgen Celsius      22
-#> Sa     28      16      23 Morgen Celsius      28
-#> So     23      20      27 Morgen Celsius      27
+#> Mo     30      10      23 Morgen Celsius      30
+#> Di     24      15      26 Morgen Celsius      26
+#> Mi     24      11      25 Morgen Celsius      25
+#> Do     19      17      25 Morgen Celsius      25
+#> Fr     26      25      17 Morgen Celsius      26
+#> Sa     21      12      28 Morgen Celsius      28
+#> So     18      10      22 Morgen Celsius      22
 ```
 
 ```r
@@ -1754,13 +1770,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     16      22      10 Morgen Celsius    71.6
-#> Di     28      16      13 Morgen Celsius    82.4
-#> Mi     16      18      29 Morgen Celsius    84.2
-#> Do     26      29      15 Morgen Celsius    84.2
-#> Fr     15      22      16 Morgen Celsius    71.6
-#> Sa     28      16      23 Morgen Celsius    82.4
-#> So     23      20      27 Morgen Celsius    80.6
+#> Mo     30      10      23 Morgen Celsius    86.0
+#> Di     24      15      26 Morgen Celsius    78.8
+#> Mi     24      11      25 Morgen Celsius    77.0
+#> Do     19      17      25 Morgen Celsius    77.0
+#> Fr     26      25      17 Morgen Celsius    78.8
+#> Sa     21      12      28 Morgen Celsius    82.4
+#> So     18      10      22 Morgen Celsius    71.6
 ```
 
 ```r
@@ -1772,13 +1788,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     16      22      10 Morgen Celsius               71.6
-#> Di     28      16      13 Morgen Celsius               82.4
-#> Mi     16      18      29 Morgen Celsius               84.2
-#> Do     26      29      15 Morgen Celsius               84.2
-#> Fr     15      22      16 Morgen Celsius               71.6
-#> Sa     28      16      23 Morgen Celsius               82.4
-#> So     23      20      27 Morgen Celsius               80.6
+#> Mo     30      10      23 Morgen Celsius               86.0
+#> Di     24      15      26 Morgen Celsius               78.8
+#> Mi     24      11      25 Morgen Celsius               77.0
+#> Do     19      17      25 Morgen Celsius               77.0
+#> Fr     26      25      17 Morgen Celsius               78.8
+#> Sa     21      12      28 Morgen Celsius               82.4
+#> So     18      10      22 Morgen Celsius               71.6
 ```
 
 ```r
@@ -1818,12 +1834,12 @@ str(morning_temp_dataframe)
 
 ```
 #> 'data.frame':	7 obs. of  6 variables:
-#>  $ Berlin            : int  16 28 16 26 15 28 23
-#>  $ Hamburg           : int  22 16 18 29 22 16 20
-#>  $ München           : int  10 13 29 15 16 23 27
+#>  $ Berlin            : int  30 24 24 19 26 21 18
+#>  $ Hamburg           : int  10 15 11 17 25 12 10
+#>  $ München           : int  23 26 25 25 17 28 22
 #>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
 #>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
-#>  $ Maximum_Fahrenheit: num  71.6 82.4 84.2 84.2 71.6 82.4 80.6
+#>  $ Maximum_Fahrenheit: num  86 78.8 77 77 78.8 82.4 71.6
 ```
 Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
 
@@ -1855,7 +1871,7 @@ typeof(morning_temp_dataframe[,3])
 #> [1] "integer"
 ```
 
-Zuletzt gibt es eine Reihe hilfreicher Funktionen, mit denen Datenstrukturen auf bestimmte Aspekte hin untersucht werden können. `length()` liefert die Anzahl der Elemente in einer Datenstruktur; `nchar()` gibt die Anzahl der Zeichen in einer Zeichenkette aus. `ncol()` und `nrow()` geben Auskunft über die Anzahl an Spalten und Zeilen in einer Datenstruktur und die bereits bekannte Funktion `dim()` liefert die Dimension. 
+Zuletzt gibt es eine Reihe hilfreicher Funktionen, mit denen Datenstrukturen auf bestimmte Aspekte hin untersucht werden können. `length()` liefert die Anzahl der Elemente in einer Datenstruktur; `nchar()` gibt die Anzahl der Zeichen in einer Zeichenkette aus. `ncol()` und `nrow()` geben Auskunft über die Anzahl an Spalten und Zeilen in einer Datenstruktur und die bereits bekannte Funktion `dim()` liefert die Dimension. Für Datenstrukturen mit numerischen Werten kann zusätzlich auch das Minimum, das Maximum oder statistische Maße wie der Median oder das arithmetische Mittel bestimmt werden, und zwar mit den Funktionen `min()`, `max()`, `median()`, `mean()`. 
 
 :::task
 Verständnisfragen:
@@ -1968,11 +1984,10 @@ Diese Beispiele und alle Erklärungen auf Englisch könnt ihr auch nochmal im Ka
 
 ## Quellen {-}
 
-Quellen aktualisieren nur für Datenstrukturen 
 
-* Venables, W.N. and Smith, D.M. and the R Core Team (2023). An Introduction to R, [https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
-* Wickham, Hadley. The Tidyverse Style Guide, [https://style.tidyverse.org/](https://style.tidyverse.org/)
-* Wickham, Hadley (2019). Advanced R. Chapter 2: Names and Values, [https://adv-r.hadley.nz/names-values.html](https://adv-r.hadley.nz/names-values.html)
-* Reussner, Ralf H. Mitschnitt zur Vorlesung "Programmieren" im WiSe 2015/2016. 02: Typen und Variablen, [https://www.youtube.com/watch?v=POe41EL2EgU](https://www.youtube.com/watch?v=POe41EL2EgU)
-* R 4.3.0 Documentation. Operator Syntax and Precedence, [https://stat.ethz.ch/R-manual/R-devel/library/base/html/Syntax.html](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Syntax.html)
-* Wickham, Hadley (2019). Advanced R. Chapter 4: Subsetting, [https://adv-r.hadley.nz/subsetting.html](https://adv-r.hadley.nz/subsetting.html)
+* Venables, W.N. and Smith, D.M. and the R Core Team (2023). An Introduction to R, https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf
+* Wickham, Hadley. The Tidyverse Style Guide, https://style.tidyverse.org/
+* Wickham, Hadley (2019). Advanced R. Chapter 4: Subsetting, https://adv-r.hadley.nz/subsetting.html
+* Wickham, Hadley (2019). Advanced R. Chapter 2: Names and Values, https://adv-r.hadley.nz/names-values.html
+* Phillips, Nathaniel D. (2018). Matrices and Dataframes, https://bookdown.org/ndphillips/YaRrr/matricesdataframes.html
+* Phillips, Nathaniel D. (2018). Advanced Dataframe Manipulation, https://bookdown.org/ndphillips/YaRrr/advanceddataframe.html

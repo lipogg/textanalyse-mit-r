@@ -243,9 +243,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Grundlegende Begriffe<a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <table>
 <colgroup>
-<col width="2%" />
+<col width="3%" />
 <col width="5%" />
-<col width="92%" />
+<col width="91%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -256,16 +256,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">Anweisungsblock</td>
+<td align="left">Code block</td>
+<td align="left">Mehrere aufeinanderfolgende Codezeilen, zum Beispiel im Körper einer Schleife oder einer bedingten Anweisung.</td>
+</tr>
+<tr class="even">
 <td align="left">Iteration</td>
 <td align="left">Iteration</td>
 <td align="left">Im Kontext von Kontrollstrukturen bezeichnet Iteration zwei Dinge: in einem allgemeinen Sinn den Prozess, bei dem Anweisungen wiederholt ausgeführt werden, und zum anderen einen einzigen Schleifendurchlauf, also das einmalige Ausführen der Anweisungen im Schleifenkörper. Wenn der Code einmal ausgeführt wird, sagt man entsprechend ‘eine Iteration’, für das zweimalige Ausführen ‘zwei Iterationen’, usw.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Iterieren</td>
 <td align="left">Iterate</td>
 <td align="left">Wenn beschrieben werden soll, dass eine for-Schleife ein Objekt durchläuft, wird dazu häufig gesagt, dass die Schleife ‘über das Objekt iteriert’.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Terminieren</td>
 <td align="left">Terminate</td>
 <td align="left">Wenn eine Schleife terminiert bedeutet das, dass sie die Ausführung beendet; sie kommt zum Ende.</td>
@@ -337,14 +342,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics-iii-kontrollstrukturen.html#cb10-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: es passiert nichts</span></span>
 <span id="cb10-2"><a href="r-basics-iii-kontrollstrukturen.html#cb10-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
 <span id="cb10-3"><a href="r-basics-iii-kontrollstrukturen.html#cb10-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">&amp;&amp;</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb10-4"><a href="r-basics-iii-kontrollstrukturen.html#cb10-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Fiat stehen in der Garage!&quot;</span>)</span>
+<span id="cb10-4"><a href="r-basics-iii-kontrollstrukturen.html#cb10-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes und ein Opel stehen in der Garage!&quot;</span>)</span>
 <span id="cb10-5"><a href="r-basics-iii-kontrollstrukturen.html#cb10-5" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics-iii-kontrollstrukturen.html#cb11-1" tabindex="-1"></a><span class="co"># Einer der Ausdrücke ist falsch: die Nachricht wird ausgegeben</span></span>
 <span id="cb11-2"><a href="r-basics-iii-kontrollstrukturen.html#cb11-2" tabindex="-1"></a>autos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercedes&quot;</span>, <span class="st">&quot;Fiat&quot;</span>, <span class="st">&quot;Volvo&quot;</span>, <span class="st">&quot;BMW&quot;</span>)</span>
 <span id="cb11-3"><a href="r-basics-iii-kontrollstrukturen.html#cb11-3" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;Mercedes&quot;</span> <span class="sc">%in%</span> autos <span class="sc">||</span> <span class="st">&quot;Opel&quot;</span> <span class="sc">%in%</span> autos) {</span>
-<span id="cb11-4"><a href="r-basics-iii-kontrollstrukturen.html#cb11-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes oder ein Fiat steht in der Garage!&quot;</span>)</span>
+<span id="cb11-4"><a href="r-basics-iii-kontrollstrukturen.html#cb11-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Ein Mercedes oder ein Opel steht in der Garage!&quot;</span>)</span>
 <span id="cb11-5"><a href="r-basics-iii-kontrollstrukturen.html#cb11-5" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>## [1] &quot;Ein Mercedes oder ein Fiat steht in der Garage!&quot;</code></pre>
+<pre><code>## [1] &quot;Ein Mercedes oder ein Opel steht in der Garage!&quot;</code></pre>
 </div>
 <div id="verzweigungen" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Verzweigungen<a href="r-basics-iii-kontrollstrukturen.html#verzweigungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -648,22 +653,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb49-14"><a href="r-basics-iii-kontrollstrukturen.html#cb49-14" tabindex="-1"></a><span class="co"># Änderungen wurden übernommen! </span></span>
 <span id="cb49-15"><a href="r-basics-iii-kontrollstrukturen.html#cb49-15" tabindex="-1"></a><span class="fu">print</span>(tiere)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
-<p>Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor <code>tiere_neu()</code> hinzuzufügt werden:</p>
+<p>Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor <code>tiere_neu()</code> hinzuzufügt werden. Dafür kann in diesem Fall eine einfache for-Schleife verwendet werden:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-basics-iii-kontrollstrukturen.html#cb51-1" tabindex="-1"></a>tiere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Hund&quot;</span>, <span class="st">&quot;Elefant&quot;</span>, <span class="st">&quot;Igel&quot;</span>, <span class="st">&quot;Katze&quot;</span>)</span>
 <span id="cb51-2"><a href="r-basics-iii-kontrollstrukturen.html#cb51-2" tabindex="-1"></a>tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># leeren Vektor erstellen</span></span>
 <span id="cb51-3"><a href="r-basics-iii-kontrollstrukturen.html#cb51-3" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="r-basics-iii-kontrollstrukturen.html#cb51-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(tiere)) {</span>
-<span id="cb51-5"><a href="r-basics-iii-kontrollstrukturen.html#cb51-5" tabindex="-1"></a>  tier <span class="ot">&lt;-</span> tiere[i]</span>
-<span id="cb51-6"><a href="r-basics-iii-kontrollstrukturen.html#cb51-6" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
-<span id="cb51-7"><a href="r-basics-iii-kontrollstrukturen.html#cb51-7" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
-<span id="cb51-8"><a href="r-basics-iii-kontrollstrukturen.html#cb51-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb51-9"><a href="r-basics-iii-kontrollstrukturen.html#cb51-9" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
-<span id="cb51-10"><a href="r-basics-iii-kontrollstrukturen.html#cb51-10" tabindex="-1"></a>  }</span>
-<span id="cb51-11"><a href="r-basics-iii-kontrollstrukturen.html#cb51-11" tabindex="-1"></a>  <span class="co"># Wert der Variable tier als neues Element dem Vektor tiere_neu hinzufügen</span></span>
-<span id="cb51-12"><a href="r-basics-iii-kontrollstrukturen.html#cb51-12" tabindex="-1"></a>  tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>(tiere_neu, tier)</span>
-<span id="cb51-13"><a href="r-basics-iii-kontrollstrukturen.html#cb51-13" tabindex="-1"></a>}</span>
-<span id="cb51-14"><a href="r-basics-iii-kontrollstrukturen.html#cb51-14" tabindex="-1"></a></span>
-<span id="cb51-15"><a href="r-basics-iii-kontrollstrukturen.html#cb51-15" tabindex="-1"></a><span class="fu">print</span>(tiere_neu)</span></code></pre></div>
+<span id="cb51-4"><a href="r-basics-iii-kontrollstrukturen.html#cb51-4" tabindex="-1"></a><span class="cf">for</span> (tier <span class="cf">in</span> tiere) {</span>
+<span id="cb51-5"><a href="r-basics-iii-kontrollstrukturen.html#cb51-5" tabindex="-1"></a>  <span class="cf">if</span> (tier <span class="sc">==</span> <span class="st">&quot;Hund&quot;</span>) {</span>
+<span id="cb51-6"><a href="r-basics-iii-kontrollstrukturen.html#cb51-6" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">tolower</span>(tier)</span>
+<span id="cb51-7"><a href="r-basics-iii-kontrollstrukturen.html#cb51-7" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb51-8"><a href="r-basics-iii-kontrollstrukturen.html#cb51-8" tabindex="-1"></a>    tier <span class="ot">&lt;-</span> <span class="fu">toupper</span>(tier)</span>
+<span id="cb51-9"><a href="r-basics-iii-kontrollstrukturen.html#cb51-9" tabindex="-1"></a>  }</span>
+<span id="cb51-10"><a href="r-basics-iii-kontrollstrukturen.html#cb51-10" tabindex="-1"></a>  <span class="co"># Wert der Variable tier als neues Element dem Vektor tiere_neu hinzufügen</span></span>
+<span id="cb51-11"><a href="r-basics-iii-kontrollstrukturen.html#cb51-11" tabindex="-1"></a>  tiere_neu <span class="ot">&lt;-</span> <span class="fu">c</span>(tiere_neu, tier)</span>
+<span id="cb51-12"><a href="r-basics-iii-kontrollstrukturen.html#cb51-12" tabindex="-1"></a>}</span>
+<span id="cb51-13"><a href="r-basics-iii-kontrollstrukturen.html#cb51-13" tabindex="-1"></a></span>
+<span id="cb51-14"><a href="r-basics-iii-kontrollstrukturen.html#cb51-14" tabindex="-1"></a><span class="fu">print</span>(tiere_neu)</span></code></pre></div>
 <pre><code>## [1] &quot;hund&quot;    &quot;ELEFANT&quot; &quot;IGEL&quot;    &quot;KATZE&quot;</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="r-basics-iii-kontrollstrukturen.html#cb53-1" tabindex="-1"></a><span class="fu">print</span>(tiere) <span class="co"># Vektor tiere ist unverändert</span></span></code></pre></div>
 <pre><code>## [1] &quot;Hund&quot;    &quot;Elefant&quot; &quot;Igel&quot;    &quot;Katze&quot;</code></pre>

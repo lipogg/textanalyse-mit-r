@@ -6,11 +6,12 @@ Bisher haben wir in unseren Beispielen immer einzelne Anweisungen oder Ausdrück
 ## Grundlegende Begriffe
 
 
-|Begriff     |Englische Entsprechung |Definition (im R-Kontext)                                                                                                                                                                                                                                                                                                                                                                                           |
-|:-----------|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|Iteration   |Iteration              |Im Kontext von Kontrollstrukturen bezeichnet Iteration zwei Dinge: in einem allgemeinen Sinn den Prozess, bei dem Anweisungen wiederholt ausgeführt werden, und zum anderen einen einzigen Schleifendurchlauf, also das einmalige Ausführen der Anweisungen im Schleifenkörper. Wenn der Code einmal ausgeführt wird, sagt man entsprechend 'eine Iteration', für das zweimalige Ausführen 'zwei Iterationen', usw. |
-|Iterieren   |Iterate                |Wenn beschrieben werden soll, dass eine for-Schleife ein Objekt durchläuft, wird dazu häufig gesagt, dass die Schleife 'über das Objekt iteriert'.                                                                                                                                                                                                                                                                  |
-|Terminieren |Terminate              |Wenn eine Schleife terminiert bedeutet das, dass sie die Ausführung beendet; sie kommt zum Ende.                                                                                                                                                                                                                                                                                                                    |
+|Begriff         |Englische Entsprechung |Definition (im R-Kontext)                                                                                                                                                                                                                                                                                                                                                                                           |
+|:---------------|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Anweisungsblock |Code block             |Mehrere aufeinanderfolgende Codezeilen, zum Beispiel im Körper einer Schleife oder einer bedingten Anweisung.                                                                                                                                                                                                                                                                                                       |
+|Iteration       |Iteration              |Im Kontext von Kontrollstrukturen bezeichnet Iteration zwei Dinge: in einem allgemeinen Sinn den Prozess, bei dem Anweisungen wiederholt ausgeführt werden, und zum anderen einen einzigen Schleifendurchlauf, also das einmalige Ausführen der Anweisungen im Schleifenkörper. Wenn der Code einmal ausgeführt wird, sagt man entsprechend 'eine Iteration', für das zweimalige Ausführen 'zwei Iterationen', usw. |
+|Iterieren       |Iterate                |Wenn beschrieben werden soll, dass eine for-Schleife ein Objekt durchläuft, wird dazu häufig gesagt, dass die Schleife 'über das Objekt iteriert'.                                                                                                                                                                                                                                                                  |
+|Terminieren     |Terminate              |Wenn eine Schleife terminiert bedeutet das, dass sie die Ausführung beendet; sie kommt zum Ende.                                                                                                                                                                                                                                                                                                                    |
 
 
 :::tip
@@ -120,7 +121,7 @@ if ("Mercedes" %in% autos && "Fiat" %in% autos) {
 # Einer der Ausdrücke ist falsch: es passiert nichts
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
 if ("Mercedes" %in% autos && "Opel" %in% autos) {
-  print("Ein Mercedes und ein Fiat stehen in der Garage!")
+  print("Ein Mercedes und ein Opel stehen in der Garage!")
 }
 ```
 
@@ -129,12 +130,12 @@ if ("Mercedes" %in% autos && "Opel" %in% autos) {
 # Einer der Ausdrücke ist falsch: die Nachricht wird ausgegeben
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
 if ("Mercedes" %in% autos || "Opel" %in% autos) {
-  print("Ein Mercedes oder ein Fiat steht in der Garage!")
+  print("Ein Mercedes oder ein Opel steht in der Garage!")
 }
 ```
 
 ```
-## [1] "Ein Mercedes oder ein Fiat steht in der Garage!"
+## [1] "Ein Mercedes oder ein Opel steht in der Garage!"
 ```
 
 
@@ -610,15 +611,14 @@ print(tiere)
 ## [1] "hund"    "ELEFANT" "IGEL"    "KATZE"
 ```
 
-Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor `tiere_neu()` hinzuzufügt werden: 
+Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor `tiere_neu()` hinzuzufügt werden. Dafür kann in diesem Fall eine einfache for-Schleife verwendet werden:  
 
 
 ```r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 tiere_neu <- c() # leeren Vektor erstellen
 
-for (i in seq_along(tiere)) {
-  tier <- tiere[i]
+for (tier in tiere) {
   if (tier == "Hund") {
     tier <- tolower(tier)
   } else {

@@ -2,6 +2,17 @@
 
 Wir haben im Laufe der vergangenen Stunden bereits einige Funktionen kennengelernt, zum Beispiel die Ausgabe-Funktion `print()`, die Funktion `c()` zum Erstellen von Vektoren oder die Funktion `paste()` zum Verketten von character-Objekten. 
 
+
+## Grundlegende Begriffe
+
+
+|Begriff     |Englische Entsprechung |Definition (im R-Kontext)                                                                                                                                                                                                                                                                              |
+|:-----------|:----------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Aufrufen    |Call                   |Wenn die Anweisungen, die in einer Funktion definiert sind, ausgeführt werden, sagt man, dass die Funktion aufgerufen wird. Beim Aufruf können der Funktion Argumente übergeben werden, also Werte, die für die Parameter aus der Funktionsdefinition eingesetzt werden.                               |
+|Zurückgeben |Return                 |Funktionen haben einen Rückgabewert, das heißt, sie liefern beim Ausführen einen Wert, der das Ergebnis der Funktion darstellt und der weiterverwendet werden kann. Beim Aufruf einiger Funktionen wird nur etwas auf dem Bildschirm ausgegeben. Diese Funktionen haben meist den Rückgabewert `NULL`. |
+
+
+
 ## Was sind Funktionen? 
 
 Funktionen sind wiederverwendbare Abfolgen von Anweisungen. Sie sind also Codeabschnitte, die mithilfe eines Namens wiederholt ausgeführt werden können. Das Prinzip ist also ein bisschen ähnlich wie Variablen, mit dem Unterschied, dass man mithilfe von Funktionsnamen auf Anweisungen zugreifen kann, während man mithilfe von Variablennamen auf Objekte zugreifen kann. Im Grunde sind Funktionsnamen aber auch zugleich Variablennamen, weil in R Funktionen auch Objekte sind (-> Grundbegriffe: alles in R ist ein Objekt). 
@@ -864,6 +875,7 @@ Fast alle R Pakete nutzen selbst Funktionen aus anderen Paketen. Zum Beispiel gi
 * Wickham, Hadley. Advanced R. Chapter 6: Functions. Function Components, [https://adv-r.hadley.nz/functions.html#fun-components](https://adv-r.hadley.nz/functions.html#fun-components)
 * Wickham, Hadley. Advanced R. Chapter 6: Functions. Lexical Scoping, [https://adv-r.hadley.nz/functions.html#lexical-scoping](https://adv-r.hadley.nz/functions.html#lexical-scoping)
 * Wickham, Hadley and Grolemund, Garrett (2017). R for Data Science: Iteration. The Map Functions, [https://r4ds.had.co.nz/iteration.html#the-map-functions](https://r4ds.had.co.nz/iteration.html#the-map-functions)
+* Wickham, Hadley (2019). Advanced R. Ch. 7.4.2: The Function Environment,  https://adv-r.hadley.nz/environments.html#function-environments
 * Benoit, Kenneth and Watanabe, Kohei. Quanteda 4.0.0: Reference, [https://quanteda.io/reference/index.html](https://quanteda.io/reference/index.html)
 * Benoit, Kenneth and Watanabe, Kohei. Quanteda: Quantitative Analysis of Textual Data, [https://quanteda.io](https://quanteda.io)
 * Wickham, Hadley and Grolemund, Garrett (2017). R for Data Science: Pipes, [https://r4ds.had.co.nz/pipes.html](https://r4ds.had.co.nz/pipes.html)

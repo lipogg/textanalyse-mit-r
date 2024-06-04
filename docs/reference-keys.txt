@@ -51,3 +51,13 @@ pakete-installieren
 pakete-laden
 wozu-werden-pakete-verwendet
 welche-pakete-gibt-es-denn-alles
+textanalyse-i-korpus-tokens-daten-und-dateien
+was-sind-eigentlich-daten
+korpus-tokens-und-types
+vom-korpus-zur-analyse
+überblick-textanalyse-mit-quanteda
+textdateien-einlesen
+quanteda-corpus-objekte
+quanteda-tokens-objekte
+quanteda-dfm-objekte
+daten-schreiben

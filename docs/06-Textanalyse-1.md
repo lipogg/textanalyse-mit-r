@@ -10,32 +10,32 @@ In den Geisteswissenschaften wird der Begriff "Daten" kaum verwendet, aber in de
 
 Schöch fasst zunächst Diskussionen zur Begriffsbestimmung in den Digital Humanities zusammen: 
 
-> Some practitioners of digital humanities, notably Joanna Drucker, have argued that the term “data” is actually inadequate. And indeed, the term’s etymology seems problematic in the context of the humanities: it comes from the Latin datum, which means “that which is given.” This means it carries with it the meaning of an observer-independent fact which cannot be challenged in itself. Johanna Drucker prefers to speak of “capta” instead of data, literally “that which has been captured or gathered”, underlining the idea that even the very act of capturing data in the first place is oriented by certain goals, done with specific instruments, and driven by a specific attention to a small part of what could have been captured given different goals and instruments. In other words, capturing data is not passively accepting what is given, but actively constructing what one is interested in.
+> Some practitioners of digital humanities, notably Joanna Drucker, have argued that the term “data” is actually inadequate. And indeed, the term’s etymology seems problematic in the context of the humanities: it comes from the Latin datum, which means “that which is given.” This means it carries with it the meaning of an observer-independent fact which cannot be challenged in itself. Johanna Drucker prefers to speak of “capta” instead of data, literally “that which has been captured or gathered”, underlining the idea that even the very act of capturing data in the first place is oriented by certain goals, done with specific instruments, and driven by a specific attention to a small part of what could have been captured given different goals and instruments. In other words, capturing data is not passively accepting what is given, but actively constructing what one is interested in. (Schöch 2013)
 
 Und schlägt dann eine eigene Definition für den Begriff "Daten" vor:
 
-> Data in the humanities could be considered a digital, selectively constructed, machine-actionable abstraction representing some aspects of a given object of humanistic inquiry.
+> Data in the humanities could be considered a digital, selectively constructed, machine-actionable abstraction representing some aspects of a given object of humanistic inquiry. (Schöch 2013)
 
-**Geisteswissenschaftliche Daten** sind also erst einmal ganz allgemein **"digitale Abstraktionen", die Aspekte eines (Forschungs-)Objekts repräsentieren**. Sie sind dabei nicht einfach "gegeben", sondern sie werden aktiv von Forscher:innen im Hinblick auf eine bestimmte Fragestellung konstruiert und mithilfe von ganz konkreten Methoden nach bestimmten Regeln gesammelt. 
+**Geisteswissenschaftliche Daten** sind also erst einmal ganz allgemein **"digitale Abstraktionen", die Aspekte eines (Forschungs-)Objekts repräsentieren**. Sie sind dabei nicht einfach "gegeben", sondern sie werden aktiv von Forscher:innen im Hinblick auf eine bestimmte Fragestellung konstruiert und mithilfe von ganz konkreten Methoden nach bestimmten Regeln gesammelt. Vielleicht erinnert euch das aus die Lektüre aus der ersten Woche: Eine ganz ähnliche Idee haben auch die Autor:innen von "Mapping Texts" mit ihrem Gegenbegriff "Mapping" zum gängigen "Mining" formuliert ([Stolz/Taylor 2024](https://global.oup.com/academic/product/mapping-texts-9780197756881)). 
 
 Je nachdem, wie die so gesammelten Daten organisiert sind, kann zwischen **strukturierten** und **unstrukturierten Daten** unterschieden werden: 
 
-> Structured data is typically held in a database in which all key/value pairs have identifiers and clear relations and which follow an explicit data model. Plain text is a typical example of unstructured data, in which the boundaries of individual items, the relations between items, and the meaning of items, are mostly implicit. Data held in XML files is an example of semi-structured data, which can be more or less strictly constrained by the absence or presence of a more or less precise schema. 
+> Structured data is typically held in a database in which all key/value pairs have identifiers and clear relations and which follow an explicit data model. Plain text is a typical example of unstructured data, in which the boundaries of individual items, the relations between items, and the meaning of items, are mostly implicit. Data held in XML files is an example of semi-structured data, which can be more or less strictly constrained by the absence or presence of a more or less precise schema. (Schöch 2013)
 
 Zusätzlich kann zwischen **Daten** und **Metadaten** unterschieden werden: 
 
-> [...] “data” refers to the part of a file or dataset which contains the actual representation of an object of inquiry, while the term “metadata” refers to data about that data: metadata explicitly describes selected aspects of a dataset, such as the time of its creation, or the way it was collected, or what entity external to the dataset it is supposed to represent.
+> [...] “data” refers to the part of a file or dataset which contains the actual representation of an object of inquiry, while the term “metadata” refers to data about that data: metadata explicitly describes selected aspects of a dataset, such as the time of its creation, or the way it was collected, or what entity external to the dataset it is supposed to represent. (Schöch 2013)
 
 Aber was sind denn ganz konkret die Daten, mit denen wir bei der Textanalyse zu tun haben? Sind diese Daten strukturiert, unstrukturiert oder semi-strukturiert? Und was sind "Metadaten" von Textdaten? 
 
 ## Korpus, Tokens und Types 
 
-In der Übungsaufgabe zur heutigen Sitzung habt ihr euch bereits die Begriffe "Korpus", "Token", "Type" und "Document-Term-Matrix" erarbeitet, und seid dabei zu folgenden Definitionen gelangt: 
+In der computergestützten bzw. algorithmischen Textanalyse gibt es eine Reihe von Begriffen, um zwischen verschiedenen Organisationsebenen von Textdaten zu unterscheiden. In den folgenden Sitzungen zur Textanalyse werden die folgenden Begriffe immer wieder vorkommen:
 
-- **Korpus**: Texte oder andere Objekte, die auf eine bestimmte Weise mit einem Forschungsziel oder im Hinblick auf einen bestimmten Aspekt gesammelt wurden. Bei Textkorpora kann das beispielsweise die Textsorte, Epoche oder Autor:in sein (s.  [forText](https://fortext.net/ueber-fortext/glossar/korpus)).  "Eine nach bestimmten Regeln geordnete und nach Auswahlkriterien zusammengestellte Sammlung von Texten" ([Riebling 2019, S. 152](https://d-nb.info/1188242121/34)).
+- **Korpus**: Texte oder andere Objekte, die auf eine bestimmte Weise mit einem Forschungsziel oder im Hinblick auf einen bestimmten Aspekt gesammelt wurden. Bei Textkorpora kann das beispielsweise die Textsorte, Epoche oder Autor:in sein (s.  [forText](https://fortext.net/ueber-fortext/glossar/korpus)).  "Eine nach bestimmten Regeln geordnete und nach Auswahlkriterien zusammengestellte Sammlung von Texten" ([Riebling 2019, S. 152](https://d-nb.info/1188242121/34)). Dabei ist wichtig zu beachten, dass es von der Forschungsfrage, die auf der Grundlage eines Korpus beantwortet werden soll, abhängt, ob die Zusammenstellung des Korpus sinnvoll ist oder nicht. Jedes Korpus hat blinde Flecken und Auslassungen und spiegelt immer eine bestimmte Perspektive wieder. Ein "neutrales" Korpus gibt es in diesem Sinne nicht ([Grimmer et al. 2022, S. 35-37](https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9960725495502883)).
 - **Tokens**: Vorkomnisse von Wörtern oder Äußerungen in Texten (s.  [forText](https://fortext.net/ueber-fortext/glossar/type-token))
 - **Types**: Typen von Wörtern oder Äußerungen in Texten (s.  [forText](https://fortext.net/ueber-fortext/glossar/type-token))
-- **Document-Term-Matrix** (oder **Document-Feature-Matrix**): Eine numerische Repräsentation eines Textkorpus als Matrix, bei der jede Zeile einem Satz oder Text ("document") entspricht, und jede Spalte einem Token oder Type ("term" bzw. "feature"). In den Zellen wird angezeigt, ob bzw. wie häufig jedes Token oder Type in einem Dokument vorkommt (s. [Jünger/Gärtner 2023](https://doi.org/10.1007/978-3-658-37747-2_9); [Van Atteveldt 2022](https://cssbook.net/content/chapter10.html#sec-dtm)).
+- **Document-Term-Matrix** (kurz DTM, oder **Document-Feature-Matrix**, DFM): Eine numerische Repräsentation eines Textkorpus als Matrix, bei der jede Zeile einem Satz oder Text ("document") entspricht, und jede Spalte einem Token oder Type ("term" bzw. "feature"). In den Zellen wird angezeigt, ob bzw. wie häufig jedes Token oder Type in einem Dokument vorkommt (s. [Jünger/Gärtner 2023](https://doi.org/10.1007/978-3-658-37747-2_9); [Van Atteveldt 2022](https://cssbook.net/content/chapter10.html#sec-dtm)).
 
 :::tip
 Achtung
@@ -69,10 +69,44 @@ In R kann ein tokenisierter Text als spezieller Vektor dargestellt werden, bei d
 
 Ein weiterer Abstraktionsschritt ist die numerische **Repräsentation von Texten als Ansammlung von Tokens ohne festgelegte Reihenfolge** (also als **"bag of words"**). Wie wir bereits gesehen haben, kann eine **Document-Term-Matrix (DTM)** verwendet werden, um ein Korpus auf diese Weise darzustellen. Die Textdaten liegen als DTM strukturiert vor: Die Beziehung zwischen Dokumenten und Tokens (oder Types) ist durch die Spalten und Zeilen klar definiert und wird durch die Angabe, ob bzw. wie oft jedes Token vorkommt, zusätzlich quantifiziert. 
 
+:::task
+Verständnisfragen: 
+
+- Welche Zeichen bilden jeweils inhaltlich zusammenhängende Einheiten in [diesen beiden Tweets](https://x.com/GretaThunberg/status/1608056944501178368) von Greta Thunberg (der viertmeistgelikte Tweet aller Zeiten) und Andrew Tate? 
+- Angenommen, die beiden Tweets werden so tokenisiert, dass die in der vorigen Frage identifizierten Einheiten Tokens bilden. Wie viele Tokens hat der Tweet von Greta Thunberg? Wie viele Types? 
+
+:::
+
+
+## Vom Korpus zur Analyse 
+
+Wir haben bereits gesehen, dass sowohl die Auswahl und Zusammenstellung des Korpus als auch die Wahl eines Verfahrens zum Tokenisieren der Texte Entscheidungen voraussetzen, bevor wir überhaupt mit der eigentlichen Analyse begonnen haben. Also wo beginnt man bei einem Textanalyseprojekt? Wie trifft man diese Entscheidungen? Es gibt verschiedene Zugänge, die bereits in den Lektüren zur ersten Sitzung angedeutet wurden. Zur Erinnerung: 
+
+Evelyn Gius und Janina Jacke haben zwischen **"explorativen"** und **"konfirmatorischen"** Methoden unterschieden (Gius/Jacke, S. 10f.) . Beim explorativen Zugriff wird ein Korpus mit programmatischen Methoden untersucht, um über die geänderte oder auch entfremdete Perspektive eine Fragestellung zu entwickeln, der im Anschluss mithilfe quantitativer oder aber auch "klassischer" qualitativer Analysemethoden nachgegangen werden kann. Beim konfirmatorischen Zugriff steht dagegen die Fragestellung vorab fest und es werden ganz gezielt Methoden der quantitativen Textanalyse angewandt, um eine Hypothese zu testen. Bei diesem Zugriff ist eine vorsichtige und kritische **Operationalisierung** der Fragestellung notwendig. Dem Begriff Operationalisierung seid ihr im Text von Axel Pichler und Nils Reiter begegnet: Operationalisierung ist der "Arbeitsprozess, einem theoretischen Begriff messbare Textoberflächenphänomene zuzuordnen" (Pichler/Reiter 2021, S. 12), also das Werkzeug, mit dem Fragestellungen von den "klassischen" in die digitalen Geisteswissenschaften überführt werden können. Der Operationalisierungsprozess ist oft das schwierigste an der gesamten Textanalyse, denn dabei müssen sowohl die "**mitbestimmenden literaturtheoretischen Hintergrundannahmen**" (oder andere fachspezifische theoretische Hintergründe) als auch die "**Hintergrundannahmen der algortihmischen Textanalyse**" verstanden und berücksichtigt werden (ebd., S. 24). Was bedeutet das? Ein Beispiel aus meiner Masterarbeit: (folgt noch). 
+
+
+Die Betrachtung von Kookkurrenzen, also von Wörtern, die mit bestimmten Begriffen in einem bestimmten Kontext gemeinsam vorkommen, ist eine gängige Operationalisierung für Fragestellungen, bei denen es um kontextuelle Bedeutungen von Begriffen oder auch den Bedeutungswandel über die Zeit geht. Diese Art der Operationalisierung wurde auch in dem Text von Sayan Bhattacharyya diskutiert (Bhattacharyya 2021, S. 81). Bhattacharyya hat sich dabei auf eine ganz konkrete Methode bezogen, mit der  Kookkurrenzen von Wörtern bestimmt werden können: word embeddings. Diese Methode werden wir später genauer kennenlernen, aber wir können bereits an dieser Stelle einen grundlegenden Aspekt hervorheben: Genauso wie geisteswissenschaftliche Fragestellungen unterschiedliche theoretische Hintergründe haben, haben auch algorithmische Textanalysemethoden verschiedene theoretische Hintergründe. Kookkurrenzen sind also nicht gleich Kookkurrenzen, denn verschiedene Methoden, Kookkurrenzen zu bestimmen, gehen von verschiedenen Grundannahmen aus. Justin Grimer, Margarete Roberts und Brandon Stewart unterscheiden in "Text as Data" zwischen zwei solchen grundlegenden "Hintergrundannahmen der algorithmischen Textanalyse" (wie es Pichler und Reiter ausdrücken): Sie unterscheiden zwischen **probabilistischen Ansätzen**, bei denen Text nach einem wahrscheinlichkeitstheoretischen Modell ("multinomial language model") und **algorithmischen Ansätzen**, bei denen Text als Vektorraum ("vector space model") aufgefasst wird (Grimmer et al. 2022, S. 60-77). Beide Ansätze gehen von einer Repräsentation von Text als Document Feature Matrix (s.o.) aus, also eine Matrix, bei der die Zeilen Dokumenten und die Spalten Tokens entsprechen. Nach dem wahrscheinlichkeitstheoretischen Modell wird jede Zeile in einer Document Feature Matrix aufgefasst als "a random draw from a multinomial distribution", während das Vektorraummodell jede Zeile als "a vector in a high-dimensional space" interpretiert (Grimmer et al. 2022, S. 70). Neben diesen beiden verschiedenen Arten, Document Feature Matrizen zu betrachten, gibt es eine noch grundlegendere Unterscheidung zwischen einer **bag of words** Repräsentation von Text und einer **string of words** Repräsentation. Die Document Feature Matrix ist eine Möglichkeit, Text als bag of words abzubilden: als Ansammlung von Wörtern ohne feste Reihenfolge. Ein Text in seiner ursprünglichen Reihenfolge wäre stellt den Text dagegen als string of words dar: als Anordnung oder Sequenz von Wörtern mit fester Reihenfolge. 
+
+Ihr seht: Der theoretische Hintergrund der Textanalyse ist durchaus komplex und um wirklich tief einzusteigen, kommt man irgendwann nicht mehr darum herum, sich mit den mathematischen Grundlagen der verschiedenen Textanalysemethoden zu beschäftigen. Für dieses Seminar sind keine mathematischen Vorkenntnisse vorausgesetzt, deswegen werde ich zu den Textanalysemethoden immer optionale Kapitel über die mathematischen Hintergründe zur Verfügung stellen, die ihr in solchen ausklappbaren Abschnitten findet: 
+
+
+<details>
+<summary><b>Hier verbirgt sich ein optionaler Abschnitt</b></summary>
+
+Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich überhaupt was hier passiert" lässt sich vielleicht ungefähr so darstellen: 
+
+
+```{=html}
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7fef2a1a593a5d976bc8" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-7fef2a1a593a5d976bc8">{"x":{"visdat":{"646f7852c9c":["function () ","plotlyVisDat"]},"cur_data":"646f7852c9c","attrs":{"646f7852c9c":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+```
+
+
+</details>
 
 ## Überblick: Textanalyse mit Quanteda
 
-Im Kapitel IV: Funktionen und Pakete haben wir bereits das Paket `quanteda` kennengelernt. Das Paket quanteda bietet eine Vielzahl Funktionen zur quantitativen Analyse von Text sowie spezialisierte Datenstrukturen und sogar Datensätze.
+Zum Einstieg in die Textanalyse werden wir uns nächste Woche mit ganz einfachen Worthäufigkeiten beschäftigen. Im Kapitel IV: Funktionen und Pakete haben wir bereits das Paket `quanteda` kennengelernt. Das Paket quanteda bietet eine Vielzahl Funktionen zur quantitativen Analyse von Text sowie spezialisierte Datenstrukturen und sogar Datensätze. Zur Analyse von Worthäufigkeiten werden wir vor allem mit quanteda arbeiten. 
 
 Bevor wir ganz praktisch in die Textanalyse mit quanteda einsteigen, verschaffen wir uns einen theoretischen Überblick über das Vorgehen: 
 
@@ -389,6 +423,7 @@ write.table(kafka_1,
 - ForText (2016), Glossar: Korpus,  https://fortext.net/ueber-fortext/glossar/korpus.
 - Jünger, J. and Gärtner, C. (2023). *Computational Methods für die Sozial- und Geisteswissenschaften. Kapitel 9: Textanalyse,* S. 356-359, https://doi.org/10.1007/978-3-658-37747-2_9.
 - Riebling, Jan Rasmus (2019). *Methode und Methodologie quantitativer Textanalyse. Kapitel 5: Text und Token,* S. 125-160, https://d-nb.info/1188242121/34.
+- Stoltz, Dustin S. und Taylor, Marshall A. (2024). Mapping Texts. Computational Text Analysis for the Social Sciences, Einleitung, https://global.oup.com/academic/product/mapping-texts-9780197756881
 - Lukes, David (2016). How Computers Handle Text: A Gentle but Thorough Introduction to Unicode, https://dlukes.github.io/unicode.html.
 - Van Atteveldt, Wouter, Trilling, Damian und Arcila Calderón, Carlos (2022). *Computational Analysis of Communication. Chapter 9: Processing Text*, 
 https://cssbook.net/content/chapter09.html. 

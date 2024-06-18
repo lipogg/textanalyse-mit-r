@@ -35,7 +35,7 @@ setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
 
 ```
 
-Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory".
+Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory". Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Zip-Ordner müsst ihr vorher entpacken!
 
 Wenn wir das Arbeitsverzeichnis gesetzt haben, können wir die Dateien einlesen. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
 
@@ -73,7 +73,7 @@ library(quanteda)
 
 ## Corpus-Objekt erstellen und Preprocessing
 
-Wir werden in der Analyse verschiedene Methoden einmal auf das Korpus mit und einmal ohne Stoppwörter anwenden, denn je nach Fragestellung und Methode sind Stoppwörter mehr oder weniger interessant. Deswegen erstellen wir in diesem Abschnitt zwei verschiedene tokens-Objekte.
+Wir werden in der Analyse verschiedene Methoden einmal auf das Korpus mit und einmal ohne Stoppwörter anwenden, denn je nach Fragestellung und Methode sind Stoppwörter mehr oder weniger interessant. Deswegen erstellen wir in diesem Abschnitt zwei verschiedene tokens-Objekte. Wir werden aber auch sehen, dass Textanalyse und Preprocessing eigentlich ein iterative Prozesse sind: Es kommt oft vor, dass bei der Analyse weitere Preprocessingschritte notwendig werden.
 
 ```{r}
 
@@ -97,11 +97,9 @@ maerchen_toks_rm <- tokens_remove(maerchen_toks, pattern = stopwords("de"))
 
 Wir haben jetzt also ein corpus-Objekt sowie zwei verschiedene tokens-Objekte (eins mit und eins ohne Stoppwörter), die wir in unserer Analyse verwenden können. 
 
-## Token-Häufigkeitsanalyse 
+## Einstieg: absolute Häufigkeiten
 
-### Einstieg: absolute Häufigkeiten
-
-Zunächst ist es sinnvoll, sich einen Überblick über die Anzahl der Tokens in den Texten unseres Korpus zu verschaffen. Hierfür wenden wir einfach die summary()-Funktion auf das corpus-Objekt an. 
+Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Hierbei interessiert uns vor allem, wie lang die einzelnen Texte sind, denn wenn wir später Worthäufigkeiten betrachten wollen, müssen wir wissen, ob es vielleicht einzelne Texte gibt, die besonders lang sind.  Hierfür wenden wir einfach die summary()-Funktion auf das corpus-Objekt an. Beim Aufruf der summary()-Funktion wird der Text erst mit den Defaultargumenten tokenisiert. 
 
 ```{r attr.output='style="max-height: 150px;"'}
 
@@ -122,7 +120,7 @@ Um einen visuellen Überblick zu verschaffen, können wir die Tokenanzahl auch v
 
 
 :::tip
-ggplot2
+Visualisierungen erstellen mit ggplot2
 
 Die Syntax zur Erstellung von Grafiken mit ggplot2 folgt einem eigenen Design-Prinzip, das nach dem Titel des zugrundeliegenden Werks ["Grammar of Graphics"](https://doi.org/10.1007/0-387-28695-0) genannt wird. Diese "Grammatik" legt fest, wie die einzelnen Bestandteile einer Grafik beschrieben und konstruiert werden können. Konkret bedeutet das, dass ggplot2-Grafiken immer als mehrere, übereinanderliegende Ebenen erstellt werden, die mit einem `+`-Operator verknüpft werden: Die erste Ebene ist dabei immer ein Datenobjekt, das mit der Funktion `ggplot()` erzeugt wird. Welche Ebenen es genau gibt könnt ihr in den [ggplot2-Dokumentationsseiten](https://ggplot2.tidyverse.org/reference/index.html) nachlesen. Einen leicht verständlichen Einstieg in die Grammar of Graphics und ggplot2 bietet dieser [Artikel von Dipanjan Sarkar](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149). Einen tieferen Einblick bietet dieser [Artikel von Hadley Wickham](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098). 
 
@@ -140,22 +138,28 @@ summary_plot <- ggplot(data=token_info, aes(x=Titel, y=Tokens)) +
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=4)) + 
   ggtitle("Anzahl Tokens / Text")
-summary_plot
+
 ```
 
-Die Visualisierung erfordert ganz genauen Abgleich der Werte auf der x-Achse, um die richtige Tokenanzahl auf der y-Achse zu finden. Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel mit einem weiteren Paket aus dem Tidyverse, das darauf spezialisiert ist, ggplot-Grafiken in interaktive Grafiken umzuwandeln: 
+Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel mit einem weiteren Paket aus dem Tidyverse, das darauf spezialisiert ist, ggplot-Grafiken in interaktive Grafiken umzuwandeln: 
 
 ```{r warning=FALSE, message=FALSE, fig.width=8, fig.height=6}
 library(plotly)
 
 plotly_plot <- ggplotly(summary_plot)
-plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Titel", standoff = 10)))
+plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Text", standoff = 10)))
 plotly_plot
 ```
 
-Wenn man jetzt im Plot-Fenster den Cursor über die Visualisierung bewegt, werden die x- und y-Werte zu den einzelnen Datenpunkten automatisch angezeigt. 
+:::task
+Verständnisfragen:
 
-Der Grafik können wir entnehmen, dass das Märchen "Die zwei Brüder" mit einer Tokenanzahl von 9265 das mit Abstand längste Märchen ist. Diese Information behalten wir erst einmal im Hinterkopf. Die manuelle Durchsicht der Häufigkeiten mithilfe dieses Diagramms ist aber immer noch etwas unpraktisch. Am besten wäre es, wenn wir auf einen Blick sehen könnten, wie stark die Tokenanzahl der Texte in unserem Korpus gestreut sind, ob es besonders lange Texte gibt, und wie viele Tokens die meisten Texte haben. So einen zusammenfassenden Blick auf unser Korpus bietet ein **Boxplot**: 
+- Bewertet das Diagramm: Welche Informationen könnt ihr daraus entnehmen? 
+- Eignet sich das Diagramm, um einen Überblick über die Verteilung der Tokens in unserem Korpus zu verschaffen? 
+
+:::
+
+Wenn man im Plot-Fenster den Cursor über die Visualisierung bewegt, werden die x- und y-Werte zu den einzelnen Datenpunkten automatisch angezeigt. Der Grafik können wir entnehmen, dass das Märchen "Die zwei Brüder" mit einer Tokenanzahl von 9265 das mit Abstand längste Märchen ist, und dass die meisten Märchen weniger als 2500 Tokens zu haben scheinen. Die Visualisierung ist aber unübersichtlich, da die Titel auf der x-Achse erst durch Markieren der einzelnen Datenpunkte sichtbar werden. Die manuelle Durchsicht der Häufigkeiten mithilfe dieses Diagramms ist deswegen unpraktisch. Am besten wäre es, wenn wir auf einen Blick sehen könnten, wie stark die Tokenanzahl der Texte in unserem Korpus gestreut sind, ob es besonders lange Texte gibt, und wie viele Tokens die meisten Texte haben. So einen zusammenfassenden Blick auf unser Korpus bietet ein **Boxplot**: 
 
 ```{r}
 ggplot(token_info, aes(x = "", y = Tokens)) +
@@ -168,7 +172,7 @@ ggplot(token_info, aes(x = "", y = Tokens)) +
 :::task
 Verständnisfragen:
 
-- Beschreibt die Anzahl der Tokens der Texte in unserem Korpus anhand des Boxplots.
+- Beschreibt die Verteilung der Tokens in unserem Korpus anhand des Boxplots.
 
 :::
 
@@ -303,14 +307,14 @@ subset_df
 library(ggplot2)
 
 tochter_plot <- ggplot(subset_df, aes(x = group, y = feature, size = frequency)) +
-  geom_point() +
+  geom_point(shape=21, color="black", fill="grey") +
   theme(axis.text.y = element_text(size=5), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
   labs(x = "Text", y = "Feature")
 
 library(plotly)
 plotly_plot <- ggplotly(tochter_plot)
-plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Titel", standoff = 5)))
+plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Text", standoff = 5)))
 plotly_plot
 
 ```

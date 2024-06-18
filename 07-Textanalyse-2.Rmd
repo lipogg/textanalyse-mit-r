@@ -43,7 +43,7 @@ beispiel_toks <- tokens(beispiel_1, split_tags = TRUE, split_hyphens = TRUE )
 print(beispiel_toks, max_ntoken = 200)
 ```
 
-Zeichenketten können nicht nur wie bisher in Wörter und andere Äußerungen zerlegt werden. Manchmal ist es sinnvoll, Texte in kleinere oder größere Einheiten zu zerlegen, also z.B. in einzelne Zeichen oder einzelne Sätze. Wenn Texte in größere Segmente zerlegt werden, nennt man diese Operation **Segmentieren** (oder engl. "chunking"). Dazu kann ebenfalls die Funktion `tokens()` verwendet werden, mit dem zusätzlichen Argument `what = "character"` bzw. `what = "sentence"`: 
+Zeichenketten können nicht nur wie bisher in Wörter und andere Äußerungen zerlegt werden. Manchmal ist es sinnvoll, Texte in kleinere oder größere Einheiten zu zerlegen, also z.B. in einzelne Zeichen oder einzelne Sätze. Wenn Texte in größere Segmente wie Sätze zerlegt werden, nennt man diese Operation **Segmentieren** (oder engl. "segmentation"). Dazu kann ebenfalls die Funktion `tokens()` verwendet werden, mit dem zusätzlichen Argument `what = "character"` bzw. `what = "sentence"`: 
 
 ```{r warning=FALSE, message=FALSE}
 # Segmentieren auf Satzebene
@@ -60,39 +60,32 @@ Da Tokenisieren eine komplexe Operation ist, dauert es je nach Anzahl und Länge
 tokens(beispiel_1, verbose = TRUE)
 ```
 
+Die `tokens()`-Funktion kann auch zum Tokenisieren von japanisch- und chinesischsprachigen Texten verwendet werden, hierbei wird unter der Motorhaube eine morphologische Analyse durchgeführt. Ein Beispiel aus den [Quanteda-Dokumentationsseiten](https://tutorials.quanteda.io/multilingual/overview/): 
+
+```{r warning=FALSE, message=FALSE}
+library(readtext)
+declaration <- readtext("data/declaration_rights.txt")
+cor <- corpus(declaration)
+toks <- tokens(cor)
+toks
+```
+
 
 ## Reguläre Ausdrücke im Preprocessing
 
-Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass bei der Tokenisierung manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. "regular expressions") verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel "Exkurs: Reguläre Ausdrücke". In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.  
+Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. "regular expressions") verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel "Exkurs: Reguläre Ausdrücke". In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.  
 
-Um Zeichenketten nach Mustern zu durchsuchen, nutzen wir in R spezielle Funktionen, die die Suche mithilfe von regulären Ausdrücken ermöglichen: 
+Der Beispieltext `froschkoenig` enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen. Die bereits bekannte Funktion `gsub()` kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (`+`) Zahl zwischen 0 und 9 (`[0-9]`) innerhalb von eckigen Klammern (`\\[` oder `\\]`) sucht und durch einen leeren String (`""`) austauscht. Bevor wir die Seitenzahlen entfernen, sollten wir uns allerdings die Suchergebnisse anzeigen lassen, um zu überprüfen, ob der reguläre Ausdruck die richtigen Zeichenketten findet:  
 
 ```{r}
 froschkoenig <- "In den alten Zeiten [1], wo das Wünschen noch geholfen hat, lebte ein König [2], dessen Töchter waren alle schön, aber die jüngste Tochter [3] war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien."
 
-grepl("Tochter", froschkoenig)
-grepl("T(o|ö)chter", froschkoenig)
-gregexpr("T(o|ö)chter", froschkoenig)
-regmatches(froschkoenig, gregexpr("T(o|ö)chter", froschkoenig))
-
-```
-
-:::task
-Verständnisfrage: 
-
-* Was machen die verschiedenen Funktionen?
-
-:::
-
-Der Beispieltext `froschkoenig` enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen.
-
-Die bereits bekannte Funktion `gsub()` kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (`+`) Zahl zwischen 0 und 9 (`[0-9]`) innerhalb von eckigen Klammern (`\\[` oder `\\]`) sucht und durch einen leeren String (`""`) austauscht: 
-
-```{r}
+regmatches(froschkoenig, gregexpr(" \\[[0-9]+\\]", froschkoenig))
 
 froschkoenig <- gsub(" \\[[0-9]+\\]", "", froschkoenig)
 froschkoenig
 ```
+
 
 Die eckige Klammer steht in einem Regex-Ausdruck für Zeichenklassen (s. "Exkurs: Reguläre Ausdrücke"). Die doppelten \\\\ werden verwendet, damit die eckige Klammer nicht als Regex-Symbol erkannt wird, sondern als ganz normales Satzzeichen. 
 
@@ -101,10 +94,9 @@ Verständnisfragen:
 
 * Was passiert, wenn man die \\\\ weglässt?
 * Was passiert, wenn man das Leerzeichen am Anfang des regulären Ausdrucks `" \\[[1-9]+\\]"` weglässt?
+* Was machen die Funktionen `gregexpr()` und `regmatches()`?
 
 :::
-
-Da die Ausgabe von Ergebnissen durch Kombination der R-base-Funktionen `regmatches()` und `gregexpr()` etwas kompliziert ist (s.o.), gibt es das Paket `stringr`, welches Funktionen für die Suche und Bearbeitung von Zeichenketten mithilfe von regulären Ausdrücken bereitstellt (mehr dazu unter "Exkurs: Reguläre Ausdrücke").
 
 
 ## Satzzeichen, Zahlen und Sonderzeichen entfernen 
@@ -146,9 +138,24 @@ custom_stopwords <- readLines("stopwords.txt", encoding = "UTF-8")
 custom_stopwords <- readtext("stopwords.txt") 
 custom_stopwords
 # Importierte Stoppwortliste and die tokens_remove()-Funktion übergeben
-ger_new <- ger_toks %>% 
-  tokens_remove(pattern = custom_stopwords, padding=F)
-ger_new
+froschkoenig_toks <- tokens_remove(froschkoenig_toks, pattern = custom_stopwords, padding=F)
+
+```
+
+Alternativ kann auch die Default-Stoppwortliste der Funktion `stopwords()` durch eine andere Stoppwortliste ausgetauscht werden. Um zu überprüfen, welche Stoppwortlisten es gibt: 
+
+```{r}
+library(stopwords)
+stopwords_getsources()
+froschkoenig_toks <- tokens(froschkoenig) %>%
+  tokens_remove(pattern = stopwords("de", source="nltk"))
+
+```
+
+Zuletzt können mit der `tokens_remove()`-Funktion auch nachträglich einzelne Tokens entfernt werden, die in einem Text vielleicht besonders häufig vorkommen, aber nicht auf der Stoppwortliste stehen: 
+
+```{r}
+froschkoenig_toks <- tokens_remove(froschkoenig_toks, pattern = "daß", padding=F)
 
 ```
 
@@ -242,7 +249,7 @@ Wir betrachten zunächst wieder unseren Beispielsatz:
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 ```
 
-```{r}
+```{r attr.output='style="max-height: 200px;"'}
 beispiel_df <- udpipe(beispiel, ud_model)
 head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen 
 beispiel_annotated <- udpipe_annotate(ud_model, beispiel, tagger="default", parser="none")
@@ -262,13 +269,14 @@ library(readtext)
 library(quanteda)
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
 ger_korpus <- quanteda::corpus(ger_texte)
-kafka_korpus <- corpus_subset(ger_korpus, Autor == "kafka")
+kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 
 ```
 
 Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden: 
 
 ```{r eval = FALSE}
+library(udpipe)
 # 3. Mit Korpus zur Weiterverarbeitung in quanteda
 kafka_annotated <- udpipe_annotate(ud_model, kafka_korpus, tagger="default", parser="none", doc_id = kafka_korpus$Titel)
 kafka_df <- as.data.frame(kafka_annotated)
@@ -278,9 +286,9 @@ Da bei der Lemmatisierung Tokens wie "am" in zwei Lemmata aufgeteilt werden ("an
 
 ```{r eval = FALSE}
 # Zeilen mit NA-Werten entfernen
-kafka_cleaned_df <- kafka_df[!is.na(kafka_df), ]
-# Überall die zweite Variante in der Spalte `lemma` löschen: Hier muss jedoch ggf. im Einzelfall entschieden werden, welche Variante richtig ist!
-kafka_cleaned_df$lemma <- sub("\\|.*", "", kafka_cleaned_df$lemma)
+kafka_cleaned_df <- kafka_df[!is.na(kafka_df$lemma), ]
+# Alle Zeilen mit zwei verschiedenen Varianten in der Spalte lemma auswählen: Hier muss ggf. im Einzelfall entschieden werden, welche Variante richtig ist!
+kafka_cleaned_df[grep("\\|.*", kafka_cleaned_df$lemma), ]
 ```
 
 Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte `lemma` vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Dazu kombinieren wir die Lemmata aus jedem der Texte in einer einzigen Zeile, sodass wir einen Dataframe mit einer Zeile je Text erhalten, der in einer neuen Spalte "text" einen character Vektor mit den Lemmata aus diesem Text enthält. Ein Dataframe mit dieser Struktur ist kompatibel mit der Quanteda-`corpus()`-Funktion. Um unseren Dataframe zu bearbeiten, verwenden wir die Funktionen `group_by()` und `summarise()` aus dem Paket `dplyr`: 

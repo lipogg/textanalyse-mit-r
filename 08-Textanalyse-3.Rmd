@@ -97,7 +97,7 @@ maerchen_toks_rm <- tokens_remove(maerchen_toks, pattern = stopwords("de"))
 
 Wir haben jetzt also ein corpus-Objekt sowie zwei verschiedene tokens-Objekte (eins mit und eins ohne Stoppwörter), die wir in unserer Analyse verwenden können. 
 
-## Einstieg: absolute Häufigkeiten
+## Absolute Häufigkeiten und das Zipf'sche Gesetz
 
 Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Aus der letzten Woche kennt ihr bereits die `summary()`-Funktion, die ein Quanteda Corpus-Objekt als Argument annimmt und einen Dataframe mit der Anzahl von Types und Tokens zu jedem Text liefert. Der Text wird dabei automatisch mit den Defaultargumenten tokenisiert. 
 
@@ -118,7 +118,7 @@ token_info[order(token_info$Tokens, decreasing = TRUE),]
 Um uns einen visuellen Überblick zu verschaffen, können wir die Tokenanzahl auch visualisieren. Dazu verwenden wir das Paket `ggplot2`, welches spezialisierte Funktionen zur Datenvisualisierung bietet. 
 
 :::tip
-Visualisierungen erstellen mit ggplot2
+Grafiken erstellen mit ggplot2
 
 Die Syntax zur Erstellung von Grafiken mit ggplot2 folgt einem eigenen Design-Prinzip, das nach dem Titel des zugrundeliegenden Werks ["Grammar of Graphics"](https://doi.org/10.1007/0-387-28695-0) genannt wird. Diese "Grammatik" legt fest, wie die einzelnen Bestandteile einer Grafik beschrieben und konstruiert werden können. Konkret bedeutet das, dass ggplot2-Grafiken immer als mehrere, übereinanderliegende Ebenen erstellt werden, die mit einem `+`-Operator verknüpft werden: Die erste Ebene ist dabei immer ein Datenobjekt, das mit der Funktion `ggplot()` erzeugt wird. Welche Ebenen es genau gibt könnt ihr in den [ggplot2-Dokumentationsseiten](https://ggplot2.tidyverse.org/reference/index.html) nachlesen. Einen leicht verständlichen Einstieg in die Grammar of Graphics und ggplot2 bietet dieser [Artikel von Dipanjan Sarkar](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149). Einen tieferen Einblick bietet dieser [Artikel von Hadley Wickham](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098). 
 
@@ -140,7 +140,7 @@ summary_plot <- ggplot(data=token_info, aes(x=Titel, y=Tokens)) +
 
 ```
 
-Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel mit einem weiteren Paket aus dem Tidyverse, das darauf spezialisiert ist, ggplot-Grafiken in interaktive Grafiken umzuwandeln: 
+Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel mit dem Paket plotly, das darauf spezialisiert ist, ggplot-Grafiken in interaktive Grafiken umzuwandeln: 
 
 ```{r warning=FALSE, message=FALSE, fig.width=8, fig.height=6}
 library(plotly)
@@ -171,7 +171,7 @@ ggplot(token_info, aes(x = "", y = Tokens)) +
 :::task
 Verständnisfragen:
 
-- Beschreibt die Verteilung der Tokens in unserem Korpus anhand des Boxplots. 
+- Beschreibt die Verteilung der Tokens in unserem Korpus anhand des Boxplots. Falls ihr nicht wisst, was ein Boxplot ist, ist an dieser Stelle Eigenrecherche gefordert, in diesem Fall hilft sogar [Wikipedia](https://de.wikipedia.org/wiki/Box-Plot) weiter. 
 
 :::
 
@@ -340,7 +340,7 @@ plotly_plot
 
 Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein Token in dem entsprechenden Text vorkommt. Die Tochter-Tokens sind also über das gesamte Korpus verteilt und kommen nicht in einem bestimmten Märchen ganz besonders häufig vor. 
 
-Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? Probiert es aus! 
+Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? 
 
 ## Quellen {-}
 

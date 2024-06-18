@@ -87,3 +87,5 @@ corpus-objekt-erstellen-und-preprocessing
 token-häufigkeitsanalyse
 einstieg-absolute-häufigkeiten
 corpus-objekt-erstellen-und-erste-preprocessingschritte
+einstieg-absolute-häufigkeiten-und-das-zipfsche-gesetz
+absolute-häufigkeiten-und-das-zipfsche-gesetz

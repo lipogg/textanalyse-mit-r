@@ -35,9 +35,9 @@ setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
 
 ```
 
-Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory". Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Zip-Ordner müsst ihr vorher entpacken!
+Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory". Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Achtung: Zip-Ordner müsst ihr vorher entpacken!
 
-Wenn wir das Arbeitsverzeichnis gesetzt haben, können wir die Dateien einlesen. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
+Wenn ihr das Arbeitsverzeichnis gesetzt habt, könnt ihr die Dateien einlesen. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
 
 
 ```{r}
@@ -71,9 +71,9 @@ Wir laden zunächst nur das Paket quanteda. Die restlichen Pakete werden wir aus
 library(quanteda)
 ```
 
-## Corpus-Objekt erstellen und Preprocessing
+## Corpus-Objekt erstellen und erste Preprocessingschritte
 
-Wir werden in der Analyse verschiedene Methoden einmal auf das Korpus mit und einmal ohne Stoppwörter anwenden, denn je nach Fragestellung und Methode sind Stoppwörter mehr oder weniger interessant. Deswegen erstellen wir in diesem Abschnitt zwei verschiedene tokens-Objekte. Wir werden aber auch sehen, dass Textanalyse und Preprocessing eigentlich ein iterative Prozesse sind: Es kommt oft vor, dass bei der Analyse weitere Preprocessingschritte notwendig werden.
+Wir werden in der Analyse verschiedene Methoden einmal auf das Korpus mit und einmal ohne Stoppwörter anwenden, denn je nach Fragestellung und Methode sind Stoppwörter mehr oder weniger interessant. Deswegen erstellen wir in diesem Abschnitt zwei verschiedene tokens-Objekte. Wir werden aber auch sehen, dass Textanalyse und Preprocessing eigentlich iterative Prozesse sind: Es kommt oft vor, dass bei der Analyse weitere Preprocessingschritte notwendig werden.
 
 ```{r}
 
@@ -99,7 +99,7 @@ Wir haben jetzt also ein corpus-Objekt sowie zwei verschiedene tokens-Objekte (e
 
 ## Einstieg: absolute Häufigkeiten
 
-Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Hierbei interessiert uns vor allem, wie lang die einzelnen Texte sind, denn wenn wir später Worthäufigkeiten betrachten wollen, müssen wir wissen, ob es vielleicht einzelne Texte gibt, die besonders lang sind.  Hierfür wenden wir einfach die summary()-Funktion auf das corpus-Objekt an. Beim Aufruf der summary()-Funktion wird der Text erst mit den Defaultargumenten tokenisiert. 
+Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Aus der letzten Woche kennt ihr bereits die `summary()`-Funktion, die ein Quanteda Corpus-Objekt als Argument annimmt und einen Dataframe mit der Anzahl von Types und Tokens zu jedem Text liefert. Der Text wird dabei automatisch mit den Defaultargumenten tokenisiert. 
 
 ```{r attr.output='style="max-height: 150px;"'}
 
@@ -107,7 +107,7 @@ token_info <- summary(maerchen_corpus, 200)
 token_info
 ```
 
-Um schnell den längsten und kürzesten Text zu finden, können wir einfach wieder die Funktionen `max()` und `min()` anwenden (s. [Kapitel 5.5](https://lipogg.github.io/einfuehrung-in-r/textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte)), oder den Dataframe absteigend nach der Spalte Types bzw. Tokens sortieren: 
+Um schnell den längsten und kürzesten Text zu finden, können wir einfach wieder die Funktionen `max()` und `min()` anwenden (s. [Kapitel 5.5](https://lipogg.github.io/textanalyse-mit-r/textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte)), oder den Dataframe absteigend nach der Spalte Types bzw. Tokens sortieren: 
 
 ```{r attr.output='style="max-height: 150px;"'}
 
@@ -115,9 +115,7 @@ token_info[order(token_info$Tokens, decreasing = TRUE),]
 ```
 
 
-Um einen visuellen Überblick zu verschaffen, können wir die Tokenanzahl auch visualisieren. Dazu verwenden wir das Paket `ggplot2`, welches spezialisierte Funktionen zur Datenvisualisierung bietet. 
-
-
+Um uns einen visuellen Überblick zu verschaffen, können wir die Tokenanzahl auch visualisieren. Dazu verwenden wir das Paket `ggplot2`, welches spezialisierte Funktionen zur Datenvisualisierung bietet. 
 
 :::tip
 Visualisierungen erstellen mit ggplot2
@@ -127,7 +125,7 @@ Die Syntax zur Erstellung von Grafiken mit ggplot2 folgt einem eigenen Design-Pr
 :::
 
 
-Bei der Arbeit mit quanteda-Objekten ist wichtig zu beachten, dass die Funktion `ggplot()` als Input einen Dataframe erwartet. Das Objekt `token_info` ist bereits ein Dataframe und kann direkt als Argument der `ggplot()`-Funktion übergeben werden. Als zusätzliches Argument geben wir mithilfe der Funktion `aes()`  eine "Ästhetik" für das Datenobjekt an, welche die Dimensionen der Daten bestimmt, also welche Spalte des Dataframes auf welcher Achse abgebildet werden sollen. Alle weiteren Ebenen werden dem Datenobjekt mithilfe des `+`-Operators angefügt: Zunächst ein geometrisches Objekt ("geom"), das bestimmt, dass die Datenpunkte als Punkte dargestellt werden sollen, nicht etwa als Säulen oder Linien (also `geom_point()`). Die restlichen drei Ebenen dienen dazu, das Aussehen des Plots anzupassen: Es wird mit `theme_bw()` eine Designvorlage gewählt und anschließend mit `theme()` angepasst. `ggtitle()` bestimmt zuletzt den Titel des Plots.
+Bei der Erstellung von Visualisierungen für quanteda-Objekte ist wichtig zu beachten, dass die Funktion `ggplot()` als Input einen Dataframe erwartet. Das Objekt `token_info` ist bereits ein Dataframe und kann direkt als Argument der `ggplot()`-Funktion übergeben werden. Als zusätzliches Argument geben wir mithilfe der Funktion `aes()`  eine "Ästhetik" für das Datenobjekt an, welche die Dimensionen der Daten bestimmt, also welche Spalte des Dataframes auf welcher Achse abgebildet werden sollen. Alle weiteren Ebenen werden dem Datenobjekt mithilfe des `+`-Operators angefügt: Zunächst ein geometrisches Objekt ("geom"), das bestimmt, dass die Datenpunkte als Punkte dargestellt werden sollen, nicht etwa als Säulen oder Linien (also `geom_point()`). Die restlichen drei Ebenen dienen dazu, das Aussehen des Plots anzupassen: Es wird mit `theme_bw()` eine Designvorlage gewählt und anschließend mit `theme()` angepasst. `ggtitle()` bestimmt zuletzt den Titel des Plots.
 
 ```{r warning=FALSE, fig.width=10, fig.height=6}
 library(ggplot2)
@@ -137,7 +135,8 @@ summary_plot <- ggplot(data=token_info, aes(x=Titel, y=Tokens)) +
   geom_point() + 
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=4)) + 
-  ggtitle("Anzahl Tokens / Text")
+  ggtitle("Anzahl Tokens / Text") + 
+  labs(y="Anzahl Tokens")
 
 ```
 
@@ -159,7 +158,7 @@ Verständnisfragen:
 
 :::
 
-Wenn man im Plot-Fenster den Cursor über die Visualisierung bewegt, werden die x- und y-Werte zu den einzelnen Datenpunkten automatisch angezeigt. Der Grafik können wir entnehmen, dass das Märchen "Die zwei Brüder" mit einer Tokenanzahl von 9265 das mit Abstand längste Märchen ist, und dass die meisten Märchen weniger als 2500 Tokens zu haben scheinen. Die Visualisierung ist aber unübersichtlich, da die Titel auf der x-Achse erst durch Markieren der einzelnen Datenpunkte sichtbar werden. Die manuelle Durchsicht der Häufigkeiten mithilfe dieses Diagramms ist deswegen unpraktisch. Am besten wäre es, wenn wir auf einen Blick sehen könnten, wie stark die Tokenanzahl der Texte in unserem Korpus gestreut sind, ob es besonders lange Texte gibt, und wie viele Tokens die meisten Texte haben. So einen zusammenfassenden Blick auf unser Korpus bietet ein **Boxplot**: 
+Wenn man im Plot-Fenster den Cursor über die Visualisierung bewegt, werden die x- und y-Werte zu den einzelnen Datenpunkten automatisch angezeigt. Der Grafik können wir entnehmen, dass das Märchen "Die zwei Brüder" mit einer Tokenanzahl von 9265 das mit Abstand längste Märchen ist, und dass die meisten Märchen weniger als 2500 Tokens zu haben scheinen. Das ist eine nützliche Information, aber die Visualisierung ist sehr unübersichtlich, da die Titel auf der x-Achse erst durch Markieren der einzelnen Datenpunkte sichtbar werden. Die manuelle Durchsicht der Häufigkeiten mithilfe dieses Diagramms ist deswegen unpraktisch. Am besten wäre es, wenn wir auf einen Blick sehen könnten, wie stark die Tokenanzahl der Texte in unserem Korpus variiert, ob es besonders lange Texte gibt, und wie viele Tokens die meisten Texte haben. So einen zusammenfassenden Blick auf unser Korpus bietet ein **Boxplot**: 
 
 ```{r}
 ggplot(token_info, aes(x = "", y = Tokens)) +
@@ -172,11 +171,11 @@ ggplot(token_info, aes(x = "", y = Tokens)) +
 :::task
 Verständnisfragen:
 
-- Beschreibt die Verteilung der Tokens in unserem Korpus anhand des Boxplots.
+- Beschreibt die Verteilung der Tokens in unserem Korpus anhand des Boxplots. 
 
 :::
 
-Als nächstes schauen wir uns an, welche Tokens denn in unserem Korpus am häufigsten vorkommen. Dazu erstellen wir zunächst eine DFM, und zwar zunächst aus dem tokens-Objekt mit Stoppwörtern, und lassen uns anschließend mit der quanteda-Funktion `topfeatures()` einen **Überblick über die häufigsten Tokens**  ausgeben: 
+Als nächstes schauen wir uns an, welche Tokens denn in unserem Korpus am häufigsten vorkommen. Dazu erstellen wir zunächst eine Document-Feature-Matrix (DFM), und zwar zunächst aus dem tokens-Objekt mit Stoppwörtern, und lassen uns anschließend mit der quanteda-Funktion `topfeatures()` einen **Überblick über die häufigsten Tokens**  ausgeben: 
 
 ```{r attr.output='style="max-height: 150px;"'}
 
@@ -187,12 +186,71 @@ topfeatures(maerchen_dfm, n=100)
 
 ```
 
-Diese Übersicht ist jedoch nicht sonderlich interessant: Stoppwörter dominieren erwartungsgemäß die Übersicht. Viel interessanter wäre es für uns aber, wenn wir durch die Ansicht beispielsweise erfahren könnten, welche Charaktere besonders häufig in unserem Märchenkorpus vorkommen. Wir verwenden deswegen das tokens-Objekt ohne Stoppwörter: 
+Diese Übersicht zeigt, dass die häufigsten Wörter in unserem Korpus anscheinend Funktionswörter wie "und", "der" oder "es" sind. Warum ist das so? Handelt es sich dabei um eine besondere Eigenschaft von Märchentexten, von unserem konkreten Korpus oder gar nur von einigen wenigen Texten in unserem Korpus, in denen zufällig besonders viele Funktionswörter vorkommen? 
+Die Funktion `textstat_frequency()` liefert detaillierte Informationen zu den 100 häufigsten Tokens als Dataframe. Neben dem Vorkommen der einzelnen Tokens gibt der Dataframe auch an, in wie vielen Texten jedes Token vorkommt: 
+
+```{r warning=FALSE, message=FALSE}
+library("quanteda.textstats")
+```
+
+```{r attr.output='style="max-height: 150px;"'}
+# Detaillierte Informationen zu den 100 häufigsten Tokens
+tstat_freq <- textstat_frequency(maerchen_dfm, n = 100)
+tstat_freq
+```
+
+Dem Dataframe können wir entnehmen, dass die Funktionswörter in allen oder fast allen der 193 Märchen in unserem Märchenkorpus vorkommen. Das ist kein Zufall: Tatsächlich kommen in natürlichsprachigen Texten in der Regel einige wenige Wörter sehr häufig vor und viele Wörter sehr selten. Wenn wir die häufigsten Wörter des `tstat_freq`-Dataframes nach ihrer Häufigkeit ordnen und visualisieren, wird dieser Umstand direkt deutlich: 
+
+```{r}
+# Top Features visualisieren
+ggplot(tstat_freq, aes(x = reorder(feature, -frequency), y = frequency)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
+  labs(x = "Feature", y = "Frequency")
+# Die Funktion `reorder(feature, -frequency)` bewirkt, dass die Tokens nach Häufigkeit geordnet werden, sodass die Tokens mit der höchsten Frequenz auf der linken Seite der x-Achse angezeigt werden.
+```
+
+
+
+:::task
+Verständnisfragen: 
+
+- Welche Informationen liefert die Funktion `textstat_frequency()`?
+- Was wäre ein passender Titel für die Visualisierung? 
+- Wozu wird die Funktion `labs()` verwendet? Was beschreibt diese Ebene? 
+- Was passiert, wenn das - vor frequency in `reorder(feature, -frequency)` entfernt wird? 
+:::
+
+Die hier am Beispiel unseres Märchenkorpus aufgezeigte Eigenschaft natürlichsprachlicher Texte lässt sich formal mit dem **Zipf'schen Gesetz** beschreiben, nach dem in einem Korpus von natürlichsprachlichen Äußerungen die Häufigkeit irgendeines Wortes umgekehrt proportional zu seinem Rang in der Häufigkeitstabelle ist. Dieser Umstand begründet auch die Motivation, Funktionswörter und andere erwartungsgemäß besonders häufig vorkommende Tokens während des Preprocessing zu entfernen. Die folgende Grafik vergleicht die Verteilung der Wörter in unserem Märchenkorpus ("observed") mit einer idealtypischen oder theoretischen Verteilung nach dem Zipf'schen Gesetz (Zipf-Verteilung, "theoretical"): 
+
+```{r}
+# Diesen Code könnt ihr ignorieren
+tstat_freq_alle <- textstat_frequency(maerchen_dfm, n = ncol(maerchen_dfm)) 
+# Aber falls ihr den Code doch genauer verstehen wollt: Die Spalte rank wird hier zunächst transformiert, sodass Ränge konsekutiv sind und beim Vorkommen mehrerer gleicher Ränge trotzdem kontinuierlich weitergezählt wird. Das lässt sich leider seit Quanteda Version 3 nicht mehr mit der textstat_frequency()-Funktion einstellen, hier ist die Funktionsdokumentation veraltet
+neuer_rang <- c(TRUE, diff(tstat_freq_alle$rank) != 0)
+tstat_freq_alle$rank <- cumsum(neuer_rang)
+
+zipfs_freq = ifelse(tstat_freq_alle$rank == 1, tstat_freq_alle$frequency, dplyr::first(tstat_freq_alle$frequency) / tstat_freq_alle$rank ^ 1)
+
+ggplot(tstat_freq_alle, aes(x = rank, y = frequency, group="all")) +
+  geom_line(aes(color = "observed")) +
+  geom_line(aes(y = zipfs_freq, color = "theoretical")) +
+  geom_point(aes(color = "observed")) +
+  geom_point(aes(y = zipfs_freq, color = "theoretical")) +
+  labs(x = "Rank", y = "Frequency")
+
+```
+
+Wenn wir einen Eindruck davon gewinnen möchten, welche inhaltlich möglicherweise aufschlussreichen Wörter in unserem Korpus vorkommen, dann ist es also sinnvoll, beim Preprocessing die besonders häufig vorkommenden Wörter mithilfe einer Stoppwortliste zu entfernen. Im Abschnitt 8.2 haben wir bereits für diesen Zweck ein Objekt `maerchen_toks_rm` erstellt. Dieses Objekt enthält unsere Märchentexte als Tokens ohne Stoppwörter und Satzzeichen; zusätzlich wurden alle Wörter in Kleinbuchstaben umgewandelt. Durch das Umwandeln der Wörter in Kleinbuchstaben können wir später einfacher nach bestimmten Tokens suchen, die sowohl in Groß- als auch in Kleinschreibung vorkommen. Dazu in Kürze mehr. 
+
+Zunächst verschaffen wir uns noch einmal einen Überblick über die besonders häufigen Tokens in unserem Korpus, aber diesmal ohne die Stoppwörter und Satzzeichen: 
 
 ```{r attr.output='style="max-height: 150px;"'}
 
 maerchen_dfm_rm <- dfm(maerchen_toks_rm)
 topfeatures(maerchen_dfm_rm, n=100)
+tstat_freq_rm <- textstat_frequency(maerchen_dfm_rm, n = 100)
+tstat_freq_rm
 ```
 
 Die häufigsten Tokens können auch in einer **Wortwolke** visualisiert werden, und zwar mit der Quanteda-Funktion `textplot_wordcloud()`: 
@@ -219,7 +277,7 @@ Verständnisfragen:
 
 :::
 
-Eines der häufigsten Wörter ist "dass". Aber dabei handelt es sich eigentlich um ein Stoppwort, und Stoppwörter haben wir doch eigentlich entfernt! Inspiziert die [Stoppwortliste](http://snowball.tartarus.org/algorithms/german/stop.txt), welche die Funktion `tokens_remove()` verwendet: Warum wurde das Wort "dass" nicht entfernt? Lest euch nochmal den Abschnitt "Stoppwörter entfernen" im Kapitel "Textanalyse II" an. Wie können wir das Problem lösen? 
+Eines der häufigsten Wörter ist "dass". Aber Stoppwörter haben wir doch eigentlich entfernt! Inspiziert die [Stoppwortliste](http://snowball.tartarus.org/algorithms/german/stop.txt), welche die Funktion `tokens_remove()` verwendet: Warum wurde das Wort "dass" nicht entfernt? Lest euch nochmal den Abschnitt "Stoppwörter entfernen" im Kapitel "Textanalyse II" an. Wie können wir das Problem lösen? 
 
 Die wohl einfachste Lösung wäre, das Token, das in der Stoppwortliste nicht enthalten ist, zusätzlich manuell zu entfernen: 
 
@@ -235,82 +293,43 @@ textplot_wordcloud(maerchen_dfm_rm,
                    )
 ```
 
-So ist die Wortwolke deutlich informativer. Noch interessanter wäre es aber, wenn wir nicht nur erfahren könnten, wie häufig jedes Token vorkommt, sondern auch beispielsweise, **in wie vielen Texten ein Token vorkommt**. Detailliertere Informationen zum Vorkommen der in diesem Fall 100 häufigsten Tokens bietet die Funktion `textstat_frequency()`: 
-
-```{r warning=FALSE, message=FALSE}
-library("quanteda.textstats")
-```
-
-```{r attr.output='style="max-height: 150px;"'}
-# Detaillierte Informationen zu den 100 häufigsten Tokens
-tstat_freq_maerchen <- textstat_frequency(maerchen_dfm, n = 100)
-tstat_freq_maerchen
-```
+So ist die Wortwolke deutlich informativer. Diese Wortwolke können wir bereits zur explorativen Annäherung an unsere Fragestellung nutzen. Wir interessieren uns dafür, wie verschiedene Märchencharaktere beschrieben werden. Zunächst müssen wir also überhaupt erstmal Charaktere, die in unseren Märchen vorkommen, identifizieren. Unter den 100 häufigsten Tokens finden sich nach der Wortwolke zu urteilen scheinbar auch einige Charaktere: Unter den Wörtern, die im Zentrum der Wortwolke am größten dargestellt sind, befinden sich die Tokens "könig", "frau", "vater", "mann", "mädchen", und etwas kleiner "hans", "kind", "königstochter", "herr". Erste Vermutungen, die wir anhand der Wortwolke gemacht haben, können wir anschließend mithilfe des bereits erstellten Dataframes `tstat_freq_rm` überprüfen: Haben wir vielleicht einfach nur das Token "prinzessin" übersehen? 
 
 ```{r}
-# Überprüfen, ob ein gesuchtes Token unter den 100 häufigsten Tokens ist? 
-"tochter" %in% tstat_freq_maerchen$feature
-# Top Features visualisieren
-ggplot(tstat_freq_maerchen, aes(x = reorder(feature, -frequency), y = frequency)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
-  labs(x = "Feature", y = "Frequency")
+"prinzessin" %in% tstat_freq_rm$feature
 ```
 
-Die Funktion `reorder(feature, -frequency)` bewirkt, dass die Tokens nach Häufigkeit geordnet werden, sodass die Tokens mit der höchsten Frequenz auf der linken Seite der x-Achse angezeigt werden.
-
-:::task
-Verständnisfragen: 
-
-- Welche Informationen liefert die Funktion `textstat_frequency()`?
-- Was wäre ein passender Titel für die Visualisierung? 
-- Wozu wird die Funktion `labs()` verwendet? Was beschreibt diese Ebene? 
-- Was passiert, wenn das - vor frequency in `reorder(feature, -frequency)` entfernt wird? 
-:::
-
-Es fallen bei einer genaueren Betrachtung der Darstellung zwei Aspekte auf: Zum einen sind die häufigsten 23 Wörter alle Funktionswörter, und zum anderen scheint der Abstand zwischen den Häufigkeiten der einzelnen Tokens untereinander bei den häufigeren Tokens größer zu sein als bei den weniger häufigen Tokens. Dieser Umstand lässt sich formal mit dem **Zipf'schen Gesetz** beschreiben, nach dem in einem Korpus von natürlichsprachlichen Äußerungen die Häufigkeit irgendeines Wortes umgekehrt proportional zu seinem Rang in der Häufigkeitstabelle ist. Dieser Umstand begründet auch die Motivation, Funktionswörter und andere besonders häufig vorkommende Tokens während des Preprocessing zu entfernen. 
+Und in wie vielen Texten kommt das Token "könig" vor? 
 
 ```{r}
-# Diesen Code könnt ihr ignorieren
-tstat_freq_alle <- textstat_frequency(maerchen_dfm, n = ncol(maerchen_dfm)) 
-# Spalte rank transformieren, sodass Ränge konsekutiv sind und beim Vorkommen mehrerer gleicher Ränge trotzdem kontinuierlich weitergezählt wird: Das lässt sich leider seit Quanteda Version 3 nicht mehr mit der textstat_frequency()-Funktion einstellen
-neuer_rang <- c(TRUE, diff(tstat_freq_alle$rank) != 0)
-tstat_freq_alle$rank <- cumsum(neuer_rang)
-
-zipfs_freq = ifelse(tstat_freq_alle$rank == 1, tstat_freq_alle$frequency, dplyr::first(tstat_freq_alle$frequency) / tstat_freq_alle$rank ^ 1)
-
-ggplot(tstat_freq_alle, aes(x = rank, y = frequency, group="all")) +
-  geom_line(aes(color = "observed")) +
-  geom_line(aes(y = zipfs_freq, color = "theoretical")) +
-  geom_point(aes(color = "observed")) +
-  geom_point(aes(y = zipfs_freq, color = "theoretical")) +
-  labs(x = "Rank", y = "Frequency")
-
+tstat_freq$docfreq[tstat_freq_rm$feature == "könig"]
 ```
 
-Aber zurück zu den 100 häufigsten Tokens. Unter den 100 häufigsten Tokens finden sich auch einige Charaktere:
-Neben Frau, Mann, König und Königin gehören auch Königstochter, Tochter und Mädchen zu den 100 häufigsten Tokens und kommen in je ca. 50 der Märchen vor; ebenso Junge. Die Wörter Königssohn und Sohn dagegen nicht. Die Wörter Prinz und Prinzessin scheinen allgemein nicht vorzukommen. Das verwundert vielleicht im ersten Moment, wir werden aber am Ende der Stunde noch einmal darauf zurückkommen.  
 
-Nun haben wir aber ja anfangs bemerkt, dass die Märchen sehr verschiedene Längen haben. Die Übersicht, die wir mithilfe der Funktion `textstat_frequency()` erhalten haben, verrät zwar, dass die Tokens in je etwa fünfzig Märchen vorkommen, allerdings wissen wir nicht, wie sie über diese Märchen verteilt sind. Es könnte ja sein, dass ein Märchen, beispielsweise das längste, besonders häufig ein bestimmtes Token enthält. Im Folgenden werden wir also überprüfen, ob ein Token ganz besonders häufig in dem längsten Text vorkommt, aber kaum in den anderen. Als Beispiel nehmen wir die Tokens mit der Zeichenkette "tochter".  
+Eine genauere Inspektion des Dataframes `tstat_freq_rm` zeigt außerdem, dass die Tokens "königstochter", aber auch "tochter" und "mädchen" zwar in der Wortwolke recht unscheinbar erscheinen, aber dass sie dennoch in je ca. 50 der Märchen vorkommen. Die Tokens "königssohn" und "sohn" tauchen dagegen unter den 100 häufigsten Tokens überhaupt nicht auf, ebenso die Wörter Prinz und Prinzessin. Das verwundert vielleicht im ersten Moment, wir werden aber später noch einmal darauf zurückkommen.  
+
+Nun haben wir aber ja anfangs bemerkt, dass die Märchen sehr verschiedene Längen haben. Der Dataframe `tstat_freq_rm`, den wir mithilfe der Funktion `textstat_frequency()` erhalten haben, verrät zwar, dass die Tokens in je etwa fünfzig Märchen vorkommen, allerdings wissen wir nicht, wie sie über diese Märchen verteilt sind. Es könnte ja sein, dass ein Märchen, beispielsweise das längste, besonders häufig ein bestimmtes Token enthält. Im Folgenden werden wir also die **Häufigkeit der Tokens je Text** vergleichen, und überprüfen, ob ein Token vielleicht ganz besonders häufig in dem längsten Text vorkommt, aber kaum in den anderen. Als Beispiel nehmen wir die Tokens mit der Zeichenkette "tochter". Um das Vorkommen der Tokens in verschiedenen Texten zu vergleichen, müssen wir der Funktion `textstat_frequency()` ein zusätzliches Argument übergeben: `groups = Titel` legt fest, dass die berechneten Häufigkeiten für jeden Text einzeln bestimmt werden können. `Titel` ist dabei der Vektor mit den Titeln der Texte, den wir ganz am Anfang mit der `readtext()`-Funktion aus dem Dateinamen eingelesen haben (siehe dazu auch das Kapitel "Textanalyse I": da haben wir das Konzept der Metadaten auf Dokumentenebene, oder "docvars", etwas ausführlicher besprochen). Mit dem Ausdruck `grepl("tochter", tstat_freq_text$feature)` werden anschließend nur die Zeilen aus dem Dataframe tstat_freq_grouped ausgewählt, die den character "tochter" in der Spalte `feature` enthalten. 
 
 ```{r  warning=FALSE, message=FALSE, attr.output='style="max-height: 150px;"'}
 
 library(quanteda.textstats)
 
-df <- textstat_frequency(maerchen_dfm, groups = Titel)
-subset_df <- df[grepl("tochter", df$feature), ]
-subset_df
+tstat_freq_grouped <- textstat_frequency(maerchen_dfm_rm, groups = Titel)
+tstat_subset <- tstat_freq_grouped[grepl("tochter", tstat_freq_grouped$feature), ]
+tstat_subset
 ```
+
+Die Häufigkeit der "tochter"-Tokens wird anschließend visualisiert: 
 
 ```{r  warning=FALSE, message=FALSE}
 
 library(ggplot2)
 
-tochter_plot <- ggplot(subset_df, aes(x = group, y = feature, size = frequency)) +
-  geom_point(shape=21, color="black", fill="grey") +
+tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
+  geom_point(shape=21, color="black", fill="white") +
   theme(axis.text.y = element_text(size=5), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
-  labs(x = "Text", y = "Feature")
+  labs(x = "Text", y = "Token")
 
 library(plotly)
 plotly_plot <- ggplotly(tochter_plot)
@@ -320,6 +339,7 @@ plotly_plot
 ```
 
 Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein Token in dem entsprechenden Text vorkommt. Die Tochter-Tokens sind also über das gesamte Korpus verteilt und kommen nicht in einem bestimmten Märchen ganz besonders häufig vor. 
+
 Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? Probiert es aus! 
 
 ## Quellen {-}

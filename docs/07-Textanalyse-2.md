@@ -4,6 +4,27 @@ Im Kapitel "Textanalyse I" haben wir bereits die grundlegenden Quanteda-Objekte 
 
 Welche Preprocessing-Schritte im Einzelnen durchgeführt werden, hängt vom Kontext, von der Qualität der Texte und von der Forschungsfrage ab. Für manche Forschungsfragen kann es z.B. interessant sein, manche Stoppwörter beizubehalten oder zusätzliche Wörter zu entfernen. In anderen Fällen soll dagegen vielleicht mit den Grundformen der Wörter (Lemma) gearbeitet werden; die Texte müssen also "lemmatisiert" werden. 
 
+
+:::tip
+Der Pipe-Operator `%>%`
+
+In den Beispielen in diesem Kapitel kommt manchmal der sogenannte Pipe-Operator `%>%` vor. Diesen Operator habt ihr bereits im Kapitel ["R Basics IV: Funktionen und Pakete"](https://lipogg.github.io/textanalyse-mit-r/r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet) kurz kennengelernt. Der Pipe-Operator wird verwendet, um mehrere Funktionsaufrufe miteinander zu verketten. Dabei übernimmt die nachfolgende Funktion als erstes Argument jeweils den Rückgabewert der vorhergehenden Funktion. Im folgenden Beispiel übergibt der Pipe-Operator der Funktion `paste0()` das Objekt `satz` als Argument. Die `paste0()`-Funktion fügt an den Satz ein Fragezeichen an und übergibt die bearbeitete Zeichenkette "Hallo, wie geht es dir?" an die Funktion `strsplit()`. Die Funktion `strsplit()` teilt dann den Satz anhand der Leerzeichen in einzelne Einheiten auf und gibt einen character-Vektor zurück. Dieser character-Vektor wird zuletzt der Variable `woerter` zugewiesen. 
+
+```
+satz <- "Hallo, wie geht es dir"
+
+woerter <- satz %>%
+  paste0("?") %>%
+  strsplit(" ")
+```
+
+Ein Ausdruck der Art `x %>% f` ist also äquivalent zu `f(x)`.
+
+:::
+
+
+
+
 ## Tokenisieren und segmentieren
 
 Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon kennengelernt. Wir schauen uns als Beispiel wieder den Beispielsatz aus dem letzten Übungsblatt an, mit ein paar Zusätzen:

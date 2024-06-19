@@ -49,6 +49,7 @@ Textanalyse mit Quanteda:
 Datenvisualisierung mit ggplot2:
 
 * Healy, Kieran (2019). Data Visualization. A Practical Introduction, https://socviz.co/
+* Wickham, Hadley (2016). ggplot2. Elegant Graphics for Data Analysis, https://ggplot2-book.org/
 
 Statistik: 
 

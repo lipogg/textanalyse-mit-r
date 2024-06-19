@@ -350,9 +350,11 @@ Beim Stemming werden Wörter auf ihren Wortstamm reduziert, indem Wortendungen n
 
 
 ```r
+library(quanteda)
+
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 
-beispiel_stem <- quanteda::tokens_wordstem(tokens(beispiel), language="ger")
+beispiel_stem <- tokens_wordstem(tokens(beispiel), language="ger")
 print(beispiel_stem, max_ntoken = 200)
 ```
 
@@ -413,7 +415,6 @@ Diese Methode kann zur Lemmatisierung auch von deutsch- und anderssprachigen Tex
 ```r
 # 0. Vorbereitung
 install.packages("udpipe")
-
 library(udpipe)
 
 # Deutsches Sprachmodell herunterladen und laden
@@ -534,8 +535,9 @@ Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Ko
 ```r
 library(readtext)
 library(quanteda)
+
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
-ger_korpus <- quanteda::corpus(ger_texte)
+ger_korpus <- corpus(ger_texte)
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 ```
 
@@ -544,6 +546,7 @@ Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpu
 
 ```r
 library(udpipe)
+
 # 3. Mit Korpus zur Weiterverarbeitung in quanteda
 kafka_annotated <- udpipe_annotate(ud_model, kafka_korpus, tagger="default", parser="none", doc_id = kafka_korpus$Titel)
 kafka_df <- as.data.frame(kafka_annotated)
@@ -555,8 +558,12 @@ Da bei der Lemmatisierung Tokens wie "am" in zwei Lemmata aufgeteilt werden ("an
 ```r
 # Zeilen mit NA-Werten entfernen
 kafka_cleaned_df <- kafka_df[!is.na(kafka_df$lemma), ]
+
 # Alle Zeilen mit zwei verschiedenen Varianten in der Spalte lemma auswählen: Hier muss ggf. im Einzelfall entschieden werden, welche Variante richtig ist!
-kafka_cleaned_df[grep("\\|.*", kafka_cleaned_df$lemma), ]
+kafka_cleaned_df[grep("\\|", kafka_cleaned_df$lemma), ]
+
+# Als "quick and dirty" Methode kann z.B. einfach immer die letzte Variante ausgewählt werden
+kafka_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", kafka_cleaned_df$lemma)
 ```
 
 Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte `lemma` vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Dazu kombinieren wir die Lemmata aus jedem der Texte in einer einzigen Zeile, sodass wir einen Dataframe mit einer Zeile je Text erhalten, der in einer neuen Spalte "text" einen character Vektor mit den Lemmata aus diesem Text enthält. Ein Dataframe mit dieser Struktur ist kompatibel mit der Quanteda-`corpus()`-Funktion. Um unseren Dataframe zu bearbeiten, verwenden wir die Funktionen `group_by()` und `summarise()` aus dem Paket `dplyr`: 
@@ -564,13 +571,13 @@ Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu j
 
 ```r
 library(dplyr)
-# Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmas zu einem zusammenhängenden Text zusammengefügt werden 
+# Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden 
 kafka_grouped <- kafka_cleaned_df %>% 
   group_by(doc_id) %>% 
   summarise(text = paste(lemma, collapse = " ")) 
 View(kafka_grouped)
-# In quanteda-Korpus Objekt umwandeln
-kafka_lemmatized <- corpus(kafka_grouped)
+# In Quanteda corpus-Objekt umwandeln
+kafka_lemmatized <- corpus(kafka_grouped, docnames = maerchen_grouped$doc_id)
 # Korpus-Objekt mit den lemmatisierten Texten speichern
 saveRDS(kafka_lemmatized, file="kafka_lemmatized.rds")
 ```

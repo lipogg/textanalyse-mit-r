@@ -200,10 +200,11 @@ Quelle: [Jurafsky/Martin 2023, S. 2](https://web.stanford.edu/~jurafsky/slp3/2.p
 Beim Stemming werden Wörter auf ihren Wortstamm reduziert, indem Wortendungen nach bestimmten Regeln entfernt werden. Das Stemming schauen wir uns nur äußerst kurz an, denn in der Praxis lohnt es sich selten, dieses Verfahren anzuwenden. Zum Stemming kann die quanteda-Funktion `tokens_wordstem()` verwendet werden: 
 
 ```{r}
+library(quanteda)
 
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 
-beispiel_stem <- quanteda::tokens_wordstem(tokens(beispiel), language="ger")
+beispiel_stem <- tokens_wordstem(tokens(beispiel), language="ger")
 print(beispiel_stem, max_ntoken = 200)
 
 ```
@@ -284,9 +285,10 @@ Beachtet Zeile 29: Hier wurde das Token "am" in zwei Lemmata aufgeteilt: "an" un
 
 Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten: 
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 library(readtext)
 library(quanteda)
+
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
 ger_korpus <- corpus(ger_texte)
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
@@ -295,24 +297,24 @@ kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 
 Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden: 
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 library(udpipe)
+
 # 3. Mit Korpus zur Weiterverarbeitung in quanteda
 kafka_annotated <- udpipe_annotate(ud_model, kafka_korpus, tagger="default", parser="none", doc_id = kafka_korpus$Titel)
 kafka_df <- as.data.frame(kafka_annotated)
-```
-```{r echo=FALSE}
-kafka_annotated <- readRDS("data/kafka_annotated.rds")
-kafka_df <- as.data.frame(kafka_annotated)
+
 ```
 
 Da bei der Lemmatisierung Tokens wie "am" in zwei Lemmata aufgeteilt werden ("an" und "dem"), gibt es im Dataframe `kafka_df` einige Zeilen, in denen in der Spalte `lemma` der Wert `NA` steht. Außerdem fällt auf, dass es einige Zeilen gibt, in denen zwei mögliche Lemmata angegeben werden, die mit einem `|` getrennt sind, zum Beispiel fallen|fällen. Diese Zeilen sollten zunächst bereinigt werden und es muss entschieden werden, welche Variante die richtige ist. 
 
-```{r attr.output='style="max-height: 200px;"'}
+```{r eval=FALSE}
 # Zeilen mit NA-Werten entfernen
 kafka_cleaned_df <- kafka_df[!is.na(kafka_df$lemma), ]
+
 # Alle Zeilen mit zwei verschiedenen Varianten in der Spalte lemma auswählen: Hier muss ggf. im Einzelfall entschieden werden, welche Variante richtig ist!
-kafka_cleaned_df[grep("\\|.*", kafka_cleaned_df$lemma), ]
+kafka_cleaned_df[grep("\\|", kafka_cleaned_df$lemma), ]
+
 # Als "quick and dirty" Methode kann z.B. einfach immer die letzte Variante ausgewählt werden
 kafka_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", kafka_cleaned_df$lemma)
 

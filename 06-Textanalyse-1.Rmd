@@ -214,6 +214,11 @@ class(kafka_3)
 
 ```
 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readtext)
+ger_texte <- readtext("data/korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
+```
+
 Beachtet, dass die Funktion `typeof()` angibt, wie ein Objekt intern in R gespeichert ist. Das muss immer eine der grundlegenden R Datenstrukturen sein, die wir in Kapitel II kennengelernt haben. Die Funktion `class()` dagegen gibt an, wie ein Objekt in R behandelt wird: Das heißt, auch wenn manche Pakete ihre eigenen Datenstrukturen definieren und festlegen, welche Eigenschaften diese haben und Funktionen darauf angewendet werden können, müssen diese Datenstrukturen irgendwie wieder als R Datenstrukturen interpretiert werden, damit sie gespeichert werden können. Während das Objekt `kafka_3` also intern als Liste gespeichert ist, handelt es sich dabei eigentlich um einen Dataframe, und ganz genau gesagt um ein readtext-Objekt. Das Objekt teilt also Eigenschaften mit R Dataframes, aber es hat auch weitere spezielle Eigenschaften von readtext-Objekten, und es gibt Funktionen, die nur auf genau diese Art von Objekt angewendet werden können. 
 
 :::task
@@ -226,7 +231,7 @@ Verständnisfragen:
 
 Bereits nach dem Einlesen können wir uns einen Überblick über das Korpus verschaffen. Dabei können auch die beim Einlesen aus den Dateinamen extrahierten Metadaten zu den einzelnen Texten abgefragt werden.  
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"'}
 # Alle Texte mit Publikationsjahr 1912 auswählen 
 ger_texte$doc_id[ger_texte$Jahr == 1912]
 # Wie viele Texte gibt es aus dem Jahr 1912? 
@@ -240,38 +245,39 @@ table(ger_texte$Jahr)
 Ein Quanteda corpus-Objekt enthält die eingelesenen Texte selbst, sowie Metadaten auf Dokument- und Korpusebene. 
 
 ```{r eval=FALSE}
+install.packages("quanteda")
+```
+```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+# remove eval=FALSE and run this when rebuilding the site
+install.packages("quanteda", repos = "http://cran.us.r-project.org")
+```
+```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
 library(quanteda)
 
 # quanteda-Korpusobkjekt erstellen
-ger_korpus <- quanteda::corpus(ger_texte)
+ger_korpus <- corpus(ger_texte)
 ger_korpus
 
 ```
 
 Die Funktion `str()` kann verwendet werden, um einen Überblick über die Struktur des Objekts zu erhalten. Da ein Quanteda corpus-Objekt neben den Texten selbst auch Metadaten enthält, gibt die `str()`-Funktion einen Überblick über alle Metadaten. Die Metadaten der einzelnen Dokumente (z.B. Dateinamen, ggf. mithilfe der readtext-Funktion extrahierte docvars)  können unter `attr(*, "docvars")` eingesehen werden. `attr(*, "meta")` beschreibt dagegen alle Metadaten auf Korpusebene (z.B. Informationen zu Ort und Zeit der Erstellung des corpus-Objekts). 
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"'}
 str(ger_korpus)
 ```
 
 Mit der Funktion `summary()` können Informationen zu den Texten selbst abgerufen werden. Die Funktion berechnet für jeden Text in einem Korpus die Anzahl der Tokens, der Types und der Sätze und bietet so einen ersten Überblick über das Korpus. 
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"'}
 # Weitere Informationen abrufen mit der summary()-Funktion
-ger_info <- summary(ger_korpus, 109) 
+ger_info <- summary(ger_korpus) 
 ger_info
-?summary
 ```
 
-:::task
-Verständnisfrage:
-
-- Warum haben wir der `summary()`-Funktion beim Aufruf 109 als zusätzliches Argument übergeben? 
-:::
 
 Die `summary()`-Funktion gibt einen Dataframe zurück. Es können deswegen alle Zugriffsoperationen und Funktionen auf das Objekt `ger_info` angewendet werden, die auf Dataframes angewendet werden können:  
 
-```{r eval=FALSE}
+```{r}
 # Minimum und Maximum der Spalten Jahr und Tokens
 range(ger_info$Jahr) 
 range(ger_info$Tokens) 
@@ -289,47 +295,27 @@ ger_info$Titel[ger_info$Tokens >= 250000 & ger_info$Tokens <= 300000]
 
 ```
 
-Mithilfe von R-base-Funktionen können Daten auch visualisiert werden, zum Beispiel als **Histogramm** (Funktion `hist()`) oder als **Boxplot** (Funktion `boxplot()`). Die R-base-Funktionen sind jedoch nur für sehr einfache Visualisierungen geeignet. Mehr Anpassungsmöglichkeiten und ein moderneres Design bietet das auf die Datenvisualisierung spezialisierte Paket `ggplot2`, das wir in der übernächsten Stunde kennenlernen werden. 
-
-```{r eval=FALSE}
-# Histogramm: Anzahl der Tokens je Text
-hist(ger_info$Tokens)
-# Boxplot: Median, mittlere 50% (Interquartilsabstand), Ausreißer 
-boxplot(ger_info$Tokens)
-
-```
-
-:::task
-Verständnisfragen:
-
-- Wie kann man diese Funktionen anpassen? Schaut in die R-Hilfeseiten
-- Fügt eine Beschriftung für die x und y-Achsen hinzu, indem ihr der Funktion die zusätzlichen Argumente ylab="..." und xlab="..." übergebt. 
-- Fügt einen Titel mithilfe des Arguments main="..." hinzu.
-- Was sind die drei längsten Werke in unserem Korpus? 
-
-:::
-
 Oft ist bei der Textanalyse der Vergleich zwischen verschiedenen Teilkorpora oder Unterkorpora von Interesse, beispielsweise, wenn die Texte verschiedener Autor:innen verglichen werden sollen. Ein **Teilkorpus** kann unkompliziert nach dem Einlesen der Texte erstellt werden: 
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"'}
 # Teilkorpus aus Kafka-Texten erstellen mit R Base-Funktionen
 length(which(ger_korpus$Autor_in == "kafka"))
-which(ger_korpus$Autor_in == "kafka") # gibt aus 39 40 41 42 43 44 45 46 47 48 49
-ger_korpus[39:49] 
+which(ger_korpus$Autor_in == "kafka") # gibt aus 6 7 8 9 10 11
+ger_korpus[6:11] 
 
 # Teilkorpus aus Kafka-Texten erstellen: the quanteda way 
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 kafka_korpus
+```
 
+```{r eval=FALSE}
 # Teilkorpus erstellen und Korpusinformationen zusammenfassen in einer Zeile
 kafka_summary <- summary(corpus_subset(ger_korpus, Autor_in == "kafka"))
 # Wir können auch stattdessen den Dataframe ger_info nach Kafka-Texten filtern: 
 kafka_summary <- ger_info[ger_info$Autor_in == "kafka",]
 
-# Wie viele Texte umfasst das Kafka-Korpus?
+# Wie viele Texte umfasst das Kafka-Korpus? View() öffnet im RStudio ein neues Fenster
 View(kafka_summary) 
-
-
 ```
 
 
@@ -337,31 +323,21 @@ View(kafka_summary)
 
 Ein Quanteda tokens-Objekt bildet ein tokenisiertes Korpus als eine Liste von Vektoren ab, wobei jedes Element der Liste einem Dokument aus dem Korpus entspricht. Die Reihenfolge der Tokens ist für alle Texte in einem tokens-Objekt beibehalten.
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
+library(quanteda)
 
 # quanteda-Tokensobjekt erstellen 
-ger_toks <- quanteda::tokens(ger_korpus)
+kafka_toks <- tokens(kafka_korpus)
 
 # Print-Funktion muss für quanteda-Objekte angepasst werden: http://quanteda.io/reference/print-quanteda.html
-print(ger_toks[1]) # wird nicht komplett angezeigt
-print(ger_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
-
+print(kafka_toks[1]) # wird nicht komplett angezeigt
+print(kafka_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
 ```
 
 Auch ein tokens-Objekt kann mithilfe der Funktion `str()` untersucht werden. Quanteda tokens-Objekte enthalten neben den Tokens selbst dieselben Metadaten wie quanteda corpus-Objekte. 
 
-```{r eval=FALSE}
-
-str(ger_toks)
-
-```
-
-Und genau wie von einem Quanteda corpus-Objekt lässt sich auch eine Auswahl bestimmter Texte von einem tokens-Objekt bilden: 
-
-```{r eval=FALSE}
-# Tokens-Objekt nach Kafka-Texten filtern
-kafka_tokens <- tokens_subset(ger_toks, Autor_in == "kafka")
-kafka_tokens
+```{r attr.output='style="max-height: 200px;"'}
+str(kafka_toks)
 ```
 
 
@@ -370,13 +346,13 @@ kafka_tokens
 Für die meisten Analysemethoden wird eine sogenannte Document-Feature-Matrix (DFM) verwendet. Wie wir bereits gesehen haben, ist eine DFM eine Matrix, deren Spalten "Features" und deren Zeilen Dokumente repräsentieren. In unserem Fall sind die Features Tokens und die Dokumente sind die Texte des Korpus. 
 
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
+library(quanteda)
 
 # DFM erstellen
-kafka_dfm <- dfm(kafka_tokens)
+kafka_dfm <- dfm(kafka_toks)
 kafka_dfm
-# Gesamte dfm anzeigen
-print(kafka_dfm, max_ndoc = 200)
+
 ```
 
 ## Daten schreiben
@@ -413,7 +389,7 @@ Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel qua
 
 # rds: Ein Objekt in einer Datei speichern
 saveRDS(ger_info, file="ger_info.rds")
-saveRDS(ger_toks, file="ger_toks.rds")
+saveRDS(kafka_toks, file="kafka_toks.rds")
 
 # RData und rda : Mehrere Objekte in einer Datei speichern 
 save(kafka_1, kafka_2, kafka_3, file="uebung.rda")
@@ -425,7 +401,7 @@ RDS-, RDA- und RData-Dateien können später eingelesen werden mit:
 
 ```{r eval=FALSE}
 ger_info <- readRDS(file="ger_info.rds")
-ger_toks <- readRDS(file="ger_toks.rds")
+kafka_toks <- readRDS(file="kafka_toks.rds")
 load(file="uebung.rda")
 load(file="uebung.RData")
 ```

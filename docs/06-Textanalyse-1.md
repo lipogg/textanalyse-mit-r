@@ -113,8 +113,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-eb105dc159374a5b0601" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-eb105dc159374a5b0601">{"x":{"visdat":{"1028786a647e":["function () ","plotlyVisDat"]},"cur_data":"1028786a647e","attrs":{"1028786a647e":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-99d1d2d8945b0e9627ea" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-99d1d2d8945b0e9627ea">{"x":{"visdat":{"1b3766dad3ed":["function () ","plotlyVisDat"]},"cur_data":"1b3766dad3ed","attrs":{"1b3766dad3ed":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -194,6 +194,8 @@ typeof(kafka_3) #readtext
 class(kafka_3)
 ```
 
+
+
 Beachtet, dass die Funktion `typeof()` angibt, wie ein Objekt intern in R gespeichert ist. Das muss immer eine der grundlegenden R Datenstrukturen sein, die wir in Kapitel II kennengelernt haben. Die Funktion `class()` dagegen gibt an, wie ein Objekt in R behandelt wird: Das heißt, auch wenn manche Pakete ihre eigenen Datenstrukturen definieren und festlegen, welche Eigenschaften diese haben und Funktionen darauf angewendet werden können, müssen diese Datenstrukturen irgendwie wieder als R Datenstrukturen interpretiert werden, damit sie gespeichert werden können. Während das Objekt `kafka_3` also intern als Liste gespeichert ist, handelt es sich dabei eigentlich um einen Dataframe, und ganz genau gesagt um ein readtext-Objekt. Das Objekt teilt also Eigenschaften mit R Dataframes, aber es hat auch weitere spezielle Eigenschaften von readtext-Objekten, und es gibt Funktionen, die nur auf genau diese Art von Objekt angewendet werden können. 
 
 :::task
@@ -210,10 +212,30 @@ Bereits nach dem Einlesen können wir uns einen Überblick über das Korpus vers
 ```r
 # Alle Texte mit Publikationsjahr 1912 auswählen 
 ger_texte$doc_id[ger_texte$Jahr == 1912]
+```
+
+```{style="max-height: 200px;"}
+## character(0)
+```
+
+```r
 # Wie viele Texte gibt es aus dem Jahr 1912? 
 length(ger_texte$doc_id[ger_texte$Jahr == 1912])
+```
+
+```{style="max-height: 200px;"}
+## [1] 0
+```
+
+```r
 # Häufigkeitstabelle der Publikationsjahre
 table(ger_texte$Jahr)
+```
+
+```{style="max-height: 200px;"}
+## 
+## 1883 1888 1894 1896 1899 1901 1903 1905 1913 1915 1918 1919 1920 1924 1925 1926 
+##    1    1    1    1    1    1    2    1    2    1    1    1    1    2    2    1
 ```
 
 ## Quanteda corpus-Objekte 
@@ -222,11 +244,39 @@ Ein Quanteda corpus-Objekt enthält die eingelesenen Texte selbst, sowie Metadat
 
 
 ```r
+install.packages("quanteda")
+```
+
+
+```r
 library(quanteda)
 
 # quanteda-Korpusobkjekt erstellen
-ger_korpus <- quanteda::corpus(ger_texte)
+ger_korpus <- corpus(ger_texte)
 ger_korpus
+```
+
+```{style="max-height: 200px;"}
+## Corpus consisting of 20 documents and 3 docvars.
+## fontane_briest_1896.txt :
+## "In Front des schon seit Kurfürst Georg Wilhelm von der Famil..."
+## 
+## fontane_irrungen_1888.txt :
+## "An dem Schnittpunkte von Kurfürstendamm und Kurfürstenstraße..."
+## 
+## fontane_reise_1894.txt :
+## "Zu den Eigentümlichkeiten unserer Zeit gehört das Massenreis..."
+## 
+## fontane_stechlin_1899.txt :
+## "Im Norden der Grafschaft Ruppin, hart an der mecklenburgisch..."
+## 
+## fontane_wuthenow_1883.txt :
+## "In dem Salon der in der Behrenstraße wohnenden Frau v. Caray..."
+## 
+## kafka_amerika_1925.txt :
+## "Als der sechzehnjährige Karl Roßmann, der von seinen armen E..."
+## 
+## [ reached max_ndoc ... 14 more documents ]
 ```
 
 Die Funktion `str()` kann verwendet werden, um einen Überblick über die Struktur des Objekts zu erhalten. Da ein Quanteda corpus-Objekt neben den Texten selbst auch Metadaten enthält, gibt die `str()`-Funktion einen Überblick über alle Metadaten. Die Metadaten der einzelnen Dokumente (z.B. Dateinamen, ggf. mithilfe der readtext-Funktion extrahierte docvars)  können unter `attr(*, "docvars")` eingesehen werden. `attr(*, "meta")` beschreibt dagegen alle Metadaten auf Korpusebene (z.B. Informationen zu Ort und Zeit der Erstellung des corpus-Objekts). 
@@ -236,21 +286,91 @@ Die Funktion `str()` kann verwendet werden, um einen Überblick über die Strukt
 str(ger_korpus)
 ```
 
+```{style="max-height: 200px;"}
+##  'corpus' Named chr [1:20] "In Front des schon seit Kurfürst Georg Wilhelm von der Familie von Briest bewohnten Herrenhauses zu Hohen-Cremm"| __truncated__ ...
+##  - attr(*, "names")= chr [1:20] "fontane_briest_1896.txt" "fontane_irrungen_1888.txt" "fontane_reise_1894.txt" "fontane_stechlin_1899.txt" ...
+##  - attr(*, "docvars")='data.frame':	20 obs. of  6 variables:
+##   ..$ docname_: chr [1:20] "fontane_briest_1896.txt" "fontane_irrungen_1888.txt" "fontane_reise_1894.txt" "fontane_stechlin_1899.txt" ...
+##   ..$ docid_  : Factor w/ 20 levels "fontane_briest_1896.txt",..: 1 2 3 4 5 6 7 8 9 10 ...
+##   ..$ segid_  : int [1:20] 1 1 1 1 1 1 1 1 1 1 ...
+##   ..$ Autor_in: chr [1:20] "fontane" "fontane" "fontane" "fontane" ...
+##   ..$ Titel   : chr [1:20] "briest" "irrungen" "reise" "stechlin" ...
+##   ..$ Jahr    : int [1:20] 1896 1888 1894 1899 1883 1925 1920 1925 1919 1913 ...
+##  - attr(*, "meta")=List of 3
+##   ..$ system:List of 6
+##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
+##   .. .. ..$ : int [1:3] 4 0 2
+##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
+##   .. .. ..$ : int [1:3] 4 3 3
+##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
+##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
+##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
+##   .. ..$ created        : Date[1:1], format: "2024-06-19"
+##   .. ..$ source         : chr "data.frame"
+##   ..$ object:List of 2
+##   .. ..$ unit   : chr "documents"
+##   .. ..$ summary:List of 2
+##   .. .. ..$ hash: chr(0) 
+##   .. .. ..$ data: NULL
+##   ..$ user  : list()
+```
+
 Mit der Funktion `summary()` können Informationen zu den Texten selbst abgerufen werden. Die Funktion berechnet für jeden Text in einem Korpus die Anzahl der Tokens, der Types und der Sätze und bietet so einen ersten Überblick über das Korpus. 
 
 
 ```r
 # Weitere Informationen abrufen mit der summary()-Funktion
-ger_info <- summary(ger_korpus, 109) 
+ger_info <- summary(ger_korpus) 
 ger_info
-?summary
 ```
 
-:::task
-Verständnisfrage:
+```{style="max-height: 200px;"}
+## Corpus consisting of 20 documents, showing 20 documents:
+## 
+##                              Text Types Tokens Sentences   Autor_in
+##           fontane_briest_1896.txt 11846 118213      5875    fontane
+##         fontane_irrungen_1888.txt  8823  63642      3546    fontane
+##            fontane_reise_1894.txt  8086  43945      2167    fontane
+##         fontane_stechlin_1899.txt 16162 156206      8998    fontane
+##         fontane_wuthenow_1883.txt  8700  50846      2671    fontane
+##            kafka_amerika_1925.txt 10407 100252      4023      kafka
+##           kafka_landarzt_1920.txt  3813  15675       663      kafka
+##            kafka_schloss_1925.txt 11392 133468      4631      kafka
+##       kafka_strafkolonie_1919.txt  2505  12252       522      kafka
+##             kafka_urteil_1913.txt  1345   4793       237      kafka
+##        kafka_verwandlung_1915.txt  3968  22294       720      kafka
+##              mann_budden_1901.txt 26631 285968     12806       mann
+##               mann_tonio_1903.txt  5435  26161      1151       mann
+##             mann_tristan_1903.txt  4085  17475       852       mann
+##             mann_venedig_1913.txt  7588  29609      1011       mann
+##          mann_zauberberg_1924.txt 36068 321896     12198       mann
+##      schnitzler_casanova_1918.txt  7077  43424      1381 schnitzler
+##          schnitzler_else_1924.txt  2827  19276      1803 schnitzler
+##      schnitzler_tanzerin_1905.txt  5740  41441      2240 schnitzler
+##  schnitzler_traumnovelle_1926.txt  5092  27465      1414 schnitzler
+##         Titel Jahr
+##        briest 1896
+##      irrungen 1888
+##         reise 1894
+##      stechlin 1899
+##      wuthenow 1883
+##       amerika 1925
+##      landarzt 1920
+##       schloss 1925
+##  strafkolonie 1919
+##        urteil 1913
+##   verwandlung 1915
+##        budden 1901
+##         tonio 1903
+##       tristan 1903
+##       venedig 1913
+##    zauberberg 1924
+##      casanova 1918
+##          else 1924
+##      tanzerin 1905
+##  traumnovelle 1926
+```
 
-- Warum haben wir der `summary()`-Funktion beim Aufruf 109 als zusätzliches Argument übergeben? 
-:::
 
 Die `summary()`-Funktion gibt einen Dataframe zurück. Es können deswegen alle Zugriffsoperationen und Funktionen auf das Objekt `ger_info` angewendet werden, die auf Dataframes angewendet werden können:  
 
@@ -258,39 +378,64 @@ Die `summary()`-Funktion gibt einen Dataframe zurück. Es können deswegen alle 
 ```r
 # Minimum und Maximum der Spalten Jahr und Tokens
 range(ger_info$Jahr) 
+```
+
+```
+## [1] 1883 1926
+```
+
+```r
 range(ger_info$Tokens) 
+```
+
+```
+## [1]   4793 321896
+```
+
+```r
 # Anzahl der verschiedenen Autor:innen 
 length(unique(ger_info$Autor_in)) 
+```
+
+```
+## [1] 4
+```
+
+```r
 # Gesamtzahl der Tokens im ger_korpus Korpus
 sum(ger_info$Tokens) 
+```
 
+```
+## [1] 1534301
+```
+
+```r
 # Titel des Textes mit den meisten Tokens
 ger_info$Titel[ger_info$Tokens == max(ger_info$Tokens)]
+```
+
+```
+## [1] "zauberberg"
+```
+
+```r
 # Autor:in des Textes mit den meisten Tokens
 ger_info$Autor_in[ger_info$Tokens == max(ger_info$Tokens)]
+```
+
+```
+## [1] "mann"
+```
+
+```r
 # Titel des Textes mit einer Tokenanzahl zwischen 250000 und 300000
 ger_info$Titel[ger_info$Tokens >= 250000 & ger_info$Tokens <= 300000]
 ```
 
-Mithilfe von R-base-Funktionen können Daten auch visualisiert werden, zum Beispiel als **Histogramm** (Funktion `hist()`) oder als **Boxplot** (Funktion `boxplot()`). Die R-base-Funktionen sind jedoch nur für sehr einfache Visualisierungen geeignet. Mehr Anpassungsmöglichkeiten und ein moderneres Design bietet das auf die Datenvisualisierung spezialisierte Paket `ggplot2`, das wir in der übernächsten Stunde kennenlernen werden. 
-
-
-```r
-# Histogramm: Anzahl der Tokens je Text
-hist(ger_info$Tokens)
-# Boxplot: Median, mittlere 50% (Interquartilsabstand), Ausreißer 
-boxplot(ger_info$Tokens)
 ```
-
-:::task
-Verständnisfragen:
-
-- Wie kann man diese Funktionen anpassen? Schaut in die R-Hilfeseiten
-- Fügt eine Beschriftung für die x und y-Achsen hinzu, indem ihr der Funktion die zusätzlichen Argumente ylab="..." und xlab="..." übergebt. 
-- Fügt einen Titel mithilfe des Arguments main="..." hinzu.
-- Was sind die drei längsten Werke in unserem Korpus? 
-
-:::
+## [1] "budden"
+```
 
 Oft ist bei der Textanalyse der Vergleich zwischen verschiedenen Teilkorpora oder Unterkorpora von Interesse, beispielsweise, wenn die Texte verschiedener Autor:innen verglichen werden sollen. Ein **Teilkorpus** kann unkompliziert nach dem Einlesen der Texte erstellt werden: 
 
@@ -298,19 +443,80 @@ Oft ist bei der Textanalyse der Vergleich zwischen verschiedenen Teilkorpora ode
 ```r
 # Teilkorpus aus Kafka-Texten erstellen mit R Base-Funktionen
 length(which(ger_korpus$Autor_in == "kafka"))
-which(ger_korpus$Autor_in == "kafka") # gibt aus 39 40 41 42 43 44 45 46 47 48 49
-ger_korpus[39:49] 
+```
 
+```{style="max-height: 200px;"}
+## [1] 6
+```
+
+```r
+which(ger_korpus$Autor_in == "kafka") # gibt aus 6 7 8 9 10 11
+```
+
+```{style="max-height: 200px;"}
+## [1]  6  7  8  9 10 11
+```
+
+```r
+ger_korpus[6:11] 
+```
+
+```{style="max-height: 200px;"}
+## Corpus consisting of 6 documents and 3 docvars.
+## kafka_amerika_1925.txt :
+## "Als der sechzehnjährige Karl Roßmann, der von seinen armen E..."
+## 
+## kafka_landarzt_1920.txt :
+## "Der neue Advokat. Wir haben einen neuen Advokaten, den Dr. B..."
+## 
+## kafka_schloss_1925.txt :
+## "Es war spätabends, als K. ankam. Das Dorf lag in tiefem Schn..."
+## 
+## kafka_strafkolonie_1919.txt :
+## "»Es ist ein eigentümlicher Apparat«, sagte der Offizier zu d..."
+## 
+## kafka_urteil_1913.txt :
+## "Es war an einem Sonntagvormittag im schönsten Frühjahr. Geor..."
+## 
+## kafka_verwandlung_1915.txt :
+## "Als Gregor Samsa eines Morgens aus unruhigen Träumen erwacht..."
+```
+
+```r
 # Teilkorpus aus Kafka-Texten erstellen: the quanteda way 
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 kafka_korpus
+```
 
+```{style="max-height: 200px;"}
+## Corpus consisting of 6 documents and 3 docvars.
+## kafka_amerika_1925.txt :
+## "Als der sechzehnjährige Karl Roßmann, der von seinen armen E..."
+## 
+## kafka_landarzt_1920.txt :
+## "Der neue Advokat. Wir haben einen neuen Advokaten, den Dr. B..."
+## 
+## kafka_schloss_1925.txt :
+## "Es war spätabends, als K. ankam. Das Dorf lag in tiefem Schn..."
+## 
+## kafka_strafkolonie_1919.txt :
+## "»Es ist ein eigentümlicher Apparat«, sagte der Offizier zu d..."
+## 
+## kafka_urteil_1913.txt :
+## "Es war an einem Sonntagvormittag im schönsten Frühjahr. Geor..."
+## 
+## kafka_verwandlung_1915.txt :
+## "Als Gregor Samsa eines Morgens aus unruhigen Träumen erwacht..."
+```
+
+
+```r
 # Teilkorpus erstellen und Korpusinformationen zusammenfassen in einer Zeile
 kafka_summary <- summary(corpus_subset(ger_korpus, Autor_in == "kafka"))
 # Wir können auch stattdessen den Dataframe ger_info nach Kafka-Texten filtern: 
 kafka_summary <- ger_info[ger_info$Autor_in == "kafka",]
 
-# Wie viele Texte umfasst das Kafka-Korpus?
+# Wie viele Texte umfasst das Kafka-Korpus? View() öffnet im RStudio ein neues Fenster
 View(kafka_summary) 
 ```
 
@@ -321,28 +527,130 @@ Ein Quanteda tokens-Objekt bildet ein tokenisiertes Korpus als eine Liste von Ve
 
 
 ```r
+library(quanteda)
+
 # quanteda-Tokensobjekt erstellen 
-ger_toks <- quanteda::tokens(ger_korpus)
+kafka_toks <- tokens(kafka_korpus)
 
 # Print-Funktion muss für quanteda-Objekte angepasst werden: http://quanteda.io/reference/print-quanteda.html
-print(ger_toks[1]) # wird nicht komplett angezeigt
-print(ger_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
+print(kafka_toks[1]) # wird nicht komplett angezeigt
+```
+
+```{style="max-height: 200px;"}
+## Tokens consisting of 1 document and 3 docvars.
+## kafka_amerika_1925.txt :
+##  [1] "Als"             "der"             "sechzehnjährige" "Karl"           
+##  [5] "Roßmann"         ","               "der"             "von"            
+##  [9] "seinen"          "armen"           "Eltern"          "nach"           
+## [ ... and 100,240 more ]
+```
+
+```r
+print(kafka_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
+```
+
+```{style="max-height: 200px;"}
+## Tokens consisting of 1 document and 3 docvars.
+## kafka_amerika_1925.txt :
+##   [1] "Als"             "der"             "sechzehnjährige" "Karl"           
+##   [5] "Roßmann"         ","               "der"             "von"            
+##   [9] "seinen"          "armen"           "Eltern"          "nach"           
+##  [13] "Amerika"         "geschickt"       "worden"          "war"            
+##  [17] ","               "weil"            "ihn"             "ein"            
+##  [21] "Dienstmädchen"   "verführt"        "und"             "ein"            
+##  [25] "Kind"            "von"             "ihm"             "bekommen"       
+##  [29] "hatte"           ","               "in"              "dem"            
+##  [33] "schon"           "langsam"         "gewordenen"      "Schiff"         
+##  [37] "in"              "den"             "Hafen"           "von"            
+##  [41] "New"             "York"            "einfuhr"         ","              
+##  [45] "erblickte"       "er"              "die"             "schon"          
+##  [49] "längst"          "beobachtete"     "Statue"          "der"            
+##  [53] "Freiheitsgöttin" "wie"             "in"              "einem"          
+##  [57] "plötzlich"       "stärker"         "gewordenen"      "Sonnenlicht"    
+##  [61] "."               "Ihr"             "Arm"             "mit"            
+##  [65] "dem"             "Schwert"         "ragte"           "wie"            
+##  [69] "neuerdings"      "empor"           ","               "und"            
+##  [73] "um"              "ihre"            "Gestalt"         "wehten"         
+##  [77] "die"             "freien"          "Lüfte"           "."              
+##  [81] "›"               "So"              "hoch"            "!"              
+##  [85] "‹"               "sagte"           "er"              "sich"           
+##  [89] "und"             "wurde"           ","               "wie"            
+##  [93] "er"              "so"              "gar"             "nicht"          
+##  [97] "an"              "das"             "Weggehen"        "dachte"         
+## [101] ","               "von"             "der"             "immer"          
+## [105] "mehr"            "anschwellenden"  "Menge"           "der"            
+## [109] "Gepäckträger"    ","               "die"             "an"             
+## [113] "ihm"             "vorüberzogen"    ","               "allmählich"     
+## [117] "bis"             "an"              "das"             "Bordgeländer"   
+## [121] "geschoben"       "."               "Ein"             "junger"         
+## [125] "Mann"            ","               "mit"             "dem"            
+## [129] "er"              "während"         "der"             "Fahrt"          
+## [133] "flüchtig"        "bekannt"         "geworden"        "war"            
+## [137] ","               "sagte"           "im"              "Vorübergehen"   
+## [141] ":"               "»"               "Ja"              ","              
+## [145] "haben"           "Sie"             "denn"            "noch"           
+## [149] "keine"           "Lust"            "auszusteigen"    "?"              
+## [153] "«"               "»"               "Ich"             "bin"            
+## [157] "doch"            "fertig"          "«"               ","              
+## [161] "sagte"           "Karl"            ","               "ihn"            
+## [165] "anlachend"       ","               "und"             "hob"            
+## [169] "aus"             "Übermut"         ","               "und"            
+## [173] "weil"            "er"              "ein"             "starker"        
+## [177] "Junge"           "war"             ","               "seinen"         
+## [181] "Koffer"          "auf"             "die"             "Achsel"         
+## [185] "."               "Aber"            "wie"             "er"             
+## [189] "über"            "seinen"          "Bekannten"       "hinsah"         
+## [193] ","               "der"             "ein"             "wenig"          
+## [197] "seinen"          "Stock"           "schwenkend"      "sich"           
+## [ ... and 100,052 more ]
 ```
 
 Auch ein tokens-Objekt kann mithilfe der Funktion `str()` untersucht werden. Quanteda tokens-Objekte enthalten neben den Tokens selbst dieselben Metadaten wie quanteda corpus-Objekte. 
 
 
 ```r
-str(ger_toks)
+str(kafka_toks)
 ```
 
-Und genau wie von einem Quanteda corpus-Objekt lässt sich auch eine Auswahl bestimmter Texte von einem tokens-Objekt bilden: 
-
-
-```r
-# Tokens-Objekt nach Kafka-Texten filtern
-kafka_tokens <- tokens_subset(ger_toks, Autor_in == "kafka")
-kafka_tokens
+```{style="max-height: 200px;"}
+## List of 6
+##  $ kafka_amerika_1925.txt     : chr [1:100252] "Als" "der" "sechzehnjährige" "Karl" ...
+##  $ kafka_landarzt_1920.txt    : chr [1:15675] "Der" "neue" "Advokat" "." ...
+##  $ kafka_schloss_1925.txt     : chr [1:133468] "Es" "war" "spätabends" "," ...
+##  $ kafka_strafkolonie_1919.txt: chr [1:12252] "»" "Es" "ist" "ein" ...
+##  $ kafka_urteil_1913.txt      : chr [1:4793] "Es" "war" "an" "einem" ...
+##  $ kafka_verwandlung_1915.txt : chr [1:22294] "Als" "Gregor" "Samsa" "eines" ...
+##  - attr(*, "class")= chr "tokens"
+##  - attr(*, "types")= chr [1:19780] "Als" "der" "sechzehnjährige" "Karl" ...
+##  - attr(*, "padding")= logi TRUE
+##  - attr(*, "docvars")='data.frame':	6 obs. of  6 variables:
+##   ..$ docname_: chr [1:6] "kafka_amerika_1925.txt" "kafka_landarzt_1920.txt" "kafka_schloss_1925.txt" "kafka_strafkolonie_1919.txt" ...
+##   ..$ docid_  : Factor w/ 6 levels "kafka_amerika_1925.txt",..: 1 2 3 4 5 6
+##   ..$ segid_  : int [1:6] 1 1 1 1 1 1
+##   ..$ Autor_in: chr [1:6] "kafka" "kafka" "kafka" "kafka" ...
+##   ..$ Titel   : chr [1:6] "amerika" "landarzt" "schloss" "strafkolonie" ...
+##   ..$ Jahr    : int [1:6] 1925 1920 1925 1919 1913 1915
+##  - attr(*, "meta")=List of 3
+##   ..$ system:List of 5
+##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
+##   .. .. ..$ : int [1:3] 4 0 2
+##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
+##   .. .. ..$ : int [1:3] 4 3 3
+##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
+##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
+##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
+##   .. ..$ created        : Date[1:1], format: "2024-06-19"
+##   ..$ object:List of 7
+##   .. ..$ unit        : chr "documents"
+##   .. ..$ what        : chr "word"
+##   .. ..$ tokenizer   : chr "tokenize_word4"
+##   .. ..$ ngram       : int 1
+##   .. ..$ skip        : int 0
+##   .. ..$ concatenator: chr "_"
+##   .. ..$ summary     :List of 2
+##   .. .. ..$ hash: chr(0) 
+##   .. .. ..$ data: NULL
+##   ..$ user  : list()
 ```
 
 
@@ -353,11 +661,32 @@ Für die meisten Analysemethoden wird eine sogenannte Document-Feature-Matrix (D
 
 
 ```r
+library(quanteda)
+
 # DFM erstellen
-kafka_dfm <- dfm(kafka_tokens)
+kafka_dfm <- dfm(kafka_toks)
 kafka_dfm
-# Gesamte dfm anzeigen
-print(kafka_dfm, max_ndoc = 200)
+```
+
+```{style="max-height: 200px;"}
+## Document-feature matrix of: 6 documents, 18,490 features (71.75% sparse) and 3 docvars.
+##                              features
+## docs                          als  der sechzehnjährige karl roßmann     , von
+##   kafka_amerika_1925.txt      444 1965               1 1107      54  8844 482
+##   kafka_landarzt_1920.txt      65  311               0    0       0  1241  64
+##   kafka_schloss_1925.txt      629 1964               0    0       0 13256 672
+##   kafka_strafkolonie_1919.txt  54  447               0    0       0   966  46
+##   kafka_urteil_1913.txt        15   90               0    0       0   391  22
+##   kafka_verwandlung_1915.txt  133  426               1    0       0  1862  93
+##                              features
+## docs                          seinen armen eltern
+##   kafka_amerika_1925.txt         146    11     22
+##   kafka_landarzt_1920.txt          5     4      2
+##   kafka_schloss_1925.txt          79    17     15
+##   kafka_strafkolonie_1919.txt     16     2      0
+##   kafka_urteil_1913.txt           12     1      2
+##   kafka_verwandlung_1915.txt      27     3     27
+## [ reached max_nfeat ... 18,480 more features ]
 ```
 
 ## Daten schreiben
@@ -394,7 +723,7 @@ Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel qua
 
 # rds: Ein Objekt in einer Datei speichern
 saveRDS(ger_info, file="ger_info.rds")
-saveRDS(ger_toks, file="ger_toks.rds")
+saveRDS(kafka_toks, file="kafka_toks.rds")
 
 # RData und rda : Mehrere Objekte in einer Datei speichern 
 save(kafka_1, kafka_2, kafka_3, file="uebung.rda")
@@ -406,7 +735,7 @@ RDS-, RDA- und RData-Dateien können später eingelesen werden mit:
 
 ```r
 ger_info <- readRDS(file="ger_info.rds")
-ger_toks <- readRDS(file="ger_toks.rds")
+kafka_toks <- readRDS(file="kafka_toks.rds")
 load(file="uebung.rda")
 load(file="uebung.RData")
 ```

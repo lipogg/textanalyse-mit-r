@@ -24,32 +24,29 @@ Verständnisfragen:
  
 ## Märchenkorpus einlesen und Pakete installieren
 
-Um unser Korpus in R einzulesen, müssen wir zuerst wieder das Arbeitsverzeichnis setzen: 
+Um unser Korpus in R einzulesen, müssen wir zuerst wieder das **Arbeitsverzeichnis setzen**: 
 
 ```{r eval=FALSE}
-# Arbeitsverzeichnis setzen
-
-setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
+# Arbeitsverzeichnis setzen: Setzt hier euren eigenen Pfad ein
+setwd("/Users/gast/R-Seminar") 
 # Backslashes für Windows:
 # setwd("C:\Users\gast\R-Seminar")
 
 ```
 
-Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory". Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Achtung: Zip-Ordner müsst ihr vorher entpacken!
+Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory" (siehe Kapitel "Orientierung im RStudio"). Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Achtung: Zip-Ordner müsst ihr vorher entpacken!
 
 Wenn ihr das Arbeitsverzeichnis gesetzt habt, könnt ihr die Dateien einlesen. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
 
-
-```{r}
-library(readtext)
-```
-
 ```{r eval=FALSE}
+library(readtext)
+
 # Märchen von 1857 und 1812/15 einlesen und Informationen aus dem Dateinamen extrahieren
 maerchen_alle <- readtext("maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
 ```
 
 ```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+library(readtext)
 maerchen_alle <- readtext("data/maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
 ```
 
@@ -57,25 +54,24 @@ Bevor wir mit der Analyse starten können, müssen wir noch einige Pakete instal
 
 ```{r eval=FALSE}
 
-install.packages(c("quanteda.textplots", "quanteda.textstats", "ggplot2", "plotly"))
+install.packages(c("quanteda.textplots", "quanteda.textstats", "ggplot2", "plotly", "udpipe", "dplyr"))
 
 ```
 
-```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
-install.packages(c("quanteda.textplots", "quanteda.textstats", "ggplot2", "plotly"), repos = "http://cran.us.r-project.org")
+```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+# remove eval=FALSE and run this when rebuilding the site
+install.packages(c("quanteda.textplots", "quanteda.textstats", "ggplot2", "plotly", "udpipe", "dplyr"), repos = "http://cran.us.r-project.org")
 ```
 
-Wir laden zunächst nur das Paket quanteda. Die restlichen Pakete werden wir ausnahmsweise erst dann laden, wenn sie gebraucht werden, sodass ihr in jeder Codezelle direkt erkennt, ob der Code Funktionen aus zusätzlichen Paketen enthält. 
+Die Pakete müssen wie bisher immer nur einmal am Anfang des Skripts geladen werden. Allerdings werden wir in den folgenden Abschnitten Funktionen aus vielen verschiedenen Paketen verwenden. **Deswegen werden wir in diesem Kapitel ausnahmsweise Pakete erst dann laden, wenn sie gebraucht werden, sodass ihr in jeder Codezelle direkt erkennt, ob der Code Funktionen aus zusätzlichen Paketen enthält.** 
 
-```{r warning=FALSE, message=FALSE}
-library(quanteda)
-```
 
 ## Corpus-Objekt erstellen und erste Preprocessingschritte
 
 Wir werden in der Analyse verschiedene Methoden einmal auf das Korpus mit und einmal ohne Stoppwörter anwenden, denn je nach Fragestellung und Methode sind Stoppwörter mehr oder weniger interessant. Deswegen erstellen wir in diesem Abschnitt zwei verschiedene tokens-Objekte. Wir werden aber auch sehen, dass Textanalyse und Preprocessing eigentlich iterative Prozesse sind: Es kommt oft vor, dass bei der Analyse weitere Preprocessingschritte notwendig werden.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
+library(quanteda)
 
 # Quanteda-corpus-Objekt erstellen
 maerchen_corpus_alle <- corpus(maerchen_alle) 
@@ -132,7 +128,7 @@ library(ggplot2)
 
 options(scipen=999) 
 summary_plot <- ggplot(data=token_info, aes(x=Titel, y=Tokens)) +
-  geom_point() + 
+  geom_point(alpha=0.6) + 
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=4)) + 
   ggtitle("Anzahl Tokens / Text") + 
@@ -145,9 +141,9 @@ Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel 
 ```{r warning=FALSE, message=FALSE, fig.width=8, fig.height=6}
 library(plotly)
 
-plotly_plot <- ggplotly(summary_plot)
-plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Text", standoff = 10)))
-plotly_plot
+ggplotly(summary_plot) %>%
+  layout(xaxis = list(title = list(text = "Text", standoff = 10)))
+
 ```
 
 :::task
@@ -315,7 +311,7 @@ Nun haben wir aber ja anfangs bemerkt, dass die Märchen sehr verschiedene Läng
 library(quanteda.textstats)
 
 tstat_freq_grouped <- textstat_frequency(maerchen_dfm_rm, groups = Titel)
-tstat_subset <- tstat_freq_grouped[grepl("tochter", tstat_freq_grouped$feature), ]
+tstat_subset <- tstat_freq_grouped[grepl("t(o|ö)chter", tstat_freq_grouped$feature), ]
 tstat_subset
 ```
 
@@ -324,23 +320,167 @@ Die Häufigkeit der "tochter"-Tokens wird anschließend visualisiert:
 ```{r  warning=FALSE, message=FALSE}
 
 library(ggplot2)
+library(plotly)
 
 tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
-  geom_point(shape=21, color="black", fill="white") +
+  geom_point(alpha=0.6) +
   theme(axis.text.y = element_text(size=5), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
   labs(x = "Text", y = "Token")
 
-library(plotly)
-plotly_plot <- ggplotly(tochter_plot)
-plotly_plot <- layout(plotly_plot, xaxis = list(title = list(text = "Text", standoff = 5)))
-plotly_plot
+ggplotly(tochter_plot) %>%
+  layout(xaxis = list(title = list(text = "Text", standoff = 5)))
+
 
 ```
 
-Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein Token in dem entsprechenden Text vorkommt. Die Tochter-Tokens sind also über das gesamte Korpus verteilt und kommen nicht in einem bestimmten Märchen ganz besonders häufig vor. 
+Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein Token in dem entsprechenden Text vorkommt. Die Tochter-Tokens sind demnach über das gesamte Korpus verteilt und kommen nicht in einem bestimmten Märchen ganz besonders häufig vor. 
 
 Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? 
+
+## Absolute Häufigkeiten und Lemmata
+
+Die Suche nach allen Tochter-Tokens mithilfe des regulären Ausdrucks "t(o|ö)chter" hat verschiedene Zeichenketten mit "tochter" oder "töchter" geliefert, darunter auch Flexionsformen der jeweiligen Wörter (z.B. "töchtern"). Wenn wir Worthäufigkeiten vergleichen wollen, ist das unpraktisch, wenn wir in jedem Schritt verschiedene Flexionsformen berücksichtigen und zusammenzählen müssen. Wir lemmatisieren deswegen im Folgenden das Märchenkorpus und betrachten die Worthäufigkeiten erneut. Dazu verwenden wir den Code aus Abschnitt 7.7.
+
+```{r eval=FALSE}
+library(udpipe)
+
+# Deutsches Sprachmodell ins Arbeitsverzeichnis herunterladen und laden
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+
+# Corpus-Objekt lemmatisieren und bereinigen
+maerchen_annotated <- udpipe_annotate(ud_model, maerchen_corpus, tagger="default", parser="none", doc_id = maerchen_corpus$Titel)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(udpipe)
+maerchen_annotated <- readRDS("data/maerchen_annotated.rds")
+
+```
+
+```{r}
+library(dplyr)
+
+maerchen_df <- as.data.frame(maerchen_annotated)
+maerchen_cleaned_df <- maerchen_df[!is.na(maerchen_df$lemma), ]
+# "Quick and dirty" Methode: bei mehreren möglichen Varianten immer die letzte Variante wählen 
+maerchen_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", maerchen_cleaned_df$lemma)
+# Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden 
+maerchen_grouped <- maerchen_cleaned_df %>% 
+  group_by(doc_id) %>% 
+  summarise(text = paste(lemma, collapse = " ")) 
+# Dataframe in Quanteda corpus-Objekt umwandeln
+maerchen_lemmata <- corpus(maerchen_grouped) #, docnames = maerchen_grouped$doc_id
+
+```
+
+Jetzt wiederholen wir das Preprocessing aus Abschnitt 8.2 für das lemmatisierte Korpus:
+
+```{r}
+library(quanteda)
+
+# Quanteda-tokens-Objekt erstellen und Stoppwörter entfernen: Verarbeitungsschritte werden mit Pipe-Operator kombiniert
+maerchen_toks_lemmata <- maerchen_lemmata %>%
+  tokens(remove_punct = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass")
+
+# DFM erstellen
+maerchen_dfm_lemmata <- dfm(maerchen_toks_lemmata)
+
+```
+
+Mit dem Objekt `maerchen_toks_lemmata` können wir jetzt unsere beiden Visualisierungen erstellen und kopieren dazu den Code aus Abschnitt 8.3: 
+
+```{r}
+library(quanteda.textplots)
+
+set.seed(100)
+textplot_wordcloud(maerchen_dfm_lemmata, 
+                   min_count = 6, 
+                   random_order = FALSE, 
+                   rotation = .25,
+                   )
+```
+
+
+:::task
+Verständnisfragen:
+
+- Vergleicht diese Wortwolke mit der Wortwolke aus Abschnitt 8.3. Wie kommt es, dass in der Wortwolke der Lemmata einige Verben größer abgebildet sind als in der Wortwolke der einfachen Tokens? 
+- Wie wirkt sich die Lemmatisierung auf die Rangliste der häufigsten Tokens in unserem Korpus aus? 
+:::
+
+Um einen genaueren Eindruck davon zu gewinnen, wie sich die Lemmatisierung auf die Rangliste der häufigsten Tokens in unserem Korpus auswirkt, können wir uns einfach wieder mithilfe der Funktion `topfeatures()` die häufigsten 100 Tokens anzeigen lassen:   
+
+```{r}
+# Häufigste Tokens nach der Lemmatisierung
+topfeatures(maerchen_dfm_lemmata, n=100)
+# Häufigste Tokens vor der Lemmatisierung
+topfeatures(maerchen_dfm_rm, n=100)
+```
+
+Zuletzt vergleichen wir, wie sich die Lemmatisierung auf die Anzahl der Tochter-Tokens ausgewirkt hat. Dazu kopieren wir den Code aus Abschnitt 8.3: 
+
+```{r}
+library(quanteda.textstats)
+
+docvars(maerchen_dfm_lemmata, "Titel") <- docnames(maerchen_dfm_lemmata)
+tstat_freq_lemmata <- textstat_frequency(maerchen_dfm_lemmata, groups = Titel)
+tstat_subset_lemmata <- tstat_freq_lemmata[grepl("t(o|ö)chter", tstat_freq_lemmata$feature), ]
+```
+
+```{r  warning=FALSE, message=FALSE}
+library(ggplot2)
+library(plotly)
+
+tochter_plot <- ggplot(tstat_subset_lemmata, aes(x = group, y = feature, size = frequency)) +
+  geom_point(alpha=0.6) + 
+  theme(axis.text.y = element_text(size=5), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
+  labs(x = "Text", y = "Token")
+
+plotly_plot <- ggplotly(tochter_plot) %>%
+  layout(xaxis = list(title = list(text = "Text", standoff = 5)))
+
+```
+
+Der Abgleich dieses Diagramms mit dem Diagramm aus Abschnitt 8.3 ist jedoch nicht so einfach wie der Vergleich der Wortwolken. Es wäre vorteilhaft, wenn wir die Anzahl der jeweiligen Tokens vor und nach der Lemmatisierung in einer einzigen Visualisierung nebeneinanderstellen könnten. Dazu können wir mithilfe der `textstat_frequency()`-Funktion zunächst die Anzahl der Tochter-Tokens vor und nach der Lemmatisierung bestimmen, und dann für das lemmatisierte und das nicht-lemmatisierte Korpus jeweils ein **Balkendiagramm** erstellen. Die Balkendiagramme werden mithilfe der ggplot2-Funktion `facet_grid()` nebeneinander angeordnet. Die Funktion `facet_grid()` erwartet, dass die Daten für beide Balkendiagramme in einem einzigen Dataframe enthalten sind, und dass es eine Spalte gibt, welche die Daten den beiden Balkendiagrammen zuordnet. Wir kombinieren deswegen zunächst die beiden Dataframes, die wir mithilfe der Funktion `textstat_frequency()` erstellt haben und fügen eine gemeinsame Spalte `origin` hinzu, welche zur Unterscheidung der lemmatisierten von den nichtlemmatisierten Daten dient.
+
+```{r}
+# Informationen zu häufigsten Tokens vor und nach der Lemmatisierung abrufen 
+tstat_freq <- textstat_frequency(maerchen_dfm_rm)
+tstat_tokens <- tstat_freq[grepl("t(o|ö)chter", tstat_freq$feature), ]
+tstat_freq <- textstat_frequency(maerchen_dfm_lemmata)
+tstat_lemmata <- tstat_freq[grepl("t(o|ö)chter", tstat_freq$feature), ]
+
+# Spalte origin hinzufügen
+tstat_tokens$origin <- "Raw tokens"
+tstat_lemmata$origin <- "Lemmata"
+
+# Dataframes kombinieren: die rbind()-Funktion kennt ihr bereits aus "R Basics II"
+tstat_combined <- rbind(tstat_tokens, tstat_lemmata) 
+```
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+
+# Facettiertes Balkendiagramm erstellen
+ggplot(tstat_combined, aes(x = feature, y = frequency)) +
+  geom_col(position = "dodge2") +
+  labs(x = NULL, y = "Frequency", fill = "Feature") + guides(fill = FALSE) +
+  coord_flip() +
+  facet_grid(~ origin)
+```
+
+:::task
+Verständnisfragen:
+
+- Was macht die Ebene `facet_grid(~ origin)`? Recherchiert in den ggplot2-Dokumentationsseiten und zieht [dieses Lehrbuch](https://ggplot2-book.org/facet) zurate. 
+:::
+
+
 
 ## Quellen {-}
 

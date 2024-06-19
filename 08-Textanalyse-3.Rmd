@@ -36,7 +36,7 @@ setwd("/Users/gast/R-Seminar")
 
 Wie bereits vergangene Woche erläutert kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unten rechts gesetzt werden. Navigiert euch dazu erst in den gewünschten Ordner, klickt dann auf "More" und "Set As Working Directory" (siehe Kapitel "Orientierung im RStudio"). Wählt dabei den Ordner als Arbeitsverzeichnis, in dem ihr den Ordner maerchen_alle gespeichert habt. Achtung: Zip-Ordner müsst ihr vorher entpacken!
 
-Wenn ihr das Arbeitsverzeichnis gesetzt habt, könnt ihr die Dateien einlesen. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
+Wenn ihr das Arbeitsverzeichnis gesetzt habt, könnt ihr die **Dateien einlesen**. Wir werden ganz am Ende unserer Analyse die Grimm-Märchen in der siebten Edition von 1857 mit den Märchen aus der ersten Edition von 1812/15 vergleichen, um einen möglichen Wandel über die Zeit zu identifizieren. 
 
 ```{r eval=FALSE}
 library(readtext)
@@ -185,11 +185,9 @@ topfeatures(maerchen_dfm, n=100)
 Diese Übersicht zeigt, dass die häufigsten Wörter in unserem Korpus anscheinend Funktionswörter wie "und", "der" oder "es" sind. Warum ist das so? Handelt es sich dabei um eine besondere Eigenschaft von Märchentexten, von unserem konkreten Korpus oder gar nur von einigen wenigen Texten in unserem Korpus, in denen zufällig besonders viele Funktionswörter vorkommen? 
 Die Funktion `textstat_frequency()` liefert detaillierte Informationen zu den 100 häufigsten Tokens als Dataframe. Neben dem Vorkommen der einzelnen Tokens gibt der Dataframe auch an, in wie vielen Texten jedes Token vorkommt: 
 
-```{r warning=FALSE, message=FALSE}
+```{r warning=FALSE, message=FALSE, attr.output='style="max-height: 150px;"'}
 library("quanteda.textstats")
-```
 
-```{r attr.output='style="max-height: 150px;"'}
 # Detaillierte Informationen zu den 100 häufigsten Tokens
 tstat_freq <- textstat_frequency(maerchen_dfm, n = 100)
 tstat_freq
@@ -484,6 +482,7 @@ ggplot(tstat_combined, aes(x = feature, y = frequency)) +
 Verständnisfragen:
 
 - Was macht die Ebene `facet_grid(~ origin)`? Recherchiert in den ggplot2-Dokumentationsseiten und zieht [dieses Lehrbuch](https://ggplot2-book.org/facet) zurate. 
+- Wie wirkt sich das Lemmatisieren auf die Tochter-Tokens aus?
 :::
 
 

@@ -473,7 +473,8 @@ library(ggplot2)
 # Facettiertes Balkendiagramm erstellen
 ggplot(tstat_combined, aes(x = feature, y = frequency)) +
   geom_col(position = "dodge2") +
-  labs(x = NULL, y = "Frequency", fill = "Feature") + guides(fill = FALSE) +
+  labs(x = NULL, y = "Frequency", fill = "Feature") +
+  guides(fill = FALSE) +
   coord_flip() +
   facet_grid(~ origin)
 ```

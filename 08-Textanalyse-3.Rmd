@@ -121,18 +121,18 @@ Die Syntax zur Erstellung von Grafiken mit ggplot2 folgt einem eigenen Design-Pr
 :::
 
 
-Bei der Erstellung von Visualisierungen für quanteda-Objekte ist wichtig zu beachten, dass die Funktion `ggplot()` als Input einen Dataframe erwartet. Das Objekt `token_info` ist bereits ein Dataframe und kann direkt als Argument der `ggplot()`-Funktion übergeben werden. Als zusätzliches Argument geben wir mithilfe der Funktion `aes()`  eine "Ästhetik" für das Datenobjekt an, welche die Dimensionen der Daten bestimmt, also welche Spalte des Dataframes auf welcher Achse abgebildet werden sollen. Alle weiteren Ebenen werden dem Datenobjekt mithilfe des `+`-Operators angefügt: Zunächst ein geometrisches Objekt ("geom"), das bestimmt, dass die Datenpunkte als Punkte dargestellt werden sollen, nicht etwa als Säulen oder Linien (also `geom_point()`). Die restlichen drei Ebenen dienen dazu, das Aussehen des Plots anzupassen: Es wird mit `theme_bw()` eine Designvorlage gewählt und anschließend mit `theme()` angepasst. `ggtitle()` bestimmt zuletzt den Titel des Plots.
+Bei der Erstellung von Visualisierungen für quanteda-Objekte ist wichtig zu beachten, dass die Funktion `ggplot()` als Input einen Dataframe erwartet. Das Objekt `token_info` ist bereits ein Dataframe und kann direkt als Argument der `ggplot()`-Funktion übergeben werden. Als zusätzliches Argument geben wir mithilfe der Funktion `aes()` ein Mapping ("Ästhetik") für das Datenobjekt an, welches die Dimensionen der Daten bestimmt. Es legt fest, welche Spalte des Dataframes auf welcher Achse des Koordinatensystems abgebildet werden soll. Alle weiteren Ebenen werden dem Datenobjekt mithilfe des `+`-Operators angefügt: Zunächst ein geometrisches Objekt ("geom"), das bestimmt, dass die Datenpunkte als Punkte dargestellt werden sollen, nicht etwa als Säulen oder Linien (also als `geom_point()` statt `geom_col()` oder `geom_line()`). Die restlichen drei Ebenen dienen dazu, das Aussehen des Plots anzupassen: Es wird mit `theme_bw()` eine Designvorlage gewählt und anschließend mit `theme()` angepasst. `ggtitle()` bestimmt den Titel des Plots, und `labs()` legt die Beschriftung der Achsen fest.
 
 ```{r warning=FALSE, fig.width=10, fig.height=6}
 library(ggplot2)
 
 options(scipen=999) 
-summary_plot <- ggplot(data=token_info, aes(x=Titel, y=Tokens)) +
+summary_plot <- ggplot(data=token_info, mapping=aes(x=Titel, y=Tokens)) +
   geom_point(alpha=0.6) + 
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=4)) + 
   ggtitle("Anzahl Tokens / Text") + 
-  labs(y="Anzahl Tokens")
+  labs(x="Text", y="Anzahl Tokens")
 
 ```
 
@@ -142,9 +142,11 @@ Die Grafiken, die mit ggplot2 erstellt werden, sind praktischerweise kompatibel 
 library(plotly)
 
 ggplotly(summary_plot) %>%
-  layout(xaxis = list(title = list(text = "Text", standoff = 10)))
+  layout(xaxis = list(title = list(standoff = 10)))
 
 ```
+
+Die Funktion `layout()` passt die Position der x-Achsen-Beschriftung auf der interaktiven Grafik an. 
 
 :::task
 Verständnisfragen:

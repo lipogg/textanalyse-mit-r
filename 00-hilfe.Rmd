@@ -50,6 +50,7 @@ Datenvisualisierung mit ggplot2:
 
 * Healy, Kieran (2019). Data Visualization. A Practical Introduction, https://socviz.co/
 * Wickham, Hadley (2016). ggplot2. Elegant Graphics for Data Analysis, https://ggplot2-book.org/
+* ggplot2-Dokumentationsseiten: https://ggplot2.tidyverse.org/;  https://ggplot2.tidyverse.org/articles/ggplot2.html
 
 Statistik: 
 

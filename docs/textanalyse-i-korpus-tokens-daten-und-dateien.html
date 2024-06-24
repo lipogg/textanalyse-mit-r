@@ -286,8 +286,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
 <li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.4</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
+<li class="chapter" data-level="8.3.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#relative-häufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#wörter-im-kontext-gemeinsames-vorkommen-von-wörtern"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.4</b> Kollokationen</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -395,8 +406,8 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 <b>Hier verbirgt sich ein optionaler Abschnitt</b>
 </summary>
 <p>Das Verhältnis zwischen “wie interessant ist die Analyse” und “verstehe ich überhaupt was hier passiert” lässt sich anfangs vielleicht ungefähr so darstellen:</p>
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0a8d2f61eab739c72e80" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-0a8d2f61eab739c72e80">{"x":{"visdat":{"9f917390d8eb":["function () ","plotlyVisDat"]},"cur_data":"9f917390d8eb","attrs":{"9f917390d8eb":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9be815e1fa0c4e787e13" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-9be815e1fa0c4e787e13">{"x":{"visdat":{"9073708cde9c":["function () ","plotlyVisDat"]},"cur_data":"9073708cde9c","attrs":{"9073708cde9c":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </details>
 </div>
 <div id="überblick-textanalyse-mit-quanteda" class="section level2 hasAnchor" number="5.4">
@@ -530,7 +541,7 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 ##   .. ..$ system         : Named chr [1:3] &quot;Darwin&quot; &quot;arm64&quot; &quot;lipogg&quot;
 ##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;sysname&quot; &quot;machine&quot; &quot;user&quot;
 ##   .. ..$ directory      : chr &quot;/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r&quot;
-##   .. ..$ created        : Date[1:1], format: &quot;2024-06-20&quot;
+##   .. ..$ created        : Date[1:1], format: &quot;2024-06-25&quot;
 ##   .. ..$ source         : chr &quot;data.frame&quot;
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr &quot;documents&quot;
@@ -759,7 +770,7 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 ##   .. ..$ system         : Named chr [1:3] &quot;Darwin&quot; &quot;arm64&quot; &quot;lipogg&quot;
 ##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;sysname&quot; &quot;machine&quot; &quot;user&quot;
 ##   .. ..$ directory      : chr &quot;/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r&quot;
-##   .. ..$ created        : Date[1:1], format: &quot;2024-06-20&quot;
+##   .. ..$ created        : Date[1:1], format: &quot;2024-06-25&quot;
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr &quot;documents&quot;
 ##   .. ..$ what        : chr &quot;word&quot;
@@ -771,15 +782,18 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 ##   .. .. ..$ hash: chr(0) 
 ##   .. .. ..$ data: NULL
 ##   ..$ user  : list()</code></pre>
+<p>Auch aus Quanteda tokens-Objekten kann ein Teilkorpus gebildet werden:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-1" tabindex="-1"></a><span class="co"># Tokens-Objekt nach Kafka-Texten filtern</span></span>
+<span id="cb45-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-2" tabindex="-1"></a>kafka_tokens <span class="ot">&lt;-</span> <span class="fu">tokens_subset</span>(ger_toks, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span></code></pre></div>
 </div>
 <div id="quanteda-dfm-objekte" class="section level2 hasAnchor" number="5.8">
 <h2><span class="header-section-number">5.8</span> Quanteda DFM-Objekte<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Für die meisten Analysemethoden wird eine sogenannte Document-Feature-Matrix (DFM) verwendet. Wie wir bereits gesehen haben, ist eine DFM eine Matrix, deren Spalten “Features” und deren Zeilen Dokumente repräsentieren. In unserem Fall sind die Features Tokens und die Dokumente sind die Texte des Korpus.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb45-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-2" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-3" tabindex="-1"></a><span class="co"># DFM erstellen</span></span>
-<span id="cb45-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-4" tabindex="-1"></a>kafka_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(kafka_toks)</span>
-<span id="cb45-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb45-5" tabindex="-1"></a>kafka_dfm</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb46-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb46-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb46-3" tabindex="-1"></a><span class="co"># DFM erstellen</span></span>
+<span id="cb46-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb46-4" tabindex="-1"></a>kafka_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(kafka_toks)</span>
+<span id="cb46-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb46-5" tabindex="-1"></a>kafka_dfm</span></code></pre></div>
 <pre style="max-height: 200px;"><code>## Document-feature matrix of: 6 documents, 18,490 features (71.75% sparse) and 3 docvars.
 ##                              features
 ## docs                          als  der sechzehnjährige karl roßmann     , von
@@ -803,44 +817,44 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 <h2><span class="header-section-number">5.9</span> Daten schreiben<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Alle Objekte, die wir bisher erstellt haben, existieren nur in unserer RStudio Umgebung. Es gibt verschiedene Möglichkeiten, diese Objekte zu speichern.
 Wenn Objekte in einem eigenen Ordner (=“Verzeichnis”) gespeichert werden sollen, kann dieser direkt aus R heraus erstellt werden:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb47-1" tabindex="-1"></a><span class="co"># Neuen Ordner erstellen: falls bereits ein Ordner &quot;output&quot; existiert, wird dieser gelöscht</span></span>
-<span id="cb47-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb47-2" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;output&quot;</span>, <span class="at">recursive =</span> T) </span>
-<span id="cb47-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb47-3" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;output&quot;</span>) </span>
-<span id="cb47-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb47-4" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/output&quot;</span>))</span>
-<span id="cb47-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb47-5" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-1" tabindex="-1"></a><span class="co"># Neuen Ordner erstellen: falls bereits ein Ordner &quot;output&quot; existiert, wird dieser gelöscht</span></span>
+<span id="cb48-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-2" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;output&quot;</span>, <span class="at">recursive =</span> T) </span>
+<span id="cb48-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-3" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;output&quot;</span>) </span>
+<span id="cb48-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-4" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/output&quot;</span>))</span>
+<span id="cb48-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-5" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
 <p>Tabellarische Daten (Dataframes) können zum Beispiel in csv-Dateien gespeichert werden:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-1" tabindex="-1"></a><span class="co"># Dataframe in csv-Datei schreiben</span></span>
-<span id="cb48-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-2" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>)</span>
-<span id="cb48-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-3" tabindex="-1"></a><span class="co"># Können wir verhindern, dass die Zeilenindizes als eigene Spalte gespeichert werden? </span></span>
-<span id="cb48-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-4" tabindex="-1"></a>?write.csv2</span>
-<span id="cb48-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-5" tabindex="-1"></a><span class="co"># Ja, mit dem Parameter row.names:</span></span>
-<span id="cb48-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb48-6" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-1" tabindex="-1"></a><span class="co"># Dataframe in csv-Datei schreiben</span></span>
+<span id="cb49-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-2" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>)</span>
+<span id="cb49-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-3" tabindex="-1"></a><span class="co"># Können wir verhindern, dass die Zeilenindizes als eigene Spalte gespeichert werden? </span></span>
+<span id="cb49-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-4" tabindex="-1"></a>?write.csv2</span>
+<span id="cb49-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-5" tabindex="-1"></a><span class="co"># Ja, mit dem Parameter row.names:</span></span>
+<span id="cb49-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-6" tabindex="-1"></a><span class="fu">write.csv2</span>(ger_info, <span class="st">&quot;ger_info.csv&quot;</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel quanteda tokens-Objekte oder auch der ger_info Dataframe, können außerdem in R-internen Datenformaten gespeichert werden:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-1" tabindex="-1"></a><span class="co"># R-interne Datenformate: R Objekte speichern und laden</span></span>
-<span id="cb49-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-2" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-3" tabindex="-1"></a><span class="co"># rds: Ein Objekt in einer Datei speichern</span></span>
-<span id="cb49-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-4" tabindex="-1"></a><span class="fu">saveRDS</span>(ger_info, <span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
-<span id="cb49-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-5" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_toks, <span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span>
-<span id="cb49-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-6" tabindex="-1"></a></span>
-<span id="cb49-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-7" tabindex="-1"></a><span class="co"># RData und rda : Mehrere Objekte in einer Datei speichern </span></span>
-<span id="cb49-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-8" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
-<span id="cb49-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb49-9" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-1" tabindex="-1"></a><span class="co"># R-interne Datenformate: R Objekte speichern und laden</span></span>
+<span id="cb50-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-2" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-3" tabindex="-1"></a><span class="co"># rds: Ein Objekt in einer Datei speichern</span></span>
+<span id="cb50-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-4" tabindex="-1"></a><span class="fu">saveRDS</span>(ger_info, <span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
+<span id="cb50-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-5" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_toks, <span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span>
+<span id="cb50-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-6" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-7" tabindex="-1"></a><span class="co"># RData und rda : Mehrere Objekte in einer Datei speichern </span></span>
+<span id="cb50-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-8" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
+<span id="cb50-9"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-9" tabindex="-1"></a><span class="fu">save</span>(kafka_1, kafka_2, kafka_3, <span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
 <p>RDS-, RDA- und RData-Dateien können später eingelesen werden mit:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
-<span id="cb50-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-2" tabindex="-1"></a>kafka_toks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span>
-<span id="cb50-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-3" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
-<span id="cb50-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb50-4" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb51-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;ger_info.rds&quot;</span>)</span>
+<span id="cb51-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb51-2" tabindex="-1"></a>kafka_toks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span>
+<span id="cb51-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb51-3" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.rda&quot;</span>)</span>
+<span id="cb51-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb51-4" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;uebung.RData&quot;</span>)</span></code></pre></div>
 <p>Und csv-Dateien könne eingelesen werden mit:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb51-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="at">file=</span><span class="st">&quot;ger_info.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-1" tabindex="-1"></a>ger_info <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="at">file=</span><span class="st">&quot;ger_info.csv&quot;</span>)</span></code></pre></div>
 <p>Um Änderungen zu speichern, die wir ggf. an den eingelesenen Texten vorgenommen haben, können wir diese einfach in eine neue Textdatei schreiben:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-1" tabindex="-1"></a><span class="co"># Textdateien Zeile für Zeile schreiben:</span></span>
-<span id="cb52-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-2" tabindex="-1"></a><span class="fu">writeLines</span>(kafka_1, <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>)</span>
-<span id="cb52-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-3" tabindex="-1"></a><span class="co"># Alternativ mit write.table: Funktioniert auch für Textdateien!</span></span>
-<span id="cb52-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-4" tabindex="-1"></a><span class="fu">write.table</span>(kafka_1, </span>
-<span id="cb52-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-5" tabindex="-1"></a>            <span class="at">file =</span> <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>, </span>
-<span id="cb52-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-6" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
-<span id="cb52-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-7" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
-<span id="cb52-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb52-8" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-1" tabindex="-1"></a><span class="co"># Textdateien Zeile für Zeile schreiben:</span></span>
+<span id="cb53-2"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-2" tabindex="-1"></a><span class="fu">writeLines</span>(kafka_1, <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>)</span>
+<span id="cb53-3"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-3" tabindex="-1"></a><span class="co"># Alternativ mit write.table: Funktioniert auch für Textdateien!</span></span>
+<span id="cb53-4"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-4" tabindex="-1"></a><span class="fu">write.table</span>(kafka_1, </span>
+<span id="cb53-5"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-5" tabindex="-1"></a>            <span class="at">file =</span> <span class="st">&quot;kafka_bearbeitet.txt&quot;</span>, </span>
+<span id="cb53-6"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-6" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
+<span id="cb53-7"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-7" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb53-8"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#cb53-8" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="quellen-4" class="section level2 unnumbered hasAnchor">
 <h2>Quellen<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>

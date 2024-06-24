@@ -21,7 +21,6 @@ Verständnisfragen:
 
 :::
 
- 
 ## Märchenkorpus einlesen und Pakete installieren
 
 Um unser Korpus in R einzulesen, müssen wir zuerst wieder das **Arbeitsverzeichnis setzen**: 
@@ -93,7 +92,13 @@ maerchen_toks_rm <- tokens_remove(maerchen_toks, pattern = stopwords("de"))
 
 Wir haben jetzt also ein corpus-Objekt sowie zwei verschiedene tokens-Objekte (eins mit und eins ohne Stoppwörter), die wir in unserer Analyse verwenden können. 
 
-## Absolute Häufigkeiten und das Zipf'sche Gesetz
+## Worthäufigkeiten verstehen: absolute und relative Häufigkeiten
+
+In diesem Abschnitt betrachten wir Worthäufigkeiten über das gesamte Korpus hinweg und vergleichen Worthäufigkeiten in verschiedenen Dokumenten miteinander. Dazu lernen wir drei verschiedene Maße kennen: absolute Häufigkeiten, relative Häufigkeiten und TF-IDF, die sogenannte Term Frequency-Inverse Document Frequency. 
+
+Lernziele für diesen Abschnitt: Einfluss verschiedener Preprocessingschritte auf die Worthäufigkeiten verstehen und 
+
+### Absolute Häufigkeiten und das Zipf'sche Gesetz
 
 Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Aus der letzten Woche kennt ihr bereits die `summary()`-Funktion, die ein Quanteda Corpus-Objekt als Argument annimmt und einen Dataframe mit der Anzahl von Types und Tokens zu jedem Text liefert. Der Text wird dabei automatisch mit den Defaultargumenten tokenisiert. 
 
@@ -325,11 +330,12 @@ library(plotly)
 tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
   geom_point(alpha=0.6) +
   theme(axis.text.y = element_text(size=5), 
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
-  labs(x = "Text", y = "Token")
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, 
+                                   size=5)) + 
+  labs(x = "Text", y = "Token", size = "Frequency")
 
 ggplotly(tochter_plot) %>%
-  layout(xaxis = list(title = list(text = "Text", standoff = 5)))
+  layout(xaxis = list(title = list(standoff = 5))) 
 
 
 ```
@@ -338,7 +344,7 @@ Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein 
 
 Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? Zunächst untersuchen wir, wie sich die absoluten Worthäufigkeiten verändern, wenn wir das Korpus lemmatisieren. Etwas später kommen wir auf die Frage nach den relativen Häufigkeiten zurück. 
 
-## Absolute Häufigkeiten und Lemmata
+### Absolute Häufigkeiten und Lemmata
 
 Die Suche nach allen Tochter-Tokens mithilfe des regulären Ausdrucks "t(o|ö)chter" hat verschiedene Zeichenketten mit "tochter" oder "töchter" geliefert, darunter auch Flexionsformen der jeweiligen Wörter (z.B. "töchtern"). Wenn wir Worthäufigkeiten vergleichen wollen, ist das unpraktisch: In jedem Schritt müssen wir verschiedene Flexionsformen berücksichtigen und zusammenzählen. **Wir lemmatisieren deswegen im Folgenden das Märchenkorpus und betrachten die Worthäufigkeiten danach erneut.** Dazu verwenden wir den **Code aus Abschnitt 7.7 im Kapitel "Textanalyse II"**.
 
@@ -487,6 +493,632 @@ Verständnisfragen:
 - Was macht die Ebene `facet_grid(~ origin)`? Recherchiert in den ggplot2-Dokumentationsseiten und zieht [dieses Lehrbuch](https://ggplot2-book.org/facet) zurate. 
 - Wie wirkt sich das Lemmatisieren auf die Tochter-Tokens aus?
 :::
+
+### Relative Häufigkeiten und TF-IDF
+
+Wir haben bisher gesehen, dass sich die Worthäufigkeiten unterscheiden, je nachdem, welche Preprocessingentscheidungen getroffen wurden: das Entfernen der Stoppwörter und Satzzeichen hat die Aufmerksamkeit auf die am häufigsten vorkommenden Wörter gelenkt, die keine Funktionswörter sind. Die Lemmatisierung hat die Gesamtanzahl der Tokens weiter reduziert, indem verschiedene Flexionsformen zu einem Wortstamm zusammengefasst wurden. **Mit unserem `tochter_plot` haben wir danach versucht einzuschätzen, was diese Häufigkeiten bedeuten**: Wenn "königstochter" fast 200 Mal in unserem Märchenkorpus vorkommt, bedeutet das etwa, dass in fast jedem Märchen eine Königstochter vorkommt? Oder gibt es vielleicht nur wenige Märchen, in denen immer wieder eine Königstochter erwähnt wird? 
+Unsem `tochter_plot` konnten wir entnehmen, dass "königstochter" in fast 50 verschiedenen Märchen vorkommt: in manchen Märchen nur ein oder zweimal, und in anderen Märchen zehn oder sogar 18 Mal. **Aus unserem Plot können wir aber nicht ablesen, was diese Unterschiede bedeuten**: "königstochter" kommt im Märchen "Der Forschkönig" 13 Mal vor, und in "Die zwei Brüder" 18 Mal. Im Vergleich mit anderen Märchen erscheint das viel, aber bedeuten diese Zahlen wirklich dasselbe, wenn ein Märchen nur etwa 1500 Token lang ist, und das andere 9000? **Um Worthäufigkeiten vergleich zu können, brauchen wir also anstelle der absoluten Häufigkeiten ein Maß, das die verschiedenen Textlängen berücksichtigt.**
+
+Eine simple Lösung wäre es, einfach alle Worthäufigkeiten durch die Länge der Märchen zu teilen, also die **relativen Häufigkeiten** zu betrachten. Das geht ganz einfach mit der Funktion `dfm_weight(scheme="prop")`:
+
+```{r}
+library(quanteda)
+library(quanteda.textstats)
+library(ggplot2)
+library(plotly)
+
+maerchen_dfm_weighted <- maerchen_dfm_lemmata %>%
+  dfm_weight(scheme="prop")
+
+
+tstat_freq_grouped <- textstat_frequency(maerchen_dfm_weighted, groups = Titel)
+tstat_subset <- tstat_freq_grouped[grepl("t(o|ö)chter", tstat_freq_grouped$feature), ]
+
+tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
+  geom_point(alpha=0.6) +
+  theme(axis.text.y = element_text(size=5), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, 
+                                   size=5)) + 
+  labs(x = "Text", y = "Token", size = "Frequency")
+
+ggplotly(tochter_plot) %>%
+  layout(xaxis = list(title = list(standoff = 5))) 
+
+
+```
+
+:::task
+Verständnisfragen:
+
+- Was hat sich verändert? Vergleicht die Märchen Froschkönig und die zwei Brüder!
+- Welche anderen Möglichkeiten gibt es, die Länge der Märchen zu berücksichtigen? Ruft die Dokumentationsseiten zur Funktion `dfm_weight()` mit `?dfm_weight` auf. 
+
+:::
+
+Im Vergleich mit dem Plot für die absoluten Häufigkeiten sticht das Märchen "Die zwei Brüder" nicht hervor, wenn die relativen Häufigkeiten verwendet werden. Der Punkt bei "königstochter" für "Die zwei Brüder" ist jetzt sogar etwas kleiner als der Punkt für "Der Froschkönig". Kleine Punkte in unserem Plot sind also durch das Einbeziehen der Textlängen scheinbar etwas größer geworden, und große Punkte kleiner. Warum ist das so? Unserer Beobachtung können wir nachgehen, indem wir direkt die Häufigkeiten für das Token "königstochter" für die beiden Märchen "Der Froschkönig" und "Die zwei Brüder" vergleichen:  
+
+```{r}
+docvars(maerchen_toks_lemmata, "Titel") <- docnames(maerchen_toks_lemmata)
+
+subset_dfm_lemmata <- maerchen_toks_lemmata %>%
+  tokens_subset(Titel %in% c("Der-Froschkoenig-oder-der-eiserne-Heinrich", "Die-zwei-Brueder")) %>% 
+  dfm()
+
+subset_dfm_lemmata[, "königstochter"]
+subset_dfm_weighted <- dfm_weight(subset_dfm_lemmata, scheme="prop")
+subset_dfm_weighted[, "königstochter"]
+
+```
+
+**Ihr seht: die absoluten Häufigkeiten können ganz schön täuschen. Als wir anfangs von den absoluten Häufigkeiten ausgegangen sind, um Märchencharaktere zu identifizieren, sind wir von den insgesamt am häufigsten vorkommenden Tokens ausgegangen. Wie wir gesehen haben,  bevorzugt diese Methode aber Charaktere, die in den längsten Märchen immer wieder vorkommen, weil die Anzahl an Erwähnungen mit der Gesamtanzahl der Wörter in einem Text zunimmt. Die relativen Häufigkeiten betonen dagegen Charaktere, die im Verhältnis zur Länge des Märchens häufig vorkommen und erlauben es, Märchen mit unterschiedlicher Länge zu vergleichen.** 
+
+Neben den absoluten und den relativen Häufigkeiten gibt es noch ein drittes Maß, das häufig  verwendet wird, um Worthäufigkeiten in einem Korpus zu vergleichen: die sogenannte **Term Frequency-Inverse Document Frequency** (kurz **TF-IDF**). **Dieses Maß eignet sich besonders, um Tokens zu identifizieren, die häufig in einem bestimmten Dokument, aber selten im gesamten Korpus vorkommen**. Der Name TF-IDF verrät bereits, wie das Maß berechnet wird: die absolute Häufigkeit jedes Tokens in einem Dokument (TF) wird ins Verhältnis zur Textlänge und zusätzlich zur Anzahl der Dokumente, in denen das Token auftritt (IDF), gesetzt. TF-IDF-Werte können mithilfe der Funktion `dfm_tfidf()` berechnet werden. Wir berechnen im Folgenden die TF-IDF-Werte für die beiden Märchen "Der Froschkönig" und "Die zwei Brüder" und vergleichen die Tokens mit den höchsten TF-IDF Werten. Anders als bei den absoluten und relativen Häufigkeiten müssen zur Berechnung der TF-IDF Werte Satzzeichen und Stoppwörter nicht unbedingt entfernt werden, weil das Maß Tokens, die in allen oder fast allen Texten vorkommen, gegenüber Tokens, die nur in wenigen Texten vorkommen, benachteiligt. Da wir aber bereits das Objekt `subset_dfm_lemmata` ohne Stoppwörter und Satzzeichen verwenden, die TF-IDF-Werte sind dieselben.
+
+```{r}
+maerchen_dfm_tfidf <- dfm_tfidf(subset_dfm_lemmata)
+
+tstat_freq_tfidf <- textstat_frequency(maerchen_dfm_tfidf, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_tfidf,
+                      aes(x = factor(nrow(tstat_freq_tfidf):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf):1),
+                   labels = tstat_freq_tfidf$feature) +
+  labs(x = NULL, y = "TF-IDF")
+
+```
+
+Können wir ausgehend von den TF-IDF-Werten Vermutungen über den Inhalt oder die Charaktere in den beiden Märchen anstellen? Zum Vergleich betrachten wir noch einmal die Tokens mit den höchsten absoluten und relativen Häufigkeiten in den beiden Märchen: 
+
+```{r}
+
+tstat_freq_lemmata <- textstat_frequency(subset_dfm_lemmata, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_lemmata,
+                      aes(x = factor(nrow(tstat_freq_lemmata):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_lemmata):1),
+                   labels = tstat_freq_lemmata$feature) +
+  labs(x = NULL, y = "Raw Frequencies")
+
+
+```
+```{r}
+
+tstat_freq_weighted <- textstat_frequency(subset_dfm_weighted, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_weighted,
+                      aes(x = factor(nrow(tstat_freq_weighted):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_weighted):1),
+                   labels = tstat_freq_weighted$feature) +
+  labs(x = NULL, y = "Relative Frequencies")
+
+
+```
+
+:::task
+
+Dustin Stoltz und Marshall Taylor schreiben in ihrem Lehrbuch "Mapping Texts": "We can think of *tf-idf* scores as giving us the **keywords** for a document — the set of words best summarizing the purpose or content of that text" (S. 88). Was haltet ihr nach unserem kleinen Beispiel von dieser Aussage? 
+ 
+
+:::
+
+
+
+<details>
+<summary><b>Anwendungsbeispiele: TF-IDF</b></summary>
+
+- Kimmo Elo (2022). A Text Network Analysis of Discursive Changes in German, Austrian and Swiss New Year’s Speeches 2000-2021, https://www.digitalhumanities.org/dhq/vol/16/1/000598/000598.html
+- Kritik einer Arbeit, die TF-IDF auf problematische Weise anwendet: David L. Hoover (2016). Argument, Evidence, and the Limits of Digital Literary Studies, https://dhdebates.gc.cuny.edu/read/untitled/section/70f5261e-e268-4f56-928f-0c4ea30d254d.
+- Die Arbeit, die kritisiert wird: https://companions.digitalhumanities.org/DLS/?chapter=content/9781405148641_chapter_26.html
+
+</details>
+
+<details>
+<summary><b>Theoretischer Hintergrund: TF-IDF </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.3.1: Co-occurrence Weighting Functions, https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund: TF-IDF </b></summary>
+
+Für einen allgemeinen Einstieg in den mathematischen Hintergrund hinter TF-IDF empfehle ich:
+
+- Dan Jurafsky (2022). Vectors 5 TF IDF, https://www.youtube.com/watch?v=TBUpxFw8oIA
+- Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector, https://web.stanford.edu/~jurafsky/slp3/.
+
+Um zu verstehen, wie TF-IDF-Werte in Quanteda berechnet werden, müssen wir jedoch auch die [Funktionsdokumentation](https://quanteda.io/reference/dfm_tfidf.html) zu Rate ziehen, den die Formeln zur Berechnung der TF-IDF Werte unterscheiden sich mitunter etwas.
+
+(folgt noch)
+
+</details>
+
+
+## Wörter im Kontext: gemeinsames Vorkommen von Wörtern 
+
+Bisher haben wir absolute und relative Häufigkeiten sowie TF-IDF-Werte für die Wörter in unserem Märchenkorpus betrachtet. Dabei haben wir versucht, über die am häufigsten vorkommenden Wörter Märchencharaktere zu identifizieren, die für unsere Fragestellung interessant sind, und wir haben uns beispielhaft die Tokens "tochter" und "königstochter" etwas näher angesehen. In diesem Abschnitt operationalisieren wir die ursprüngliche Fragestellung, wie Geschlechterstereotype oder Geschlechterrollen in unserem Märchenkorpus konstruiert werden, auf eine naive Art: Wir betrachten zunächst explorativ ausgewählte Märchencharaktere (zum Beispiel die Königstochter-Tokens) in ihrem Kontext. Danach betrachten wir diesen Kontext etwas genauer und untersuchen, welche Wörter mit den Tochter-Tokens gemeinsam vorkommen und wie oft, und wir werden versuchen, mit Mitteln der Statistik zu bewerten, was dieses gemeinsame Vorkommen bedeutet. 
+
+### Keywords in Context (KWIC)
+
+Zunächst interessiert uns: In welchem Satz- bzw. Sinnzusammenhang stehen Wörter wie Königstochter und Tochter in den Märchen? 
+Mithilfe der Quanteda-Funktion `kwic()` können Tokens in ihrem Kontext übersichtlich dargestellt werden. Solche Listen von Tokens in ihrem  Zusammenhang nennt man auch **Konkordanzen** (oder "concordances"). Die Funktion `kwic()` unterstützt keine regulären Ausdrücke, aber eine **unscharfe Suche mithilfe des Platzhalters `*` und dem Argument `case_insensitive=TRUE`** ist möglich. Da es uns darum geht, die Schlüsselwörter in ihrem Kontext zu sehen, verwenden wir in diesem Fall das tokens-Objekt ohne weitere Preprocessing-Schritte: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+maerchen_kwic <- kwic(maerchen_toks_raw, pattern = c("*tochter*", "*töchter*"), case_insensitive = TRUE)
+maerchen_kwic # RStudio: View(maerchen_kwic)
+```
+
+Bei der Durchsicht der Kontexte im Hinblick auf unsere Fragestellung fällt vielleicht auf, dass die Tochter-Tokens häufig im Kontext von Beschreibungen vorkommen, in denen die Tochter als schön beschrieben wird, entweder durch das Adjektiv schön oder in einer Aussage der Art "...die Müllerstochter war ein schönes und frommes...". Allein 25 Textstellen enthalten Wortpaare der Art "schöne Tochter": 
+
+
+```{r attr.output='style="max-height: 200px;"'}
+
+kwic_multiword <- kwic(maerchen_toks_raw, phrase(c("*schön* *tochter*", "*schön* *töchter*")), case_insensitive = TRUE)
+kwic_multiword # RStudio: View(maerchen_kwic)
+
+```
+
+
+Diese Wortpaare werden wir im Folgenden etwas genauer untersuchen. 
+
+<details>
+<summary><b>Anwendungsbeispiele: KWIC</b></summary>
+
+- Maëlle Le Roux (2021), Digital History of Representations: Analysing Identity and Nationalism in the Capuchin Annual Periodical (1930-1977),  https://journalofdigitalhistory.org/en/article/L2gBr3BzwH8Z
+- Mark Dang-Anh und Stefan Scholl (2022), *Chapter 5. Digital Discourse Analysis of Language Use under National Socialism: Methodological Reflections and Applications*, in: Julia Timpe und Frederike Buda (Hrsg.), Writing the Digital History of Nazi Germany, pp. 99-129, https://doi.org/10.1515/9783110714692 
+
+</details>
+
+### N-Gramme
+
+Bei der Durchsicht der Keywords in Context sind uns Textstellen aufgefallen, in denen Töchter als schön beschrieben werden. Zwar nehmen wir natürlich aus unserem Vorwissen an, dass dies natürlich kein Zufall sondern ein verbreitetes Motiv in Märchen sein wird. Aber bisher haben wir erst einmal nur eine  Beobachtung gemacht. Der Eindruck könnte schließlich auch täuschen, und andere Wörter könnten ebenso häufig mit dem Schlüsselwort "Tochter" zusammen vorkommen. Wir untersuchen also zunächst, welche Wörter häufig zusammen mit Tokens wie Königstochter und Tochter zusammen vorkommen. Wir betrachten dabei ganz allgemein das gemeinsame Vorkommen, unabhängig vom Bezug der Wörter zueinander. 
+
+**Sequenzen von N aufeinanderfolgenden Tokens werden auch N-Gramme (engl. n-grams) genannt. N-Gramme aus zwei Tokens werden Bigramme genannt.** N-Gramme können mithilfe der Quanteda-Funktion `tokens_ngrams()` entweder für jeden Text im Gesamten bestimmt werden, oder für jeden Satz einzeln. Um N-Gramme über die Satzgrenzen hinweg zu bestimmen, kann der `tokens_ngrams()`-Funktion einfach unser tokens-Objekt übergeben werden:
+
+```{r attr.output='style="max-height: 200px;"'}
+
+toks_ngrams <- tokens_ngrams(maerchen_toks, n=3)
+toks_ngrams # erste fünf Zeilen anzeigen
+```
+
+Allerdings sind diese N-Gramme für unsere Fragestellung nicht besonders aufschlussreich, denn das Bigramm "schöne tochter" könnte auch dadurch zustande kommen, dass ein vorhergehender Satz mit "schöne" endet, und der darauffolgende mit "tochter" beginnt. Durch das Entfernen der Satzzeichen und Vereinheitlichen der Groß- und Kleinschreibung würde uns dieser Umstand jedoch nicht auffallen. Es wäre deswegen besser, wenn beim Bilden der N-Gramme die Satzgrenzen berücksichtigt würden.  
+
+**Um N-Gramme auf Satzebene zu erhalten, muss zuerst das corpus-Objekt so umgeformt werden, dass es einzelne Sätze enthält, und nicht einzelne Texte:**
+
+```{r}
+
+maerchen_sentences <- corpus_reshape(maerchen_corpus, to="sentences")
+
+```
+ 
+Anschließend muss das corpus-Objekt wieder mit denselben Preprocessing-Schritten wie zuvor tokenisiert werden: 
+
+```{r}
+maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_tolower()
+
+```
+ 
+Zuletzt kann das neue tokens-Objekt mit der `tokens_ngrams()` Funktion verwendet werden. Da wir uns aber speziell für Bigramme mit dem Wort "tochter" oder "schön" interessieren, müssen wir das Vorgehen etwas anpassen: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+toks_bigram_tochter <- maerchen_sentences_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+
+```
+
+Die Ausgabe ist jedoch immer noch nicht sonderlich übersichtlich: Sie enthält keine Angabe zur Häufigkeit der jeweiligen Bigramme. Einen Dataframe mit den Häufigkeiten zu allen Bigrammen erhalten wir, indem wir zunächst aus dem tokens_Objekt eine DFM machen und anschließend Informationen zu den häufigsten Bigrammen mithilfe der bereits bekannten Funktion `textstat_frequency()` abrufen. 
+
+:::tip
+Achtung
+
+Zwar haben wir am Anfang besprochen, dass eine DFM für bag-of-words-Analysen verwendet wird. Die Bestimmung der N-Gramme ist allerdings trotzdem eine string-of-words-Methode. Wir erstellen die DFM in diesem Fall erst, nachdem wir bereits aufeinanderfolgende Tokens bestimmt haben. Die Reihenfolge der so bestimmten Bigramme in den Texten ist dann egal, sodass die zusammengesetzen Tokens als DFM repräsentiert werden können.
+:::
+
+Die Verarbeitungsschritte verketten wir mit Pipes: 
+
+```{r attr.output='style="max-height: 200px;"'}
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+
+
+```
+
+22 der 69 so bestimmten Bigramme enthalten eine Kombination aus den Wörtern "tochter" und "schön". Wenn wir die Suche auf "töchter" ausweiten würden, würden vermutlich noch einige Bigramme hinzukommen. Daneben finden sich aber auch andere Adjektive in den Bigrammen, zum Beispiel "einzige", "älteste" oder "fremde". Wie eingangs erwähnt wurde, bedeutet dies natürlich noch nicht unbedingt, dass die Töchter auch tatsächlich mit diesen Adjektiven beschrieben werden; bei der Interpretation ist also Vorsicht geboten.  
+
+Für jede Kombination von zwei Tokens müssen jedoch alle Flexionsformen beider Wörter betrachtet werden, weil "fremde_töchter", "fremden_töchtern", "fremder_töchtern", usw. jeweils als unterschiedliche Bigramme gezählt werden. Um solche Bigramme zusammenzufassen können wieder Lemmata verwendet werden. Beim Lemmatisieren wollen wir aber diesmal ein corpus-Objekt erstellen, dessen Dokumente Sätze der einzelnen Märchen sind, das also dieselbe Form hat wie das mit `corpus_reshape()` erzeugte corpus-Objekt. Dazu nehmen wir eine kleine Änderung am Code aus Abschnitt 7.7 vor. Den Code aus Abschnitt 7.7 haben wir bereits im Abschnitt 8.3.2 "Absolute Häufigkeiten und Lemmata" verwendet, um das Märchenkorpus zu lemmatisieren. Bis zur Erzeugung des Objekts `maerchen_cleaned_df` gehen wir ganz genauso vor, den Code wiederholen wir an dieser Stelle deswegen nicht und machen direkt mit dem Objekt `maerchen_cleaned_df` weiter: 
+
+```{r}
+# Dataframe umformen, sodass jede Zeile einem Satz (!) entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden
+# Mit mutate() wird eine Laufnummer an die Märchennamen in der Spalte `doc_id` angefügt, damit jeder Satz eine einzigartige doc_id hat
+maerchen_grouped <- maerchen_cleaned_df %>% 
+  group_by(doc_id, sentence) %>%
+  summarise(text = paste(lemma, collapse = " ")) %>%
+  mutate(doc_id = paste0(doc_id, "_", row_number()))
+maerchen_grouped$sentence <- NULL
+# Dataframe in Quanteda corpus-Objekt umwandeln
+maerchen_sentences <- corpus(maerchen_grouped) 
+
+```
+
+Jetzt wiederholen wir das Preprocessing und lassen uns die häufigsten Bigramme ausgeben, diemal mit den Lemmata:
+
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+# Code aus diesem Abschnitt wird hier für das lemmatiserte Korpus wiederholt
+
+maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_tolower()
+
+toks_bigram_tochter <- maerchen_sentences_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+
+```
+
+Die Bigramme mit "tochter" und "schön" können wir auch visualisieren: 
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda.textstats)
+library(ggplot2)
+
+bigram_freq <- tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *tochter*")) %>%
+  tokens_select(pattern = phrase("*schön*_*tochter*")) %>%
+  dfm() %>%
+  textstat_frequency()
+
+bigram_filtered <- bigram_freq[bigram_freq$frequency >= 1,]
+
+ggplot(bigram_filtered, aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, max(bigram_filtered$frequency), by = 2)) + 
+  labs(x = "Feature", y = "Frequency")
+
+```
+
+Zuletzt könnten wir noch untersuchen, welche anderen Tokens zusammen mit dem Wort "schön" auftreten. Dabei verketten wir alle Schritte mit Pipes:  
+
+```{r attr.output='style="max-height: 200px;"'}
+library(quanteda.textstats)
+
+tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *")) %>%
+  tokens_select(pattern = phrase("*schön*_*")) %>%
+  dfm() %>%
+  textstat_frequency()
+
+```
+
+
+<details>
+<summary><b>Anwendungsbeispiele: N-Gramme</b></summary>
+
+- Turo Hiltunen, Jenni Räikkönen und Jukka Tyrkkö (2020), Investigating colloquialization in the British parliamentary record in the late 19th and early 20th century,  https://doi.org/10.1016/j.langsci.2020.101270
+- Colin Sippl et al. (2016), Korpusbasierte Analyse österreichischer Parlamentsreden, https://epub.uni-regensburg.de/35705/
+
+</details>
+
+
+### Kookkurrenzen 
+
+Bisher haben wir nur direkt aufeinanderfolgende Tokens betrachtet. Aber in den Keywords in Context haben wir gesehen, dass "Tochter" und "schön" auch häufig gemeinsam auftreten, ohne, dass sie direkt aufeinanderfolgen, beispielsweise in Sätzen wie "...die Tochter war so schön, dass...". 
+Diese Fälle wollen wir im Folgenden untersuchen, indem wir Kookkurrenzen bestimmen. **Der Begriff Kookkurrenz  beschreibt das gemeinsame Auftreten von zwei oder mehr Tokens innerhalb eines bestimmten Kontexts**. **Im Grunde sind N-Gramme auch spezielle Kookkurrenzen, mit der Besonderheit, dass die Tokens genau aufeinanderfolgen.** 
+
+Zur Bestimmung und Repräsentation von Kookkurrenzen gibt es in Quanteda ein weiteres Objekt, das wir bisher noch nicht behandelt haben: eine **Feature Co-Occurrence Matrix (FCM)**. Wenn das tokens-Objekt maerchen_toks zum Erstellen der FCM verwendet wird und kein zusätzliches Argument beim Funktionsaufruf übergeben wird, dann gibt die Matrix standardmäßig die Kookkurrenzen aller Wörter in einem Text aus, unabhängig von den Satzgrenzen. Solche Kookkurrenzen auf Dokumentenebene sind zum Beispiel dann interessant, wenn wir herausfinden wollen, welche Charaktere in Märchen gemeinsam auftreten. 
+
+In diesem Abschnitt betrachten wir wieder die Lemmata anstelle der absoluten Häufigkeiten wie im Abschnitt mit den N-Grammen. Prinzipiell können aber sowohl N-Gramme als auch Kookkurrenzen für ein lemmatisiertes oder nichtlemmatisiertes Korpus bestimmt werden.
+
+
+```{r attr.output='style="max-height: 200px;"'}
+# FCM mit Kookkurrenzen auf Dokumentenebene
+fcm(maerchen_toks_lemmata)
+
+```
+
+Alternativ kann der Kontext aber auch auf einzelne Sätze eingeschränkt werden, indem wir stattdessen das Objekt `maerchen_sentences_toks` aus dem Abschnitt "N-Gramme" zum Erstellen der FCM verwenden. 
+
+```{r attr.output='style="max-height: 200px;"'}
+# FCM mit Kookkurrenzen auf Satzebene
+# Code für das Preprocessing aus dem Abschnitt "N-Gramme"
+maerchen_fcm <- fcm(maerchen_sentences_toks)
+maerchen_fcm
+
+```
+
+Mithilfe des Arguments `context="window"` gibt es die zusätzliche Möglichkeit, manuell eine feste Anzahl von Tokens als Kontext festzulegen:
+
+```{r attr.output='style="max-height: 200px;"'}
+#  FCM mit Kookkurrenzen in einem manuell festgelegten Kontext
+fcm(maerchen_toks_lemmata, context="window", window=6)
+
+```
+
+
+Wir verwenden aber den Satz als Kontext, da für unsere Fragestellung die Satzübergänge wichtig sind. Da wir uns speziell für die Kookkurrenzen der Tokens mit "tochter" und "schön" interessieren, filtern wir unsere FCM: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+fcm_select(maerchen_fcm, 
+                  pattern = c("*tochter*", 
+                              "*schön*"),
+                  selection = "keep")
+
+```
+
+Diese Matrix ist für einige Weiterverarbeitungsschritte zwar praktisch, aber für uns nicht sonderlich übersichtlich, da jedes Token einmal als Spalte und noch einmal als Zeile vorkommt. Da für uns die Reihenfolge der Kookkurrenzen erst einmal nicht interessant ist, kombinieren wir diese Kookkurrenzen und bringen die Daten in ein übersichtlicheres Format:  
+
+```{r attr.output='style="max-height: 200px;"'}
+# Separat erst Spalten, dann Zeilen mit den gesuchten Werten extrahieren
+fcm_tochter_cols <- maerchen_fcm[, grepl("tochter", colnames(maerchen_fcm))] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_cols <- fcm_tochter_cols[grepl("schön", rownames(maerchen_fcm)),]
+matrix_cols
+fcm_tochter_rows <- maerchen_fcm[grepl("tochter", rownames(maerchen_fcm)), ] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_rows <- fcm_tochter_rows[, grepl("schön", colnames(maerchen_fcm))]
+matrix_rows
+# matrix_cols transponieren, damit Tochter-Tokens ebenfalls in den Zeilen stehen
+matrix_rows_2 <- t(matrix_cols) 
+matrix_rows_2
+# überprüfen, ob Spaltennamen der Matrizen übereinstimmen
+colnames(matrix_rows) == colnames(matrix_rows_2)
+# überprüfen, ob Zeilennamen der Matrizen übereinstimmen
+rownames(matrix_rows) == rownames(matrix_rows_2)
+# Dimension der Matrix matrix_rows
+dim(matrix_rows)
+# Dimension der Matrix matrix_rows_2 nach dem Transponieren
+dim(matrix_rows_2)
+# Matrizen addieren: Geht nur, wenn beide Matrizen dieselbe Dimension haben 
+matrix_tochter <- matrix_rows + matrix_rows_2
+# Komplett anzeigen (in "nicht spärliche" Matrix  umwandeln)
+matrix_tochter <- as.matrix(matrix_tochter)
+# Spalten mit nur Nullen löschen 
+matrix_tochter <- matrix_tochter[, colSums(matrix_tochter) != 0]
+matrix_tochter
+# So lassen sich Zeilen mit nur Nullen löschen: lassen wir aber erstmal drin  
+# matrix_tochter <- matrix_tochter[rowSums(matrix_tochter) != 0,]
+# In Dataframe umwandeln: Beachtet den Zusatz Table, dieser bestimmt, wie der Dataframe organisiert ist
+df_tochter <- as.data.frame.table(matrix_tochter)
+df_tochter$cooccurrence <- paste(df_tochter$features, df_tochter$features.1, sep="_")
+df_tochter
+```
+
+Die Daten können wir in dieser Form auch visualisieren, zum Beispiel als **Heat Map**: 
+
+```{r}
+ggplot(df_tochter, aes(x = features, y = features.1, fill = Freq)) +
+  geom_tile() + 
+  scale_fill_gradient(low = "lightblue", high = "darkblue") + 
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) + 
+  labs(x = "Tokens mit tochter", y = "Tokens mit schön") + 
+  geom_text(aes(label = ifelse(Freq >= 1, Freq, "")),  # Nur Werte >= 1 anzeigen
+            size = 2)
+```
+
+Vergleicht man die Heat Map mit den Kookkurrenzen mit dem Säulendiagramm der Bigramme, so fällt auf, dass es mehr Kookkurrenzen als Bigramme gibt: Während das Bigramm "schöne königstochter" 8 Mal vorkommt, finden sich in unserer FCM 10 Kookkurrenzen von "schöne" und "königstochter". Die zwei zusätzlichen Kookkurrenzen könnten beispielsweise durch ein Konstrukt wie "eine schöne und kluge königstochter" zustandekommen, oder aber auch durch einen Satz wie "ein schöner Königssohn und eine Königstochter". 
+
+Die Bestimmung der Kookkurrenzen auf Satzebene gibt uns also weitere möglicherweise relevante Wortkombinationen. Aber genau wie bei den N-Grammen können wir auch aus den Kookkurrenzen noch nicht ableiten, dass die Töchter in den Märchen tatsächlich als "schön" beschrieben werden, denn Kookkurrenzen können auch dadurch zustande kommen, dass ein nachfolgender Satz auf den vorhergehenden Bezug nimmt, und, dass sich das Wort schön im selben Satz auf ein anderes Wort bezieht. Trotzdem kann das häufige gemeinsame Auftreten von zwei Tokens statistisch beschrieben werden und es kann untersucht werden, ob das gemeinsame Auftreten statistisch signifikant ist.   
+
+Bevor wir uns der Frage nach der statistischen Signifikanz von Kookkurrenzen widmen, betrachten wir noch eine andere mögliche  Visualisierung für Kookkurrenzen: 
+
+```{r}
+
+# library(quanteda.textplots)
+# Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
+docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
+froschkoenig_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Froschkönig"
+textplot_network(froschkoenig_fcm, min_freq=4)
+
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Zusätzliches Preprocessing für längere Texte, siehe https://search.r-project.org/CRAN/refmans/quanteda.textplots/html/textplot_network.html
+feat <- colSums(brueder_fcm) %>%
+  sort(decreasing = TRUE) %>%
+  head(30) %>%
+  names()
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Die zwei Brüder"
+fcm_select(brueder_fcm, pattern = feat) %>%
+  textplot_network(min_freq = 10)
+
+```
+
+<details>
+<summary><b>Anwendungsbeispiele: Kookkurrenzen</b></summary>
+
+- Andrew Piper, Enumerations, Chapter 5. Characterization (Constraint), https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9958928373502883 (die Netzwerkvisualisierungen findest du auf S. 137 und S. 146. Piper verwendet den Begriff "semantic field"). 
+
+- Axel Pichler et al., Algorithmische Mikrolektüren philosophischer Texte
+Ein auf der digitalen Netzwerkanalyse basierender Vergleich der ‚Begriffsnetzwerke‘ bei Adorno und Carnap, https://doi.org/10.1515/9783110693973-014 (die Autor:innen verwenden den Begriff "Begriffsnetzwerk")
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kookkurrenzen</b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch. 1: From Usage to Meaning: The Foundations of Distributional Semantics, https://doi.org/10.1017/9780511783692.002 
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences, und 2.3: The Co-occurrence Matrix,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+
+### Kollokationen
+
+Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" denn tatsächlich statistisch signifikant? Ist das nicht nur zufällig? Um die statistische Signifikanz von Kookkurrenzen und speziell N-Grammen zu untersuchen, werden Kollokationen bestimmt. **Der Begriff Kollokation hat verschiedene Bedeutungen und ist deswegen durchaus umstritten (s. [Evert 2009, S. 1212f.](https://doi.org/10.1515/9783110213881.2.1212)). In diesem Kontext ist mit "Kollokation" einfach das wiederholte Auftreten von Wortpaaren in einem Korpus gemeint. Genau wie bei Kookkurrenzen und N-Grammen müssen die Wörter dabei nicht in einer syntaktischen Relation zueinander stehen, sie kommen also einfach in einem defininierten Kontext (z.B. in einem Text, Satz, Segment aus 5 Tokens, ...) gemeinsam vor.** Nicht alle Kollokationen sind dabei jedoch gleich signifikant: Zum Beispiel kommt zwar "und er" in vielen Sätzen vor, aber dieses Wortpaar ist nicht unbedingt inhaltlich aufschlussreich oder für das untersuchte Korpus spezifisch. Beispiele "echter" Kollokationen sind dagegen Wortpaare wie Frohe Weihnachten, Grüß Gott oder auch Vor- Nachnamekombinationen. Eine engere Definition von Kollokationen wäre deswegen vielleicht "statistisch signifikante Kookkurrenzen". Um die Signifikanz verschiedener Kollokationen zu bestimmen, können statistische Parameter berechnet werden. **Assoziationsmaße** beschreiben dabei die Stärke der Bindung zwischen zwei Wörtern. In Quanteda geht das mit der Funktion `textstat_collocations()`: 
+
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda.textstats)
+
+collocs_10 <- textstat_collocations(maerchen_toks, min_count = 10) # 84
+```
+
+Die Funktion `textstat_collocations()` berücksichtigt per Default Satzübergänge und behandelt Sätze als Kontext für die Kollokationen. Das können wir der Dokumentationsseite zur `textstat_collocations()`-Funktion entnehmen: "Documents are grouped for the purposes of scoring, but collocations will not span sentences."
+
+Wir betrachten nun die erzeugten Kollokationen und die zugehörigen statistischen Maße: 
+
+```{r attr.output='style="max-height: 200px;"'}
+collocs_10
+```
+
+Der Dataframe enthält die folgenden Spalten (vgl. [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für Details zur Berechnung der Maße): 
+
+* `count` ist die absolute Häufigkeit der Kollokationen im Korpus 
+* `lambda` ist ein Assoziationsmaß, das die **Stärke der Assoziation** oder Bindung der Wörter in einem Wortpaar angibt. Ein hoher Wert von λ deutet darauf hin, dass es eine starke Assoziation zwischen den Wörtern in einem Wortpaar vorliegt. Während ein positiver Wert darauf hindeutet, dass die Wörter häufiger gemeinsam auftreten als erwartet, deutet ein negativer Wert darauf hin, dass die Wörter seltener gemeinsam auftreten als erwartet und ein Wert um Null legt nahe, dass das gemeinsame Auftreten zufällig ist.
+* `z` ist eine Teststatistik, die verwendet wird, um die **Signifikanz der Assoziation** zwischen den Wörtern in einem Wortpaar zu bewerten. Der z-Wert gibt an, wie stark die beobachtete Assoziation von der Verteilung abweicht, die erwartet würde, wenn das gemeinsame Auftreten der Wörter zufällig wäre. Die statistische Signifikanz wird bewertet, indem die Hypothese getestet wird, dass λ signifikant von Null verschieden ist. Ein hoher Wert von z deutet darauf hin, dass die Nullhypothese (keine Assoziation) mit hoher Wahrscheinlichkeit abgelehnt wird, was bedeutet, dass die Assoziation signifikant ist. 
+
+Die Interpretation dieser Werte ist jedoch nicht trivial und hängt von einigen Faktoren ab, die wir uns im folgenden genauer ansehen. 
+
+Unter den Kollokationen mit den höchsten Werten in den Spalten lambda und z finden sich Wortkombinationen, die erst einmal wenig interessant erscheinen wie "in den", "der könig" oder "als er". Aber daneben finden sich auch Wortpaare, die irgendwie "märchenspezifisch" erscheinen, z.B. "sieben jahre", "drei tage" oder "bruder lustig" und andere, die inhaltlich weniger spezifisch sind wie "guten tag" oder "von herzen", "nach haus". Eine Suche nach "tochter" und "schön" zeigt, dass einzig die kollokation "schöne jungfrau" in der Liste der Kollokationen auftaucht, aber keine Kombination von "schön" und "tochter". Das liegt natürlich daran, dass wir den `min_count`, also die minimale Anzahl der Vorkommen der Kollokation, beim Aufruf der Funktion `textstat_collocations()` auf 10 eingestellt haben. Da Wortpaare mit "schön" und "tochter" in vielen verschiedenen Flexionsformen vorkommen, werden diese Formen als verschiedene Kollokationen gezählt, und aus der Liste der N-Gramme wissen wir bereits, dass sowohl "schöne königstochter" als auch "schöne tochter" nur achtmal vorkommen. Wenn wir zur Bestimmung der Kollokationen Lemmata verwendet hätten, dann hätten die Kollokationen "schön tochter" und "schön königstochter" vermutlich einen insgesamt höheren Count. Um die Kollokationen mit "schön" und "tochter" zu betrachten, müssen wir also den Schwellenwert herabsetzen. Da wir uns ja besonders für die Kollokationen mit "Tochter" interessieren, filtern wir unseren Dataframe außerdem nach Kollokationen mit "tochter". Um alle Wortpaare zu erhalten, setzen wir den min_count zunächst auf 1.
+
+```{r attr.output='style="max-height: 200px;"'}
+collocs_1 <- textstat_collocations(maerchen_sentences_toks, min_count = 1)
+subset_collocs <- collocs_1[grepl("tochter", collocs_1$collocation), ]
+subset_collocs
+```
+
+Wenn wir die Werte aus dem Dataframe `collocs_1` mit den Werten aus dem Dataframe `collocs_10` vergleichen, sehen wir, dass der niedrigere Schwellenwert die Werte nicht beeinflusst: der Funktionsparameter `min_count` bestimmt nur, welche Wortpaare ausgegeben werden.
+
+Fast alle Kollokationen mit `schön` und `tochter` haben z-Werte von > 8 und Lambda-Werte von > 4, darunter allerdings auch vier Kollokationen, die jeweils nur einmal vorkommen. Aber was bedeuten diese Werte? Unter den Wortpaaren mit einem Count von 1 lassen sich sowohl vergleichsweise hohe Lambda-Werte finden als auch vergleichsweise geringe. Z.B. hat das Wortpaar "stieftochter spinnefeind" einen Lamda-Wert von über 8; andere Wortpaare, die nur einmal vorkommen, wie beispielsweise "unsere tochter" haben einen deutlich niedrigeren Lambda-Wert. Kollokationen, die vergleichsweise häufig vorkommen, haben dagegen allgemein eher mittlere Lambda-Werte. Mit den z-Werten verhält es sich ähnlich: Wortpaare, die nur einmal vorkommen, können ebenfalls sowohl vergleichsweise geringe als auch hohe z-Werte aufweisen. Die höchsten z-Werte finden sich jedoch, anders als bei den Lambda-Werten, bei Wortpaaren, die im Vergleich häufiger vorkommen. 
+
+Wir können uns diesen Umstand erklären? Und wie können wir die Werte in Bezug auf unser Korpus und unsere Fragestellung deuten?
+
+Um ein besseres Verständnis für die berechneten Werte zu erhalten, visualisieren wir das Verhältnis zwischen der absoluten Häufigkeit oder Frequenz (Spalte count) der Kollokationen und den berechneten Werten. Ein Streudiagramm der absoluten Häufigkeit der Kollokationen im Korpus (x-Achse) und ihren zugehörigen Lambda-Werte (y-Achse) zeigt, dass die Lambda-Werte tatsächlich am stärksten auseinandergehen für selten vorkommende Wortpaare: 
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+
+ggplot(collocs_1, aes(x = count, y = lambda)) +
+  geom_point() +
+    labs(x = "Collocation Count", y = "Lambda Score")
+
+```
+
+Für ein tiefergehendes Verständnis der Lambda- und z-Werte solltet ihr den optionalen Abschnitt "Mathematischer Hintergrund: Kollokationen" zurate ziehen. An dieser Stelle solltet ihr euch vor allem einprägen: Bei der Interpretation der Lambda- und z-Werte muss sowohl die Häufigkeit eines Wortpaars im Korpus als auch die Gesamthäufigkeit der beiden Wörter berücksichtigt werden. Die Kollokation "er so", die 53 mal vorkommt, hat beispielsweise sowohl einen negativen Lambda-Wert (-0.02236963) als auch einen negativen z-Wert (-0.1609824). Die beiden Tokens "er" und "so" kommen beide so häufig im Gesamtkorpus vor, dass das häufige gemeinsame Auftreten der beiden Wörter nicht statistisch siginfikant ist: Ein häufiges gemeinsames Auftreten von häufig auftreteneden Wörtern wird erwartet und weicht in diesem Fall offenbar nicht signifikant vom Zufall ab. Anders formuliert: Das Wortpaar "er so" kommt zwar häufig vor, aber nicht häufiger, als es aufgrund der Einzelfrequenzen der Wörter "er" und "so" statistisch zu erwarten wäre. Tatsächlich zeigt der negative λ-Wert an, dass die Wörter vielleicht sogar seltener zusammen auftreten, als man erwarten würde, wenn ihre Verteilung rein zufällig wäre. **Denn grundsätzlich würde man erwarten, dass häufige Wörter tendenziell auch häufig zusammen auftreten, ohne dass dies auf eine besondere linguistische oder konzeptuelle Verbindung zwischen ihnen hinweist.**
+
+Wir können an diesem Punkt also erst einmal festhalten: **Die Interpretation von Assoziationsmaßen bei der Kollokationsanalyse ist nicht trivial und hängt sowohl vom jeweiligen Korpus als auch vom eigenen Ermessen ab. In der Praxis ist es wichtig, statistische Parameter wie λ und z im Kontext der Gesamthäufigkeit der betrachteten Wörter zu interpretieren. Sonst kann es schnell passieren, dass Kollokationen  fälschlicherweise als signifikant bewertet werden, die es nicht sind, oder dass signifikante Kollokationen übersehen werden. In der Praxis wird zudem häufig ein Schwellenwert festgelegt, um seltene Wortpaare auszuschließen.** 
+
+Was bedeuten diese Beobachtungen nun für unsere Kollokationen mit "schön" und "tochter"? Wir können annehmen, dass die hohen Werte für nur einmal vorkommende Wortpaare darauf zurückgeführt werden können, dass die einzelnen Wörter insgesamt im Korpus seltener vorkommen, zum Beispiel "stieftochter" und "spinnefeind". Dies wird zu einem geringeren Maße auch bei "schön" und "tochter" der Fall sein, die im Vergleich zu Funktionswörtern wie "auch" und "sie" natürlich seltener vorkommen, jedoch haben wir anfangs gesehen, dass die Tokens "Tochter" und "Königstochter" zu den häufigsten Tokens zählten, wenn Stoppwörter entfernt wurden (s. Token-Häufigkeitsanalyse). Trotzdem können Wortpaare, die nur einmal vorkommen, offensichtlich nicht als signifikant betrachtet werden, und nach unserer Definition streng genommen auch nicht als Kollokationen. 
+Anders verhält es sich mit den Kollokationen "schöne königstochter", "schöne tochter" und "schönen königstochter" mit 8,7 und 4 Vorkommen, Lambda-Werten > 4 und z-Werte > 8. Diese Werte liegen über dem Median; zugleich sind die einzelnen Wörter im Gesamtkorpus nicht so selten, dass eine fälschliche Erhöhung der Werte wahrscheinlich erscheint. 
+Wenn man die Kollokationen mit "tochter" und "schön" jedoch mit anderen Kollokationen mit "schön" vergleicht, erscheint die Assoziation von Tokens mit "tochter" und "schön" zwar auffällig, aber nicht außergewöhnlich:  Unter den Kollokationen mit dem Wort "schön" finden sich außerdem weitere Kollokationen mit anderen Tokens, zum Beispiel mit "jungfrau" (16) und "mädchen" (7), aber auch mit "knaben" (3), "jüngling" (3) und "mann" (4). Während die Werte für Kollokationen mit "knaben" und "jüngling" durch die geringe Häufigkeit der Kollokationen sowie durch die relative Seltenheit der Wörter "knaben" und "jüngling" im Gesamtkorpus beeinflusst sein wird, erscheinen die Werte insbesondere für die Kollokationen "schöne jungfrau", aber auch für "schöner mann" auf einen signifikante Assoziation hinzuweisen. 
+
+In unserem kleinen Beispiel konnten wir zumindest unsere ursprüngliche Beobachtung bestärken, dass "schön" statistisch häufiger als zufällig gemeinsam mit Tokens, die Tochter-Charaktere beschreiben, vorkommt. Wir können jedoch noch nicht sagen, ob "schön" tatsächlich zur Beschreibung dieser Charaktere verwendet wird, da wir bisher nur Wortpaare betrachtet haben, die im selben Satz vorkommen und/oder direkt aufeinander folgen. Ob die Wörter tatsächlich in einer Beziehung zueinander stehen, haben wir nicht untersucht. Zugleich haben wir uns nur auf ein einzelnes Adjektiv beschränkt, aber wir wissen noch nicht, welche anderen Adjektive vielleicht gemeinsam mit diesen Tokens vorkommen. Bei der gesamten Analyse haben wir außerdem erst einmal angenommen, dass wenn ein Token mit "tochter" vorkommt, dieses auch einen Charakter in dem Märchen beschreibt. Diesen Fragen und Problemen werden wir uns in der nächsten Woche widmen.
+
+
+<details>
+<summary><b>Anwendungsbeispiele: Kollokationen</b></summary>
+
+- Melanie Schröter et al. (2019). *Chapter 1. A comparative analysis of the keyword multicultural(ism) in French, British, German and Italian migration discourse*, in: Lorella Viola und Andreas Musolff (Hg.), Migration and Media. Discourses about identities in crisis, https://www.jbe-platform.com/content/books/9789027262707-dapsac.81.02sch
+- Paul Baker und Robbie Love (2021). *Corpus Linguistics and Sexuality*, in: Kira Hall und Rusty Barrett (Hrsg.), The Oxford Handbook of Language and Sexuality, Paul Baker und Robbie Love, Corpus Linguistics and Sexuality, https://academic.oup.com/edited-volume/42645/chapter/358158005
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kollokationen </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund: Kollokationen </b></summary>
+
+Dieser Abschnitt bezieht sich auf die Berechnung der Kollokationen mit der Quanteda-Funktion `textstat_collocations()`. 
+
+Die beste Strategie, um zu verstehen, wie eine Funktion funktioniert, ist die Formel aus den Dokumentationsseiten manuell (das heißt mit Taschenrechner, aber ohne R) nachzurechnen. Im Folgenden berechnen wir manuell die Werte für Lambda ($\lambda$) und $z$ nach den Formeln aus der [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für das folgende Beispiel: 
+
+* Beispielsatz (unser Korpus): "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+* $K$-word target expression $x$ = "Guten Tag"
+* $K$ = 2 (weil "Guten Tag" aus zwei Wörtern besteht)
+* $z_r$ = "Guten Tag", "Tag Max", "Max Mustermann", "Mustermann wie", "wie geht", "geht es", "es Ihnen", "Ihnen Guten", "Guten Tag" 
+
+$log(n_i)$ bedeutet hier Logarithmus zur Basis $e$, also $log_e(n_i)$.
+
+Wir müssen zunächst klären, was $M$, $n_i$ und $b_i$ sind. 
+
+$M$ = $2^K$, also 4. Das sind die möglichen Werte ("possible values") für $c_i$. 
+
+$c_i$ sind die möglichen Fälle, die beim Vergleich der Wortkombination "Guten Tag" mit allen Wortkombinationen $z_r$ auftreten können: 
+ 
+- $c_1$ = (0,0) (sowohl das erste als auch das zweite Wort in x ist ungleich dem ersten und zweiten Wort in z: Beispiel "Max Mustermann")
+- $c_2$ = (1,0) (das erste Wort in $x$ ist gleich dem ersten Wort in $z$, aber das zweite Wort ist nicht gleich dem zweiten Wort: Beispiel "\underline{Guten} Abend")
+- $c_3$ = (0,1) (das zweite Wort in $x$ ist gleich dem zweiten Wort in z, aber das erste Wort ist nicht gleich dem ersten Wort: Beispiel "schönen \underline{Tag}") 
+- $c_4$ = (1,1) (beide Wörter in $x$ und $z$ sind gleich: In unserem Fall "\underline{Guten} \underline{Tag}") 
+
+$b_i$ sind die Anzahl an Einsen in den verschiedenen Fällen $c_i$. In unserem Beispiel: 
+ 
+- $b_1$ = 0 (weil $c_1$ keine 1 enthält) 
+- $b_2$ = 1 (weil $c_2$ eine 1 enthält) 
+- $b_3$ = 1 (weil $c_3$ eine 1 enthält) 
+- $b_4$ = 2 (weil $c_4$ zweimal 1 enthält)
+ 
+$n_i$ sind die Anzahl der Wortkombinationen aus $z_r$, für die der jeweilige Fall $c_i$ zutrifft, also: 
+ 
+- $n_1$ = 7 (es gibt 7 Wortkombinationen, die weder "Guten" noch "Tag" an der richtigen Stelle enthalten, z.B. "Tag Max", "Max Mustermann", "Mustermann wie", .....) 
+- $n_2$ = 0 (es gibt keine Wortkombination mit "Guten" an der ersten Stelle) 
+- $n_3$ = 0 (es gibt keine Wortkombination mit "Tag" an der zweiten Stelle) 
+- $n_4$ = 2 ("Guten Tag" kommt zweimal vor)
+
+Jedes $n_i$ wird noch mit dem "smoothing parameter" addiert (dieser soll verhindern, dass Operationen der Art $log_e(0)$ oder $0^{-1}$ notwendig werden). Der smoothing Parameter ist per Default 0.5.
+Daraus ergibt sich: $n_1$ = 7.5, $n_2$ = 0.5, $n_3$ = 0.5, $n_4$ = 2.5 
+
+Wenn wir diese Werte in die Formel einsetzen, erhalten wir: 
+
+$\lambda = ((-1)^2*log_e(7.5)) + ((-1)^1*log_e(0.5)) + ((-1)^1*log_e(0.5)) + ((-1)^0*log_e(2.5))$
+
+Und entsprechend für $z$: 
+
+$z = \frac{\lambda}{(n_1^{-1} + n_2^{-1} + n_3^){-1} + n_4^{-1})^{(\frac{1}{2})}}
+= \frac{\lambda}{(7.5^{-1} + 0.5^{-1} + 0.5^{-1} + 2.5^{-1})^{(\frac{1}{2})}}$
+
+Vergleicht die berechneten Werte mit den Werten, welche die Quanteda `textstat_collocations()`-Funktion berechnet, indem ihr den folgenden Code ausführt. Stimmen die Werte überein? 
+
+```{r eval=FALSE}
+library(quanteda)
+library(quanteda.textstats)
+test <- "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+Wir haben im Abschnitt "Kollokationen" bereits beobachtet, dass die Gesamthäufigkeit der Tokens in einer Wortkombination die lambda- und z-Werte beeinträchtigt. Das können wir anhand der beiden Formeln etwas genauer untersuchen. Wir nehmen an, eine Wortkombination $x$ kommt nur einmal vor ($n_4$ = 1.5) und es kommen sonst 10 Wortkombinationen vor ohne irgendeines der beiden Wörter aus $x$ ($n_1$ = 10.5). Wenn eines der beiden Wörter aus der Wortkombination $x$ im Gesamtkorpus häufig vorkommt, dann wird es höhere Werte für $n_2$ oder $n_3$ geben, weil dieses Wort dann mit anderen Wörtern zusammen auftritt. 
+
+* Wie groß ist Lambda für $n_2$ = 8.5 und $n_3$ = 0.5?
+* Wie groß ist Lambda für $n_2$ = 0.5 und $n_3$ = 0.5? 
+
+Zuletzt können wir auch die Formel für die z-Statistik untersuchen. Wie wir gesehen haben, werden die z-Werte als Bruch mit Lambda im Zähler definiert. 
+
+* Wie wirkt sich ein hohes Lambda im Zähler auf den z-Wert aus? 
+* Wie wirkt sich ein niedriger Wert für Lambda auf den z-Wert aus? 
+* Wie beeinflussen die Werte im Nenner das Ergebnis? 
+
+Ohne tief in die Statistik einzusteigen, können wir also schon durch einfaches Nachrechnen nachvollziehen, warum die Gesamthäufigkeit der Tokens in einer Wortkombination einen Einfluss auf die Lambda- und z-Werte haben muss. 
+
+</details>
 
 
 

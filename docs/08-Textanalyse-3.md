@@ -19,7 +19,6 @@ Verständnisfragen:
 
 :::
 
- 
 ## Märchenkorpus einlesen und Pakete installieren
 
 Um unser Korpus in R einzulesen, müssen wir zuerst wieder das **Arbeitsverzeichnis setzen**: 
@@ -85,7 +84,13 @@ maerchen_toks_rm <- tokens_remove(maerchen_toks, pattern = stopwords("de"))
 
 Wir haben jetzt also ein corpus-Objekt sowie zwei verschiedene tokens-Objekte (eins mit und eins ohne Stoppwörter), die wir in unserer Analyse verwenden können. 
 
-## Absolute Häufigkeiten und das Zipf'sche Gesetz
+## Worthäufigkeiten verstehen: absolute und relative Häufigkeiten
+
+In diesem Abschnitt betrachten wir Worthäufigkeiten über das gesamte Korpus hinweg und vergleichen Worthäufigkeiten in verschiedenen Dokumenten miteinander. Dazu lernen wir drei verschiedene Maße kennen: absolute Häufigkeiten, relative Häufigkeiten und TF-IDF, die sogenannte Term Frequency-Inverse Document Frequency. 
+
+Lernziele für diesen Abschnitt: Einfluss verschiedener Preprocessingschritte auf die Worthäufigkeiten verstehen und 
+
+### Absolute Häufigkeiten und das Zipf'sche Gesetz
 
 Zunächst ist es sinnvoll, sich einen Überblick über das Korpus zu verschaffen. Aus der letzten Woche kennt ihr bereits die `summary()`-Funktion, die ein Quanteda Corpus-Objekt als Argument annimmt und einen Dataframe mit der Anzahl von Types und Tokens zu jedem Text liefert. Der Text wird dabei automatisch mit den Defaultargumenten tokenisiert. 
 
@@ -537,8 +542,8 @@ ggplotly(summary_plot) %>%
 ```
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-dfa3ece68e1769d15c61" style="width:768px;height:576px;"></div>
-<script type="application/json" data-for="htmlwidget-dfa3ece68e1769d15c61">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194],"y":[2361,517,2851,4792,2670,355,1929,211,136,1420,367,561,1083,637,859,2548,349,1307,1236,2560,3607,285,2014,2440,1767,2575,262,1620,938,1347,1501,1802,2179,405,394,3502,2307,1077,2898,1560,537,399,258,331,2054,2443,1318,359,1336,2443,192,3285,1608,1926,288,1523,1282,685,1379,1995,3381,295,2635,2279,2893,1614,3430,790,291,1488,2506,838,843,799,1018,2879,1598,266,2958,1376,3383,4223,166,812,483,1191,1218,1280,1026,369,1392,167,1001,4487,845,702,165,1424,194,728,254,1104,1114,1064,1018,1311,2200,1560,977,1014,895,827,4376,2295,975,1706,2183,515,217,566,910,585,1519,1564,1752,246,1144,674,1963,2335,2427,183,1181,191,500,265,2911,2143,961,1126,341,786,1739,2838,305,1705,1609,1201,1549,9166,423,2178,1144,1197,836,1423,2724,1434,1269,349,1059,256,3231,488,502,2309,2218,412,1017,2204,1112,1883,465,427,4284,528,2049,1562,164,139,1577,273,1537,1211,2683,2274,889,3436,1149,566,4290,1301,648,713],"text":["Titel: Allerleirauh<br />Tokens: 2361","Titel: Armuth-und-Demuth-fuehren-zum-Himmel<br />Tokens:  517","Titel: Aschenputtel<br />Tokens: 2851","Titel: Bruder-Lustig<br />Tokens: 4792","Titel: Bruederchen-und-Schwesterchen<br />Tokens: 2670","Titel: Das-alte-Muetterchen<br />Tokens:  355","Titel: Das-blaue-Licht<br />Tokens: 1929","Titel: Das-Dietmarsische-Luegenmaerchen<br />Tokens:  211","Titel: Das-eigensinnige-Kind<br />Tokens:  136","Titel: Das-Eselein<br />Tokens: 1420","Titel: Das-Hirtenbueblein<br />Tokens:  367","Titel: Das-junggegluehte-Maennlein<br />Tokens:  561","Titel: Das-kluge-Grethel<br />Tokens: 1083","Titel: Das-Laemmchen-und-Fischchen<br />Tokens:  637","Titel: Das-Lumpengesindel<br />Tokens:  859","Titel: Das-Maedchen-ohne-Haende<br />Tokens: 2548","Titel: Das-Maerchen-vom-Schlauraffenland<br />Tokens:  349","Titel: Das-Meerhaeschen<br />Tokens: 1307","Titel: Das-Raethsel<br />Tokens: 1236","Titel: Das-singende-springende-Loeweneckerchen<br />Tokens: 2560","Titel: Das-tapfere-Schneiderlein<br />Tokens: 3607","Titel: Das-Todtenhemdchen<br />Tokens:  285","Titel: Das-Waldhaus<br />Tokens: 2014","Titel: Das-Wasser-des-Lebens<br />Tokens: 2440","Titel: Daumerlings-Wanderschaft<br />Tokens: 1767","Titel: Daumesdick<br />Tokens: 2575","Titel: Der-alte-Grossvater-und-der-Enkel<br />Tokens:  262","Titel: Der-alte-Hildebrand<br />Tokens: 1620","Titel: Der-alte-Sultan<br />Tokens:  938","Titel: Der-arme-Junge-im-Grab<br />Tokens: 1347","Titel: Der-arme-Muellerbursch-und-das-Kaetzchen<br />Tokens: 1501","Titel: Der-Arme-und-der-Reiche<br />Tokens: 1802","Titel: Der-Baerenhaeuter<br />Tokens: 2179","Titel: Der-Bauer-und-der-Teufel<br />Tokens:  405","Titel: Der-Dreschflegel-vom-Himmel<br />Tokens:  394","Titel: Der-Eisenhans<br />Tokens: 3502","Titel: Der-Eisenofen<br />Tokens: 2307","Titel: Der-faule-Heinz<br />Tokens: 1077","Titel: Der-Frieder-und-das-Catherlieschen<br />Tokens: 2898","Titel: Der-Froschkoenig-oder-der-eiserne-Heinrich<br />Tokens: 1560","Titel: Der-Fuchs-und-das-Pferd<br />Tokens:  537","Titel: Der-Fuchs-und-die-Frau-Gevatterin<br />Tokens:  399","Titel: Der-Fuchs-und-die-Gaense<br />Tokens:  258","Titel: Der-Fuchs-und-die-Katze<br />Tokens:  331","Titel: Der-Geist-im-Glas<br />Tokens: 2054","Titel: Der-gelernte-Jaeger<br />Tokens: 2443","Titel: Der-gescheidte-Hans<br />Tokens: 1318","Titel: Der-gestohlene-Heller<br />Tokens:  359","Titel: Der-Gevatter-Tod<br />Tokens: 1336","Titel: Der-glaeserne-Sarg<br />Tokens: 2443","Titel: Der-goldene-Schluessel<br />Tokens:  192","Titel: Der-goldene-Vogel<br />Tokens: 3285","Titel: Der-Grabhuegel<br />Tokens: 1608","Titel: Der-gute-Handel<br />Tokens: 1926","Titel: Der-Hahnenbalken<br />Tokens:  288","Titel: Der-Hase-und-der-Igel<br />Tokens: 1523","Titel: Der-heilige-Joseph-im-Walde<br />Tokens: 1282","Titel: Der-Herr-Gevatter<br />Tokens:  685","Titel: Der-Hund-und-der-Sperling<br />Tokens: 1379","Titel: Der-Jude-im-Dorn<br />Tokens: 1995","Titel: Der-junge-Riese<br />Tokens: 3381","Titel: Der-kluge-Knecht<br />Tokens:  295","Titel: Der-Koenig-vom-goldenen-Berg<br />Tokens: 2635","Titel: Der-Koenigssohn-der-sich-vor-nichts-fuerchtet<br />Tokens: 2279","Titel: Der-Krautesel<br />Tokens: 2893","Titel: Der-Liebste-Roland<br />Tokens: 1614","Titel: Der-Meisterdieb<br />Tokens: 3430","Titel: Der-Mond<br />Tokens:  790","Titel: Der-Nagel<br />Tokens:  291","Titel: Der-Raeuberbraeutigam<br />Tokens: 1488","Titel: Der-Ranzen,-das-Huetlein-und-das-Hoernlein<br />Tokens: 2506","Titel: Der-Riese-und-der-Schneider<br />Tokens:  838","Titel: Der-Schneider-im-Himmel<br />Tokens:  843","Titel: Der-singende-Knochen<br />Tokens:  799","Titel: Der-Sperling-und-seine-vier-Kinder<br />Tokens: 1018","Titel: Der-starke-Hans<br />Tokens: 2879","Titel: Der-Stiefel-von-Bueffelleder<br />Tokens: 1598","Titel: Der-suesse-Brei<br />Tokens:  266","Titel: Der-Teufel-mit-den-drei-goldenen-Haaren<br />Tokens: 2958","Titel: Der-Teufel-und-seine-Grossmutter<br />Tokens: 1376","Titel: Der-treue-Johannes<br />Tokens: 3383","Titel: Der-Trommler<br />Tokens: 4223","Titel: Der-undankbare-Sohn<br />Tokens:  166","Titel: Der-Wolf-und-der-Fuchs<br />Tokens:  812","Titel: Der-Wolf-und-der-Mensch<br />Tokens:  483","Titel: Der-Wolf-und-die-sieben-jungen-Geislein<br />Tokens: 1191","Titel: Der-wunderliche-Spielmann<br />Tokens: 1218","Titel: Der-Zaunkoenig<br />Tokens: 1280","Titel: Der-Zaunkoenig-und-der-Baer<br />Tokens: 1026","Titel: Des-Herrn-und-des-Teufels-Gethier<br />Tokens:  369","Titel: Des-Teufels-russiger-Bruder<br />Tokens: 1392","Titel: Die-alte-Bettelfrau<br />Tokens:  167","Titel: Die-Alte-im-Wald<br />Tokens: 1001","Titel: Die-beiden-Wanderer<br />Tokens: 4487","Titel: Die-Bienenkoenigin<br />Tokens:  845","Titel: Die-Boten-des-Todes<br />Tokens:  702","Titel: Die-Brautschau<br />Tokens:  165","Titel: Die-Bremer-Stadtmusikanten<br />Tokens: 1424","Titel: Die-Brosamen-auf-dem-Tisch<br />Tokens:  194","Titel: Die-drei-Brueder<br />Tokens:  728","Titel: Die-drei-Faulen<br />Tokens:  254","Titel: Die-drei-Federn<br />Tokens: 1104","Titel: Die-drei-Feldscherer<br />Tokens: 1114","Titel: Die-drei-Glueckskinder<br />Tokens: 1064","Titel: Die-drei-gruenen-Zweige<br />Tokens: 1018","Titel: Die-drei-Handwerksburschen<br />Tokens: 1311","Titel: Die-drei-Maennlein-im-Walde<br />Tokens: 2200","Titel: Die-drei-Schlangenblaetter<br />Tokens: 1560","Titel: Die-drei-Spinnerinnen<br />Tokens:  977","Titel: Die-drei-Sprachen<br />Tokens: 1014","Titel: Die-Eule<br />Tokens:  895","Titel: Die-faule-Spinnerin<br />Tokens:  827","Titel: Die-Gaensehirtin-am-Brunnen<br />Tokens: 4376","Titel: Die-Gaensemagd<br />Tokens: 2295","Titel: Die-Geschenke-des-kleinen-Volkes<br />Tokens:  975","Titel: Die-goldene-Gans<br />Tokens: 1706","Titel: Die-Goldkinder<br />Tokens: 2183","Titel: Die-hagere-Liese<br />Tokens:  515","Titel: Die-Haselruthe<br />Tokens:  217","Titel: Die-himmlische-Hochzeit<br />Tokens:  566","Titel: Die-Hochzeit-der-Frau-Fuechsin<br />Tokens:  910","Titel: Die-klare-Sonne-bringts-an-den-Tag<br />Tokens:  585","Titel: Die-kluge-Bauerntochter<br />Tokens: 1519","Titel: Die-kluge-Else<br />Tokens: 1564","Titel: Die-klugen-Leute<br />Tokens: 1752","Titel: Die-Kornaehre<br />Tokens:  246","Titel: Die-Krystallkugel<br />Tokens: 1144","Titel: Die-Lebenszeit<br />Tokens:  674","Titel: Die-Nelke<br />Tokens: 1963","Titel: Die-Nixe-im-Teich<br />Tokens: 2335","Titel: Die-Rabe<br />Tokens: 2427","Titel: Die-Rose<br />Tokens:  183","Titel: Die-Ruebe<br />Tokens: 1181","Titel: Die-Schlickerlinge<br />Tokens:  191","Titel: Die-schoene-Katrinelje-und-Pif-Paf-Poltrie<br />Tokens:  500","Titel: Die-Scholle<br />Tokens:  265","Titel: Die-sechs-Diener<br />Tokens: 2911","Titel: Die-sechs-Schwaene<br />Tokens: 2143","Titel: Die-sieben-Raben<br />Tokens:  961","Titel: Die-sieben-Schwaben<br />Tokens: 1126","Titel: Die-Sternthaler<br />Tokens:  341","Titel: Die-ungleichen-Kinder-Evas<br />Tokens:  786","Titel: Die-vier-kunstreichen-Brueder<br />Tokens: 1739","Titel: Die-wahre-Braut<br />Tokens: 2838","Titel: Die-Wassernixe<br />Tokens:  305","Titel: Die-weisse-Schlange<br />Tokens: 1705","Titel: Die-weisse-und-die-schwarze-Braut<br />Tokens: 1609","Titel: Die-Wichtelmaenner<br />Tokens: 1201","Titel: Die-zertanzten-Schuhe<br />Tokens: 1549","Titel: Die-zwei-Brueder<br />Tokens: 9166","Titel: Die-zwoelf-Apostel<br />Tokens:  423","Titel: Die-zwoelf-Brueder<br />Tokens: 2178","Titel: Die-zwoelf-faulen-Knechte<br />Tokens: 1144","Titel: Die-zwoelf-Jaeger<br />Tokens: 1197","Titel: Doctor-Allwissend<br />Tokens:  836","Titel: Dornroeschen<br />Tokens: 1423","Titel: Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein<br />Tokens: 2724","Titel: Fitchers-Vogel<br />Tokens: 1434","Titel: Frau-Holle<br />Tokens: 1269","Titel: Frau-Trude<br />Tokens:  349","Titel: Fundevogel<br />Tokens: 1059","Titel: Gottes-Speise<br />Tokens:  256","Titel: Haensel-und-Grethel<br />Tokens: 3231","Titel: Haesichenbraut<br />Tokens:  488","Titel: Hans-heirathet<br />Tokens:  502","Titel: Hans-im-Glueck<br />Tokens: 2309","Titel: Hans-mein-Igel<br />Tokens: 2218","Titel: Herr-Korbes<br />Tokens:  412","Titel: Jorinde-und-Joringel<br />Tokens: 1017","Titel: Jungfrau-Maleen<br />Tokens: 2204","Titel: Katze-und-Maus-in-Gesellschaft<br />Tokens: 1112","Titel: Koenig-Drosselbart<br />Tokens: 1883","Titel: Laeuschen-und-Floehchen<br />Tokens:  465","Titel: Lieb-und-Leid-theilen<br />Tokens:  427","Titel: Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen<br />Tokens: 4284","Titel: Maerchen-von-der-Unke<br />Tokens:  528","Titel: Marienkind<br />Tokens: 2049","Titel: Meister-Pfriem<br />Tokens: 1562","Titel: Muttergottesglaeschen<br />Tokens:  164","Titel: Raethselmaerchen<br />Tokens:  139","Titel: Rapunzel<br />Tokens: 1577","Titel: Rohrdommel-und-Wiedehopf<br />Tokens:  273","Titel: Rothkaeppchen<br />Tokens: 1537","Titel: Rumpelstilzchen<br />Tokens: 1211","Titel: Schneeweisschen-und-Rosenroth<br />Tokens: 2683","Titel: Sechse-kommen-durch-die-ganze-Welt<br />Tokens: 2274","Titel: Simeliberg<br />Tokens:  889","Titel: Sneewittchen<br />Tokens: 3436","Titel: Spindel,-Weberschiffchen-und-Nadel<br />Tokens: 1149","Titel: Strohhalm,-Kohle-und-Bohne<br />Tokens:  566","Titel: Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack<br />Tokens: 4290","Titel: Vom-klugen-Schneiderlein<br />Tokens: 1301","Titel: Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst<br />Tokens:  648","Titel: Von-dem-Tode-des-Huehnchens<br />Tokens:  713"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.275494672754945,"r":7.3059360730593621,"b":176.78151376781511,"l":48.949771689497723},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Anzahl Tokens / Text","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,194.59999999999999],"tickmode":"array","ticktext":["Allerleirauh","Armuth-und-Demuth-fuehren-zum-Himmel","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-alte-Muetterchen","Das-blaue-Licht","Das-Dietmarsische-Luegenmaerchen","Das-eigensinnige-Kind","Das-Eselein","Das-Hirtenbueblein","Das-junggegluehte-Maennlein","Das-kluge-Grethel","Das-Laemmchen-und-Fischchen","Das-Lumpengesindel","Das-Maedchen-ohne-Haende","Das-Maerchen-vom-Schlauraffenland","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Todtenhemdchen","Das-Waldhaus","Das-Wasser-des-Lebens","Daumerlings-Wanderschaft","Daumesdick","Der-alte-Grossvater-und-der-Enkel","Der-alte-Hildebrand","Der-alte-Sultan","Der-arme-Junge-im-Grab","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Arme-und-der-Reiche","Der-Baerenhaeuter","Der-Bauer-und-der-Teufel","Der-Dreschflegel-vom-Himmel","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Frieder-und-das-Catherlieschen","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-Fuchs-und-das-Pferd","Der-Fuchs-und-die-Frau-Gevatterin","Der-Fuchs-und-die-Gaense","Der-Fuchs-und-die-Katze","Der-Geist-im-Glas","Der-gelernte-Jaeger","Der-gescheidte-Hans","Der-gestohlene-Heller","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Schluessel","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-Hahnenbalken","Der-Hase-und-der-Igel","Der-heilige-Joseph-im-Walde","Der-Herr-Gevatter","Der-Hund-und-der-Sperling","Der-Jude-im-Dorn","Der-junge-Riese","Der-kluge-Knecht","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Mond","Der-Nagel","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-Riese-und-der-Schneider","Der-Schneider-im-Himmel","Der-singende-Knochen","Der-Sperling-und-seine-vier-Kinder","Der-starke-Hans","Der-Stiefel-von-Bueffelleder","Der-suesse-Brei","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-Teufel-und-seine-Grossmutter","Der-treue-Johannes","Der-Trommler","Der-undankbare-Sohn","Der-Wolf-und-der-Fuchs","Der-Wolf-und-der-Mensch","Der-Wolf-und-die-sieben-jungen-Geislein","Der-wunderliche-Spielmann","Der-Zaunkoenig","Der-Zaunkoenig-und-der-Baer","Des-Herrn-und-des-Teufels-Gethier","Des-Teufels-russiger-Bruder","Die-alte-Bettelfrau","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-Boten-des-Todes","Die-Brautschau","Die-Bremer-Stadtmusikanten","Die-Brosamen-auf-dem-Tisch","Die-drei-Brueder","Die-drei-Faulen","Die-drei-Federn","Die-drei-Feldscherer","Die-drei-Glueckskinder","Die-drei-gruenen-Zweige","Die-drei-Handwerksburschen","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-drei-Sprachen","Die-Eule","Die-faule-Spinnerin","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-Geschenke-des-kleinen-Volkes","Die-goldene-Gans","Die-Goldkinder","Die-hagere-Liese","Die-Haselruthe","Die-himmlische-Hochzeit","Die-Hochzeit-der-Frau-Fuechsin","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-klugen-Leute","Die-Kornaehre","Die-Krystallkugel","Die-Lebenszeit","Die-Nelke","Die-Nixe-im-Teich","Die-Rabe","Die-Rose","Die-Ruebe","Die-Schlickerlinge","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-Scholle","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-sieben-Schwaben","Die-Sternthaler","Die-ungleichen-Kinder-Evas","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-Wassernixe","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-Wichtelmaenner","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Apostel","Die-zwoelf-Brueder","Die-zwoelf-faulen-Knechte","Die-zwoelf-Jaeger","Doctor-Allwissend","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Frau-Trude","Fundevogel","Gottes-Speise","Haensel-und-Grethel","Haesichenbraut","Hans-heirathet","Hans-im-Glueck","Hans-mein-Igel","Herr-Korbes","Jorinde-und-Joringel","Jungfrau-Maleen","Katze-und-Maus-in-Gesellschaft","Koenig-Drosselbart","Laeuschen-und-Floehchen","Lieb-und-Leid-theilen","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Maerchen-von-der-Unke","Marienkind","Meister-Pfriem","Muttergottesglaeschen","Raethselmaerchen","Rapunzel","Rohrdommel-und-Wiedehopf","Rothkaeppchen","Rumpelstilzchen","Schneeweisschen-und-Rosenroth","Sechse-kommen-durch-die-ganze-Welt","Simeliberg","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel","Strohhalm,-Kohle-und-Bohne","Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack","Vom-klugen-Schneiderlein","Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst","Von-dem-Tode-des-Huehnchens"],"tickvals":[1,2,3,3.9999999999999996,5,6,6.9999999999999991,7.9999999999999991,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,49.999999999999993,51,51.999999999999993,53,53.999999999999993,55,55.999999999999993,57,57.999999999999993,59,59.999999999999993,61,61.999999999999993,63,63.999999999999993,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,97.999999999999986,99,100,101.00000000000001,101.99999999999999,103,104,105.00000000000001,105.99999999999999,107,108,109.00000000000001,109.99999999999999,111,112,113.00000000000001,113.99999999999999,115,116,117.00000000000001,117.99999999999999,119,120,121.00000000000001,121.99999999999999,123,124,125.00000000000001,125.99999999999999,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194],"categoryorder":"array","categoryarray":["Allerleirauh","Armuth-und-Demuth-fuehren-zum-Himmel","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-alte-Muetterchen","Das-blaue-Licht","Das-Dietmarsische-Luegenmaerchen","Das-eigensinnige-Kind","Das-Eselein","Das-Hirtenbueblein","Das-junggegluehte-Maennlein","Das-kluge-Grethel","Das-Laemmchen-und-Fischchen","Das-Lumpengesindel","Das-Maedchen-ohne-Haende","Das-Maerchen-vom-Schlauraffenland","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Todtenhemdchen","Das-Waldhaus","Das-Wasser-des-Lebens","Daumerlings-Wanderschaft","Daumesdick","Der-alte-Grossvater-und-der-Enkel","Der-alte-Hildebrand","Der-alte-Sultan","Der-arme-Junge-im-Grab","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Arme-und-der-Reiche","Der-Baerenhaeuter","Der-Bauer-und-der-Teufel","Der-Dreschflegel-vom-Himmel","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Frieder-und-das-Catherlieschen","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-Fuchs-und-das-Pferd","Der-Fuchs-und-die-Frau-Gevatterin","Der-Fuchs-und-die-Gaense","Der-Fuchs-und-die-Katze","Der-Geist-im-Glas","Der-gelernte-Jaeger","Der-gescheidte-Hans","Der-gestohlene-Heller","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Schluessel","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-Hahnenbalken","Der-Hase-und-der-Igel","Der-heilige-Joseph-im-Walde","Der-Herr-Gevatter","Der-Hund-und-der-Sperling","Der-Jude-im-Dorn","Der-junge-Riese","Der-kluge-Knecht","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Mond","Der-Nagel","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-Riese-und-der-Schneider","Der-Schneider-im-Himmel","Der-singende-Knochen","Der-Sperling-und-seine-vier-Kinder","Der-starke-Hans","Der-Stiefel-von-Bueffelleder","Der-suesse-Brei","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-Teufel-und-seine-Grossmutter","Der-treue-Johannes","Der-Trommler","Der-undankbare-Sohn","Der-Wolf-und-der-Fuchs","Der-Wolf-und-der-Mensch","Der-Wolf-und-die-sieben-jungen-Geislein","Der-wunderliche-Spielmann","Der-Zaunkoenig","Der-Zaunkoenig-und-der-Baer","Des-Herrn-und-des-Teufels-Gethier","Des-Teufels-russiger-Bruder","Die-alte-Bettelfrau","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-Boten-des-Todes","Die-Brautschau","Die-Bremer-Stadtmusikanten","Die-Brosamen-auf-dem-Tisch","Die-drei-Brueder","Die-drei-Faulen","Die-drei-Federn","Die-drei-Feldscherer","Die-drei-Glueckskinder","Die-drei-gruenen-Zweige","Die-drei-Handwerksburschen","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-drei-Sprachen","Die-Eule","Die-faule-Spinnerin","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-Geschenke-des-kleinen-Volkes","Die-goldene-Gans","Die-Goldkinder","Die-hagere-Liese","Die-Haselruthe","Die-himmlische-Hochzeit","Die-Hochzeit-der-Frau-Fuechsin","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-klugen-Leute","Die-Kornaehre","Die-Krystallkugel","Die-Lebenszeit","Die-Nelke","Die-Nixe-im-Teich","Die-Rabe","Die-Rose","Die-Ruebe","Die-Schlickerlinge","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-Scholle","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-sieben-Schwaben","Die-Sternthaler","Die-ungleichen-Kinder-Evas","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-Wassernixe","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-Wichtelmaenner","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Apostel","Die-zwoelf-Brueder","Die-zwoelf-faulen-Knechte","Die-zwoelf-Jaeger","Doctor-Allwissend","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Frau-Trude","Fundevogel","Gottes-Speise","Haensel-und-Grethel","Haesichenbraut","Hans-heirathet","Hans-im-Glueck","Hans-mein-Igel","Herr-Korbes","Jorinde-und-Joringel","Jungfrau-Maleen","Katze-und-Maus-in-Gesellschaft","Koenig-Drosselbart","Laeuschen-und-Floehchen","Lieb-und-Leid-theilen","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Maerchen-von-der-Unke","Marienkind","Meister-Pfriem","Muttergottesglaeschen","Raethselmaerchen","Rapunzel","Rohrdommel-und-Wiedehopf","Rothkaeppchen","Rumpelstilzchen","Schneeweisschen-und-Rosenroth","Sechse-kommen-durch-die-ganze-Welt","Simeliberg","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel","Strohhalm,-Kohle-und-Bohne","Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack","Vom-klugen-Schneiderlein","Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst","Von-dem-Tode-des-Huehnchens"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":5.3134080531340802},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":10},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-315.5,9617.5],"tickmode":"array","ticktext":["0","2500","5000","7500"],"tickvals":[0,2499.9999999999995,5000,7500],"categoryorder":"array","categoryarray":["0","2500","5000","7500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Anzahl Tokens","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"3f614cd8e83d":{"x":{},"y":{},"type":"scatter"}},"cur_data":"3f614cd8e83d","visdat":{"3f614cd8e83d":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-627d09d893d523ac5a64" style="width:768px;height:576px;"></div>
+<script type="application/json" data-for="htmlwidget-627d09d893d523ac5a64">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194],"y":[2361,517,2851,4792,2670,355,1929,211,136,1420,367,561,1083,637,859,2548,349,1307,1236,2560,3607,285,2014,2440,1767,2575,262,1620,938,1347,1501,1802,2179,405,394,3502,2307,1077,2898,1560,537,399,258,331,2054,2443,1318,359,1336,2443,192,3285,1608,1926,288,1523,1282,685,1379,1995,3381,295,2635,2279,2893,1614,3430,790,291,1488,2506,838,843,799,1018,2879,1598,266,2958,1376,3383,4223,166,812,483,1191,1218,1280,1026,369,1392,167,1001,4487,845,702,165,1424,194,728,254,1104,1114,1064,1018,1311,2200,1560,977,1014,895,827,4376,2295,975,1706,2183,515,217,566,910,585,1519,1564,1752,246,1144,674,1963,2335,2427,183,1181,191,500,265,2911,2143,961,1126,341,786,1739,2838,305,1705,1609,1201,1549,9166,423,2178,1144,1197,836,1423,2724,1434,1269,349,1059,256,3231,488,502,2309,2218,412,1017,2204,1112,1883,465,427,4284,528,2049,1562,164,139,1577,273,1537,1211,2683,2274,889,3436,1149,566,4290,1301,648,713],"text":["Titel: Allerleirauh<br />Tokens: 2361","Titel: Armuth-und-Demuth-fuehren-zum-Himmel<br />Tokens:  517","Titel: Aschenputtel<br />Tokens: 2851","Titel: Bruder-Lustig<br />Tokens: 4792","Titel: Bruederchen-und-Schwesterchen<br />Tokens: 2670","Titel: Das-alte-Muetterchen<br />Tokens:  355","Titel: Das-blaue-Licht<br />Tokens: 1929","Titel: Das-Dietmarsische-Luegenmaerchen<br />Tokens:  211","Titel: Das-eigensinnige-Kind<br />Tokens:  136","Titel: Das-Eselein<br />Tokens: 1420","Titel: Das-Hirtenbueblein<br />Tokens:  367","Titel: Das-junggegluehte-Maennlein<br />Tokens:  561","Titel: Das-kluge-Grethel<br />Tokens: 1083","Titel: Das-Laemmchen-und-Fischchen<br />Tokens:  637","Titel: Das-Lumpengesindel<br />Tokens:  859","Titel: Das-Maedchen-ohne-Haende<br />Tokens: 2548","Titel: Das-Maerchen-vom-Schlauraffenland<br />Tokens:  349","Titel: Das-Meerhaeschen<br />Tokens: 1307","Titel: Das-Raethsel<br />Tokens: 1236","Titel: Das-singende-springende-Loeweneckerchen<br />Tokens: 2560","Titel: Das-tapfere-Schneiderlein<br />Tokens: 3607","Titel: Das-Todtenhemdchen<br />Tokens:  285","Titel: Das-Waldhaus<br />Tokens: 2014","Titel: Das-Wasser-des-Lebens<br />Tokens: 2440","Titel: Daumerlings-Wanderschaft<br />Tokens: 1767","Titel: Daumesdick<br />Tokens: 2575","Titel: Der-alte-Grossvater-und-der-Enkel<br />Tokens:  262","Titel: Der-alte-Hildebrand<br />Tokens: 1620","Titel: Der-alte-Sultan<br />Tokens:  938","Titel: Der-arme-Junge-im-Grab<br />Tokens: 1347","Titel: Der-arme-Muellerbursch-und-das-Kaetzchen<br />Tokens: 1501","Titel: Der-Arme-und-der-Reiche<br />Tokens: 1802","Titel: Der-Baerenhaeuter<br />Tokens: 2179","Titel: Der-Bauer-und-der-Teufel<br />Tokens:  405","Titel: Der-Dreschflegel-vom-Himmel<br />Tokens:  394","Titel: Der-Eisenhans<br />Tokens: 3502","Titel: Der-Eisenofen<br />Tokens: 2307","Titel: Der-faule-Heinz<br />Tokens: 1077","Titel: Der-Frieder-und-das-Catherlieschen<br />Tokens: 2898","Titel: Der-Froschkoenig-oder-der-eiserne-Heinrich<br />Tokens: 1560","Titel: Der-Fuchs-und-das-Pferd<br />Tokens:  537","Titel: Der-Fuchs-und-die-Frau-Gevatterin<br />Tokens:  399","Titel: Der-Fuchs-und-die-Gaense<br />Tokens:  258","Titel: Der-Fuchs-und-die-Katze<br />Tokens:  331","Titel: Der-Geist-im-Glas<br />Tokens: 2054","Titel: Der-gelernte-Jaeger<br />Tokens: 2443","Titel: Der-gescheidte-Hans<br />Tokens: 1318","Titel: Der-gestohlene-Heller<br />Tokens:  359","Titel: Der-Gevatter-Tod<br />Tokens: 1336","Titel: Der-glaeserne-Sarg<br />Tokens: 2443","Titel: Der-goldene-Schluessel<br />Tokens:  192","Titel: Der-goldene-Vogel<br />Tokens: 3285","Titel: Der-Grabhuegel<br />Tokens: 1608","Titel: Der-gute-Handel<br />Tokens: 1926","Titel: Der-Hahnenbalken<br />Tokens:  288","Titel: Der-Hase-und-der-Igel<br />Tokens: 1523","Titel: Der-heilige-Joseph-im-Walde<br />Tokens: 1282","Titel: Der-Herr-Gevatter<br />Tokens:  685","Titel: Der-Hund-und-der-Sperling<br />Tokens: 1379","Titel: Der-Jude-im-Dorn<br />Tokens: 1995","Titel: Der-junge-Riese<br />Tokens: 3381","Titel: Der-kluge-Knecht<br />Tokens:  295","Titel: Der-Koenig-vom-goldenen-Berg<br />Tokens: 2635","Titel: Der-Koenigssohn-der-sich-vor-nichts-fuerchtet<br />Tokens: 2279","Titel: Der-Krautesel<br />Tokens: 2893","Titel: Der-Liebste-Roland<br />Tokens: 1614","Titel: Der-Meisterdieb<br />Tokens: 3430","Titel: Der-Mond<br />Tokens:  790","Titel: Der-Nagel<br />Tokens:  291","Titel: Der-Raeuberbraeutigam<br />Tokens: 1488","Titel: Der-Ranzen,-das-Huetlein-und-das-Hoernlein<br />Tokens: 2506","Titel: Der-Riese-und-der-Schneider<br />Tokens:  838","Titel: Der-Schneider-im-Himmel<br />Tokens:  843","Titel: Der-singende-Knochen<br />Tokens:  799","Titel: Der-Sperling-und-seine-vier-Kinder<br />Tokens: 1018","Titel: Der-starke-Hans<br />Tokens: 2879","Titel: Der-Stiefel-von-Bueffelleder<br />Tokens: 1598","Titel: Der-suesse-Brei<br />Tokens:  266","Titel: Der-Teufel-mit-den-drei-goldenen-Haaren<br />Tokens: 2958","Titel: Der-Teufel-und-seine-Grossmutter<br />Tokens: 1376","Titel: Der-treue-Johannes<br />Tokens: 3383","Titel: Der-Trommler<br />Tokens: 4223","Titel: Der-undankbare-Sohn<br />Tokens:  166","Titel: Der-Wolf-und-der-Fuchs<br />Tokens:  812","Titel: Der-Wolf-und-der-Mensch<br />Tokens:  483","Titel: Der-Wolf-und-die-sieben-jungen-Geislein<br />Tokens: 1191","Titel: Der-wunderliche-Spielmann<br />Tokens: 1218","Titel: Der-Zaunkoenig<br />Tokens: 1280","Titel: Der-Zaunkoenig-und-der-Baer<br />Tokens: 1026","Titel: Des-Herrn-und-des-Teufels-Gethier<br />Tokens:  369","Titel: Des-Teufels-russiger-Bruder<br />Tokens: 1392","Titel: Die-alte-Bettelfrau<br />Tokens:  167","Titel: Die-Alte-im-Wald<br />Tokens: 1001","Titel: Die-beiden-Wanderer<br />Tokens: 4487","Titel: Die-Bienenkoenigin<br />Tokens:  845","Titel: Die-Boten-des-Todes<br />Tokens:  702","Titel: Die-Brautschau<br />Tokens:  165","Titel: Die-Bremer-Stadtmusikanten<br />Tokens: 1424","Titel: Die-Brosamen-auf-dem-Tisch<br />Tokens:  194","Titel: Die-drei-Brueder<br />Tokens:  728","Titel: Die-drei-Faulen<br />Tokens:  254","Titel: Die-drei-Federn<br />Tokens: 1104","Titel: Die-drei-Feldscherer<br />Tokens: 1114","Titel: Die-drei-Glueckskinder<br />Tokens: 1064","Titel: Die-drei-gruenen-Zweige<br />Tokens: 1018","Titel: Die-drei-Handwerksburschen<br />Tokens: 1311","Titel: Die-drei-Maennlein-im-Walde<br />Tokens: 2200","Titel: Die-drei-Schlangenblaetter<br />Tokens: 1560","Titel: Die-drei-Spinnerinnen<br />Tokens:  977","Titel: Die-drei-Sprachen<br />Tokens: 1014","Titel: Die-Eule<br />Tokens:  895","Titel: Die-faule-Spinnerin<br />Tokens:  827","Titel: Die-Gaensehirtin-am-Brunnen<br />Tokens: 4376","Titel: Die-Gaensemagd<br />Tokens: 2295","Titel: Die-Geschenke-des-kleinen-Volkes<br />Tokens:  975","Titel: Die-goldene-Gans<br />Tokens: 1706","Titel: Die-Goldkinder<br />Tokens: 2183","Titel: Die-hagere-Liese<br />Tokens:  515","Titel: Die-Haselruthe<br />Tokens:  217","Titel: Die-himmlische-Hochzeit<br />Tokens:  566","Titel: Die-Hochzeit-der-Frau-Fuechsin<br />Tokens:  910","Titel: Die-klare-Sonne-bringts-an-den-Tag<br />Tokens:  585","Titel: Die-kluge-Bauerntochter<br />Tokens: 1519","Titel: Die-kluge-Else<br />Tokens: 1564","Titel: Die-klugen-Leute<br />Tokens: 1752","Titel: Die-Kornaehre<br />Tokens:  246","Titel: Die-Krystallkugel<br />Tokens: 1144","Titel: Die-Lebenszeit<br />Tokens:  674","Titel: Die-Nelke<br />Tokens: 1963","Titel: Die-Nixe-im-Teich<br />Tokens: 2335","Titel: Die-Rabe<br />Tokens: 2427","Titel: Die-Rose<br />Tokens:  183","Titel: Die-Ruebe<br />Tokens: 1181","Titel: Die-Schlickerlinge<br />Tokens:  191","Titel: Die-schoene-Katrinelje-und-Pif-Paf-Poltrie<br />Tokens:  500","Titel: Die-Scholle<br />Tokens:  265","Titel: Die-sechs-Diener<br />Tokens: 2911","Titel: Die-sechs-Schwaene<br />Tokens: 2143","Titel: Die-sieben-Raben<br />Tokens:  961","Titel: Die-sieben-Schwaben<br />Tokens: 1126","Titel: Die-Sternthaler<br />Tokens:  341","Titel: Die-ungleichen-Kinder-Evas<br />Tokens:  786","Titel: Die-vier-kunstreichen-Brueder<br />Tokens: 1739","Titel: Die-wahre-Braut<br />Tokens: 2838","Titel: Die-Wassernixe<br />Tokens:  305","Titel: Die-weisse-Schlange<br />Tokens: 1705","Titel: Die-weisse-und-die-schwarze-Braut<br />Tokens: 1609","Titel: Die-Wichtelmaenner<br />Tokens: 1201","Titel: Die-zertanzten-Schuhe<br />Tokens: 1549","Titel: Die-zwei-Brueder<br />Tokens: 9166","Titel: Die-zwoelf-Apostel<br />Tokens:  423","Titel: Die-zwoelf-Brueder<br />Tokens: 2178","Titel: Die-zwoelf-faulen-Knechte<br />Tokens: 1144","Titel: Die-zwoelf-Jaeger<br />Tokens: 1197","Titel: Doctor-Allwissend<br />Tokens:  836","Titel: Dornroeschen<br />Tokens: 1423","Titel: Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein<br />Tokens: 2724","Titel: Fitchers-Vogel<br />Tokens: 1434","Titel: Frau-Holle<br />Tokens: 1269","Titel: Frau-Trude<br />Tokens:  349","Titel: Fundevogel<br />Tokens: 1059","Titel: Gottes-Speise<br />Tokens:  256","Titel: Haensel-und-Grethel<br />Tokens: 3231","Titel: Haesichenbraut<br />Tokens:  488","Titel: Hans-heirathet<br />Tokens:  502","Titel: Hans-im-Glueck<br />Tokens: 2309","Titel: Hans-mein-Igel<br />Tokens: 2218","Titel: Herr-Korbes<br />Tokens:  412","Titel: Jorinde-und-Joringel<br />Tokens: 1017","Titel: Jungfrau-Maleen<br />Tokens: 2204","Titel: Katze-und-Maus-in-Gesellschaft<br />Tokens: 1112","Titel: Koenig-Drosselbart<br />Tokens: 1883","Titel: Laeuschen-und-Floehchen<br />Tokens:  465","Titel: Lieb-und-Leid-theilen<br />Tokens:  427","Titel: Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen<br />Tokens: 4284","Titel: Maerchen-von-der-Unke<br />Tokens:  528","Titel: Marienkind<br />Tokens: 2049","Titel: Meister-Pfriem<br />Tokens: 1562","Titel: Muttergottesglaeschen<br />Tokens:  164","Titel: Raethselmaerchen<br />Tokens:  139","Titel: Rapunzel<br />Tokens: 1577","Titel: Rohrdommel-und-Wiedehopf<br />Tokens:  273","Titel: Rothkaeppchen<br />Tokens: 1537","Titel: Rumpelstilzchen<br />Tokens: 1211","Titel: Schneeweisschen-und-Rosenroth<br />Tokens: 2683","Titel: Sechse-kommen-durch-die-ganze-Welt<br />Tokens: 2274","Titel: Simeliberg<br />Tokens:  889","Titel: Sneewittchen<br />Tokens: 3436","Titel: Spindel,-Weberschiffchen-und-Nadel<br />Tokens: 1149","Titel: Strohhalm,-Kohle-und-Bohne<br />Tokens:  566","Titel: Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack<br />Tokens: 4290","Titel: Vom-klugen-Schneiderlein<br />Tokens: 1301","Titel: Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst<br />Tokens:  648","Titel: Von-dem-Tode-des-Huehnchens<br />Tokens:  713"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.275494672754945,"r":7.3059360730593621,"b":176.78151376781511,"l":48.949771689497723},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Anzahl Tokens / Text","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,194.59999999999999],"tickmode":"array","ticktext":["Allerleirauh","Armuth-und-Demuth-fuehren-zum-Himmel","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-alte-Muetterchen","Das-blaue-Licht","Das-Dietmarsische-Luegenmaerchen","Das-eigensinnige-Kind","Das-Eselein","Das-Hirtenbueblein","Das-junggegluehte-Maennlein","Das-kluge-Grethel","Das-Laemmchen-und-Fischchen","Das-Lumpengesindel","Das-Maedchen-ohne-Haende","Das-Maerchen-vom-Schlauraffenland","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Todtenhemdchen","Das-Waldhaus","Das-Wasser-des-Lebens","Daumerlings-Wanderschaft","Daumesdick","Der-alte-Grossvater-und-der-Enkel","Der-alte-Hildebrand","Der-alte-Sultan","Der-arme-Junge-im-Grab","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Arme-und-der-Reiche","Der-Baerenhaeuter","Der-Bauer-und-der-Teufel","Der-Dreschflegel-vom-Himmel","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Frieder-und-das-Catherlieschen","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-Fuchs-und-das-Pferd","Der-Fuchs-und-die-Frau-Gevatterin","Der-Fuchs-und-die-Gaense","Der-Fuchs-und-die-Katze","Der-Geist-im-Glas","Der-gelernte-Jaeger","Der-gescheidte-Hans","Der-gestohlene-Heller","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Schluessel","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-Hahnenbalken","Der-Hase-und-der-Igel","Der-heilige-Joseph-im-Walde","Der-Herr-Gevatter","Der-Hund-und-der-Sperling","Der-Jude-im-Dorn","Der-junge-Riese","Der-kluge-Knecht","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Mond","Der-Nagel","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-Riese-und-der-Schneider","Der-Schneider-im-Himmel","Der-singende-Knochen","Der-Sperling-und-seine-vier-Kinder","Der-starke-Hans","Der-Stiefel-von-Bueffelleder","Der-suesse-Brei","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-Teufel-und-seine-Grossmutter","Der-treue-Johannes","Der-Trommler","Der-undankbare-Sohn","Der-Wolf-und-der-Fuchs","Der-Wolf-und-der-Mensch","Der-Wolf-und-die-sieben-jungen-Geislein","Der-wunderliche-Spielmann","Der-Zaunkoenig","Der-Zaunkoenig-und-der-Baer","Des-Herrn-und-des-Teufels-Gethier","Des-Teufels-russiger-Bruder","Die-alte-Bettelfrau","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-Boten-des-Todes","Die-Brautschau","Die-Bremer-Stadtmusikanten","Die-Brosamen-auf-dem-Tisch","Die-drei-Brueder","Die-drei-Faulen","Die-drei-Federn","Die-drei-Feldscherer","Die-drei-Glueckskinder","Die-drei-gruenen-Zweige","Die-drei-Handwerksburschen","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-drei-Sprachen","Die-Eule","Die-faule-Spinnerin","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-Geschenke-des-kleinen-Volkes","Die-goldene-Gans","Die-Goldkinder","Die-hagere-Liese","Die-Haselruthe","Die-himmlische-Hochzeit","Die-Hochzeit-der-Frau-Fuechsin","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-klugen-Leute","Die-Kornaehre","Die-Krystallkugel","Die-Lebenszeit","Die-Nelke","Die-Nixe-im-Teich","Die-Rabe","Die-Rose","Die-Ruebe","Die-Schlickerlinge","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-Scholle","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-sieben-Schwaben","Die-Sternthaler","Die-ungleichen-Kinder-Evas","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-Wassernixe","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-Wichtelmaenner","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Apostel","Die-zwoelf-Brueder","Die-zwoelf-faulen-Knechte","Die-zwoelf-Jaeger","Doctor-Allwissend","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Frau-Trude","Fundevogel","Gottes-Speise","Haensel-und-Grethel","Haesichenbraut","Hans-heirathet","Hans-im-Glueck","Hans-mein-Igel","Herr-Korbes","Jorinde-und-Joringel","Jungfrau-Maleen","Katze-und-Maus-in-Gesellschaft","Koenig-Drosselbart","Laeuschen-und-Floehchen","Lieb-und-Leid-theilen","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Maerchen-von-der-Unke","Marienkind","Meister-Pfriem","Muttergottesglaeschen","Raethselmaerchen","Rapunzel","Rohrdommel-und-Wiedehopf","Rothkaeppchen","Rumpelstilzchen","Schneeweisschen-und-Rosenroth","Sechse-kommen-durch-die-ganze-Welt","Simeliberg","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel","Strohhalm,-Kohle-und-Bohne","Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack","Vom-klugen-Schneiderlein","Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst","Von-dem-Tode-des-Huehnchens"],"tickvals":[1,2,3,3.9999999999999996,5,6,6.9999999999999991,7.9999999999999991,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,49.999999999999993,51,51.999999999999993,53,53.999999999999993,55,55.999999999999993,57,57.999999999999993,59,59.999999999999993,61,61.999999999999993,63,63.999999999999993,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,97.999999999999986,99,100,101.00000000000001,101.99999999999999,103,104,105.00000000000001,105.99999999999999,107,108,109.00000000000001,109.99999999999999,111,112,113.00000000000001,113.99999999999999,115,116,117.00000000000001,117.99999999999999,119,120,121.00000000000001,121.99999999999999,123,124,125.00000000000001,125.99999999999999,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194],"categoryorder":"array","categoryarray":["Allerleirauh","Armuth-und-Demuth-fuehren-zum-Himmel","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-alte-Muetterchen","Das-blaue-Licht","Das-Dietmarsische-Luegenmaerchen","Das-eigensinnige-Kind","Das-Eselein","Das-Hirtenbueblein","Das-junggegluehte-Maennlein","Das-kluge-Grethel","Das-Laemmchen-und-Fischchen","Das-Lumpengesindel","Das-Maedchen-ohne-Haende","Das-Maerchen-vom-Schlauraffenland","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Todtenhemdchen","Das-Waldhaus","Das-Wasser-des-Lebens","Daumerlings-Wanderschaft","Daumesdick","Der-alte-Grossvater-und-der-Enkel","Der-alte-Hildebrand","Der-alte-Sultan","Der-arme-Junge-im-Grab","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Arme-und-der-Reiche","Der-Baerenhaeuter","Der-Bauer-und-der-Teufel","Der-Dreschflegel-vom-Himmel","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Frieder-und-das-Catherlieschen","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-Fuchs-und-das-Pferd","Der-Fuchs-und-die-Frau-Gevatterin","Der-Fuchs-und-die-Gaense","Der-Fuchs-und-die-Katze","Der-Geist-im-Glas","Der-gelernte-Jaeger","Der-gescheidte-Hans","Der-gestohlene-Heller","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Schluessel","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-Hahnenbalken","Der-Hase-und-der-Igel","Der-heilige-Joseph-im-Walde","Der-Herr-Gevatter","Der-Hund-und-der-Sperling","Der-Jude-im-Dorn","Der-junge-Riese","Der-kluge-Knecht","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Mond","Der-Nagel","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-Riese-und-der-Schneider","Der-Schneider-im-Himmel","Der-singende-Knochen","Der-Sperling-und-seine-vier-Kinder","Der-starke-Hans","Der-Stiefel-von-Bueffelleder","Der-suesse-Brei","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-Teufel-und-seine-Grossmutter","Der-treue-Johannes","Der-Trommler","Der-undankbare-Sohn","Der-Wolf-und-der-Fuchs","Der-Wolf-und-der-Mensch","Der-Wolf-und-die-sieben-jungen-Geislein","Der-wunderliche-Spielmann","Der-Zaunkoenig","Der-Zaunkoenig-und-der-Baer","Des-Herrn-und-des-Teufels-Gethier","Des-Teufels-russiger-Bruder","Die-alte-Bettelfrau","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-Boten-des-Todes","Die-Brautschau","Die-Bremer-Stadtmusikanten","Die-Brosamen-auf-dem-Tisch","Die-drei-Brueder","Die-drei-Faulen","Die-drei-Federn","Die-drei-Feldscherer","Die-drei-Glueckskinder","Die-drei-gruenen-Zweige","Die-drei-Handwerksburschen","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-drei-Sprachen","Die-Eule","Die-faule-Spinnerin","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-Geschenke-des-kleinen-Volkes","Die-goldene-Gans","Die-Goldkinder","Die-hagere-Liese","Die-Haselruthe","Die-himmlische-Hochzeit","Die-Hochzeit-der-Frau-Fuechsin","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-klugen-Leute","Die-Kornaehre","Die-Krystallkugel","Die-Lebenszeit","Die-Nelke","Die-Nixe-im-Teich","Die-Rabe","Die-Rose","Die-Ruebe","Die-Schlickerlinge","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-Scholle","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-sieben-Schwaben","Die-Sternthaler","Die-ungleichen-Kinder-Evas","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-Wassernixe","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-Wichtelmaenner","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Apostel","Die-zwoelf-Brueder","Die-zwoelf-faulen-Knechte","Die-zwoelf-Jaeger","Doctor-Allwissend","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Frau-Trude","Fundevogel","Gottes-Speise","Haensel-und-Grethel","Haesichenbraut","Hans-heirathet","Hans-im-Glueck","Hans-mein-Igel","Herr-Korbes","Jorinde-und-Joringel","Jungfrau-Maleen","Katze-und-Maus-in-Gesellschaft","Koenig-Drosselbart","Laeuschen-und-Floehchen","Lieb-und-Leid-theilen","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Maerchen-von-der-Unke","Marienkind","Meister-Pfriem","Muttergottesglaeschen","Raethselmaerchen","Rapunzel","Rohrdommel-und-Wiedehopf","Rothkaeppchen","Rumpelstilzchen","Schneeweisschen-und-Rosenroth","Sechse-kommen-durch-die-ganze-Welt","Simeliberg","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel","Strohhalm,-Kohle-und-Bohne","Tischchen-deck-dich,-Goldesel,-und-Knueppel-aus-dem-Sack","Vom-klugen-Schneiderlein","Von-dem-Maeuschen,-Voegelchen-und-der-Bratwurst","Von-dem-Tode-des-Huehnchens"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":5.3134080531340802},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":10},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-315.5,9617.5],"tickmode":"array","ticktext":["0","2500","5000","7500"],"tickvals":[0,2499.9999999999995,5000,7500],"categoryorder":"array","categoryarray":["0","2500","5000","7500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Anzahl Tokens","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"8e1e108f3ece":{"x":{},"y":{},"type":"scatter"}},"cur_data":"8e1e108f3ece","visdat":{"8e1e108f3ece":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 Die Funktion `layout()` passt die Position der x-Achsen-Beschriftung auf der interaktiven Grafik an. 
@@ -1105,23 +1110,24 @@ library(plotly)
 tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
   geom_point(alpha=0.6) +
   theme(axis.text.y = element_text(size=5), 
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
-  labs(x = "Text", y = "Token")
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, 
+                                   size=5)) + 
+  labs(x = "Text", y = "Token", size = "Frequency")
 
 ggplotly(tochter_plot) %>%
-  layout(xaxis = list(title = list(text = "Text", standoff = 5)))
+  layout(xaxis = list(title = list(standoff = 5))) 
 ```
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7baddf1b39efcac0c2ff" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-7baddf1b39efcac0c2ff">{"x":{"data":[{"x":[1,1,2,2,2,2,2,2,2,3,3,4,5,5,6,7,7,8,9,9,10,10,10,11,11,12,12,13,14,15,16,16,17,17,17,17,18,19,19,20,20,21,21,22,23,23,24,25,25,26,26,27,28,29,30,30,30,31,32,33,33,34,34,35,36,36,37,38,38,39,39,40,41,41,41,42,42,43,43,43,44,45,46,46,46,46,47,47,48,48,48,49,50,51,52,53,54,55,55,56,57,58,59,60,60,61,62,63,63,64,64,65,65,66,66,66,67,67,68,68,69,70,71,71,72,73,73,74,75,75,76,77,78,78,79,79,80,80,81],"y":[11,3,11,3,14,12,9,10,15,3,11,11,3,11,11,11,6,3,3,11,11,3,12,11,3,11,15,3,3,12,3,11,3,11,6,7,11,3,12,3,11,3,11,11,3,11,3,11,3,11,12,3,3,2,8,11,12,11,11,3,11,11,14,3,11,3,3,3,11,11,3,3,11,12,5,3,15,11,8,13,11,11,11,13,3,12,3,11,11,3,12,11,11,11,11,3,11,3,13,11,11,11,13,3,11,11,3,11,8,12,4,3,11,3,14,13,3,11,3,11,12,12,11,12,1,11,3,11,3,11,11,14,6,11,3,11,3,14,11],"text":["feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: töchter<br />frequency:  1","feature: stieftöchter<br />frequency:  1","feature: stieftöchtern<br />frequency:  1","feature: töchtern<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: müllerstochter<br />frequency:  1","feature: königstochter<br />frequency: 10","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  4","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: töchtern<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: töchter<br />frequency:  4","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  3","feature: müllerstochter<br />frequency:  3","feature: schweinehirtentochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  8","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: herzenstöchterchen<br />frequency:  1","feature: stieftochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  7","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: königstochter<br />frequency: 10","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: meistertochter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: töchtern<br />frequency:  1","feature: tochter<br />frequency: 16","feature: stieftochter<br />frequency:  2","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  7","feature: töchterchen<br />frequency:  5","feature: königstochter<br />frequency:  3","feature: töchter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  9","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency: 10","feature: tochter<br />frequency:  2","feature: töchterchen<br />frequency:  2","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  7","feature: stieftochter<br />frequency:  5","feature: töchter<br />frequency:  3","feature: königstöchter<br />frequency:  2","feature: königstochter<br />frequency: 18","feature: tochter<br />frequency: 11","feature: königstochter<br />frequency:  3","feature: töchterlein<br />frequency:  1","feature: töchterchen<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: bauerntochter<br />frequency:  1","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: töchterlein<br />frequency:  2","feature: müllerstochter<br />frequency:  6","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: tochter<br />frequency:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":[11.718123311024939,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,12.94622834782991,8.3628779534425135,12.94622834782991,15.006397337688277,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,17.529578742217303,12.94622834782991,8.3628779534425135,12.94622834782991,11.718123311024939,3.7795275590551185,10.261363847905846,3.7795275590551185,3.7795275590551185,3.7795275590551185,11.718123311024939,11.718123311024939,11.718123311024939,15.905932874073978,11.718123311024939,15.006397337688277,10.261363847905846,10.261363847905846,8.3628779534425135,3.7795275590551185,15.905932874073978,3.7795275590551185,15.006397337688277,11.718123311024939,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,8.3628779534425135,8.3628779534425135,8.3628779534425135,3.7795275590551185,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,8.3628779534425135,10.261363847905846,8.3628779534425135,8.3628779534425135,3.7795275590551185,3.7795275590551185,15.006397337688277,8.3628779534425135,16.743200136756574,17.529578742217303,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,21.5307673063507,8.3628779534425135,3.7795275590551185,8.3628779534425135,10.261363847905846,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,16.743200136756574,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,10.261363847905846,3.7795275590551185,16.743200136756574,3.7795275590551185,14.028210605605803,3.7795275590551185,11.718123311024939,3.7795275590551185,8.3628779534425135,17.529578742217303,8.3628779534425135,8.3628779534425135,14.028210605605803,3.7795275590551185,3.7795275590551185,12.94622834782991,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,22.677165354330711,18.273354119950305,10.261363847905846,3.7795275590551185,3.7795275590551185,12.94622834782991,3.7795275590551185,12.94622834782991,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,3.7795275590551185,11.718123311024939,8.3628779534425135,3.7795275590551185,12.94622834782991,11.718123311024939,10.261363847905846,8.3628779534425135,14.028210605605803,10.261363847905846,14.028210605605803,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283108,"r":7.3059360730593621,"b":211.14155251141557,"l":95.3092569530926},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,81.599999999999994],"tickmode":"array","ticktext":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"tickvals":[1,2,2.9999999999999996,4,5,5.9999999999999991,7,8,9,10,11,12,12.999999999999998,14,15,16,17,18,19,20,21.000000000000004,22,23,23.999999999999996,25,26,27,28,29,30,31.000000000000004,32,33,34,35,36,37,38,39,40,41,41.999999999999993,43,44,45,46,47,48,49,50,51,52,53.000000000000007,54,55,56.000000000000007,57,58,59.000000000000007,60,61,61.999999999999993,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],"categoryorder":"array","categoryarray":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":5},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,15.6],"tickmode":"array","ticktext":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","stieftöchtern","tochter","töchter","töchterchen","töchterlein","töchtern"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"categoryorder":"array","categoryarray":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","stieftöchtern","tochter","töchter","töchterchen","töchterlein","töchtern"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Token","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"frequency","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"3f615953a592":{"x":{},"y":{},"size":{},"type":"scatter"}},"cur_data":"3f615953a592","visdat":{"3f615953a592":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c101e416ec711cb02dc8" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c101e416ec711cb02dc8">{"x":{"data":[{"x":[1,1,2,2,2,2,2,2,2,3,3,4,5,5,6,7,7,8,9,9,10,10,10,11,11,12,12,13,14,15,16,16,17,17,17,17,18,19,19,20,20,21,21,22,23,23,24,25,25,26,26,27,28,29,30,30,30,31,32,33,33,34,34,35,36,36,37,38,38,39,39,40,41,41,41,42,42,43,43,43,44,45,46,46,46,46,47,47,48,48,48,49,50,51,52,53,54,55,55,56,57,58,59,60,60,61,62,63,63,64,64,65,65,66,66,66,67,67,68,68,69,70,71,71,72,73,73,74,75,75,76,77,78,78,79,79,80,80,81],"y":[11,3,11,3,14,12,9,10,15,3,11,11,3,11,11,11,6,3,3,11,11,3,12,11,3,11,15,3,3,12,3,11,3,11,6,7,11,3,12,3,11,3,11,11,3,11,3,11,3,11,12,3,3,2,8,11,12,11,11,3,11,11,14,3,11,3,3,3,11,11,3,3,11,12,5,3,15,11,8,13,11,11,11,13,3,12,3,11,11,3,12,11,11,11,11,3,11,3,13,11,11,11,13,3,11,11,3,11,8,12,4,3,11,3,14,13,3,11,3,11,12,12,11,12,1,11,3,11,3,11,11,14,6,11,3,11,3,14,11],"text":["feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: töchter<br />frequency:  1","feature: stieftöchter<br />frequency:  1","feature: stieftöchtern<br />frequency:  1","feature: töchtern<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: müllerstochter<br />frequency:  1","feature: königstochter<br />frequency: 10","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  4","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: töchtern<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: töchter<br />frequency:  4","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  3","feature: müllerstochter<br />frequency:  3","feature: schweinehirtentochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  8","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: herzenstöchterchen<br />frequency:  1","feature: stieftochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  7","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: königstochter<br />frequency: 10","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: meistertochter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: töchtern<br />frequency:  1","feature: tochter<br />frequency: 16","feature: stieftochter<br />frequency:  2","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  7","feature: töchterchen<br />frequency:  5","feature: königstochter<br />frequency:  3","feature: töchter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  9","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency: 10","feature: tochter<br />frequency:  2","feature: töchterchen<br />frequency:  2","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  7","feature: stieftochter<br />frequency:  5","feature: töchter<br />frequency:  3","feature: königstöchter<br />frequency:  2","feature: königstochter<br />frequency: 18","feature: tochter<br />frequency: 11","feature: königstochter<br />frequency:  3","feature: töchterlein<br />frequency:  1","feature: töchterchen<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: töchter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: töchter<br />frequency:  1","feature: bauerntochter<br />frequency:  1","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: töchterlein<br />frequency:  2","feature: müllerstochter<br />frequency:  6","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: tochter<br />frequency:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":[11.718123311024939,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,12.94622834782991,8.3628779534425135,12.94622834782991,15.006397337688277,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,17.529578742217303,12.94622834782991,8.3628779534425135,12.94622834782991,11.718123311024939,3.7795275590551185,10.261363847905846,3.7795275590551185,3.7795275590551185,3.7795275590551185,11.718123311024939,11.718123311024939,11.718123311024939,15.905932874073978,11.718123311024939,15.006397337688277,10.261363847905846,10.261363847905846,8.3628779534425135,3.7795275590551185,15.905932874073978,3.7795275590551185,15.006397337688277,11.718123311024939,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,8.3628779534425135,8.3628779534425135,8.3628779534425135,3.7795275590551185,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,8.3628779534425135,10.261363847905846,8.3628779534425135,8.3628779534425135,3.7795275590551185,3.7795275590551185,15.006397337688277,8.3628779534425135,16.743200136756574,17.529578742217303,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,21.5307673063507,8.3628779534425135,3.7795275590551185,8.3628779534425135,10.261363847905846,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,16.743200136756574,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,10.261363847905846,3.7795275590551185,16.743200136756574,3.7795275590551185,14.028210605605803,3.7795275590551185,11.718123311024939,3.7795275590551185,8.3628779534425135,17.529578742217303,8.3628779534425135,8.3628779534425135,14.028210605605803,3.7795275590551185,3.7795275590551185,12.94622834782991,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,22.677165354330711,18.273354119950305,10.261363847905846,3.7795275590551185,3.7795275590551185,12.94622834782991,3.7795275590551185,12.94622834782991,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,3.7795275590551185,11.718123311024939,8.3628779534425135,3.7795275590551185,12.94622834782991,11.718123311024939,10.261363847905846,8.3628779534425135,14.028210605605803,10.261363847905846,14.028210605605803,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283108,"r":7.3059360730593621,"b":211.14155251141557,"l":95.3092569530926},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,81.599999999999994],"tickmode":"array","ticktext":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"tickvals":[1,2,2.9999999999999996,4,5,5.9999999999999991,7,8,9,10,11,12,12.999999999999998,14,15,16,17,18,19,20,21.000000000000004,22,23,23.999999999999996,25,26,27,28,29,30,31.000000000000004,32,33,34,35,36,37,38,39,40,41,41.999999999999993,43,44,45,46,47,48,49,50,51,52,53.000000000000007,54,55,56.000000000000007,57,58,59.000000000000007,60,61,61.999999999999993,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],"categoryorder":"array","categoryarray":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":5},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,15.6],"tickmode":"array","ticktext":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","stieftöchtern","tochter","töchter","töchterchen","töchterlein","töchtern"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"categoryorder":"array","categoryarray":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","stieftöchtern","tochter","töchter","töchterchen","töchterlein","töchtern"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Token","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Frequency","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"8e1e4810251b":{"x":{},"y":{},"size":{},"type":"scatter"}},"cur_data":"8e1e4810251b","visdat":{"8e1e4810251b":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 Die Visualisierung zeigt anhand der Größe der Datenpunkte an, wie häufig ein Token in dem entsprechenden Text vorkommt. Die Tochter-Tokens sind demnach über das gesamte Korpus verteilt und kommen nicht in einem bestimmten Märchen ganz besonders häufig vor. 
 
 Aber: bisher haben wir nur absolute, "rohe" Worthäufigkeiten betrachtet. Wie sieht es aus, wenn wir relative Häufigkeiten betrachten? Was ändert sich, wenn wir die Lemmata verwenden? Zunächst untersuchen wir, wie sich die absoluten Worthäufigkeiten verändern, wenn wir das Korpus lemmatisieren. Etwas später kommen wir auf die Frage nach den relativen Häufigkeiten zurück. 
 
-## Absolute Häufigkeiten und Lemmata
+### Absolute Häufigkeiten und Lemmata
 
 Die Suche nach allen Tochter-Tokens mithilfe des regulären Ausdrucks "t(o|ö)chter" hat verschiedene Zeichenketten mit "tochter" oder "töchter" geliefert, darunter auch Flexionsformen der jeweiligen Wörter (z.B. "töchtern"). Wenn wir Worthäufigkeiten vergleichen wollen, ist das unpraktisch: In jedem Schritt müssen wir verschiedene Flexionsformen berücksichtigen und zusammenzählen. **Wir lemmatisieren deswegen im Folgenden das Märchenkorpus und betrachten die Worthäufigkeiten danach erneut.** Dazu verwenden wir den **Code aus Abschnitt 7.7 im Kapitel "Textanalyse II"**.
 
@@ -1248,8 +1254,8 @@ ggplotly(tochter_plot) %>%
 ```
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d79f3d9b6c1590233ea0" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d79f3d9b6c1590233ea0">{"x":{"data":[{"x":[1,1,2,2,2,2,3,3,4,5,5,6,7,7,8,9,9,10,10,11,11,12,13,14,15,16,16,17,17,17,17,18,19,19,20,20,21,21,22,23,23,24,25,25,26,27,28,29,30,30,31,32,33,33,34,34,35,36,36,37,38,38,39,39,40,41,41,42,42,43,43,43,44,45,46,46,46,46,47,47,48,48,49,50,51,52,53,54,55,55,56,57,58,59,60,60,61,62,63,63,64,64,65,65,66,66,66,67,67,68,68,69,70,71,72,73,73,74,75,75,76,77,78,78,79,79,80,80,81],"y":[10,3,10,9,3,13,3,10,10,3,10,10,10,6,3,3,10,10,3,10,3,10,3,3,10,3,10,3,10,6,7,10,3,10,3,10,3,10,10,3,10,3,10,3,10,3,3,2,10,8,10,10,3,10,10,13,3,10,3,3,3,10,10,3,3,10,5,3,10,10,8,12,10,10,10,12,3,11,3,10,10,3,10,10,10,10,3,10,3,12,10,10,10,12,3,10,10,3,10,8,10,4,3,10,3,13,12,3,10,3,10,10,10,10,1,10,3,10,3,10,10,13,6,10,3,10,3,13,10],"text":["feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: stieftöchter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: müllerstochter<br />frequency:  1","feature: königstochter<br />frequency: 10","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  6","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  3","feature: müllerstochter<br />frequency:  3","feature: schweinehirtentochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: herzenstöchterchen<br />frequency:  1","feature: tochter<br />frequency:  3","feature: stieftochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  7","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: königstochter<br />frequency: 10","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: meistertochter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency: 16","feature: stieftochter<br />frequency:  2","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  8","feature: töchterchen<br />frequency:  5","feature: königstochter<br />frequency:  3","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  9","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  9","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency: 10","feature: tochter<br />frequency:  2","feature: töchterchen<br />frequency:  2","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  7","feature: stieftochter<br />frequency:  5","feature: tochter<br />frequency:  3","feature: königstöchter<br />frequency:  2","feature: königstochter<br />frequency: 18","feature: tochter<br />frequency: 11","feature: königstochter<br />frequency:  3","feature: töchterlein<br />frequency:  1","feature: töchterchen<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: bauerntochter<br />frequency:  1","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: töchterlein<br />frequency:  2","feature: müllerstochter<br />frequency:  6","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: tochter<br />frequency:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":[11.718123311024939,11.718123311024939,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,12.94622834782991,8.3628779534425135,12.94622834782991,15.006397337688277,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,17.529578742217303,12.94622834782991,8.3628779534425135,14.028210605605803,11.718123311024939,10.261363847905846,3.7795275590551185,8.3628779534425135,11.718123311024939,11.718123311024939,11.718123311024939,15.905932874073978,11.718123311024939,15.006397337688277,10.261363847905846,10.261363847905846,8.3628779534425135,3.7795275590551185,15.905932874073978,3.7795275590551185,15.006397337688277,11.718123311024939,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,8.3628779534425135,8.3628779534425135,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,10.261363847905846,3.7795275590551185,8.3628779534425135,10.261363847905846,8.3628779534425135,8.3628779534425135,3.7795275590551185,3.7795275590551185,15.006397337688277,8.3628779534425135,16.743200136756574,17.529578742217303,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,8.3628779534425135,3.7795275590551185,21.5307673063507,8.3628779534425135,3.7795275590551185,8.3628779534425135,10.261363847905846,15.905932874073978,12.94622834782991,10.261363847905846,3.7795275590551185,16.743200136756574,8.3628779534425135,12.94622834782991,3.7795275590551185,10.261363847905846,3.7795275590551185,16.743200136756574,3.7795275590551185,14.028210605605803,3.7795275590551185,11.718123311024939,3.7795275590551185,8.3628779534425135,17.529578742217303,8.3628779534425135,8.3628779534425135,14.028210605605803,3.7795275590551185,3.7795275590551185,12.94622834782991,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,22.677165354330711,18.273354119950305,10.261363847905846,3.7795275590551185,3.7795275590551185,12.94622834782991,3.7795275590551185,12.94622834782991,3.7795275590551185,3.7795275590551185,3.7795275590551185,10.261363847905846,3.7795275590551185,11.718123311024939,8.3628779534425135,3.7795275590551185,12.94622834782991,11.718123311024939,10.261363847905846,8.3628779534425135,14.028210605605803,10.261363847905846,14.028210605605803,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283108,"r":7.3059360730593621,"b":211.14155251141557,"l":95.3092569530926},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,81.599999999999994],"tickmode":"array","ticktext":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"tickvals":[1,2,2.9999999999999996,4,5,5.9999999999999991,7,8,9,10,11,12,12.999999999999998,14,15,16,17,18,19,20,21.000000000000004,22,23,23.999999999999996,25,26,27,28,29,30,31.000000000000004,32,33,34,35,36,37,38,39,40,41,41.999999999999993,43,44,45,46,47,48,49,50,51,52,53.000000000000007,54,55,56.000000000000007,57,58,59.000000000000007,60,61,61.999999999999993,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],"categoryorder":"array","categoryarray":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":5},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,13.6],"tickmode":"array","ticktext":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13],"categoryorder":"array","categoryarray":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Token","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"frequency","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"3f616fc54f04":{"x":{},"y":{},"size":{},"type":"scatter"}},"cur_data":"3f616fc54f04","visdat":{"3f616fc54f04":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-30e3048d814c8bab5d8a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-30e3048d814c8bab5d8a">{"x":{"data":[{"x":[1,1,2,2,2,2,3,3,4,5,5,6,7,7,8,9,9,10,10,11,11,12,13,14,15,16,16,17,17,17,17,18,19,19,20,20,21,21,22,23,23,24,25,25,26,27,28,29,30,30,31,32,33,33,34,34,35,36,36,37,38,38,39,39,40,41,41,42,42,43,43,43,44,45,46,46,46,46,47,47,48,48,49,50,51,52,53,54,55,55,56,57,58,59,60,60,61,62,63,63,64,64,65,65,66,66,66,67,67,68,68,69,70,71,72,73,73,74,75,75,76,77,78,78,79,79,80,80,81],"y":[10,3,10,9,3,13,3,10,10,3,10,10,10,6,3,3,10,10,3,10,3,10,3,3,10,3,10,3,10,6,7,10,3,10,3,10,3,10,10,3,10,3,10,3,10,3,3,2,10,8,10,10,3,10,10,13,3,10,3,3,3,10,10,3,3,10,5,3,10,10,8,12,10,10,10,12,3,11,3,10,10,3,10,10,10,10,3,10,3,12,10,10,10,12,3,10,10,3,10,8,10,4,3,10,3,13,12,3,10,3,10,10,10,10,1,10,3,10,3,10,10,13,6,10,3,10,3,13,10],"text":["feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: stieftöchter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  1","feature: müllerstochter<br />frequency:  1","feature: königstochter<br />frequency: 10","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  6","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  4","feature: königstochter<br />frequency:  4","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  3","feature: müllerstochter<br />frequency:  3","feature: schweinehirtentochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  8","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  7","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  1","feature: herzenstöchterchen<br />frequency:  1","feature: tochter<br />frequency:  3","feature: stieftochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: königstochter<br />frequency:  3","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  2","feature: töchterlein<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  7","feature: königstochter<br />frequency:  2","feature: königstochter<br />frequency:  9","feature: königstochter<br />frequency: 10","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  2","feature: meistertochter<br />frequency:  1","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: tochter<br />frequency: 16","feature: stieftochter<br />frequency:  2","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  8","feature: töchterchen<br />frequency:  5","feature: königstochter<br />frequency:  3","feature: töchter<br />frequency:  1","feature: königstochter<br />frequency:  9","feature: tochter<br />frequency:  2","feature: tochter<br />frequency:  5","feature: königstochter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  9","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  4","feature: töchterchen<br />frequency:  1","feature: tochter<br />frequency:  2","feature: tochter<br />frequency: 10","feature: tochter<br />frequency:  2","feature: töchterchen<br />frequency:  2","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  7","feature: stieftochter<br />frequency:  5","feature: tochter<br />frequency:  3","feature: königstöchter<br />frequency:  2","feature: königstochter<br />frequency: 18","feature: tochter<br />frequency: 11","feature: königstochter<br />frequency:  3","feature: töchterlein<br />frequency:  1","feature: töchterchen<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  1","feature: tochter<br />frequency:  3","feature: bauerntochter<br />frequency:  1","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  2","feature: tochter<br />frequency:  1","feature: königstochter<br />frequency:  5","feature: tochter<br />frequency:  4","feature: tochter<br />frequency:  3","feature: töchterlein<br />frequency:  2","feature: müllerstochter<br />frequency:  6","feature: tochter<br />frequency:  3","feature: königstochter<br />frequency:  6","feature: tochter<br />frequency:  4","feature: königstochter<br />frequency:  1","feature: töchterlein<br />frequency:  1","feature: tochter<br />frequency:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":[11.718123311024939,11.718123311024939,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,12.94622834782991,8.3628779534425135,12.94622834782991,15.006397337688277,8.3628779534425135,11.718123311024939,3.7795275590551185,3.7795275590551185,17.529578742217303,12.94622834782991,8.3628779534425135,14.028210605605803,11.718123311024939,10.261363847905846,3.7795275590551185,8.3628779534425135,11.718123311024939,11.718123311024939,11.718123311024939,15.905932874073978,11.718123311024939,15.006397337688277,10.261363847905846,10.261363847905846,8.3628779534425135,3.7795275590551185,15.905932874073978,3.7795275590551185,15.006397337688277,11.718123311024939,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,8.3628779534425135,3.7795275590551185,8.3628779534425135,8.3628779534425135,10.261363847905846,8.3628779534425135,3.7795275590551185,3.7795275590551185,10.261363847905846,10.261363847905846,3.7795275590551185,8.3628779534425135,10.261363847905846,8.3628779534425135,8.3628779534425135,3.7795275590551185,3.7795275590551185,15.006397337688277,8.3628779534425135,16.743200136756574,17.529578742217303,3.7795275590551185,3.7795275590551185,3.7795275590551185,3.7795275590551185,8.3628779534425135,3.7795275590551185,8.3628779534425135,3.7795275590551185,21.5307673063507,8.3628779534425135,3.7795275590551185,8.3628779534425135,10.261363847905846,15.905932874073978,12.94622834782991,10.261363847905846,3.7795275590551185,16.743200136756574,8.3628779534425135,12.94622834782991,3.7795275590551185,10.261363847905846,3.7795275590551185,16.743200136756574,3.7795275590551185,14.028210605605803,3.7795275590551185,11.718123311024939,3.7795275590551185,8.3628779534425135,17.529578742217303,8.3628779534425135,8.3628779534425135,14.028210605605803,3.7795275590551185,3.7795275590551185,12.94622834782991,15.006397337688277,12.94622834782991,10.261363847905846,8.3628779534425135,22.677165354330711,18.273354119950305,10.261363847905846,3.7795275590551185,3.7795275590551185,12.94622834782991,3.7795275590551185,12.94622834782991,3.7795275590551185,3.7795275590551185,3.7795275590551185,10.261363847905846,3.7795275590551185,11.718123311024939,8.3628779534425135,3.7795275590551185,12.94622834782991,11.718123311024939,10.261363847905846,8.3628779534425135,14.028210605605803,10.261363847905846,14.028210605605803,11.718123311024939,3.7795275590551185,3.7795275590551185,3.7795275590551185],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283108,"r":7.3059360730593621,"b":211.14155251141557,"l":95.3092569530926},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,81.599999999999994],"tickmode":"array","ticktext":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"tickvals":[1,2,2.9999999999999996,4,5,5.9999999999999991,7,8,9,10,11,12,12.999999999999998,14,15,16,17,18,19,20,21.000000000000004,22,23,23.999999999999996,25,26,27,28,29,30,31.000000000000004,32,33,34,35,36,37,38,39,40,41,41.999999999999993,43,44,45,46,47,48,49,50,51,52,53.000000000000007,54,55,56.000000000000007,57,58,59.000000000000007,60,61,61.999999999999993,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],"categoryorder":"array","categoryarray":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":5},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,13.6],"tickmode":"array","ticktext":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13],"categoryorder":"array","categoryarray":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Token","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"frequency","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"8e1e316eeba":{"x":{},"y":{},"size":{},"type":"scatter"}},"cur_data":"8e1e316eeba","visdat":{"8e1e316eeba":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 Der Abgleich dieses Diagramms mit dem Diagramm aus Abschnitt 8.3 ist jedoch nicht so einfach wie der Vergleich der Wortwolken. Es wäre vorteilhaft, wenn wir die Anzahl der jeweiligen Tokens vor und nach der Lemmatisierung in einer einzigen Visualisierung nebeneinanderstellen könnten. Dazu können wir mithilfe der `textstat_frequency()`-Funktion zunächst die Anzahl der Tochter-Tokens vor und nach der Lemmatisierung bestimmen, und dann für das lemmatisierte und das nicht-lemmatisierte Korpus jeweils ein **Balkendiagramm** erstellen. Die Balkendiagramme werden mithilfe der ggplot2-Funktion `facet_grid()` nebeneinander angeordnet. Die Funktion `facet_grid()` erwartet, dass die Daten für beide Balkendiagramme in einem einzigen Dataframe enthalten sind, und dass es eine Spalte gibt, welche die Daten den beiden Balkendiagrammen zuordnet. Wir kombinieren deswegen zunächst die beiden Dataframes, die wir mithilfe der Funktion `textstat_frequency()` erstellt haben und fügen eine gemeinsame Spalte `origin` hinzu, welche zur Unterscheidung der lemmatisierten von den nichtlemmatisierten Daten dient.
@@ -1293,6 +1299,5490 @@ Verständnisfragen:
 - Was macht die Ebene `facet_grid(~ origin)`? Recherchiert in den ggplot2-Dokumentationsseiten und zieht [dieses Lehrbuch](https://ggplot2-book.org/facet) zurate. 
 - Wie wirkt sich das Lemmatisieren auf die Tochter-Tokens aus?
 :::
+
+### Relative Häufigkeiten und TF-IDF
+
+Wir haben bisher gesehen, dass sich die Worthäufigkeiten unterscheiden, je nachdem, welche Preprocessingentscheidungen getroffen wurden: das Entfernen der Stoppwörter und Satzzeichen hat die Aufmerksamkeit auf die am häufigsten vorkommenden Wörter gelenkt, die keine Funktionswörter sind. Die Lemmatisierung hat die Gesamtanzahl der Tokens weiter reduziert, indem verschiedene Flexionsformen zu einem Wortstamm zusammengefasst wurden. **Mit unserem `tochter_plot` haben wir danach versucht einzuschätzen, was diese Häufigkeiten bedeuten**: Wenn "königstochter" fast 200 Mal in unserem Märchenkorpus vorkommt, bedeutet das etwa, dass in fast jedem Märchen eine Königstochter vorkommt? Oder gibt es vielleicht nur wenige Märchen, in denen immer wieder eine Königstochter erwähnt wird? 
+Unsem `tochter_plot` konnten wir entnehmen, dass "königstochter" in fast 50 verschiedenen Märchen vorkommt: in manchen Märchen nur ein oder zweimal, und in anderen Märchen zehn oder sogar 18 Mal. **Aus unserem Plot können wir aber nicht ablesen, was diese Unterschiede bedeuten**: "königstochter" kommt im Märchen "Der Forschkönig" 13 Mal vor, und in "Die zwei Brüder" 18 Mal. Im Vergleich mit anderen Märchen erscheint das viel, aber bedeuten diese Zahlen wirklich dasselbe, wenn ein Märchen nur etwa 1500 Token lang ist, und das andere 9000? **Um Worthäufigkeiten vergleich zu können, brauchen wir also anstelle der absoluten Häufigkeiten ein Maß, das die verschiedenen Textlängen berücksichtigt.**
+
+Eine simple Lösung wäre es, einfach alle Worthäufigkeiten durch die Länge der Märchen zu teilen, also die **relativen Häufigkeiten** zu betrachten. Das geht ganz einfach mit der Funktion `dfm_weight(scheme="prop")`:
+
+
+```r
+library(quanteda)
+library(quanteda.textstats)
+library(ggplot2)
+library(plotly)
+
+maerchen_dfm_weighted <- maerchen_dfm_lemmata %>%
+  dfm_weight(scheme="prop")
+
+
+tstat_freq_grouped <- textstat_frequency(maerchen_dfm_weighted, groups = Titel)
+tstat_subset <- tstat_freq_grouped[grepl("t(o|ö)chter", tstat_freq_grouped$feature), ]
+
+tochter_plot <- ggplot(tstat_subset, aes(x = group, y = feature, size = frequency)) +
+  geom_point(alpha=0.6) +
+  theme(axis.text.y = element_text(size=5), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, 
+                                   size=5)) + 
+  labs(x = "Text", y = "Token", size = "Frequency")
+
+ggplotly(tochter_plot) %>%
+  layout(xaxis = list(title = list(standoff = 5))) 
+```
+
+```{=html}
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5d75665e7e30061fcd50" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5d75665e7e30061fcd50">{"x":{"data":[{"x":[1,1,2,2,2,2,3,3,4,5,5,6,7,7,8,9,9,10,10,11,11,12,13,14,15,16,16,17,17,17,17,18,19,19,20,20,21,21,22,23,23,24,25,25,26,27,28,29,30,30,31,32,33,33,34,34,35,36,36,37,38,38,39,39,40,41,41,42,42,43,43,43,44,45,46,46,46,46,47,47,48,48,49,50,51,52,53,54,55,55,56,57,58,59,60,60,61,62,63,63,64,64,65,65,66,66,66,67,67,68,68,69,70,71,72,73,73,74,75,75,76,77,78,78,79,79,80,80,81],"y":[10,3,10,9,3,13,3,10,10,3,10,10,10,6,3,3,10,10,3,10,3,10,3,3,10,3,10,3,10,6,7,10,3,10,3,10,3,10,10,3,10,3,10,3,10,3,3,2,10,8,10,10,3,10,10,13,3,10,3,3,3,10,10,3,3,10,5,3,10,10,8,12,10,10,10,12,3,11,3,10,10,3,10,10,10,10,3,10,3,12,10,10,10,12,3,10,10,3,10,8,10,4,3,10,3,13,12,3,10,3,10,10,10,10,1,10,3,10,3,10,10,13,6,10,3,10,3,13,10],"text":["feature: tochter<br />frequency: 0.0046565774","feature: königstochter<br />frequency: 0.0046565774","feature: tochter<br />frequency: 0.0026761820","feature: stieftöchter<br />frequency: 0.0017841213","feature: königstochter<br />frequency: 0.0008920607","feature: töchterlein<br />frequency: 0.0008920607","feature: königstochter<br />frequency: 0.0028719127","feature: tochter<br />frequency: 0.0011487651","feature: tochter<br />frequency: 0.0050813008","feature: königstochter<br />frequency: 0.0097222222","feature: tochter<br />frequency: 0.0027777778","feature: tochter<br />frequency: 0.0076481836","feature: tochter<br />frequency: 0.0010548523","feature: müllerstochter<br />frequency: 0.0010548523","feature: königstochter<br />frequency: 0.0205761317","feature: königstochter<br />frequency: 0.0106609808","feature: tochter<br />frequency: 0.0042643923","feature: tochter<br />frequency: 0.0064585576","feature: königstochter<br />frequency: 0.0043057051","feature: tochter<br />frequency: 0.0021961933","feature: königstochter<br />frequency: 0.0007320644","feature: tochter<br />frequency: 0.0025575448","feature: königstochter<br />frequency: 0.0044101433","feature: königstochter<br />frequency: 0.0074906367","feature: tochter<br />frequency: 0.0050062578","feature: königstochter<br />frequency: 0.0061396777","feature: tochter<br />frequency: 0.0030698388","feature: königstochter<br />frequency: 0.0081206497","feature: tochter<br />frequency: 0.0034802784","feature: müllerstochter<br />frequency: 0.0034802784","feature: schweinehirtentochter<br />frequency: 0.0023201856","feature: tochter<br />frequency: 0.0023696682","feature: königstochter<br />frequency: 0.0142857143","feature: tochter<br />frequency: 0.0017857143","feature: königstochter<br />frequency: 0.0078299776","feature: tochter<br />frequency: 0.0044742729","feature: königstochter<br />frequency: 0.0041322314","feature: tochter<br />frequency: 0.0020661157","feature: tochter<br />frequency: 0.0009940358","feature: königstochter<br />frequency: 0.0024752475","feature: tochter<br />frequency: 0.0016501650","feature: königstochter<br />frequency: 0.0017035775","feature: tochter<br />frequency: 0.0028530670","feature: königstochter<br />frequency: 0.0028530670","feature: tochter<br />frequency: 0.0065934066","feature: königstochter<br />frequency: 0.0021645022","feature: königstochter<br />frequency: 0.0012019231","feature: herzenstöchterchen<br />frequency: 0.0009505703","feature: tochter<br />frequency: 0.0049833887","feature: stieftochter<br />frequency: 0.0049833887","feature: tochter<br />frequency: 0.0008176615","feature: tochter<br />frequency: 0.0036832413","feature: königstochter<br />frequency: 0.0032608696","feature: tochter<br />frequency: 0.0021739130","feature: tochter<br />frequency: 0.0060790274","feature: töchterlein<br />frequency: 0.0030395137","feature: königstochter<br />frequency: 0.0009017133","feature: tochter<br />frequency: 0.0067502411","feature: königstochter<br />frequency: 0.0019286403","feature: königstochter<br />frequency: 0.0071485306","feature: königstochter<br />frequency: 0.0067750678","feature: tochter<br />frequency: 0.0006775068","feature: tochter<br />frequency: 0.0019417476","feature: königstochter<br />frequency: 0.0019417476","feature: königstochter<br />frequency: 0.0027247956","feature: tochter<br />frequency: 0.0011580776","feature: meistertochter<br />frequency: 0.0005790388","feature: königstochter<br />frequency: 0.0060606061","feature: tochter<br />frequency: 0.0030303030","feature: tochter<br />frequency: 0.0188679245","feature: stieftochter<br />frequency: 0.0023584906","feature: töchterchen<br />frequency: 0.0011792453","feature: tochter<br />frequency: 0.0034129693","feature: tochter<br />frequency: 0.0080428954","feature: tochter<br />frequency: 0.0049689441","feature: töchterchen<br />frequency: 0.0031055901","feature: königstochter<br />frequency: 0.0018633540","feature: töchter<br />frequency: 0.0006211180","feature: königstochter<br />frequency: 0.0100558659","feature: tochter<br />frequency: 0.0022346369","feature: tochter<br />frequency: 0.0075075075","feature: königstochter<br />frequency: 0.0015015015","feature: tochter<br />frequency: 0.0038860104","feature: tochter<br />frequency: 0.0046296296","feature: tochter<br />frequency: 0.0168224299","feature: tochter<br />frequency: 0.0017543860","feature: königstochter<br />frequency: 0.0145631068","feature: tochter<br />frequency: 0.0013513514","feature: königstochter<br />frequency: 0.0048019208","feature: töchterchen<br />frequency: 0.0012004802","feature: tochter<br />frequency: 0.0105263158","feature: tochter<br />frequency: 0.0095877277","feature: tochter<br />frequency: 0.0026631158","feature: töchterchen<br />frequency: 0.0053333333","feature: königstochter<br />frequency: 0.0094936709","feature: tochter<br />frequency: 0.0015822785","feature: tochter<br />frequency: 0.0009310987","feature: königstochter<br />frequency: 0.0074183976","feature: tochter<br />frequency: 0.0115702479","feature: stieftochter<br />frequency: 0.0082644628","feature: tochter<br />frequency: 0.0051635112","feature: königstöchter<br />frequency: 0.0034423408","feature: königstochter<br />frequency: 0.0052462839","feature: tochter<br />frequency: 0.0032060624","feature: königstochter<br />frequency: 0.0036809816","feature: töchterlein<br />frequency: 0.0012269939","feature: töchterchen<br />frequency: 0.0012269939","feature: königstochter<br />frequency: 0.0114416476","feature: tochter<br />frequency: 0.0022883295","feature: königstochter<br />frequency: 0.0090090090","feature: tochter<br />frequency: 0.0018018018","feature: tochter<br />frequency: 0.0009389671","feature: tochter<br />frequency: 0.0018248175","feature: tochter<br />frequency: 0.0063829787","feature: bauerntochter<br />frequency: 0.0053763441","feature: tochter<br />frequency: 0.0050377834","feature: königstochter<br />frequency: 0.0025188917","feature: tochter<br />frequency: 0.0011709602","feature: königstochter<br />frequency: 0.0070521862","feature: tochter<br />frequency: 0.0056417489","feature: tochter<br />frequency: 0.0019893899","feature: töchterlein<br />frequency: 0.0026212320","feature: müllerstochter<br />frequency: 0.0131578947","feature: tochter<br />frequency: 0.0065789474","feature: königstochter<br />frequency: 0.0069767442","feature: tochter<br />frequency: 0.0046511628","feature: königstochter<br />frequency: 0.0007662835","feature: töchterlein<br />frequency: 0.0007662835","feature: tochter<br />frequency: 0.0022371365"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":0.59999999999999998,"size":[12.312947734460849,12.312947734460849,9.8993402577743694,8.4186141941849897,6.1438757036979039,6.1438757036979039,10.178557967217865,6.9692817439074846,12.746368617066882,16.557819467992047,10.045823863999997,15.015418789129825,6.6945538772953279,6.6945538772953279,22.677165354330711,17.19778705341459,11.892194866244154,14.026486126522371,11.937539556608854,9.1535545264473441,5.432654376743427,9.7237187577246242,12.051062141292112,14.889508681699731,12.671325658256627,13.744737082507779,10.44903130132195,15.384821594960691,10.977594630341093,10.977594630341093,9.3557717734397396,9.4344538737652748,19.425053037705794,8.42167932214522,15.158975923979717,12.120004239759998,11.745402129718803,8.9328913714332661,6.5018938712452501,9.5987794917827216,8.1531814701847587,8.260902641110544,10.152206171871468,10.152206171871468,14.143328916323828,9.1006370447335616,7.1147728101951326,6.3553856692966439,12.648330312821381,12.648330312821381,5.8438615311220561,11.225117392289841,10.700064216234097,9.116406008005935,13.690242431492955,10.408306812155628,6.1800533947541325,14.277585850269348,8.688910022708896,14.611061767882921,14.298681434227637,5.105613290022605,8.7126922610635109,8.7126922610635109,9.9698652646509736,6.9952452876639324,3.7795275590551185,13.673631366989225,10.395887950240255,21.852005860609953,9.4167763160901856,7.053495567344477,10.893606589308796,15.324841148474754,12.633775206797107,10.496725500788855,8.5686937400331331,4.646405422202613,16.788876659343209,9.2170560463951556,14.90305982211601,7.8383354620483221,11.464446999049279,12.284703001631389,20.811401711664118,8.3610220808171043,19.582575307642742,7.4933457267972035,12.463702434992346,7.1109075938752326,17.107871599784847,16.463488144891979,9.8802458921249983,12.993929030746285,16.397099829702508,8.0123148096849111,6.2869780684129974,14.831296171684055,17.789807870658091,15.49495140376435,12.827864607933352,10.93037753627498,12.909183106063873,10.628983461642003,11.222406946711542,7.1812316692045597,7.1812316692045597,17.707604539715398,9.3045246873592173,16.049316966817813,8.4525216756893276,6.3148436384096707,8.4962958609991919,13.960412823726507,13.035515224718919,12.702928069701603,9.6653680327392681,7.0308205400658581,14.531343877090132,13.288106591034257,8.798186853108243,9.8186314362144884,18.767561243050896,14.13086354052396,14.468506154006674,12.307280023735284,5.6081703979882107,5.6081703979882107,9.2211592422588282],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283108,"r":7.3059360730593621,"b":211.14155251141557,"l":95.3092569530926},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,81.599999999999994],"tickmode":"array","ticktext":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"tickvals":[1,2,2.9999999999999996,4,5,5.9999999999999991,7,8,9,10,11,12,12.999999999999998,14,15,16,17,18,19,20,21.000000000000004,22,23,23.999999999999996,25,26,27,28,29,30,31.000000000000004,32,33,34,35,36,37,38,39,40,41,41.999999999999993,43,44,45,46,47,48,49,50,51,52,53.000000000000007,54,55,56.000000000000007,57,58,59.000000000000007,60,61,61.999999999999993,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],"categoryorder":"array","categoryarray":["Allerleirauh","Aschenputtel","Bruder-Lustig","Bruederchen-und-Schwesterchen","Das-blaue-Licht","Das-Eselein","Das-Maedchen-ohne-Haende","Das-Meerhaeschen","Das-Raethsel","Das-singende-springende-Loeweneckerchen","Das-tapfere-Schneiderlein","Das-Waldhaus","Das-Wasser-des-Lebens","Der-arme-Muellerbursch-und-das-Kaetzchen","Der-Baerenhaeuter","Der-Eisenhans","Der-Eisenofen","Der-faule-Heinz","Der-Froschkoenig-oder-der-eiserne-Heinrich","Der-gelernte-Jaeger","Der-Gevatter-Tod","Der-glaeserne-Sarg","Der-goldene-Vogel","Der-Grabhuegel","Der-gute-Handel","Der-heilige-Joseph-im-Walde","Der-Koenig-vom-goldenen-Berg","Der-Koenigssohn-der-sich-vor-nichts-fuerchtet","Der-Krautesel","Der-Liebste-Roland","Der-Meisterdieb","Der-Raeuberbraeutigam","Der-Ranzen,-das-Huetlein-und-das-Hoernlein","Der-singende-Knochen","Der-starke-Hans","Der-Teufel-mit-den-drei-goldenen-Haaren","Der-treue-Johannes","Der-Trommler","Des-Teufels-russiger-Bruder","Die-Alte-im-Wald","Die-beiden-Wanderer","Die-Bienenkoenigin","Die-drei-Maennlein-im-Walde","Die-drei-Schlangenblaetter","Die-drei-Spinnerinnen","Die-Gaensehirtin-am-Brunnen","Die-Gaensemagd","Die-goldene-Gans","Die-Goldkinder","Die-klare-Sonne-bringts-an-den-Tag","Die-kluge-Bauerntochter","Die-kluge-Else","Die-Krystallkugel","Die-Nelke","Die-Rabe","Die-schoene-Katrinelje-und-Pif-Paf-Poltrie","Die-sechs-Diener","Die-sechs-Schwaene","Die-sieben-Raben","Die-vier-kunstreichen-Brueder","Die-wahre-Braut","Die-weisse-Schlange","Die-weisse-und-die-schwarze-Braut","Die-zertanzten-Schuhe","Die-zwei-Brueder","Die-zwoelf-Brueder","Die-zwoelf-Jaeger","Dornroeschen","Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein","Fitchers-Vogel","Frau-Holle","Hans-heirathet","Hans-mein-Igel","Jungfrau-Maleen","Koenig-Drosselbart","Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen","Marienkind","Rumpelstilzchen","Sechse-kommen-durch-die-ganze-Welt","Sneewittchen","Spindel,-Weberschiffchen-und-Nadel"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Text","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"standoff":5},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,13.6],"tickmode":"array","ticktext":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13],"categoryorder":"array","categoryarray":["bauerntochter","herzenstöchterchen","königstochter","königstöchter","meistertochter","müllerstochter","schweinehirtentochter","stieftochter","stieftöchter","tochter","töchter","töchterchen","töchterlein"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":6.6417600664176026},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Token","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Frequency","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"8e1e598bce78":{"x":{},"y":{},"size":{},"type":"scatter"}},"cur_data":"8e1e598bce78","visdat":{"8e1e598bce78":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+```
+
+:::task
+Verständnisfragen:
+
+- Was hat sich verändert? Vergleicht die Märchen Froschkönig und die zwei Brüder!
+- Welche anderen Möglichkeiten gibt es, die Länge der Märchen zu berücksichtigen? Ruft die Dokumentationsseiten zur Funktion `dfm_weight()` mit `?dfm_weight` auf. 
+
+:::
+
+Im Vergleich mit dem Plot für die absoluten Häufigkeiten sticht das Märchen "Die zwei Brüder" nicht hervor, wenn die relativen Häufigkeiten verwendet werden. Der Punkt bei "königstochter" für "Die zwei Brüder" ist jetzt sogar etwas kleiner als der Punkt für "Der Froschkönig". Kleine Punkte in unserem Plot sind also durch das Einbeziehen der Textlängen scheinbar etwas größer geworden, und große Punkte kleiner. Warum ist das so? Unserer Beobachtung können wir nachgehen, indem wir direkt die Häufigkeiten für das Token "königstochter" für die beiden Märchen "Der Froschkönig" und "Die zwei Brüder" vergleichen:  
+
+
+```r
+docvars(maerchen_toks_lemmata, "Titel") <- docnames(maerchen_toks_lemmata)
+
+subset_dfm_lemmata <- maerchen_toks_lemmata %>%
+  tokens_subset(Titel %in% c("Der-Froschkoenig-oder-der-eiserne-Heinrich", "Die-zwei-Brueder")) %>% 
+  dfm()
+
+subset_dfm_lemmata[, "königstochter"]
+```
+
+```
+## Document-feature matrix of: 2 documents, 1 feature (0.00% sparse) and 1 docvar.
+##                                             features
+## docs                                         königstochter
+##   Der-Froschkoenig-oder-der-eiserne-Heinrich             8
+##   Die-zwei-Brueder                                      18
+```
+
+```r
+subset_dfm_weighted <- dfm_weight(subset_dfm_lemmata, scheme="prop")
+subset_dfm_weighted[, "königstochter"]
+```
+
+```
+## Document-feature matrix of: 2 documents, 1 feature (0.00% sparse) and 1 docvar.
+##                                             features
+## docs                                         königstochter
+##   Der-Froschkoenig-oder-der-eiserne-Heinrich   0.014285714
+##   Die-zwei-Brueder                             0.005246284
+```
+
+**Ihr seht: die absoluten Häufigkeiten können ganz schön täuschen. Als wir anfangs von den absoluten Häufigkeiten ausgegangen sind, um Märchencharaktere zu identifizieren, sind wir von den insgesamt am häufigsten vorkommenden Tokens ausgegangen. Wie wir gesehen haben,  bevorzugt diese Methode aber Charaktere, die in den längsten Märchen immer wieder vorkommen, weil die Anzahl an Erwähnungen mit der Gesamtanzahl der Wörter in einem Text zunimmt. Die relativen Häufigkeiten betonen dagegen Charaktere, die im Verhältnis zur Länge des Märchens häufig vorkommen und erlauben es, Märchen mit unterschiedlicher Länge zu vergleichen.** 
+
+Neben den absoluten und den relativen Häufigkeiten gibt es noch ein drittes Maß, das häufig  verwendet wird, um Worthäufigkeiten in einem Korpus zu vergleichen: die sogenannte **Term Frequency-Inverse Document Frequency** (kurz **TF-IDF**). **Dieses Maß eignet sich besonders, um Tokens zu identifizieren, die häufig in einem bestimmten Dokument, aber selten im gesamten Korpus vorkommen**. Der Name TF-IDF verrät bereits, wie das Maß berechnet wird: die absolute Häufigkeit jedes Tokens in einem Dokument (TF) wird ins Verhältnis zur Textlänge und zusätzlich zur Anzahl der Dokumente, in denen das Token auftritt (IDF), gesetzt. TF-IDF-Werte können mithilfe der Funktion `dfm_tfidf()` berechnet werden. Wir berechnen im Folgenden die TF-IDF-Werte für die beiden Märchen "Der Froschkönig" und "Die zwei Brüder" und vergleichen die Tokens mit den höchsten TF-IDF Werten. Anders als bei den absoluten und relativen Häufigkeiten müssen zur Berechnung der TF-IDF Werte Satzzeichen und Stoppwörter nicht unbedingt entfernt werden, weil das Maß Tokens, die in allen oder fast allen Texten vorkommen, gegenüber Tokens, die nur in wenigen Texten vorkommen, benachteiligt. Da wir aber bereits das Objekt `subset_dfm_lemmata` ohne Stoppwörter und Satzzeichen verwenden, die TF-IDF-Werte sind dieselben.
+
+
+```r
+maerchen_dfm_tfidf <- dfm_tfidf(subset_dfm_lemmata)
+
+tstat_freq_tfidf <- textstat_frequency(maerchen_dfm_tfidf, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_tfidf,
+                      aes(x = factor(nrow(tstat_freq_tfidf):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf):1),
+                   labels = tstat_freq_tfidf$feature) +
+  labs(x = NULL, y = "TF-IDF")
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-34-1.png" width="672" />
+
+Können wir ausgehend von den TF-IDF-Werten Vermutungen über den Inhalt oder die Charaktere in den beiden Märchen anstellen? Zum Vergleich betrachten wir noch einmal die Tokens mit den höchsten absoluten und relativen Häufigkeiten in den beiden Märchen: 
+
+
+```r
+tstat_freq_lemmata <- textstat_frequency(subset_dfm_lemmata, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_lemmata,
+                      aes(x = factor(nrow(tstat_freq_lemmata):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_lemmata):1),
+                   labels = tstat_freq_lemmata$feature) +
+  labs(x = NULL, y = "Raw Frequencies")
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-35-1.png" width="672" />
+
+```r
+tstat_freq_weighted <- textstat_frequency(subset_dfm_weighted, n = 10, groups = Titel, force = TRUE)
+# plot frequencies
+ggplot(data = tstat_freq_weighted,
+                      aes(x = factor(nrow(tstat_freq_weighted):1),
+                          y = frequency)) +
+  geom_point() +
+  facet_wrap(~ group, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_weighted):1),
+                   labels = tstat_freq_weighted$feature) +
+  labs(x = NULL, y = "Relative Frequencies")
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-36-1.png" width="672" />
+
+:::task
+
+Dustin Stoltz und Marshall Taylor schreiben in ihrem Lehrbuch "Mapping Texts": "We can think of *tf-idf* scores as giving us the **keywords** for a document — the set of words best summarizing the purpose or content of that text" (S. 88). Was haltet ihr nach unserem kleinen Beispiel von dieser Aussage? 
+ 
+
+:::
+
+
+
+<details>
+<summary><b>Anwendungsbeispiele: TF-IDF</b></summary>
+
+- Kimmo Elo (2022). A Text Network Analysis of Discursive Changes in German, Austrian and Swiss New Year’s Speeches 2000-2021, https://www.digitalhumanities.org/dhq/vol/16/1/000598/000598.html
+- Kritik einer Arbeit, die TF-IDF auf problematische Weise anwendet: David L. Hoover (2016). Argument, Evidence, and the Limits of Digital Literary Studies, https://dhdebates.gc.cuny.edu/read/untitled/section/70f5261e-e268-4f56-928f-0c4ea30d254d.
+- Die Arbeit, die kritisiert wird: https://companions.digitalhumanities.org/DLS/?chapter=content/9781405148641_chapter_26.html
+
+</details>
+
+<details>
+<summary><b>Theoretischer Hintergrund: TF-IDF </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.3.1: Co-occurrence Weighting Functions, https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund: TF-IDF </b></summary>
+
+Für einen allgemeinen Einstieg in den mathematischen Hintergrund hinter TF-IDF empfehle ich:
+
+- Dan Jurafsky (2022). Vectors 5 TF IDF, https://www.youtube.com/watch?v=TBUpxFw8oIA
+- Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector, https://web.stanford.edu/~jurafsky/slp3/.
+
+Um zu verstehen, wie TF-IDF-Werte in Quanteda berechnet werden, müssen wir jedoch auch die [Funktionsdokumentation](https://quanteda.io/reference/dfm_tfidf.html) zu Rate ziehen, den die Formeln zur Berechnung der TF-IDF Werte unterscheiden sich mitunter etwas.
+
+(folgt noch)
+
+</details>
+
+
+## Wörter im Kontext: gemeinsames Vorkommen von Wörtern 
+
+Bisher haben wir absolute und relative Häufigkeiten sowie TF-IDF-Werte für die Wörter in unserem Märchenkorpus betrachtet. Dabei haben wir versucht, über die am häufigsten vorkommenden Wörter Märchencharaktere zu identifizieren, die für unsere Fragestellung interessant sind, und wir haben uns beispielhaft die Tokens "tochter" und "königstochter" etwas näher angesehen. In diesem Abschnitt operationalisieren wir die ursprüngliche Fragestellung, wie Geschlechterstereotype oder Geschlechterrollen in unserem Märchenkorpus konstruiert werden, auf eine naive Art: Wir betrachten zunächst explorativ ausgewählte Märchencharaktere (zum Beispiel die Königstochter-Tokens) in ihrem Kontext. Danach betrachten wir diesen Kontext etwas genauer und untersuchen, welche Wörter mit den Tochter-Tokens gemeinsam vorkommen und wie oft, und wir werden versuchen, mit Mitteln der Statistik zu bewerten, was dieses gemeinsame Vorkommen bedeutet. 
+
+### Keywords in Context (KWIC)
+
+Zunächst interessiert uns: In welchem Satz- bzw. Sinnzusammenhang stehen Wörter wie Königstochter und Tochter in den Märchen? 
+Mithilfe der Quanteda-Funktion `kwic()` können Tokens in ihrem Kontext übersichtlich dargestellt werden. Solche Listen von Tokens in ihrem  Zusammenhang nennt man auch **Konkordanzen** (oder "concordances"). Die Funktion `kwic()` unterstützt keine regulären Ausdrücke, aber eine **unscharfe Suche mithilfe des Platzhalters `*` und dem Argument `case_insensitive=TRUE`** ist möglich. Da es uns darum geht, die Schlüsselwörter in ihrem Kontext zu sehen, verwenden wir in diesem Fall das tokens-Objekt ohne weitere Preprocessing-Schritte: 
+
+
+```r
+maerchen_kwic <- kwic(maerchen_toks_raw, pattern = c("*tochter*", "*töchter*"), case_insensitive = TRUE)
+maerchen_kwic # RStudio: View(maerchen_kwic)
+```
+
+```{style="max-height: 200px;"}
+## Keyword-in-context with 437 matches.                                                                                                                                                                                     
+##                                              [Allerleirauh_1857.txt, 228]              Nun hatte der König eine |        Tochter        | , die war gerade so                        
+##                                              [Allerleirauh_1857.txt, 288]                Räten „ ich will meine |        Tochter        | heiraten, denn sie ist                     
+##                                              [Allerleirauh_1857.txt, 332]         verboten dass der Vater seine |        Tochter        | heirate, aus der Sünde                     
+##                                              [Allerleirauh_1857.txt, 353]              Verderben gezogen. “ Die |        Tochter        | erschrak noch mehr als sie                 
+##                                              [Allerleirauh_1857.txt, 570]                       . “ Als nun die |     Königstochter     | sah dass keine Hoffnung mehr               
+##                                              [Allerleirauh_1857.txt, 989]                      . Ach, du schöne |     Königstochter     | , wie solls mit dir                        
+##                                             [Allerleirauh_1857.txt, 1152]               anders als dass es eine |     Königstochter     | wäre. Der König aber                       
+##                                             [Allerleirauh_1857.txt, 1757]               hinauf, und glich einer |     Königstochter     | : und der König trat                       
+##                                               [Aschenputtel_1857.txt, 24]               , rief sie ihr einziges |      Töchterlein      | zu sich ans Bett und                       
+##                                              [Aschenputtel_1857.txt, 132]                 . Die Frau hatte zwei |        Töchter        | mit ins Haus gebracht,                     
+##                                              [Aschenputtel_1857.txt, 362]               da fragte er die beiden |     Stieftöchter      | was er ihnen mitbringen sollte             
+##                                              [Aschenputtel_1857.txt, 484]                       kam, gab er den |     Stieftöchtern     | was sie sich gewünscht hatten              
+##                                             [Aschenputtel_1857.txt, 1203]          eilte mit ihren zwei stolzen |       Töchtern        | fort. Als nun niemand                      
+##                                             [Aschenputtel_1857.txt, 1289]          meinten es müßte eine fremde |     Königstochter     | sein, so schön sah                         
+##                                             [Aschenputtel_1857.txt, 2481]               „ habt ihr keine andere |        Tochter        | ? “ „ Nein,                                
+##                                            [Bruder-Lustig_1857.txt, 1560]                da hörten sie dass die |     Königstochter     | totkrank läge. „ Holla                     
+##                                            [Bruder-Lustig_1857.txt, 1663]            bis sie endlich hörten die |     Königstochter     | wäre gestorben. „ Da                       
+##                                            [Bruder-Lustig_1857.txt, 1779]               dem König er wollte die |        Tochter        | wieder lebendig machen. Da                 
+##                                            [Bruder-Lustig_1857.txt, 1915]        beim drittenmal erhob sich die |     Königstochter     | lebendig, gesund und schön                 
+##                                            [Bruder-Lustig_1857.txt, 2372]                  wo er hörte dass die |     Königstochter     | gestorben wäre. „ Holla                    
+##                                            [Bruder-Lustig_1857.txt, 2475]                    es wagen, da seine |        Tochter        | doch tot wäre. Nun                         
+##                                            [Bruder-Lustig_1857.txt, 2775]                        auf, “ und die |     Königstochter     | stand auf, war gesund                      
+##                            [Bruederchen-und-Schwesterchen_1857.txt, 1827]           bringen könnte. Ihre rechte |        Tochter        | , die häßlich war wie                      
+##                            [Bruederchen-und-Schwesterchen_1857.txt, 1967]                     kalt wird. “ Ihre |        Tochter        | war auch bei der Hand                      
+##                            [Bruederchen-und-Schwesterchen_1857.txt, 2028]                  , nahm die Alte ihre |        Tochter        | , setzte ihr eine Haube                    
+##                            [Bruederchen-und-Schwesterchen_1857.txt, 2592]                die böse Hexe und ihre |        Tochter        | an ihr verübt hatten.                      
+##                            [Bruederchen-und-Schwesterchen_1857.txt, 2615]            das Urteil gesprochen. Die |        Tochter        | ward in Wald geführt,                      
+##                                           [Das-blaue-Licht_1857.txt, 933]                „ Spät Abends wenn die |     Königstochter     | im Bett liegt, so                          
+##                                           [Das-blaue-Licht_1857.txt, 998]             und das Männchen trug die |     Königstochter     | herein. „ Aha,                             
+##                                          [Das-blaue-Licht_1857.txt, 1120]                andern Morgen, als die |     Königstochter     | aufgestanden war, ging sie                 
+##                                          [Das-blaue-Licht_1857.txt, 1277]               , als es die schlafende |     Königstochter     | wieder durch die Straßen trug              
+##                                          [Das-blaue-Licht_1857.txt, 1312]         Straßen Erbsen verstreut. Die |     Königstochter     | aber mußte wieder bis zum                  
+##                                          [Das-blaue-Licht_1857.txt, 1426]        Abends verlangte er sollte die |     Königstochter     | wieder herbei tragen, riet                 
+##                                          [Das-blaue-Licht_1857.txt, 1474]                   der Soldat, und die |     Königstochter     | mußte auch in der dritten                  
+##                                          [Das-blaue-Licht_1857.txt, 1514]         ganzen Stadt den Schuh seiner |        Tochter        | suchen: er ward bei                        
+##                                          [Das-blaue-Licht_1857.txt, 1926]            Soldat das Reich und seine |        Tochter        | zur Frau.                                  
+##                                               [Das-Eselein_1857.txt, 360]    nur eine einzige aber wunderschöne |        Tochter        | hatte. Das Eselein sagte                   
+##                                               [Das-Eselein_1857.txt, 584]               , wie gefällt dir meine |        Tochter        | ? “ Das Eselein drehte                     
+##                                               [Das-Eselein_1857.txt, 804]              : willst du meine schöne |        Tochter        | zur Frau? “ „                              
+##                                              [Das-Eselein_1857.txt, 1037]                  “ sagte er zu seiner |        Tochter        | , „ dass du keinen                         
+##                                  [Das-Maedchen-ohne-Haende_1857.txt, 252]         nicht gemeint, sondern unsere |        Tochter        | , die stand hinter der                     
+##                                  [Das-Maedchen-ohne-Haende_1857.txt, 266]                        den Hof. “ Die |    Müllerstochter     | war ein schönes und frommes                
+##                                            [Das-Meerhaeschen_1857.txt, 5]                    Es war einmal eine |     Königstochter     | , die hatte in ihrem                       
+##                                          [Das-Meerhaeschen_1857.txt, 184]             meldete sich niemand. Die |     Königstochter     | war vergnügt und dachte „                  
+##                                          [Das-Meerhaeschen_1857.txt, 610]                  soll, damit mich die |     Königstochter     | nicht sieht. “ Der                         
+##                                          [Das-Meerhaeschen_1857.txt, 666]                  sich darauf. Als die |     Königstochter     | an das erste Fenster trat                  
+##                                          [Das-Meerhaeschen_1857.txt, 775]             verbergen, damit mich die |     Königstochter     | nicht sieht. “ Der                         
+##                                          [Das-Meerhaeschen_1857.txt, 815]                   Grund des Sees. Die |     Königstochter     | blickte durch ihre Fenster,                
+##                                          [Das-Meerhaeschen_1857.txt, 934]                  soll, damit mich die |     Königstochter     | nicht findet. “ „                          
+##                                         [Das-Meerhaeschen_1857.txt, 1027]                . Zuletzt kam auch die |     Königstochter     | , und weil sie großen                      
+##                                         [Das-Meerhaeschen_1857.txt, 1061]                     zu ihm „ wenn die |     Königstochter     | ans Fenster geht, so                       
+##                                         [Das-Meerhaeschen_1857.txt, 1232]                   in das Schloss. Die |     Königstochter     | wartete schon auf ihn und                  
+##                                              [Das-Raethsel_1857.txt, 269]                Topf etwas kochte. Die |        Tochter        | warnte die beiden vorsichtig zu            
+##                                              [Das-Raethsel_1857.txt, 622]                im Hause übrig als die |        Tochter        | des Wirths, die es                         
+##                                              [Das-Raethsel_1857.txt, 691]     worin eine schöne aber übermütige |     Königstochter     | war, die hatte bekannt                     
+##                                              [Das-Raethsel_1857.txt, 935]        der zweiten Nacht schickte die |     Königstochter     | ihre Kammerjungfer, die sollte             
+##                                              [Das-Raethsel_1857.txt, 988]                      Bett, da kam die |     Königstochter     | selbst, hatte einen nebelgrauen            
+##                                             [Das-Raethsel_1857.txt, 1129]      Am andern Morgen verkündigte die |     Königstochter     | sie habe das Rätsel erraten                
+##                                             [Das-Raethsel_1857.txt, 1212]       nebelgrauen erblickten, den die |     Königstochter     | zu tragen pflegte, so                      
+##                    [Das-singende-springende-Loeweneckerchen_1857.txt, 21]         Abschied fragte er seine drei |        Töchter        | was er ihnen mitbringen sollte             
+##                   [Das-singende-springende-Loeweneckerchen_1857.txt, 332]               und den Vogel für deine |        Tochter        | obendrein. “ Der Mann                      
+##                   [Das-singende-springende-Loeweneckerchen_1857.txt, 348]            „ das könnte meine jüngste |        Tochter        | sein, die hat mich                         
+##                   [Das-singende-springende-Loeweneckerchen_1857.txt, 383]             muß euch denn gerade eure |        Tochter        | begegnen, es könnte ja                     
+##                   [Das-singende-springende-Loeweneckerchen_1857.txt, 447]      anders als seine jüngste liebste |        Tochter        | : die kam gelaufen,                        
+##                   [Das-singende-springende-Loeweneckerchen_1857.txt, 825]                  Wald. Wie die zweite |        Tochter        | heiratete und sie wieder zur               
+##                  [Das-singende-springende-Loeweneckerchen_1857.txt, 1505]    Lindwurm ist aber eine verzauberte |     Königstochter     | . “ Da sagte der                           
+##                  [Das-singende-springende-Loeweneckerchen_1857.txt, 1731]                  wieder. Aber wie die |     Königstochter     | , die vorher ein Lindwurm                  
+##                  [Das-singende-springende-Loeweneckerchen_1857.txt, 2434]                Traum, denn die fremde |     Königstochter     | hatte mich bezaubert, dass                 
+##                  [Das-singende-springende-Loeweneckerchen_1857.txt, 2479]                sich vor dem Vater der |     Königstochter     | , der ein Zauberer war                     
+##                                [Das-tapfere-Schneiderlein_1857.txt, 2087]           wollte er ihm seine einzige |        Tochter        | zur Gemahlin geben und das                 
+##                                [Das-tapfere-Schneiderlein_1857.txt, 2130]          Schneiderlein, „ eine schöne |     Königstochter     | und ein halbes Königreich wird             
+##                                [Das-tapfere-Schneiderlein_1857.txt, 2752]                      . „ Ehe du meine |        Tochter        | und das halbe Reich erhältst               
+##                                [Das-tapfere-Schneiderlein_1857.txt, 3232]            halten mußte und ihm seine |        Tochter        | und das halbe Königreich übergab           
+##                                               [Das-Waldhaus_1857.txt, 10]              mit seiner Frau und drei |       Töchtern        | in einer kleinen Hütte an                  
+##                                              [Das-Waldhaus_1857.txt, 704]         Wald und verlangte die zweite |        Tochter        | sollte ihm diesmal das Essen               
+##                                    [Das-Wasser-des-Lebens_1857.txt, 1631]              einer von uns die schöne |     Königstochter     | . Aber hüte dich dass                      
+##                                    [Das-Wasser-des-Lebens_1857.txt, 2046]        Gnaden aufgenommen werden. Die |     Königstochter     | aber ließ eine Straße vor                  
+##                                    [Das-Wasser-des-Lebens_1857.txt, 2122]                wollte sich eilen, zur |     Königstochter     | gehen und sich für ihren                   
+##                                    [Das-Wasser-des-Lebens_1857.txt, 2349]                  es aufgetan, und die |     Königstochter     | empfing ihn mit Freuden und                
+##                 [Der-arme-Muellerbursch-und-das-Kaetzchen_1857.txt, 1204]     Kutsche aber stieg eine prächtige |     Königstochter     | und ging in die Mühle                      
+##                 [Der-arme-Muellerbursch-und-das-Kaetzchen_1857.txt, 1214]                 Mühle hinein, und die |     Königstochter     | war das kleine bunte Kätzchen              
+##                 [Der-arme-Muellerbursch-und-das-Kaetzchen_1857.txt, 1269]                      . “ Da sagte die |     Königstochter     | sie sollten ihn gleich holen               
+##                 [Der-arme-Muellerbursch-und-das-Kaetzchen_1857.txt, 1400]                 sagte der Müller, die |     Königstochter     | aber sprach da wäre das                    
+##                                        [Der-Baerenhaeuter_1857.txt, 1039]             geschwunden, er und seine |        Töchter        | mußten darben, und er                      
+##                                        [Der-Baerenhaeuter_1857.txt, 1139]                       zu ihm, „ meine |        Töchter        | sind Wunder von Schönheit,                 
+##                                        [Der-Baerenhaeuter_1857.txt, 1843]                  das Zimmer, wo seine |        Töchter        | saßen. Er mußte sich                       
+##                                        [Der-Baerenhaeuter_1857.txt, 1911]                 ob er ihm eine seiner |        Töchter        | zur Frau geben wollte,                     
+##                                            [Der-Eisenhans_1857.txt, 1813]      Strahlen in das Schlafzimmer der |     Königstochter     | fielen und sie aufsprang um                
+##                                            [Der-Eisenhans_1857.txt, 1880]                   „ wie kannst du der |     Königstochter     | einen Strauß von schlechten Blumen         
+##                                            [Der-Eisenhans_1857.txt, 1931]                Zimmer kam, sprach die |     Königstochter     | „ nimm dein Hütchen ab                     
+##                                            [Der-Eisenhans_1857.txt, 2049]               andern Tag rief ihm die |     Königstochter     | abermals zu er sollte ihr                  
+##                                            [Der-Eisenhans_1857.txt, 2567]                   kam, ging ihm seine |        Tochter        | entgegen und wünschte ihm Glück            
+##                                            [Der-Eisenhans_1857.txt, 2609]                      Hilfe kam. “ Die |        Tochter        | wollte wissen wer der fremde               
+##                                            [Der-Eisenhans_1857.txt, 2731]            Der König sprach zu seiner |        Tochter        | „ ich will ein großes                      
+##                                            [Der-Eisenhans_1857.txt, 2796]            ich den goldenen Apfel der |     Königstochter     | fange. “ „ Es                              
+##                                            [Der-Eisenhans_1857.txt, 2853]              von niemand erkannt. Die |     Königstochter     | trat hervor und warf den                   
+##                                            [Der-Eisenhans_1857.txt, 3071]              Am andern Tag fragte die |     Königstochter     | den Gärtner nach seinem Jungen             
+##                                            [Der-Eisenhans_1857.txt, 3138]                    dem Kopf. Aber die |     Königstochter     | ging auf ihn zu und                        
+##                                            [Der-Eisenhans_1857.txt, 3360]                   wohl, gebt mir eure |        Tochter        | zur Frau. “ Da                             
+##                                              [Der-Eisenofen_1857.txt, 47]              erlösen. Einmal kam eine |     Königstochter     | in den Wald, die                           
+##                                             [Der-Eisenofen_1857.txt, 158]       größerer Königssohn als du eine |     Königstochter     | , und will dich heiraten                   
+##                                             [Der-Eisenofen_1857.txt, 260]                   im Schloss, als die |     Königstochter     | wieder kam, und der                        
+##                                             [Der-Eisenofen_1857.txt, 362]              er hatte nur die einzige |        Tochter        | . Beratschlagten sich also,                
+##                                             [Der-Eisenofen_1857.txt, 371]                 also, sie wollten die |    Müllerstochter     | , die schön wäre,                          
+##                                             [Der-Eisenofen_1857.txt, 458]                     „ So bist du eine |    Müllerstochter     | , dann geh gleich hinaus                   
+##                                             [Der-Eisenofen_1857.txt, 467]             gleich hinaus und laß die |     Königstochter     | herkommen. “ Da ging                       
+##                                             [Der-Eisenofen_1857.txt, 489]                nicht, er wollte seine |        Tochter        | . Da erschrak der alte                     
+##                                             [Der-Eisenofen_1857.txt, 498]                der alte König und die |        Tochter        | weinte. Sie hatten aber                    
+##                                             [Der-Eisenofen_1857.txt, 506]             Sie hatten aber noch eine | Schweinehirtentochter | , die war noch schöner                     
+##                                             [Der-Eisenofen_1857.txt, 514]              war noch schöner als die |    Müllerstochter     | , der wollten sie ein                      
+##                                             [Der-Eisenofen_1857.txt, 528]                   , damit sie für die |     Königstochter     | zum eisernen Ofen ginge.                   
+##                                             [Der-Eisenofen_1857.txt, 596]                     „ So bist du eine | Schweinehirtentochter | , geh gleich fort und                      
+##                                             [Der-Eisenofen_1857.txt, 604]               gleich fort und laß die |     Königstochter     | kommen: und sag ihr                        
+##                                             [Der-Eisenofen_1857.txt, 645]                    bleiben. “ Als die |     Königstochter     | das hörte, fing sie                        
+##                                           [Der-faule-Heinz_1857.txt, 248]   um ihre arbeitsame und tugendreiche |        Tochter        | an. Die Eltern besannen                    
+##                 [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 18]               lebte ein König, dessen |        Töchter        | waren alle schön, aber                     
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 144]            dass die goldene Kugel der |     Königstochter     | nicht in ihr Händchen fiel                 
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 173]             Wasser hinein rollte. Die |     Königstochter     | folgte ihr mit den Augen                   
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 233]                      was hast du vor, |     Königstochter     | , du schreist ja dass                      
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 547]                     sie ins Gras. Die |     Königstochter     | war voll Freude, als                       
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 688]                    der Tür und rief „ |     Königstochter     | , jüngste, mach mir                        
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 887]             zum zweitenmal und rief „ |     Königstochter     | , jüngste, mach mir                        
+##                [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 909]         bei dem kühlen Brunnenwasser? |     Königstochter     | , jüngste, mach mir                        
+##               [Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt, 1094]                 schlafen legen. “ Die |     Königstochter     | fing an zu weinen und                      
+##                                       [Der-gelernte-Jaeger_1857.txt, 671]              dem Turm säß eine schöne |     Königstochter     | , die wollten sie gern                     
+##                                       [Der-gelernte-Jaeger_1857.txt, 825]            und meinten sie hätten die |     Königstochter     | schon gewiss, aber der                     
+##                                       [Der-gelernte-Jaeger_1857.txt, 961]                    das Zimmer, wo die |     Königstochter     | lag und schlief: und                       
+##                                      [Der-gelernte-Jaeger_1857.txt, 1192]              und dachten er würde die |     Königstochter     | bringen. Er rief ihnen                     
+##                                      [Der-gelernte-Jaeger_1857.txt, 1394]         er in die Schlafkammer seiner |        Tochter        | , weckte sie auf und                       
+##                                      [Der-gelernte-Jaeger_1857.txt, 1497]                , und fragte wer seine |        Tochter        | befreit und die Riesen ums                 
+##                                      [Der-gelernte-Jaeger_1857.txt, 1542]                hätte, sollte er seine |        Tochter        | auch heiraten. Die Jungfrau                
+##                                      [Der-gelernte-Jaeger_1857.txt, 1691]                    ginge. Wie nun die |     Königstochter     | ihren Kram auf die Straße                  
+##                                      [Der-gelernte-Jaeger_1857.txt, 2047]                  er ob sie des Königs |        Tochter        | wäre. „ Ja,                                
+##                                      [Der-gelernte-Jaeger_1857.txt, 2238]               auf die linke Seite der |     Königstochter     | zu sitzen, der Jäger                       
+##                                      [Der-gelernte-Jaeger_1857.txt, 2407]            vier Stücke zerrissen, die |     Königstochter     | aber mit dem Jäger vermählt                
+##                                          [Der-Gevatter-Tod_1857.txt, 831]            “ Bald hernach verfiel die |        Tochter        | des Königs in eine schwere                 
+##                                          [Der-Gevatter-Tod_1857.txt, 911]          aber die große Schönheit der |     Königstochter     | und das Glück ihr Gemahl                   
+##                                         [Der-Gevatter-Tod_1857.txt, 1232]          werde und Gemahl der schönen |     Königstochter     | . “ „ Ich kann                             
+##                                       [Der-glaeserne-Sarg_1857.txt, 1407]                       . „ Ich bin die |        Tochter        | eines reichen Grafen. Meine                
+##                                        [Der-goldene-Vogel_1857.txt, 1551]                  , wenn er die schöne |     Königstochter     | vom goldenen Schlosse herbeischaffen könnte
+##                                        [Der-goldene-Vogel_1857.txt, 1638]                , dann geht die schöne |     Königstochter     | ins Badehaus, um da                        
+##                                        [Der-goldene-Vogel_1857.txt, 1920]                  , so sollst du meine |        Tochter        | zur Belohnung haben. “                     
+##                                        [Der-goldene-Vogel_1857.txt, 2060]             Wort halten und ihm seine |        Tochter        | geben. Nun zogen die                       
+##                                        [Der-goldene-Vogel_1857.txt, 3257]            als der Bruder der schönen |     Königstochter     | , der endlich von dem                      
+##                                            [Der-Grabhuegel_1857.txt, 816]                  , der aber bekam die |     Königstochter     | zur Frau und mit ihr                       
+##                                           [Der-gute-Handel_1857.txt, 809]                 der da saß mit seiner |        Tochter        | und fragte was ihm für                     
+##                                           [Der-gute-Handel_1857.txt, 862]                 war. Darüber fing die |     Königstochter     | laut an zu lachen,                         
+##                                           [Der-gute-Handel_1857.txt, 888]            aber dafür sollst du meine |        Tochter        | zur Frau haben: ihr                        
+##                                          [Der-gute-Handel_1857.txt, 1069]             Schildwache „ du hast die |     Königstochter     | zum Lachen gebracht, da                    
+##                                [Der-heilige-Joseph-im-Walde_1857.txt, 10]                Mutter, die hatte drei |        Töchter        | , davon war die älteste                    
+##                                [Der-heilige-Joseph-im-Walde_1857.txt, 54]           dass sie gerade die älteste |        Tochter        | am liebsten hatte und die                  
+##                               [Der-heilige-Joseph-im-Walde_1857.txt, 822]                 . Nun war die älteste |        Tochter        | neugierig geworden und wollte den          
+##                             [Der-Koenig-vom-goldenen-Berg_1857.txt, 1156]         die Schlange zu einer schönen |     Königstochter     | , die kam mit dem                          
+##                             [Der-Koenig-vom-goldenen-Berg_1857.txt, 1572]           vom goldenen Berge und eine |     Königstochter     | wäre seine Gemahlin, und                   
+##            [Der-Koenigssohn-der-sich-vor-nichts-fuerchtet_1857.txt, 2239]          die Jungfrau war eine reiche |     Königstochter     | . Die Diener kamen und                     
+##                                             [Der-Krautesel_1857.txt, 652]              wir darum berücken, mein |  Herzenstöchterchen   | : uns steht das besser                     
+##                                         [Der-Liebste-Roland_1857.txt, 16]                  Hexe, und hatte zwei |        Töchter        | , eine häßlich und böse                    
+##                                         [Der-Liebste-Roland_1857.txt, 32]                , weil sie ihre rechte |        Tochter        | war, und eine schön                        
+##                                         [Der-Liebste-Roland_1857.txt, 48]                    sie, weil sie ihre |     Stieftochter      | war. Zu einer Zeit                         
+##                                         [Der-Liebste-Roland_1857.txt, 56]               Zu einer Zeit hatte die |     Stieftochter      | eine schöne Schürze, die                   
+##                                        [Der-Liebste-Roland_1857.txt, 438]                   war, rief sie ihrer |        Tochter        | , und wollte ihr die                       
+##                                        [Der-Liebste-Roland_1857.txt, 610]            konnte, erblickte sie ihre |     Stieftochter      | , die mit ihrem Liebsten                   
+##                                          [Der-Meisterdieb_1857.txt, 1122]               mußt du mit des Seilers |        Tochter        | Hochzeit halten, und das                   
+##                                      [Der-Raeuberbraeutigam_1857.txt, 11]               , der hatte eine schöne |        Tochter        | , und als sie herangewachsen               
+##                                      [Der-Raeuberbraeutigam_1857.txt, 79]             so versprach er ihm seine |        Tochter        | . Das Mädchen aber hatte                   
+##               [Der-Ranzen,-das-Huetlein-und-das-Hoernlein_1857.txt, 1968]               bis mir der König seine |        Tochter        | zur Frau gibt, und                         
+##               [Der-Ranzen,-das-Huetlein-und-das-Hoernlein_1857.txt, 1996]           und dieser sprach zu seiner |        Tochter        | „ Muß ist eine harte                       
+##               [Der-Ranzen,-das-Huetlein-und-das-Hoernlein_1857.txt, 2045]               also gefeiert, aber die |     Königstochter     | war verdrießlich dass ihr Gemahl           
+##               [Der-Ranzen,-das-Huetlein-und-das-Hoernlein_1857.txt, 2303]                 alles nieder, und die |     Königstochter     | mußte selbst kommen und um                 
+##               [Der-Ranzen,-das-Huetlein-und-das-Hoernlein_1857.txt, 2456]            schlugen den König und die |     Königstochter     | tot. Und wenn er                           
+##                                       [Der-singende-Knochen_1857.txt, 90]         oder töte solle seine einzige |        Tochter        | zur Gemahlin haben. Nun                    
+##                                      [Der-singende-Knochen_1857.txt, 541]                getötet; worauf er die |        Tochter        | des Königs zur Gemahlin erhielt            
+##                                      [Der-singende-Knochen_1857.txt, 692]               Schwein, für des Königs |      Töchterlein      | . “ „ Was für                              
+##                                          [Der-starke-Hans_1857.txt, 2342]            erzählte ihm sie wäre eine |     Königstochter     | , die ein wilder Graf                      
+##                    [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 37]         werde im vierzehnten Jahr die |        Tochter        | des Königs zur Frau haben                  
+##                   [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 120]        vierzehnten Jahre solle er die |        Tochter        | des Königs zur Frau haben                  
+##                   [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 248]    unerwarteten Freier habe ich meine |        Tochter        | geholfen. “ Die Schachtel                  
+##                   [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 862]            sollte er sogleich mit der |     Königstochter     | vermählt werden. Sie ließen                
+##                   [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 924]      Hochzeitsfest anstellen, und die |     Königstochter     | ward mit dem Glückskind vermählt           
+##                   [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 970]         und das Glückskind mit seiner |        Tochter        | vermählt war. „ Wie                        
+##                  [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 1096]               nicht werden, wer meine |        Tochter        | haben will, der muss                       
+##                  [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 1127]                  , so sollst du meine |        Tochter        | behalten. “ Damit hoffte                   
+##                  [Der-Teufel-mit-den-drei-goldenen-Haaren_1857.txt, 2757]           erfüllt und du kannst meine |        Tochter        | behalten. Aber, lieber                     
+##                                        [Der-treue-Johannes_1857.txt, 238]                  , worin das Bild der |     Königstochter     | vom goldenen Dache verborgen steht         
+##                                        [Der-treue-Johannes_1857.txt, 821]                       “ „ Das ist die |     Königstochter     | vom goldenen Dache, “                      
+##                                        [Der-treue-Johannes_1857.txt, 905]             nur vor das Angesicht der |     Königstochter     | zu kommen. Endlich hatte                   
+##                                       [Der-treue-Johannes_1857.txt, 1066]                Stadt kamen, worin die |     Königstochter     | vom goldenen Dache wohnte.                 
+##                                       [Der-treue-Johannes_1857.txt, 1098]                     , „ bring ich die |     Königstochter     | mit, darum sorgt dass                      
+##                                       [Der-treue-Johannes_1857.txt, 1244]                Mädchen „ das muss die |     Königstochter     | sehen, die hat so                          
+##                                       [Der-treue-Johannes_1857.txt, 1282]            die Kammerjungfer. Als die |     Königstochter     | die Waare sah, war                         
+##                                       [Der-treue-Johannes_1857.txt, 1718]                   gefallen. “ Als die |     Königstochter     | vom goldenen Dache das hörte               
+##                                       [Der-treue-Johannes_1857.txt, 1819]                     , da führt er die |     Königstochter     | vom goldenen Dache heim.                   
+##                                              [Der-Trommler_1857.txt, 193]                       , „ ich bin die |        Tochter        | eines mächtigen Königs, aber               
+##                                             [Der-Trommler_1857.txt, 1815]            ? Ich bin ausgegangen eine |     Königstochter     | zu suchen, die hier                        
+##                                             [Der-Trommler_1857.txt, 2723]                   er wohl dass es die |     Königstochter     | war. Aber die Alte                         
+##                                             [Der-Trommler_1857.txt, 2801]           Hexe verzehren sollten. Die |     Königstochter     | blickte darauf den Trommler an             
+##                                             [Der-Trommler_1857.txt, 3045]                      Ach, “ sagte die |     Königstochter     | , „ ich bitte dich                         
+##                                             [Der-Trommler_1857.txt, 3212]              ihm jeder Gedanke an die |     Königstochter     | . Er leerte seine Taschen                  
+##                                             [Der-Trommler_1857.txt, 3307]              Eltern wollten. Die arme |     Königstochter     | hatte lange vor der Stadt                  
+##                                             [Der-Trommler_1857.txt, 3597]                 , so kauerte sich die |     Königstochter     | vor die Türe der Schlafkammer              
+##                                             [Der-Trommler_1857.txt, 3686]             Morgen anbrach, mußte die |     Königstochter     | unverrichteter Dinge wieder fortgehen.     
+##                                             [Der-Trommler_1857.txt, 3894]           Am dritten Abend drehte die |     Königstochter     | den Wunschring und sprach „                
+##                                             [Der-Trommler_1857.txt, 4123]                  sprang auf, nahm die |     Königstochter     | bei der Hand und führte                    
+##                              [Des-Teufels-russiger-Bruder_1857.txt, 1317]             er dem Hans seine älteste |        Tochter        | zur Ehe versprach. Als                     
+##                              [Des-Teufels-russiger-Bruder_1857.txt, 1380]        des Teufels rußiger Bruder die |     Königstochter     | und als der alte König                     
+##                                          [Die-Alte-im-Wald_1857.txt, 410]               herrlich, wie sie keine |     Königstochter     | hat. Also lebte es                         
+##                                       [Die-beiden-Wanderer_1857.txt, 367]                      , so gab ihm die |    Meistertochter     | unter der Haustüre auch noch               
+##                                      [Die-beiden-Wanderer_1857.txt, 3820]                 lang. Der König hatte |        Töchter        | genug, eine immer schöner                  
+##                                      [Die-beiden-Wanderer_1857.txt, 3912]            so sollst du meine älteste |        Tochter        | zur Frau haben. “                          
+##                                        [Die-Bienenkoenigin_1857.txt, 440]             Moos lagen die Perlen der |     Königstochter     | , tausend an der Zahl                      
+##                                        [Die-Bienenkoenigin_1857.txt, 639]     Schlüssel zu der Schlafkammer der |     Königstochter     | aus der See zu holen                       
+##                                        [Die-Bienenkoenigin_1857.txt, 688]            , aus den drei schlafenden |       Töchtern        | des Königs sollte die jüngste              
+##                                [Die-drei-Maennlein-im-Walde_1857.txt, 25]               und der Mann hatte eine |        Tochter        | , und die Frau hatte                       
+##                                [Die-drei-Maennlein-im-Walde_1857.txt, 33]              die Frau hatte auch eine |        Tochter        | . Die Mädchen waren mit                    
+##                                [Die-drei-Maennlein-im-Walde_1857.txt, 60]              sprach sie zu des Mannes |        Tochter        | „ hör, sage deinem                         
+##                                [Die-drei-Maennlein-im-Walde_1857.txt, 87]               und Wein trinken, meine |        Tochter        | aber soll sich in Wasser                   
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 284]               da stand vor des Mannes |        Tochter        | Milch zum Waschen und Wein                 
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 296]                 Trinken, vor der Frau |        Tochter        | aber stand Wasser zum Waschen              
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 323]                 so gut vor des Mannes |        Tochter        | als vor der Frau Tochter                   
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 328]              Tochter als vor der Frau |        Tochter        | . Und am dritten Morgen                    
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 345]            zum Trinken vor des Mannes |        Tochter        | , und Milch zum Waschen                    
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 358]              zum Trinken vor der Frau |        Tochter        | , und dabei bliebs.                        
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 368]                 . Die Frau ward ihrer |     Stieftochter      | spinnefeind und wusste nicht wie           
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 393]               sie neidisch, weil ihre |     Stieftochter      | schön und lieblich war,                    
+##                               [Die-drei-Maennlein-im-Walde_1857.txt, 401]             lieblich war, ihre rechte |        Tochter        | aber häßlich und widerlich.                
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 1067]                   „ nein, mein liebes |      Töchterchen      | , es ist zu kalt                           
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 1429]                nur darauf wie sie der |        Tochter        | des Mannes alles Herzeleid antun           
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 1686]                  so kam sie mit ihrer |        Tochter        | in das Schloss und tat                     
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 1722]                     am Kopf, und ihre |        Tochter        | packte sie an den Füßen                    
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 1751]       Darauf legte sich ihre häßliche |        Tochter        | ins Bett, und die                          
+##                              [Die-drei-Maennlein-im-Walde_1857.txt, 2180]                und die Alte mit ihrer |        Tochter        | hineinstecken, dann ward der               
+##                                [Die-drei-Schlangenblaetter_1857.txt, 216]                . Der König hatte eine |        Tochter        | , die war sehr schön                       
+##                               [Die-drei-Schlangenblaetter_1857.txt, 1306]             Als er die Bosheit seiner |        Tochter        | vernahm, sprach er „                       
+##                                      [Die-drei-Spinnerinnen_1857.txt, 79]                Mutter, warum sie ihre |        Tochter        | schlüge, dass man draußen                  
+##                                     [Die-drei-Spinnerinnen_1857.txt, 102]           dass sie die Faulheit ihrer |        Tochter        | offenbaren sollte und sprach „             
+##                                     [Die-drei-Spinnerinnen_1857.txt, 160]              schnurren: gebt mir eure |        Tochter        | mit ins Schloss, ich                       
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1146]                     “ „ Bewahre, mein |      Töchterchen      | , “ erwiderte sie,                         
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1281]                 ins Haus hinein, mein |      Töchterchen      | , es schickt sich nicht                    
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1364]               und ging dann mit ihrer |        Tochter        | in das Haus. Der                           
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1633]             Weg ohne nach dem schönen |      Töchterchen      | auch nur einmal umzublicken.               
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1848]                 Kummer. Ich habe drei |        Töchter        | gehabt, davon war die                      
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 1953]              Der König sprach „ meine |        Töchter        | , ich weiss nicht wann                     
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 2367]                   Art, wie sie meiner |        Tochter        | aus den Augen geflossen sind               
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 2469]          sie auch Nachricht von ihrer |        Tochter        | finden. Die Alte saß                       
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 2531]            Bald hernach trat auch die |        Tochter        | herein. Aber die Alte                      
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 2550]                     mit dem Kopf. Die |        Tochter        | setzte sich zu ihr nieder                  
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 2625]                    „ jetzt ists Zeit, |      Töchterchen      | , dass du hinaus gehst                     
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 3720]         nicht dass das ihre verlorene |        Tochter        | gewesen wäre. Voll Freude                  
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 3809]                den Füßen tragen. Ihre |        Tochter        | aber sahen sie nicht.                      
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 3958]                   „ komm heraus, mein |      Töchterchen      | . “ Da ging die                            
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 3969]                     Türe auf, und die |     Königstochter     | trat heraus in ihrem seidenen              
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 4219]           Ich glaube immer die schöne |     Königstochter     | ist mit dem Grafen vermählt                
+##                              [Die-Gaensehirtin-am-Brunnen_1857.txt, 4346]                 auch gewesen, die der |     Königstochter     | schon bei der Geburt die                   
+##                                             [Die-Gaensemagd_1857.txt, 22]             und sie hatte eine schöne |        Tochter        | . Wie die erwuchs,                         
+##                                            [Die-Gaensemagd_1857.txt, 132]                  , aber das Pferd der |     Königstochter     | hieß Falada und konnte sprechen            
+##                                            [Die-Gaensemagd_1857.txt, 186]             hineinfallen, gab sie der |        Tochter        | und sprach „ liebes Kind                   
+##                                            [Die-Gaensemagd_1857.txt, 217]            : das Läppchen steckte die |     Königstochter     | in ihren Busen vor sich                    
+##                                            [Die-Gaensemagd_1857.txt, 317]                      . “ Da stieg die |     Königstochter     | vor großem Durst herunter,                 
+##                                            [Die-Gaensemagd_1857.txt, 473]                      . “ Da stieg die |     Königstochter     | hernieder vor großem Durst,                
+##                                            [Die-Gaensemagd_1857.txt, 760]       Treppe hinaufgeführt, die wahre |     Königstochter     | aber mußte unten stehen bleiben            
+##                                            [Die-Gaensemagd_1857.txt, 976]                möchte wie sie mit der |     Königstochter     | umgegangen war. Nun war                    
+##                                           [Die-Gaensemagd_1857.txt, 1003]               kam es auch der rechten |     Königstochter     | zu Ohr, und sie                            
+##                                           [Die-Gaensemagd_1857.txt, 1940]                   , und bin doch eine |     Königstochter     | , und eine falsche Kammerjungfer           
+##                                           [Die-Gaensemagd_1857.txt, 2114]                saß der Bräutigam, die |     Königstochter     | zur einen Seite und die                    
+##                                          [Die-goldene-Gans_1857.txt, 609]             Der Wirth hatte aber drei |        Töchter        | , die sahen die Gans                       
+##                                         [Die-goldene-Gans_1857.txt, 1050]                 König, der hatte eine |        Tochter        | , die war so ernstaft                      
+##                                         [Die-goldene-Gans_1857.txt, 1101]              und ihrem Anhang vor die |     Königstochter     | , und als diese die                        
+##                                         [Die-goldene-Gans_1857.txt, 1357]          einen Dummling nannte, seine |        Tochter        | davon tragen sollte, und                   
+##                                         [Die-goldene-Gans_1857.txt, 1590]             so sollst du gleich meine |        Tochter        | zur Gemahlin haben. “                      
+##                                         [Die-goldene-Gans_1857.txt, 1678]                 , konnte er ihm seine |        Tochter        | nicht länger vorentalten. Die              
+##                                           [Die-Goldkinder_1857.txt, 1456]                 als er sah dass seine |        Tochter        | Hochzeit machte, verwunderte er            
+##                                           [Die-Goldkinder_1857.txt, 1497] nimmermehr soll ein Bärenhäuter meine |        Tochter        | haben, “ und wollte                        
+##                                           [Die-Goldkinder_1857.txt, 1560]       Morgen früh aufstand und seiner |        Tochter        | Mann sehen wollte, ob                      
+##                        [Die-klare-Sonne-bringts-an-den-Tag_1857.txt, 235]               , der hatte eine schöne |        Tochter        | , in die verliebte er                      
+##                                    [Die-kluge-Bauerntochter_1857.txt, 20]   kleines Häuschen und eine alleinige |        Tochter        | , da sprach die Tochter                    
+##                                    [Die-kluge-Bauerntochter_1857.txt, 25]                Tochter, da sprach die |        Tochter        | „ wir sollten den Herrn                    
+##                                   [Die-kluge-Bauerntochter_1857.txt, 132]                    dafür geben. “ Die |        Tochter        | aber wollt es nicht bewilligen             
+##                                   [Die-kluge-Bauerntochter_1857.txt, 316]                  ach, hätt ich meiner |        Tochter        | gehört! ach, ach                           
+##                                   [Die-kluge-Bauerntochter_1857.txt, 326]                  ach, hätt ich meiner |        Tochter        | gehört! “ Da gingen                        
+##                                   [Die-kluge-Bauerntochter_1857.txt, 353]                , hätt ich doch meiner |        Tochter        | gehört! “ und wollte                       
+##                                   [Die-kluge-Bauerntochter_1857.txt, 396]                  ach, hätt ich meiner |        Tochter        | gehört! “ „ Was                            
+##                                   [Die-kluge-Bauerntochter_1857.txt, 404]                      “ „ Was hat eure |        Tochter        | denn gesagt? “ „                           
+##                                   [Die-kluge-Bauerntochter_1857.txt, 436]                Habt ihr so eine kluge |        Tochter        | , so laßt sie einmal                       
+##                                              [Die-kluge-Else_1857.txt, 9]                  Mann, der hatte eine |        Tochter        | , die hieß die kluge                       
+##                                         [Die-Krystallkugel_1857.txt, 145]   der goldenen Sonne eine verwünschte |     Königstochter     | säße, die auf Erlösung                     
+##                                         [Die-Krystallkugel_1857.txt, 414]                  , dachte aber an die |     Königstochter     | , vergaß die Riesen und                    
+##                                         [Die-Krystallkugel_1857.txt, 483]                 er in dem letzten die |     Königstochter     | fand. Aber wie erschrak                    
+##                                         [Die-Krystallkugel_1857.txt, 514]                      . „ Seid ihr die |     Königstochter     | , deren Schönheit alle Welt                
+##                                         [Die-Krystallkugel_1857.txt, 737]                  wissen, “ sprach die |     Königstochter     | , „ wenn du den                            
+##                                        [Die-Krystallkugel_1857.txt, 1115]             eilte der Jüngling zu der |     Königstochter     | , und als er in                            
+##                                                  [Die-Nelke_1857.txt, 40]              ihr einen Sohn oder eine |        Tochter        | bescheren. Da kam ein                      
+##                                                   [Die-Rabe_1857.txt, 10]                Königin, die hatte ein |      Töchterchen      | , das war noch klein                       
+##                                                  [Die-Rabe_1857.txt, 165]                   Rabe „ ich bin eine |     Königstochter     | von Geburt und bin verwünscht              
+##                                                  [Die-Rabe_1857.txt, 847]          Lohhucke und wartete auf die |     Königstochter     | : da ward er noch                          
+##                                                 [Die-Rabe_1857.txt, 1898]               ganzes Jahr und sah die |     Königstochter     | alle Tage oben fahren,                     
+##                                                 [Die-Rabe_1857.txt, 2401]                    er ab und nahm die |     Königstochter     | in den Arm: sie                            
+##                 [Die-schoene-Katrinelje-und-Pif-Paf-Poltrie_1857.txt, 23]                 „ Könnt ich wohl eure |        Tochter        | kriegen? “ „ O                             
+##                 [Die-schoene-Katrinelje-und-Pif-Paf-Poltrie_1857.txt, 99]                 „ Könnt ich wohl eure |        Tochter        | kriegen? “ „ O                             
+##                                           [Die-sechs-Diener_1857.txt, 15]               eine Zauberin, und ihre |        Tochter        | war das schönste Mädchen unter             
+##                                           [Die-sechs-Diener_1857.txt, 51]                so sprach sie wer ihre |        Tochter        | haben wollte, müßte zuvor                  
+##                                          [Die-sechs-Diener_1857.txt, 503]            Königin, welche die schöne |        Tochter        | hat? “ Da antwortete                       
+##                                         [Die-sechs-Diener_1857.txt, 1036]             wollt ihr mir eure schöne |        Tochter        | geben, so will ich                         
+##                                         [Die-sechs-Diener_1857.txt, 1088]            der Herr und Gemahl meiner |        Tochter        | werden. “ „ Was                            
+##                                         [Die-sechs-Diener_1857.txt, 1582]                   , „ bring ich meine |        Tochter        | zu dir in deine Kammer                     
+##                                         [Die-sechs-Diener_1857.txt, 1709]                kam die Alte mit ihrer |        Tochter        | und führte sie in die                      
+##                                         [Die-sechs-Diener_1857.txt, 2091]                  , “ und glaubte ihre |        Tochter        | säße dreihundert Stunden weit im           
+##                                         [Die-sechs-Diener_1857.txt, 2103]                   . Als sie aber ihre |        Tochter        | in den Armen des Königssohns               
+##                                         [Die-sechs-Diener_1857.txt, 2410]                  vorkäme, und ihr die |        Tochter        | zurück bringen. Der Horcher                
+##                                        [Die-sechs-Schwaene_1857.txt, 165]                     . „ Ich habe eine |        Tochter        | , “ sagte die Alte                         
+##                                        [Die-sechs-Schwaene_1857.txt, 234]               ihrem Häuschen, wo ihre |        Tochter        | beim Feuer saß. Sie                        
+##                                           [Die-sieben-Raben_1857.txt, 10]             Söhne und immer noch kein |      Töchterchen      | , so sehr er sichs                         
+##                                          [Die-sieben-Raben_1857.txt, 234]    doch einigermaßen durch ihr liebes |      Töchterchen      | , das bald zu Kräften                      
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1112]                    Lärm ins Land, die |     Königstochter     | wäre von einem Drachen entführt            
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1168]    wollten zusammen ausziehen und die |     Königstochter     | befreien. „ Wo sie                         
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1250]                 Felsen hin kamen. Die |     Königstochter     | saß da, aber der                           
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1344]           der bei seinem Erwachen die |     Königstochter     | nicht mehr gefunden hatte,                 
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1493]                 . Als der König seine |        Tochter        | wieder erblickte, war große                
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1549]                  „ hätt ich nicht die |     Königstochter     | gesehen, so wären alle                     
+##                            [Die-vier-kunstreichen-Brueder_1857.txt, 1601]                ihr wärt doch samt der |     Königstochter     | von dem Untier zerrissen worden            
+##                                          [Die-wahre-Braut_1857.txt, 2104]                 das Gerücht, dass die |        Tochter        | des Königs ihre Hochzeit feiern            
+##                                      [Die-weisse-Schlange_1857.txt, 1012]                 machte bekannt, „ die |     Königstochter     | suche einen Gemahl, wer                    
+##                                      [Die-weisse-Schlange_1857.txt, 1067]                  Jüngling, als er die |     Königstochter     | sah, ward er von                           
+##                                      [Die-weisse-Schlange_1857.txt, 1262]            gewähren würde. Die stolze |     Königstochter     | aber, als sie vernahm                      
+##                                      [Die-weisse-Schlange_1857.txt, 1434]              die Säcke gesammelt. Die |     Königstochter     | kam selbst in den Garten                   
+##                                      [Die-weisse-Schlange_1857.txt, 1662]       Heimweg und brachte der schönen |     Königstochter     | den goldenen Apfel, der                    
+##                           [Die-weisse-und-die-schwarze-Braut_1857.txt, 6]              Eine Frau ging mit ihrer |        Tochter        | und Stieftochter über Feld,                
+##                           [Die-weisse-und-die-schwarze-Braut_1857.txt, 8]            ging mit ihrer Tochter und |     Stieftochter      | über Feld, Futter zu                       
+##                          [Die-weisse-und-die-schwarze-Braut_1857.txt, 60]                     selber, “ und die |        Tochter        | setzte hinzu „ habt ihr                    
+##                          [Die-weisse-und-die-schwarze-Braut_1857.txt, 82]                  Wegweiser mit. “ Die |     Stieftochter      | aber sprach „ armer Mann                   
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 108]              Gott über die Mutter und |        Tochter        | , wendete ihnen den Rücken                 
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 135]                  die Sünde. Der armen |     Stieftochter      | aber war Gott gnädig und                   
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 270]         Als die Stiefmutter mit ihrer |        Tochter        | nach Hause kam und sah                     
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 285]                und häßlich waren, die |     Stieftochter      | aber weiss und schön,                      
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 318]                Leid antun könnte. Die |     Stieftochter      | aber hatte einen Bruder Namens             
+##                         [Die-weisse-und-die-schwarze-Braut_1857.txt, 712]        dann die Stiefmutter mit ihrer |        Tochter        | , und Reginer saß auf                      
+##                        [Die-weisse-und-die-schwarze-Braut_1857.txt, 1161]                  dass er sie und ihre |        Tochter        | behielt, ja dass sie                       
+##                        [Die-weisse-und-die-schwarze-Braut_1857.txt, 1582]            an ihr und ihrer schwarzen |        Tochter        | . Der König aber heiratete                 
+##                                      [Die-zertanzten-Schuhe_1857.txt, 10]                König, der hatte zwölf |        Töchter        | , eine immer schöner als                   
+##                                     [Die-zertanzten-Schuhe_1857.txt, 356]            ausfindig zu machen wo die |     Königstöchter     | ihre Schuhe vertanzen, und                 
+##                                     [Die-zertanzten-Schuhe_1857.txt, 556]                . Das hörten die zwölf |     Königstöchter     | , lachten, und die                         
+##                                    [Die-zertanzten-Schuhe_1857.txt, 1412]                „ wo haben meine zwölf |        Töchter        | ihre Schuhe in der Nacht                   
+##                                    [Die-zertanzten-Schuhe_1857.txt, 1451]               Da ließ der König seine |        Töchter        | kommen und fragte sie ob                   
+##                                         [Die-zwei-Brueder_1857.txt, 2189]    weil morgen unseres Königs einzige |        Tochter        | sterben wird. “ Fragte                     
+##                                         [Die-zwei-Brueder_1857.txt, 2282]                   mehr übrig, als die |     Königstochter     | , dennoch ist keine Gnade                  
+##                                         [Die-zwei-Brueder_1857.txt, 2346]            den Drachen besiegt, seine |        Tochter        | zur Frau versprochen, und                  
+##                                         [Die-zwei-Brueder_1857.txt, 2584]                  mit ansehen. Als die |     Königstochter     | oben auf den Berg kam                      
+##                                         [Die-zwei-Brueder_1857.txt, 2869]                     auf, und fand die |     Königstochter     | auf der Erde liegen,                       
+##                                         [Die-zwei-Brueder_1857.txt, 3304]                  . Da schlief nun die |     Königstochter     | , der Jäger, der                           
+##                                         [Die-zwei-Brueder_1857.txt, 3384]              und nicht weit davon die |     Königstochter     | und ein Jäger mit seinen                   
+##                                         [Die-zwei-Brueder_1857.txt, 4051]      seinen traurigen Gedanken an die |     Königstochter     | : erst zu Mittag,                          
+##                                         [Die-zwei-Brueder_1857.txt, 4207]                        kam, wo er die |     Königstochter     | vom Drachen erlöst hatte und               
+##                                         [Die-zwei-Brueder_1857.txt, 4261]        vorm Jahr sollte unsers Königs |        Tochter        | dem Drachen ausgeliefert werden,           
+##                                         [Die-zwei-Brueder_1857.txt, 4564]         Schloss hinein und gerade zur |     Königstochter     | , setzte sich unter ihren                  
+##                                         [Die-zwei-Brueder_1857.txt, 4902]               , setzte sich unter der |     Königstochter     | Stuhl, und kratzte an                      
+##                                         [Die-zwei-Brueder_1857.txt, 5112]                     und als er in der |     Königstochter     | Zimmer kam, da zupfte                      
+##                                         [Die-zwei-Brueder_1857.txt, 5363]               er gerades Weges zu der |     Königstochter     | , stellte sich hinter sie                  
+##                                         [Die-zwei-Brueder_1857.txt, 5613]                      Türe. Da kam die |     Königstochter     | heraus, und wäre fast                      
+##                                         [Die-zwei-Brueder_1857.txt, 6095]                   er sah dass ihn die |     Königstochter     | noch lieb hatte. Und                       
+##                                         [Die-zwei-Brueder_1857.txt, 6137]              Königs Hof gehen und die |     Königstochter     | heiraten. “ Fragte der                     
+##                                         [Die-zwei-Brueder_1857.txt, 6176]                   heraus, das ihm die |     Königstochter     | auf dem Drachenberg gegeben hatte          
+##                                         [Die-zwei-Brueder_1857.txt, 6276]       der königlichen Tafel zu seiner |        Tochter        | „ was haben die wilden                     
+##                                         [Die-zwei-Brueder_1857.txt, 6430]                 , sprach er zu seiner |        Tochter        | „ was soll ich tun                         
+##                                         [Die-zwei-Brueder_1857.txt, 6531]                 , sprach er zu seiner |        Tochter        | „ wie soll ich ihn                         
+##                                         [Die-zwei-Brueder_1857.txt, 6583]              an neben sich und seiner |        Tochter        | , der Marschall saß auf                    
+##                                         [Die-zwei-Brueder_1857.txt, 6636]               geb ich ihm heute meine |        Tochter        | zur Gemahlin. “ Da                         
+##                                         [Die-zwei-Brueder_1857.txt, 6754]               in welches der Name der |     Königstochter     | gestickt war, und zeigte                   
+##                                         [Die-zwei-Brueder_1857.txt, 6874]                     . Dann hat er die |     Königstochter     | fortgetragen und vorgegeben er sei         
+##                                         [Die-zwei-Brueder_1857.txt, 6958]             Da fragte der König seine |        Tochter        | , „ ist es wahr                            
+##                                         [Die-zwei-Brueder_1857.txt, 7071]          der König aber übergab seine |        Tochter        | dem Jäger und ernannte ihn                 
+##                                         [Die-zwei-Brueder_1857.txt, 7131]                     , Herr Wirth, die |     Königstochter     | habe ich geheiratet, und                   
+##                                         [Die-zwei-Brueder_1857.txt, 9006]            sprach der König zu seiner |        Tochter        | „ sag an welcher ist                       
+##                                        [Die-zwoelf-Brueder_1857.txt, 342]           wiederkommen; gebär ich ein |      Töchterlein      | , so will ich eine                         
+##                                        [Die-zwoelf-Brueder_1857.txt, 646]                 ihnen nicht lang. Das |      Töchterchen      | , das ihre Mutter,                         
+##                                        [Die-zwoelf-Brueder_1857.txt, 931]                    sie „ ich bin eine |     Königstochter     | und suche meine zwölf Brüder               
+##                                       [Die-zwoelf-Brueder_1857.txt, 1247]                    Bütte auf, und die |     Königstochter     | kam hervor in ihren königlichen            
+##                                       [Die-zwoelf-Brueder_1857.txt, 1763]             herbei und sah die schöne |     Königstochter     | mit dem goldenen Stern auf                 
+##                                         [Die-zwoelf-Jaeger_1857.txt, 143]           und nannte ihm eine gewisse |     Königstochter     | , die sollte seine Gemahlin                
+##                                         [Die-zwoelf-Jaeger_1857.txt, 220]                     , und ließ um die |     Königstochter     | werben, und sie ward                       
+##                                         [Die-zwoelf-Jaeger_1857.txt, 337]     Jungfrauen gefunden waren, seiner |        Tochter        | von Angesicht Gestalt und Wuchs            
+##                                         [Die-zwoelf-Jaeger_1857.txt, 350]                      . Als sie zu der |     Königstochter     | kamen, ließ diese zwölf                    
+##                                         [Die-zwoelf-Jaeger_1857.txt, 680]                   “ Da dankte ihm die |     Königstochter     | und sprach hernach zu ihren                
+##                                         [Die-zwoelf-Jaeger_1857.txt, 861]               Anschlag. Da sprach die |     Königstochter     | , als sie allein waren                     
+##                                               [Dornroeschen_1857.txt, 72]                vergeht, wirst du eine |        Tochter        | zur Welt bringen. “                        
+##                                              [Dornroeschen_1857.txt, 268]               mit lauter Stimme „ die |     Königstochter     | soll sich in ihrem funfzehnten             
+##                                              [Dornroeschen_1857.txt, 351]                Schlaf, in welchen die |     Königstochter     | fällt. “ Der König                         
+##                                              [Dornroeschen_1857.txt, 544]              Mütterchen, “ sprach die |     Königstochter     | , „ was machst du                          
+##                                              [Dornroeschen_1857.txt, 844]                    , denn so ward die |     Königstochter     | genannt, also dass von                     
+##                                              [Dornroeschen_1857.txt, 939]        , in welchem eine wunderschöne |     Königstochter     | , Dornröschen genannt, schon               
+##                  [Einaeuglein,-Zweiaeuglein-und-Dreiaeuglein_1857.txt, 9]                  Frau, die hatte drei |        Töchter        | , davon hieß die älteste                   
+##                                             [Fitchers-Vogel_1857.txt, 58]               Mannes, der drei schöne |        Töchter        | hatte, sah aus wie                         
+##                                                  [Frau-Holle_1857.txt, 5]                 Eine Witwe hatte zwei |        Töchter        | , davon war die eine                       
+##                                                 [Frau-Holle_1857.txt, 33]                , weil sie ihre rechte |        Tochter        | war, viel lieber,                          
+##                                                [Frau-Holle_1857.txt, 853]       der andern häßlichen und faulen |        Tochter        | gerne dasselbe Glück verschaffen.          
+##                                            [Hans-heirathet_1857.txt, 128]          andere Dorf zu einer reichen |     Bauerntochter     | und sprach „ wollt ihr                     
+##                                            [Hans-mein-Igel_1857.txt, 752]            glücklich nach Haus. Seine |        Tochter        | aber, wie sie ihn                          
+##                                           [Hans-mein-Igel_1857.txt, 1124]             Nun hatte er eine einzige |        Tochter        | , die war sehr schön                       
+##                                           [Hans-mein-Igel_1857.txt, 1574]               wollt er ihm und seiner |        Tochter        | das Leben nehmen. Da                       
+##                                           [Hans-mein-Igel_1857.txt, 1584]               Da gab der König seiner |        Tochter        | gute Worte, sie möchte                     
+##                                           [Hans-mein-Igel_1857.txt, 1807]                     . Wie ihn nun die |     Königstochter     | sah, war sie erschrocken                   
+##                                           [Hans-mein-Igel_1857.txt, 2092]                     Herr. Wie das die |     Königstochter     | sah, war sie froh                          
+##                                            [Jungfrau-Maleen_1857.txt, 16]                     , der warb um die |        Tochter        | eines mächtigen Königs, die                
+##                                          [Koenig-Drosselbart_1857.txt, 5]                  Ein König hatte eine |        Tochter        | , die war über alle                        
+##                                        [Koenig-Drosselbart_1857.txt, 102]               Edelleute. Nun ward die |     Königstochter     | durch die Reihen geführt,                  
+##                                        [Koenig-Drosselbart_1857.txt, 274]                 als er sah dass seine |        Tochter        | nichts tat als über die                    
+##                                        [Koenig-Drosselbart_1857.txt, 370]              vor dem König und seiner |        Tochter        | , und bat, als                             
+##                                        [Koenig-Drosselbart_1857.txt, 401]                  , dass ich dir meine |        Tochter        | da zur Frau geben will                     
+##                                        [Koenig-Drosselbart_1857.txt, 410]                     geben will. “ Die |     Königstochter     | erschrak, aber der König                   
+##                                        [Koenig-Drosselbart_1857.txt, 780]                  Diener? “ sprach die |     Königstochter     | . „ Was Diener!                            
+##                                        [Koenig-Drosselbart_1857.txt, 826]                      ganz müde. “ Die |     Königstochter     | verstand aber nichts vom Feueranmachen     
+##                                       [Koenig-Drosselbart_1857.txt, 1348]                      . “ Nun ward die |     Königstochter     | eine Küchenmagd, mußte dem                 
+##  [Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen_1857.txt, 1264]            wo siebene mit des Seilers |        Tochter        | Hochzeit gehalten haben und jetzt          
+##  [Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen_1857.txt, 2001]              ders wagen wollte, seine |        Tochter        | zur Frau versprochen, und                  
+##  [Maehrchen-von-einem,-der-auszog-das-Fuerchten-zu-lernen_1857.txt, 4105]       Schloss erlöst und sollst meine |        Tochter        | heiraten. “ „ Das                          
+##                                               [Marienkind_1857.txt, 1700]         gebar die Königin ein schönes |      Töchterlein      | , da erschien ihr zum                      
+##                                               [Marienkind_1857.txt, 2005]       ihren Seiten und das neugeborne |      Töchterlein      | auf dem Arm. Sie                           
+##                                            [Rumpelstilzchen_1857.txt, 16]             aber er hatte eine schöne |        Tochter        | . Nun traf es sich                         
+##                                            [Rumpelstilzchen_1857.txt, 48]                   ihm „ ich habe eine |        Tochter        | , die kann Stroh zu                        
+##                                            [Rumpelstilzchen_1857.txt, 76]              wohl gefällt, wenn deine |        Tochter        | so geschickt ist, wie                      
+##                                           [Rumpelstilzchen_1857.txt, 182]                   Da saß nun die arme |    Müllerstochter     | und wusste um ihr Leben                    
+##                                           [Rumpelstilzchen_1857.txt, 395]             goldgieriger. Er ließ die |    Müllerstochter     | in eine andere Kammer voll                 
+##                                           [Rumpelstilzchen_1857.txt, 527]                satt, sondern ließ die |    Müllerstochter     | in eine noch größere Kammer                
+##                                           [Rumpelstilzchen_1857.txt, 564]                   “ „ Wenns auch eine |    Müllerstochter     | ist, “ dachte er                           
+##                                           [Rumpelstilzchen_1857.txt, 654]                noch geht “ dachte die |    Müllerstochter     | und wusste sich auch in                    
+##                                           [Rumpelstilzchen_1857.txt, 713]                   ihr, und die schöne |    Müllerstochter     | ward eine Königin. Über                    
+##                        [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 711]          machen lassen wer mit seiner |        Tochter        | in die Wette laufen wollte                 
+##                        [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 850]                   einen Krug, und die |     Königstochter     | auch einen, und sie                        
+##                        [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 871]             einem Augenblick, als die |     Königstochter     | erst eine kleine Strecke fort              
+##                        [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 976]            erwachte. Indessen war die |     Königstochter     | , die auch gut laufen                      
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1073]                    Da sprach er „ die |     Königstochter     | soll doch gegen uns nicht                  
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1123]                sein Krug leer und die |     Königstochter     | schon weit voraus war.                     
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1157]             zehn Minuten eher als die |     Königstochter     | daheim. „ Seht ihr                         
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1194]                 kränkte es, und seine |        Tochter        | noch mehr, dass sie                        
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1672]              und dein Recht auf meine |        Tochter        | aufgeben, so sollst du                     
+##                       [Sechse-kommen-durch-die-ganze-Welt_1857.txt, 1711]                , so verlange ich eure |        Tochter        | nicht. “ Das war                           
+##                                              [Sneewittchen_1857.txt, 114]             Bald darauf bekam sie ein |      Töchterlein      | , das war so weiss                         
+##                                             [Sneewittchen_1857.txt, 2883]                    , und dass es eine |     Königstochter     | wäre. Dann setzten sie                     
+##                         [Spindel,-Weberschiffchen-und-Nadel_1857.txt, 85]                Bett und sagte „ liebe |        Tochter        | , ich fühle dass mein
+```
+
+Bei der Durchsicht der Kontexte im Hinblick auf unsere Fragestellung fällt vielleicht auf, dass die Tochter-Tokens häufig im Kontext von Beschreibungen vorkommen, in denen die Tochter als schön beschrieben wird, entweder durch das Adjektiv schön oder in einer Aussage der Art "...die Müllerstochter war ein schönes und frommes...". Allein 25 Textstellen enthalten Wortpaare der Art "schöne Tochter": 
+
+
+
+```r
+kwic_multiword <- kwic(maerchen_toks_raw, phrase(c("*schön* *tochter*", "*schön* *töchter*")), case_insensitive = TRUE)
+kwic_multiword # RStudio: View(maerchen_kwic)
+```
+
+```{style="max-height: 200px;"}
+## Keyword-in-context with 25 matches.                                                                                                                                                              
+##                        [Allerleirauh_1857.txt, 988:989]           armselig. Ach, du |    schöne Königstochter    | , wie solls mit dir                        
+##                         [Das-Eselein_1857.txt, 359:360]   der nur eine einzige aber |    wunderschöne Tochter    | hatte. Das Eselein sagte                   
+##                         [Das-Eselein_1857.txt, 803:804]     könnte: willst du meine |       schöne Tochter       | zur Frau? “ „                              
+##         [Das-tapfere-Schneiderlein_1857.txt, 2129:2130]   das Schneiderlein, „ eine |    schöne Königstochter    | und ein halbes Königreich wird             
+##             [Das-Wasser-des-Lebens_1857.txt, 1630:1631]      sich einer von uns die |    schöne Königstochter    | . Aber hüte dich dass                      
+##                 [Der-gelernte-Jaeger_1857.txt, 670:671]        in dem Turm säß eine |    schöne Königstochter    | , die wollten sie gern                     
+##                  [Der-Gevatter-Tod_1857.txt, 1231:1232]  König werde und Gemahl der |   schönen Königstochter    | . “ „ Ich kann                             
+##                 [Der-goldene-Vogel_1857.txt, 1550:1551]          Pferd, wenn er die |    schöne Königstochter    | vom goldenen Schlosse herbeischaffen könnte
+##                 [Der-goldene-Vogel_1857.txt, 1637:1638]          ist, dann geht die |    schöne Königstochter    | ins Badehaus, um da                        
+##                 [Der-goldene-Vogel_1857.txt, 3256:3257]   anders als der Bruder der |   schönen Königstochter    | , der endlich von dem                      
+##      [Der-Koenig-vom-goldenen-Berg_1857.txt, 1155:1156]  ward die Schlange zu einer |   schönen Königstochter    | , die kam mit dem                          
+##                 [Der-Raeuberbraeutigam_1857.txt, 10:11]      Müller, der hatte eine |       schöne Tochter       | , und als sie herangewachsen               
+##       [Die-Gaensehirtin-am-Brunnen_1857.txt, 1632:1633]       den Weg ohne nach dem |    schönen Töchterchen     | auch nur einmal umzublicken.               
+##       [Die-Gaensehirtin-am-Brunnen_1857.txt, 4218:4219]      . Ich glaube immer die |    schöne Königstochter    | ist mit dem Grafen vermählt                
+##                        [Die-Gaensemagd_1857.txt, 21:22]        , und sie hatte eine |       schöne Tochter       | . Wie die erwuchs,                         
+##  [Die-klare-Sonne-bringts-an-den-Tag_1857.txt, 234:235]      Arbeit, der hatte eine |       schöne Tochter       | , in die verliebte er                      
+##                    [Die-sechs-Diener_1857.txt, 502:503]   alten Königin, welche die |       schöne Tochter       | hat? “ Da antwortete                       
+##                  [Die-sechs-Diener_1857.txt, 1035:1036]        „ wollt ihr mir eure |       schöne Tochter       | geben, so will ich                         
+##               [Die-weisse-Schlange_1857.txt, 1661:1662] den Heimweg und brachte der |   schönen Königstochter    | den goldenen Apfel, der                    
+##                [Die-zwoelf-Brueder_1857.txt, 1762:1763]    König herbei und sah die |    schöne Königstochter    | mit dem goldenen Stern auf                 
+##                        [Dornroeschen_1857.txt, 938:939]     stehen, in welchem eine | wunderschöne Königstochter | , Dornröschen genannt, schon               
+##                        [Fitchers-Vogel_1857.txt, 57:58]      eines Mannes, der drei |       schöne Töchter       | hatte, sah aus wie                         
+##                        [Marienkind_1857.txt, 1699:1700] Jahre gebar die Königin ein |    schönes Töchterlein     | , da erschien ihr zum                      
+##                       [Rumpelstilzchen_1857.txt, 15:16]        , aber er hatte eine |       schöne Tochter       | . Nun traf es sich                         
+##                     [Rumpelstilzchen_1857.txt, 712:713]            mit ihr, und die |   schöne Müllerstochter    | ward eine Königin. Über
+```
+
+
+Diese Wortpaare werden wir im Folgenden etwas genauer untersuchen. 
+
+<details>
+<summary><b>Anwendungsbeispiele: KWIC</b></summary>
+
+- Maëlle Le Roux (2021), Digital History of Representations: Analysing Identity and Nationalism in the Capuchin Annual Periodical (1930-1977),  https://journalofdigitalhistory.org/en/article/L2gBr3BzwH8Z
+- Mark Dang-Anh und Stefan Scholl (2022), *Chapter 5. Digital Discourse Analysis of Language Use under National Socialism: Methodological Reflections and Applications*, in: Julia Timpe und Frederike Buda (Hrsg.), Writing the Digital History of Nazi Germany, pp. 99-129, https://doi.org/10.1515/9783110714692 
+
+</details>
+
+### N-Gramme
+
+Bei der Durchsicht der Keywords in Context sind uns Textstellen aufgefallen, in denen Töchter als schön beschrieben werden. Zwar nehmen wir natürlich aus unserem Vorwissen an, dass dies natürlich kein Zufall sondern ein verbreitetes Motiv in Märchen sein wird. Aber bisher haben wir erst einmal nur eine  Beobachtung gemacht. Der Eindruck könnte schließlich auch täuschen, und andere Wörter könnten ebenso häufig mit dem Schlüsselwort "Tochter" zusammen vorkommen. Wir untersuchen also zunächst, welche Wörter häufig zusammen mit Tokens wie Königstochter und Tochter zusammen vorkommen. Wir betrachten dabei ganz allgemein das gemeinsame Vorkommen, unabhängig vom Bezug der Wörter zueinander. 
+
+**Sequenzen von N aufeinanderfolgenden Tokens werden auch N-Gramme (engl. n-grams) genannt. N-Gramme aus zwei Tokens werden Bigramme genannt.** N-Gramme können mithilfe der Quanteda-Funktion `tokens_ngrams()` entweder für jeden Text im Gesamten bestimmt werden, oder für jeden Satz einzeln. Um N-Gramme über die Satzgrenzen hinweg zu bestimmen, kann der `tokens_ngrams()`-Funktion einfach unser tokens-Objekt übergeben werden:
+
+
+```r
+toks_ngrams <- tokens_ngrams(maerchen_toks, n=3)
+toks_ngrams # erste fünf Zeilen anzeigen
+```
+
+```{style="max-height: 200px;"}
+## Tokens consisting of 194 documents and 2 docvars.
+## Allerleirauh_1857.txt :
+##  [1] "es_war_einmal"       "war_einmal_ein"      "einmal_ein_könig"    "ein_könig_der"       "könig_der_hatte"     "der_hatte_eine"      "hatte_eine_frau"     "eine_frau_mit"       "frau_mit_goldenen"   "mit_goldenen_haaren" "goldenen_haaren_und" "haaren_und_sie"     
+## [ ... and 2,006 more ]
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt :
+##  [1] "es_war_einmal"         "war_einmal_ein"        "einmal_ein_königssohn" "ein_königssohn_der"    "königssohn_der_ging"   "der_ging_hinaus"       "ging_hinaus_in"        "hinaus_in_das"         "in_das_feld"           "das_feld_und"          "feld_und_war"          "und_war_nachdenklich" 
+## [ ... and 433 more ]
+## 
+## Aschenputtel_1857.txt :
+##  [1] "einem_reichen_manne" "reichen_manne_dem"   "manne_dem_wurde"     "dem_wurde_seine"     "wurde_seine_frau"    "seine_frau_krank"    "frau_krank_und"      "krank_und_als"       "und_als_sie"         "als_sie_fühlte"      "sie_fühlte_dass"     "fühlte_dass_ihr"    
+## [ ... and 2,406 more ]
+## 
+## Bruder-Lustig_1857.txt :
+##  [1] "es_war_einmal"     "war_einmal_ein"    "einmal_ein_großer" "ein_großer_krieg"  "großer_krieg_und"  "krieg_und_als"     "und_als_der"       "als_der_krieg"     "der_krieg_zu"      "krieg_zu_ende"     "zu_ende_war"       "ende_war_bekamen" 
+## [ ... and 3,821 more ]
+## 
+## Bruederchen-und-Schwesterchen_1857.txt :
+##  [1] "brüderchen_nahm_sein"    "nahm_sein_schwesterchen" "sein_schwesterchen_an"   "schwesterchen_an_der"    "an_der_hand"             "der_hand_und"            "hand_und_sprach"         "und_sprach_seit"         "sprach_seit_die"         "seit_die_mutter"         "die_mutter_tot"          "mutter_tot_ist"         
+## [ ... and 2,238 more ]
+## 
+## Das-alte-Muetterchen_1857.txt :
+##  [1] "es_war_in"            "war_in_einer"         "in_einer_großen"      "einer_großen_stadt"   "großen_stadt_ein"     "stadt_ein_altes"      "ein_altes_mütterchen" "altes_mütterchen_das" "mütterchen_das_saß"   "das_saß_abends"       "saß_abends_allein"    "abends_allein_in"    
+## [ ... and 297 more ]
+## 
+## [ reached max_ndoc ... 188 more documents ]
+```
+
+Allerdings sind diese N-Gramme für unsere Fragestellung nicht besonders aufschlussreich, denn das Bigramm "schöne tochter" könnte auch dadurch zustande kommen, dass ein vorhergehender Satz mit "schöne" endet, und der darauffolgende mit "tochter" beginnt. Durch das Entfernen der Satzzeichen und Vereinheitlichen der Groß- und Kleinschreibung würde uns dieser Umstand jedoch nicht auffallen. Es wäre deswegen besser, wenn beim Bilden der N-Gramme die Satzgrenzen berücksichtigt würden.  
+
+**Um N-Gramme auf Satzebene zu erhalten, muss zuerst das corpus-Objekt so umgeformt werden, dass es einzelne Sätze enthält, und nicht einzelne Texte:**
+
+
+```r
+maerchen_sentences <- corpus_reshape(maerchen_corpus, to="sentences")
+```
+ 
+Anschließend muss das corpus-Objekt wieder mit denselben Preprocessing-Schritten wie zuvor tokenisiert werden: 
+
+
+```r
+maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_tolower()
+```
+ 
+Zuletzt kann das neue tokens-Objekt mit der `tokens_ngrams()` Funktion verwendet werden. Da wir uns aber speziell für Bigramme mit dem Wort "tochter" oder "schön" interessieren, müssen wir das Vorgehen etwas anpassen: 
+
+
+```r
+toks_bigram_tochter <- maerchen_sentences_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+```
+
+```{style="max-height: 200px;"}
+## Tokens consisting of 10,998 documents and 2 docvars.
+## Allerleirauh_1857.txt.1 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.2 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.3 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.4 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.5 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.6 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.7 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.8 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.9 :
+## [1] "eine_tochter"
+## 
+## Allerleirauh_1857.txt.10 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.11 :
+## [1] "meine_tochter"
+## 
+## Allerleirauh_1857.txt.12 :
+## [1] "seine_tochter"
+## 
+## Allerleirauh_1857.txt.13 :
+## [1] "die_tochter"
+## 
+## Allerleirauh_1857.txt.14 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.15 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.16 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.17 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.18 :
+## [1] "die_königstochter"
+## 
+## Allerleirauh_1857.txt.19 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.20 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.21 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.22 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.23 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.24 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.25 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.26 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.27 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.28 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.29 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.30 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.31 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.32 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.33 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.34 :
+## [1] "schöne_königstochter"
+## 
+## Allerleirauh_1857.txt.35 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.36 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.37 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.38 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.39 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.40 :
+## [1] "eine_königstochter"
+## 
+## Allerleirauh_1857.txt.41 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.42 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.43 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.44 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.45 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.46 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.47 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.48 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.49 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.50 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.51 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.52 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.53 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.54 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.55 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.56 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.57 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.58 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.59 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.60 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.61 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.62 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.63 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.64 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.65 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.66 :
+## [1] "einer_königstochter"
+## 
+## Allerleirauh_1857.txt.67 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.68 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.69 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.70 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.71 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.72 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.73 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.74 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.75 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.76 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.77 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.78 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.79 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.80 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.81 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.82 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.83 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.84 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.85 :
+## character(0)
+## 
+## Allerleirauh_1857.txt.86 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.1 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.2 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.3 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.4 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.5 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.6 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.7 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.8 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.9 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.10 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.11 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.12 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.13 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1857.txt.14 :
+## character(0)
+## 
+## [ reached max_ndoc ... 10,898 more documents ]
+```
+
+Die Ausgabe ist jedoch immer noch nicht sonderlich übersichtlich: Sie enthält keine Angabe zur Häufigkeit der jeweiligen Bigramme. Einen Dataframe mit den Häufigkeiten zu allen Bigrammen erhalten wir, indem wir zunächst aus dem tokens_Objekt eine DFM machen und anschließend Informationen zu den häufigsten Bigrammen mithilfe der bereits bekannten Funktion `textstat_frequency()` abrufen. 
+
+:::tip
+Achtung
+
+Zwar haben wir am Anfang besprochen, dass eine DFM für bag-of-words-Analysen verwendet wird. Die Bestimmung der N-Gramme ist allerdings trotzdem eine string-of-words-Methode. Wir erstellen die DFM in diesem Fall erst, nachdem wir bereits aufeinanderfolgende Tokens bestimmt haben. Die Reihenfolge der so bestimmten Bigramme in den Texten ist dann egal, sodass die zusammengesetzen Tokens als DFM repräsentiert werden können.
+:::
+
+Die Verarbeitungsschritte verketten wir mit Pipes: 
+
+
+```r
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+```
+
+```{style="max-height: 200px;"}
+##                       feature frequency rank docfreq group
+## 1           die_königstochter       127    1     126   all
+## 2               seine_tochter        22    2      22   all
+## 3           der_königstochter        22    2      22   all
+## 4                 die_tochter        21    4      21   all
+## 5              seiner_tochter        19    5      19   all
+## 6               meine_tochter        17    6      16   all
+## 7                ihre_tochter        12    7      12   all
+## 8                eine_tochter        11    8      10   all
+## 9          eine_königstochter        11    8      11   all
+## 10              ihrer_tochter        10   10      10   all
+## 11       schöne_königstochter         8   11       8   all
+## 12             schöne_tochter         7   12       7   all
+## 13               eure_tochter         7   12       7   all
+## 14         die_müllerstochter         6   14       6   all
+## 15             meiner_tochter         6   14       6   all
+## 16            einzige_tochter         5   16       5   all
+## 17             rechte_tochter         4   17       4   all
+## 18      schönen_königstochter         4   17       4   all
+## 19            älteste_tochter         4   17       4   all
+## 20           die_stieftochter         4   17       4   all
+## 21             mannes_tochter         4   17       4   all
+## 22          ihre_stieftochter         3   22       3   all
+## 23               frau_tochter         3   22       3   all
+## 24       fremde_königstochter         2   24       2   all
+## 25              deine_tochter         2   24       2   all
+## 26             zweite_tochter         2   24       2   all
+## 27          zur_königstochter         2   24       2   all
+## 28        eine_müllerstochter         2   24       2   all
+## 29 eine_schweinehirtentochter         2   24       2   all
+## 30         rief_königstochter         2   24       2   all
+## 31             königs_tochter         2   24       2   all
+## 32            seilers_tochter         2   24       2   all
+## 33                der_tochter         2   24       2   all
+## 34        einer_königstochter         1   34       1   all
+## 35             andere_tochter         1   34       1   all
+## 36   schlafende_königstochter         1   34       1   all
+## 37       wunderschöne_tochter         1   34       1   all
+## 38             unsere_tochter         1   34       1   all
+## 39   übermütige_königstochter         1   34       1   all
+## 40            jüngste_tochter         1   34       1   all
+## 41            liebste_tochter         1   34       1   all
+## 42  verzauberte_königstochter         1   34       1   all
+## 43    prächtige_königstochter         1   34       1   all
+## 44       tugendreiche_tochter         1   34       1   all
+## 45          vor_königstochter         1   34       1   all
+## 46       reiche_königstochter         1   34       1   all
+## 47         arme_königstochter         1   34       1   all
+## 48        keine_königstochter         1   34       1   all
+## 49         die_meistertochter         1   34       1   all
+## 50         ihrer_stieftochter         1   34       1   all
+## 51           häßliche_tochter         1   34       1   all
+## 52          verlorene_tochter         1   34       1   all
+## 53        wahre_königstochter         1   34       1   all
+## 54      rechten_königstochter         1   34       1   all
+## 55          alleinige_tochter         1   34       1   all
+## 56              kluge_tochter         1   34       1   all
+## 57  verwünschte_königstochter         1   34       1   all
+## 58       stolze_königstochter         1   34       1   all
+## 59           und_stieftochter         1   34       1   all
+## 60                und_tochter         1   34       1   all
+## 61         armen_stieftochter         1   34       1   all
+## 62          schwarzen_tochter         1   34       1   all
+## 63      gewisse_königstochter         1   34       1   all
+## 64 wunderschöne_königstochter         1   34       1   all
+## 65             faulen_tochter         1   34       1   all
+## 66      reichen_bauerntochter         1   34       1   all
+## 67        arme_müllerstochter         1   34       1   all
+## 68      schöne_müllerstochter         1   34       1   all
+## 69              liebe_tochter         1   34       1   all
+```
+
+22 der 69 so bestimmten Bigramme enthalten eine Kombination aus den Wörtern "tochter" und "schön". Wenn wir die Suche auf "töchter" ausweiten würden, würden vermutlich noch einige Bigramme hinzukommen. Daneben finden sich aber auch andere Adjektive in den Bigrammen, zum Beispiel "einzige", "älteste" oder "fremde". Wie eingangs erwähnt wurde, bedeutet dies natürlich noch nicht unbedingt, dass die Töchter auch tatsächlich mit diesen Adjektiven beschrieben werden; bei der Interpretation ist also Vorsicht geboten.  
+
+Für jede Kombination von zwei Tokens müssen jedoch alle Flexionsformen beider Wörter betrachtet werden, weil "fremde_töchter", "fremden_töchtern", "fremder_töchtern", usw. jeweils als unterschiedliche Bigramme gezählt werden. Um solche Bigramme zusammenzufassen können wieder Lemmata verwendet werden. Beim Lemmatisieren wollen wir aber diesmal ein corpus-Objekt erstellen, dessen Dokumente Sätze der einzelnen Märchen sind, das also dieselbe Form hat wie das mit `corpus_reshape()` erzeugte corpus-Objekt. Dazu nehmen wir eine kleine Änderung am Code aus Abschnitt 7.7 vor. Den Code aus Abschnitt 7.7 haben wir bereits im Abschnitt 8.3.2 "Absolute Häufigkeiten und Lemmata" verwendet, um das Märchenkorpus zu lemmatisieren. Bis zur Erzeugung des Objekts `maerchen_cleaned_df` gehen wir ganz genauso vor, den Code wiederholen wir an dieser Stelle deswegen nicht und machen direkt mit dem Objekt `maerchen_cleaned_df` weiter: 
+
+
+```r
+# Dataframe umformen, sodass jede Zeile einem Satz (!) entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden
+# Mit mutate() wird eine Laufnummer an die Märchennamen in der Spalte `doc_id` angefügt, damit jeder Satz eine einzigartige doc_id hat
+maerchen_grouped <- maerchen_cleaned_df %>% 
+  group_by(doc_id, sentence) %>%
+  summarise(text = paste(lemma, collapse = " ")) %>%
+  mutate(doc_id = paste0(doc_id, "_", row_number()))
+```
+
+```
+## `summarise()` has grouped output by 'doc_id'. You can override using the `.groups` argument.
+```
+
+```r
+maerchen_grouped$sentence <- NULL
+# Dataframe in Quanteda corpus-Objekt umwandeln
+maerchen_sentences <- corpus(maerchen_grouped) 
+```
+
+Jetzt wiederholen wir das Preprocessing und lassen uns die häufigsten Bigramme ausgeben, diemal mit den Lemmata:
+
+
+```r
+# Code aus diesem Abschnitt wird hier für das lemmatiserte Korpus wiederholt
+
+maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_tolower()
+
+toks_bigram_tochter <- maerchen_sentences_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+```
+
+```{style="max-height: 200px;"}
+## Tokens consisting of 11,109 documents.
+## Allerleirauh_1 :
+## [1] "schön_königstochter"
+## 
+## Allerleirauh_2 :
+## character(0)
+## 
+## Allerleirauh_3 :
+## character(0)
+## 
+## Allerleirauh_4 :
+## character(0)
+## 
+## Allerleirauh_5 :
+## character(0)
+## 
+## Allerleirauh_6 :
+## character(0)
+## 
+## Allerleirauh_7 :
+## character(0)
+## 
+## Allerleirauh_8 :
+## character(0)
+## 
+## Allerleirauh_9 :
+## character(0)
+## 
+## Allerleirauh_10 :
+## character(0)
+## 
+## Allerleirauh_11 :
+## [1] "sein_tochter"
+## 
+## Allerleirauh_12 :
+## character(0)
+## 
+## Allerleirauh_13 :
+## [1] "der_königstochter"
+## 
+## Allerleirauh_14 :
+## character(0)
+## 
+## Allerleirauh_15 :
+## character(0)
+## 
+## Allerleirauh_16 :
+## character(0)
+## 
+## Allerleirauh_17 :
+## character(0)
+## 
+## Allerleirauh_18 :
+## character(0)
+## 
+## Allerleirauh_19 :
+## character(0)
+## 
+## Allerleirauh_20 :
+## character(0)
+## 
+## Allerleirauh_21 :
+## character(0)
+## 
+## Allerleirauh_22 :
+## character(0)
+## 
+## Allerleirauh_23 :
+## character(0)
+## 
+## Allerleirauh_24 :
+## character(0)
+## 
+## Allerleirauh_25 :
+## character(0)
+## 
+## Allerleirauh_26 :
+## character(0)
+## 
+## Allerleirauh_27 :
+## character(0)
+## 
+## Allerleirauh_28 :
+## character(0)
+## 
+## Allerleirauh_29 :
+## [1] "ein_königstochter"
+## 
+## Allerleirauh_30 :
+## character(0)
+## 
+## Allerleirauh_31 :
+## character(0)
+## 
+## Allerleirauh_32 :
+## character(0)
+## 
+## Allerleirauh_33 :
+## character(0)
+## 
+## Allerleirauh_34 :
+## character(0)
+## 
+## Allerleirauh_35 :
+## [1] "mein_tochter"
+## 
+## Allerleirauh_36 :
+## character(0)
+## 
+## Allerleirauh_37 :
+## character(0)
+## 
+## Allerleirauh_38 :
+## character(0)
+## 
+## Allerleirauh_39 :
+## character(0)
+## 
+## Allerleirauh_40 :
+## character(0)
+## 
+## Allerleirauh_41 :
+## character(0)
+## 
+## Allerleirauh_42 :
+## character(0)
+## 
+## Allerleirauh_43 :
+## character(0)
+## 
+## Allerleirauh_44 :
+## character(0)
+## 
+## Allerleirauh_45 :
+## character(0)
+## 
+## Allerleirauh_46 :
+## character(0)
+## 
+## Allerleirauh_47 :
+## character(0)
+## 
+## Allerleirauh_48 :
+## character(0)
+## 
+## Allerleirauh_49 :
+## character(0)
+## 
+## Allerleirauh_50 :
+## character(0)
+## 
+## Allerleirauh_51 :
+## character(0)
+## 
+## Allerleirauh_52 :
+## character(0)
+## 
+## Allerleirauh_53 :
+## character(0)
+## 
+## Allerleirauh_54 :
+## character(0)
+## 
+## Allerleirauh_55 :
+## [1] "der_tochter"
+## 
+## Allerleirauh_56 :
+## character(0)
+## 
+## Allerleirauh_57 :
+## character(0)
+## 
+## Allerleirauh_58 :
+## character(0)
+## 
+## Allerleirauh_59 :
+## character(0)
+## 
+## Allerleirauh_60 :
+## character(0)
+## 
+## Allerleirauh_61 :
+## character(0)
+## 
+## Allerleirauh_62 :
+## character(0)
+## 
+## Allerleirauh_63 :
+## character(0)
+## 
+## Allerleirauh_64 :
+## character(0)
+## 
+## Allerleirauh_65 :
+## character(0)
+## 
+## Allerleirauh_66 :
+## character(0)
+## 
+## Allerleirauh_67 :
+## character(0)
+## 
+## Allerleirauh_68 :
+## [1] "ein_tochter"
+## 
+## Allerleirauh_69 :
+## character(0)
+## 
+## Allerleirauh_70 :
+## character(0)
+## 
+## Allerleirauh_71 :
+## character(0)
+## 
+## Allerleirauh_72 :
+## character(0)
+## 
+## Allerleirauh_73 :
+## character(0)
+## 
+## Allerleirauh_74 :
+## character(0)
+## 
+## Allerleirauh_75 :
+## character(0)
+## 
+## Allerleirauh_76 :
+## character(0)
+## 
+## Allerleirauh_77 :
+## character(0)
+## 
+## Allerleirauh_78 :
+## character(0)
+## 
+## Allerleirauh_79 :
+## [1] "ein_königstochter"
+## 
+## Allerleirauh_80 :
+## character(0)
+## 
+## Allerleirauh_81 :
+## character(0)
+## 
+## Allerleirauh_82 :
+## character(0)
+## 
+## Allerleirauh_83 :
+## character(0)
+## 
+## Allerleirauh_84 :
+## character(0)
+## 
+## Allerleirauh_85 :
+## character(0)
+## 
+## Allerleirauh_86 :
+## character(0)
+## 
+## Allerleirauh_87 :
+## character(0)
+## 
+## Allerleirauh_88 :
+## character(0)
+## 
+## Allerleirauh_89 :
+## character(0)
+## 
+## Allerleirauh_90 :
+## character(0)
+## 
+## Allerleirauh_91 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_1 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_2 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_3 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_4 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_5 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_6 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_7 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_8 :
+## character(0)
+## 
+## Armuth-und-Demuth-fuehren-zum-Himmel_9 :
+## character(0)
+## 
+## [ reached max_ndoc ... 11,009 more documents ]
+```
+
+```r
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+```
+
+```{style="max-height: 200px;"}
+##                      feature frequency rank docfreq group
+## 1          der_königstochter       151    1     150   all
+## 2               sein_tochter        45    2      45   all
+## 3               mein_tochter        25    3      25   all
+## 4                der_tochter        24    4      24   all
+## 5                ihr_tochter        22    5      22   all
+## 6        schön_königstochter        12    6      12   all
+## 7          ein_königstochter        12    6      12   all
+## 8                ein_tochter        11    8      10   all
+## 9              schön_tochter         8    9       8   all
+## 10              euer_tochter         7   10       6   all
+## 11        der_müllerstochter         6   11       6   all
+## 12              drei_tochter         5   12       5   all
+## 13            einzig_tochter         5   12       5   all
+## 14             recht_tochter         4   14       4   all
+## 15          ihr_stieftochter         4   14       4   all
+## 16          der_stieftochter         4   14       4   all
+## 17               alt_tochter         4   14       4   all
+## 18              mann_tochter         4   14       4   all
+## 19              zwei_tochter         3   19       3   all
+## 20              frau_tochter         3   19       3   all
+## 21       fremd_königstochter         2   21       2   all
+## 22             zweit_tochter         2   21       2   all
+## 23              dein_tochter         2   21       2   all
+## 24              lieb_tochter         2   21       2   all
+## 25 ein_schweinehirtentochter         2   21       2   all
+## 26        ein_müllerstochter         2   21       2   all
+## 27            seiler_tochter         2   21       2   all
+## 28             könig_tochter         2   21       2   all
+## 29             zwölf_tochter         2   21       2   all
+## 30           stolzen_tochter         1   30       1   all
+## 31             ander_tochter         1   30       1   all
+## 32       wunderschön_tochter         1   30       1   all
+## 33             unser_tochter         1   30       1   all
+## 34   übermütig_königstochter         1   30       1   all
+## 35   schlafend_königstochter         1   30       1   all
+## 36              jung_tochter         1   30       1   all
+## 37  verzaubert_königstochter         1   30       1   all
+## 38       rufen_königstochter         1   30       1   all
+## 39         vor_königstochter         1   30       1   all
+## 40       reich_königstochter         1   30       1   all
+## 41        arme_königstochter         1   30       1   all
+## 42    prächtig_königstochter         1   30       1   all
+## 43       tugendreich_tochter         1   30       1   all
+## 44        kein_königstochter         1   30       1   all
+## 45         schlafend_tochter         1   30       1   all
+## 46          verloren_tochter         1   30       1   all
+## 47        wahr_königstochter         1   30       1   all
+## 48       recht_königstochter         1   30       1   all
+## 49  verwünscht_königstochter         1   30       1   all
+## 50             haben_tochter         1   30       1   all
+## 51        der_meistertochter         1   30       1   all
+## 52           häßlich_tochter         1   30       1   all
+## 53          alleinig_tochter         1   30       1   all
+## 54              klug_tochter         1   30       1   all
+## 55       stolz_königstochter         1   30       1   all
+## 56               und_tochter         1   30       1   all
+## 57           schwarz_tochter         1   30       1   all
+## 58          arm_stieftochter         1   30       1   all
+## 59          und_stieftochter         1   30       1   all
+## 60       gewiß_königstochter         1   30       1   all
+## 61 wunderschön_königstochter         1   30       1   all
+## 62            faulen_tochter         1   30       1   all
+## 63       reich_bauerntochter         1   30       1   all
+## 64        arm_müllerstochter         1   30       1   all
+## 65      schön_müllerstochter         1   30       1   all
+```
+
+Die Bigramme mit "tochter" und "schön" können wir auch visualisieren: 
+
+
+```r
+library(quanteda.textstats)
+library(ggplot2)
+
+bigram_freq <- tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *tochter*")) %>%
+  tokens_select(pattern = phrase("*schön*_*tochter*")) %>%
+  dfm() %>%
+  textstat_frequency()
+
+bigram_filtered <- bigram_freq[bigram_freq$frequency >= 1,]
+
+ggplot(bigram_filtered, aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, max(bigram_filtered$frequency), by = 2)) + 
+  labs(x = "Feature", y = "Frequency")
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-46-1.png" width="672" />
+
+Zuletzt könnten wir noch untersuchen, welche anderen Tokens zusammen mit dem Wort "schön" auftreten. Dabei verketten wir alle Schritte mit Pipes:  
+
+
+```r
+library(quanteda.textstats)
+
+tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *")) %>%
+  tokens_select(pattern = phrase("*schön*_*")) %>%
+  dfm() %>%
+  textstat_frequency()
+```
+
+```{style="max-height: 200px;"}
+##                       feature frequency rank docfreq group
+## 1                  schön_sein        26    1      26   all
+## 2                   schön_und        24    2      24   all
+## 3              schön_jungfrau        18    3      18   all
+## 4                   schön_als        17    4      16   all
+## 5                   schön_wie        13    5      13   all
+## 6               schön_mädchen        13    5      13   all
+## 7               schön_kleider        13    5      13   all
+## 8         schön_königstochter        12    8      12   all
+## 9                  schön_dass        12    8      12   all
+## 10                 schön_aber         9   10       9   all
+## 11                   schön_in         9   10       2   all
+## 12                schön_kleid         8   12       8   all
+## 13              schön_tochter         8   12       8   all
+## 14                schön_blume         7   14       7   all
+## 15                 schön_frau         7   14       7   all
+## 16           schön_katrinelje         7   14       7   all
+## 17                 schön_mann         6   17       6   all
+## 18               schön_schloß         6   17       6   all
+## 19                 schön_kind         6   17       6   all
+## 20              schönheit_der         5   20       5   all
+## 21                 schön_weiß         5   20       5   all
+## 22             schön_hühnchen         5   20       3   all
+## 23             schön_hähnchen         5   20       3   all
+## 24                 schön_bunt         5   20       3   all
+## 25             schön_jüngling         5   20       5   all
+## 26                schön_essen         5   20       5   all
+## 27              schönheit_und         5   20       5   all
+## 28                 schön_hier         5   20       4   all
+## 29                 schön_groß         4   29       4   all
+## 30                schön_knabe         4   29       4   all
+## 31                 schön_ding         4   29       4   all
+## 32                 schön_tier         3   32       3   all
+## 33                  schön_auf         3   32       3   all
+## 34                schön_stück         3   32       3   all
+## 35                  schön_der         3   32       3   all
+## 36                 schön_bild         3   32       3   all
+## 37                schön_braut         3   32       3   all
+## 38                 schön_ring         3   32       3   all
+## 39                   schön_zu         3   32       2   all
+## 40                 schön_wild         3   32       3   all
+## 41                schön_musik         3   32       3   all
+## 42                 schön_rein         2   42       2   all
+## 43                 schön_baum         2   42       2   all
+## 44                schön_platz         2   42       2   all
+## 45                 schön_jung         2   42       2   all
+## 46              schön_gemacht         2   42       2   all
+## 47                 schön_sohn         2   42       2   all
+## 48               schön_werden         2   42       2   all
+## 49                  schön_neu         2   42       2   all
+## 50               schön_decken         2   42       2   all
+## 51                 schön_leib         2   42       2   all
+## 52              schön_gericht         2   42       2   all
+## 53             schön_aussehen         2   42       2   all
+## 54                schön_honig         2   42       2   all
+## 55               schön_hirsch         2   42       2   all
+## 56                schön_vogel         2   42       2   all
+## 57                schön_sache         2   42       2   all
+## 58              schön_speisen         2   42       2   all
+## 59               schönheit_so         2   42       2   all
+## 60             schönheit_dass         2   42       2   all
+## 61             schön_haushalt         2   42       2   all
+## 62                schön_wiese         2   42       2   all
+## 63                  schön_rot         2   42       2   all
+## 64                 schön_waar         2   42       2   all
+## 65           schönheit_wieder         1   65       1   all
+## 66                schön_haben         1   65       1   all
+## 67                  schön_fuß         1   65       1   all
+## 68           schön_jungfrauen         1   65       1   all
+## 69                schön_sehen         1   65       1   all
+## 70             schöne_kleider         1   65       1   all
+## 71             schön_knäblein         1   65       1   all
+## 72        wunderschön_tochter         1   65       1   all
+## 73            schön_königlich         1   65       1   all
+## 74            allerschön_sein         1   65       1   all
+## 75               schön_frucht         1   65       1   all
+## 76                schön_birne         1   65       1   all
+## 77          schönheit_blenden         1   65       1   all
+## 78           schön_prinzessin         1   65       1   all
+## 79               schön_golden         1   65       1   all
+## 80        schön_frischgedeckt         1   65       1   all
+## 81                 schön_saal         1   65       1   all
+## 82                schön_mädel         1   65       1   all
+## 83                 schön_gast         1   65       1   all
+## 84                 schön_huhn         1   65       1   all
+## 85              schönern_mann         1   65       1   all
+## 86           schönheit_wählen         1   65       1   all
+## 87           schön_geschichte         1   65       1   all
+## 88          schön_waitzenmehl         1   65       1   all
+## 89          schön_spielwerken         1   65       1   all
+## 90               schön_fetter         1   65       1   all
+## 91                schön_könig         1   65       1   all
+## 92              schön_gestalt         1   65       1   all
+## 93                schön_haupt         1   65       1   all
+## 94       wunderschön_jungfrau         1   65       1   all
+## 95               schön_schürz         1   65       1   all
+## 96                 schön_euer         1   65       1   all
+## 97                 schön_haus         1   65       1   all
+## 98                  schön_tag         1   65       1   all
+## 99           wunderschön_sein         1   65       1   all
+## 100            schön_anführen         1   65       1   all
+## 101           schön_maimorgen         1   65       1   all
+## 102              schön_morgen         1   65       1   all
+## 103           schön_schön_ach         1   65       1   all
+## 104                schön_lang         1   65       1   all
+## 105              schön_gesang         1   65       1   all
+## 106              schön_singen         1   65       1   all
+## 107               schön_singa         1   65       1   all
+## 108             schön_gebäude         1   65       1   all
+## 109       schönheit_erblicken         1   65       1   all
+## 110            schön_lustgart         1   65       1   all
+## 111         schön_dankbarkeit         1   65       1   all
+## 112              schön_liegen         1   65       1   all
+## 113            schön_ankommen         1   65       1   all
+## 114                schön_rock         1   65       1   all
+## 115            schön_halsband         1   65       1   all
+## 116        schön_klafterstück         1   65       1   all
+## 117                schön_grab         1   65       1   all
+## 118        bildschön_jungfrau         1   65       1   all
+## 119            schön_arbeiten         1   65       1   all
+## 120            schönheit_noch         1   65       1   all
+## 121            schön_goldzeug         1   65       1   all
+## 122               schön_weich         1   65       1   all
+## 123         schön_töchterchen         1   65       1   all
+## 124                schön_wort         1   65       1   all
+## 125              schön_wetter         1   65       1   all
+## 126               schön_gehen         1   65       1   all
+## 127           schön_erdbeeren         1   65       1   all
+## 128       schön_zeiselschwanz         1   65       1   all
+## 129                schön_ähre         1   65       1   all
+## 130            schönheit_alle         1   65       1   all
+## 131               schön_nelke         1   65       1   all
+## 132               schön_malen         1   65       1   all
+## 133                schön_lied         1   65       1   all
+## 134                schön_weib         1   65       1   all
+## 135              schön_kleide         1   65       1   all
+## 136      wunderschön_fräulein         1   65       1   all
+## 137            schön_fräulein         1   65       1   all
+## 138             schön_teppich         1   65       1   all
+## 139            schönheit_doch         1   65       1   all
+## 140              schön_flachs         1   65       1   all
+## 141                schön_fein         1   65       1   all
+## 142              schön_weizen         1   65       1   all
+## 143            schön_handwerk         1   65       1   all
+## 144           schönheit_sehen         1   65       1   all
+## 145             schönheit_wie         1   65       1   all
+## 146                schön_ward         1   65       1   all
+## 147               schön_ander         1   65       1   all
+## 148                  schön_so         1   65       1   all
+## 149      schön_hellerleuchtet         1   65       1   all
+## 150               schön_prinz         1   65       1   all
+## 151                schön_kost         1   65       1   all
+## 152               schön_zaren         1   65       1   all
+## 153                 schön_von         1   65       1   all
+## 154               schön_leute         1   65       1   all
+## 155             schön_sittsam         1   65       1   all
+## 156         schön_dornröschen         1   65       1   all
+## 157           schön_schlafend         1   65       1   all
+## 158 wunderschön_königstochter         1   65       1   all
+## 159                schön_herr         1   65       1   all
+## 160         schön_rittersmann         1   65       1   all
+## 161          schön_schneeweiß         1   65       1   all
+## 162            schön_bettlein         1   65       1   all
+## 163             schön_pfennig         1   65       1   all
+## 164                 schön_gan         1   65       1   all
+## 165               schön_wagen         1   65       1   all
+## 166               schön_abend         1   65       1   all
+## 167               schön_perle         1   65       1   all
+## 168                schön_wald         1   65       1   all
+## 169               schön_grüne         1   65       1   all
+## 170              schön_mensch         1   65       1   all
+## 171                schön_auge         1   65       1   all
+## 172     wunderschönes_mädchen         1   65       1   all
+## 173         schön_töchterlein         1   65       1   all
+## 174           schön_rapunzeln         1   65       1   all
+## 175                schön_haar         1   65       1   all
+## 176            schön_flechten         1   65       1   all
+## 177      schön_müllerstochter         1   65       1   all
+## 178           schön_edelstein         1   65       1   all
+## 179                schön_rose         1   65       1   all
+## 180         allerschön_treten         1   65       1   all
+## 181        schön_sneewittchen         1   65       1   all
+## 182             schönheit_von         1   65       1   all
+## 183               schöner_und         1   65       1   all
+## 184               schön_apfel         1   65       1   all
+## 185                 schön_aus         1   65       1   all
+## 186        schönheit_sprechen         1   65       1   all
+## 187                schön_laub         1   65       1   all
+## 188             schön_kräuter         1   65       1   all
+## 189          schön_wünschding         1   65       1   all
+## 190            schön_schüssel         1   65       1   all
+```
+
+
+<details>
+<summary><b>Anwendungsbeispiele: N-Gramme</b></summary>
+
+- Turo Hiltunen, Jenni Räikkönen und Jukka Tyrkkö (2020), Investigating colloquialization in the British parliamentary record in the late 19th and early 20th century,  https://doi.org/10.1016/j.langsci.2020.101270
+- Colin Sippl et al. (2016), Korpusbasierte Analyse österreichischer Parlamentsreden, https://epub.uni-regensburg.de/35705/
+
+</details>
+
+
+### Kookkurrenzen 
+
+Bisher haben wir nur direkt aufeinanderfolgende Tokens betrachtet. Aber in den Keywords in Context haben wir gesehen, dass "Tochter" und "schön" auch häufig gemeinsam auftreten, ohne, dass sie direkt aufeinanderfolgen, beispielsweise in Sätzen wie "...die Tochter war so schön, dass...". 
+Diese Fälle wollen wir im Folgenden untersuchen, indem wir Kookkurrenzen bestimmen. **Der Begriff Kookkurrenz  beschreibt das gemeinsame Auftreten von zwei oder mehr Tokens innerhalb eines bestimmten Kontexts**. **Im Grunde sind N-Gramme auch spezielle Kookkurrenzen, mit der Besonderheit, dass die Tokens genau aufeinanderfolgen.** 
+
+Zur Bestimmung und Repräsentation von Kookkurrenzen gibt es in Quanteda ein weiteres Objekt, das wir bisher noch nicht behandelt haben: eine **Feature Co-Occurrence Matrix (FCM)**. Wenn das tokens-Objekt maerchen_toks zum Erstellen der FCM verwendet wird und kein zusätzliches Argument beim Funktionsaufruf übergeben wird, dann gibt die Matrix standardmäßig die Kookkurrenzen aller Wörter in einem Text aus, unabhängig von den Satzgrenzen. Solche Kookkurrenzen auf Dokumentenebene sind zum Beispiel dann interessant, wenn wir herausfinden wollen, welche Charaktere in Märchen gemeinsam auftreten. 
+
+In diesem Abschnitt betrachten wir wieder die Lemmata anstelle der absoluten Häufigkeiten wie im Abschnitt mit den N-Grammen. Prinzipiell können aber sowohl N-Gramme als auch Kookkurrenzen für ein lemmatisiertes oder nichtlemmatisiertes Korpus bestimmt werden.
+
+
+
+```r
+# FCM mit Kookkurrenzen auf Dokumentenebene
+fcm(maerchen_toks_lemmata)
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 10,574 by 10,574 features.
+##            features
+## features    könig frau golden haar schön gleichen mehr erde finden geschehen
+##   könig      7889 2442   2957 1077  3494       86 2231 1160   2481      1113
+##   frau          0 1320    697  439  1719        6  798  480   1005       400
+##   golden        0    0   1081  605  1333       39  631  229    720       341
+##   haar          0    0      0  224   488       14  347   87    292       137
+##   schön         0    0      0    0  1631       23  996  640   1136       567
+##   gleichen      0    0      0    0     0        1   11    6     14         6
+##   mehr          0    0      0    0     0        0  398  359    746       252
+##   erde          0    0      0    0     0        0    0  120    389       152
+##   finden        0    0      0    0     0        0    0    0    545       279
+##   geschehen     0    0      0    0     0        0    0    0      0        67
+## [ reached max_feat ... 10,564 more features, reached max_nfeat ... 10,564 more features ]
+```
+
+Alternativ kann der Kontext aber auch auf einzelne Sätze eingeschränkt werden, indem wir stattdessen das Objekt `maerchen_sentences_toks` aus dem Abschnitt "N-Gramme" zum Erstellen der FCM verwenden. 
+
+
+```r
+# FCM mit Kookkurrenzen auf Satzebene
+# Code für das Preprocessing aus dem Abschnitt "N-Gramme"
+maerchen_fcm <- fcm(maerchen_sentences_toks)
+maerchen_fcm
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 10,696 by 10,696 features.
+##                features
+## features        ach   du schön königstochter wie solls mit noch werden allerleirauh
+##   ach             6   53    13             4  31     1  23    8     23            0
+##   du              0 1919   155            48 303     3 583  254    492            5
+##   schön           0    0    90            28  90     1  95   48     53            0
+##   königstochter   0    0     0             2  32     1  46   14     28            0
+##   wie             0    0     0             0 102     3 192   91    156            5
+##   solls           0    0     0             0   0     0   2    2      1            0
+##   mit             0    0     0             0   0     0 184  117    199            1
+##   noch            0    0     0             0   0     0   0   61     96            0
+##   werden          0    0     0             0   0     0   0    0    103            1
+##   allerleirauh    0    0     0             0   0     0   0    0      0            0
+## [ reached max_feat ... 10,686 more features, reached max_nfeat ... 10,686 more features ]
+```
+
+Mithilfe des Arguments `context="window"` gibt es die zusätzliche Möglichkeit, manuell eine feste Anzahl von Tokens als Kontext festzulegen:
+
+
+```r
+#  FCM mit Kookkurrenzen in einem manuell festgelegten Kontext
+fcm(maerchen_toks_lemmata, context="window", window=6)
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 10,574 by 10,574 features.
+##            features
+## features    könig frau golden haar schön gleichen mehr erde finden geschehen
+##   könig       130   37     34    9    68        2   29    9     22        13
+##   frau          0   48      9    4    46        2   18    5     23         8
+##   golden        0    0     24   27    27        1    5    7     12         1
+##   haar          0    0      0    6     8        1    2    1      5         2
+##   schön         0    0      0    0    84        1   11    7     19        11
+##   gleichen      0    0      0    0     0        0    1    1      2         1
+##   mehr          0    0      0    0     0        0   42    5     17         1
+##   erde          0    0      0    0     0        0    0    2      8         6
+##   finden        0    0      0    0     0        0    0    0     26         5
+##   geschehen     0    0      0    0     0        0    0    0      0         0
+## [ reached max_feat ... 10,564 more features, reached max_nfeat ... 10,564 more features ]
+```
+
+
+Wir verwenden aber den Satz als Kontext, da für unsere Fragestellung die Satzübergänge wichtig sind. Da wir uns speziell für die Kookkurrenzen der Tokens mit "tochter" und "schön" interessieren, filtern wir unsere FCM: 
+
+
+```r
+fcm_select(maerchen_fcm, 
+                  pattern = c("*tochter*", 
+                              "*schön*"),
+                  selection = "keep")
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 16 by 16 features.
+##                        features
+## features                schön königstochter tochter schönheit schöne wunderschön allerschön müllerstochter schönern schweinehirtentochter
+##   schön                    90            28      26         2      0           0          0              4        0                     1
+##   königstochter             0             2       1         5      0           1          0              2        0                     2
+##   tochter                   0             0       8         2      0           2          0              0        0                     0
+##   schönheit                 0             0       0         0      0           0          0              0        0                     0
+##   schöne                    0             0       0         0      0           0          0              0        0                     0
+##   wunderschön               0             0       0         0      0           0          0              0        0                     0
+##   allerschön                0             0       0         0      0           0          0              0        0                     0
+##   müllerstochter            0             0       0         0      0           0          0              0        0                     1
+##   schönern                  0             0       0         0      0           0          0              0        0                     0
+##   schweinehirtentochter     0             0       0         0      0           0          0              0        0                     0
+## [ reached max_feat ... 6 more features, reached max_nfeat ... 6 more features ]
+```
+
+Diese Matrix ist für einige Weiterverarbeitungsschritte zwar praktisch, aber für uns nicht sonderlich übersichtlich, da jedes Token einmal als Spalte und noch einmal als Zeile vorkommt. Da für uns die Reihenfolge der Kookkurrenzen erst einmal nicht interessant ist, kombinieren wir diese Kookkurrenzen und bringen die Daten in ein übersichtlicheres Format:  
+
+
+```r
+# Separat erst Spalten, dann Zeilen mit den gesuchten Werten extrahieren
+fcm_tochter_cols <- maerchen_fcm[, grepl("tochter", colnames(maerchen_fcm))] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_cols <- fcm_tochter_cols[grepl("schön", rownames(maerchen_fcm)),]
+matrix_cols
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 9 by 7 features.
+##                features
+## features        königstochter tochter müllerstochter schweinehirtentochter stieftochter meistertochter bauerntochter
+##   schön                    28      26              4                     1            4              0             0
+##   schönheit                 0       0              0                     0            0              0             0
+##   schöne                    0       0              0                     0            0              0             0
+##   wunderschön               0       0              0                     0            0              0             0
+##   allerschön                0       0              0                     0            0              0             0
+##   schönern                  0       0              0                     0            0              0             0
+##   bildschön                 0       0              0                     0            0              0             0
+##   wunderschönes             0       0              0                     0            0              0             0
+##   schöner                   0       0              0                     0            0              0             0
+```
+
+```r
+fcm_tochter_rows <- maerchen_fcm[grepl("tochter", rownames(maerchen_fcm)), ] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_rows <- fcm_tochter_rows[, grepl("schön", colnames(maerchen_fcm))]
+matrix_rows
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 7 by 9 features.
+##                        features
+## features                schön schönheit schöne wunderschön allerschön schönern bildschön wunderschönes schöner
+##   königstochter             0         5      0           1          0        0         0             0       0
+##   tochter                   0         2      0           2          0        0         0             0       0
+##   müllerstochter            0         0      0           0          0        0         0             0       0
+##   schweinehirtentochter     0         0      0           0          0        0         0             0       0
+##   stieftochter              0         0      0           0          0        0         0             0       0
+##   meistertochter            0         0      0           0          0        0         0             0       0
+##   bauerntochter             0         0      0           0          0        0         0             0       0
+```
+
+```r
+# matrix_cols transponieren, damit Tochter-Tokens ebenfalls in den Zeilen stehen
+matrix_rows_2 <- t(matrix_cols) 
+matrix_rows_2
+```
+
+```{style="max-height: 200px;"}
+## Feature co-occurrence matrix of: 7 by 9 features.
+##                        features
+## features                schön schönheit schöne wunderschön allerschön schönern bildschön wunderschönes schöner
+##   königstochter            28         0      0           0          0        0         0             0       0
+##   tochter                  26         0      0           0          0        0         0             0       0
+##   müllerstochter            4         0      0           0          0        0         0             0       0
+##   schweinehirtentochter     1         0      0           0          0        0         0             0       0
+##   stieftochter              4         0      0           0          0        0         0             0       0
+##   meistertochter            0         0      0           0          0        0         0             0       0
+##   bauerntochter             0         0      0           0          0        0         0             0       0
+```
+
+```r
+# überprüfen, ob Spaltennamen der Matrizen übereinstimmen
+colnames(matrix_rows) == colnames(matrix_rows_2)
+```
+
+```{style="max-height: 200px;"}
+## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+```
+
+```r
+# überprüfen, ob Zeilennamen der Matrizen übereinstimmen
+rownames(matrix_rows) == rownames(matrix_rows_2)
+```
+
+```{style="max-height: 200px;"}
+## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+```
+
+```r
+# Dimension der Matrix matrix_rows
+dim(matrix_rows)
+```
+
+```{style="max-height: 200px;"}
+## [1] 7 9
+```
+
+```r
+# Dimension der Matrix matrix_rows_2 nach dem Transponieren
+dim(matrix_rows_2)
+```
+
+```{style="max-height: 200px;"}
+## [1] 7 9
+```
+
+```r
+# Matrizen addieren: Geht nur, wenn beide Matrizen dieselbe Dimension haben 
+matrix_tochter <- matrix_rows + matrix_rows_2
+# Komplett anzeigen (in "nicht spärliche" Matrix  umwandeln)
+matrix_tochter <- as.matrix(matrix_tochter)
+# Spalten mit nur Nullen löschen 
+matrix_tochter <- matrix_tochter[, colSums(matrix_tochter) != 0]
+matrix_tochter
+```
+
+```{style="max-height: 200px;"}
+##                        features
+## features                schön schönheit wunderschön
+##   königstochter            28         5           1
+##   tochter                  26         2           2
+##   müllerstochter            4         0           0
+##   schweinehirtentochter     1         0           0
+##   stieftochter              4         0           0
+##   meistertochter            0         0           0
+##   bauerntochter             0         0           0
+```
+
+```r
+# So lassen sich Zeilen mit nur Nullen löschen: lassen wir aber erstmal drin  
+# matrix_tochter <- matrix_tochter[rowSums(matrix_tochter) != 0,]
+# In Dataframe umwandeln: Beachtet den Zusatz Table, dieser bestimmt, wie der Dataframe organisiert ist
+df_tochter <- as.data.frame.table(matrix_tochter)
+df_tochter$cooccurrence <- paste(df_tochter$features, df_tochter$features.1, sep="_")
+df_tochter
+```
+
+```{style="max-height: 200px;"}
+##                 features  features.1 Freq                      cooccurrence
+## 1          königstochter       schön   28               königstochter_schön
+## 2                tochter       schön   26                     tochter_schön
+## 3         müllerstochter       schön    4              müllerstochter_schön
+## 4  schweinehirtentochter       schön    1       schweinehirtentochter_schön
+## 5           stieftochter       schön    4                stieftochter_schön
+## 6         meistertochter       schön    0              meistertochter_schön
+## 7          bauerntochter       schön    0               bauerntochter_schön
+## 8          königstochter   schönheit    5           königstochter_schönheit
+## 9                tochter   schönheit    2                 tochter_schönheit
+## 10        müllerstochter   schönheit    0          müllerstochter_schönheit
+## 11 schweinehirtentochter   schönheit    0   schweinehirtentochter_schönheit
+## 12          stieftochter   schönheit    0            stieftochter_schönheit
+## 13        meistertochter   schönheit    0          meistertochter_schönheit
+## 14         bauerntochter   schönheit    0           bauerntochter_schönheit
+## 15         königstochter wunderschön    1         königstochter_wunderschön
+## 16               tochter wunderschön    2               tochter_wunderschön
+## 17        müllerstochter wunderschön    0        müllerstochter_wunderschön
+## 18 schweinehirtentochter wunderschön    0 schweinehirtentochter_wunderschön
+## 19          stieftochter wunderschön    0          stieftochter_wunderschön
+## 20        meistertochter wunderschön    0        meistertochter_wunderschön
+## 21         bauerntochter wunderschön    0         bauerntochter_wunderschön
+```
+
+Die Daten können wir in dieser Form auch visualisieren, zum Beispiel als **Heat Map**: 
+
+
+```r
+ggplot(df_tochter, aes(x = features, y = features.1, fill = Freq)) +
+  geom_tile() + 
+  scale_fill_gradient(low = "lightblue", high = "darkblue") + 
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) + 
+  labs(x = "Tokens mit tochter", y = "Tokens mit schön") + 
+  geom_text(aes(label = ifelse(Freq >= 1, Freq, "")),  # Nur Werte >= 1 anzeigen
+            size = 2)
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-53-1.png" width="672" />
+
+Vergleicht man die Heat Map mit den Kookkurrenzen mit dem Säulendiagramm der Bigramme, so fällt auf, dass es mehr Kookkurrenzen als Bigramme gibt: Während das Bigramm "schöne königstochter" 8 Mal vorkommt, finden sich in unserer FCM 10 Kookkurrenzen von "schöne" und "königstochter". Die zwei zusätzlichen Kookkurrenzen könnten beispielsweise durch ein Konstrukt wie "eine schöne und kluge königstochter" zustandekommen, oder aber auch durch einen Satz wie "ein schöner Königssohn und eine Königstochter". 
+
+Die Bestimmung der Kookkurrenzen auf Satzebene gibt uns also weitere möglicherweise relevante Wortkombinationen. Aber genau wie bei den N-Grammen können wir auch aus den Kookkurrenzen noch nicht ableiten, dass die Töchter in den Märchen tatsächlich als "schön" beschrieben werden, denn Kookkurrenzen können auch dadurch zustande kommen, dass ein nachfolgender Satz auf den vorhergehenden Bezug nimmt, und, dass sich das Wort schön im selben Satz auf ein anderes Wort bezieht. Trotzdem kann das häufige gemeinsame Auftreten von zwei Tokens statistisch beschrieben werden und es kann untersucht werden, ob das gemeinsame Auftreten statistisch signifikant ist.   
+
+Bevor wir uns der Frage nach der statistischen Signifikanz von Kookkurrenzen widmen, betrachten wir noch eine andere mögliche  Visualisierung für Kookkurrenzen: 
+
+
+```r
+# library(quanteda.textplots)
+# Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
+docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
+froschkoenig_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Froschkönig"
+textplot_network(froschkoenig_fcm, min_freq=4)
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-54-1.png" width="672" />
+
+```r
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Zusätzliches Preprocessing für längere Texte, siehe https://search.r-project.org/CRAN/refmans/quanteda.textplots/html/textplot_network.html
+feat <- colSums(brueder_fcm) %>%
+  sort(decreasing = TRUE) %>%
+  head(30) %>%
+  names()
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Die zwei Brüder"
+fcm_select(brueder_fcm, pattern = feat) %>%
+  textplot_network(min_freq = 10)
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-54-2.png" width="672" />
+
+<details>
+<summary><b>Anwendungsbeispiele: Kookkurrenzen</b></summary>
+
+- Andrew Piper, Enumerations, Chapter 5. Characterization (Constraint), https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9958928373502883 (die Netzwerkvisualisierungen findest du auf S. 137 und S. 146. Piper verwendet den Begriff "semantic field"). 
+
+- Axel Pichler et al., Algorithmische Mikrolektüren philosophischer Texte
+Ein auf der digitalen Netzwerkanalyse basierender Vergleich der ‚Begriffsnetzwerke‘ bei Adorno und Carnap, https://doi.org/10.1515/9783110693973-014 (die Autor:innen verwenden den Begriff "Begriffsnetzwerk")
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kookkurrenzen</b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch. 1: From Usage to Meaning: The Foundations of Distributional Semantics, https://doi.org/10.1017/9780511783692.002 
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences, und 2.3: The Co-occurrence Matrix,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+
+### Kollokationen
+
+Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" denn tatsächlich statistisch signifikant? Ist das nicht nur zufällig? Um die statistische Signifikanz von Kookkurrenzen und speziell N-Grammen zu untersuchen, werden Kollokationen bestimmt. **Der Begriff Kollokation hat verschiedene Bedeutungen und ist deswegen durchaus umstritten (s. [Evert 2009, S. 1212f.](https://doi.org/10.1515/9783110213881.2.1212)). In diesem Kontext ist mit "Kollokation" einfach das wiederholte Auftreten von Wortpaaren in einem Korpus gemeint. Genau wie bei Kookkurrenzen und N-Grammen müssen die Wörter dabei nicht in einer syntaktischen Relation zueinander stehen, sie kommen also einfach in einem defininierten Kontext (z.B. in einem Text, Satz, Segment aus 5 Tokens, ...) gemeinsam vor.** Nicht alle Kollokationen sind dabei jedoch gleich signifikant: Zum Beispiel kommt zwar "und er" in vielen Sätzen vor, aber dieses Wortpaar ist nicht unbedingt inhaltlich aufschlussreich oder für das untersuchte Korpus spezifisch. Beispiele "echter" Kollokationen sind dagegen Wortpaare wie Frohe Weihnachten, Grüß Gott oder auch Vor- Nachnamekombinationen. Eine engere Definition von Kollokationen wäre deswegen vielleicht "statistisch signifikante Kookkurrenzen". Um die Signifikanz verschiedener Kollokationen zu bestimmen, können statistische Parameter berechnet werden. **Assoziationsmaße** beschreiben dabei die Stärke der Bindung zwischen zwei Wörtern. In Quanteda geht das mit der Funktion `textstat_collocations()`: 
+
+
+
+```r
+library(quanteda.textstats)
+
+collocs_10 <- textstat_collocations(maerchen_toks, min_count = 10) # 84
+```
+
+Die Funktion `textstat_collocations()` berücksichtigt per Default Satzübergänge und behandelt Sätze als Kontext für die Kollokationen. Das können wir der Dokumentationsseite zur `textstat_collocations()`-Funktion entnehmen: "Documents are grouped for the purposes of scoring, but collocations will not span sentences."
+
+Wir betrachten nun die erzeugten Kollokationen und die zugehörigen statistischen Maße: 
+
+
+```r
+collocs_10
+```
+
+```{style="max-height: 200px;"}
+##              collocation count count_nested length        lambda              z
+## 1               ich will   312            0      2  4.3975567219  55.2457345043
+## 2                 in den   465            0      2  2.8396347243  52.2674608165
+## 3              der könig   416            0      2  3.9492624311  50.9595446535
+## 4              nach haus   127            0      2  5.7068394064  47.2167616419
+## 5               will ich   229            0      2  3.8517403086  46.1071990373
+## 6                 als er   409            0      2  2.5821052321  44.8877628277
+## 7                aus dem   194            0      2  3.7427360062  43.2898955989
+## 8                hast du   163            0      2  4.8436102371  43.1787365513
+## 9               ich habe   189            0      2  4.4059648061  43.1564661126
+## 10             am andern    95            0      2  5.8518074447  43.1498913655
+## 11            und sprach   530            0      2  2.1893798712  41.0614128744
+## 12               dass er   320            0      2  2.6663046925  40.9015625952
+## 13               auf dem   253            0      2  2.9115267483  40.8927650046
+## 14           das mädchen   204            0      2  4.8033387134  40.6006512196
+## 15         andern morgen    77            0      2  6.1907832583  40.3285407513
+## 16                in die   477            0      2  2.0728268056  40.0131627448
+## 17               mit dem   233            0      2  2.9275327208  39.5862294305
+## 18               auf den   274            0      2  2.6418076136  38.8847012479
+## 19               ich bin   149            0      2  4.8445786184  37.6501134218
+## 20            sprach der   362            0      2  2.2823378542  37.6427716165
+## 21               wenn du   154            0      2  3.4568027609  37.2577882354
+## 22              den wald   144            0      2  4.3998979041  36.9881521358
+## 23           setzte sich   123            0      2  4.9237629585  36.2612241530
+## 24         bruder lustig    58            0      2  7.8597489554  35.8977331373
+## 25              die alte   183            0      2  3.8430691902  34.9991417292
+## 26               als sie   300            0      2  2.2509081067  34.8876704557
+## 27               bist du   103            0      2  4.5920395368  34.5143591422
+## 28            nicht mehr   116            0      2  4.0498052477  34.2000118819
+## 29                in der   432            0      2  1.8185363900  33.9359683606
+## 30                zu dem   226            0      2  2.4748767658  33.7550248127
+## 31            wollen wir    53            0      2  5.8737445331  32.8182944458
+## 32             da sprach   193            0      2  2.5417086867  32.1110596126
+## 33               fing an    76            0      2  4.9246512471  31.8611540438
+## 34            wir wollen    49            0      2  5.7436150206  31.5807081941
+## 35             sollst du    88            0      2  5.0381074672  31.4653113987
+## 36             sprach er   258            0      2  2.1753865770  31.4457593513
+## 37                es war   219            0      2  2.3059857675  31.1970097896
+## 38               gab ihm    79            0      2  4.3165681012  31.1551782792
+## 39             sagte der   206            0      2  2.5186082672  30.7307363619
+## 40             willst du    87            0      2  5.2756178377  30.6266450422
+## 41           heil petrus    50            0      2 10.1581084896  30.2143852158
+## 42               du bist    81            0      2  4.1890607434  30.1975685542
+## 43               von dem   127            0      2  2.8962329828  29.5998723105
+## 44        antwortete der   166            0      2  2.7669476893  29.3193788641
+## 45               ich dir   108            0      2  3.2483905076  29.2996595845
+## 46          sieben jahre    29            0      2  7.2658123922  29.0116600043
+## 47               den weg    93            0      2  3.6983282265  28.8722813555
+## 48              der mann   143            0      2  3.0773791255  28.7191663903
+## 49               so viel    81            0      2  4.1544148898  28.6386679275
+## 50     die königstochter   127            0      2  4.3042724359  28.4851894666
+## 51          einen großen    55            0      2  4.7586072098  28.4435052631
+## 52              dass sie   205            0      2  2.1661521776  28.1562353165
+## 53            keine ruhe    31            0      2  6.6984813660  27.8144777668
+## 54             kannst du    66            0      2  4.8574438649  27.5529894869
+## 55              den kopf    79            0      2  4.1700400439  27.4488246185
+## 56              in einem   101            0      2  3.1184225410  27.4107222717
+## 57               du hast    76            0      2  3.6221435353  27.3714376512
+## 58              so lange    80            0      2  3.6802951785  27.3520800837
+## 59             guten tag    31            0      2  5.9246091720  27.1571524957
+## 60               dass es   152            0      2  2.3586798951  26.8267165792
+## 61           nicht lange    76            0      2  3.6430408905  26.6699318066
+## 62                es ist   130            0      2  2.5237022747  26.3554912898
+## 63              nach dem    91            0      2  3.0548871269  26.3282632580
+## 64           noch einmal    53            0      2  3.9880137206  26.2930374417
+## 65               und als   377            0      2  1.5179623648  26.1439129366
+## 66            liebe gott    25            0      2  6.3387853911  25.9685104512
+## 67             der junge   110            0      2  4.1286655933  25.8723369367
+## 68             du sollst    58            0      2  4.2621814366  25.7551487430
+## 69       nein antwortete    35            0      2  5.2375631324  25.7522261160
+## 70              will dir    53            0      2  3.8496877279  25.5869829884
+## 71            ganzen tag    27            0      2  6.0161874747  25.5823167976
+## 72             ich weiss    66            0      2  4.1345884015  25.5310228185
+## 73              der herr   106            0      2  3.3462506497  25.4654368304
+## 74              habe ich    84            0      2  3.1533477577  25.4236790912
+## 75            des königs    59            0      2  8.2519741322  25.2367992553
+## 76             der vater   118            0      2  2.8605970474  25.2265479894
+## 77                wie er   181            0      2  2.0519388490  25.2229865451
+## 78            legte sich    60            0      2  4.0001788484  25.1820372944
+## 79            einmal ein    79            0      2  3.1728761847  25.1105168053
+## 80              die türe    96            0      2  4.1299389769  25.1034930434
+## 81             der jäger   100            0      2  3.6458600358  25.0664467973
+## 82                an den   144            0      2  2.2537078255  25.0648660642
+## 83           seiner frau    35            0      2  4.7517577096  25.0306510109
+## 84              die frau   117            0      2  2.7535726400  25.0282240160
+## 85             ein wenig    82            0      2  5.8733728992  25.0185441544
+## 86             gar nicht    59            0      2  4.5310922255  24.7623661213
+## 87           machte sich    60            0      2  3.8267150667  24.7408328471
+## 88               das ist   134            0      2  2.3212866130  24.6454449671
+## 89               er sich   232            0      2  1.7456401688  24.6199869600
+## 90           kein mensch    25            0      2  6.6907870654  24.5384458734
+## 91               da ging   102            0      2  2.6450436688  24.5377347760
+## 92           großen wald    28            0      2  5.2212521763  24.3082332154
+## 93           guter dinge    20            0      2  9.3356015091  24.1314218214
+## 94              zur erde    26            0      2  5.4205449804  24.0618341598
+## 95           nichts mehr    37            0      2  4.3400636305  24.0058090805
+## 96                in dem   170            0      2  1.9678171227  23.9783521573
+## 97           de swinegel    24            0      2  8.5291841716  23.9590475474
+## 98               mußt du    49            0      2  4.8591850219  23.7704146433
+## 99            war einmal    70            0      2  3.1493387591  23.7666561134
+## 100             so schön    55            0      2  4.3923426413  23.7625060040
+## 101              weil er    89            0      2  3.0272724188  23.7317764625
+## 102             habt ihr    41            0      2  5.3420598171  23.6779231447
+## 103           mit seiner    53            0      2  3.7431155670  23.6661463051
+## 104       der königssohn   107            0      2  4.7386119060  23.6261710067
+## 105            drei tage    24            0      2  5.6676705732  23.5374322714
+## 106              hin und   127            0      2  3.0018434940  23.5121486249
+## 107             im walde    27            0      2  5.9348818672  23.3519928379
+## 108             wenn ich    99            0      2  2.5360839681  23.2692294231
+## 109            der fuchs    86            0      2  3.8640443684  23.2103115003
+## 110             ein paar    98            0      2  6.5404886497  23.1881120001
+## 111              bei dem    67            0      2  3.1234667654  23.0899928789
+## 112              vor dem    79            0      2  2.8203381676  23.0757356977
+## 113            und sagte   203            0      2  1.8845874469  23.0044975929
+## 114             kann ich    63            0      2  3.3543678292  22.9730104831
+## 115            die augen    86            0      2  3.1205199525  22.9620913150
+## 116             sah dass    60            0      2  3.2168734821  22.9399435086
+## 117           mit seinem    55            0      2  3.4516279881  22.8912138653
+## 118           von herzen    33            0      2  5.1866606180  22.8381555737
+## 119            jeden tag    21            0      2  6.4017982793  22.7890963968
+## 120           die mutter    85            0      2  3.1020067191  22.7703622598
+## 121             das kind    67            0      2  3.3342783444  22.7452141178
+## 122        antwortete er   106            0      2  2.4733636817  22.6210713703
+## 123        der schneider    81            0      2  3.6975604360  22.5809300589
+## 124             laß mich    26            0      2  5.2771683472  22.5685339617
+## 125            ein stück    53            0      2  5.2705479795  22.3746387663
+## 126             zu einem    73            0      2  2.8757634363  22.3479041593
+## 127             zu essen    54            0      2  3.5787775089  22.3123731846
+## 128             der welt    81            0      2  3.3589124962  22.3032140862
+## 129            hans mein    29            0      2  4.5077184231  22.1447245044
+## 130          ganze nacht    20            0      2  5.6286093322  22.0992034554
+## 131           lange zeit    25            0      2  4.8635950663  22.0646753299
+## 132         nicht wieder    94            0      2  2.4405295695  22.0459754960
+## 133             der wolf    79            0      2  4.0961331444  21.9856287572
+## 134         lieber vater    24            0      2  5.0147234502  21.8968091164
+## 135           dein leben    21            0      2  5.2955105643  21.7852739158
+## 136             sich auf   126            0      2  2.0577909673  21.7574654352
+## 137          die königin    72            0      2  3.4481963017  21.7476469301
+## 138           das wasser    64            0      2  3.1963829988  21.7389110544
+## 139              rief er    91            0      2  2.5875437925  21.6992064570
+## 140              so will    83            0      2  2.5696487734  21.6726510526
+## 141         mit einander    39            0      2  4.3382777221  21.6671861493
+## 142             soll ich    60            0      2  3.1734814878  21.6624184087
+## 143           die beiden    70            0      2  3.9345981826  21.6430890272
+## 144          voll freude    18            0      2  5.7998408619  21.5883054964
+## 145           ins wasser    24            0      2  4.8307957175  21.5724140797
+## 146             ich muss    54            0      2  3.4178686709  21.5319105804
+## 147          guten abend    17            0      2  5.9435121208  21.5044215535
+## 148            der bauer    79            0      2  4.3443564493  21.4808693814
+## 149         gesagt hatte    30            0      2  5.1801265541  21.4193779795
+## 150         frau königin    25            0      2  4.7464068454  21.4055959380
+## 151             wirst du    40            0      2  4.9450108196  21.4008817157
+## 152           armer mann    21            0      2  6.2604289030  21.3821661233
+## 153        ja antwortete    31            0      2  4.1677177064  21.3491785018
+## 154             der hand    78            0      2  3.0683816021  21.2439748667
+## 155         wilden tiere    13            0      2  7.3875515180  21.1657407085
+## 156              da ward    67            0      2  2.8314958519  21.1564419114
+## 157            könnt ihr    32            0      2  5.2596366799  21.0615740579
+## 158              du mußt    38            0      2  4.3942523190  21.0449473642
+## 159               zu ihm   117            0      2  2.0643545146  21.0397262621
+## 160            mit einem    58            0      2  2.9838420420  21.0269916518
+## 161             ich dich    73            0      2  2.6796488249  21.0116610964
+## 162         die jungfrau    65            0      2  3.8234810894  20.9029018100
+## 163          ihrem vater    22            0      2  4.9321208141  20.8174157070
+## 164               so gut    52            0      2  3.2793623444  20.7705902259
+## 165           fertig war    38            0      2  4.4763645505  20.7220807519
+## 166         seinem vater    27            0      2  4.2963751000  20.6860468533
+## 167           sollen wir    20            0      2  5.6195689811  20.5548359130
+## 168         ihres vaters    16            0      2 10.2965524761  20.5485017196
+## 169           führte ihn    30            0      2  4.4668689137  20.5405425391
+## 170              auf die   205            0      2  1.5394009842  20.5367775801
+## 171             was hast    41            0      2  3.4601320433  20.5014751601
+## 172           eine große    32            0      2  4.0742749802  20.4164697477
+## 173             das herz    51            0      2  3.5123992245  20.3634456068
+## 174         nicht anders    43            0      2  5.0922391042  20.3498265809
+## 175          ganz allein    20            0      2  5.0263641833  20.3286715994
+## 176         bald hernach    14            0      2  6.5012882798  20.2097924562
+## 177      drachen getötet    11            0      2  9.2095893988  20.1633438790
+## 178             ins feld    16            0      2  5.9815395103  20.1599397526
+## 179           auf einmal    55            0      2  2.9404600716  20.1427630190
+## 180             der alte    88            0      2  2.4980894927  20.1000007541
+## 181            alle drei    26            0      2  4.2375333146  20.0960943621
+## 182            will dich    39            0      2  3.4215849467  20.0927926085
+## 183           der teufel    77            0      2  4.7311615892  20.0626115239
+## 184            kein wort    16            0      2  6.0219123999  20.0597132128
+## 185               du mir    72            0      2  2.5094548702  20.0332347228
+## 186               als es   132            0      2  1.8397742940  19.9856389226
+## 187         stellte sich    36            0      2  4.6076001104  19.9797523701
+## 188              hab ich    55            0      2  5.7367492447  19.9233379565
+## 189             sagte er   111            0      2  2.0516736392  19.8766234258
+## 190              wir uns    24            0      2  4.4003547966  19.8710211950
+## 191             was soll    37            0      2  3.5392191915  19.8642154234
+## 192            das pferd    48            0      2  3.5575060481  19.8637898070
+## 193               wie es   106            0      2  2.0437377126  19.8450019758
+## 194           der soldat    78            0      2  4.8330887159  19.8295556749
+## 195             den hals    49            0      2  5.3059508789  19.7975674914
+## 196       seiner tochter    19            0      2  4.9398853864  19.7703518191
+## 197           kluge else    14            0      2 10.5038426801  19.7692589527
+## 198       treue johannes    10            0      2  8.1329911261  19.7518078597
+## 199           seine frau    32            0      2  3.7067052934  19.6907414142
+## 200            der wirth    63            0      2  4.0624212204  19.6896704567
+## 201            im himmel    20            0      2  5.0346951229  19.6890119859
+## 202         nicht länger    41            0      2  5.1695297707  19.6866460931
+## 203              bin ich    51            0      2  3.0897595787  19.6472766659
+## 204          ins gesicht    16            0      2  5.5570008113  19.6368431310
+## 205               sah er    86            0      2  2.3423357534  19.5713504323
+## 206            wer weiss    18            0      2  5.0307607470  19.5653178555
+## 207             ihr seid    27            0      2  4.7977417449  19.5582939992
+## 208             die hand    66            0      2  2.9312037686  19.5485170996
+## 209           den ganzen    40            0      2  4.0560915374  19.5479962476
+## 210            lange bis    25            0      2  4.1896613726  19.5340339152
+## 211              so groß    37            0      2  4.3048450141  19.5331497048
+## 212            aufs neue    14            0      2  9.2566788560  19.5021592161
+## 213          morgen früh    16            0      2  7.1397083343  19.4837273988
+## 214         seinem herrn    17            0      2  5.3248331077  19.4827825771
+## 215           andern tag    23            0      2  4.3621971586  19.4792151557
+## 216              wie sie   136            0      2  1.7857061574  19.4697046886
+## 217                an zu   102            0      2  2.0360818745  19.4540154245
+## 218            wollt ihr    27            0      2  4.6088291968  19.4354934881
+## 219          schon lange    23            0      2  4.3461264264  19.4254805169
+## 220             lange so    50            0      2  3.0549693899  19.4155057051
+## 221    hochzeit gefeiert    11            0      2  7.2763778922  19.3882397124
+## 222          wald hinein    22            0      2  4.4394625571  19.3810024118
+## 223            ließ sich    52            0      2  2.9187476366  19.3506918305
+## 224       goldenen haare    12            0      2  6.4660234986  19.3501689496
+## 225   königliche schloss    14            0      2  6.7788540083  19.3266037092
+## 226            viel geld    17            0      2  5.1027009486  19.2970538925
+## 227          eines tages    19            0      2  8.9743556463  19.2960919948
+## 228          junge könig    26            0      2  4.1409900072  19.2901819864
+## 229            du kannst    35            0      2  3.8108698163  19.2818648657
+## 230         allen seiten    11            0      2  8.1237945786  19.2638150957
+## 231        meine tochter    17            0      2  5.0685098105  19.2162036245
+## 232                 o ja    15            0      2  5.7251375682  19.1678619491
+## 233           ein großes    46            0      2  5.7674164135  19.1290561760
+## 234        keine antwort    14            0      2  6.6308020733  19.1211982763
+## 235       tischchen deck    10            0      2  9.6294771863  19.0693348958
+## 236            die leute    54            0      2  3.7726260582  19.0692286473
+## 237        großer freude    12            0      2  6.2172371145  19.0455725806
+## 238    das schneiderlein    59            0      2  5.5854052286  19.0398329922
+## 239            mein sohn    20            0      2  4.6388705556  19.0125770309
+## 240             in einer    54            0      2  2.8625396416  18.9970041170
+## 241        sieben jahren    11            0      2  6.9137444555  18.9841705228
+## 242             ach gott    17            0      2  4.9809223608  18.9441472618
+## 243          liebes kind    15            0      2  7.1676753665  18.9285770592
+## 244            dem könig    66            0      2  2.4541366240  18.7758823852
+## 245        seiner mutter    19            0      2  4.6261034648  18.7732437859
+## 246         rechte braut    12            0      2  6.1944372319  18.7656794288
+## 247      schlimm ergehen    10            0      2 10.0189631662  18.7436246075
+## 248            ans feuer    12            0      2  6.2285340990  18.7386092404
+## 249            die sonne    55            0      2  4.3227236748  18.7275502214
+## 250              gib mir    21            0      2  5.5674465174  18.7039857002
+## 251           liebe frau    18            0      2  4.9033676011  18.7029145629
+## 252           am dritten    16            0      2  5.4210340756  18.6567424613
+## 253            guten rat    11            0      2  6.5937175581  18.6313318490
+## 254             und ließ   111            0      2  2.1256747697  18.6081353593
+## 255             in einen    92            0      2  2.0495002697  18.5544259428
+## 256         eines abends    12            0      2  5.9375963222  18.5198179732
+## 257            die katze    55            0      2  4.4339623692  18.5059387510
+## 258            alle tage    17            0      2  4.9708006038  18.4904284989
+## 259         stieg hinauf    13            0      2  5.6203303352  18.4554950014
+## 260             ins bett    16            0      2  5.0047240762  18.4347744459
+## 261            alte frau    25            0      2  3.9063335414  18.4124819996
+## 262          zum fenster    17            0      2  4.9627100761  18.3480629794
+## 263             und rief   117            0      2  2.0030681680  18.3240543523
+## 264            im ganzen    18            0      2  4.8186358735  18.3221268177
+## 265        seine tochter    22            0      2  4.2133653160  18.3197546274
+## 266        ganz vergnügt    14            0      2  5.7488597035  18.3189138759
+## 267           stück wegs    11            0      2  8.3198165639  18.3035591340
+## 268            unter dem    40            0      2  3.1977995347  18.2745109459
+## 269           sich nicht   121            0      2  1.7471830805  18.2744933276
+## 270          herzen lieb    10            0      2  6.5908706603  18.2600630233
+## 271           und wollte   152            0      2  1.6850066549  18.2541593401
+## 272         gretel guten    12            0      2  5.8117879837  18.2458687110
+## 273               war so   120            0      2  1.7459228962  18.1871824051
+## 274        junge königin    15            0      2  5.0698786458  18.1838656093
+## 275            mit ihren    33            0      2  3.5463679692  18.1824798012
+## 276            am morgen    21            0      2  4.2245726219  18.1561108454
+## 277            die ganze    50            0      2  3.4261834822  18.1275088209
+## 278               da kam    73            0      2  2.2482298358  18.1224749475
+## 279           anders als    28            0      2  4.4439777458  18.0971533367
+## 280              ging er   101            0      2  1.9380457890  18.0629840232
+## 281            siehst du    37            0      2  5.9103732686  18.0519411246
+## 282            ums leben    13            0      2  7.3623247770  18.0303596065
+## 283         die hochzeit    48            0      2  3.8352752794  17.9834859577
+## 284            tage lang    11            0      2  6.0031448060  17.9811265017
+## 285                ak ak    15            0      2 11.7017034755  17.8833015080
+## 286            der riese    68            0      2  5.0225617866  17.8391225400
+## 287             hat mich    28            0      2  3.5474705992  17.8136796214
+## 288         seine brüder    17            0      2  4.9068494914  17.8096950520
+## 289             und ging   161            0      2  1.5772111607  17.7792847455
+## 290             die erde    51            0      2  3.1367557101  17.7723593791
+## 291             wenn wir    33            0      2  3.2592278082  17.7582157746
+## 292           eines tags    11            0      2  7.9811721094  17.7367993039
+## 293             zur welt    17            0      2  4.5991900232  17.7367870455
+## 294          dritten tag    13            0      2  5.5506635772  17.7336334739
+## 295      keinem menschen    10            0      2  8.2004698449  17.7065390618
+## 296            den tisch    33            0      2  3.9006672452  17.6419701459
+## 297            zu seiner    41            0      2  3.0387412222  17.5837108211
+## 298           den rücken    32            0      2  4.1734638255  17.5689149896
+## 299           was willst    25            0      2  3.8588374019  17.5043702372
+## 300           einen baum    26            0      2  3.7383768025  17.4913783799
+## 301             seid ihr    22            0      2  4.4833466261  17.4671216252
+## 302             und weil    94            0      2  2.1866921220  17.4610945718
+## 303              zu ende    30            0      2  3.9756752012  17.4540275722
+## 304           des lebens    23            0      2  7.7861586771  17.4438849592
+## 305            zu seinem    45            0      2  2.8291087690  17.4297900144
+## 306             weil sie    59            0      2  2.5425406497  17.4242757230
+## 307            mein igel    29            0      2  8.1389603955  17.4143944772
+## 308              als der   193            0      2  1.3352617086  17.3977062968
+## 309         gekommen war    29            0      2  3.8103353497  17.3935626892
+## 310      wieder lebendig    20            0      2  5.8759839951  17.3690429493
+## 311            eine zeit    28            0      2  3.5266761444  17.3320121731
+## 312              wenn er    97            0      2  1.8912175156  17.3312182020
+## 313             der erde    52            0      2  3.0461619329  17.3297000437
+## 314            eine alte    33            0      2  3.1990486797  17.3283737956
+## 315              für ein    46            0      2  2.7544758077  17.3164454848
+## 316              wie ein    85            0      2  1.9715452679  17.3158224885
+## 317       seine gemahlin    15            0      2  5.4499591381  17.2988700439
+## 318         wusste nicht    34            0      2  3.3896491368  17.2871579859
+## 319            das ganze    37            0      2  3.4542230277  17.2665838247
+## 320            ein armer    36            0      2  5.6694414482  17.2653958029
+## 321         zur gemahlin    12            0      2  5.8169157065  17.2525178191
+## 322             fort und   102            0      2  2.0209694134  17.2294829965
+## 323              bei mir    31            0      2  3.2472134641  17.1757764705
+## 324          lieben gott    10            0      2  6.5608863324  17.1637100530
+## 325             der heil    53            0      2  4.5435702565  17.1574416275
+## 326         der jüngling    53            0      2  4.5435702565  17.1574416275
+## 327      ganz freundlich    12            0      2  6.1760625160  17.1272857111
+## 328           vor freude    18            0      2  4.4357210296  17.0986686261
+## 329               da sah    54            0      2  2.4811388258  17.0754763493
+## 330           können wir    15            0      2  4.8952628428  17.0753827021
+## 331            fragte ob    16            0      2  4.5445296365  17.0716083053
+## 332             ja sagte    26            0      2  3.5492075370  17.0532569707
+## 333          ein kleines    48            0      2  6.3444909820  17.0357958787
+## 334  menschliche gestalt    17            0      2 10.3553208466  17.0349103704
+## 335           drei söhne    12            0      2  6.4585285078  17.0086103740
+## 336           weite welt    13            0      2  7.8484960769  16.9876908439
+## 337            die braut    48            0      2  3.0310097110  16.9861196052
+## 338           herr wirth    13            0      2  5.0952226118  16.9839550353
+## 339          das schloss    44            0      2  2.8922090980  16.9764723180
+## 340          bald darauf    15            0      2  4.6723360468  16.9730605869
+## 341             sie sich   162            0      2  1.4054476004  16.9519707047
+## 342            ging fort    29            0      2  3.3051477216  16.9074501131
+## 343       neben einander    10            0      2  5.8236255496  16.8890843984
+## 344           alte könig    27            0      2  3.4175716356  16.8679339661
+## 345            dachte er    58            0      2  2.4802956623  16.8533016466
+## 346              da rief    50            0      2  2.5508526402  16.8415347238
+## 347        seinen ranzen    12            0      2  5.7065243266  16.8297522360
+## 348         setzten sich    26            0      2  4.8911223991  16.8046881576
+## 349      schöne jungfrau    11            0      2  5.4572223106  16.7956786805
+## 350             ach nein    13            0      2  4.9873487441  16.7943888050
+## 351            von ihrem    22            0      2  3.9085767540  16.7892963002
+## 352           gingen sie    41            0      2  3.1763108195  16.7691594411
+## 353        seinem bruder    16            0      2  4.4472437382  16.7665805746
+## 354           nein sagte    20            0      2  4.0934718656  16.7597321648
+## 355             den baum    37            0      2  3.1075802049  16.7166358743
+## 356            alles was    33            0      2  3.0653055417  16.7008713104
+## 357            zu weinen    32            0      2  5.4171542032  16.6979297170
+## 358               ab und    75            0      2  2.4405412921  16.6712673442
+## 359           ganze welt    12            0      2  5.1599559984  16.6656282923
+## 360         jeden morgen    11            0      2  5.6117428030  16.6544395625
+## 361           zur gretel    13            0      2  4.9962471636  16.6506141320
+## 362           vom himmel    11            0      2  5.4215266521  16.6319367503
+## 363             über den    51            0      2  2.5086713262  16.6247847509
+## 364             ich sehe    31            0      2  5.1611004289  16.6025859616
+## 365           adies hans    11            0      2  6.8677113446  16.5887058113
+## 366              dass du    77            0      2  1.9760547629  16.5884299347
+## 367           und fragte    88            0      2  2.1256199717  16.5852880399
+## 368             dem wald    39            0      2  2.8607918285  16.5755421937
+## 369             zur frau    20            0      2  3.8878507080  16.5332849839
+## 370            wir haben    22            0      2  3.6959709631  16.5270952927
+## 371            zu finden    29            0      2  3.5973926161  16.4975752823
+## 372              der bär    45            0      2  4.1938008846  16.4894353812
+## 373            in seinem    45            0      2  2.6669889877  16.4496429098
+## 374            paar tage    10            0      2  5.6081268307  16.4449266244
+## 375           drei tagen    11            0      2  6.3127307189  16.4275597199
+## 376          tochter zur    15            0      2  4.4856739941  16.4186418743
+## 377              pik pik    12            0      2 11.8879546991  16.4155576368
+## 378         große freude    11            0      2  5.3005192040  16.3908558018
+## 379            trug sich    29            0      2  3.4375993965  16.3654845294
+## 380             dass man    24            0      2  3.7122296328  16.3599526515
+## 381             die zwei    62            0      2  2.3385168684  16.3505680910
+## 382           warten bis    12            0      2  5.9220594134  16.3380045259
+## 383           müssen wir    13            0      2  5.1389722962  16.3377006978
+## 384            dem walde    24            0      2  4.1747261082  16.3258962609
+## 385             für dich    23            0      2  3.5627130009  16.3083278695
+## 386             sien fro    10            0      2 11.5129348589  16.2934394196
+## 387            hinaus in    42            0      2  2.7492007251  16.2919064741
+## 388          eine schöne    21            0      2  3.9078954797  16.2364470197
+## 389            mein kind    18            0      2  4.0213788182  16.2079216026
+## 390           einer ecke    11            0      2  5.5633805257  16.1581105189
+## 391             der sohn    48            0      2  2.8556606054  16.1556883978
+## 392           der bruder    52            0      2  2.6621977988  16.1509255994
+## 393            durch die    50            0      2  2.6682837776  16.1329868253
+## 394              so weit    27            0      2  3.7111092801  16.1169155105
+## 395          und brachte    62            0      2  2.7833668474  16.1016218258
+## 396           klopfte an    19            0      2  4.5182500409  16.0330629588
+## 397            alte hexe    12            0      2  5.0897128537  16.0084692870
+## 398             die drei    60            0      2  2.3229527419  16.0073280127
+## 399            laßt mich    13            0      2  5.0620596926  15.9885677097
+## 400           der zweite    41            0      2  3.4186318699  15.9819788024
+## 401             sehen ob    13            0      2  4.6806050650  15.9806041129
+## 402         erzählte ihm    22            0      2  3.8881141605  15.9683896955
+## 403           kaum hatte    18            0      2  4.2667498357  15.9477330439
+## 404              aus der   102            0      2  1.7040561052  15.9127259346
+## 405              mit mir    53            0      2  2.2751725267  15.8485684490
+## 406           doch nicht    45            0      2  2.5183800629  15.8477110997
+## 407           gar nichts    15            0      2  4.3760459618  15.8422929714
+## 408           eine weile    17            0      2  5.4543813265  15.8319240480
+## 409             muss ich    36            0      2  2.9004100881  15.8306383936
+## 410              vor den    60            0      2  2.1622366142  15.8193183769
+## 411              da nahm    42            0      2  2.6190675802  15.8162119013
+## 412             ich kann    39            0      2  2.7527503023  15.8117803673
+## 413             in aller    26            0      2  4.0015874239  15.8108058543
+## 414            du willst    27            0      2  3.3628931002  15.7698138100
+## 415        begegnete ihm    19            0      2  4.6846654516  15.7649704447
+## 416             den sack    26            0      2  3.9673356038  15.7569153463
+## 417          ihre kammer    11            0      2  5.1150328480  15.7041557460
+## 418          reichte ihm    19            0      2  4.4872803932  15.6904465490
+## 419             den ring    26            0      2  3.8941193085  15.6888319502
+## 420           der dritte    39            0      2  3.5321225757  15.6733219994
+## 421               bis er    62            0      2  2.1700594593  15.6621505145
+## 422               was er   105            0      2  1.6200682956  15.6588628686
+## 423             wenn sie    85            0      2  1.8072459863  15.6496732447
+## 424           und dachte    83            0      2  2.0372381332  15.6458459500
+## 425           ein großer    24            0      2  3.8496896790  15.6303829670
+## 426          und schlief    54            0      2  3.3051323077  15.5626426620
+## 427            sollt ihr    17            0      2  4.6596192173  15.5576813923
+## 428            heran kam    15            0      2  4.5832139782  15.5520221925
+## 429            so sollst    31            0      2  3.1035461352  15.5439179575
+## 430           noch nicht    57            0      2  2.1598175877  15.5134187020
+## 431         seine mutter    19            0      2  3.7313325811  15.5083104681
+## 432          freute sich    31            0      2  5.9943224660  15.4844567969
+## 433              nahm er    56            0      2  2.2731809544  15.4755051036
+## 434           nicht eher    26            0      2  5.3026981287  15.4271844110
+## 435        ihrer tochter    10            0      2  5.1929523009  15.4229021350
+## 436              auf der   175            0      2  1.2354433683  15.4184872469
+## 437           setze dich    14            0      2  6.6927485749  15.4100029632
+## 438           dich nicht    49            0      2  2.3236504410  15.3960461683
+## 439              mit ihm    71            0      2  1.8993005323  15.3746823474
+## 440            ein alter    23            0      2  4.9459652297  15.3673572510
+## 441           mehr übrig    10            0      2  5.4868684110  15.3143596928
+## 442               an dem    74            0      2  1.8543308878  15.3076332822
+## 443          einen stein    17            0      2  4.1787827405  15.2957107352
+## 444       fenster hinaus    11            0      2  4.9036532930  15.2502892639
+## 445              wer hat    17            0      2  3.8704579386  15.2477643353
+## 446             zur türe    13            0      2  4.4424512333  15.2477340688
+## 447           ließ sichs    10            0      2  5.7899565290  15.2262436469
+## 448          sich nieder    24            0      2  3.5554153705  15.2258652472
+## 449             gebt mir    18            0      2  6.5972044929  15.1888141512
+## 450        wieder heraus    22            0      2  3.4056302140  15.1456252796
+## 451            das leben    37            0      2  2.7706048538  15.1262007483
+## 452       zum drittenmal    29            0      2  8.5747774306  15.1043283130
+## 453          viel besser    10            0      2  5.0703930102  15.0994441672
+## 454           dem wasser    32            0      2  2.8704064512  15.0946769540
+## 455          seinen kopf    14            0      2  4.2140199986  15.0570381574
+## 456           sein leben    19            0      2  3.6382416558  15.0302746855
+## 457              es wäre    47            0      2  2.3306911121  15.0246305659
+## 458             dem baum    28            0      2  3.1008106524  15.0179043960
+## 459        gegeben hatte    16            0      2  4.2366360244  15.0144804441
+## 460            am himmel    12            0      2  4.6427223773  15.0122258216
+## 461             wenn man    17            0      2  3.9004376862  14.9859225828
+## 462           mit seinen    33            0      2  2.7565436617  14.9733677391
+## 463         dem goldenen    24            0      2  3.4400824251  14.9635445264
+## 464            das feuer    33            0      2  2.9544980033  14.9565099008
+## 465           nichts als    40            0      2  2.4863896811  14.9505136303
+## 466             hand und    67            0      2  2.2277231342  14.9416739793
+## 467               so oft    23            0      2  4.9974455120  14.9384095937
+## 468           wasser des    16            0      2  3.8924546785  14.9334668647
+## 469             ich mich    49            0      2  2.2528072736  14.9173927414
+## 470             am abend    13            0      2  4.3675452943  14.9043377426
+## 471              von den    70            0      2  1.8656175161  14.8976110602
+## 472             ich euch    38            0      2  2.5968382605  14.8928293413
+## 473        geschehen war    20            0      2  4.0631733402  14.8782337594
+## 474                ob er    40            0      2  2.6893308023  14.8765090518
+## 475           den keller    23            0      2  4.5021338337  14.8692936231
+## 476           weise frau    10            0      2  5.9889869153  14.8677579940
+## 477        weiter nichts    17            0      2  3.7553066765  14.8495332256
+## 478           hinein und    74            0      2  2.0473792570  14.8331931935
+## 479          ins schloss    13            0      2  4.2901369796  14.8285252542
+## 480             dem kopf    28            0      2  3.0457797076  14.8172439234
+## 481            noch mehr    22            0      2  3.2913892916  14.8162338436
+## 482               wo sie    60            0      2  2.0590897886  14.8072102664
+## 483           welt herum    11            0      2  4.6687443595  14.7995965900
+## 484         das männchen    25            0      2  3.8617410122  14.7568172224
+## 485         erzählte ihr    18            0      2  3.8550050977  14.7515772457
+## 486       ach antwortete    17            0      2  3.7387054054  14.7389870605
+## 487            mitten in    23            0      2  3.8318411557  14.7388807059
+## 488            von allen    15            0      2  4.2614441400  14.7367436626
+## 489            bei jedem    10            0      2  5.3025954411  14.7323196293
+## 490         sein schwert    12            0      2  5.2968141552  14.6806454889
+## 491             an einem    34            0      2  2.6273697231  14.6774738463
+## 492         einem großen    15            0      2  3.9710955444  14.6649640113
+## 493           gut machen    12            0      2  4.4158092911  14.6584585993
+## 494            sein herz    17            0      2  3.7661218413  14.6550292684
+## 495          einen guten    18            0      2  3.7376345361  14.6521528292
+## 496          zwei kinder    12            0      2  4.4274409302  14.6273708833
+## 497              es trug    28            0      2  3.1057445628  14.6240195470
+## 498             fiel ihm    21            0      2  3.4973298050  14.6206289669
+## 499               ob sie    38            0      2  2.6892079445  14.6149920477
+## 500           die kinder    39            0      2  2.7600134236  14.5766259434
+## 501           der andere    46            0      2  2.4932121686  14.5745024976
+## 502              im wald    18            0      2  3.5641264563  14.5569618984
+## 503          eine stunde    14            0      2  4.6824295459  14.5332392631
+## 504             das haus    46            0      2  2.3027177920  14.5299084984
+## 505              bis zum    19            0      2  3.4520515214  14.5182532466
+## 506          wieder heim    18            0      2  3.6400145367  14.5176161494
+## 507           noch immer    19            0      2  3.4813291627  14.5122707982
+## 508          sich selbst    25            0      2  3.1969037575  14.5057675307
+## 509            dem alten    24            0      2  3.2801038002  14.5040232791
+## 510            die stadt    34            0      2  3.1075598184  14.4946627291
+## 511        wieder zurück    18            0      2  3.6323766513  14.4938726407
+## 512           hinter dem    24            0      2  3.2702955173  14.4742604602
+## 513            auf einem    39            0      2  2.4267327706  14.4548296938
+## 514            deck dich    15            0      2  7.1967828479  14.4412235188
+## 515          zwei brüder    10            0      2  4.8653636665  14.4245004362
+## 516          dem brunnen    20            0      2  3.7786621075  14.4193347477
+## 517            den stall    22            0      2  4.6753923475  14.4016604745
+## 518            was macht    15            0      2  4.2048782676  14.4011938768
+## 519        einem kleinen    12            0      2  4.4461668948  14.3919900961
+## 520          seine tiere    12            0      2  4.4955689476  14.3834537389
+## 521             ist mein    27            0      2  2.8789543421  14.3786090814
+## 522        einen kleinen    16            0      2  3.9518797318  14.3768975541
+## 523           führte sie    31            0      2  3.0750638039  14.3752353558
+## 524             das geld    32            0      2  2.8469150396  14.3641253128
+## 525            von einem    28            0      2  2.8160599546  14.3576436633
+## 526              geh hin    10            0      2  4.7602320218  14.3108182847
+## 527         ihre tochter    12            0      2  4.2963878271  14.3061955159
+## 528           herr könig    19            0      2  3.4263089496  14.3061486277
+## 529           den garten    21            0      2  4.1942352796  14.2964475087
+## 530            das hörte    33            0      2  2.7683804382  14.2933878345
+## 531              hol mir    12            0      2  5.5383255058  14.2891694018
+## 532           fragte der    56            0      2  2.1284366540  14.2878010772
+## 533            den wagen    26            0      2  3.1832898789  14.2877331990
+## 534              wo bist    16            0      2  3.7101518562  14.2837310879
+## 535            hand voll    11            0      2  4.4791358525  14.2771378409
+## 536              in eine    72            0      2  1.7561123989  14.2732045934
+## 537          schlief ein    22            0      2  3.4733057163  14.2674747305
+## 538        seinem herzen    10            0      2  4.7893583486  14.2660132308
+## 539         niemand mehr    12            0      2  4.2999121320  14.2616175866
+## 540         rechter zeit    11            0      2  7.9921441334  14.2603904570
+## 541         geworden war    20            0      2  3.6703659163  14.2482335620
+## 542           herr fuchs    11            0      2  4.4737338176  14.2409288633
+## 543              da trat    25            0      2  3.1802092923  14.2407189753
+## 544              was für    26            0      2  2.9118298035  14.2371145763
+## 545            ins feuer    11            0      2  4.4694056341  14.2238172966
+## 546               bat um    11            0      2  4.5762514125  14.2236138099
+## 547         sehen konnte    14            0      2  3.9466726723  14.2102736311
+## 548             dass ich    80            0      2  1.6537990681  14.2079030300
+## 549            die nacht    45            0      2  2.3934044184  14.2069558510
+## 550             mit gold    23            0      2  3.2013519427  14.1955525873
+## 551             und wenn   134            0      2  1.3498713754  14.1918535514
+## 552            aus allen    13            0      2  4.3228695481  14.1877101893
+## 553            kommst du    17            0      2  4.3492486101  14.1833313453
+## 554             über das    47            0      2  2.2109683416  14.1811465247
+## 555         gegangen war    20            0      2  3.6367407429  14.1781997568
+## 556           auch nicht    55            0      2  1.9919475202  14.1506457176
+## 557            der erste    32            0      2  3.4150185748  14.1411295813
+## 558            die stube    30            0      2  3.4724198252  14.1341868504
+## 559         lieber jäger    10            0      2  4.6533785696  14.1306756889
+## 560          schöner als    17            0      2  4.3020477953  14.1260161875
+## 561            lege dich    10            0      2  6.0596735057  14.1192880462
+## 562             da sagte    56            0      2  1.9687390313  14.1099986960
+## 563              du mich    39            0      2  2.3597750397  14.0951820843
+## 564              den hof    21            0      2  3.8355542051  14.0759182825
+## 565              so lang    22            0      2  3.4454484403  14.0533970430
+## 566              so sehr    19            0      2  4.1692005762  14.0510884708
+## 567           das andere    33            0      2  2.7040337718  14.0474899408
+## 568          da erschrak    20            0      2  3.7673079876  14.0236678241
+## 569               um den    43            0      2  2.2645202671  14.0088625843
+## 570             mirs nur    10            0      2  4.8394516234  13.9966403261
+## 571            auf einen    56            0      2  1.9408797808  13.9951761267
+## 572              was ist    41            0      2  2.2596458311  13.9894989759
+## 573          so gewaltig    19            0      2  4.0656470290  13.9891992951
+## 574           wir müssen    10            0      2  4.8152617066  13.9782910335
+## 575            fingen an    14            0      2  4.8452995940  13.9303221201
+## 576          ein schönes    33            0      2  6.4034096671  13.9041000856
+## 577             aber der   182            0      2  1.0859102289  13.8978923423
+## 578             es nicht   112            0      2  1.3648666178  13.8775286253
+## 579           von silber    12            0      2  4.7824548370  13.8742416617
+## 580             wer bist    12            0      2  4.1404943459  13.8591473480
+## 581         sprachen sie    28            0      2  3.1553285193  13.8588276379
+## 582             über die    59            0      2  1.9596665955  13.8356963607
+## 583          türe hinaus    11            0      2  4.3114582216  13.7835892199
+## 584             dir dein    14            0      2  3.8330418136  13.7751687924
+## 585           die zweite    31            0      2  3.0678330819  13.7725677340
+## 586            der nacht    46            0      2  2.3000527506  13.7629419326
+## 587              und bat    43            0      2  3.0268022833  13.7591626160
+## 588             ließ ihn    26            0      2  2.8032595639  13.7420617173
+## 589            weisst du    23            0      2  6.0896492516  13.7227484584
+## 590           nieder und    45            0      2  2.7684776041  13.7130939776
+## 591             der löwe    39            0      2  4.9572624663  13.7103563935
+## 592           sein pferd    15            0      2  3.7279951795  13.6966822936
+## 593            kamen sie    40            0      2  2.3829833466  13.6958119764
+## 594             sind wir    14            0      2  3.7955071184  13.6945575344
+## 595            zu suchen    19            0      2  3.7541877311  13.6887603635
+## 596           die tasche    28            0      2  3.4900415118  13.6774387127
+## 597            eine gute    14            0      2  4.0503259675  13.6595018003
+## 598            zum könig    22            0      2  3.0065597425  13.6477434814
+## 599          eine andere    19            0      2  3.3014759128  13.6456502626
+## 600            hans hans    12            0      2  4.0664896768  13.6375764354
+## 601              wo hast    17            0      2  3.4126527341  13.6348065849
+## 602              und gab    67            0      2  1.9481201854  13.6250958066
+## 603              weil es    35            0      2  2.4511017138  13.6162177253
+## 604           der müller    30            0      2  4.0864011756  13.6150407646
+## 605             am leben    13            0      2  3.9046454306  13.5925981463
+## 606        dauerte nicht    18            0      2  4.8627048726  13.5632419184
+## 607       gekommen waren    11            0      2  4.2891998507  13.5395736021
+## 608            den armen    21            0      2  3.4719845414  13.5247838601
+## 609            die beine    27            0      2  3.9453328152  13.5072780990
+## 610             komm mit    18            0      2  3.5258669876  13.4971887987
+## 611           dem andern    32            0      2  2.5106553255  13.4822909658
+## 612         nichts davon    13            0      2  3.8845306457  13.4786745660
+## 613              geh nur    11            0      2  4.2672813791  13.4544327290
+## 614             der arme    33            0      2  2.8606085868  13.4445399779
+## 615           die rechte    27            0      2  3.4844653748  13.4311316866
+## 616              sich in   102            0      2  1.3812984147  13.4221258437
+## 617           was machst    12            0      2  5.3833854412  13.4194222292
+## 618           und machte    60            0      2  2.0537599819  13.4000726570
+## 619            kaum aber    19            0      2  3.5052010459  13.3899176565
+## 620         gewesen wäre    12            0      2  4.0181163113  13.3776413524
+## 621             mehr als    30            0      2  2.5588470089  13.3367748600
+## 622            mit einer    28            0      2  2.6416229047  13.3248326335
+## 623       gegangen waren    10            0      2  4.4565805504  13.3233180860
+## 624        was geschehen    13            0      2  4.1261247415  13.3128573346
+## 625              da ließ    36            0      2  2.3367038835  13.2994958793
+## 626             der hund    28            0      2  3.4960385276  13.2957576489
+## 627           könig isst    11            0      2  6.2516926408  13.2764351199
+## 628          die älteste    26            0      2  3.6513778494  13.2760905274
+## 629              du dich    37            0      2  2.2723924940  13.2744141324
+## 630          eine kleine    13            0      2  4.0923666002  13.2623046234
+## 631             der wind    28            0      2  3.9627060984  13.2610430701
+## 632               da saß    26            0      2  2.8048798663  13.2349078296
+## 633             hieß ihn    14            0      2  3.8712404896  13.2121936956
+## 634           mich nicht    41            0      2  2.1571808349  13.2017713969
+## 635              vor ihm    36            0      2  2.2758368460  13.1852158382
+## 636              da fing    26            0      2  2.7914030666  13.1846360285
+## 637          ging weiter    18            0      2  3.2248865536  13.1845562494
+## 638             da stand    33            0      2  2.4240330759  13.1641519971
+## 639       dem augenblick    16            0      2  3.9318341960  13.1611276311
+## 640             zu holen    21            0      2  3.2013585447  13.1591368058
+## 641          den brunnen    20            0      2  3.4432543138  13.1521549981
+## 642             du wirst    17            0      2  3.5948000835  13.1472439878
+## 643           es dauerte    18            0      2  4.7074021073  13.1330087793
+## 644             in ihrem    25            0      2  2.8901668673  13.1303265215
+## 645             der koch    27            0      2  3.6875873929  13.1140150555
+## 646           die sieben    31            0      2  2.7911962256  13.1082445105
+## 647            wenn mirs    11            0      2  4.3551267140  13.0886983821
+## 648       antwortete sie    58            0      2  1.8237603493  13.0831359908
+## 649            also dass    20            0      2  3.0879796907  13.0619791711
+## 650           den andern    36            0      2  2.3049051089  13.0448924523
+## 651            herab und    47            0      2  2.3784162278  13.0410671144
+## 652         gehört hatte    13            0      2  3.9467133775  13.0406004672
+## 653             und fing    54            0      2  2.1291834288  13.0383612208
+## 654           die schöne    32            0      2  2.6966206889  13.0382964469
+## 655             von gold    16            0      2  3.4247600344  13.0360282171
+## 656             zu sehen    27            0      2  2.6824518239  13.0169593067
+## 657            die küche    25            0      2  3.9195046064  13.0166703000
+## 658              bat ihn    14            0      2  3.7795477173  13.0058459441
+## 659           so traurig    17            0      2  3.8048239704  12.9964992083
+## 660             war aber    84            0      2  1.4691741795  12.9945600230
+## 661           die räuber    25            0      2  3.9721526929  12.9943746267
+## 662            wohl dass    25            0      2  2.7080778497  12.9931729284
+## 663             die luft    25            0      2  3.5756982430  12.9916896282
+## 664            die ziege    25            0      2  3.5756982430  12.9916896282
+## 665             zu ihrem    23            0      2  2.9509918672  12.9795939983
+## 666              denn es    32            0      2  2.4381445005  12.9748130168
+## 667           mit großer    16            0      2  3.6216718444  12.9681979909
+## 668        hochzeit ward    10            0      2  4.3090852338  12.9641676345
+## 669           dem rücken    17            0      2  3.5623952616  12.9250743996
+## 670          endlich kam    19            0      2  3.0627183682  12.9178986771
+## 671          darauf ging    18            0      2  3.1473518053  12.9035784394
+## 672           zeigte ihm    14            0      2  3.9265011581  12.9027067320
+## 673             den mund    17            0      2  4.2053076082  12.9003793410
+## 674            die tiere    27            0      2  3.0840720124  12.9003084541
+## 675             den berg    21            0      2  3.1913979014  12.8960044579
+## 676            sagte sie    71            0      2  1.6084576826  12.8772714667
+## 677             warf ihn    14            0      2  3.7227778445  12.8720241984
+## 678            so schwer    16            0      2  4.0380192612  12.8507549329
+## 679          sie sollten    26            0      2  2.9291254501  12.8277997127
+## 680          nach meinem    11            0      2  4.0769930862  12.8197782725
+## 681        gesehen hatte    13            0      2  3.8371993127  12.7990731852
+## 682              und sah    91            0      2  1.4920245151  12.7917285166
+## 683           von selbst    15            0      2  3.4694306697  12.7741524268
+## 684            schon gut    12            0      2  3.7802251474  12.7565244628
+## 685            bei einem    17            0      2  3.1715831039  12.7395038647
+## 686              gab ihr    21            0      2  2.8951298828  12.7273216115
+## 687        der spielmann    26            0      2  4.0665923799  12.7077655168
+## 688           von seinem    20            0      2  2.9360679280  12.6965882463
+## 689             den leib    18            0      2  3.5558561787  12.6920182731
+## 690              das tor    19            0      2  3.6212333998  12.6913371107
+## 691            zu helfen    19            0      2  3.2622492522  12.6911798794
+## 692             wald und    68            0      2  1.7580350315  12.6869951300
+## 693         erkannte ihn    11            0      2  4.4949710150  12.6844797407
+## 694               in das   134            0      2  1.1391608241  12.6733398771
+## 695             weg nach    16            0      2  3.2584757018  12.6669389182
+## 696        einen schönen    13            0      2  3.7912064473  12.6630453631
+## 697              von der    96            0      2  1.3697578938  12.6616086181
+## 698         der dummling    35            0      2  5.0862947650  12.6504402245
+## 699             mir doch    21            0      2  2.8417148091  12.6500863434
+## 700            ein gutes    16            0      2  3.7163289901  12.6469664415
+## 701            mit ihrem    19            0      2  3.1012681358  12.6290595535
+## 702         erblickte er    25            0      2  2.9939256379  12.6258938948
+## 703            machst du    14            0      2  5.1225197816  12.6211981015
+## 704              auf und   224            0      2  0.9021641863  12.6014330499
+## 705            dir sagen    11            0      2  3.9378132098  12.5799011895
+## 706             fort bis    15            0      2  3.3277876703  12.5723492519
+## 707              sich zu    88            0      2  1.3849948886  12.5442475737
+## 708             ging mit    41            0      2  2.0221391398  12.5359871729
+## 709            neben ihm    15            0      2  3.5396631413  12.5326789617
+## 710         zwischen den    16            0      2  4.2487924737  12.5289108871
+## 711             den ofen    16            0      2  4.1961444435  12.5255401506
+## 712              ihm die   121            0      2  1.1950899923  12.5252711077
+## 713         sein hütchen    10            0      2  6.2683594747  12.5247420433
+## 714          ein schöner    15            0      2  3.9119994329  12.5137395817
+## 715            die vögel    23            0      2  3.6943773555  12.5129203027
+## 716               zu tun    22            0      2  2.8897820448  12.5015616751
+## 717         seine arbeit    11            0      2  3.9215512727  12.4916156983
+## 718           die kammer    26            0      2  2.9868319414  12.4749055383
+## 719           fragte wer    11            0      2  3.8473993415  12.4587788654
+## 720           eine weiße    10            0      2  4.8225824972  12.4423321631
+## 721            sie beide    24            0      2  2.9707037241  12.4389750032
+## 722          einen brief    10            0      2  4.6960023249  12.4308774116
+## 723              als die   140            0      2  1.1004274292  12.4268211938
+## 724             vor sich    40            0      2  2.0357031188  12.4108005432
+## 725              de haas    21            0      2 10.5609522369  12.4065372612
+## 726           erhob sich    16            0      2  5.4659342918  12.3968639811
+## 727            lief fort    10            0      2  4.0384896617  12.3938145899
+## 728                wo er    52            0      2  1.8284310741  12.3865847845
+## 729               bis an    26            0      2  2.5111521908  12.3752713807
+## 730          einen wagen    14            0      2  3.5002735020  12.3690524472
+## 731          den drachen    16            0      2  4.6408603412  12.3614532291
+## 732             ins haus    12            0      2  3.6452122740  12.3335661029
+## 733          ging hinaus    17            0      2  3.0822323021  12.3243238420
+## 734            da gingen    21            0      2  2.9196755775  12.3050175801
+## 735              so lieb    16            0      2  3.5894062244  12.3045113529
+## 736             in allen    18            0      2  3.3292712211  12.2846824065
+## 737              hat dir    17            0      2  3.0483750945  12.2741107396
+## 738           die andern    48            0      2  1.9169660610  12.2668363786
+## 739            er wollte    65            0      2  1.5984228624  12.2282062409
+## 740             das arme    22            0      2  2.9392342006  12.2258543054
+## 741             die höhe    72            0      2  6.6900463574  12.2208016673
+## 742           heraus und    57            0      2  1.8737654584  12.2174033107
+## 743          herum waren    11            0      2  3.7781148710  12.1948141973
+## 744          das goldene    19            0      2  3.2932705070  12.1832281602
+## 745          heil joseph    14            0      2 10.5698127628  12.1828123074
+## 746             die magd    22            0      2  4.0234303830  12.1792173738
+## 747             das holz    19            0      2  3.2719887993  12.1421738860
+## 748          da sprachen    18            0      2  3.1808989950  12.1415248552
+## 749           regte sich    15            0      2  5.4029537415  12.1326242152
+## 750        der bräutigam    23            0      2  3.7164090641  12.1223244068
+## 751            er sollte    44            0      2  1.9576640512  12.1208642752
+## 752           den mantel    15            0      2  4.0832721011  12.1128486866
+## 753           zu fressen    14            0      2  4.6798323790  12.1088060322
+## 754        ein stückchen    14            0      2  4.9113236154  12.1044444354
+## 755          was gruseln    10            0      2  5.5928571546  12.0952224412
+## 756             seht ihr    10            0      2  4.6754069865  12.0677248529
+## 757            ihr könnt    12            0      2  3.8089984904  12.0535533608
+## 758              als nun    39            0      2  1.9913671829  12.0366929229
+## 759           das schöne    23            0      2  2.7822523555  12.0253844634
+## 760            dem wagen    18            0      2  3.0678648323  12.0229311531
+## 761            ihr sollt    11            0      2  4.0613453453  12.0057890138
+## 762             sie alle    44            0      2  1.9266740963  11.9987242685
+## 763            ach sagte    15            0      2  3.1961180262  11.9941399174
+## 764            das reich    20            0      2  3.0639082024  11.9880005824
+## 765             der wand    27            0      2  4.7045871567  11.9820140286
+## 766             sich hin    25            0      2  2.5189673422  11.9819315726
+## 767            noch viel    14            0      2  3.2940463417  11.9639058497
+## 768            mein herr    12            0      2  3.5296081990  11.9615054716
+## 769              wenn es    50            0      2  1.7544993426  11.9595368415
+## 770             wenn ihr    33            0      2  2.1388825108  11.9573684220
+## 771              sie ihn    83            0      2  1.3702264708  11.9544085287
+## 772          mein lieber    10            0      2  3.8808759390  11.9523332366
+## 773          der älteste    23            0      2  3.3023895939  11.9316399647
+## 774                 o du    14            0      2  3.5717555371  11.9263142920
+## 775            sein brot    12            0      2  3.5762641153  11.9121737856
+## 776              und her    42            0      2  2.2428096494  11.9116639553
+## 777    das schwesterchen    16            0      2  3.9445260082  11.9112163852
+## 778            will mich    20            0      2  2.7259285827  11.9088093244
+## 779             an einen    40            0      2  1.9351336970  11.9044492604
+## 780         seinen augen    11            0      2  3.6596873861  11.8958209428
+## 781         der sperling    25            0      2  4.5175514729  11.8787442785
+## 782             das tuch    16            0      2  3.8514269675  11.8670533473
+## 783       gegessen hatte    10            0      2  4.1445163220  11.8559002866
+## 784             nur noch    19            0      2  2.7807314290  11.8412634285
+## 785              der tod    25            0      2  2.9079476024  11.8301433265
+## 786    eingeschlafen war    12            0      2  4.5669056340  11.8134684924
+## 787            ich wills    15            0      2  5.0468820028  11.8127704867
+## 788           aber nicht    86            0      2  1.3161469627  11.8052738222
+## 789            meinte es    17            0      2  3.2239844847  11.8036992219
+## 790           zurück und    45            0      2  2.0987441751  11.7997085747
+## 791            sein bett    12            0      2  3.5335012804  11.7936671172
+## 792            eine ecke    10            0      2  4.1429642514  11.7855427103
+## 793            froh dass    10            0      2  4.6620983155  11.7826571830
+## 794               da lag    21            0      2  2.7554332803  11.7622618158
+## 795              bei ihm    26            0      2  2.3830820781  11.7598214177
+## 796            den boden    15            0      2  3.6536621763  11.7552421239
+## 797             etwas zu    24            0      2  2.5427809952  11.7550883419
+## 798              bei uns    11            0      2  3.6170286920  11.7419845481
+## 799           nicht weit    17            0      2  3.1398828380  11.7393821389
+## 800           brachte es    21            0      2  2.7682680468  11.7308232620
+## 801           sie gingen    26            0      2  2.5645451530  11.7289886035
+## 802            den füßen    14            0      2  4.1189063196  11.7271649674
+## 803         und erzählte    36            0      2  2.4927516270  11.7269232934
+## 804             haus kam    18            0      2  2.8320299083  11.7197273990
+## 805             und warf    35            0      2  2.5575695559  11.7134200355
+## 806           sagten sie    20            0      2  3.1313495430  11.7128817109
+## 807             der graf    24            0      2  4.4773971070  11.7085498726
+## 808           die dritte    24            0      2  2.8513929977  11.7056200355
+## 809              in acht    16            0      2  3.3795386052  11.7008095943
+## 810            eine hexe    11            0      2  3.7978561105  11.6874239716
+## 811            da fragte    28            0      2  2.3168849879  11.6788940361
+## 812          ein anderer    15            0      2  5.4580267975  11.6687322277
+## 813              es wird    27            0      2  2.3785067075  11.6673675848
+## 814           der fremde    22            0      2  4.1174913560  11.6648062936
+## 815            noch eine    28            0      2  2.2584066030  11.6544268774
+## 816            ein altes    13            0      2  4.9395309880  11.6502637768
+## 817             dem haus    28            0      2  2.2887294162  11.6336339430
+## 818           zeigte ihr    11            0      2  3.8453842091  11.6327775577
+## 819             hätt ich    15            0      2  5.1724198964  11.6176971490
+## 820           geschah es    14            0      2  3.7541022580  11.6176630441
+## 821             hörte er    30            0      2  2.3287474619  11.6127782273
+## 822            groß dass    13            0      2  3.4630621130  11.6098914714
+## 823         sein gesicht    10            0      2  3.8562941998  11.6047515535
+## 824            das erste    18            0      2  3.1578118109  11.5976158679
+## 825               es ihm    73            0      2  1.4031090498  11.5965017047
+## 826         der trommler    21            0      2  3.7353859453  11.5936577265
+## 827            in großer    17            0      2  3.1651216363  11.5897722965
+## 828            wollte er    62            0      2  1.5460925797  11.5846690533
+## 829           einen sohn    14            0      2  3.2265170101  11.5787152502
+## 830               wo die    54            0      2  1.6805003767  11.5774624129
+## 831            der zwerg    21            0      2  3.8567555365  11.5666254394
+## 832            gehen und    54            0      2  1.8019517516  11.5425254398
+## 833            der treue    21            0      2  3.9234512781  11.5380422862
+## 834            hüte dich    14            0      2  7.9165495147  11.5354564336
+## 835             als wenn    40            0      2  1.8780752075  11.5264355431
+## 836             nicht zu    89            0      2  1.2626829137  11.5243275266
+## 837            ein neues    13            0      2  5.0507609087  11.5223298444
+## 838            du kommst    12            0      2  3.8436256346  11.5214580014
+## 839           werdet ihr    11            0      2  5.9802632994  11.5178612719
+## 840             wir sind    11            0      2  3.5403162382  11.5044317611
+## 841           es geschah    14            0      2  3.7151135100  11.4977557013
+## 842               ei was    12            0      2  3.5082169476  11.4914063746
+## 843           fragte ihn    19            0      2  2.7170996860  11.4910004214
+## 844              ist das    64            0      2  1.4912334880  11.4874554705
+## 845             noch ein    41            0      2  1.8547199194  11.4873959796
+## 846            in meinem    18            0      2  2.9927087465  11.4761581432
+## 847            sprach zu    70            0      2  1.4154983464  11.4754144777
+## 848              was ich    57            0      2  1.5696216821  11.4671494194
+## 849              so wird    25            0      2  2.4132845627  11.4518814054
+## 850             der mond    21            0      2  4.0718800173  11.4410727473
+## 851            die haare    21            0      2  3.0942037434  11.4247890575
+## 852           besser als    15            0      2  3.1920663717  11.4216501170
+## 853       jungfrau maria    13            0      2  9.8896860036  11.4192655907
+## 854            will euch    15            0      2  3.0116728841  11.4045915583
+## 855          der jüngste    21            0      2  3.2833571496  11.3947370393
+## 856            durch den    24            0      2  2.4794584327  11.3944431718
+## 857      die stiefmutter    19            0      2  3.8798268584  11.3930347044
+## 858          wieder nach    23            0      2  2.4292782214  11.3887094873
+## 859           abends als    15            0      2  3.1790748972  11.3874670355
+## 860               ihn an    40            0      2  1.8475065351  11.3830519681
+## 861             höhe und    32            0      2  2.6378825548  11.3678740199
+## 862             die welt    33            0      2  2.1834037428  11.3669826481
+## 863               da war    80            0      2  1.3101998879  11.3506617209
+## 864         die schulter    19            0      2  4.0179859026  11.3406542534
+## 865           hinauf und    38            0      2  2.2431254928  11.3390299699
+## 866             der esel    21            0      2  3.2131441563  11.3203983909
+## 867           morgen bis    11            0      2  3.4734689257  11.3200271238
+## 868         aber niemand    19            0      2  2.7665930648  11.3178205349
+## 869             der hahn    20            0      2  3.8089785450  11.3085373917
+## 870          alten könig    11            0      2  3.5241223550  11.3075710798
+## 871           mein vater    13            0      2  3.1906106150  11.3070711645
+## 872           sprach sie   101            0      2  1.1699820997  11.3068821411
+## 873            den brief    13            0      2  4.0471103149  11.2913320634
+## 874               gab er    35            0      2  2.0531720095  11.2883986924
+## 875              so dass    63            0      2  1.4637346216  11.2634664737
+## 876          zu gevatter    12            0      2  4.0859001981  11.2595406442
+## 877           größer als    11            0      2  4.0303595736  11.2524543261
+## 878           der knecht    20            0      2  3.4362726898  11.2451382659
+## 879             die maus    19            0      2  4.1783372584  11.2310163778
+## 880              ihm ein    63            0      2  1.4575138273  11.2255327265
+## 881             ende war    14            0      2  3.2875902527  11.2120839760
+## 882            das beste    17            0      2  5.1523260874  11.2094556089
+## 883            auch noch    23            0      2  2.3859012094  11.2009807532
+## 884         nur gruselte    11            0      2  7.8343587655  11.2000069284
+## 885           fragte was    18            0      2  2.7127976122  11.1953896428
+## 886          dem schloss    21            0      2  2.5610315130  11.1808485735
+## 887           der kleine    22            0      2  2.9417957424  11.1758332026
+## 888            den apfel    13            0      2  3.8513485509  11.1710842771
+## 889           bei seinem    12            0      2  3.2767491091  11.1683709675
+## 890            haben wir    13            0      2  3.1387167457  11.1310441548
+## 891            der alten    29            0      2  2.3452284245  11.1281446938
+## 892            den augen    26            0      2  2.3029707652  11.1221174598
+## 893          brachte sie    25            0      2  2.4499630133  11.1169317130
+## 894           was sollen    10            0      2  3.7719226084  11.1123458969
+## 895          weiss nicht    20            0      2  2.6374521821  11.1046829936
+## 896             zu einer    27            0      2  2.2274465434  11.0840232382
+## 897           dem ersten    12            0      2  3.6523249653  11.0807735204
+## 898            hielt ihn    12            0      2  3.3618703922  11.0802592056
+## 899        sprach lieber    16            0      2  2.9141365666  11.0796620990
+## 900          die jüngste    19            0      2  3.2362156767  11.0772007619
+## 901           ein junger    16            0      2  5.8887022686  11.0644861405
+## 902             die hexe    21            0      2  2.8790531832  11.0253590862
+## 903          der pfarrer    19            0      2  3.8255149457  11.0249121081
+## 904          seine augen    12            0      2  3.2410053432  11.0239076633
+## 905            ich komme    12            0      2  4.6193552502  11.0232360976
+## 906          das gesicht    18            0      2  2.9130595906  11.0230217429
+## 907            der liebe    26            0      2  2.4963755881  11.0204677934
+## 908           den himmel    17            0      2  2.9419224779  11.0193098383
+## 909             ein loch    11            0      2  4.4269310260  11.0173175930
+## 910               bis es    32            0      2  2.0176340665  10.9615726974
+## 911            zu werden    25            0      2  2.2907837792  10.9485304158
+## 912          ein kleiner    11            0      2  4.6782583112  10.9473798454
+## 913             legte es    22            0      2  2.4736530216  10.9449741805
+## 914              ist ein    48            0      2  1.6267523013  10.9427143685
+## 915            und legte    46            0      2  1.8606447314  10.9310427470
+## 916             nahm ihn    19            0      2  2.5710819032  10.9231382528
+## 917          sich wieder    43            0      2  1.7133032276  10.9159320548
+## 918            von ihnen    15            0      2  2.8903465242  10.9105640218
+## 919          der richter    19            0      2  4.0573296608  10.9064908553
+## 920            den acker    12            0      2  4.2134516158  10.9043149207
+## 921         dem häuschen    12            0      2  3.5455398633  10.9008594533
+## 922            ich nicht    90            0      2  1.1863893096  10.8997184617
+## 923             da stieg    18            0      2  2.7495985030  10.8970088763
+## 924          den schwanz    12            0      2  4.3618802141  10.8930930807
+## 925            ohne dass    14            0      2  3.0500828544  10.8920827459
+## 926              trug es    19            0      2  2.6787613354  10.8874585092
+## 927        gewaltig dass    10            0      2  3.7890598555  10.8807024912
+## 928        den schlüssel    12            0      2  4.0842312910  10.8788267181
+## 929            schön wie    13            0      2  3.1606657419  10.8777307414
+## 930            sehen was    15            0      2  2.8924886065  10.8718362149
+## 931              wer ist    15            0      2  2.8814903811  10.8603999102
+## 932               zu ihr    56            0      2  1.4919597925  10.8393139208
+## 933              ist mir    27            0      2  2.1308373965  10.8357832339
+## 934             den saal    12            0      2  3.9698123465  10.8287434537
+## 935              bei der    51            0      2  1.6182559890  10.8045221861
+## 936               an die   101            0      2  1.1231788991  10.8043739705
+## 937            etwas von    14            0      2  2.9650946769  10.8034459248
+## 938         die schüssel    17            0      2  3.8379740208  10.8002651688
+## 939             bei sich    28            0      2  2.1111187620  10.7958533043
+## 940             rief der    52            0      2  1.5983001095  10.7873253857
+## 941             war froh    10            0      2  4.2647880773  10.7864971050
+## 942         den goldenen    18            0      2  2.7541217848  10.7854179027
+## 943            meinst du    16            0      2  6.3514135144  10.7845693530
+## 944            fragte er    36            0      2  1.9164721493  10.7816835855
+## 945          das vöglein    13            0      2  3.9601078655  10.7796166038
+## 946             und ritt    27            0      2  2.8588434893  10.7784969523
+## 947              die axt    17            0      2  3.5943345266  10.7705248822
+## 948              ihm das    79            0      2  1.2532450489  10.7690704409
+## 949          merkte dass    10            0      2  3.7158436462  10.7499549196
+## 950            still und    32            0      2  2.3587959617  10.7386009073
+## 951           und schlug    34            0      2  2.2435845665  10.7359363038
+## 952            hast mich    13            0      2  3.0198131615  10.7255508182
+## 953              bis ich    31            0      2  1.9995433566  10.7102632933
+## 954             aber die   142            0      2  0.9367689711  10.7082636559
+## 955         der fuhrmann    18            0      2  3.9211510532  10.7034920300
+## 956             rief ach    10            0      2  3.4283819863  10.6943001600
+## 957           euch nicht    25            0      2  2.2293277427  10.6913316752
+## 958               kam wo    18            0      2  2.5664236614  10.6859790881
+## 959              mir nur    18            0      2  2.5665238830  10.6849657900
+## 960             darf ich    12            0      2  3.6211192141  10.6569052046
+## 961            ich bitte    11            0      2  4.2128174492  10.6562502757
+## 962              mit dir    27            0      2  2.1083666703  10.6545585298
+## 963              bin ein    23            0      2  2.3176033744  10.6537671281
+## 964             wird dir    11            0      2  3.2553714229  10.6411038387
+## 965              nur ein    30            0      2  2.0058695413  10.6219108553
+## 966           sie hätten    16            0      2  3.1974159081  10.6182404896
+## 967           so schnell    12            0      2  3.5243952074  10.6146309720
+## 968             für mich    13            0      2  2.9859169504  10.6121357414
+## 969            über alle    12            0      2  3.1019846857  10.6080064203
+## 970           sprach ich    69            0      2  1.3134589283  10.5891617170
+## 971              aber es    85            0      2  1.1843553893  10.5855253583
+## 972            stand ein    25            0      2  2.2000355634  10.5849485716
+## 973           noch einen    25            0      2  2.1610030650  10.5837724711
+## 974              tag kam    14            0      2  2.8841445751  10.5760484235
+## 975              war ein    72            0      2  1.2832927923  10.5747676575
+## 976          nach seinem    13            0      2  2.9775095176  10.5697558957
+## 977           von meinem    10            0      2  3.4822548512  10.5674293213
+## 978             die jagd    17            0      2  4.2608526358  10.5673441864
+## 979         nicht besser    15            0      2  2.9500980216  10.5632646189
+## 980             feuer an    14            0      2  2.9362291404  10.5606082514
+## 981              da fiel    17            0      2  2.7312155245  10.5429676247
+## 982           herein und    31            0      2  2.3450085372  10.5364887554
+## 983              die tür    17            0      2  3.2733963354  10.5357785115
+## 984           jetzt will    10            0      2  3.4119961166  10.5313309370
+## 985             zu gehen    22            0      2  2.3464986388  10.5111272728
+## 986             für eine    18            0      2  2.5304088224  10.5003023959
+## 987             was habt    10            0      2  3.4913365573  10.5002151035
+## 988             der jude    27            0      2  5.3405933910  10.4992506603
+## 989            dem boden    11            0      2  3.5684745331  10.4955800277
+## 990            nichts zu    31            0      2  1.9493698464  10.4888700335
+## 991               er ihn    78            0      2  1.2357473340  10.4881420889
+## 992             ein glas    10            0      2  4.1973794625  10.4875740865
+## 993            ein licht    12            0      2  3.3876099402  10.4782783580
+## 994          herr schulz    12            0      2  9.0803161914  10.4770502659
+## 995              ihn mit    42            0      2  1.6563607295  10.4708076444
+## 996            dachte es    26            0      2  2.1439002136  10.4703775634
+## 997           auf seinen    23            0      2  2.2554546743  10.4687599555
+## 998         das hähnchen    13            0      2  3.5247510150  10.4591396385
+## 999             oben auf    14            0      2  2.9666324691  10.4535173566
+## 1000           und trank    25            0      2  2.9288983821  10.4523912581
+## 1001           unter der    36            0      2  1.8951762343  10.4509323176
+## 1002          der tasche    20            0      2  2.8240115915  10.4499764631
+## 1003              zu fuß    12            0      2  3.4055749413  10.4416216152
+## 1004            sah wohl    12            0      2  3.0510193087  10.4341092120
+## 1005            heim kam    11            0      2  3.2236548054  10.4284105369
+## 1006             weg und    56            0      2  1.5554376520  10.4249384171
+## 1007            rief sie    41            0      2  1.7096158102  10.4068691454
+## 1008          weiter bis    10            0      2  3.3261512550  10.4050515341
+## 1009            ließ sie    38            0      2  1.7805459912  10.4046173737
+## 1010      einen goldenen    11            0      2  3.2554929639  10.4010147585
+## 1011          stehen und    31            0      2  2.2932594516  10.3980636083
+## 1012      ein wirthshaus    10            0      2  4.0204358972  10.3905195073
+## 1013           der knabe    22            0      2  4.9385024767  10.3786710884
+## 1014            nahm sie    36            0      2  1.8276367832  10.3741978386
+## 1015            da kamen    22            0      2  2.3126884102  10.3704037245
+## 1016             geh mit    13            0      2  3.0449895090  10.3703982717
+## 1017              an und   157            0      2  0.8829401224  10.3665732564
+## 1018         kanns nicht    10            0      2  4.6444914553  10.3618776734
+## 1019        einem andern    12            0      2  3.0278962757  10.3609378096
+## 1020          mußte sich    21            0      2  2.3510238566  10.3585997030
+## 1021          morgen kam    13            0      2  2.9295675625  10.3581176006
+## 1022            ein mann    27            0      2  2.0618013960  10.3496962300
+## 1023          sprang auf    17            0      2  2.6211242001  10.3496503929
+## 1024         das schwein    12            0      2  4.3348815570  10.3470286519
+## 1025             mit den    73            0      2  1.2476894116  10.3437373749
+## 1026        der schuster    17            0      2  4.0397944472  10.3436942803
+## 1027           schön war    15            0      2  2.8273608299  10.3409597223
+## 1028             du dein    17            0      2  2.6167660299  10.3357089698
+## 1029          und setzte    49            0      2  1.6645701115  10.3255526232
+## 1030          aus seinem    14            0      2  2.7993068927  10.2997837083
+## 1031            trug ihn    12            0      2  3.0726647058  10.2849795359
+## 1032        das hühnchen    12            0      2  3.7158035704  10.2444012780
+## 1033            das bild    13            0      2  4.8917091558  10.2400488710
+## 1034           die zwölf    21            0      2  2.5517619064  10.2326669262
+## 1035           übrig als    10            0      2  3.6259641505  10.2310131724
+## 1036           weiss ich    19            0      2  2.4797320402  10.2243669588
+## 1037           ein engel    10            0      2  3.8246741769  10.2179453967
+## 1038           hatte und   126            0      2  0.9752226845  10.2178343000
+## 1039         der schüler    19            0      2  4.6278963540  10.2143030191
+## 1040            ich gehe    11            0      2  5.0151982596  10.2123145953
+## 1041           dann nahm    11            0      2  3.1078408473  10.2053693712
+## 1042             du auch    35            0      2  1.7662717425  10.1901183909
+## 1043        die schönste    22            0      2  5.2602408908  10.1831300100
+## 1044            das tier    14            0      2  3.1094023788  10.1774048408
+## 1045            dem wege    10            0      2  3.6622022738  10.1724239988
+## 1046          zum andern    11            0      2  3.0926340523  10.1570746732
+## 1047            er hätte    34            0      2  1.8477966420  10.1507517151
+## 1048           unter den    23            0      2  2.2209707638  10.1496602013
+## 1049            ging hin    13            0      2  2.8595406042  10.1323716448
+## 1050        hochzeit mit    12            0      2  3.1035118791  10.1320014647
+## 1051             mehr zu    25            0      2  2.1012813576  10.1259527605
+## 1052         nicht recht    17            0      2  2.5931161007  10.1206314430
+## 1053      das königliche    12            0      2  3.5726898003  10.1162284104
+## 1054          und führte    32            0      2  2.1408208725  10.1095345548
+## 1055           in seiner    23            0      2  2.2097963473  10.1085921873
+## 1056             den tod    14            0      2  2.9674784153  10.0955122882
+## 1057           werden da    23            0      2  2.1901073612  10.0922839510
+## 1058            war ganz    22            0      2  2.2236457633  10.0880752235
+## 1059            ihr habt    10            0      2  3.3524441457  10.0879522349
+## 1060            das gold    21            0      2  2.3515417152  10.0823933546
+## 1061         nicht sagen    16            0      2  2.6726898449  10.0790014398
+## 1062          die andere    29            0      2  2.0351552069  10.0749681798
+## 1063            ließ den    29            0      2  1.9439980262  10.0725371311
+## 1064          den ersten    12            0      2  3.3179773358  10.0725207348
+## 1065            dem wolf    15            0      2  2.7421353921  10.0719620758
+## 1066           sahen sie    17            0      2  2.7697253002  10.0660140475
+## 1067            ich darf    11            0      2  3.5025114488  10.0596769548
+## 1068          der kirche    17            0      2  3.0769094584  10.0539859973
+## 1069           wieder an    31            0      2  1.8429257740  10.0463247302
+## 1070             kam ein    39            0      2  1.6504010814  10.0311817594
+## 1071       erwiderte der    17            0      2  4.3768928892  10.0246877007
+## 1072          die wilden    16            0      2  3.1031496928  10.0223924175
+## 1073         einen alten    11            0      2  3.1150118391  10.0197474192
+## 1074          hinter ihm    13            0      2  2.8950515122  10.0164311414
+## 1075          dem himmel    13            0      2  2.9618214435  10.0059590947
+## 1076             nur hin    10            0      2  3.1904035146   9.9993996753
+## 1077           habe dich    13            0      2  2.8006075508   9.9848849219
+## 1078            den herd    10            0      2  4.3612152931   9.9838683532
+## 1079           den spieß    10            0      2  4.3612152931   9.9838683532
+## 1080          dem jungen    12            0      2  3.1027091587   9.9759184664
+## 1081             wie der    99            0      2  1.0480015414   9.9742688285
+## 1082           mit ihrer    12            0      2  3.0393659751   9.9663748487
+## 1083          aus seiner    12            0      2  2.9226936706   9.9657338370
+## 1084            das brot    19            0      2  2.4549690716   9.9508616368
+## 1085           den vogel    15            0      2  2.7793279833   9.9450473790
+## 1086           wollte es    39            0      2  1.6409765525   9.9441946005
+## 1087         dem fenster    13            0      2  2.9360049947   9.9376475674
+## 1088        ein bisschen    10            0      2  5.2335142502   9.9351976671
+## 1089         ließen sich    11            0      2  3.2779057941   9.9318886172
+## 1090          schön dass    12            0      2  2.9821421654   9.9297815525
+## 1091            zeit kam    12            0      2  2.9136106626   9.9229922371
+## 1092          in welchem    10            0      2  4.5810920934   9.9207827018
+## 1093            die haut    15            0      2  3.2768768123   9.9193541564
+## 1094          die stimme    18            0      2  2.7282683834   9.9140124210
+## 1095            so wirst    13            0      2  2.9780008953   9.9009272614
+## 1096           zogen sie    14            0      2  3.1616059479   9.9007473051
+## 1097            stieg er    22            0      2  2.3047510868   9.8979317855
+## 1098             gab dem    20            0      2  2.2923397761   9.8966855310
+## 1099            warf sie    18            0      2  2.5968166039   9.8950908477
+## 1100          noch etwas    11            0      2  3.0261359960   9.8899093592
+## 1101            dem bett    15            0      2  2.6801386871   9.8808880372
+## 1102       es zugegangen    10            0      2  4.7260456214   9.8776632479
+## 1103         den rechten    11            0      2  3.4539176009   9.8729594459
+## 1104          die treppe    16            0      2  3.0030531748   9.8727037386
+## 1105         da erzählte    14            0      2  2.8281840413   9.8703395384
+## 1106            ein jahr    12            0      2  3.0968603385   9.8702514524
+## 1107         zu sprechen    10            0      2  3.6039908217   9.8683592734
+## 1108              als ob    16            0      2  2.5638651812   9.8550838307
+## 1109              bin so    22            0      2  2.1822063013   9.8421463411
+## 1110      zum zweitenmal    12            0      2  8.5190284582   9.8420118246
+## 1111          und zeigte    24            0      2  2.6159066902   9.8342946611
+## 1112          kommen und    45            0      2  1.6508544134   9.8337540184
+## 1113           den alten    17            0      2  2.5386041382   9.8294272228
+## 1114            die ente    14            0      2  3.8812342017   9.8237446457
+## 1115           die krone    14            0      2  3.8812342017   9.8237446457
+## 1116             dem weg    21            0      2  2.2125603311   9.8113097024
+## 1117            stand da    24            0      2  2.0751892720   9.8092927375
+## 1118           kamen die    32            0      2  1.8628055204   9.8065603700
+## 1119           der stadt    22            0      2  2.3732648637   9.8052220128
+## 1120          und sagten    25            0      2  2.4912135840   9.8000145821
+## 1121           die ohren    14            0      2  3.5827238018   9.7999387291
+## 1122        einen andern    16            0      2  2.4920956568   9.7881064495
+## 1123          wieder ins    13            0      2  2.7586451127   9.7781878286
+## 1124             die kuh    16            0      2  2.9414865754   9.7708928111
+## 1125            den bart    10            0      2  3.7421374151   9.7648676685
+## 1126           wieder in    46            0      2  1.4800924231   9.7516354991
+## 1127          damit fort    10            0      2  3.1029345113   9.7511548198
+## 1128           aus einem    16            0      2  2.4674025017   9.7378513167
+## 1129             ließ er    37            0      2  1.6845555134   9.7330755033
+## 1130              zog er    25            0      2  2.0924993369   9.7301473557
+## 1131           ich meine    19            0      2  2.3390415103   9.7221091489
+## 1132           das haupt    11            0      2  3.5821310653   9.7127936575
+## 1133        so geschwind    11            0      2  3.2508370207   9.7119079936
+## 1134              wo ist    18            0      2  2.3256553780   9.7067870010
+## 1135            den rand    10            0      2  4.8408055594   9.6927605379
+## 1136              saß da    18            0      2  2.3895012665   9.6841247839
+## 1137          wieder auf    36            0      2  1.6516604891   9.6829944137
+## 1138            wie viel    14            0      2  2.6525262824   9.6785076529
+## 1139           er möchte    15            0      2  2.9038323930   9.6773753930
+## 1140         dem mädchen    22            0      2  2.1245620099   9.6666947961
+## 1141          sprach ach    16            0      2  2.4912723368   9.6657112783
+## 1142             und wie   144            0      2  0.8574390670   9.6609909260
+## 1143            dem sack    11            0      2  3.1397251738   9.6536971465
+## 1144            der luft    17            0      2  2.8215278276   9.6513913553
+## 1145           ein feuer    16            0      2  2.5285629544   9.6432656086
+## 1146             es half    10            0      2  3.5838794989   9.6425271689
+## 1147         war traurig    10            0      2  3.3185330845   9.6098427625
+## 1148             ging es    41            0      2  1.5428201040   9.6054111377
+## 1149            saß eine    12            0      2  2.8342819051   9.6017316431
+## 1150          zu rechter    12            0      2  5.8036203056   9.5915609513
+## 1151           der mitte    17            0      2  4.6864434468   9.5838637837
+## 1152              gar zu    15            0      2  2.6131382753   9.5803959115
+## 1153        die zauberin    14            0      2  4.3086956277   9.5755747550
+## 1154          nach einem    14            0      2  2.5859621002   9.5746861440
+## 1155          die eltern    15            0      2  3.0059713866   9.5736334067
+## 1156           mit ihnen    17            0      2  2.3888034345   9.5672423395
+## 1157          und meinte    26            0      2  2.3040467849   9.5648930598
+## 1158            der hase    15            0      2  4.2546212422   9.5614862061
+## 1159     herr antwortete    10            0      2  3.0455230211   9.5547415319
+## 1160              da gab    21            0      2  2.1645606194   9.5544533548
+## 1161           vater ich    26            0      2  1.9378642461   9.5505744425
+## 1162           der vogel    21            0      2  2.3560329583   9.5351229242
+## 1163            ist denn    14            0      2  2.5900211821   9.5299414294
+## 1164             so müde    11            0      2  3.1566326470   9.5252868334
+## 1165              da hab    12            0      2  2.9731363119   9.5221034646
+## 1166             ging in    42            0      2  1.5110425728   9.5160937699
+## 1167       da antwortete    31            0      2  1.7584070808   9.5156380328
+## 1168       wieder hinaus    13            0      2  2.6786897545   9.5148835935
+## 1169           setzte er    28            0      2  1.9104770699   9.5069607977
+## 1170          die arbeit    22            0      2  2.2367265338   9.5006074151
+## 1171           stein auf    11            0      2  3.0415262363   9.4993722099
+## 1172          der reiche    14            0      2  3.5285048604   9.4955194115
+## 1173            mir mein    15            0      2  2.4830627086   9.4945738169
+## 1174        das männlein    10            0      2  3.9086485583   9.4912467245
+## 1175           mich doch    12            0      2  2.7605506716   9.4865757844
+## 1176          die steine    13            0      2  3.6492565180   9.4755570802
+## 1177             und zog    39            0      2  1.7193093348   9.4714043479
+## 1178             es geht    14            0      2  2.7145291663   9.4668722365
+## 1179             als bis    23            0      2  2.0244080708   9.4645589374
+## 1180        ein einziges    11            0      2  5.7769005986   9.4576789028
+## 1181             nahm es    25            0      2  1.9559442938   9.4459638258
+## 1182           die weite    15            0      2  4.6857180279   9.4376168536
+## 1183          weiter und    47            0      2  1.5306264494   9.4318513973
+## 1184           dem herrn    12            0      2  2.8843913592   9.4306936781
+## 1185          den sieben    15            0      2  2.5980463207   9.4298533833
+## 1186             im haus    11            0      2  2.8614529714   9.4281449461
+## 1187            ein kind    19            0      2  2.2396746662   9.4141627056
+## 1188           das kleid    12            0      2  3.0888325235   9.4130708259
+## 1189           legte sie    24            0      2  2.0460334959   9.3992041771
+## 1190             fand er    19            0      2  2.3617981048   9.3959203350
+## 1191         hatte einen    27            0      2  1.8358395487   9.3753448678
+## 1192          hörte dass    13            0      2  2.6716661612   9.3745151827
+## 1193           einer von    14            0      2  2.5409020697   9.3719709488
+## 1194           tisch und    27            0      2  2.1571233364   9.3471815719
+## 1195            das bett    18            0      2  2.3477107843   9.3427138063
+## 1196           konnte es    26            0      2  1.8914139726   9.3326349065
+## 1197         den dritten    12            0      2  2.9458594702   9.3268879177
+## 1198            sich vor    30            0      2  1.7439943403   9.3230965341
+## 1199             den fuß    11            0      2  3.1274737495   9.3196031600
+## 1200           die hände    14            0      2  3.0463712098   9.3185561010
+## 1201          den bäumen    12            0      2  5.6348845583   9.3134713504
+## 1202         die kleinen    19            0      2  2.3936024074   9.3133838555
+## 1203           die mühle    13            0      2  3.3341537069   9.3083472193
+## 1204            dass wir    20            0      2  2.1201370952   9.3036850203
+## 1205         das eselein    10            0      2  4.6395662271   9.2909467135
+## 1206             sich um    24            0      2  1.9473399167   9.2900568385
+## 1207          dem finger    10            0      2  3.1649473873   9.2794385328
+## 1208           sich aufs    10            0      2  3.1651931980   9.2632687345
+## 1209            ward ihm    21            0      2  2.0618434975   9.2613056437
+## 1210             und tat    37            0      2  1.7214903724   9.2383879199
+## 1211         erschrak er    15            0      2  2.6985302578   9.2373972438
+## 1212         besann sich    13            0      2  6.3625173493   9.2362030620
+## 1213            kaum war    11            0      2  2.9448404012   9.2092258507
+## 1214            denn sie    29            0      2  1.8008838034   9.2090640873
+## 1215           wieder zu    40            0      2  1.4921143687   9.2056041026
+## 1216          hinaus auf    18            0      2  2.2301659887   9.2033901477
+## 1217           so kannst    15            0      2  2.4939756215   9.1995018712
+## 1218         einmal eine    17            0      2  2.2637270142   9.1972916826
+## 1219          könig ließ    13            0      2  2.5747320330   9.1959513593
+## 1220            trug sie    20            0      2  2.2125240879   9.1894906416
+## 1221          hervor und    23            0      2  2.3843625636   9.1888155520
+## 1222              sie in   129            0      2  0.8370745573   9.1873554975
+## 1223        ein weilchen    32            0      2  7.6719796348   9.1837861661
+## 1224         ein mädchen    22            0      2  2.0155522211   9.1752838555
+## 1225         nachdem sie    11            0      2  3.4847417955   9.1729619319
+## 1226           liegt ein    10            0      2  3.1520007234   9.1704288414
+## 1227           zu laufen    10            0      2  3.1797735407   9.1665654288
+## 1228           essen und    41            0      2  1.6022888358   9.1635152375
+## 1229           das licht    12            0      2  2.9604298112   9.1633140769
+## 1230             in sein    39            0      2  1.5083912316   9.1625781038
+## 1231          von seinen    14            0      2  2.4772544992   9.1504619817
+## 1232          zu trinken    11            0      2  2.9741843204   9.1477738216
+## 1233           der geist    13            0      2  3.4568971090   9.1353662129
+## 1234           die reihe    12            0      2  3.7324794966   9.1300376255
+## 1235            die zeit    29            0      2  1.8125241199   9.1242698685
+## 1236            mich nur    12            0      2  2.6491334118   9.1185218961
+## 1237              das ei    15            0      2  2.5388054990   9.1175572782
+## 1238          einen wald    14            0      2  2.4709876016   9.1107327473
+## 1239             mit ihr    39            0      2  1.4893861264   9.1097006904
+## 1240          die kirche    14            0      2  2.9057718466   9.1017100719
+## 1241            ein wort    10            0      2  3.1203785814   9.0976156083
+## 1242         sich selber    10            0      2  3.0843239706   9.0904776127
+## 1243         und steckte    23            0      2  2.3361515217   9.0817224560
+## 1244         der meister    15            0      2  2.8194319054   9.0800558910
+## 1245           die hunde    12            0      2  4.0347734268   9.0716323960
+## 1246            der türe    26            0      2  1.9355568379   9.0688379298
+## 1247          mit beiden    12            0      2  2.7134660276   9.0676806171
+## 1248               er zu   120            0      2  0.8565076564   9.0663829191
+## 1249           eine hand    12            0      2  2.6609495116   9.0652697324
+## 1250            der gast    13            0      2  3.3276766434   9.0623863214
+## 1251            in seine    32            0      2  1.6488379907   9.0587713422
+## 1252              was du    38            0      2  1.5005181152   9.0557909615
+## 1253              sie an    76            0      2  1.0737068827   9.0556364990
+## 1254           dem jäger    16            0      2  2.3388468286   9.0485373933
+## 1255           abend war    13            0      2  2.6130668025   9.0371423908
+## 1256           der prinz    19            0      2  5.2469486630   9.0364007347
+## 1257           zu nehmen    12            0      2  2.7725007959   9.0335161638
+## 1258       zicklein meck    10            0      2 15.0094763588   9.0315202115
+## 1259            da legte    17            0      2  2.2772345620   9.0284391567
+## 1260          wollte ihn    22            0      2  1.9527617627   9.0223682815
+## 1261         wollten sie    17            0      2  2.3795562645   9.0077455198
+## 1262          ein mensch    10            0      2  3.0773526238   9.0076693933
+## 1263          sie wieder    57            0      2  1.2335330474   8.9945392949
+## 1264             bis sie    35            0      2  1.5875448741   8.9941174871
+## 1265        da erblickte    12            0      2  2.7585164472   8.9882124471
+## 1266          die hühner    13            0      2  4.5472329334   8.9861357302
+## 1267          den wilden    10            0      2  3.1715281040   8.9861020112
+## 1268            dass ihr    34            0      2  1.5633610792   8.9467780272
+## 1269         hatte keine    12            0      2  2.6185246368   8.9435615883
+## 1270             und hol    18            0      2  3.7060937959   8.9416680366
+## 1271          welche die    12            0      2  3.3129429397   8.9403725555
+## 1272           da wurden    11            0      2  2.8893622383   8.9403301744
+## 1273            heim und    34            0      2  1.7384142775   8.9314927123
+## 1274           könnt ich    11            0      2  2.9074869549   8.9295128017
+## 1275         wusste sich    14            0      2  2.4788053652   8.9276329738
+## 1276            hier ist    11            0      2  2.7312200213   8.9257926105
+## 1277      meck tischlein    10            0      2 13.2748456073   8.9237958190
+## 1278             tun was    10            0      2  2.8764828579   8.9217046171
+## 1279            wald kam    12            0      2  2.5982100563   8.9181199889
+## 1280             da warf    12            0      2  2.7312953038   8.9170613104
+## 1281              um ein    24            0      2  1.8684096286   8.9170345035
+## 1282        nicht weiter    19            0      2  2.1130288663   8.9143982770
+## 1283          sie lebten    12            0      2  2.9804909682   8.9073038747
+## 1284        eine tochter    11            0      2  2.7226608223   8.8833071405
+## 1285          den beiden    15            0      2  2.4165686311   8.8790308564
+## 1286           in seinen    24            0      2  1.8732039007   8.8786576254
+## 1287             denn er    29            0      2  1.7346264960   8.8718197758
+## 1288            die arme    19            0      2  2.2446312370   8.8704292805
+## 1289           dem tisch    11            0      2  2.8137032939   8.8678522625
+## 1290           von ihren    10            0      2  2.8423527119   8.8654557298
+## 1291             heim zu    15            0      2  2.3851507487   8.8603104489
+## 1292            das blut    10            0      2  3.2341374966   8.8596762927
+## 1293           gaben sie    11            0      2  3.1899162868   8.8564773613
+## 1294             so bist    19            0      2  2.1003724144   8.8539642177
+## 1295            indem er    11            0      2  3.2604918172   8.8431131290
+## 1296            und fand    28            0      2  1.9415346237   8.8390732561
+## 1297           und holte    28            0      2  1.9415346237   8.8390732561
+## 1298              und aß    23            0      2  2.2249035359   8.8158112478
+## 1299            in ihrer    13            0      2  2.5974296200   8.8062713350
+## 1300         durch einen    11            0      2  2.6934060956   8.8014202607
+## 1301          riefen sie    12            0      2  2.9189244186   8.7980924947
+## 1302    getreue johannes    16            0      2 12.7532967344   8.7900382917
+## 1303     antworteten sie    10            0      2  3.5149247537   8.7880450074
+## 1304             in ihre    21            0      2  1.9831504713   8.7711310094
+## 1305            ihm nach    23            0      2  1.8605243240   8.7704212856
+## 1306           da sprang    16            0      2  2.2743042880   8.7580594350
+## 1307              da zog    16            0      2  2.2743042880   8.7580594350
+## 1308            gold und    34            0      2  1.6952817961   8.7529416590
+## 1309          der küster    12            0      2  4.0390635004   8.7416923625
+## 1310          fuhren sie    10            0      2  3.4524000687   8.7391825380
+## 1311            er mußte    27            0      2  1.7729294622   8.7380250887
+## 1312         und trinken    22            0      2  2.2693214794   8.7332630837
+## 1313           geriet er    11            0      2  3.1673927263   8.7309801168
+## 1314            womit er    10            0      2  4.1748969151   8.7284978450
+## 1315         und schaute    19            0      2  2.5846163360   8.7259513132
+## 1316           der küche    14            0      2  2.7848569509   8.7237645195
+## 1317             so komm    12            0      2  2.6599862882   8.7237051660
+## 1318         der frieder    14            0      2  4.6986197826   8.7050159370
+## 1319             weil du    18            0      2  2.0998759669   8.7036080877
+## 1320            wie eine    29            0      2  1.6431947557   8.7035675100
+## 1321          die schuhe    11            0      2  3.4885792239   8.6888650139
+## 1322           mir etwas    10            0      2  2.7695731442   8.6862455113
+## 1323            gehen da    18            0      2  2.1153687195   8.6837188798
+## 1324          wurden sie    14            0      2  2.5628413983   8.6787366498
+## 1325         mädchen das    26            0      2  1.7652958095   8.6709333620
+## 1326          auf seinem    18            0      2  2.0828226565   8.6368802393
+## 1327           herum war    14            0      2  2.3825561126   8.6346536349
+## 1328          der drache    16            0      2  5.0794479504   8.6294172349
+## 1329          fanden sie    11            0      2  3.0327133906   8.6283712950
+## 1330             her und    30            0      2  1.7981349364   8.6256597108
+## 1331            brach er    10            0      2  3.4489252418   8.6233946917
+## 1332            hinab in    13            0      2  2.5267114299   8.6102685597
+## 1333         gewesen war    13            0      2  2.4698931578   8.6043003825
+## 1334           er seinen    31            0      2  1.6163771389   8.5930031385
+## 1335              ist so    41            0      2  1.3727128631   8.5906826187
+## 1336           sprang er    22            0      2  1.9464466494   8.5904619413
+## 1337             den arm    11            0      2  2.7873226451   8.5889663655
+## 1338             hat mir    14            0      2  2.3107494498   8.5769320288
+## 1339          legten sie    10            0      2  3.2853330000   8.5764247384
+## 1340  eine königstochter    11            0      2  2.6193405841   8.5732908323
+## 1341          und weinte    20            0      2  2.3793278830   8.5724124018
+## 1342             so soll    20            0      2  1.9740359017   8.5722658293
+## 1343          packte sie    11            0      2  2.9969909798   8.5711137053
+## 1344            mann der    40            0      2  1.4292851498   8.5627721923
+## 1345          oder nicht    14            0      2  2.3794277627   8.5593658331
+## 1346          sein vater    12            0      2  2.4854612073   8.5586143596
+## 1347            dass die    88            0      2  0.9461782310   8.5575510791
+## 1348          der treppe    14            0      2  2.6910250936   8.5539599867
+## 1349         sie wollten    16            0      2  2.3081505457   8.5372741852
+## 1350           über eine    15            0      2  2.2263914868   8.5268945642
+## 1351          dir nichts    11            0      2  2.5760192762   8.5218448325
+## 1352            sieht er    10            0      2  3.3275557171   8.5185788087
+## 1353           den könig    36            0      2  1.4564553727   8.5185051209
+## 1354            ist dein    10            0      2  2.7239643553   8.5123164996
+## 1355            nahm das    26            0      2  1.7282070845   8.5015610000
+## 1356          könig aber    31            0      2  1.5593766333   8.4981925761
+## 1357            groß und    24            0      2  2.0413595922   8.4974717939
+## 1358          der diener    16            0      2  2.4100323200   8.4910180718
+## 1359      antwortete ich    29            0      2  1.6162874317   8.4874314874
+## 1360        eine königin    10            0      2  2.7192006094   8.4819318569
+## 1361             was sie    62            0      2  1.1115125987   8.4764949323
+## 1362             der tag    32            0      2  1.5931848837   8.4727829182
+## 1363        nicht einmal    24            0      2  1.7724270362   8.4720944923
+## 1364          herbei und    26            0      2  1.9223300722   8.4611888386
+## 1365          und ließen    20            0      2  2.3245107066   8.4577889650
+## 1366             ihn auf    37            0      2  1.4172392414   8.4550622927
+## 1367            den wein    12            0      2  2.5900613267   8.4502486775
+## 1368             kam der    64            0      2  1.1022827324   8.4487601288
+## 1369             du hier    14            0      2  2.3175440128   8.4482159825
+## 1370           zu seinen    21            0      2  1.8922474258   8.4428136749
+## 1371             wie die    82            0      2  0.9658599111   8.4330758627
+## 1372        nicht finden    12            0      2  2.5437875059   8.4224421563
+## 1373           dem wirth    11            0      2  2.6435373701   8.4186226979
+## 1374            ich dirs    10            0      2  2.8538881881   8.4147317832
+## 1375           durch das    19            0      2  2.0172102632   8.4072975062
+## 1376           für seine    10            0      2  2.6575989721   8.3969527110
+## 1377             das war    81            0      2  0.9590782542   8.3955270843
+## 1378           die asche    11            0      2  3.1208283263   8.3885287965
+## 1379           zu lassen    14            0      2  2.3260437488   8.3839663362
+## 1380          der rechte    15            0      2  2.4738734846   8.3804173920
+## 1381            und dann    58            0      2  1.1896677682   8.3744456589
+## 1382           die suppe    10            0      2  3.7488554638   8.3686299346
+## 1383          nicht lang    11            0      2  2.6499885445   8.3617698196
+## 1384            soll mir    11            0      2  2.5339050930   8.3568042356
+## 1385            über ein    22            0      2  1.8231180494   8.3525740659
+## 1386              ihn am    15            0      2  2.1796765672   8.3487378600
+## 1387           die erste    15            0      2  2.4105755149   8.3481675405
+## 1388              er sah    38            0      2  1.4072238881   8.3420978307
+## 1389           wollt ich    11            0      2  2.6602704665   8.3326918334
+## 1390             kam sah    14            0      2  2.2366775864   8.3123399225
+## 1391             ward er    36            0      2  1.4415763438   8.3107037838
+## 1392          den finger    10            0      2  2.8308634705   8.3046313536
+## 1393       dem schneider    13            0      2  2.3752270084   8.3037593347
+## 1394          den jungen    11            0      2  2.6685090271   8.3027815296
+## 1395               ei du    10            0      2  2.7238864116   8.2986344677
+## 1396           zu machen    15            0      2  2.2126033673   8.2881183159
+## 1397             du mein    20            0      2  1.8886778953   8.2859633311
+## 1398            das feld    11            0      2  2.7208715000   8.2848919783
+## 1399             der not    15            0      2  2.4299016259   8.2774929126
+## 1400           der ferne    12            0      2  4.5499022248   8.2742545374
+## 1401          hinter den    14            0      2  2.3133198600   8.2726369753
+## 1402           konnte er    32            0      2  1.5220959769   8.2545431770
+## 1403           in dieser    11            0      2  2.6455637627   8.2511136643
+## 1404            die nixe    11            0      2  4.5872306875   8.2475554967
+## 1405            wie kann    13            0      2  2.3174789441   8.2462342876
+## 1406           in vollem    10            0      2  5.8048933010   8.2458708172
+## 1407           er konnte    32            0      2  1.5190704869   8.2392414559
+## 1408            er seine    40            0      2  1.3523580772   8.2385363909
+## 1409            ich wohl    21            0      2  1.8469979596   8.2323245643
+## 1410          geht nicht    11            0      2  2.5985969431   8.2262587901
+## 1411         schloss von    10            0      2  2.6171030716   8.2151861625
+## 1412           ihn nicht    42            0      2  1.2941440511   8.2100412069
+## 1413             aus den    36            0      2  1.4011652701   8.2063602662
+## 1414           die gänse    10            0      2  3.3259768488   8.2035349617
+## 1415           ein stein    10            0      2  2.7258690077   8.2010056744
+## 1416           von einer    12            0      2  2.3834301648   8.1986201770
+## 1417             zu bett    13            0      2  2.3583362013   8.1900819126
+## 1418          der frosch    11            0      2  3.1081916178   8.1836329763
+## 1419          und wusste    31            0      2  1.6471914953   8.1703742741
+## 1420          ihn wieder    23            0      2  1.7247115693   8.1671562359
+## 1421           ihm einen    30            0      2  1.5151769174   8.1666549314
+## 1422             zog den    16            0      2  2.1193286548   8.1646480802
+## 1423            ist doch    14            0      2  2.1990300100   8.1609445186
+## 1424         konnte sich    20            0      2  1.8620375833   8.1526013254
+## 1425            und hieß    22            0      2  2.0438325435   8.1505164873
+## 1426            die nase    10            0      2  3.2592811214   8.1500917249
+## 1427          das kleine    11            0      2  2.6608405622   8.1475942242
+## 1428         das fenster    13            0      2  2.4001024453   8.1327394865
+## 1429           das glück    13            0      2  2.4001024453   8.1327394865
+## 1430           hinein da    18            0      2  1.9698511224   8.1318210746
+## 1431         setzten sie    11            0      2  2.7495481801   8.1230731123
+## 1432           habe mich    10            0      2  2.5639212638   8.1134705633
+## 1433            und fuhr    21            0      2  2.0945369618   8.1039033359
+## 1434            band sie    10            0      2  2.9415268358   8.1017870025
+## 1435          der ritter    10            0      2  3.6280151372   8.0992503322
+## 1436          die straße    10            0      2  3.1967564116   8.0932934741
+## 1437             so kann    18            0      2  1.9592829632   8.0895911962
+## 1438         öffnete die    12            0      2  2.6938384358   8.0877102063
+## 1439         der amtmann    10            0      2  3.5279273117   8.0802507660
+## 1440          das dritte    12            0      2  2.4888135553   8.0612920531
+## 1441            bett und    29            0      2  1.6834161355   8.0489568419
+## 1442          ach sprach    13            0      2  2.2732480510   8.0463032718
+## 1443        schulter und    15            0      2  2.8067374764   8.0440110168
+## 1444              sie zu   107            0      2  0.8015740972   8.0400988575
+## 1445           damit ich    21            0      2  1.8000827512   8.0359349077
+## 1446          weinen und    17            0      2  2.4405130658   8.0322370738
+## 1447      der großknecht    10            0      2  4.0075178597   8.0272894833
+## 1448            aßen und    14            0      2  3.3509073981   8.0258853096
+## 1449           ihm seine    20            0      2  1.8159926826   8.0096992746
+## 1450       der hauptmann    10            0      2  3.3535651905   8.0076095303
+## 1451         wollte sich    28            0      2  1.5416880329   8.0066592133
+## 1452          und suchte    20            0      2  2.1311035531   8.0065453475
+## 1453             bös und    14            0      2  3.0764571440   7.9685580980
+## 1454          sprach zum    18            0      2  1.9063988054   7.9674033685
+## 1455               er in   125            0      2  0.7357833927   7.9654129314
+## 1456          hinaus und    43            0      2  1.3247209006   7.9601003068
+## 1457     jungfrau maleen    19            0      2 11.4134593657   7.9499373817
+## 1458            türe auf    12            0      2  2.3490146439   7.9437083135
+## 1459           der engel    11            0      2  2.9023220950   7.9397685899
+## 1460           für einen    13            0      2  2.2163161694   7.9325138644
+## 1461          fragte sie    26            0      2  1.6213124477   7.9306251714
+## 1462          nichts von    14            0      2  2.1319397952   7.9262213468
+## 1463        die wahrheit    11            0      2  4.8385494684   7.9241466915
+## 1464            es abend    13            0      2  2.2878442106   7.9186108637
+## 1465           er wieder    54            0      2  1.1091038131   7.8925748733
+## 1466             noch am    11            0      2  2.3814924633   7.8876912610
+## 1467           sagte die    56            0      2  1.0914671906   7.8693479740
+## 1468            in ihren    15            0      2  2.1044196527   7.8673621328
+## 1469          lebten sie    10            0      2  2.8057079817   7.8667153181
+## 1470          sich unter    15            0      2  2.0770566858   7.8630899654
+## 1471             er aber   104            0      2  0.7952360205   7.8621016047
+## 1472             es auch    35            0      2  1.3532638940   7.8303793065
+## 1473            das soll    22            0      2  1.7247248370   7.8227685143
+## 1474           willst so    13            0      2  2.2415024605   7.8213998616
+## 1475             es sich    68            0      2  0.9681672003   7.7946925057
+## 1476             für den    22            0      2  1.7044438473   7.7880323159
+## 1477           gleich an    10            0      2  2.4956517181   7.7856340149
+## 1478         den kleinen    11            0      2  2.4663246762   7.7848352943
+## 1479          nicht viel    15            0      2  2.0638663060   7.7831499138
+## 1480      die großmutter    10            0      2  2.9320420926   7.7829877323
+## 1481           die worte    10            0      2  2.9320420926   7.7829877323
+## 1482         die fliegen    11            0      2  2.7068089980   7.7806776159
+## 1483           in meinen    11            0      2  2.4618951866   7.7772805313
+## 1484         wieder fort    12            0      2  2.2522017861   7.7710961870
+## 1485           ja sprach    14            0      2  2.1081532463   7.7694253197
+## 1486         die schönen    15            0      2  2.1929986226   7.7667581109
+## 1487           ist alles    13            0      2  2.1641093577   7.7579388347
+## 1488            so stand    19            0      2  1.8210478575   7.7540018201
+## 1489         bleiben und    22            0      2  1.9068309252   7.7502881106
+## 1490           so wollen    13            0      2  2.2187613355   7.7501768363
+## 1491         nicht sehen    15            0      2  2.0531337612   7.7458436897
+## 1492          eine nacht    10            0      2  2.4640382069   7.7421682744
+## 1493       der marschall    11            0      2  4.7176906679   7.7264070645
+## 1494          perlen und    13            0      2  3.1792769709   7.7245189461
+## 1495             um sich    20            0      2  1.7566601040   7.7128107964
+## 1496             von nun    17            0      2  1.8832558380   7.7069092286
+## 1497           den fuchs    14            0      2  2.1346143128   7.7055432521
+## 1498             hob sie    11            0      2  2.5513366239   7.7049225454
+## 1499              an der    88            0      2  0.8517138310   7.7025766573
+## 1500           er wusste    18            0      2  1.9170490293   7.6888198786
+## 1501          morgen als    14            0      2  2.0932514487   7.6873891514
+## 1502             was ihm    29            0      2  1.4484525260   7.6873788995
+## 1503           meinte er    13            0      2  2.3063135351   7.6757877995
+## 1504          silber und    15            0      2  2.5119111183   7.6734967640
+## 1505            oder ich    13            0      2  2.1998088248   7.6686352690
+## 1506           nicht gut    16            0      2  1.9629184589   7.6643983507
+## 1507          mußten sie    11            0      2  2.5291091586   7.6550564784
+## 1508           sich auch    29            0      2  1.4452805049   7.6492469789
+## 1509           war schon    17            0      2  1.8890833276   7.6486738139
+## 1510           mir nicht    32            0      2  1.3764735110   7.6390105391
+## 1511           damit sie    27            0      2  1.5255975546   7.6332513177
+## 1512       endlich sagte    10            0      2  2.4127062562   7.6275797278
+## 1513            haus und    50            0      2  1.1630878984   7.6238412151
+## 1514            zu ihnen    16            0      2  1.9524914136   7.6228090614
+## 1515        nicht gleich    13            0      2  2.1748586734   7.6227398613
+## 1516             auf ihn    34            0      2  1.3285163798   7.6181142641
+## 1517          wollte ihm    22            0      2  1.6436618437   7.6133594922
+## 1518         sprach wenn    25            0      2  1.5439001968   7.6128220256
+## 1519            nahm den    21            0      2  1.7032262079   7.6090087258
+## 1520             wie nun    20            0      2  1.7188404855   7.6070876316
+## 1521            der ecke    12            0      2  2.5128892832   7.6064866525
+## 1522              du für    17            0      2  1.8742496606   7.6054263482
+## 1523        haben wollte    10            0      2  2.3984407533   7.5944402177
+## 1524          berg semsi    10            0      2 11.0139990099   7.5868234246
+## 1525              ihn in    44            0      2  1.1680136871   7.5828086695
+## 1526         unter einen    10            0      2  2.3995998821   7.5549656018
+## 1527            das wäre    27            0      2  1.4945253066   7.5516359310
+## 1528           der stube    14            0      2  2.2416743785   7.5495525783
+## 1529        entgegen und    15            0      2  2.4302241479   7.5423411753
+## 1530        sie zusammen    20            0      2  1.7643511237   7.5417050346
+## 1531          die pferde    12            0      2  2.4251875097   7.5310176967
+## 1532           nicht was    38            0      2  1.2443896267   7.5262073170
+## 1533           herum und    31            0      2  1.4923267247   7.5200152553
+## 1534           pferd und    28            0      2  1.5827532692   7.5191878289
+## 1535            zu ihrer    10            0      2  2.4680970804   7.5184938195
+## 1536         sich gleich    12            0      2  2.2205989067   7.5140141099
+## 1537             in ruhe    10            0      2  2.4940667160   7.5137342101
+## 1538         und wollten    23            0      2  1.7747134193   7.4952456901
+## 1539      der dunkelheit    10            0      2  4.6265701687   7.4943948244
+## 1540          der vierte    10            0      2  4.6265701687   7.4943948244
+## 1541           sich über    19            0      2  1.7492168851   7.4934571743
+## 1542         sondern ein    12            0      2  2.2207431005   7.4919016334
+## 1543          setzen und    15            0      2  2.3917533973   7.4764202812
+## 1544             mich an    17            0      2  1.8291612164   7.4700372306
+## 1545          hatte drei    11            0      2  2.2586750951   7.4653145930
+## 1546          tasche und    18            0      2  2.0732425799   7.4651196791
+## 1547            hatte so    37            0      2  1.2471120022   7.4423457417
+## 1548            sie ihre    23            0      2  1.6143558037   7.4406165153
+## 1549           das alles    25            0      2  1.5306121415   7.4405012980
+## 1550           den guten    12            0      2  2.2284982441   7.4357735192
+## 1551            der gute    14            0      2  2.1860914240   7.4057280905
+## 1552          wieder zum    12            0      2  2.1414021177   7.4019651392
+## 1553            fort als    17            0      2  1.8202010917   7.3941509263
+## 1554           sie nicht   101            0      2  0.7558632677   7.3784127682
+## 1555          konnte nun    10            0      2  2.3265892726   7.3741373739
+## 1556            mir wohl    10            0      2  2.3289469647   7.3713221893
+## 1557           angst und    20            0      2  1.8969772881   7.3694814427
+## 1558          kammer und    20            0      2  1.8969772881   7.3694814427
+## 1559           alles wie    14            0      2  1.9797105129   7.3531958944
+## 1560          kann nicht    16            0      2  1.8706521131   7.3265915963
+## 1561           dann ging    11            0      2  2.2076983151   7.3236100151
+## 1562              nun an    20            0      2  1.6525852319   7.3174386025
+## 1563              es mit    56            0      2  0.9974524302   7.3047687068
+## 1564            ich auch    32            0      2  1.3150230882   7.2965111531
+## 1565          den großen    14            0      2  2.0089365339   7.2936935971
+## 1566            komm ich    10            0      2  2.3951079685   7.2922050372
+## 1567            er müßte    10            0      2  2.5390073416   7.2865649656
+## 1568            rief ihm    16            0      2  1.8380392640   7.2789040956
+## 1569          sprach wer    12            0      2  2.1261221782   7.2755107404
+## 1570              ihm zu    47            0      2  1.0816629934   7.2719985357
+## 1571            liebe zu    10            0      2  2.3751093028   7.2714742062
+## 1572         zusammen in    15            0      2  1.9290711245   7.2671865993
+## 1573            und hieb    12            0      2  2.8509045648   7.2609578414
+## 1574              war da    58            0      2  0.9737002102   7.2599654402
+## 1575          die riesen    11            0      2  2.4405018409   7.2567744147
+## 1576         die tochter    21            0      2  1.6713851227   7.2522085743
+## 1577           stall und    14            0      2  2.4034590355   7.2509924728
+## 1578          und silber    14            0      2  2.4034590355   7.2509924728
+## 1579            zu sagen    11            0      2  2.2491830106   7.2498654681
+## 1580           dir einen    14            0      2  1.9456522402   7.2471311839
+## 1581         steckte sie    11            0      2  2.3485818252   7.2298537007
+## 1582         schwert und    13            0      2  2.5601975367   7.2285020606
+## 1583              lag da    12            0      2  2.1402727995   7.2217640894
+## 1584           eine frau    13            0      2  2.0101830551   7.2191001144
+## 1585             sie ihm    71            0      2  0.8800980950   7.2141695603
+## 1586             zu dass    44            0      2  1.1072204240   7.2063368614
+## 1587          sie hatten    19            0      2  1.7198769837   7.1870694301
+## 1588            von euch    10            0      2  2.2670840001   7.1705405331
+## 1589              so saß    13            0      2  2.0344529979   7.1616519210
+## 1590            legte er    19            0      2  1.7193026181   7.1611562688
+## 1591           alles mit    16            0      2  1.8105684613   7.1603745607
+## 1592          aber keine    14            0      2  1.9473709001   7.1501131617
+## 1593       den schneider    13            0      2  2.0407456934   7.1401861319
+## 1594           und trieb    12            0      2  2.7127452873   7.1337630374
+## 1595           sich also    12            0      2  2.0977830154   7.1309136999
+## 1596           stand auf    15            0      2  1.8632921993   7.1208320106
+## 1597        und schlugen    11            0      2  3.1188551993   7.1120845766
+## 1598              tat es    13            0      2  2.0243711279   7.1073236406
+## 1599           doch noch    10            0      2  2.2380913568   7.1021467145
+## 1600        könig sprach    22            0      2  1.5305849088   7.0969033757
+## 1601            habe ihn    13            0      2  1.9755519179   7.0942360432
+## 1602          einen mann    12            0      2  2.0513839543   7.0891132654
+## 1603           da machte    14            0      2  1.9359099663   7.0886020768
+## 1604             gut als    13            0      2  1.9936652280   7.0874487870
+## 1605              um ihn    13            0      2  1.9729636673   7.0852466298
+## 1606          erlöst und    15            0      2  2.1876312220   7.0837061376
+## 1607             ich mir    32            0      2  1.2754928795   7.0828195443
+## 1608             für ihn    12            0      2  2.0514486898   7.0823228505
+## 1609            hals und    18            0      2  1.9239988905   7.0754348831
+## 1610           saßen sie    10            0      2  2.4161782885   7.0648924764
+## 1611            kommt so    11            0      2  2.1853703054   7.0583497626
+## 1612           ein bauer    10            0      2  2.2886509156   7.0551217634
+## 1613             ihn ins    10            0      2  2.2348102391   7.0515540833
+## 1614      ein königssohn    11            0      2  2.1731988352   7.0447146322
+## 1615           machte er    20            0      2  1.6424478619   7.0415103905
+## 1616            das wird    18            0      2  1.7061129418   7.0254205309
+## 1617          frisch und    13            0      2  2.4170832841   7.0183873448
+## 1618            ihm auch    22            0      2  1.5120898330   7.0178870883
+## 1619            ich soll    17            0      2  1.7376995979   7.0171836657
+## 1620             so muss    14            0      2  1.9140181284   7.0123448266
+## 1621           heran und    17            0      2  1.9726288375   7.0090371557
+## 1622       zufrieden und    16            0      2  2.0551432559   7.0075509750
+## 1623              er nun    42            0      2  1.1138597299   7.0064256392
+## 1624           mir einen    18            0      2  1.6621764927   7.0060924921
+## 1625        sprachen die    14            0      2  2.0128513670   7.0052967715
+## 1626             so fest    10            0      2  2.2704719755   6.9808002892
+## 1627             sah wie    15            0      2  1.8113871570   6.9739491923
+## 1628        einiger zeit    10            0      2 10.0935119456   6.9649655459
+## 1629          allein war    10            0      2  2.2409688764   6.9572513992
+## 1630             da lief    11            0      2  2.1500033864   6.9566478893
+## 1631           selbst in    12            0      2  2.0654486138   6.9502822523
+## 1632             vor der    47            0      2  1.0528822332   6.9467513013
+## 1633             als ein    51            0      2  0.9915859578   6.9463747584
+## 1634             was hat    13            0      2  1.9319769484   6.9462570460
+## 1635           an seinem    12            0      2  2.0119247860   6.9320458986
+## 1636           feuer und    27            0      2  1.4679228987   6.9282851337
+## 1637           und jagte    12            0      2  2.5358011704   6.9236121440
+## 1638              wie du    34            0      2  1.2041374914   6.9168664252
+## 1639           vögel die    10            0      2  2.4308446819   6.9148896019
+## 1640            du meine    11            0      2  2.1134472080   6.9148702223
+## 1641            mir auch    15            0      2  1.7902524981   6.9116877314
+## 1642              tot da    10            0      2  2.2369733420   6.8906410805
+## 1643        zusammen und    32            0      2  1.3256107390   6.8869337233
+## 1644           und eilte    13            0      2  2.3319165363   6.8770925319
+## 1645           war alles    17            0      2  1.6878231833   6.8684536560
+## 1646              ihn zu    37            0      2  1.1472656378   6.8594925337
+## 1647            die böse    10            0      2  2.4027174699   6.8563217454
+## 1648        sie sprachen    12            0      2  2.0929929815   6.8524793263
+## 1649            das sind    16            0      2  1.7630012840   6.8419509192
+## 1650            tat sich    11            0      2  2.0963227047   6.8366977166
+## 1651            aber sie    92            0      2  0.7324708945   6.8352843078
+## 1652          finger und    16            0      2  1.9819264417   6.8292168293
+## 1653          dem großen    11            0      2  2.0908475716   6.8246628636
+## 1654          er endlich    24            0      2  1.4422156380   6.8189203313
+## 1655            waren so    20            0      2  1.5495281587   6.8149379966
+## 1656       ein schneider    11            0      2  2.0910159717   6.8002683262
+## 1657            ihm noch    20            0      2  1.5342635454   6.7990290939
+## 1658             arm und    17            0      2  1.8883506132   6.7860936865
+## 1659          hatte zwei    10            0      2  2.1418613454   6.7822327652
+## 1660          wollte sie    39            0      2  1.1126296284   6.7607790176
+## 1661         der königin    20            0      2  1.5969684497   6.7483675747
+## 1662            immer zu    14            0      2  1.8359821588   6.7478377887
+## 1663            baum und    29            0      2  1.3679015221   6.7470439262
+## 1664            aber das    76            0      2  0.7915451459   6.7371644130
+## 1665            ich mein    20            0      2  1.5332095610   6.7364993876
+## 1666        erschrak sie    10            0      2  2.2759186468   6.7362953915
+## 1667           sprang in    13            0      2  1.9091594567   6.7193913866
+## 1668           boden und    14            0      2  2.1208563053   6.7126880516
+## 1669           dir nicht    21            0      2  1.4870217629   6.7106837565
+## 1670            dass der    83            0      2  0.7614441634   6.7094347131
+## 1671         waschen und    10            0      2  2.9277119788   6.7066821612
+## 1672            dir auch    11            0      2  2.0148385440   6.7013204167
+## 1673         und tranken    13            0      2  4.6143972511   6.7011844579
+## 1674          hatte eine    20            0      2  1.5071677237   6.6917847958
+## 1675             ihr mir    19            0      2  1.5456215850   6.6907121117
+## 1676           sagte das    36            0      2  1.1378883127   6.6809272492
+## 1677           er fertig    12            0      2  2.0401286319   6.6736916629
+## 1678           es könnte    11            0      2  2.0653557886   6.6722426185
+## 1679          gehen aber    13            0      2  1.8754777199   6.6606149781
+## 1680             als das    67            0      2  0.8325707865   6.6600996615
+## 1681            nach der    44            0      2  1.0417347810   6.6567886204
+## 1682         konnte aber    17            0      2  1.6358746747   6.6520749321
+## 1683        abschied und    14            0      2  2.0905464859   6.6474075119
+## 1684   der königstochter    22            0      2  1.4921237977   6.6467845023
+## 1685         und fragten    10            0      2  2.8367357312   6.6442547424
+## 1686          sprach die    86            0      2  0.7382962343   6.6407778503
+## 1687           holte den    10            0      2  2.1636297414   6.6404933322
+## 1688              so kam    29            0      2  1.2523528922   6.6379372787
+## 1689          sprach was    27            0      2  1.2914890490   6.6328466502
+## 1690           führte er    13            0      2  1.9360088621   6.6276196927
+## 1691           und hielt    21            0      2  1.6081138605   6.6192633945
+## 1692             tat sie    16            0      2  1.7214466986   6.6184350836
+## 1693             ich tun    11            0      2  2.0383645869   6.6074355007
+## 1694             tat als    10            0      2  2.1098357564   6.5960573581
+## 1695             so fing    12            0      2  1.9385698656   6.5909317844
+## 1696        frau füchsin    11            0      2  9.5240853674   6.5887527795
+## 1697           schrie er    10            0      2  2.2287917320   6.5869313324
+## 1698           auf ihren    10            0      2  2.1056243778   6.5854784869
+## 1699             lag und    26            0      2  1.4140522654   6.5842772225
+## 1700           der ganze    16            0      2  1.7519479736   6.5742175781
+## 1701             mit der    96            0      2  0.6925028520   6.5663735691
+## 1702            ihm sein    20            0      2  1.4749929475   6.5418487777
+## 1703           kommen da    13            0      2  1.8433684899   6.5342148002
+## 1704       und schliefen    11            0      2  2.4523360402   6.5285793208
+## 1705             sie mit    73            0      2  0.7830177868   6.5198019987
+## 1706            ist noch    15            0      2  1.6870607803   6.5174484103
+## 1707          frau holle    10            0      2  9.4305883354   6.5111909317
+## 1708            kopf und    29            0      2  1.3124882757   6.5041308235
+## 1709           ein pferd    10            0      2  2.0896230090   6.4950804478
+## 1710        schlafen und    16            0      2  1.8498398989   6.4871674926
+## 1711             nun war    23            0      2  1.3682579648   6.4838660800
+## 1712             zu haus    17            0      2  1.5958723207   6.4838123763
+## 1713            dir noch    10            0      2  2.0380045529   6.4825968853
+## 1714         gewesen und    25            0      2  1.4179039465   6.4743944614
+## 1715            nun will    12            0      2  1.8640455076   6.4712918810
+## 1716            und trug    24            0      2  1.4496304539   6.4695835687
+## 1717            du nicht    50            0      2  0.9315588591   6.4675695016
+## 1718          sitzen und    17            0      2  1.7739134403   6.4666943072
+## 1719           sollte er    25            0      2  1.3342002148   6.4625568967
+## 1720          laufen und    14            0      2  2.0047662544   6.4552171664
+## 1721            die vier    12            0      2  1.9925413098   6.4497774867
+## 1722          nun wollte    12            0      2  1.8550713019   6.4406547027
+## 1723           sie wären    10            0      2  2.1529266344   6.4334979084
+## 1724           die probe    10            0      2  5.5947169758   6.4088317560
+## 1725          halten und    15            0      2  1.8960612033   6.4064658836
+## 1726           sie sahen    10            0      2  2.1365284958   6.3921711663
+## 1727            ging der    53            0      2  0.9081944674   6.3897716758
+## 1728            ist eine    19            0      2  1.4733888026   6.3852575030
+## 1729              du mit    39            0      2  1.0372255690   6.3798433944
+## 1730            fing das    14            0      2  1.7500734276   6.3717803193
+## 1731         sich hinein    13            0      2  1.7867782054   6.3707253552
+## 1732         gesicht und    18            0      2  1.6792444177   6.3630586513
+## 1733            ließ ihm    13            0      2  1.7722116436   6.3619775653
+## 1734          lachen und    10            0      2  2.5382248646   6.3486935419
+## 1735          messer und    12            0      2  2.1763914120   6.3404547957
+## 1736            zorn und    12            0      2  2.1763914120   6.3404547957
+## 1737           von neuem    17            0      2  9.0947351461   6.3393245306
+## 1738          von weitem    17            0      2  9.0947351461   6.3393245306
+## 1739             sich an    36            0      2  1.0715310766   6.3352424676
+## 1740             lag ein    10            0      2  2.0307709246   6.3278598724
+## 1741            berg und    19            0      2  1.6150146184   6.3266711241
+## 1742          und riefen    13            0      2  2.0493138061   6.3263894856
+## 1743              da tat    11            0      2  1.9374043493   6.3206676441
+## 1744         auch nichts    10            0      2  1.9865867321   6.3195696497
+## 1745            hätte da    15            0      2  1.6535765094   6.3135377626
+## 1746              kam er    43            0      2  0.9885531832   6.3129439065
+## 1747           da dachte    15            0      2  1.6498957411   6.3001049076
+## 1748             und die   410            0      2  0.3275546927   6.2963841506
+## 1749               es in    74            0      2  0.7464021686   6.2793909058
+## 1750         gesetzt und    10            0      2  2.4757000381   6.2694610566
+## 1751             los und    18            0      2  1.6486987527   6.2683324030
+## 1752            als wäre    16            0      2  1.5798967393   6.2657781222
+## 1753            ihr euch    10            0      2  1.9779447466   6.2644611473
+## 1754        nach einiger    10            0      2  9.0660115448   6.2606229654
+## 1755             sie vor    34            0      2  1.0998425164   6.2511747671
+## 1756    nicht antwortete    21            0      2  1.3817427431   6.2494749549
+## 1757              du dir    17            0      2  1.5254503729   6.2364661896
+## 1758           die junge    18            0      2  1.5335541985   6.2224260182
+## 1759           mußte sie    19            0      2  1.4709152427   6.2159770107
+## 1760             sie ins    19            0      2  1.4709152427   6.2159770107
+## 1761            ein herz    10            0      2  1.9924761425   6.2149485700
+## 1762           dass kein    10            0      2  1.9652698085   6.2134141270
+## 1763             aber er    92            0      2  0.6653367435   6.2125645038
+## 1764        wollte seine    10            0      2  1.9503315221   6.2095031011
+## 1765              sah es    21            0      2  1.3750079418   6.2073650224
+## 1766             viel zu    12            0      2  1.8160894487   6.2033834226
+## 1767            und nahm    42            0      2  1.0209191132   6.2007241918
+## 1768           unter die    21            0      2  1.4074301540   6.1945521844
+## 1769              lag in    11            0      2  1.9050177737   6.1910904241
+## 1770           ihm alles    13            0      2  1.7217743723   6.1865355656
+## 1771            ihnen zu    13            0      2  1.7365113974   6.1777797430
+## 1772       nicht sondern    10            0      2  1.9793218250   6.1681764182
+## 1773          weinte und    14            0      2  1.8763627377   6.1478827522
+## 1774             hast so    16            0      2  1.5565960612   6.1452799278
+## 1775        endlich aber    14            0      2  1.6587921438   6.1402249814
+## 1776            herz und    25            0      2  1.3348240014   6.1393511347
+## 1777             den tag    15            0      2  1.6117409491   6.1366222104
+## 1778             ihm den    47            0      2  0.9111546523   6.1343549424
+## 1779          rücken und    16            0      2  1.7149893841   6.1128069710
+## 1780             er fand    12            0      2  1.8369789468   6.0889727221
+## 1781       eine zeitlang    14            0      2  8.7600905834   6.0888212960
+## 1782        und sprachen    18            0      2  1.5902701081   6.0838198419
+## 1783            er ihnen    19            0      2  1.4414453539   6.0830731889
+## 1784            mich mit    16            0      2  1.5289363111   6.0787184348
+## 1785          dachte der    26            0      2  1.2405371669   6.0739559982
+## 1786           zu kommen    12            0      2  1.7748929146   6.0703124091
+## 1787             mir den    30            0      2  1.1250234290   6.0644292208
+## 1788             bist so    13            0      2  1.7030651042   6.0614252872
+## 1789          der kammer    12            0      2  1.8716630650   6.0590883672
+## 1790              bis in    19            0      2  1.4101717419   6.0529305778
+## 1791              kam so    27            0      2  1.1800605455   6.0489535553
+## 1792              er hat    28            0      2  1.1728349765   6.0379931486
+## 1793              hat er    28            0      2  1.1728349765   6.0379931486
+## 1794          stellte er    10            0      2  2.0074984087   6.0333704440
+## 1795             mir was    16            0      2  1.5119426639   6.0331303837
+## 1796           augen auf    11            0      2  1.8286448247   6.0304015130
+## 1797          und befahl    10            0      2  2.3086325446   6.0294235231
+## 1798          kochen und    10            0      2  2.3086325446   6.0294235231
+## 1799        waren sprach    14            0      2  1.6171526989   6.0245598111
+## 1800             dich zu    20            0      2  1.3543084968   5.9841737912
+## 1801           nun hatte    14            0      2  1.5992831798   5.9837742357
+## 1802              wo das    23            0      2  1.2702369158   5.9749675238
+## 1803            aber ich    58            0      2  0.7992182365   5.9714335660
+## 1804              ob ich    11            0      2  1.8272965791   5.9702912779
+## 1805           waren von    10            0      2  1.8738883279   5.9622897625
+## 1806             sie nun    36            0      2  1.0176002341   5.9611018956
+## 1807             war von    26            0      2  1.1804744101   5.9534096372
+## 1808           holte die    13            0      2  1.7356111158   5.9469853890
+## 1809            auf eine    27            0      2  1.1556407993   5.9407743479
+## 1810            war auch    23            0      2  1.2494665959   5.9321989092
+## 1811             sie bei    25            0      2  1.2164767155   5.9288444190
+## 1812             es soll    15            0      2  1.5532002427   5.9280747360
+## 1813          und gesund    11            0      2  2.0929262818   5.9248971716
+## 1814           und stieß    11            0      2  2.0929262818   5.9248971716
+## 1815          gesund und    11            0      2  2.0929262818   5.9248971716
+## 1816           unter das    15            0      2  1.5614046423   5.9187850380
+## 1817           wollte da    24            0      2  1.2227291672   5.9153490953
+## 1818          sprach das    56            0      2  0.8045859110   5.8999670979
+## 1819            ging auf    22            0      2  1.2681621918   5.8954998885
+## 1820            auf sein    21            0      2  1.2956236729   5.8869113311
+## 1821              er den   109            0      2  0.5794009336   5.8858201367
+## 1822            ging sie    39            0      2  0.9616758309   5.8669787562
+## 1823          über einen    10            0      2  1.8396360770   5.8504328469
+## 1824              er ihm    66            0      2  0.7363541635   5.8363142700
+## 1825         sollte sich    14            0      2  1.5701522914   5.8305600407
+## 1826             aus und    73            0      2  0.7177997631   5.8253679434
+## 1827          dachte sie    20            0      2  1.3367534383   5.8208716632
+## 1828           die große    16            0      2  1.5145058641   5.8101591055
+## 1829           könig und    70            0      2  0.7311385300   5.8081083862
+## 1830           hinaus zu    13            0      2  1.6249355000   5.7984185118
+## 1831            ward von    10            0      2  1.8210876540   5.7979978991
+## 1832           legen und    10            0      2  2.1655182920   5.7923402613
+## 1833            ihn aber    31            0      2  1.0534933621   5.7919640697
+## 1834          sollte sie    22            0      2  1.2650272782   5.7840640131
+## 1835           ein könig    23            0      2  1.2192362915   5.7833973104
+## 1836            der baum    18            0      2  1.4256868735   5.7815448013
+## 1837           auf erden    16            0      2  8.2947177048   5.7776204470
+## 1838             das für    19            0      2  1.3492385864   5.7718422437
+## 1839      antwortete das    25            0      2  1.1751206710   5.7701479020
+## 1840              bat er    10            0      2  1.9059316458   5.7666388399
+## 1841         aber nichts    17            0      2  1.4109116506   5.7651095196
+## 1842             für die    26            0      2  1.1671214131   5.7599582596
+## 1843          dachte das    17            0      2  1.4227180656   5.7547304717
+## 1844           dem vater    14            0      2  1.5453937081   5.7436727811
+## 1845          setzte sie    17            0      2  1.4321321495   5.7431789409
+## 1846             was ihr    20            0      2  1.2908821782   5.7425046857
+## 1847            und lief    22            0      2  1.3277538134   5.7403202107
+## 1848         sie endlich    20            0      2  1.3145453861   5.7286229184
+## 1849          worden und    10            0      2  2.1220287104   5.7148096862
+## 1850             mit ins    10            0      2  1.8068943747   5.7100038212
+## 1851             wird er    18            0      2  1.3839444581   5.7024246226
+## 1852            kam eine    15            0      2  1.4715696683   5.6962902960
+## 1853            würde er    10            0      2  1.8787104124   5.6939362099
+## 1854             er sein    38            0      2  0.9456773477   5.6906005063
+## 1855          sie wusste    13            0      2  1.6282146505   5.6895167978
+## 1856            ward mit    14            0      2  1.5248104762   5.6865288524
+## 1857           aber noch    22            0      2  1.2234448098   5.6813060568
+## 1858            nahm die    25            0      2  1.1736446013   5.6808165183
+## 1859             zu viel    11            0      2  1.7274168221   5.6755496625
+## 1860          schrie der    10            0      2  1.9189184572   5.6724375065
+## 1861             das tat    12            0      2  1.6716903428   5.6700044262
+## 1862          waren aber    16            0      2  1.4286422648   5.6675235113
+## 1863            er einen    49            0      2  0.8287089837   5.6646957811
+## 1864              so ist    30            0      2  1.0469571532   5.6606249627
+## 1865             sind so    11            0      2  1.7230812740   5.6589542893
+## 1866          liegen und    17            0      2  1.5066339005   5.6533412208
+## 1867            brot und    21            0      2  1.3375483147   5.6482228973
+## 1868           und stieg    21            0      2  1.3375483147   5.6482228973
+## 1869            zu geben    10            0      2  1.8022667971   5.6466989000
+## 1870            da hörte    10            0      2  1.8008412519   5.6402075810
+## 1871           und gaben    10            0      2  2.0803515443   5.6381941260
+## 1872           wir nicht    17            0      2  1.3806262584   5.6380602061
+## 1873              kam es    27            0      2  1.0985081414   5.6331682111
+## 1874             vor das    27            0      2  1.1022083438   5.6283239664
+## 1875             auch an    17            0      2  1.3674960356   5.6207730030
+## 1876              er vor    33            0      2  1.0021467056   5.6194009231
+## 1877             du wohl    12            0      2  1.6249572556   5.6108545328
+## 1878           hätte ich    14            0      2  1.5114886951   5.5940546165
+## 1879           weg nicht    13            0      2  1.5618320973   5.5838625010
+## 1880          aber hatte    28            0      2  1.0663195051   5.5788880655
+## 1881            holte er    11            0      2  1.7426388415   5.5707102296
+## 1882          hatten sie    15            0      2  1.4779721290   5.5689941689
+## 1883         fenster und    17            0      2  1.4794123956   5.5657254440
+## 1884             axt und    10            0      2  2.0403417399   5.5625555180
+## 1885           er weiter    18            0      2  1.3474592524   5.5599354548
+## 1886             trat er    12            0      2  1.6590940326   5.5533303652
+## 1887            dich auf    16            0      2  1.3949303887   5.5510256030
+## 1888            ihn auch    15            0      2  1.4330744316   5.5483388047
+## 1889          die jungen    10            0      2  1.8488722790   5.5454531927
+## 1890            sich ins    11            0      2  1.6763189301   5.5339295666
+## 1891           holen und    18            0      2  1.4209780661   5.5262058992
+## 1892        konnte nicht    15            0      2  1.4350525310   5.5111882574
+## 1893          und lebten    11            0      2  1.8888041066   5.5028661152
+## 1894          wieder kam    13            0      2  1.5214839556   5.5013063177
+## 1895            ließ ihr    10            0      2  1.7295467583   5.4998210502
+## 1896          und sprang    25            0      2  1.1800104206   5.4940861918
+## 1897             ließ es    16            0      2  1.3875843661   5.4906911836
+## 1898        sprechen und    10            0      2  2.0018709894   5.4879378590
+## 1899             war kam    22            0      2  1.1779929807   5.4794569621
+## 1900           sagte ich    26            0      2  1.0878159854   5.4789928462
+## 1901        vergnügt und    12            0      2  1.7771773645   5.4739559586
+## 1902            da mußte    12            0      2  1.5925261609   5.4720521648
+## 1903           das essen    13            0      2  1.5450946559   5.4704423098
+## 1904            feld und    13            0      2  1.6910390025   5.4672825658
+## 1905            frau die    28            0      2  1.0642122027   5.4663528406
+## 1906             tag war    11            0      2  1.6529086592   5.4639953025
+## 1907           wagen und    19            0      2  1.3605458552   5.4612091988
+## 1908             ihn bei    10            0      2  1.7112834624   5.4475636067
+## 1909              ihn um    10            0      2  1.7112834624   5.4475636067
+## 1910         könig hatte    13            0      2  1.5063515150   5.4458331222
+## 1911            sich von    25            0      2  1.0980379574   5.4377179832
+## 1912          hunger und    11            0      2  1.8584942872   5.4357914706
+## 1913          kirche und    11            0      2  1.8584942872   5.4357914706
+## 1914         erzählte er    10            0      2  1.7766765645   5.4171764528
+## 1915             sah ihn    11            0      2  1.6249801334   5.4170726492
+## 1916            und band    10            0      2  1.9648252479   5.4143709380
+## 1917         und reichte    12            0      2  1.7521715923   5.4130093728
+## 1918            will mir    11            0      2  1.6200135584   5.4087484031
+## 1919        wollte nicht    22            0      2  1.1624399136   5.3987416249
+## 1920              wo der    32            0      2  0.9842200618   5.3906251331
+## 1921            wird ein    11            0      2  1.6331962306   5.3880008846
+## 1922            dass ihm    26            0      2  1.0654544312   5.3873135949
+## 1923            sich mit    38            0      2  0.8852763664   5.3848998004
+## 1924        sich endlich    12            0      2  1.5600596915   5.3822003294
+## 1925               ob es    10            0      2  1.7134799244   5.3674476237
+## 1926        nicht heraus    11            0      2  1.6277538676   5.3644908202
+## 1927            ruhe und    15            0      2  1.5176928295   5.3540825040
+## 1928              ist im    10            0      2  1.6788848145   5.3516884508
+## 1929            rief die    28            0      2  1.0406731883   5.3497764548
+## 1930            nur eine    10            0      2  1.6787948546   5.3489074876
+## 1931            denn ich    13            0      2  1.4924667758   5.3332049515
+## 1932           hielt sie    10            0      2  1.7390968245   5.3318906780
+## 1933           der sonne    11            0      2  1.6865657171   5.3094779284
+## 1934           hatte sie    44            0      2  0.8170097740   5.3054191455
+## 1935          garten und    11            0      2  1.8004980897   5.3044570289
+## 1936           ist nicht    28            0      2  1.0134717017   5.3031182218
+## 1937          hinter der    14            0      2  1.4798850721   5.2985783233
+## 1938             da hast    14            0      2  1.4266300530   5.2982840662
+## 1939          machte sie    15            0      2  1.4011615118   5.2954203353
+## 1940         immer nicht    11            0      2  1.6040675439   5.2895423777
+## 1941             ihn aus    14            0      2  1.4084531935   5.2776947507
+## 1942              war es    51            0      2  0.7512866055   5.2762309794
+## 1943            du haben    12            0      2  1.5229834751   5.2689449363
+## 1944              er zum    24            0      2  1.0994520725   5.2619463945
+## 1945           ich schon    14            0      2  1.4165265352   5.2545212860
+## 1946           da setzte    11            0      2  1.5940870408   5.2544916159
+## 1947            sind die    17            0      2  1.3160127473   5.2491687490
+## 1948          gingen die    13            0      2  1.5112751114   5.2463617123
+## 1949             fing es    10            0      2  1.6702332523   5.2388415151
+## 1950          sitzen der    10            0      2  1.7445213921   5.2269787922
+## 1951            muss ein    10            0      2  1.6560405780   5.2185001857
+## 1952            ihr auch    15            0      2  1.3463996622   5.2156184872
+## 1953          das sollst    11            0      2  1.5947035696   5.2034001652
+## 1954            ich doch    16            0      2  1.3120292454   5.2017737525
+## 1955             bei den    17            0      2  1.2748319454   5.2004871234
+## 1956            nicht ab    10            0      2  1.6510300312   5.1970842868
+## 1957           sprach es    43            0      2  0.8028071749   5.1857587729
+## 1958            mußte er    17            0      2  1.2872191575   5.1778236866
+## 1959             wie das    43            0      2  0.8020216383   5.1696488876
+## 1960           aber kein    11            0      2  1.5637281977   5.1694883354
+## 1961           auf einer    11            0      2  1.5582520857   5.1684791588
+## 1962             sie auf    70            0      2  0.6304104785   5.1574937393
+## 1963            der zeit    19            0      2  1.2233124670   5.1442193925
+## 1964            dem hans    10            0      2  1.6230037790   5.1291611810
+## 1965           sich fort    13            0      2  1.4208176228   5.1070479940
+## 1966            wäre ein    15            0      2  1.3250273590   5.1040409499
+## 1967             kam die    43            0      2  0.7981098272   5.1003415467
+## 1968           sich aber    45            0      2  0.7706905981   5.0940781751
+## 1969          ihm nichts    12            0      2  1.4667820943   5.0931428341
+## 1970             von ihm    19            0      2  1.1701134762   5.0814590633
+## 1971           sie schon    19            0      2  1.1902513984   5.0800015164
+## 1972             so wohl    13            0      2  1.4167445610   5.0782977306
+## 1973         und stellte    14            0      2  1.4829295848   5.0770468244
+## 1974          lassen und    21            0      2  1.1880722219   5.0769094153
+## 1975             zog sie    13            0      2  1.4413499877   5.0768617921
+## 1976           er führte    10            0      2  1.6514657346   5.0691159159
+## 1977          werden als    10            0      2  1.5972628212   5.0589794442
+## 1978            weil ich    13            0      2  1.4106942112   5.0507912396
+## 1979            der berg    11            0      2  1.5943646798   5.0497014676
+## 1980          sie weiter    16            0      2  1.2898098049   5.0489619314
+## 1981          sich damit    12            0      2  1.4554547659   5.0318776549
+## 1982             fort da    14            0      2  1.3509580493   5.0251751890
+## 1983       antwortete es    19            0      2  1.1626518380   5.0217817553
+## 1984          einmal auf    13            0      2  1.3935350449   5.0198989350
+## 1985           die jäger    16            0      2  1.2904932787   5.0039981336
+## 1986           auf seine    15            0      2  1.2950848014   5.0038579749
+## 1987           geben das    11            0      2  1.5299129274   5.0031749284
+## 1988              an ihr    21            0      2  1.0966756860   5.0022965351
+## 1989            kam auch    11            0      2  1.4954248653   4.9976719255
+## 1990           und lebte    10            0      2  1.7674389947   4.9955403527
+## 1991          keller und    10            0      2  1.7674389947   4.9955403527
+## 1992            damit er    20            0      2  1.1409056636   4.9902342857
+## 1993             ihr das    41            0      2  0.7919535118   4.9881826713
+## 1994              es auf    48            0      2  0.7300645550   4.9787876449
+## 1995            über dem    13            0      2  1.3829989293   4.9760214142
+## 1996              um die    26            0      2  1.0017589585   4.9729811047
+## 1997            war kein    10            0      2  1.5679567310   4.9630082240
+## 1998             vor die    35            0      2  0.8599214928   4.9589760469
+## 1999            damit du    11            0      2  1.4914395426   4.9530792028
+## 2000            war eine    25            0      2  0.9983343585   4.9515262309
+## 2001             gab sie    16            0      2  1.2635240985   4.9504277461
+## 2002            an seine    12            0      2  1.4181041487   4.9321245924
+## 2003           und zogen    10            0      2  1.7380206396   4.9294575467
+## 2004          und hatten    25            0      2  1.0459585779   4.9157571423
+## 2005         der getreue    16            0      2  7.0253711999   4.8939062433
+## 2006            nun ging    10            0      2  1.5298798193   4.8873012167
+## 2007            hatte er    44            0      2  0.7505442324   4.8752129997
+## 2008            ward sie    23            0      2  1.0329703345   4.8597794401
+## 2009             saß und    23            0      2  1.0712096279   4.8251812848
+## 2010            bist ein    10            0      2  1.5239646437   4.8172219452
+## 2011      antwortete die    31            0      2  0.8868800776   4.8154292560
+## 2012           der wagen    12            0      2  1.4434025877   4.8085812464
+## 2013            das muss    12            0      2  1.4047926604   4.8079580361
+## 2014          könnte der    13            0      2  1.3819468172   4.8001248102
+## 2015         dann sprach    11            0      2  1.4398598993   4.7945686027
+## 2016        herunter und    12            0      2  1.5118425870   4.7927314562
+## 2017              wer da    10            0      2  1.5168870089   4.7876054704
+## 2018             er ging    36            0      2  0.8116869275   4.7722057853
+## 2019           hinaus da    11            0      2  1.4421307786   4.7707358665
+## 2020            es waren    16            0      2  1.2006100129   4.7661960422
+## 2021           sie ihren    12            0      2  1.4027900586   4.7620229149
+## 2022             aber so    49            0      2  0.6906611071   4.7611231888
+## 2023         und klopfte    11            0      2  1.5745013667   4.7577697763
+## 2024           bauer der    12            0      2  1.4243014478   4.7500653644
+## 2025          der arbeit    12            0      2  1.4236887792   4.7480244425
+## 2026          brachte er    11            0      2  1.4642290548   4.7441144962
+## 2027             ihr die    58            0      2  0.6380794229   4.7419756153
+## 2028           beine und    10            0      2  1.6546256208   4.7373202765
+## 2029             tot und    17            0      2  1.2309913839   4.7310111162
+## 2030             er wäre    23            0      2  1.0036271912   4.7177306878
+## 2031              in ein    55            0      2  0.6468407655   4.7175561764
+## 2032          wasser und    28            0      2  0.9431081834   4.7158293989
+## 2033            auch ein    21            0      2  1.0357664363   4.7147178404
+## 2034             ward es    16            0      2  1.1860564694   4.7127450594
+## 2035            nicht um    14            0      2  1.2618307803   4.7038260976
+## 2036             und laß    15            0      2  1.3055670508   4.6944927968
+## 2037              er mit    65            0      2  0.5944925435   4.6898624679
+## 2038            aber was    26            0      2  0.9273267942   4.6886722004
+## 2039              um und    41            0      2  0.7697223667   4.6873133119
+## 2040            war nahm    11            0      2  1.3978318710   4.6442614711
+## 2041               wo es    16            0      2  1.1672641868   4.6396859602
+## 2042         schloss und    25            0      2  0.9823041284   4.6354692906
+## 2043            alte mit    10            0      2  1.4565223589   4.6323836360
+## 2044             da wird    10            0      2  1.4569054444   4.6046331227
+## 2045            hatte es    28            0      2  0.8784225879   4.6004154228
+## 2046          machen und    22            0      2  1.0410279883   4.5977515062
+## 2047           sich alle    12            0      2  1.3263496058   4.5961723785
+## 2048            aber wie    29            0      2  0.8595234930   4.5859208369
+## 2049            sind sie    13            0      2  1.2893425140   4.5667030091
+## 2050          die hatten    15            0      2  1.2107465666   4.5657127505
+## 2051            ich noch    21            0      2  1.0025038967   4.5582569750
+## 2052            stand er    18            0      2  1.0918935885   4.5445796077
+## 2053            und ihre    29            0      2  0.8899793964   4.5415723259
+## 2054            das kann    13            0      2  1.2714922910   4.5387756661
+## 2055           da konnte    13            0      2  1.2589026526   4.5272515054
+## 2056             so ließ    13            0      2  1.2583015194   4.5246824150
+## 2057              was es    29            0      2  0.8487306944   4.5232472479
+## 2058           daran und    13            0      2  1.3483562358   4.5088402575
+## 2059            und ward    43            0      2  0.7213595724   4.5080421898
+## 2060           fort aber    12            0      2  1.2972304129   4.4937582779
+## 2061              er ein    81            0      2  0.5100467070   4.4878473325
+## 2062           sollte es    13            0      2  1.2486299756   4.4846267907
+## 2063           an nichts    10            0      2  1.4040593096   4.4794778607
+## 2064            ihm eine    19            0      2  1.0288820289   4.4741493208
+## 2065           waren sie    21            0      2  0.9930107647   4.4741259636
+## 2066             sah sie    23            0      2  0.9430859368   4.4470789973
+## 2067              aß und    12            0      2  1.3843663481   4.4407680536
+## 2068        mädchen aber    11            0      2  1.3333571668   4.4283847827
+## 2069            hat sich    13            0      2  1.2237302807   4.4132227401
+## 2070             wäre er    22            0      2  0.9574421550   4.4097303833
+## 2071           stieg der    12            0      2  1.3135369981   4.4057879022
+## 2072         königin die    13            0      2  1.2511169045   4.3965238047
+## 2073         brunnen und    12            0      2  1.3674123194   4.3928809832
+## 2074             da wäre    14            0      2  1.1749247531   4.3846377686
+## 2075            auch das    27            0      2  0.8535968595   4.3802438259
+## 2076          vorbei und    10            0      2  1.5061787954   4.3788230193
+## 2077          und schrie    11            0      2  1.4283774568   4.3776970792
+## 2078             war nun    17            0      2  1.0640518323   4.3766382917
+## 2079            sich ein    42            0      2  0.6786594214   4.3419871484
+## 2080             mich in    17            0      2  1.0595759714   4.3413093295
+## 2081          hinter die    11            0      2  1.3418976436   4.3357859962
+## 2082             das sah    19            0      2  1.0029855279   4.3264245547
+## 2083            land und    10            0      2  1.4834460742   4.3221798111
+## 2084             fing er    12            0      2  1.2670667499   4.3125973640
+## 2085             kind in    10            0      2  1.3634043737   4.3052579501
+## 2086            nicht wo    14            0      2  1.1515018721   4.3006146209
+## 2087              so sah    15            0      2  1.1137345393   4.3003853914
+## 2088          werden sie    15            0      2  1.1258317127   4.2939578627
+## 2089            denn die    18            0      2  1.0317990483   4.2780205136
+## 2090            sich zum    12            0      2  1.2297349488   4.2680090195
+## 2091            müde und    10            0      2  1.4612184673   4.2663704223
+## 2092          der andern    22            0      2  0.9331871205   4.2631936857
+## 2093             kam das    27            0      2  0.8285462848   4.2535344908
+## 2094           wollte so    19            0      2  0.9786017592   4.2436587414
+## 2095            will ihn    11            0      2  1.2643385886   4.2300815306
+## 2096        gebracht und    11            0      2  1.3717451520   4.2253946212
+## 2097         trinken und    11            0      2  1.3717451520   4.2253946212
+## 2098            hatte da    25            0      2  0.8509407039   4.2222610826
+## 2099            mußte es    10            0      2  1.3343410057   4.2212070677
+## 2100            es ihnen    10            0      2  1.3306090838   4.2064333465
+## 2101           nicht wie    29            0      2  0.7866947471   4.1991662604
+## 2102            sie über    19            0      2  0.9767004789   4.1935457545
+## 2103           ich hätte    11            0      2  1.2636300631   4.1902049486
+## 2104            auch die    38            0      2  0.6939570081   4.1849509694
+## 2105           kommt und    17            0      2  1.0760214996   4.1820921737
+## 2106          kommen der    16            0      2  1.0719021214   4.1738228153
+## 2107             zog der    14            0      2  1.1432162182   4.1614723466
+## 2108           sie waren    20            0      2  0.9426378878   4.1528675954
+## 2109              er auf    67            0      2  0.5178721016   4.1521142539
+## 2110            hätte es    11            0      2  1.2514757806   4.1497308299
+## 2111           aber auch    19            0      2  0.9555128777   4.1489854070
+## 2112              gab es    10            0      2  1.3087274728   4.1424409541
+## 2113          hatte aber    23            0      2  0.8682144632   4.1393318589
+## 2114           jäger das    10            0      2  1.3148876601   4.1362040522
+## 2115             ihm aus    14            0      2  1.1012221435   4.1331961697
+## 2116           als seine    13            0      2  1.1421267332   4.1285267182
+## 2117        einander und    15            0      2  1.1306371750   4.1202891654
+## 2118         auch wieder    10            0      2  1.2864381222   4.1161970462
+## 2119              tat er    11            0      2  1.2597631749   4.1140869802
+## 2120          hatte sich    22            0      2  0.8812416982   4.1128441143
+## 2121            geld und    19            0      2  0.9967597605   4.1103917790
+## 2122        der jungfrau    11            0      2  1.2740660949   4.1068566336
+## 2123            hätte er    16            0      2  1.0415811379   4.1009416998
+## 2124          konnte sie    18            0      2  0.9803607469   4.0999447842
+## 2125            sie aber    73            0      2  0.4898147946   4.0998745071
+## 2126           hinab und    14            0      2  1.1651123994   4.0966247814
+## 2127            wäre der    26            0      2  0.8211817897   4.0852742451
+## 2128             dir den    16            0      2  1.0258429652   4.0836484957
+## 2129             ist der    50            0      2  0.5911643387   4.0790598881
+## 2130            doch ein    12            0      2  1.1745147867   4.0757262867
+## 2131            fing sie    11            0      2  1.2433956847   4.0716837498
+## 2132             ich ihn    28            0      2  0.7753654198   4.0666376423
+## 2133              du ein    37            0      2  0.6741306702   4.0558204250
+## 2134            trat der    11            0      2  1.2565698962   4.0539085596
+## 2135            leib und    10            0      2  1.3769402429   4.0510843331
+## 2136            sie auch    31            0      2  0.7389896732   4.0494017941
+## 2137             ihm vor    12            0      2  1.1611539735   4.0465858346
+## 2138              er bei    20            0      2  0.9177607359   4.0396423962
+## 2139             zu sein    19            0      2  0.9278197223   4.0270355902
+## 2140            wäre als    11            0      2  1.2051352239   4.0193956858
+## 2141              um das    16            0      2  1.0114374731   4.0141570179
+## 2142        jungfrau die    10            0      2  1.2950353118   4.0068911460
+## 2143             es ging    22            0      2  0.8595373647   4.0033673325
+## 2144         bringen und    14            0      2  1.1302117275   3.9839159183
+## 2145             der weg    19            0      2  0.9359858620   3.9811490157
+## 2146             er ganz    16            0      2  1.0088118953   3.9755915739
+## 2147             sie zum    19            0      2  0.9231965470   3.9690462841
+## 2148             wäre da    13            0      2  1.1006296944   3.9687884708
+## 2149          sie dachte    15            0      2  1.0375523643   3.9670306677
+## 2150            auch von    10            0      2  1.2354860688   3.9543005110
+## 2151            wird das    11            0      2  1.1967580944   3.9513681321
+## 2152             wäre so    13            0      2  1.0942974765   3.9460178625
+## 2153          war sprach    30            0      2  0.7258274618   3.9433859040
+## 2154            ward die    24            0      2  0.8212962837   3.9423053045
+## 2155           alles auf    10            0      2  1.2337905820   3.9318529137
+## 2156          und abends    13            0      2  1.1545867672   3.9202623534
+## 2157           so dachte    10            0      2  1.2339392611   3.9170547152
+## 2158             es ganz    11            0      2  1.1803430120   3.9166296716
+## 2159             wald da    10            0      2  1.2330741457   3.9147688675
+## 2160          schrie und    10            0      2  1.3180863322   3.8974520433
+## 2161           stand der    20            0      2  0.8915092481   3.8936741954
+## 2162               wo du    11            0      2  1.1622214512   3.8789053712
+## 2163             kam ihm    14            0      2  1.0323255339   3.8770862928
+## 2164         aber sprach    32            0      2  0.6907830496   3.8727191690
+## 2165             tun und    17            0      2  0.9900871121   3.8697326175
+## 2166            für sich    10            0      2  1.2150544562   3.8675626053
+## 2167            sie ganz    15            0      2  1.0085825904   3.8592196542
+## 2168          gehört und    11            0      2  1.2347435337   3.8464875515
+## 2169             er noch    29            0      2  0.7247609789   3.8407064275
+## 2170            sich bei    11            0      2  1.1510242201   3.8370149986
+## 2171              so war    41            0      2  0.6063778985   3.8366146227
+## 2172             von mir    10            0      2  1.1970634664   3.8322847290
+## 2173           aber nahm    10            0      2  1.2034955392   3.8285259673
+## 2174             kam und    64            0      2  0.4978327468   3.8232015433
+## 2175           schön und    15            0      2  1.0386955720   3.8090605678
+## 2176           sie mußte    13            0      2  1.0622085191   3.7884601755
+## 2177            wein und    12            0      2  1.1560406379   3.7767524027
+## 2178           und blieb    15            0      2  1.0289822866   3.7758343699
+## 2179             nun die    33            0      2  0.6702013068   3.7737983858
+## 2180            eine von    12            0      2  1.0802005071   3.7718222136
+## 2181            nahm ein    10            0      2  1.1826924324   3.7625159713
+## 2182            er nicht    79            0      2  0.4305307998   3.7469825534
+## 2183            er legte    11            0      2  1.1415311087   3.7426784746
+## 2184            ließ der    22            0      2  0.8149305934   3.7374513469
+## 2185            fest und    14            0      2  1.0532193890   3.7322041145
+## 2186               es an    32            0      2  0.6629555418   3.7140640584
+## 2187           er hinaus    14            0      2  1.0049806098   3.7138019205
+## 2188          fragte die    17            0      2  0.9147873773   3.7030977209
+## 2189            der frau    24            0      2  0.7725043879   3.7011637809
+## 2190           aber doch    11            0      2  1.1089049356   3.6963062464
+## 2191            türe und    18            0      2  0.9147084424   3.6925963819
+## 2192             auch in    21            0      2  0.8104035700   3.6921473807
+## 2193          hatte auch    10            0      2  1.1496003564   3.6810775916
+## 2194              es nun    19            0      2  0.8477559739   3.6783095612
+## 2195            und fiel    15            0      2  1.0003955001   3.6776806328
+## 2196            sie noch    27            0      2  0.7173713829   3.6759820731
+## 2197              um sie    18            0      2  0.8755614727   3.6709352622
+## 2198             ihm der    68            0      2  0.4547504010   3.6613157533
+## 2199          sah sprach    10            0      2  1.1420051912   3.6484000065
+## 2200            kann das    11            0      2  1.1023750066   3.6477905847
+## 2201             nur die    23            0      2  0.7746336785   3.6465485252
+## 2202           geben und    19            0      2  0.8776623090   3.6452134285
+## 2203            kind das    10            0      2  1.1515384634   3.6374065210
+## 2204           ihr einen    14            0      2  0.9662403108   3.6329336552
+## 2205          ich wollte    18            0      2  0.8586058268   3.6307692562
+## 2206        geworden und    11            0      2  1.1577601399   3.6275900046
+## 2207            und kaum    11            0      2  1.1577601399   3.6275900046
+## 2208             so ging    19            0      2  0.8318535015   3.6142378872
+## 2209           ihr nicht    26            0      2  0.7133397256   3.6138239916
+## 2210             noch zu    17            0      2  0.8775914423   3.6121180942
+## 2211            sagte es    20            0      2  0.8048239971   3.5832968198
+## 2212           mußte der    16            0      2  0.9135338835   3.5778407262
+## 2213           fuchs und    17            0      2  0.9109498057   3.5775703138
+## 2214            erde und    16            0      2  0.9394320375   3.5765422133
+## 2215          werden und    26            0      2  0.7308049150   3.5652491194
+## 2216              es ihr    29            0      2  0.6675005608   3.5643891131
+## 2217             mir ein    18            0      2  0.8414209204   3.5636303772
+## 2218             sie ihr    42            0      2  0.5584775724   3.5623543398
+## 2219            war doch    10            0      2  1.1146282231   3.5547187441
+## 2220           der abend    10            0      2  1.1470498324   3.5534056298
+## 2221             er nahm    16            0      2  0.8970665287   3.5456357472
+## 2222            dass das    38            0      2  0.5822723344   3.5448481184
+## 2223            sohn der    11            0      2  1.0839200921   3.5230691765
+## 2224              er ihr    44            0      2  0.5400933903   3.5225958011
+## 2225           aber ließ    10            0      2  1.1047667237   3.5197062056
+## 2226         gemacht und    10            0      2  1.1762203738   3.5169078784
+## 2227            ging ihm    13            0      2  0.9679299217   3.5107253461
+## 2228           sie damit    15            0      2  0.9100725597   3.4908298385
+## 2229            wenn das    24            0      2  0.7174239289   3.4840198252
+## 2230            war ging    16            0      2  0.8675416998   3.4734619774
+## 2231           und sahen    10            0      2  1.1598220936   3.4720506918
+## 2232           vater und    32            0      2  0.6395222308   3.4694446442
+## 2233              er zog    10            0      2  1.1046271855   3.4649151639
+## 2234           stadt und    12            0      2  1.0526872576   3.4638753934
+## 2235          fragte den    10            0      2  1.0892361965   3.4584037413
+## 2236             tag und    25            0      2  0.7220757695   3.4571869595
+## 2237             für das    13            0      2  0.9615077331   3.4565061073
+## 2238             war und   141            0      2  0.3023331389   3.4528857002
+## 2239           und hatte    76            0      2  0.4114467377   3.4510041634
+## 2240             habe es    12            0      2  0.9936076592   3.4500061897
+## 2241             er auch    30            0      2  0.6388980413   3.4482496440
+## 2242            denn das    11            0      2  1.0389184446   3.4425488658
+## 2243          der großen    12            0      2  1.0131302817   3.4422477820
+## 2244              es dir    14            0      2  0.9200266655   3.4415536135
+## 2245            alles in    12            0      2  0.9899903747   3.4349451211
+## 2246              da hat    12            0      2  0.9849708556   3.4242201203
+## 2247           es wieder    22            0      2  0.7333181316   3.4212022148
+## 2248          endlich in    10            0      2  1.0748289138   3.4141355728
+## 2249             doch zu    11            0      2  1.0212312740   3.4047460625
+## 2250           sie einen    36            0      2  0.5748939279   3.3995689306
+## 2251           und schön    14            0      2  0.9525874399   3.3972719010
+## 2252          sie konnte    16            0      2  0.8568366649   3.3948272469
+## 2253              bis zu    11            0      2  1.0160211117   3.3876302884
+## 2254               er an    47            0      2  0.5022927525   3.3858820261
+## 2255          nehmen und    11            0      2  1.0725755077   3.3808125254
+## 2256          sollte den    11            0      2  1.0141104514   3.3736207749
+## 2257           und hörte    18            0      2  0.8315620184   3.3728006934
+## 2258             mir das    24            0      2  0.6941342436   3.3721087963
+## 2259           und waren    36            0      2  0.5840566404   3.3656890056
+## 2260            haben so    10            0      2  1.0559004822   3.3618408729
+## 2261           vater das    13            0      2  0.9346016136   3.3615244860
+## 2262           augen und    23            0      2  0.7306748696   3.3571846901
+## 2263              es aus    19            0      2  0.7717771743   3.3520662969
+## 2264             es noch    18            0      2  0.7917912420   3.3493423211
+## 2265            soll das    11            0      2  1.0086358852   3.3443055242
+## 2266           darin und    19            0      2  0.8013812750   3.3423889886
+## 2267          sie sollte    15            0      2  0.8688711786   3.3359886457
+## 2268             war als    31            0      2  0.6036234583   3.3353914248
+## 2269              er das   105            0      2  0.3327284384   3.3319867821
+## 2270            es stand    10            0      2  1.0476594062   3.3303315413
+## 2271            sein als    14            0      2  0.8864322389   3.3295082064
+## 2272           waren die    21            0      2  0.7371781151   3.3230482388
+## 2273          werden die    15            0      2  0.8702881648   3.3204539753
+## 2274             zu sich    39            0      2  0.5355245261   3.3092179205
+## 2275             bis der    22            0      2  0.7166596643   3.2963160388
+## 2276           stand und    28            0      2  0.6485038031   3.2937016664
+## 2277          und konnte    32            0      2  0.6057274643   3.2911241468
+## 2278             es wohl    10            0      2  1.0342416693   3.2884248199
+## 2279              an das    36            0      2  0.5534545736   3.2828595985
+## 2280             dir das    16            0      2  0.8242338895   3.2826702522
+## 2281              zu mir    18            0      2  0.7747702513   3.2821487395
+## 2282             sah ich    13            0      2  0.9055153831   3.2718200309
+## 2283            wäre und    36            0      2  0.5657956305   3.2630311628
+## 2284            war noch    14            0      2  0.8686388147   3.2617589514
+## 2285            fing der    12            0      2  0.9570847326   3.2585316829
+## 2286            es schon    10            0      2  1.0242949115   3.2573402393
+## 2287             und das   227            0      2  0.2247131602   3.2506288008
+## 2288           da wollte    16            0      2  0.8122106131   3.2489159422
+## 2289             wäre es    12            0      2  0.9334112832   3.2439367739
+## 2290           herrn und    11            0      2  1.0195650946   3.2249907848
+## 2291            wenn die    34            0      2  0.5621391103   3.2198683618
+## 2292         tochter die    11            0      2  0.9819792177   3.2170886518
+## 2293            habe den    12            0      2  0.9262804944   3.2166818474
+## 2294           sie kamen    11            0      2  0.9731244514   3.2115089973
+## 2295            sie nach    22            0      2  0.6910844722   3.2065035544
+## 2296           sehen und    20            0      2  0.7414531089   3.1804746162
+## 2297            da waren    11            0      2  0.9517784967   3.1757847838
+## 2298             ihr den    28            0      2  0.6041458180   3.1731555564
+## 2299           konnte so    10            0      2  0.9943874707   3.1688797027
+## 2300           ich einen    23            0      2  0.6609260783   3.1547060692
+## 2301             mann zu    10            0      2  0.9890339467   3.1528261096
+## 2302          der sollte    19            0      2  0.7347126547   3.1449985234
+## 2303             er fort    16            0      2  0.7936406287   3.1445691251
+## 2304            mich ich    13            0      2  0.8632734947   3.1210021179
+## 2305        gegangen und    10            0      2  1.0232063236   3.0919708184
+## 2306           sich dass    24            0      2  0.6335913134   3.0916187101
+## 2307             hat der    23            0      2  0.6562236967   3.0895780339
+## 2308            ward der    23            0      2  0.6562236967   3.0895780339
+## 2309          ich nichts    12            0      2  0.8878193407   3.0880773227
+## 2310            und ohne    14            0      2  0.8611549741   3.0876451231
+## 2311            sich der    86            0      2  0.3399973943   3.0792993258
+## 2312          konnte und    31            0      2  0.5743912598   3.0768173708
+## 2313          mutter und    22            0      2  0.6823846963   3.0752281051
+## 2314           aber ging    16            0      2  0.7675320662   3.0741592197
+## 2315           haben das    12            0      2  0.8873050687   3.0740453223
+## 2316             aus wie    10            0      2  0.9543216845   3.0581398978
+## 2317             ging zu    17            0      2  0.7402116177   3.0515790556
+## 2318       er antwortete    21            0      2  0.6730867396   3.0506600179
+## 2319            war sein    14            0      2  0.8098746196   3.0428951104
+## 2320             auf das    46            0      2  0.4529597389   3.0321855680
+## 2321             sie zur    12            0      2  0.8784801232   3.0291936561
+## 2322             war das    49            0      2  0.4381056389   3.0251535854
+## 2323           er setzte    11            0      2  0.9164430759   3.0239545177
+## 2324         und niemand    15            0      2  0.8125132061   3.0199683832
+## 2325           wäre aber    10            0      2  0.9420528689   3.0078303498
+## 2326             ward da    11            0      2  0.8988505641   3.0013020429
+## 2327             sein da    16            0      2  0.7483700822   2.9957564563
+## 2328              er nur    18            0      2  0.7121916501   2.9927054889
+## 2329             so ward    11            0      2  0.8925232413   2.9802154976
+## 2330               er am    16            0      2  0.7511963030   2.9791976179
+## 2331              es nur    12            0      2  0.8562348651   2.9776017473
+## 2332             mir auf    14            0      2  0.7912524365   2.9748167643
+## 2333              in ihr    27            0      2  0.5750529981   2.9685021765
+## 2334             dir ein    11            0      2  0.8875315565   2.9663563043
+## 2335          wollte ich    16            0      2  0.7408329618   2.9640341827
+## 2336          hatten die    11            0      2  0.9007142230   2.9583454847
+## 2337           er dachte    13            0      2  0.8256094521   2.9576194765
+## 2338            ihm dass    18            0      2  0.6950903794   2.9525150137
+## 2339             bis die    19            0      2  0.6858631372   2.9486744057
+## 2340             sie nur    17            0      2  0.7201423182   2.9466274139
+## 2341           haben und    29            0      2  0.5677350545   2.9441064009
+## 2342          war wollte    13            0      2  0.8070856344   2.9267481358
+## 2343       schneider der    10            0      2  0.9341397066   2.9176384119
+## 2344             wie ich    26            0      2  0.5742716967   2.9118844856
+## 2345          nun sprach    11            0      2  0.8557608620   2.8681027212
+## 2346           und beide    10            0      2  0.9415014684   2.8596338068
+## 2347             habe so    10            0      2  0.8944152861   2.8542000762
+## 2348             in mein    11            0      2  0.8537125025   2.8474844110
+## 2349             sich im    10            0      2  0.8896662660   2.8438466934
+## 2350             aber wo    10            0      2  0.8901211646   2.8437917822
+## 2351             noch so    15            0      2  0.7325285805   2.8429939510
+## 2352            könig zu    15            0      2  0.7319205078   2.8411088913
+## 2353          hatten und    18            0      2  0.6950294720   2.8388847933
+## 2354            die sind    11            0      2  0.8620843434   2.8346675241
+## 2355            sich aus    14            0      2  0.7525032655   2.8281455191
+## 2356          fertig und    10            0      2  0.9285098021   2.8223707514
+## 2357             er ließ    15            0      2  0.7309187401   2.8110599408
+## 2358           braut und    14            0      2  0.7773793649   2.7999238605
+## 2359             er doch    16            0      2  0.7051684835   2.7993907599
+## 2360            fing die    10            0      2  0.8908401035   2.7968508400
+## 2361              ihm so    28            0      2  0.5305391673   2.7907452069
+## 2362             als ihr    19            0      2  0.6390087807   2.7858689614
+## 2363          helfen und    10            0      2  0.9156846429   2.7855024301
+## 2364            er hatte    34            0      2  0.4817481558   2.7720694360
+## 2365            sie wäre    16            0      2  0.6973003107   2.7719706863
+## 2366            aus dass    10            0      2  0.8631995681   2.7670942360
+## 2367         und endlich    25            0      2  0.5736391824   2.7654280536
+## 2368             ich nur    11            0      2  0.8248967690   2.7548627965
+## 2369           das waren    13            0      2  0.7616228924   2.7476798792
+## 2370           sie immer    10            0      2  0.8680997963   2.7447082323
+## 2371            sagte zu    16            0      2  0.6822705159   2.7333856806
+## 2372          lustig und    11            0      2  0.8534414657   2.7265878161
+## 2373             kam war    14            0      2  0.7233623433   2.7200130191
+## 2374              er hin    11            0      2  0.8182735648   2.7064826412
+## 2375           einmal so    10            0      2  0.8467056087   2.7035963697
+## 2376            es seine    13            0      2  0.7459806794   2.6994852673
+## 2377              er gab    11            0      2  0.8140319323   2.6927176879
+## 2378              es sah    12            0      2  0.7709135396   2.6839931690
+## 2379           nicht aus    15            0      2  0.6908508000   2.6831675596
+## 2380            und kein    22            0      2  0.5923469860   2.6805065010
+## 2381           einmal in    11            0      2  0.8027786667   2.6795767508
+## 2382           und seine    40            0      2  0.4380442695   2.6744523137
+## 2383             er wohl    13            0      2  0.7450466933   2.6738522514
+## 2384             tat der    10            0      2  0.8521301654   2.6687950322
+## 2385          finden und    11            0      2  0.8318100596   2.6606556612
+## 2386           ihnen die    12            0      2  0.7738328473   2.6591345059
+## 2387             ist was    10            0      2  0.8264721568   2.6512617445
+## 2388            frau und    32            0      2  0.4835709902   2.6409429081
+## 2389            er schon    13            0      2  0.7350001468   2.6383670475
+## 2390              kam da    16            0      2  0.6570448074   2.6327512719
+## 2391              kam an    10            0      2  0.8178801281   2.6228154167
+## 2392            den mann    10            0      2  0.8180525496   2.6086827224
+## 2393           du wieder    14            0      2  0.6913415423   2.6014062476
+## 2394           und mußte    21            0      2  0.5863200959   2.5943884649
+## 2395             war ihm    23            0      2  0.5408210999   2.5873087189
+## 2396          darauf und    22            0      2  0.5710472179   2.5865192634
+## 2397             sah den    12            0      2  0.7425485164   2.5853881511
+## 2398              ist da    19            0      2  0.5924668891   2.5809562200
+## 2399             es ward    11            0      2  0.7725068758   2.5800974269
+## 2400              da ist    19            0      2  0.5904309053   2.5721370456
+## 2401            das wohl    10            0      2  0.8046531380   2.5593437061
+## 2402             das hat    13            0      2  0.7084394774   2.5579458553
+## 2403             nur das    13            0      2  0.7060877422   2.5495460792
+## 2404              sie am    14            0      2  0.6821109828   2.5432112626
+## 2405          und gretel    10            0      2  0.8302355956   2.5378435853
+## 2406             und war   132            0      2  0.2286704219   2.5340620304
+## 2407           dem einen    17            0      2  0.6098741982   2.5198144738
+## 2408             es doch    10            0      2  0.7873843370   2.5127802922
+## 2409           nichts da    10            0      2  0.7797514875   2.4919700760
+## 2410           ihm nicht    26            0      2  0.4907710463   2.4914691779
+## 2411           haben der    17            0      2  0.6081251260   2.4748799295
+## 2412             rief es    10            0      2  0.7730520319   2.4685645209
+## 2413            das will    18            0      2  0.5826386776   2.4654735256
+## 2414            gott und    15            0      2  0.6543806418   2.4515574614
+## 2415             es aber    41            0      2  0.3863131985   2.4486451405
+## 2416            dass ein    23            0      2  0.5118366920   2.4484142236
+## 2417          sprach nun    10            0      2  0.7627211512   2.4451117566
+## 2418             wie ihn    12            0      2  0.6920927161   2.4218764138
+## 2419             von ihr    10            0      2  0.7546379437   2.4214448041
+## 2420          sie wollte    22            0      2  0.5201478718   2.4207001670
+## 2421          kam sprach    11            0      2  0.7120143610   2.3889627361
+## 2422             du noch    11            0      2  0.7124179518   2.3887674224
+## 2423          als wollte    11            0      2  0.7112424531   2.3846821062
+## 2424            aber war    31            0      2  0.4303260340   2.3807945130
+## 2425            der kopf    10            0      2  0.7576333675   2.3797040803
+## 2426             dich in    12            0      2  0.6825379953   2.3785026898
+## 2427            sie doch    14            0      2  0.6363304131   2.3745505222
+## 2428           hatte als    15            0      2  0.6101381141   2.3744739718
+## 2429             er nach    20            0      2  0.5278491667   2.3427016999
+## 2430            als aber    29            0      2  0.4343651906   2.3265379126
+## 2431           sprach du    22            0      2  0.4942581837   2.3152859239
+## 2432             sie von    28            0      2  0.4391896571   2.3018293035
+## 2433            mit sich    25            0      2  0.4596510216   2.2907720360
+## 2434          sollte das    10            0      2  0.7184963521   2.2884846808
+## 2435           sagte ihm    10            0      2  0.7133790734   2.2884564138
+## 2436           der hatte    41            0      2  0.3628656492   2.2828084733
+## 2437            das alte    10            0      2  0.7154432548   2.2788677002
+## 2438     aber antwortete    10            0      2  0.7114611751   2.2773646754
+## 2439            er alles    14            0      2  0.6105599498   2.2768887034
+## 2440           er nichts    16            0      2  0.5692539962   2.2658275927
+## 2441          sie werden    10            0      2  0.7115031122   2.2570792526
+## 2442             es eine    21            0      2  0.4932589657   2.2558994428
+## 2443            rief den    10            0      2  0.7057711022   2.2539841099
+## 2444          und kannst    12            0      2  0.6698039993   2.2520789117
+## 2445               du so    31            0      2  0.4065478351   2.2493195840
+## 2446             ihn der    45            0      2  0.3413580103   2.2489413440
+## 2447            sein und    50            0      2  0.3286795681   2.2488087580
+## 2448           und damit    25            0      2  0.4642369565   2.2481096464
+## 2449          freude und    10            0      2  0.7301118977   2.2434937417
+## 2450             ihr ein    20            0      2  0.5013412722   2.2415135406
+## 2451           er einmal    15            0      2  0.5808633900   2.2406215877
+## 2452          der mutter    12            0      2  0.6481000911   2.2275886476
+## 2453              dir in    11            0      2  0.6630209616   2.2170323395
+## 2454           nicht auf    30            0      2  0.4068162406   2.2153700976
+## 2455            sich das    46            0      2  0.3304587691   2.2151371744
+## 2456              er aus    24            0      2  0.4554886810   2.2118255195
+## 2457          nicht dass    23            0      2  0.4601091277   2.2015079235
+## 2458            der hans    12            0      2  0.6391427435   2.1973210325
+## 2459            ward das    12            0      2  0.6288504579   2.1877170593
+## 2460           stand sie    11            0      2  0.6570699254   2.1834536820
+## 2461            das eine    25            0      2  0.4384265086   2.1800010341
+## 2462          wieder ein    15            0      2  0.5595716500   2.1766962837
+## 2463           so wollte    13            0      2  0.5995449909   2.1754136855
+## 2464              du was    15            0      2  0.5574582360   2.1703760489
+## 2465      sie antwortete    17            0      2  0.5246871163   2.1544557044
+## 2466          nicht nach    11            0      2  0.6386452654   2.1393324970
+## 2467            ließ die    15            0      2  0.5414415149   2.0828686771
+## 2468           und kamen    18            0      2  0.5053266377   2.0814862556
+## 2469           es wollte    14            0      2  0.5527378454   2.0772322927
+## 2470             und kam    53            0      2  0.2936454771   2.0701206664
+## 2471            ließ das    10            0      2  0.6476711426   2.0650841473
+## 2472              zu den    43            0      2  0.3178556392   2.0631167842
+## 2473             dich so    10            0      2  0.6411942697   2.0521374328
+## 2474           könig war    11            0      2  0.6110877439   2.0497719066
+## 2475          aber sagte    13            0      2  0.5642635348   2.0494706136
+## 2476           sich eine    16            0      2  0.5079297594   2.0397002926
+## 2477           hätte sie    10            0      2  0.6324237145   2.0092255695
+## 2478           sie hätte    10            0      2  0.6288092694   1.9978738011
+## 2479             und hat    31            0      2  0.3676379131   1.9854010063
+## 2480          und gingen    11            0      2  0.6117773822   1.9783376744
+## 2481             der hat    19            0      2  0.4588298478   1.9778044212
+## 2482            sie fort    12            0      2  0.5697361312   1.9767228516
+## 2483              mir zu    14            0      2  0.5240865000   1.9720535115
+## 2484          arbeit und    10            0      2  0.6294799486   1.9435851154
+## 2485           hatte ein    16            0      2  0.4836608724   1.9419635764
+## 2486            sohn und    12            0      2  0.5740598581   1.9385446420
+## 2487           hätte die    12            0      2  0.5590732410   1.9311168307
+## 2488              sie so    64            0      2  0.2432223216   1.9154515493
+## 2489         mädchen die    13            0      2  0.5323511066   1.9118927189
+## 2490           hatte die    35            0      2  0.3233972586   1.8875661575
+## 2491            aber als    27            0      2  0.3632869970   1.8804760590
+## 2492          wieder mit    11            0      2  0.5597505326   1.8797613406
+## 2493             ihm auf    19            0      2  0.4293439517   1.8745495972
+## 2494         tochter und    14            0      2  0.5108371392   1.8627400405
+## 2495            ihm aber    22            0      2  0.3959115611   1.8552882087
+## 2496           hätte und    21            0      2  0.4139287561   1.8444043675
+## 2497             er eine    31            0      2  0.3339698120   1.8410336765
+## 2498           sie hatte    28            0      2  0.3496627326   1.8349712153
+## 2499            als eine    14            0      2  0.4866192139   1.8337229693
+## 2500            und kann    19            0      2  0.4319195115   1.8317726252
+## 2501           haben sie    11            0      2  0.5449804283   1.8145725196
+## 2502             hat das    11            0      2  0.5428464444   1.8137641184
+## 2503           sie haben    11            0      2  0.5419549441   1.8045901399
+## 2504            nicht an    21            0      2  0.3936863065   1.8034208039
+## 2505             ist die    34            0      2  0.3120952796   1.7962553545
+## 2506               er es    72            0      2  0.2152895482   1.7959934010
+## 2507          allein und    11            0      2  0.5533961977   1.7941170329
+## 2508          kinder und    11            0      2  0.5533961977   1.7941170329
+## 2509        jungfrau und    10            0      2  0.5736246708   1.7755291479
+## 2510            als sein    10            0      2  0.5480337700   1.7584088789
+## 2511           mußte die    10            0      2  0.5549439076   1.7572656608
+## 2512            dass ihn    11            0      2  0.5166404313   1.7361658259
+## 2513              und ob    13            0      2  0.4833582170   1.7026312082
+## 2514           ging aber    12            0      2  0.4829945619   1.6895488198
+## 2515           und durch    14            0      2  0.4568916212   1.6696191703
+## 2516           könig der    27            0      2  0.3224527492   1.6543429426
+## 2517           leben und    14            0      2  0.4510731787   1.6487289887
+## 2518           und sehen    15            0      2  0.4343993939   1.6426090741
+## 2519             und gut    17            0      2  0.4073731527   1.6383162068
+## 2520          wollte den    13            0      2  0.4510649472   1.6372366255
+## 2521             hat sie    13            0      2  0.4526826769   1.6351450090
+## 2522           waren und    28            0      2  0.3151363431   1.6219630637
+## 2523            sie ließ    11            0      2  0.4861396995   1.6202071478
+## 2524              auf da    28            0      2  0.3069072156   1.6173381349
+## 2525              ihm in    26            0      2  0.3171751730   1.6115151284
+## 2526             als ich    30            0      2  0.2948517299   1.6067096716
+## 2527             ihm was    11            0      2  0.4777557420   1.6056250747
+## 2528            und alle    25            0      2  0.3298872632   1.6054193946
+## 2529            der soll    12            0      2  0.4637109111   1.6009894884
+## 2530              mir da    13            0      2  0.4373793880   1.5893869962
+## 2531             bin der    11            0      2  0.4790202968   1.5859041149
+## 2532           und nacht    15            0      2  0.4185126257   1.5834870096
+## 2533          ich wieder    15            0      2  0.4049910671   1.5761290144
+## 2534              er für    11            0      2  0.4729237482   1.5749281293
+## 2535             und bin    18            0      2  0.3791922079   1.5695059941
+## 2536            sagte du    10            0      2  0.4883859083   1.5677454333
+## 2537            welt und    13            0      2  0.4331551789   1.5287781429
+## 2538          wollte das    15            0      2  0.3913257169   1.5199171726
+## 2539              an ein    19            0      2  0.3468796734   1.5146845100
+## 2540            nicht in    39            0      2  0.2442948791   1.5129360685
+## 2541             da will    11            0      2  0.4507324715   1.5121411715
+## 2542           aber eine    15            0      2  0.3862311352   1.5045974205
+## 2543             sie aus    20            0      2  0.3370255802   1.5015529788
+## 2544              es kam    14            0      2  0.3967184511   1.4931626015
+## 2545            der wird    10            0      2  0.4689605564   1.4839821823
+## 2546            auch den    14            0      2  0.3942445504   1.4836016579
+## 2547              es vor    11            0      2  0.4420216336   1.4817495083
+## 2548           augen der    10            0      2  0.4651043930   1.4719259412
+## 2549            herr der    10            0      2  0.4606555703   1.4579908850
+## 2550              es von    16            0      2  0.3629003774   1.4569715382
+## 2551              an ihm    13            0      2  0.3992730075   1.4535063990
+## 2552              ihm an    13            0      2  0.3978050953   1.4481728547
+## 2553           kam nicht    12            0      2  0.4012908353   1.4041007175
+## 2554              er war    53            0      2  0.1915762899   1.3759172833
+## 2555             wie ihr    10            0      2  0.4272931227   1.3731933174
+## 2556              sie im    13            0      2  0.3778442456   1.3663280344
+## 2557            als dass    16            0      2  0.3396532395   1.3658755684
+## 2558             gut und    16            0      2  0.3484490965   1.3636724351
+## 2559            und gold    11            0      2  0.4172571428   1.3601352228
+## 2560              kam zu    12            0      2  0.3863017260   1.3517035969
+## 2561            fort der    14            0      2  0.3626414696   1.3512036249
+## 2562              ist es    16            0      2  0.3336201541   1.3400392566
+## 2563           der mußte    10            0      2  0.4208683000   1.3332003826
+## 2564             mir die    26            0      2  0.2630765125   1.3289753485
+## 2565             sie sah    13            0      2  0.3648169609   1.3194629434
+## 2566             hat die    15            0      2  0.3404351100   1.3147326752
+## 2567             noch in    12            0      2  0.3740131577   1.3075752346
+## 2568             an sich    17            0      2  0.3150304674   1.3042754396
+## 2569             dir die    16            0      2  0.3126956332   1.2464483454
+## 2570             war sie    49            0      2  0.1800874444   1.2453739373
+## 2571            sie ging    20            0      2  0.2766516191   1.2335542994
+## 2572            nicht so    33            0      2  0.2138655763   1.2214747471
+## 2573             will es    11            0      2  0.3633365078   1.2191634037
+## 2574          sie nichts    12            0      2  0.3476429795   1.2103015870
+## 2575            und will    41            0      2  0.1940651650   1.2093513984
+## 2576          einmal die    14            0      2  0.3195609129   1.1941759876
+## 2577             kam sie    20            0      2  0.2675772342   1.1932313824
+## 2578          sich einen    13            0      2  0.3240050154   1.1792034657
+## 2579            nach den    10            0      2  0.3636684202   1.1656763956
+## 2580             war wie    15            0      2  0.2987929862   1.1649889732
+## 2581            haus der    13            0      2  0.3236289858   1.1645035383
+## 2582   königstochter und    13            0      2  0.3286320073   1.1642808694
+## 2583            wäre die    14            0      2  0.3072539447   1.1484278110
+## 2584              er ich    66            0      2  0.1419313170   1.1356763793
+## 2585            dann die    13            0      2  0.3144835521   1.1341463097
+## 2586            mann und    23            0      2  0.2306485857   1.0811700134
+## 2587              und ab    13            0      2  0.3014340574   1.0689150362
+## 2588          sprach wie    12            0      2  0.3033244160   1.0632774797
+## 2589               er um    11            0      2  0.3144523450   1.0497525977
+## 2590             aber in    34            0      2  0.1781617649   1.0325667019
+## 2591            nahm der    12            0      2  0.2959056757   1.0251738035
+## 2592             sie den    66            0      2  0.1236108110   0.9896006302
+## 2593           aber wenn    10            0      2  0.3051993383   0.9801523772
+## 2594               du da    25            0      2  0.1960775847   0.9787079293
+## 2595           einer der    11            0      2  0.2913387503   0.9682902246
+## 2596             sie hat    11            0      2  0.2872123233   0.9599653424
+## 2597           nacht und    13            0      2  0.2697423046   0.9575396362
+## 2598           hatte das    19            0      2  0.2173411464   0.9480162930
+## 2599            aber kam    10            0      2  0.2949672833   0.9473554828
+## 2600            auch der    26            0      2  0.1814216471   0.9161040292
+## 2601             und saß    11            0      2  0.2787849404   0.9131984787
+## 2602           als einen    11            0      2  0.2713707470   0.9125651777
+## 2603              ihr zu    16            0      2  0.2123062990   0.8538860736
+## 2604             er über    10            0      2  0.2652945500   0.8469291459
+## 2605              ihn so    15            0      2  0.2153148236   0.8394229116
+## 2606            ist aber    12            0      2  0.2392162470   0.8382167698
+## 2607              es ein    33            0      2  0.1448145292   0.8274039087
+## 2608          sollte und    20            0      2  0.1871214421   0.8204386348
+## 2609              kam in    12            0      2  0.2285931443   0.8001487513
+## 2610             du aber    22            0      2  0.1698657020   0.7971608982
+## 2611             an aber    16            0      2  0.1971938335   0.7933785116
+## 2612           hatte war    11            0      2  0.2337284426   0.7859932642
+## 2613           und hätte    17            0      2  0.1890627769   0.7659465521
+## 2614             an dass    10            0      2  0.2352652961   0.7566366792
+## 2615              mir in    12            0      2  0.2146390580   0.7513859420
+## 2616            weil der    10            0      2  0.2315100558   0.7360899246
+## 2617              er was    26            0      2  0.1448880561   0.7347773444
+## 2618             war der    65            0      2  0.0919242646   0.7287060468
+## 2619              er ist    24            0      2  0.1455854737   0.7100432297
+## 2620             und wer    13            0      2  0.1946400202   0.6925798425
+## 2621               es so    35            0      2  0.1167438040   0.6865358349
+## 2622              du ihn    11            0      2  0.2005224126   0.6745832961
+## 2623            der eine    34            0      2  0.1166428006   0.6723566544
+## 2624             was das    19            0      2  0.1524192475   0.6652294754
+## 2625            und zwei    17            0      2  0.1598810181   0.6482882381
+## 2626             nun der    22            0      2  0.1329322660   0.6191990641
+## 2627              er von    22            0      2  0.1287545993   0.6020218483
+## 2628             er rief    10            0      2  0.1829527737   0.5846902290
+## 2629              sie es    59            0      2  0.0768844369   0.5829536830
+## 2630               er so    58            0      2  0.0752025092   0.5652743895
+## 2631             nun das    12            0      2  0.1605380497   0.5614796395
+## 2632            und nach    32            0      2  0.0993702851   0.5497105095
+## 2633            ich eine    14            0      2  0.1450874234   0.5473041179
+## 2634            sich als    20            0      2  0.1207323796   0.5412251483
+## 2635            es hatte    14            0      2  0.1425900985   0.5377653331
+## 2636              was zu    13            0      2  0.1472580403   0.5362632048
+## 2637              ist zu    12            0      2  0.1515041664   0.5309901442
+## 2638              ihr so    15            0      2  0.1286366743   0.5017791481
+## 2639           könig das    12            0      2  0.1415584564   0.4951822058
+## 2640              war er    47            0      2  0.0709149891   0.4808814500
+## 2641             er dass    32            0      2  0.0835714716   0.4694061010
+## 2642           und meine    10            0      2  0.1455234150   0.4573906727
+## 2643             war die    56            0      2  0.0597703277   0.4410946183
+## 2644             ihn die    31            0      2  0.0798385970   0.4407410319
+## 2645            und hans    13            0      2  0.1202883691   0.4289552193
+## 2646             er ward    10            0      2  0.1276830577   0.4083324381
+## 2647              er sie   102            0      2  0.0409711259   0.4059790406
+## 2648            so hatte    12            0      2  0.1115545862   0.3910417315
+## 2649               du zu    22            0      2  0.0817877061   0.3839744851
+## 2650              es ihn    15            0      2  0.0951195012   0.3709546909
+## 2651            sein der    22            0      2  0.0790562839   0.3685564910
+## 2652            kind und    12            0      2  0.1032277171   0.3544048012
+## 2653             ihn dem    11            0      2  0.0975733773   0.3283430236
+## 2654             ihn ein    12            0      2  0.0831779393   0.2916997314
+## 2655           die waren    11            0      2  0.0844402609   0.2821041371
+## 2656              ist er    22            0      2  0.0600239920   0.2808775040
+## 2657           und alles    20            0      2  0.0626970910   0.2758744285
+## 2658            und muss    11            0      2  0.0835678087   0.2753536266
+## 2659           wieder da    10            0      2  0.0818632619   0.2631605441
+## 2660          wollte die    18            0      2  0.0618179029   0.2618742307
+## 2661           so sprach    19            0      2  0.0584551073   0.2556602345
+## 2662             aber an    14            0      2  0.0641729555   0.2423194991
+## 2663              war in    27            0      2  0.0464167187   0.2406832456
+## 2664           nicht mit    19            0      2  0.0547158876   0.2393267904
+## 2665             sah der    14            0      2  0.0624972676   0.2340930532
+## 2666            und über    20            0      2  0.0516140654   0.2271751632
+## 2667              es dem    27            0      2  0.0425670580   0.2207341086
+## 2668          wollte der    20            0      2  0.0470507204   0.2095046822
+## 2669           nicht von    10            0      2  0.0575920422   0.1851825734
+## 2670           könig die    18            0      2  0.0322081551   0.1364942136
+## 2671           vater der    10            0      2  0.0421925335   0.1345657705
+## 2672             sie ist    20            0      2  0.0285895992   0.1278390175
+## 2673            sich die    56            0      2  0.0167484209   0.1236692234
+## 2674              du das    30            0      2  0.0214831636   0.1172123700
+## 2675            da hatte    11            0      2  0.0331189835   0.1114290828
+## 2676             sie ein    47            0      2  0.0148395725   0.1007260338
+## 2677              so wie    14            0      2  0.0232025756   0.0876099556
+## 2678            doch der    11            0      2  0.0200658393   0.0669914355
+## 2679            ihr aber    12            0      2  0.0175401170   0.0615361943
+## 2680             auf ihr    10            0      2  0.0178896280   0.0575691504
+## 2681           hatte der    29            0      2  0.0102252714   0.0546107910
+## 2682           und keine    11            0      2  0.0102973047   0.0339953560
+## 2683             und der   342            0      2  0.0009257511   0.0164508589
+## 2684             auf ein    19            0      2 -0.0001525400  -0.0006674427
+## 2685              du den    24            0      2 -0.0002866638  -0.0014041102
+## 2686             war mit    15            0      2 -0.0064271172  -0.0250981964
+## 2687              und es   141            0      2 -0.0025972801  -0.0299237192
+## 2688             sie mir    15            0      2 -0.0335225035  -0.1304904231
+## 2689              er mir    16            0      2 -0.0356065931  -0.1429144978
+## 2690               du in    23            0      2 -0.0321529094  -0.1543005869
+## 2691              als du    15            0      2 -0.0415154296  -0.1621476201
+## 2692            sie eine    20            0      2 -0.0421681448  -0.1886858894
+## 2693            habe und    19            0      2 -0.0442629161  -0.1904803982
+## 2694            und habe    19            0      2 -0.0442629161  -0.1904803982
+## 2695             war ihr    10            0      2 -0.0603743843  -0.1943247272
+## 2696            nach und    28            0      2 -0.0377584193  -0.1963343777
+## 2697             die hat    10            0      2 -0.0619689536  -0.1982121824
+## 2698            ging das    11            0      2 -0.0593724711  -0.1995560034
+## 2699             ich mit    19            0      2 -0.0461782045  -0.2020574008
+## 2700            wenn der    21            0      2 -0.0508300787  -0.2320921129
+## 2701           mußte und    11            0      2 -0.0710920953  -0.2351737405
+## 2702              ihr da    12            0      2 -0.0837557745  -0.2939162175
+## 2703            nicht da    25            0      2 -0.0590692844  -0.2952701521
+## 2704               du es    21            0      2 -0.0659588705  -0.3029624905
+## 2705             ihm mit    10            0      2 -0.0953097421  -0.3068681838
+## 2706             da eine    10            0      2 -0.1113281444  -0.3582470852
+## 2707            ging die    18            0      2 -0.0847331708  -0.3596059817
+## 2708           aber dass    12            0      2 -0.1111991572  -0.3903545970
+## 2709          und mutter    10            0      2 -0.1357453898  -0.4297366749
+## 2710            herr und    10            0      2 -0.1401943153  -0.4438648213
+## 2711           nicht ich    26            0      2 -0.0914506692  -0.4659900939
+## 2712             sich so    21            0      2 -0.1087437117  -0.4996409599
+## 2713            noch die    15            0      2 -0.1290476631  -0.5016862536
+## 2714           und einer    13            0      2 -0.1422035761  -0.5104665455
+## 2715              mit in    19            0      2 -0.1188440138  -0.5201404503
+## 2716             sie das    67            0      2 -0.0657095611  -0.5309338592
+## 2717            will sie    11            0      2 -0.1609152383  -0.5403871678
+## 2718           und stand    13            0      2 -0.1524910643  -0.5475195601
+## 2719            sie wenn    13            0      2 -0.1516633432  -0.5516691133
+## 2720           war nicht    19            0      2 -0.1308222079  -0.5727470379
+## 2721            aber ein    20            0      2 -0.1280442802  -0.5746647956
+## 2722              er kam    14            0      2 -0.1550406266  -0.5841403980
+## 2723             aber du    16            0      2 -0.1465787368  -0.5907493343
+## 2724             dir der    11            0      2 -0.1805025027  -0.6042174343
+## 2725            mich die    10            0      2 -0.1908825103  -0.6114353871
+## 2726             ich ihm    15            0      2 -0.1575492157  -0.6154221386
+## 2727              und am    16            0      2 -0.1602584980  -0.6361651378
+## 2728               es zu    27            0      2 -0.1245400599  -0.6464363202
+## 2729            hatte in    10            0      2 -0.2012771245  -0.6476982496
+## 2730               an da    12            0      2 -0.1864117856  -0.6544733288
+## 2731           sprach da    15            0      2 -0.1687613321  -0.6593425062
+## 2732             ihm als    10            0      2 -0.2101269175  -0.6767613374
+## 2733         mädchen und    13            0      2 -0.1893337396  -0.6803432603
+## 2734             es dass    14            0      2 -0.1883469966  -0.7117397775
+## 2735           und haben    14            0      2 -0.1937644047  -0.7216280037
+## 2736            und eine    49            0      2 -0.1084464075  -0.7437325665
+## 2737             und wir    18            0      2 -0.1803093038  -0.7581612809
+## 2738             ist sie    16            0      2 -0.1913694084  -0.7695698736
+## 2739            er sagte    13            0      2 -0.2151233174  -0.7825546264
+## 2740               da in    27            0      2 -0.1560304269  -0.8100148261
+## 2741              er die   117            0      2 -0.0766185396  -0.8125568293
+## 2742            ward und    18            0      2 -0.1971276118  -0.8291737410
+## 2743            wohl und    12            0      2 -0.2464503030  -0.8531928277
+## 2744            sich und   102            0      2 -0.0872777421  -0.8589714135
+## 2745            und wäre    17            0      2 -0.2188577905  -0.8957934420
+## 2746          und sollte    13            0      2 -0.2530376991  -0.9104446900
+## 2747             sie dem    36            0      2 -0.1555307991  -0.9279534075
+## 2748              er wie    22            0      2 -0.2014564964  -0.9451156654
+## 2749             und für    13            0      2 -0.2713856769  -0.9768156090
+## 2750         sprach aber    12            0      2 -0.2855614640  -1.0031368489
+## 2751              ihr in    11            0      2 -0.3124191058  -1.0525154696
+## 2752            aber auf    14            0      2 -0.2792784696  -1.0561547855
+## 2753           das nicht    31            0      2 -0.2017215615  -1.1200711163
+## 2754            aber mit    12            0      2 -0.3245494567  -1.1402558272
+## 2755            und sein    30            0      2 -0.2134846710  -1.1528018828
+## 2756            ging und    32            0      2 -0.2239005479  -1.2482186677
+## 2757              war zu    16            0      2 -0.3155580938  -1.2725685706
+## 2758             aber zu    18            0      2 -0.2994886731  -1.2782766831
+## 2759            dich und    19            0      2 -0.3027727320  -1.3102188719
+## 2760             sie was    15            0      2 -0.3379006969  -1.3186161393
+## 2761             ihn und    48            0      2 -0.1950356846  -1.3265484257
+## 2762           sprach so    12            0      2 -0.3931894637  -1.3815924614
+## 2763            und mich    18            0      2 -0.3286912428  -1.3861599285
+## 2764              zu der    60            0      2 -0.1818675296  -1.3912226724
+## 2765              so ein    18            0      2 -0.3403252644  -1.4527962425
+## 2766          und seinen    10            0      2 -0.4668679169  -1.4873679701
+## 2767              du ich    15            0      2 -0.3823122167  -1.4948808279
+## 2768             er wenn    10            0      2 -0.4734903519  -1.5224456770
+## 2769              und wo    15            0      2 -0.3978566103  -1.5378918387
+## 2770            und hast    10            0      2 -0.4984113398  -1.5886605323
+## 2771             sie war    31            0      2 -0.2870430823  -1.5934939975
+## 2772          wollte und    25            0      2 -0.3282626122  -1.6247879292
+## 2773           die hatte    17            0      2 -0.4074363918  -1.6873242547
+## 2774             und nur    14            0      2 -0.4529267621  -1.6949917709
+## 2775           er sprach    25            0      2 -0.3413292716  -1.7061226468
+## 2776             was der    21            0      2 -0.3804111036  -1.7435940554
+## 2777             mir der    14            0      2 -0.4778586915  -1.8012863528
+## 2778              da ein    16            0      2 -0.4500377993  -1.8157707367
+## 2779            sie dass    18            0      2 -0.4267171305  -1.8197337322
+## 2780             ich das    30            0      2 -0.3355882180  -1.8352421467
+## 2781              ein so    16            0      2 -0.4657973557  -1.8794539743
+## 2782             und vor    20            0      2 -0.4260670992  -1.8945394403
+## 2783             sich da    14            0      2 -0.5023039440  -1.9009411254
+## 2784            die eine    17            0      2 -0.4598834823  -1.9053495670
+## 2785             ich den    23            0      2 -0.3987963893  -1.9173161097
+## 2786              ich es    21            0      2 -0.4216180097  -1.9397485738
+## 2787             was die    17            0      2 -0.4698972276  -1.9469981787
+## 2788              und im    14            0      2 -0.5255819971  -1.9691580616
+## 2789          und nichts    13            0      2 -0.5500419451  -1.9892915840
+## 2790             und bei    11            0      2 -0.5964166922  -1.9923559046
+## 2791           nicht als    11            0      2 -0.5961140386  -2.0108990713
+## 2792              ich in    22            0      2 -0.4323227002  -2.0344334253
+## 2793          sie sprach    21            0      2 -0.4490296303  -2.0639338658
+## 2794             und sie   206            0      2 -0.1485896746  -2.0692882263
+## 2795             ich auf    12            0      2 -0.6025565595  -2.1186293261
+## 2796             und ihn    42            0      2 -0.3330670787  -2.1269238508
+## 2797            aber den    17            0      2 -0.5245549838  -2.1796088837
+## 2798            und mein    10            0      2 -0.6823150142  -2.1806133125
+## 2799              du die    33            0      2 -0.3957408613  -2.2642180795
+## 2800           nicht ein    13            0      2 -0.6241834822  -2.2805982504
+## 2801              auf so    10            0      2 -0.7144631709  -2.3041277143
+## 2802             und was    38            0      2 -0.3819252829  -2.3237533492
+## 2803              er dem    29            0      2 -0.4395766852  -2.3639489611
+## 2804          nichts und    11            0      2 -0.7151320371  -2.3927629491
+## 2805          wieder und    29            0      2 -0.4499601761  -2.4001424553
+## 2806             und dir    12            0      2 -0.6958363146  -2.4266087522
+## 2807              ich so    16            0      2 -0.6087422691  -2.4573376081
+## 2808             ich ein    14            0      2 -0.6525957567  -2.4707971326
+## 2809            sich den    14            0      2 -0.6571838102  -2.4880687040
+## 2810           der einen    16            0      2 -0.6197844252  -2.4947464338
+## 2811              und da   102            0      2 -0.2526093893  -2.4948918641
+## 2812             hat und    10            0      2 -0.7830734767  -2.5057895022
+## 2813             sie die    91            0      2 -0.2694459799  -2.5323178007
+## 2814            ich aber    13            0      2 -0.7040184924  -2.5727992369
+## 2815             sie wie    12            0      2 -0.7330844007  -2.5758324255
+## 2816             vor und    16            0      2 -0.6638077447  -2.6580450066
+## 2817             aber da    11            0      2 -0.7943494884  -2.6809983723
+## 2818             die ist    11            0      2 -0.8162598754  -2.7495390505
+## 2819             das mit    12            0      2 -0.7819942670  -2.7500975705
+## 2820               zu da    12            0      2 -0.7974531203  -2.8055190558
+## 2821           und einen    33            0      2 -0.4943412189  -2.8114835460
+## 2822              es den    19            0      2 -0.6431111699  -2.8210062660
+## 2823             der ist    13            0      2 -0.7744728115  -2.8235776684
+## 2824             und ein    89            0      2 -0.3115601505  -2.8802233695
+## 2825              an sie    11            0      2 -0.8825950119  -2.9768377506
+## 2826            und dich    10            0      2 -0.9407132796  -3.0154768193
+## 2827           nicht das    19            0      2 -0.6891350547  -3.0229801427
+## 2828             auf sie    19            0      2 -0.6939792748  -3.0426802581
+## 2829               da so    11            0      2 -0.9019379095  -3.0448783283
+## 2830              es die    46            0      2 -0.4737937004  -3.1922357230
+## 2831            nicht es    11            0      2 -0.9540428588  -3.2211227777
+## 2832             und von    25            0      2 -0.6547821510  -3.2577725033
+## 2833             und aus    17            0      2 -0.8037042399  -3.3199700833
+## 2834               es da    11            0      2 -1.0219670572  -3.4509459671
+## 2835               da es    10            0      2 -1.0747422607  -3.4688160701
+## 2836               er da    28            0      2 -0.6556068270  -3.4703659901
+## 2837               er du    17            0      2 -0.8671549265  -3.6047303443
+## 2838             der ihn    11            0      2 -1.0702149176  -3.6079082485
+## 2839             sie ich    27            0      2 -0.6973700253  -3.6278372237
+## 2840            und auch    16            0      2 -0.9083956409  -3.6480407273
+## 2841              ihm er    10            0      2 -1.1580342223  -3.7357485063
+## 2842              du sie    14            0      2 -0.9907962453  -3.7527817251
+## 2843            und noch    12            0      2 -1.0736920951  -3.7597026943
+## 2844             der war    30            0      2 -0.6978971157  -3.8174381258
+## 2845               da er    25            0      2 -0.7686359117  -3.8520233010
+## 2846             das ich    16            0      2 -0.9586640087  -3.8734832625
+## 2847             ihm und    44            0      2 -0.5995442249  -3.9342451939
+## 2848             und ist    22            0      2 -0.8542667190  -4.0027414113
+## 2849              das so    13            0      2 -1.0963009917  -4.0099491228
+## 2850             und nun    10            0      2 -1.2496832766  -4.0168148890
+## 2851              da sie    21            0      2 -0.8755006519  -4.0330153449
+## 2852              sie da    21            0      2 -0.8755006519  -4.0330153449
+## 2853             ich die    35            0      2 -0.6942482518  -4.0972867596
+## 2854             und mit    50            0      2 -0.5932282965  -4.1454770856
+## 2855             sie als    11            0      2 -1.2367824234  -4.1765880576
+## 2856              es der    44            0      2 -0.6400482259  -4.2225372765
+## 2857             ich sie    22            0      2 -0.9013487858  -4.2475280229
+## 2858             und ihm    41            0      2 -0.6715914555  -4.2606426562
+## 2859             und ihr    29            0      2 -0.7995718800  -4.2858406495
+## 2860             die war    21            0      2 -0.9322065409  -4.2924858617
+## 2861             und mir    12            0      2 -1.2301386383  -4.3131307625
+## 2862             die mit    14            0      2 -1.1435825688  -4.3312192361
+## 2863             die ihm    10            0      2 -1.3477076602  -4.3483934510
+## 2864            auch und    10            0      2 -1.3687469169  -4.4032482521
+## 2865              es das    12            0      2 -1.2940121336  -4.5571998758
+## 2866             der mit    16            0      2 -1.1338512630  -4.5782439996
+## 2867             ist und    17            0      2 -1.1090550985  -4.5954617051
+## 2868           nicht die    25            0      2 -0.9293603122  -4.6588181519
+## 2869           nicht sie    14            0      2 -1.2446870501  -4.7183430485
+## 2870             der ihm    10            0      2 -1.4685698713  -4.7388140720
+## 2871              und in    92            0      2 -0.5087164885  -4.7963570635
+## 2872             die auf    13            0      2 -1.3209222198  -4.8309212844
+## 2873            nicht er    14            0      2 -1.3107548797  -4.9692727527
+## 2874          der sprach    10            0      2 -1.5512604993  -5.0069743169
+## 2875             ihr und    22            0      2 -1.0759590993  -5.0526654057
+## 2876            die sich    14            0      2 -1.3704325318  -5.1947168941
+## 2877             den sie    16            0      2 -1.2982697817  -5.2495402321
+## 2878           nicht der    25            0      2 -1.0502450266  -5.2660354145
+## 2879            der sich    18            0      2 -1.2453018371  -5.3260807410
+## 2880            und sich    55            0      2 -0.7271929708  -5.3356145593
+## 2881              zu und    68            0      2 -0.6580841882  -5.3564669225
+## 2882              den er    17            0      2 -1.3049836458  -5.4333640891
+## 2883              und an    22            0      2 -1.1809076251  -5.5504419117
+## 2884              und du    42            0      2 -0.8763384824  -5.6397364577
+## 2885              die da    16            0      2 -1.3992510906  -5.6574753267
+## 2886             ein und    59            0      2 -0.7451709876  -5.6613837680
+## 2887              da die    14            0      2 -1.5292488311  -5.7995114378
+## 2888             und den    80            0      2 -0.6638071804  -5.8545670996
+## 2889           nicht und    60            0      2 -0.7709389919  -5.9077517119
+## 2890             und auf    39            0      2 -0.9529788322  -5.9180615178
+## 2891             der den    28            0      2 -1.1228266643  -5.9526460773
+## 2892              und er   160            0      2 -0.4831175096  -5.9798165080
+## 2893             das sie    17            0      2 -1.4405940252  -6.0004483463
+## 2894             die ich    14            0      2 -1.6009352487  -6.0725450239
+## 2895             ein der    10            0      2 -1.9038548700  -6.1506876868
+## 2896              die in    17            0      2 -1.4842709401  -6.1814723592
+## 2897            und dass    15            0      2 -1.5840001487  -6.1978802142
+## 2898             und dem    43            0      2 -0.9565636276  -6.2329601077
+## 2899              da der    11            0      2 -1.8833696521  -6.3668734284
+## 2900             und ich    64            0      2 -0.8072443465  -6.3887756630
+## 2901              das er    15            0      2 -1.6290349093  -6.3896754707
+## 2902           und nicht    50            0      2 -0.9570181558  -6.7168881983
+## 2903              und so    53            0      2 -0.9333054357  -6.7397034711
+## 2904              der in    15            0      2 -1.7276324558  -6.7758031653
+## 2905             mit und    17            0      2 -1.6751308147  -6.9671562435
+## 2906             das die    14            0      2 -1.8857151166  -7.1573686702
+## 2907              und zu    44            0      2 -1.1016793540  -7.2700832424
+## 2908             das der    14            0      2 -2.0064122473  -7.6165002075
+## 2909             die sie    25            0      2 -1.5731983502  -7.9052934797
+## 2910             sie der    34            0      2 -1.3881655620  -8.1021266069
+## 2911              die er    27            0      2 -1.5631799862  -8.1555311333
+## 2912            aber und    17            0      2 -1.9602326288  -8.1629740742
+## 2913              da und    29            0      2 -1.5338088888  -8.2719501188
+## 2914              es und    35            0      2 -1.4732986225  -8.7108152283
+## 2915             ich und    14            0      2 -2.3230179275  -8.8168139784
+## 2916              er der    22            0      2 -1.8862419468  -8.9116785847
+## 2917             die der    10            0      2 -2.8424171965  -9.1950232973
+## 2918             der die    11            0      2 -2.7513942737  -9.3132809926
+## 2919             sie und    84            0      2 -1.0799834583  -9.8013857364
+## 2920              er und    74            0      2 -1.2759460439 -10.8950671840
+```
+
+Der Dataframe enthält die folgenden Spalten (vgl. [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für Details zur Berechnung der Maße): 
+
+* `count` ist die absolute Häufigkeit der Kollokationen im Korpus 
+* `lambda` ist ein Assoziationsmaß, das die **Stärke der Assoziation** oder Bindung der Wörter in einem Wortpaar angibt. Ein hoher Wert von λ deutet darauf hin, dass es eine starke Assoziation zwischen den Wörtern in einem Wortpaar vorliegt. Während ein positiver Wert darauf hindeutet, dass die Wörter häufiger gemeinsam auftreten als erwartet, deutet ein negativer Wert darauf hin, dass die Wörter seltener gemeinsam auftreten als erwartet und ein Wert um Null legt nahe, dass das gemeinsame Auftreten zufällig ist.
+* `z` ist eine Teststatistik, die verwendet wird, um die **Signifikanz der Assoziation** zwischen den Wörtern in einem Wortpaar zu bewerten. Der z-Wert gibt an, wie stark die beobachtete Assoziation von der Verteilung abweicht, die erwartet würde, wenn das gemeinsame Auftreten der Wörter zufällig wäre. Die statistische Signifikanz wird bewertet, indem die Hypothese getestet wird, dass λ signifikant von Null verschieden ist. Ein hoher Wert von z deutet darauf hin, dass die Nullhypothese (keine Assoziation) mit hoher Wahrscheinlichkeit abgelehnt wird, was bedeutet, dass die Assoziation signifikant ist. 
+
+Die Interpretation dieser Werte ist jedoch nicht trivial und hängt von einigen Faktoren ab, die wir uns im folgenden genauer ansehen. 
+
+Unter den Kollokationen mit den höchsten Werten in den Spalten lambda und z finden sich Wortkombinationen, die erst einmal wenig interessant erscheinen wie "in den", "der könig" oder "als er". Aber daneben finden sich auch Wortpaare, die irgendwie "märchenspezifisch" erscheinen, z.B. "sieben jahre", "drei tage" oder "bruder lustig" und andere, die inhaltlich weniger spezifisch sind wie "guten tag" oder "von herzen", "nach haus". Eine Suche nach "tochter" und "schön" zeigt, dass einzig die kollokation "schöne jungfrau" in der Liste der Kollokationen auftaucht, aber keine Kombination von "schön" und "tochter". Das liegt natürlich daran, dass wir den `min_count`, also die minimale Anzahl der Vorkommen der Kollokation, beim Aufruf der Funktion `textstat_collocations()` auf 10 eingestellt haben. Da Wortpaare mit "schön" und "tochter" in vielen verschiedenen Flexionsformen vorkommen, werden diese Formen als verschiedene Kollokationen gezählt, und aus der Liste der N-Gramme wissen wir bereits, dass sowohl "schöne königstochter" als auch "schöne tochter" nur achtmal vorkommen. Wenn wir zur Bestimmung der Kollokationen Lemmata verwendet hätten, dann hätten die Kollokationen "schön tochter" und "schön königstochter" vermutlich einen insgesamt höheren Count. Um die Kollokationen mit "schön" und "tochter" zu betrachten, müssen wir also den Schwellenwert herabsetzen. Da wir uns ja besonders für die Kollokationen mit "Tochter" interessieren, filtern wir unseren Dataframe außerdem nach Kollokationen mit "tochter". Um alle Wortpaare zu erhalten, setzen wir den min_count zunächst auf 1.
+
+
+```r
+collocs_1 <- textstat_collocations(maerchen_sentences_toks, min_count = 1)
+subset_collocs <- collocs_1[grepl("tochter", collocs_1$collocation), ]
+subset_collocs
+```
+
+```{style="max-height: 200px;"}
+##                       collocation count count_nested length      lambda           z
+## 120             der königstochter   151            0      2  3.43558320 19.59390809
+## 188                  mein tochter    25            0      2  3.75273185 17.44164131
+## 455                  sein tochter    45            0      2  2.31003283 13.63729525
+## 696                  euer tochter     7            0      2  4.70832134 12.11613306
+## 697           schön königstochter    12            0      2  3.59021132 12.11246435
+## 808                   ihr tochter    22            0      2  2.59316744 11.52675266
+## 909                einzig tochter     5            0      2  5.12550665 11.10595076
+## 2527                schön tochter     8            0      2  3.14664478  8.89225245
+## 2730             tochter heiraten     3            0      2  5.01681058  8.78351011
+## 4203              tochter gehören     4            0      2  4.05362095  8.30843355
+## 4851             tochter behalten     3            0      2  4.52718297  8.09660421
+## 5502                   tochter zu    17            0      2  1.98556430  7.89005629
+## 7261                tochter davon     4            0      2  3.58271396  7.40399717
+## 7905            königstochter von     9            0      2  2.41787345  7.23194886
+## 8180                 drei tochter     5            0      2  3.12787160  7.16556494
+## 8672             tochter hochzeit     3            0      2  3.91794688  7.11960264
+## 9132            stieftochter aber     4            0      2  4.31861082  7.03768463
+## 9517             ihr stieftochter     4            0      2  4.27199476  6.96191947
+## 9750          fremd königstochter     2            0      2  4.58048215  6.92076324
+## 10836    stieftochter sepinnefein     1            0      2 11.17982533  6.71496197
+## 10992       königstochter blicken     2            0      2  4.39507562  6.68663916
+## 12117               recht tochter     4            0      2  3.14232866  6.52685662
+## 12909              tochter warnen     1            0      2  6.25598231  6.39248983
+## 12924       königstochter dennoch     1            0      2  6.25063030  6.38711639
+## 12925          königstochter fang     1            0      2  6.25063030  6.38711639
+## 12926        königstochter vergaß     1            0      2  6.25063030  6.38711639
+## 12927        königstochter werben     1            0      2  6.25063030  6.38711639
+## 13066             tochter heiraen     1            0      2  6.59245896  6.36712471
+## 13086  königstochter fortgetragen     1            0      2  6.58710694  6.36204048
+## 13087  königstochter unverrichtet     1            0      2  6.58710694  6.36204048
+## 13156            tochter schlügen     1            0      2  6.00466347  6.34976903
+## 13209   königstochter dornröschen     1            0      2  5.99931146  6.34421086
+## 13210       königstochter sticken     1            0      2  5.99931146  6.34421086
+## 13223             stolzen tochter     1            0      2  6.20370702  6.33997710
+## 13313   wunderschön königstochter     1            0      2  5.97818486  6.32226352
+## 13475            verloren tochter     1            0      2  5.95238818  6.29544990
+## 13476         wunderschön tochter     1            0      2  5.95238818  6.29544990
+## 13607       königstochter umgehen     1            0      2  5.79863635  6.27540924
+## 13769          arm müllerstochter     1            0      2  5.51971283  6.25424414
+## 13770            arm stieftochter     1            0      2  5.51971283  6.25424414
+## 14125          tochter offenbaren     1            0      2  5.63692987  6.20275144
+## 14237             tochter kriegen     2            0      2  4.02652164  6.18555002
+## 14526           tochter bescheren     1            0      2  7.10328899  6.13928656
+## 14651           tochter neugierig     1            0      2  5.49382462  6.12178473
+## 14689    verzaubert königstochter     1            0      2  7.07681037  6.11672126
+## 14855     schlafend königstochter     1            0      2  5.46734600  6.09280912
+## 15051           schlafend tochter     1            0      2  5.44154933  6.06456170
+## 15289     königstochter herkommen     1            0      2  5.36330505  6.03552114
+## 15779            tochter aufgeben     1            0      2  5.25742702  5.96320845
+## 16018     übermütig königstochter     1            0      2  5.23094840  5.93370960
+## 16378              tochter siegen     1            0      2  5.15733915  5.88777590
+## 17331           tochter obendrein     1            0      2  4.98297695  5.74606358
+## 17332                 tochter säß     1            0      2  4.98297695  5.74606358
+## 17333              tochter wenden     1            0      2  4.98297695  5.74606358
+## 17391           königstochter säß     1            0      2  4.97762493  5.74000110
+## 17860            tochter befreien     1            0      2  4.90601150  5.67973379
+## 17902      königstochter befreien     1            0      2  4.90065948  5.67364644
+## 17903        königstochter fielen     1            0      2  4.90065948  5.67364644
+## 18049         gewiß königstochter     1            0      2  4.87953288  5.64960932
+## 18499              seiler tochter     2            0      2  8.66555808  5.58763730
+## 18985         müllerstochter dann     1            0      2  4.87417292  5.53458013
+## 19247              tochter wecken     1            0      2  4.70532757  5.49724163
+## 19697         königstochter sehen     6            0      2  2.18317808  5.45057186
+## 19805         königstochter stuhl     1            0      2  4.64113065  5.43520798
+## 19993               zwölf tochter     2            0      2  3.48902020  5.40677441
+## 20009                mann tochter     4            0      2  2.59112231  5.40369230
+## 20147                 tochter hör     1            0      2  4.59090840  5.38771084
+## 20215        königstochter fällen     1            0      2  4.58555638  5.38153590
+## 20335          königstochter jung     3            0      2  2.91582930  5.36457590
+## 20397         stolz königstochter     1            0      2  4.56442978  5.35715305
+## 20912           tochter vermählen     1            0      2  4.48824543  5.28646234
+## 20950     königstochter empfangen     1            0      2  4.48289341  5.28026323
+## 20951     königstochter vermählen     1            0      2  4.48289341  5.28026323
+## 20986             häßlich tochter     1            0      2  4.48598496  5.27565023
+## 21039         reich bauerntochter     1            0      2  8.62250807  5.27211852
+## 21767           stieftochter über     1            0      2  4.56480067  5.18654083
+## 22436               tochter milch     1            0      2  4.30997955  5.10477184
+## 23063    verwünscht königstochter     1            0      2  4.24349119  5.03217007
+## 23172         tochter hineinsteck     1            0      2  8.20190569  5.01757487
+## 23173                 tochter muß     1            0      2  8.20190569  5.01757487
+## 23184        königstochter nennen     1            0      2  4.22614710  5.01643154
+## 23185        königstochter zimmer     1            0      2  4.22614710  5.01643154
+## 23203     königstochter hernieder     1            0      2  8.19655367  5.01432757
+## 23204    königstochter totkrinken     1            0      2  8.19655367  5.01432757
+## 23252         müllerstochter ward     1            0      2  4.40596683  5.00734569
+## 23421        schön müllerstochter     1            0      2  4.39002650  4.98934615
+## 23471            alleinig tochter     1            0      2  8.14963040  4.98584968
+## 23472              faulen tochter     1            0      2  8.14963040  4.98584968
+## 23475         tugendreich tochter     1            0      2  8.14963040  4.98584968
+## 23507           tochter vernehmen     1            0      2  4.19445344  4.98353061
+## 23545          stieftochter schön     1            0      2  4.37879355  4.97666048
+## 23694               zweit tochter     2            0      2  3.18856962  4.95866313
+## 23854          königstochter nimm     1            0      2  4.15337893  4.93927895
+## 23855       königstochter tausend     1            0      2  4.15337893  4.93927895
+## 24046        meistertochter unter     1            0      2  8.03428930  4.91579492
+## 24374         königstochter schon     3            0      2  2.64801444  4.88022838
+## 24523      königstochter heiraten     1            0      2  4.08554751  4.86653666
+## 24719                zwei tochter     3            0      2  2.62743502  4.84361439
+## 26214        königstochter treten     2            0      2  3.00495498  4.68148501
+## 26281          wahr königstochter     1            0      2  3.91259284  4.67623574
+## 26317        königstochter folgen     1            0      2  3.90593547  4.67048231
+## 26603      königstochter abermals     1            0      2  3.87890239  4.64058219
+## 26876                klug tochter     1            0      2  3.85901219  4.61518031
+## 27151            tochter entgegen     1            0      2  3.83228585  4.58915430
+## 27208     königstochter aufstehen     1            0      2  3.82693383  4.58283924
+## 27209      königstochter lebendig     1            0      2  3.82693383  4.58283924
+## 27479              tochter setzen     3            0      2  2.46945688  4.55521834
+## 27732        königstochter daheim     1            0      2  3.77753225  4.52764238
+## 27945                 alt tochter     4            0      2  2.15679875  4.50667110
+## 28258     königstochter verstehen     1            0      2  3.73045592  4.47478037
+## 28434      prächtig königstochter     1            0      2  3.70932932  4.44979509
+## 28952 schweinehirtentochter gehen     1            0      2  5.07389555  4.39294820
+## 29792                frau tochter     3            0      2  2.32706419  4.29631592
+## 31386               tochter genug     1            0      2  3.43947596  4.14326430
+## 32080          der müllerstochter     6            0      2  2.50253875  4.08056691
+## 32182            tochter erschrak     1            0      2  3.37331852  4.06679905
+## 32250      königstochter erschrak     1            0      2  3.36796650  4.06043116
+## 32465           müllerstochter in     2            0      2  2.90928812  4.04250798
+## 32596              tochter packen     1            0      2  3.34181103  4.03026764
+## 33206            tochter begegnen     1            0      2  3.29633542  3.97741708
+## 33401            königstochter zu     9            0      2  1.32063981  3.96113421
+## 33922          königstochter erst     2            0      2  2.50707937  3.91823594
+## 34218               tochter gerne     1            0      2  3.22485440  3.89406417
+## 34908          königstochter laut     1            0      2  3.17894306  3.84024032
+## 35554             schwarz tochter     1            0      2  3.13201977  3.78423040
+## 36765              tochter herein     1            0      2  3.04823480  3.68679840
+## 36809        königstochter herein     1            0      2  3.04288278  3.68040219
+## 36814                lieb tochter     2            0      2  2.35260983  3.67977626
+## 37006        königstochter warten     1            0      2  3.03138399  3.66684865
+## 37520          arme königstochter     1            0      2  2.99888921  3.62818058
+## 38232           ein königstochter    12            0      2  1.04430198  3.56664293
+## 38254        königstochter heißen     1            0      2  2.94386124  3.56347541
+## 38978          königstochter oben     1            0      2  2.89280771  3.50301353
+## 39508          ein müllerstochter     2            0      2  2.48945366  3.45945501
+## 39536           königstochter tot     1            0      2  2.85376071  3.45669542
+## 39696               unser tochter     1            0      2  2.84588441  3.44680966
+## 39862   ein schweinehirtentochter     2            0      2  5.32270311  3.43565444
+## 40316              tochter weinen     1            0      2  2.81235320  3.40756040
+## 40428                tochter aber     6            0      2  1.35706865  3.39433750
+## 40565          königstochter aber     6            0      2  1.35156968  3.38090262
+## 40595             tochter sterben     1            0      2  2.78531129  3.37539878
+## 40642       königstochter sterben     1            0      2  2.77995927  3.36898364
+## 41188       königstochter stellen     1            0      2  2.75362873  3.33764004
+## 42285         reich königstochter     1            0      2  2.67363073  3.24211935
+## 43566        königstochter selbst     1            0      2  2.59383938  3.14691684
+## 43849          königstochter sein    13            0      2  0.88241743  3.12138604
+## 44232         müllerstochter sein     2            0      2  2.22277971  3.08899907
+## 44617                 ein tochter    11            0      2  0.92800749  3.05113335
+## 44682              tochter zurück     1            0      2  2.50752072  3.04357610
+## 45077                dein tochter     2            0      2  1.92199029  3.01090896
+## 45662              tochter helfen     1            0      2  2.43601321  2.95779383
+## 46767              tochter suchen     1            0      2  2.39303094  2.90616970
+## 46909        königstochter suchen     1            0      2  2.38767892  2.89973120
+## 46938        königstochter wieder     3            0      2  1.56571292  2.89632885
+## 47059            der stieftochter     4            0      2  1.76699601  2.88121233
+## 48049                 tochter was     3            0      2  1.51734111  2.80698936
+## 48700         königstochter durch     1            0      2  2.27953550  2.76965252
+## 50010        königstochter kommen     4            0      2  1.26951301  2.65698646
+## 50708               tochter geben     2            0      2  1.64820045  2.58320768
+## 50821        königstochter fangen     1            0      2  2.11565872  2.57208721
+## 50874        königstochter müssen     2            0      2  1.63770435  2.56687575
+## 50888           königstochter vor     2            0      2  1.63600502  2.56422132
+## 51095                  tochter in     7            0      2  0.95286253  2.55432885
+## 51138        königstochter heraus     1            0      2  2.09749997  2.55016599
+## 52099         recht königstochter     1            0      2  2.04101428  2.48198055
+## 52405           bauerntochter und     1            0      2  4.01445389  2.45829924
+## 53062                jung tochter     1            0      2  2.01088416  2.44561492
+## 53962                tochter denn     1            0      2  1.96833700  2.39407761
+## 54359          müllerstochter und     2            0      2  1.69211477  2.35166263
+## 54461         königstochter nicht     5            0      2  1.01347765  2.33939136
+## 55160               tochter haben     6            0      2  0.91573067  2.29167448
+## 56436              tochter finden     1            0      2  1.75638886  2.13747175
+## 56448            stieftochter ein     1            0      2  1.87787756  2.13709842
+## 56489        königstochter finden     1            0      2  1.75103683  2.13100363
+## 56923               könig tochter     2            0      2  1.33507770  2.09416691
+## 57346        königstochter liegen     1            0      2  1.68332561  2.04891483
+## 57374              tochter sitzen     1            0      2  1.67978859  2.04460609
+## 57672        königstochter sitzen     1            0      2  1.67443656  2.03813488
+## 57719                tochter fort     1            0      2  1.67097763  2.03392043
+## 57999                tochter doch     1            0      2  1.64215450  1.99895946
+## 58587          der meistertochter     1            0      2  3.23323768  1.97992834
+## 58938       königstochter bringen     1            0      2  1.62550119  1.97877634
+## 59202                tochter sein    10            0      2  0.61933358  1.94859854
+## 59203        königstochter setzen     1            0      2  1.60052940  1.94847708
+## 59436   schweinehirtentochter der     1            0      2  2.23015226  1.93133211
+## 59611              tochter wieder     2            0      2  1.22811835  1.92619780
+## 60725           stieftochter sein     1            0      2  1.60058119  1.82157635
+## 60920        königstochter sollen     2            0      2  1.14370995  1.79406163
+## 61173                tochter mann     1            0      2  1.44657867  1.76154600
+## 61384                tochter ward     1            0      2  1.42804569  1.73903293
+## 61422          königstochter ward     1            0      2  1.42269367  1.73255213
+## 61432              tochter nichts     1            0      2  1.42118310  1.73069593
+## 61617                 tochter bei     1            0      2  1.40759706  1.71419000
+## 61623                  tochter an     3            0      2  0.92538711  1.71329907
+## 61659           königstochter bei     1            0      2  1.40224503  1.70770845
+## 62338         rufen königstochter     1            0      2  1.33281909  1.62342013
+## 63241        königstochter stehen     1            0      2  1.25017966  1.52287427
+## 63491               ander tochter     1            0      2  1.21687968  1.48255042
+## 63596                tochter nach     1            0      2  1.20098108  1.46302412
+## 63759            königstochter in     5            0      2  0.62565122  1.44468043
+## 63786                  tochter da     2            0      2  0.91833325  1.44085413
+## 64175          müllerstochter der     2            0      2  1.00638806  1.39870946
+## 64348              tochter müssen     1            0      2  1.12518381  1.37082388
+## 64508                 tochter wir     1            0      2  1.10003257  1.34022357
+## 64647           vor königstochter     1            0      2  1.08353901  1.32024965
+## 64937                 tochter der    23            0      2  0.28444543  1.28917645
+## 64998                 tochter gut     1            0      2  1.04996564  1.27930095
+## 65139                 tochter und    13            0      2  0.35682770  1.26240334
+## 65213          kein königstochter     1            0      2  1.02348696  1.24716836
+## 65237           königstochter und    13            0      2  0.35110875  1.24242447
+## 65472                tochter noch     1            0      2  0.99181033  1.20852266
+## 65498          königstochter noch     1            0      2  0.98645830  1.20202672
+## 65616         königstochter gehen     2            0      2  0.76164321  1.19522114
+## 65702            und stieftochter     1            0      2  1.04114807  1.18494667
+## 65849          königstochter wenn     1            0      2  0.95282574  1.16108665
+## 66145         königstochter haben     4            0      2  0.53097473  1.11210515
+## 66243                 tochter aus     1            0      2  0.90223725  1.09948107
+## 66344           königstochter aus     1            0      2  0.89688522  1.09298221
+## 66517                tochter auch     1            0      2  0.87406763  1.06518281
+## 66571          königstochter auch     1            0      2  0.86871560  1.05868303
+## 67591            königstochter an     2            0      2  0.57753354  0.90643626
+## 67773                 tochter mit     2            0      2  0.55881038  0.87703419
+## 67818           königstochter mit     2            0      2  0.55342958  0.86862012
+## 67822          königstochter alle     1            0      2  0.71221078  0.86807706
+## 68120                 der tochter    24            0      2  0.17722664  0.82075197
+## 68257           königstochter was     1            0      2  0.65177405  0.79445272
+## 68368              tochter sollen     1            0      2  0.63184806  0.77016351
+## 68679              tochter werden     1            0      2  0.58212598  0.70958333
+## 68851           königstochter auf     2            0      2  0.43303629  0.67971449
+## 68881                 tochter wie     1            0      2  0.55381295  0.67508486
+## 68918           königstochter wie     1            0      2  0.54846092  0.66857506
+## 69018               tochter sagen     1            0      2  0.52627255  0.64152612
+## 69019                 tochter von     1            0      2  0.52627255  0.64152612
+## 69608           königstochter ihr     2            0      2  0.33238173  0.52175350
+## 69656                 tochter ein     5            0      2  0.22166906  0.51193754
+## 69794            königstochter da     1            0      2  0.39595108  0.48271363
+## 70048            stieftochter der     1            0      2  0.38428653  0.43737315
+## 70261                 tochter als     1            0      2  0.31639365  0.38573414
+## 70296           königstochter als     1            0      2  0.31104161  0.37921721
+## 70477               tochter nicht     2            0      2  0.21294265  0.33427524
+## 70579                  tochter so     2            0      2  0.20101503  0.31555324
+## 70651                tochter dass     1            0      2  0.24088327  0.29368693
+## 71032                 tochter ich     3            0      2  0.10598186  0.19632948
+## 71049              tochter kommen     1            0      2  0.15816832  0.19284809
+## 71391              tochter wollen     1            0      2  0.07868137  0.09593644
+## 72441                 tochter ihr     1            0      2 -0.17890685 -0.21816353
+## 73130           königstochter der    16            0      2 -0.11703833 -0.45401405
+## 73342            königstochter du     1            0      2 -0.44657057 -0.54461384
+## 73486               haben tochter     1            0      2 -0.49818368 -0.60766958
+## 74164           königstochter ich     1            0      2 -0.75798439 -0.92446251
+## 74166           königstochter ein     2            0      2 -0.58904838 -0.92496853
+## 74708           königstochter sie     2            0      2 -0.80548041 -1.26488190
+## 75656                 und tochter     1            0      2 -1.98909283 -2.42672679
+```
+
+Wenn wir die Werte aus dem Dataframe `collocs_1` mit den Werten aus dem Dataframe `collocs_10` vergleichen, sehen wir, dass der niedrigere Schwellenwert die Werte nicht beeinflusst: der Funktionsparameter `min_count` bestimmt nur, welche Wortpaare ausgegeben werden.
+
+Fast alle Kollokationen mit `schön` und `tochter` haben z-Werte von > 8 und Lambda-Werte von > 4, darunter allerdings auch vier Kollokationen, die jeweils nur einmal vorkommen. Aber was bedeuten diese Werte? Unter den Wortpaaren mit einem Count von 1 lassen sich sowohl vergleichsweise hohe Lambda-Werte finden als auch vergleichsweise geringe. Z.B. hat das Wortpaar "stieftochter spinnefeind" einen Lamda-Wert von über 8; andere Wortpaare, die nur einmal vorkommen, wie beispielsweise "unsere tochter" haben einen deutlich niedrigeren Lambda-Wert. Kollokationen, die vergleichsweise häufig vorkommen, haben dagegen allgemein eher mittlere Lambda-Werte. Mit den z-Werten verhält es sich ähnlich: Wortpaare, die nur einmal vorkommen, können ebenfalls sowohl vergleichsweise geringe als auch hohe z-Werte aufweisen. Die höchsten z-Werte finden sich jedoch, anders als bei den Lambda-Werten, bei Wortpaaren, die im Vergleich häufiger vorkommen. 
+
+Wir können uns diesen Umstand erklären? Und wie können wir die Werte in Bezug auf unser Korpus und unsere Fragestellung deuten?
+
+Um ein besseres Verständnis für die berechneten Werte zu erhalten, visualisieren wir das Verhältnis zwischen der absoluten Häufigkeit oder Frequenz (Spalte count) der Kollokationen und den berechneten Werten. Ein Streudiagramm der absoluten Häufigkeit der Kollokationen im Korpus (x-Achse) und ihren zugehörigen Lambda-Werte (y-Achse) zeigt, dass die Lambda-Werte tatsächlich am stärksten auseinandergehen für selten vorkommende Wortpaare: 
+
+
+```r
+library(ggplot2)
+
+ggplot(collocs_1, aes(x = count, y = lambda)) +
+  geom_point() +
+    labs(x = "Collocation Count", y = "Lambda Score")
+```
+
+<img src="08-Textanalyse-3_files/figure-html/unnamed-chunk-58-1.png" width="672" />
+
+Für ein tiefergehendes Verständnis der Lambda- und z-Werte solltet ihr den optionalen Abschnitt "Mathematischer Hintergrund: Kollokationen" zurate ziehen. An dieser Stelle solltet ihr euch vor allem einprägen: Bei der Interpretation der Lambda- und z-Werte muss sowohl die Häufigkeit eines Wortpaars im Korpus als auch die Gesamthäufigkeit der beiden Wörter berücksichtigt werden. Die Kollokation "er so", die 53 mal vorkommt, hat beispielsweise sowohl einen negativen Lambda-Wert (-0.02236963) als auch einen negativen z-Wert (-0.1609824). Die beiden Tokens "er" und "so" kommen beide so häufig im Gesamtkorpus vor, dass das häufige gemeinsame Auftreten der beiden Wörter nicht statistisch siginfikant ist: Ein häufiges gemeinsames Auftreten von häufig auftreteneden Wörtern wird erwartet und weicht in diesem Fall offenbar nicht signifikant vom Zufall ab. Anders formuliert: Das Wortpaar "er so" kommt zwar häufig vor, aber nicht häufiger, als es aufgrund der Einzelfrequenzen der Wörter "er" und "so" statistisch zu erwarten wäre. Tatsächlich zeigt der negative λ-Wert an, dass die Wörter vielleicht sogar seltener zusammen auftreten, als man erwarten würde, wenn ihre Verteilung rein zufällig wäre. **Denn grundsätzlich würde man erwarten, dass häufige Wörter tendenziell auch häufig zusammen auftreten, ohne dass dies auf eine besondere linguistische oder konzeptuelle Verbindung zwischen ihnen hinweist.**
+
+Wir können an diesem Punkt also erst einmal festhalten: **Die Interpretation von Assoziationsmaßen bei der Kollokationsanalyse ist nicht trivial und hängt sowohl vom jeweiligen Korpus als auch vom eigenen Ermessen ab. In der Praxis ist es wichtig, statistische Parameter wie λ und z im Kontext der Gesamthäufigkeit der betrachteten Wörter zu interpretieren. Sonst kann es schnell passieren, dass Kollokationen  fälschlicherweise als signifikant bewertet werden, die es nicht sind, oder dass signifikante Kollokationen übersehen werden. In der Praxis wird zudem häufig ein Schwellenwert festgelegt, um seltene Wortpaare auszuschließen.** 
+
+Was bedeuten diese Beobachtungen nun für unsere Kollokationen mit "schön" und "tochter"? Wir können annehmen, dass die hohen Werte für nur einmal vorkommende Wortpaare darauf zurückgeführt werden können, dass die einzelnen Wörter insgesamt im Korpus seltener vorkommen, zum Beispiel "stieftochter" und "spinnefeind". Dies wird zu einem geringeren Maße auch bei "schön" und "tochter" der Fall sein, die im Vergleich zu Funktionswörtern wie "auch" und "sie" natürlich seltener vorkommen, jedoch haben wir anfangs gesehen, dass die Tokens "Tochter" und "Königstochter" zu den häufigsten Tokens zählten, wenn Stoppwörter entfernt wurden (s. Token-Häufigkeitsanalyse). Trotzdem können Wortpaare, die nur einmal vorkommen, offensichtlich nicht als signifikant betrachtet werden, und nach unserer Definition streng genommen auch nicht als Kollokationen. 
+Anders verhält es sich mit den Kollokationen "schöne königstochter", "schöne tochter" und "schönen königstochter" mit 8,7 und 4 Vorkommen, Lambda-Werten > 4 und z-Werte > 8. Diese Werte liegen über dem Median; zugleich sind die einzelnen Wörter im Gesamtkorpus nicht so selten, dass eine fälschliche Erhöhung der Werte wahrscheinlich erscheint. 
+Wenn man die Kollokationen mit "tochter" und "schön" jedoch mit anderen Kollokationen mit "schön" vergleicht, erscheint die Assoziation von Tokens mit "tochter" und "schön" zwar auffällig, aber nicht außergewöhnlich:  Unter den Kollokationen mit dem Wort "schön" finden sich außerdem weitere Kollokationen mit anderen Tokens, zum Beispiel mit "jungfrau" (16) und "mädchen" (7), aber auch mit "knaben" (3), "jüngling" (3) und "mann" (4). Während die Werte für Kollokationen mit "knaben" und "jüngling" durch die geringe Häufigkeit der Kollokationen sowie durch die relative Seltenheit der Wörter "knaben" und "jüngling" im Gesamtkorpus beeinflusst sein wird, erscheinen die Werte insbesondere für die Kollokationen "schöne jungfrau", aber auch für "schöner mann" auf einen signifikante Assoziation hinzuweisen. 
+
+In unserem kleinen Beispiel konnten wir zumindest unsere ursprüngliche Beobachtung bestärken, dass "schön" statistisch häufiger als zufällig gemeinsam mit Tokens, die Tochter-Charaktere beschreiben, vorkommt. Wir können jedoch noch nicht sagen, ob "schön" tatsächlich zur Beschreibung dieser Charaktere verwendet wird, da wir bisher nur Wortpaare betrachtet haben, die im selben Satz vorkommen und/oder direkt aufeinander folgen. Ob die Wörter tatsächlich in einer Beziehung zueinander stehen, haben wir nicht untersucht. Zugleich haben wir uns nur auf ein einzelnes Adjektiv beschränkt, aber wir wissen noch nicht, welche anderen Adjektive vielleicht gemeinsam mit diesen Tokens vorkommen. Bei der gesamten Analyse haben wir außerdem erst einmal angenommen, dass wenn ein Token mit "tochter" vorkommt, dieses auch einen Charakter in dem Märchen beschreibt. Diesen Fragen und Problemen werden wir uns in der nächsten Woche widmen.
+
+
+<details>
+<summary><b>Anwendungsbeispiele: Kollokationen</b></summary>
+
+- Melanie Schröter et al. (2019). *Chapter 1. A comparative analysis of the keyword multicultural(ism) in French, British, German and Italian migration discourse*, in: Lorella Viola und Andreas Musolff (Hg.), Migration and Media. Discourses about identities in crisis, https://www.jbe-platform.com/content/books/9789027262707-dapsac.81.02sch
+- Paul Baker und Robbie Love (2021). *Corpus Linguistics and Sexuality*, in: Kira Hall und Rusty Barrett (Hrsg.), The Oxford Handbook of Language and Sexuality, Paul Baker und Robbie Love, Corpus Linguistics and Sexuality, https://academic.oup.com/edited-volume/42645/chapter/358158005
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kollokationen </b></summary>
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund: Kollokationen </b></summary>
+
+Dieser Abschnitt bezieht sich auf die Berechnung der Kollokationen mit der Quanteda-Funktion `textstat_collocations()`. 
+
+Die beste Strategie, um zu verstehen, wie eine Funktion funktioniert, ist die Formel aus den Dokumentationsseiten manuell (das heißt mit Taschenrechner, aber ohne R) nachzurechnen. Im Folgenden berechnen wir manuell die Werte für Lambda ($\lambda$) und $z$ nach den Formeln aus der [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für das folgende Beispiel: 
+
+* Beispielsatz (unser Korpus): "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+* $K$-word target expression $x$ = "Guten Tag"
+* $K$ = 2 (weil "Guten Tag" aus zwei Wörtern besteht)
+* $z_r$ = "Guten Tag", "Tag Max", "Max Mustermann", "Mustermann wie", "wie geht", "geht es", "es Ihnen", "Ihnen Guten", "Guten Tag" 
+
+$log(n_i)$ bedeutet hier Logarithmus zur Basis $e$, also $log_e(n_i)$.
+
+Wir müssen zunächst klären, was $M$, $n_i$ und $b_i$ sind. 
+
+$M$ = $2^K$, also 4. Das sind die möglichen Werte ("possible values") für $c_i$. 
+
+$c_i$ sind die möglichen Fälle, die beim Vergleich der Wortkombination "Guten Tag" mit allen Wortkombinationen $z_r$ auftreten können: 
+ 
+- $c_1$ = (0,0) (sowohl das erste als auch das zweite Wort in x ist ungleich dem ersten und zweiten Wort in z: Beispiel "Max Mustermann")
+- $c_2$ = (1,0) (das erste Wort in $x$ ist gleich dem ersten Wort in $z$, aber das zweite Wort ist nicht gleich dem zweiten Wort: Beispiel "\underline{Guten} Abend")
+- $c_3$ = (0,1) (das zweite Wort in $x$ ist gleich dem zweiten Wort in z, aber das erste Wort ist nicht gleich dem ersten Wort: Beispiel "schönen \underline{Tag}") 
+- $c_4$ = (1,1) (beide Wörter in $x$ und $z$ sind gleich: In unserem Fall "\underline{Guten} \underline{Tag}") 
+
+$b_i$ sind die Anzahl an Einsen in den verschiedenen Fällen $c_i$. In unserem Beispiel: 
+ 
+- $b_1$ = 0 (weil $c_1$ keine 1 enthält) 
+- $b_2$ = 1 (weil $c_2$ eine 1 enthält) 
+- $b_3$ = 1 (weil $c_3$ eine 1 enthält) 
+- $b_4$ = 2 (weil $c_4$ zweimal 1 enthält)
+ 
+$n_i$ sind die Anzahl der Wortkombinationen aus $z_r$, für die der jeweilige Fall $c_i$ zutrifft, also: 
+ 
+- $n_1$ = 7 (es gibt 7 Wortkombinationen, die weder "Guten" noch "Tag" an der richtigen Stelle enthalten, z.B. "Tag Max", "Max Mustermann", "Mustermann wie", .....) 
+- $n_2$ = 0 (es gibt keine Wortkombination mit "Guten" an der ersten Stelle) 
+- $n_3$ = 0 (es gibt keine Wortkombination mit "Tag" an der zweiten Stelle) 
+- $n_4$ = 2 ("Guten Tag" kommt zweimal vor)
+
+Jedes $n_i$ wird noch mit dem "smoothing parameter" addiert (dieser soll verhindern, dass Operationen der Art $log_e(0)$ oder $0^{-1}$ notwendig werden). Der smoothing Parameter ist per Default 0.5.
+Daraus ergibt sich: $n_1$ = 7.5, $n_2$ = 0.5, $n_3$ = 0.5, $n_4$ = 2.5 
+
+Wenn wir diese Werte in die Formel einsetzen, erhalten wir: 
+
+$\lambda = ((-1)^2*log_e(7.5)) + ((-1)^1*log_e(0.5)) + ((-1)^1*log_e(0.5)) + ((-1)^0*log_e(2.5))$
+
+Und entsprechend für $z$: 
+
+$z = \frac{\lambda}{(n_1^{-1} + n_2^{-1} + n_3^){-1} + n_4^{-1})^{(\frac{1}{2})}}
+= \frac{\lambda}{(7.5^{-1} + 0.5^{-1} + 0.5^{-1} + 2.5^{-1})^{(\frac{1}{2})}}$
+
+Vergleicht die berechneten Werte mit den Werten, welche die Quanteda `textstat_collocations()`-Funktion berechnet, indem ihr den folgenden Code ausführt. Stimmen die Werte überein? 
+
+
+```r
+library(quanteda)
+library(quanteda.textstats)
+test <- "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+Wir haben im Abschnitt "Kollokationen" bereits beobachtet, dass die Gesamthäufigkeit der Tokens in einer Wortkombination die lambda- und z-Werte beeinträchtigt. Das können wir anhand der beiden Formeln etwas genauer untersuchen. Wir nehmen an, eine Wortkombination $x$ kommt nur einmal vor ($n_4$ = 1.5) und es kommen sonst 10 Wortkombinationen vor ohne irgendeines der beiden Wörter aus $x$ ($n_1$ = 10.5). Wenn eines der beiden Wörter aus der Wortkombination $x$ im Gesamtkorpus häufig vorkommt, dann wird es höhere Werte für $n_2$ oder $n_3$ geben, weil dieses Wort dann mit anderen Wörtern zusammen auftritt. 
+
+* Wie groß ist Lambda für $n_2$ = 8.5 und $n_3$ = 0.5?
+* Wie groß ist Lambda für $n_2$ = 0.5 und $n_3$ = 0.5? 
+
+Zuletzt können wir auch die Formel für die z-Statistik untersuchen. Wie wir gesehen haben, werden die z-Werte als Bruch mit Lambda im Zähler definiert. 
+
+* Wie wirkt sich ein hohes Lambda im Zähler auf den z-Wert aus? 
+* Wie wirkt sich ein niedriger Wert für Lambda auf den z-Wert aus? 
+* Wie beeinflussen die Werte im Nenner das Ergebnis? 
+
+Ohne tief in die Statistik einzusteigen, können wir also schon durch einfaches Nachrechnen nachvollziehen, warum die Gesamthäufigkeit der Tokens in einer Wortkombination einen Einfluss auf die Lambda- und z-Werte haben muss. 
+
+</details>
 
 
 

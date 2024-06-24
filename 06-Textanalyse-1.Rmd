@@ -340,6 +340,12 @@ Auch ein tokens-Objekt kann mithilfe der Funktion `str()` untersucht werden. Qua
 str(kafka_toks)
 ```
 
+Auch aus Quanteda tokens-Objekten kann ein Teilkorpus gebildet werden:
+
+```{r eval=FALSE}
+# Tokens-Objekt nach Kafka-Texten filtern
+kafka_tokens <- tokens_subset(ger_toks, Autor_in == "kafka")
+```
 
 ## Quanteda DFM-Objekte
 

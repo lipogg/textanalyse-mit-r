@@ -53,6 +53,13 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -279,8 +286,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
 <li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.4</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
+<li class="chapter" data-level="8.3.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#relative-häufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#wörter-im-kontext-gemeinsames-vorkommen-von-wörtern"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.4</b> Kollokationen</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -674,7 +692,7 @@ woerter &lt;- satz %&gt;%
 <span id="cb48-5"><a href="textanalyse-ii-preprocessing.html#cb48-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(lemma, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)) </span>
 <span id="cb48-6"><a href="textanalyse-ii-preprocessing.html#cb48-6" tabindex="-1"></a><span class="fu">View</span>(kafka_grouped)</span>
 <span id="cb48-7"><a href="textanalyse-ii-preprocessing.html#cb48-7" tabindex="-1"></a><span class="co"># In Quanteda corpus-Objekt umwandeln</span></span>
-<span id="cb48-8"><a href="textanalyse-ii-preprocessing.html#cb48-8" tabindex="-1"></a>kafka_lemmatized <span class="ot">&lt;-</span> <span class="fu">corpus</span>(kafka_grouped, <span class="at">docnames =</span> maerchen_grouped<span class="sc">$</span>doc_id)</span>
+<span id="cb48-8"><a href="textanalyse-ii-preprocessing.html#cb48-8" tabindex="-1"></a>kafka_lemmatized <span class="ot">&lt;-</span> <span class="fu">corpus</span>(kafka_grouped)</span>
 <span id="cb48-9"><a href="textanalyse-ii-preprocessing.html#cb48-9" tabindex="-1"></a><span class="co"># Korpus-Objekt mit den lemmatisierten Texten speichern</span></span>
 <span id="cb48-10"><a href="textanalyse-ii-preprocessing.html#cb48-10" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_lemmatized, <span class="at">file=</span><span class="st">&quot;kafka_lemmatized.rds&quot;</span>)</span></code></pre></div>
 <p>Mit dem Objekt <code>kafka_lemmatized</code> könnte jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wir werden uns diesen Code und auch den Dataframe <code>kafka_df</code> in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen.</p>

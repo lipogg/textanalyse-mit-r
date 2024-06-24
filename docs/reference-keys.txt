@@ -91,3 +91,12 @@ einstieg-absolute-häufigkeiten-und-das-zipfsche-gesetz
 absolute-häufigkeiten-und-das-zipfsche-gesetz
 vergleich-lemmatisiertes-korpus
 absolute-häufigkeiten-und-lemmata
+relative-häufigkeiten-und-tf-idf
+wörter-im-kontext-und-gemeinsames-vorkommen-von-wörtern
+kwic
+n-gramme
+kollokationen
+wörter-im-kontext-gemeinsames-vorkommen-von-wörtern
+worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten
+keywords-in-context-kwic
+kookkurrenzen

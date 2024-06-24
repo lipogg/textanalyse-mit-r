@@ -577,7 +577,7 @@ kafka_grouped <- kafka_cleaned_df %>%
   summarise(text = paste(lemma, collapse = " ")) 
 View(kafka_grouped)
 # In Quanteda corpus-Objekt umwandeln
-kafka_lemmatized <- corpus(kafka_grouped, docnames = maerchen_grouped$doc_id)
+kafka_lemmatized <- corpus(kafka_grouped)
 # Korpus-Objekt mit den lemmatisierten Texten speichern
 saveRDS(kafka_lemmatized, file="kafka_lemmatized.rds")
 ```

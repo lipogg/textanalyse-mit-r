@@ -554,19 +554,48 @@ subset_dfm_weighted[, "königstochter"]
 
 Neben den absoluten und den relativen Häufigkeiten gibt es noch ein drittes Maß, das häufig  verwendet wird, um Worthäufigkeiten in einem Korpus zu vergleichen: die sogenannte **Term Frequency-Inverse Document Frequency** (kurz **TF-IDF**). **Dieses Maß eignet sich besonders, um Tokens zu identifizieren, die häufig in einem bestimmten Dokument, aber selten im gesamten Korpus vorkommen**. Der Name TF-IDF verrät bereits, wie das Maß berechnet wird: die absolute Häufigkeit jedes Tokens in einem Dokument (TF) wird ins Verhältnis zur Textlänge und zusätzlich zur Anzahl der Dokumente, in denen das Token auftritt (IDF), gesetzt. TF-IDF-Werte können mithilfe der Funktion `dfm_tfidf()` berechnet werden. Wir berechnen im Folgenden die TF-IDF-Werte für die beiden Märchen "Der Froschkönig" und "Die zwei Brüder" und vergleichen die Tokens mit den höchsten TF-IDF Werten. Anders als bei den absoluten und relativen Häufigkeiten müssen zur Berechnung der TF-IDF Werte Satzzeichen und Stoppwörter nicht unbedingt entfernt werden, weil das Maß Tokens, die in allen oder fast allen Texten vorkommen, gegenüber Tokens, die nur in wenigen Texten vorkommen, benachteiligt. Da wir aber bereits das Objekt `subset_dfm_lemmata` ohne Stoppwörter und Satzzeichen verwenden, die TF-IDF-Werte sind dieselben.
 
-```{r}
-maerchen_dfm_tfidf <- dfm_tfidf(subset_dfm_lemmata)
+**Da die TF-IDF Werte von der Anzahl der Dokumente, in denen das Token auftritt, abhängen, macht es einen Unterschied, ob die Werte für das gesamte Korpus oder für ein Teilkorpus berechnet werden:** 
 
+```{r}
+# TF-IDF-Werte für ein Teilkorpus 
+tfidf_subset <- maerchen_corpus %>%
+  corpus_subset(Titel %in% c("Der-Froschkoenig-oder-der-eiserne-Heinrich", "Die-zwei-Brueder")) %>% 
+  tokens() %>%
+  tokens_tolower() %>%
+  dfm() %>%
+  dfm_tfidf()
+tfidf_subset[, "königstochter"]
+
+# TF-IDF-Werte für das gesamte Korpus
+tfidf_corpus <- maerchen_corpus %>%
+  tokens() %>%
+  tokens_tolower() %>%
+  dfm() %>%
+  dfm_tfidf()
+tfidf_corpus[c("Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt", "Die-zwei-Brueder_1857.txt"), "königstochter"]
+
+```
+
+Die TF-IDF Werte für das Teilkorpus geben Auskunft darüber, welche Tokens für jedes Dokument im Vergleich mit dem Teilkorpus besonders häufig vorkommen, also in diesem Fall verraten sie uns, dass im Märchen Forschkönig das Token "königstochter" im Vergleich mit dem Märchen Die zwei Brüder nicht besonders häufig vorkommt, denn das Token findet sich in beiden Texten. Die TF-IDF-Werte für das gesamte Korpus geben dagegen Auskunft darüber, welche Tokens in den beiden Märchen im Vergleich mit allen anderen Märchen besonders häufig vorkommen. Warum unterscheiden sich diese Werte? Schaut im optionalen Abschnitt "Mathemtatischer Hintergrund: TF-IDF" nach.   
+
+
+```{r}
+# TF-IDF-Werte für das gesamte Korpus berechnen
+maerchen_dfm_tfidf <- maerchen_toks_lemmata %>%
+  dfm() %>%
+  dfm_tfidf()
 tstat_freq_tfidf <- textstat_frequency(maerchen_dfm_tfidf, n = 10, groups = Titel, force = TRUE)
-# plot frequencies
-ggplot(data = tstat_freq_tfidf,
-                      aes(x = factor(nrow(tstat_freq_tfidf):1),
+# Märchen Froschkönig und Die zwei Brüder auswählen
+tstat_freq_tfidf_subset <- tstat_freq_tfidf[tstat_freq_tfidf$group %in% c("Die-zwei-Brueder", "Der-Froschkoenig-oder-der-eiserne-Heinrich"), ]
+# Tokens mit den höchsten TF-IDF-Werten visualisieren
+ggplot(data = tstat_freq_tfidf_subset ,
+                      aes(x = factor(nrow(tstat_freq_tfidf_subset ):1),
                           y = frequency)) +
   geom_point() +
   facet_wrap(~ group, scales = "free_y") +
   coord_flip() +
-  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf):1),
-                   labels = tstat_freq_tfidf$feature) +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf_subset ):1),
+                   labels = tstat_freq_tfidf_subset $feature) +
   labs(x = NULL, y = "TF-IDF")
 
 ```
@@ -637,9 +666,106 @@ Für einen allgemeinen Einstieg in den mathematischen Hintergrund hinter TF-IDF 
 - Dan Jurafsky (2022). Vectors 5 TF IDF, https://www.youtube.com/watch?v=TBUpxFw8oIA
 - Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector, https://web.stanford.edu/~jurafsky/slp3/.
 
-Um zu verstehen, wie TF-IDF-Werte in Quanteda berechnet werden, müssen wir jedoch auch die [Funktionsdokumentation](https://quanteda.io/reference/dfm_tfidf.html) zu Rate ziehen, den die Formeln zur Berechnung der TF-IDF Werte unterscheiden sich mitunter etwas.
+Um zu verstehen, wie TF-IDF-Werte in Quanteda berechnet werden, müssen wir jedoch auch die [Funktionsdokumentation](https://quanteda.io/reference/dfm_tfidf.html) zu Rate ziehen, den die Formeln zur Berechnung der TF-IDF Werte unterscheiden sich mitunter etwas. Unter "References" ist die Arbeit angegeben, welcher die Formel zur Berechnung der TF-IDF-Werte entnommen ist, ["Introduction to Information Retrieval" von Christopher Manning, Prabhakar Raghavan, und Hinrich Schütze](https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf). Auf den Seiten 117-120 können wir nachlesen, wie die TF-IDF Werte berechnet werden: 
 
-(folgt noch)
+"The tf-idf weighting scheme assigns to term t a weight in document d given TF-IDF by
+
+$tf-idf_t,d = tf_t,d × idf_t$. 
+
+In other words, $tf-idf_t,d$ assigns to term $t$ a weight in document $d$ that is
+
+1. highest when $t$ occurs many times within a small number of documents
+(thus lending high discriminating power to those documents);
+2. lower when the term occurs fewer times in a document, or occurs in many
+documents (thus offering a less pronounced relevance signal);
+3. lowest when the term occurs in virtually all documents."
+
+Die term frequency $tf_t,d$ ist einfach die absolute Häufigkeit für das Wort $t$ im Dokument $d$. Die inverse document frequency $idf_t$ berechnet sich wie folgt: 
+
+$idf_t = log (\frac{N}{df_t})$
+
+$N$: total number of documents in a collection \
+$df_t$: document frequency df of a term $t$: in how many documents term t occurs
+
+Dem Text können wir entnehmen, dass mit log() in diesem Fall der Logarithmus zur Basis 10 gemeint ist. 
+
+Diese Formeln verwenden wir nun, um manuell die TF-IDF-Werte für das Token "königstochter" in den beiden Märchen "Der Froschkönig" und "Die zwei Brüder" nachzurechnen. 
+
+Für das Teilkorpus nur aus den beiden Märchen hatte die Funktion `dfm_tfidf()` die folgenden TF-IDF Werte berechnet: 
+
+```{r }
+# TF-IDF-Werte für ein Teilkorpus 
+tfidf_subset[, "königstochter"]
+
+```
+
+In diesem Fall ist also: 
+
+$t$ = "königstochter" \
+$N$ = 2 
+
+Für das Märchen "Der Froschkönig": 
+
+$tf_t$ = 8 \
+$df_t$ = 2
+
+Also: 
+
+```{r}
+# Froschkönig
+tf_fr <- 8
+idf_fr<- log10(2/2) # 0
+tfidf_fr <- tf_fr * idf_fr
+tfidf_fr
+```
+
+Für das Märchen "Die zwei Brüder": 
+
+$tf_t$ = 18 \
+$df_t$ = 2
+
+Also: 
+
+```{r}
+# Zwei Brüder
+tf_br <- 18
+idf_br<- log10(2/2) # 0
+tfidf_br <- tf_br * idf_br
+tfidf_br
+```
+
+Für das gesamte Korpus mit allen Märchen hatte die Funktion `dfm_tfidf()` dagegen die folgenden TF-IDF Werte berechnet: 
+
+```{r}
+# TF-IDF-Werte für das gesamte Korpus
+tfidf_corpus[c("Der-Froschkoenig-oder-der-eiserne-Heinrich_1857.txt", "Die-zwei-Brueder_1857.txt"), "königstochter"]
+```
+
+Auch diese Werte können wir manuell nachrechnen: 
+
+$t$ = "königstochter" \
+$N$ =  194
+
+
+```{r}
+
+df_t <- length(tstat_freq_grouped$feature[grepl("königstochter", tstat_freq_grouped$feature)]
+)
+df_t
+
+# Froschkönig
+tf_fr <- 8
+idf_fr<- log10(194/df_t) 
+tfidf_fr <- tf_fr * idf_fr
+tfidf_fr
+
+# Zwei Brüder
+tf_br <- 18
+idf_br<- log10(194/df_t) 
+tfidf_br <- tf_br * idf_br
+tfidf_br
+```
+
 
 </details>
 
@@ -1141,3 +1267,4 @@ Ohne tief in die Statistik einzusteigen, können wir also schon durch einfaches 
 - Maj, Michal (2019). *Investigating Word Distribution with R - Zipf's Law*, https://www.r-bloggers.com/2019/02/investigating-words-distribution-with-r-zipfs-law/.
 - Dustin Stoltz und Marshall Taylor (2024), *Mapping Texts. Computational Text Analysis for the Social Sciences, Ch. 6: From Text to Numbers*, Oxford: Oxford Univ. Press. 
 - Dan Jurafsky und James Martin (2024). *Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector*, https://web.stanford.edu/~jurafsky/slp3/.
+- Manning, Christopher, Raghavan, Prabhakar, und Schütze, Hinrich (2008). *Introduction to Information Retrieval. Ch. 6.2 Term Frequency and Weighting*, pp. 117-120,  https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf

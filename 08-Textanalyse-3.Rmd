@@ -588,14 +588,14 @@ tstat_freq_tfidf <- textstat_frequency(maerchen_dfm_tfidf, n = 10, groups = Tite
 # Märchen Froschkönig und Die zwei Brüder auswählen
 tstat_freq_tfidf_subset <- tstat_freq_tfidf[tstat_freq_tfidf$group %in% c("Die-zwei-Brueder", "Der-Froschkoenig-oder-der-eiserne-Heinrich"), ]
 # Tokens mit den höchsten TF-IDF-Werten visualisieren
-ggplot(data = tstat_freq_tfidf_subset ,
-                      aes(x = factor(nrow(tstat_freq_tfidf_subset ):1),
+ggplot(data = tstat_freq_tfidf_subset,
+                      aes(x = factor(nrow(tstat_freq_tfidf_subset):1),
                           y = frequency)) +
   geom_point() +
   facet_wrap(~ group, scales = "free_y") +
   coord_flip() +
-  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf_subset ):1),
-                   labels = tstat_freq_tfidf_subset $feature) +
+  scale_x_discrete(breaks = factor(nrow(tstat_freq_tfidf_subset):1),
+                   labels = tstat_freq_tfidf_subset$feature) +
   labs(x = NULL, y = "TF-IDF")
 
 ```

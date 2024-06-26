@@ -113,8 +113,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9be815e1fa0c4e787e13" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9be815e1fa0c4e787e13">{"x":{"visdat":{"9073708cde9c":["function () ","plotlyVisDat"]},"cur_data":"9073708cde9c","attrs":{"9073708cde9c":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-66fd90e480b287faef32" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-66fd90e480b287faef32">{"x":{"visdat":{"27d027b01040":["function () ","plotlyVisDat"]},"cur_data":"27d027b01040","attrs":{"27d027b01040":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -173,9 +173,9 @@ install.packages("readtext")
 library(readtext)
 
 # einen Text einlesen und einer Variable zuweisen
-kafka_3 <- readtext::readtext("kafka_verwandlung_1915.txt")
+kafka_3 <- readtext("kafka_verwandlung_1915.txt")
 # zwei Texte einlesen 
-kafka_3 <- readtext::readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"))
+kafka_3 <- readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"))
 kafka_3
 # alle Texte in einem Ordner einlesen 
 ein_korpus <- readtext("korpus/*.txt")
@@ -305,7 +305,7 @@ str(ger_korpus)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-06-25"
+##   .. ..$ created        : Date[1:1], format: "2024-06-27"
 ##   .. ..$ source         : chr "data.frame"
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr "documents"
@@ -639,7 +639,7 @@ str(kafka_toks)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-06-25"
+##   .. ..$ created        : Date[1:1], format: "2024-06-27"
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr "documents"
 ##   .. ..$ what        : chr "word"
@@ -704,7 +704,7 @@ Wenn Objekte in einem eigenen Ordner (="Verzeichnis") gespeichert werden sollen,
 
 ```r
 # Neuen Ordner erstellen: falls bereits ein Ordner "output" existiert, wird dieser gelöscht
-unlink("output", recursive = T) 
+unlink("output", recursive = TRUE) 
 dir.create("output") 
 setwd(paste0(getwd(), "/output"))
 getwd()

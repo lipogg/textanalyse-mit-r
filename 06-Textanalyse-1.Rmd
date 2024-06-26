@@ -192,9 +192,9 @@ install.packages("readtext")
 library(readtext)
 
 # einen Text einlesen und einer Variable zuweisen
-kafka_3 <- readtext::readtext("kafka_verwandlung_1915.txt")
+kafka_3 <- readtext("kafka_verwandlung_1915.txt")
 # zwei Texte einlesen 
-kafka_3 <- readtext::readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"))
+kafka_3 <- readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"))
 kafka_3
 # alle Texte in einem Ordner einlesen 
 ein_korpus <- readtext("korpus/*.txt")
@@ -369,7 +369,7 @@ Wenn Objekte in einem eigenen Ordner (="Verzeichnis") gespeichert werden sollen,
 ```{r eval=FALSE}
 
 # Neuen Ordner erstellen: falls bereits ein Ordner "output" existiert, wird dieser gelöscht
-unlink("output", recursive = T) 
+unlink("output", recursive = TRUE) 
 dir.create("output") 
 setwd(paste0(getwd(), "/output"))
 getwd()

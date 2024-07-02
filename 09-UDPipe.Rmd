@@ -5,9 +5,9 @@ options(width = 9999)
 
 # POS Tagging und Dependency Parsing
 
-In der letzten Stunde haben wir untersucht, inwieweit die Betrachtung einfacher Worthäufigkeiten dabei helfen kann zu untersuchen, wie verschiedene Märchencharaktere in einem Beispielkorpus beschrieben werden. Dabei haben wir bemerkt, dass die Interpretation von N-Grammen wie "schöne_Königstochter", Kollokationen, oder Kookkurrenzen wie "schön Königstochter" unter anderem deswegen schwierig ist, weil wir nicht mit Sicherheit sagen können, dass sich "schön" tatsächlich auf "Königstochter" bezieht. Auch konnten wir die untersuchten Wortpaare nicht in einem größeren Maßstab mit anderen Wortpaaren vergleichen, weil sich unter den gefundendenen Wortpaaren viele für unsere Fragestellung uninteressante Wortpaare befunden haben (wie z.B. "die Königstochter", "es war"). Interessanter wäre ein zielgerichteter Vergleich verschiedener Adjektiv-Substantiv-Paare. Um Wortpaare für einen gezielteren Vergleich zu filtern, muss aber zum einen bekannt sein, um welche Wortarten es sich handelt, und es muss zum anderen sichergestellt werden, dass die Adjektive sich auch tatsächlich auf die Substantive beziehen. 
+In der letzten Stunde haben wir untersucht, inwieweit die Betrachtung einfacher Worthäufigkeiten dabei helfen kann zu untersuchen, wie verschiedene Märchencharaktere in einem Beispielkorpus beschrieben werden. Dabei haben wir bemerkt, dass die Interpretation von N-Grammen wie "schöne_königstochter", Kollokationen, oder Kookkurrenzen wie "schön königstochter" unter anderem deswegen schwierig ist, weil wir nicht mit Sicherheit sagen können, dass sich "schön" tatsächlich auf "königstochter" bezieht. Auch konnten wir die untersuchten Wortpaare nicht in einem größeren Maßstab mit anderen Wortpaaren vergleichen, weil sich unter den gefundendenen Wortpaaren viele für unsere Fragestellung uninteressante Wortpaare befunden haben (wie z.B. "die Königstochter", "es war"). Interessanter wäre ein zielgerichteter Vergleich verschiedener Adjektiv-Substantiv-Paare. Um Wortpaare für einen gezielteren Vergleich zu identifizieren, muss aber zum einen bekannt sein, um welche Wortarten es sich handelt, und es muss zum anderen sichergestellt werden, dass die Adjektive sich auch tatsächlich auf die Substantive beziehen. 
 
-In dieser Woche werden wir uns zwei Verfahren ansehen, mit denen die Wortart und die syntaktische Beziehung von Wörtern zueinander identifiziert werden können: Part of Speech Tagging und Dependency Parsing. Zur Extraktion dieser Daten verwenden wir das Paket UDPipe. Zuletzt werden wir beide Verfahren auf unser Märchenkorpus anwenden und diskutieren, inwieweit wir mithilfe dieser Verfahren unsere Fragestellung beantworten können.
+In dieser Woche werden wir uns zwei Verfahren ansehen, mit denen die Wortart und die syntaktische Beziehung von Wörtern zueinander identifiziert werden können: Part of Speech Tagging und Dependency Parsing. Dazu verwenden wir das Paket UDPipe. Zuletzt werden wir beide Verfahren auf unser Märchenkorpus anwenden und diskutieren, inwieweit wir mithilfe dieser Verfahren unsere Fragestellung beantworten können.
  
 ## Recap UDPipe
 
@@ -247,7 +247,7 @@ maerchen_txt <- sapply(maerchen_toks_raw, FUN=function(x) paste(x, collapse = "\
 maerchen_annotated <- udpipe_annotate(ud_model, maerchen_txt, tagger="default", parser="default", tokenizer = "vertical", doc_id = maerchen_toks_raw$Titel)
 
 # Annotiertes Korpus zwischenspeichern
-saveRDS(maerchen_annotated, file="data/maerchen_annotated.rds")
+saveRDS(maerchen_annotated, file="data/maerchen_udpipe.rds")
 ```
 
 Die Annotation eines gesamten Korpus dauert je nach Rechenleistung des Computers sehr lange. Es ist deswegen ratsam, das annotierte Korpus zwischenzuspeichern, damit es nicht für jede RStudio Sitzung neu erzeugt werden muss. Wir speichern unser Objekt `maerchen_annotated` als RDS-Datei, ein R-internes Datenformat, das zum Zwischenspeichern von R-Objekten verwendet werden kann (s. [Abschnitt 5.8](file:///Users/lipogg/Desktop/LV_Einfuehrung_WS2324/einfuehrung-in-r/docs/textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben)). RDS-Dateien können in eine R Sitzung eingelesen werden mit: 
@@ -255,15 +255,18 @@ Die Annotation eines gesamten Korpus dauert je nach Rechenleistung des Computers
 
 ```{r}
 # So kann das annotierte Korpus eingelesen werden 
-maerchen_annotated <- readRDS(file="data/maerchen_annotated.rds")
+maerchen_annotated <- readRDS(file="data/maerchen_udpipe.rds")
 
 ```
 
 Zuletzt muss das annotierte Korpus noch in einen Dataframe umgewandelt werden:
 
-```{r attr.output='style="max-height: 200px;"'}
-# In Dataframe umwandeln
+```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
+# Code aus Abschnitt 7.7
+library(dplyr)
 maerchen_df <- as.data.frame(maerchen_annotated)
+maerchen_df <- maerchen_df[!is.na(maerchen_df$lemma), ]
+maerchen_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", maerchen_df$lemma)
 maerchen_df # View(maerchen_df) im RStudio
 ```
 
@@ -271,20 +274,20 @@ maerchen_df # View(maerchen_df) im RStudio
 
 Mithilfe der POS Tags in der Spalte `upos` können wir zum Beispiel eine **Token-Häufigkeitsanalyse auf bestimmte Wortarten eingrenzen**. Wir wiederholen beispielhaft die Token-Häufigkeitsanalyse aus der vergangenen Woche für alle Substantive in unserem Märchenkorpus:
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 # Auf Lemmata zugreifen, die Substantive sind
 substantive <- maerchen_df$lemma[maerchen_df$upos == "NOUN"]
 # Wie viele Substantive gibt es?  
 length(substantive)
 # Quanteda-DFM erstellen 
-substantive_dfm <- dfm(substantive)
+substantive_dfm <- dfm(tokens(substantive))
 # 100 häufigste Substantive
 top_substantive <- topfeatures(substantive_dfm, n=100)
 
 # Substantive-Wordcloud
 set.seed(100)
 textplot_wordcloud(substantive_dfm,  
-                   min_count = 6, 
+                   min_count = 20, 
                    random_order = FALSE, 
                    rotation = .25,
 )
@@ -518,7 +521,6 @@ Zuletzt könnten wir noch weitere Aspekte mit demselben Verfahren untersuchen: W
 
 # Verb-Substantiv Paare mit "Tochter": Diesmal wird auch die Spalte dep_rel zum Filtern verwendet
 stats_filtered <- subset(stats, dep_rel %in% "nsubj" & upos %in% c("NOUN") & upos_parent %in% c("AUX", "VERB"))
-View(stats_filtered)
 stats_filtered$term <- paste(stats_filtered$lemma_parent, stats_filtered$lemma, sep = " ")
 stats_subset <- stats_filtered[grepl("(t|T)ochter", stats_filtered$token), ] # kann nur token sein, weil das das Substantiv ist
 stats_freq <- txt_freq(stats_subset$term)

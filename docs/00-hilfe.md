@@ -69,4 +69,5 @@ Theorie (wird fortlaufend ergänzt):
 * Gius, Evelyn und Jacke, Janina (2022). *Are Computational Literary Studies Structuralist?*, in: Journal of Cultural Analytics 7, no. 4, https://doi.org/10.22148/001c.46662.
 * Pichler, Axel und Reiter, Nils (2021), *Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse*, in: Journal of Literary Theory 15, no. 1-2,  https://doi.org/10.1515/jlt-2021-2008. 
 * Bhattacharyya, Sayan (2021). *Text Analysis for Thought in the Black Atlantic*, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, https://muse.jhu.edu/book/84470. 
-
+* Pichler, Axel und Reiter, Nils (2022). *From Concepts to Texts and Back: Operationalization as a Core Activity of Digital Humanities*, https://culturalanalytics.org/article/57195
+* Bubenhofer, Noah und Scharloth, Joachim (2013). *Korpuslinguistische Diskursanalyse*, in: Ulrike Hanna Meinhof, Martin Reisigl und Ingo Warnke (Hrsg.), Diskurslinguistik im Spannungsfeld von Deskription und Kritik, S. 147-167. https://doi.org/10.1524/9783050061047.147

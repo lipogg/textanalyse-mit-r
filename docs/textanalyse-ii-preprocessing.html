@@ -297,9 +297,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
 <li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
 <li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
-<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.4</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
+<li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.5</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.4.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen-pmi"><i class="fa fa-check"></i><b>8.4.6</b> Kookkurrenzen: PMI</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
+<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
+<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
+<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
+<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
+<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
+<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -338,12 +354,12 @@ woerter &lt;- satz %&gt;%
 <div id="tokenisieren-und-segmentieren" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Tokenisieren und segmentieren<a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon kennengelernt. Wir schauen uns als Beispiel wieder den Beispielsatz aus dem letzten Übungsblatt an, mit ein paar Zusätzen:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="textanalyse-ii-preprocessing.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb2-2"><a href="textanalyse-ii-preprocessing.html#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="textanalyse-ii-preprocessing.html#cb2-3" tabindex="-1"></a>beispiel_1 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme&quot;</span></span>
-<span id="cb2-4"><a href="textanalyse-ii-preprocessing.html#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="textanalyse-ii-preprocessing.html#cb2-5" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1)</span>
-<span id="cb2-6"><a href="textanalyse-ii-preprocessing.html#cb2-6" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="textanalyse-ii-preprocessing.html#cb550-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb550-2"><a href="textanalyse-ii-preprocessing.html#cb550-2" tabindex="-1"></a></span>
+<span id="cb550-3"><a href="textanalyse-ii-preprocessing.html#cb550-3" tabindex="-1"></a>beispiel_1 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme&quot;</span></span>
+<span id="cb550-4"><a href="textanalyse-ii-preprocessing.html#cb550-4" tabindex="-1"></a></span>
+<span id="cb550-5"><a href="textanalyse-ii-preprocessing.html#cb550-5" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1)</span>
+<span id="cb550-6"><a href="textanalyse-ii-preprocessing.html#cb550-6" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
@@ -355,11 +371,11 @@ woerter &lt;- satz %&gt;%
 ## [25] &quot;geboren&quot;        &quot;am&quot;             &quot;02-04-1965&quot;     &quot;.&quot;             
 ## [29] &quot;#callme&quot;</code></pre>
 <p>In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird?</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="textanalyse-ii-preprocessing.html#cb4-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
-<span id="cb4-2"><a href="textanalyse-ii-preprocessing.html#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="textanalyse-ii-preprocessing.html#cb4-3" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2)</span>
-<span id="cb4-4"><a href="textanalyse-ii-preprocessing.html#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="textanalyse-ii-preprocessing.html#cb4-5" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="textanalyse-ii-preprocessing.html#cb552-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
+<span id="cb552-2"><a href="textanalyse-ii-preprocessing.html#cb552-2" tabindex="-1"></a></span>
+<span id="cb552-3"><a href="textanalyse-ii-preprocessing.html#cb552-3" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2)</span>
+<span id="cb552-4"><a href="textanalyse-ii-preprocessing.html#cb552-4" tabindex="-1"></a></span>
+<span id="cb552-5"><a href="textanalyse-ii-preprocessing.html#cb552-5" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
@@ -372,9 +388,9 @@ woerter &lt;- satz %&gt;%
 ## [29] &quot;02&quot;             &quot;/&quot;              &quot;04&quot;             &quot;/&quot;             
 ## [33] &quot;1965&quot;           &quot;.&quot;              &quot;#callme&quot;</code></pre>
 <p>Dann werden die Telefonnummer und das Geburtsdatum nicht mehr als Sinneinheiten erkannt. In diesem Fall gibt es zwei Möglichkeiten: Entweder die Tokenisierungsregeln werden angepasst, oder die Tokens, die falsch erkannt werden, werden vor dem Tokenisieren so bearbeitet, dass sie nach den bestehenden Tokenisierungsregeln als Sinneinheit erkannt werden. Die manuelle Anpassung der Tokenisierungsregeln ist recht komplex und würde den Rahmen etwas sprengen; ihr könnt allerdings bei Interesse <a href="https://quanteda.io/reference/tokenize_custom.html">hier</a> nachlesen, wie das geht. Wir schauen uns stattdessen an, wie die Tokens so bearbeitet werden können, dass sie richtig erkannt werden. In unserem Beispiel geht das ganz einfach mit der R-Basisfunktion <code>gsub()</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="textanalyse-ii-preprocessing.html#cb6-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;/&quot;</span>, <span class="st">&quot;-&quot;</span>, beispiel_2)</span>
-<span id="cb6-2"><a href="textanalyse-ii-preprocessing.html#cb6-2" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2) </span>
-<span id="cb6-3"><a href="textanalyse-ii-preprocessing.html#cb6-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="textanalyse-ii-preprocessing.html#cb554-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;/&quot;</span>, <span class="st">&quot;-&quot;</span>, beispiel_2)</span>
+<span id="cb554-2"><a href="textanalyse-ii-preprocessing.html#cb554-2" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2) </span>
+<span id="cb554-3"><a href="textanalyse-ii-preprocessing.html#cb554-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
@@ -386,8 +402,8 @@ woerter &lt;- satz %&gt;%
 ## [25] &quot;geboren&quot;        &quot;am&quot;             &quot;02-04-1965&quot;     &quot;.&quot;             
 ## [29] &quot;#callme&quot;</code></pre>
 <p>Wenn dagegen aus irgendeinem Grund die Telefonnummer und das Geburtsdatum nicht als Sinneinheit behandelt werden sollen, sondern die Zeichen jeweils eigene Tokens bilden sollen, kann dagegen einfach beim Aufruf der <code>tokens()</code>-Funktion das zusätzliche Argument <code>split_hyphens</code> übergeben werden:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="textanalyse-ii-preprocessing.html#cb8-1" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">split_tags =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">TRUE</span> )</span>
-<span id="cb8-2"><a href="textanalyse-ii-preprocessing.html#cb8-2" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="textanalyse-ii-preprocessing.html#cb556-1" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">split_tags =</span> <span class="cn">TRUE</span>, <span class="at">split_hyphens =</span> <span class="cn">TRUE</span> )</span>
+<span id="cb556-2"><a href="textanalyse-ii-preprocessing.html#cb556-2" tabindex="-1"></a><span class="fu">print</span>(beispiel_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Name&quot;           &quot;ist&quot;           
@@ -401,16 +417,16 @@ woerter &lt;- satz %&gt;%
 ## [33] &quot;02&quot;             &quot;-&quot;              &quot;04&quot;             &quot;-&quot;             
 ## [37] &quot;1965&quot;           &quot;.&quot;              &quot;#&quot;              &quot;callme&quot;</code></pre>
 <p>Zeichenketten können nicht nur wie bisher in Wörter und andere Äußerungen zerlegt werden. Manchmal ist es sinnvoll, Texte in kleinere oder größere Einheiten zu zerlegen, also z.B. in einzelne Zeichen oder einzelne Sätze. Wenn Texte in größere Segmente wie Sätze zerlegt werden, nennt man diese Operation <strong>Segmentieren</strong> (oder engl. “segmentation”). Dazu kann ebenfalls die Funktion <code>tokens()</code> verwendet werden, mit dem zusätzlichen Argument <code>what = "character"</code> bzw. <code>what = "sentence"</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="textanalyse-ii-preprocessing.html#cb10-1" tabindex="-1"></a><span class="co"># Segmentieren auf Satzebene</span></span>
-<span id="cb10-2"><a href="textanalyse-ii-preprocessing.html#cb10-2" tabindex="-1"></a>beispiel_segments <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;sentence&quot;</span>)</span>
-<span id="cb10-3"><a href="textanalyse-ii-preprocessing.html#cb10-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_segments, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="textanalyse-ii-preprocessing.html#cb558-1" tabindex="-1"></a><span class="co"># Segmentieren auf Satzebene</span></span>
+<span id="cb558-2"><a href="textanalyse-ii-preprocessing.html#cb558-2" tabindex="-1"></a>beispiel_segments <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;sentence&quot;</span>)</span>
+<span id="cb558-3"><a href="textanalyse-ii-preprocessing.html#cb558-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_segments, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ## [1] &quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.&quot;
 ## [2] &quot;Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="textanalyse-ii-preprocessing.html#cb12-1" tabindex="-1"></a><span class="co"># Tokenisieren auf Zeichenebene</span></span>
-<span id="cb12-2"><a href="textanalyse-ii-preprocessing.html#cb12-2" tabindex="-1"></a>beispiel_chars <span class="ot">&lt;-</span>  <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;character&quot;</span>)</span>
-<span id="cb12-3"><a href="textanalyse-ii-preprocessing.html#cb12-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_chars, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="textanalyse-ii-preprocessing.html#cb560-1" tabindex="-1"></a><span class="co"># Tokenisieren auf Zeichenebene</span></span>
+<span id="cb560-2"><a href="textanalyse-ii-preprocessing.html#cb560-2" tabindex="-1"></a>beispiel_chars <span class="ot">&lt;-</span>  <span class="fu">tokens</span>(beispiel_1, <span class="at">what =</span> <span class="st">&quot;character&quot;</span>)</span>
+<span id="cb560-3"><a href="textanalyse-ii-preprocessing.html#cb560-3" tabindex="-1"></a><span class="fu">print</span>(beispiel_chars, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##   [1] &quot;H&quot; &quot;a&quot; &quot;l&quot; &quot;l&quot; &quot;o&quot; &quot;m&quot; &quot;e&quot; &quot;i&quot; &quot;n&quot; &quot;N&quot; &quot;a&quot; &quot;m&quot; &quot;e&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot; &quot;M&quot; &quot;r&quot;
@@ -423,18 +439,18 @@ woerter &lt;- satz %&gt;%
 ## [127] &quot;a&quot; &quot;m&quot; &quot;0&quot; &quot;2&quot; &quot;-&quot; &quot;0&quot; &quot;4&quot; &quot;-&quot; &quot;1&quot; &quot;9&quot; &quot;6&quot; &quot;5&quot; &quot;.&quot; &quot;#&quot; &quot;c&quot; &quot;a&quot; &quot;l&quot; &quot;l&quot;
 ## [145] &quot;m&quot; &quot;e&quot;</code></pre>
 <p>Da Tokenisieren eine komplexe Operation ist, dauert es je nach Anzahl und Länge der Texte lange, bis der Computer ein komplettes Korpus tokenisiert hat. Wenn die <code>tokens()</code>-Funktion mit dem zusätzlichen Argument <code>verbose = TRUE</code> aufgerufen wird, werden beim Ausführen der Funktion Updates zu jedem Bearbeitungsschritt auf der Konsole ausgegeben:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="textanalyse-ii-preprocessing.html#cb14-1" tabindex="-1"></a><span class="fu">tokens</span>(beispiel_1, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="textanalyse-ii-preprocessing.html#cb562-1" tabindex="-1"></a><span class="fu">tokens</span>(beispiel_1, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;  &quot;mein&quot;   &quot;Name&quot;   &quot;ist&quot;    &quot;Mr&quot;     &quot;.&quot;      &quot;Robert&quot; &quot;De&quot;    
 ##  [9] &quot;Niro&quot;   &quot;und&quot;    &quot;das&quot;    &quot;ist&quot;   
 ## [ ... and 17 more ]</code></pre>
 <p>Die <code>tokens()</code>-Funktion kann auch zum Tokenisieren von japanisch- und chinesischsprachigen Texten verwendet werden, hierbei wird unter der Motorhaube eine morphologische Analyse durchgeführt. Ein Beispiel aus den <a href="https://tutorials.quanteda.io/multilingual/overview/">Quanteda-Dokumentationsseiten</a>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="textanalyse-ii-preprocessing.html#cb16-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
-<span id="cb16-2"><a href="textanalyse-ii-preprocessing.html#cb16-2" tabindex="-1"></a>declaration <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;data/declaration_rights.txt&quot;</span>)</span>
-<span id="cb16-3"><a href="textanalyse-ii-preprocessing.html#cb16-3" tabindex="-1"></a>cor <span class="ot">&lt;-</span> <span class="fu">corpus</span>(declaration)</span>
-<span id="cb16-4"><a href="textanalyse-ii-preprocessing.html#cb16-4" tabindex="-1"></a>toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(cor)</span>
-<span id="cb16-5"><a href="textanalyse-ii-preprocessing.html#cb16-5" tabindex="-1"></a>toks</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="textanalyse-ii-preprocessing.html#cb564-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb564-2"><a href="textanalyse-ii-preprocessing.html#cb564-2" tabindex="-1"></a>declaration <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;data/declaration_rights.txt&quot;</span>)</span>
+<span id="cb564-3"><a href="textanalyse-ii-preprocessing.html#cb564-3" tabindex="-1"></a>cor <span class="ot">&lt;-</span> <span class="fu">corpus</span>(declaration)</span>
+<span id="cb564-4"><a href="textanalyse-ii-preprocessing.html#cb564-4" tabindex="-1"></a>toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(cor)</span>
+<span id="cb564-5"><a href="textanalyse-ii-preprocessing.html#cb564-5" tabindex="-1"></a>toks</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## declaration_rights.txt :
 ##  [1] &quot;鉴于&quot; &quot;对&quot;   &quot;人类&quot; &quot;家庭&quot; &quot;所有&quot; &quot;成员&quot; &quot;的&quot;   &quot;固有&quot; &quot;尊严&quot; &quot;及其&quot;
@@ -445,13 +461,13 @@ woerter &lt;- satz %&gt;%
 <h2><span class="header-section-number">7.2</span> Reguläre Ausdrücke im Preprocessing<a href="textanalyse-ii-preprocessing.html#reguläre-ausdrücke-im-preprocessing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit <code>-</code>), aber andere nicht (z.B. Telefonnummern mit <code>/</code>, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion <code>gsub()</code> alle Schrägstriche gegen Trennstriche ausgetauscht. Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. “regular expressions”) verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel “Exkurs: Reguläre Ausdrücke”. In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.</p>
 <p>Der Beispieltext <code>froschkoenig</code> enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen. Die bereits bekannte Funktion <code>gsub()</code> kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (<code>+</code>) Zahl zwischen 0 und 9 (<code>[0-9]</code>) innerhalb von eckigen Klammern (<code>\\[</code> oder <code>\\]</code>) sucht und durch einen leeren String (<code>""</code>) austauscht. Bevor wir die Seitenzahlen entfernen, sollten wir uns allerdings die Suchergebnisse anzeigen lassen, um zu überprüfen, ob der reguläre Ausdruck die richtigen Zeichenketten findet:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="textanalyse-ii-preprocessing.html#cb18-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="st">&quot;In den alten Zeiten [1], wo das Wünschen noch geholfen hat, lebte ein König [2], dessen Töchter waren alle schön, aber die jüngste Tochter [3] war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien.&quot;</span></span>
-<span id="cb18-2"><a href="textanalyse-ii-preprocessing.html#cb18-2" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="textanalyse-ii-preprocessing.html#cb18-3" tabindex="-1"></a><span class="fu">regmatches</span>(froschkoenig, <span class="fu">gregexpr</span>(<span class="st">&quot; </span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]&quot;</span>, froschkoenig))</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="textanalyse-ii-preprocessing.html#cb566-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="st">&quot;In den alten Zeiten [1], wo das Wünschen noch geholfen hat, lebte ein König [2], dessen Töchter waren alle schön, aber die jüngste Tochter [3] war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien.&quot;</span></span>
+<span id="cb566-2"><a href="textanalyse-ii-preprocessing.html#cb566-2" tabindex="-1"></a></span>
+<span id="cb566-3"><a href="textanalyse-ii-preprocessing.html#cb566-3" tabindex="-1"></a><span class="fu">regmatches</span>(froschkoenig, <span class="fu">gregexpr</span>(<span class="st">&quot; </span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]&quot;</span>, froschkoenig))</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot; [1]&quot; &quot; [2]&quot; &quot; [3]&quot;</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="textanalyse-ii-preprocessing.html#cb20-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; </span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]&quot;</span>, <span class="st">&quot;&quot;</span>, froschkoenig)</span>
-<span id="cb20-2"><a href="textanalyse-ii-preprocessing.html#cb20-2" tabindex="-1"></a>froschkoenig</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="textanalyse-ii-preprocessing.html#cb568-1" tabindex="-1"></a>froschkoenig <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; </span><span class="sc">\\</span><span class="st">[[0-9]+</span><span class="sc">\\</span><span class="st">]&quot;</span>, <span class="st">&quot;&quot;</span>, froschkoenig)</span>
+<span id="cb568-2"><a href="textanalyse-ii-preprocessing.html#cb568-2" tabindex="-1"></a>froschkoenig</span></code></pre></div>
 <pre><code>## [1] &quot;In den alten Zeiten, wo das Wünschen noch geholfen hat, lebte ein König, dessen Töchter waren alle schön, aber die jüngste Tochter war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien.&quot;</code></pre>
 <p>Die eckige Klammer steht in einem Regex-Ausdruck für Zeichenklassen (s. “Exkurs: Reguläre Ausdrücke”). Die doppelten \\ werden verwendet, damit die eckige Klammer nicht als Regex-Symbol erkannt wird, sondern als ganz normales Satzzeichen.</p>
 <div class="task">
@@ -466,8 +482,8 @@ woerter &lt;- satz %&gt;%
 <div id="satzzeichen-zahlen-und-sonderzeichen-entfernen" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Satzzeichen, Zahlen und Sonderzeichen entfernen<a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Für viele Analysemethoden spielen nur Wörter im eigentlichen Sinne eine Rolle. Satzzeichen, Zahlen und Sonderzeichen werden deswegen häufig beim Preprocessing entfernt. Dieser Vorbereitungsschritt ist so verbreitet, dass die Entwickler:innen des Pakets quanteda Parameter für die <code>tokens()</code>-Funktion definiert haben, die steuern, ob bei der Tokenisierung diese Zeichen direkt entfernt werden sollen oder nicht.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="textanalyse-ii-preprocessing.html#cb22-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-2"><a href="textanalyse-ii-preprocessing.html#cb22-2" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="textanalyse-ii-preprocessing.html#cb570-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb570-2"><a href="textanalyse-ii-preprocessing.html#cb570-2" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;In&quot;       &quot;den&quot;      &quot;alten&quot;    &quot;Zeiten&quot;   &quot;wo&quot;       &quot;das&quot;     
@@ -477,10 +493,10 @@ woerter &lt;- satz %&gt;%
 <div id="stoppwörter-entfernen" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> Stoppwörter entfernen<a href="textanalyse-ii-preprocessing.html#stoppwörter-entfernen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wenn Texte zur Analyse als “Bag of Words” repräsentiert werden sollen, dann spielt die Reihenfolge der einzelnen Worte keine Rolle und Funktionswörter wie Artikel, Konjunktionen, Präpositionen u.ä. sind außerhalb des Satzzusammenhangs für diese Analysemethoden häufig nicht von Interesse. Zugleich kommen diese Wörter aber deutlich häufiger vor als “bedeutungstragende” Wörter. Solche Wörter werden deswegen häufig beim Preprocessing entfernt. Dabei werden sogenannte Stoppwortlisten verwendet: Alle Tokens, die in der Liste vorkommen, werden nach dem Tokenisieren entfernt. Die Funktionen zum Tokenisieren und zum Entfernen der Stoppwörter kann in Quanteda mithilfe des Pipe-Operators verkettet werden:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="textanalyse-ii-preprocessing.html#cb24-1" tabindex="-1"></a><span class="co"># Funktion tokens_remove() zum entfernen der Stoppwörter verwenden </span></span>
-<span id="cb24-2"><a href="textanalyse-ii-preprocessing.html#cb24-2" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="textanalyse-ii-preprocessing.html#cb24-3" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">&quot;de&quot;</span>))</span>
-<span id="cb24-4"><a href="textanalyse-ii-preprocessing.html#cb24-4" tabindex="-1"></a><span class="fu">print</span>(froschkoenig_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="textanalyse-ii-preprocessing.html#cb572-1" tabindex="-1"></a><span class="co"># Funktion tokens_remove() zum entfernen der Stoppwörter verwenden </span></span>
+<span id="cb572-2"><a href="textanalyse-ii-preprocessing.html#cb572-2" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig) <span class="sc">%&gt;%</span></span>
+<span id="cb572-3"><a href="textanalyse-ii-preprocessing.html#cb572-3" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">&quot;de&quot;</span>))</span>
+<span id="cb572-4"><a href="textanalyse-ii-preprocessing.html#cb572-4" tabindex="-1"></a><span class="fu">print</span>(froschkoenig_toks, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;alten&quot;       &quot;Zeiten&quot;      &quot;,&quot;           &quot;Wünschen&quot;    &quot;geholfen&quot;   
@@ -497,29 +513,29 @@ woerter &lt;- satz %&gt;%
 <li><a href="https://github.com/stopwords-iso/stopwords-de/blob/master/stopwords-de.txt" class="uri">https://github.com/stopwords-iso/stopwords-de/blob/master/stopwords-de.txt</a></li>
 </ul>
 <p>Die Liste kann angepasst werden, indem einfach Wörter in der Plaintext-Datei hinzugefügt oder entfernt werden.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="textanalyse-ii-preprocessing.html#cb26-1" tabindex="-1"></a><span class="co"># Eigene Stoppwortliste einlesen</span></span>
-<span id="cb26-2"><a href="textanalyse-ii-preprocessing.html#cb26-2" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;stopwords.txt&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>) </span>
-<span id="cb26-3"><a href="textanalyse-ii-preprocessing.html#cb26-3" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;stopwords.txt&quot;</span>) </span>
-<span id="cb26-4"><a href="textanalyse-ii-preprocessing.html#cb26-4" tabindex="-1"></a>custom_stopwords</span>
-<span id="cb26-5"><a href="textanalyse-ii-preprocessing.html#cb26-5" tabindex="-1"></a><span class="co"># Importierte Stoppwortliste and die tokens_remove()-Funktion übergeben</span></span>
-<span id="cb26-6"><a href="textanalyse-ii-preprocessing.html#cb26-6" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(froschkoenig_toks, <span class="at">pattern =</span> custom_stopwords, <span class="at">padding=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="textanalyse-ii-preprocessing.html#cb574-1" tabindex="-1"></a><span class="co"># Eigene Stoppwortliste einlesen</span></span>
+<span id="cb574-2"><a href="textanalyse-ii-preprocessing.html#cb574-2" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;stopwords.txt&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>) </span>
+<span id="cb574-3"><a href="textanalyse-ii-preprocessing.html#cb574-3" tabindex="-1"></a>custom_stopwords <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;stopwords.txt&quot;</span>) </span>
+<span id="cb574-4"><a href="textanalyse-ii-preprocessing.html#cb574-4" tabindex="-1"></a>custom_stopwords</span>
+<span id="cb574-5"><a href="textanalyse-ii-preprocessing.html#cb574-5" tabindex="-1"></a><span class="co"># Importierte Stoppwortliste and die tokens_remove()-Funktion übergeben</span></span>
+<span id="cb574-6"><a href="textanalyse-ii-preprocessing.html#cb574-6" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(froschkoenig_toks, <span class="at">pattern =</span> custom_stopwords, <span class="at">padding=</span>F)</span></code></pre></div>
 <p>Alternativ kann auch die Default-Stoppwortliste der Funktion <code>stopwords()</code> durch eine andere Stoppwortliste ausgetauscht werden. Um zu überprüfen, welche Stoppwortlisten es gibt:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="textanalyse-ii-preprocessing.html#cb27-1" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
-<span id="cb27-2"><a href="textanalyse-ii-preprocessing.html#cb27-2" tabindex="-1"></a><span class="fu">stopwords_getsources</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="textanalyse-ii-preprocessing.html#cb575-1" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb575-2"><a href="textanalyse-ii-preprocessing.html#cb575-2" tabindex="-1"></a><span class="fu">stopwords_getsources</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;snowball&quot;      &quot;stopwords-iso&quot; &quot;misc&quot;          &quot;smart&quot;        
 ## [5] &quot;marimo&quot;        &quot;ancient&quot;       &quot;nltk&quot;          &quot;perseus&quot;</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="textanalyse-ii-preprocessing.html#cb29-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig) <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="textanalyse-ii-preprocessing.html#cb29-2" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">&quot;de&quot;</span>, <span class="at">source=</span><span class="st">&quot;nltk&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="textanalyse-ii-preprocessing.html#cb577-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(froschkoenig) <span class="sc">%&gt;%</span></span>
+<span id="cb577-2"><a href="textanalyse-ii-preprocessing.html#cb577-2" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">&quot;de&quot;</span>, <span class="at">source=</span><span class="st">&quot;nltk&quot;</span>))</span></code></pre></div>
 <p>Zuletzt können mit der <code>tokens_remove()</code>-Funktion auch nachträglich einzelne Tokens entfernt werden, die in einem Text vielleicht besonders häufig vorkommen, aber nicht auf der Stoppwortliste stehen:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="textanalyse-ii-preprocessing.html#cb30-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(froschkoenig_toks, <span class="at">pattern =</span> <span class="st">&quot;daß&quot;</span>, <span class="at">padding=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="textanalyse-ii-preprocessing.html#cb578-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(froschkoenig_toks, <span class="at">pattern =</span> <span class="st">&quot;daß&quot;</span>, <span class="at">padding=</span>F)</span></code></pre></div>
 </div>
 <div id="groß--und-kleinschreibung-anpassen" class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Groß- und Kleinschreibung anpassen<a href="textanalyse-ii-preprocessing.html#groß--und-kleinschreibung-anpassen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir haben bereits gesehen, dass dasselbe Wort groß- und kleingeschrieben als zwei verschiedene Types gezählt wird. Dieses Verhalten ist bei der Analyse oft nicht gewünscht, da die unterschiedliche Schreibweise meist nicht als inhaltlich bedeutungstragend angesehen wird. Beim Preprocessing kann deswegen zusätzlich der gesamte Text in Kleinbuchstaben umgewandelt werden:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="textanalyse-ii-preprocessing.html#cb31-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> froschkoenig <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="textanalyse-ii-preprocessing.html#cb31-2" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3"><a href="textanalyse-ii-preprocessing.html#cb31-3" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>()</span>
-<span id="cb31-4"><a href="textanalyse-ii-preprocessing.html#cb31-4" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="textanalyse-ii-preprocessing.html#cb579-1" tabindex="-1"></a>froschkoenig_toks <span class="ot">&lt;-</span> froschkoenig <span class="sc">%&gt;%</span> </span>
+<span id="cb579-2"><a href="textanalyse-ii-preprocessing.html#cb579-2" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb579-3"><a href="textanalyse-ii-preprocessing.html#cb579-3" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>()</span>
+<span id="cb579-4"><a href="textanalyse-ii-preprocessing.html#cb579-4" tabindex="-1"></a>froschkoenig_toks</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;in&quot;       &quot;den&quot;      &quot;alten&quot;    &quot;zeiten&quot;   &quot;wo&quot;       &quot;das&quot;     
@@ -533,12 +549,12 @@ woerter &lt;- satz %&gt;%
 </blockquote>
 <p>Quelle: <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf">Jurafsky/Martin 2023, S. 2</a></p>
 <p>Beim Stemming werden Wörter auf ihren Wortstamm reduziert, indem Wortendungen nach bestimmten Regeln entfernt werden. Das Stemming schauen wir uns nur äußerst kurz an, denn in der Praxis lohnt es sich selten, dieses Verfahren anzuwenden. Zum Stemming kann die quanteda-Funktion <code>tokens_wordstem()</code> verwendet werden:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="textanalyse-ii-preprocessing.html#cb33-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb33-2"><a href="textanalyse-ii-preprocessing.html#cb33-2" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="textanalyse-ii-preprocessing.html#cb33-3" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
-<span id="cb33-4"><a href="textanalyse-ii-preprocessing.html#cb33-4" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="textanalyse-ii-preprocessing.html#cb33-5" tabindex="-1"></a>beispiel_stem <span class="ot">&lt;-</span> <span class="fu">tokens_wordstem</span>(<span class="fu">tokens</span>(beispiel), <span class="at">language=</span><span class="st">&quot;ger&quot;</span>)</span>
-<span id="cb33-6"><a href="textanalyse-ii-preprocessing.html#cb33-6" tabindex="-1"></a><span class="fu">print</span>(beispiel_stem, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="textanalyse-ii-preprocessing.html#cb581-1" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb581-2"><a href="textanalyse-ii-preprocessing.html#cb581-2" tabindex="-1"></a></span>
+<span id="cb581-3"><a href="textanalyse-ii-preprocessing.html#cb581-3" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
+<span id="cb581-4"><a href="textanalyse-ii-preprocessing.html#cb581-4" tabindex="-1"></a></span>
+<span id="cb581-5"><a href="textanalyse-ii-preprocessing.html#cb581-5" tabindex="-1"></a>beispiel_stem <span class="ot">&lt;-</span> <span class="fu">tokens_wordstem</span>(<span class="fu">tokens</span>(beispiel), <span class="at">language=</span><span class="st">&quot;ger&quot;</span>)</span>
+<span id="cb581-6"><a href="textanalyse-ii-preprocessing.html#cb581-6" tabindex="-1"></a><span class="fu">print</span>(beispiel_stem, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span></code></pre></div>
 <pre><code>## Tokens consisting of 1 document.
 ## text1 :
 ##  [1] &quot;Hallo&quot;          &quot;mein&quot;           &quot;Nam&quot;            &quot;ist&quot;           
@@ -561,31 +577,31 @@ woerter &lt;- satz %&gt;%
 <div id="methode-1-lemmatisierung-mit-lexikon" class="section level3 hasAnchor" number="7.7.1">
 <h3><span class="header-section-number">7.7.1</span> Methode 1: Lemmatisierung mit Lexikon<a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Diese Methode kann zur Lemmatisierung englischsprachiger Texte angewandt werden.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="textanalyse-ii-preprocessing.html#cb35-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lexicon&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="textanalyse-ii-preprocessing.html#cb36-1" tabindex="-1"></a><span class="fu">library</span>(lexicon)</span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="textanalyse-ii-preprocessing.html#cb37-1" tabindex="-1"></a>beispiel_engl <span class="ot">&lt;-</span> <span class="st">&quot;Hello I went swimming yesterday&quot;</span></span>
-<span id="cb37-2"><a href="textanalyse-ii-preprocessing.html#cb37-2" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="textanalyse-ii-preprocessing.html#cb37-3" tabindex="-1"></a>beispiel_lemmatized_2 <span class="ot">&lt;-</span> <span class="fu">tokens_replace</span>(<span class="fu">tokens</span>(beispiel_engl), <span class="at">pattern =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>token, <span class="at">replacement =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>lemma)</span>
-<span id="cb37-4"><a href="textanalyse-ii-preprocessing.html#cb37-4" tabindex="-1"></a><span class="fu">print</span>(beispiel_lemmatized_2, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span>
-<span id="cb37-5"><a href="textanalyse-ii-preprocessing.html#cb37-5" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="textanalyse-ii-preprocessing.html#cb37-6" tabindex="-1"></a><span class="co"># dasselbe geht auch mit der Funktion dfm_replace()</span></span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="textanalyse-ii-preprocessing.html#cb583-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lexicon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="textanalyse-ii-preprocessing.html#cb584-1" tabindex="-1"></a><span class="fu">library</span>(lexicon)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="textanalyse-ii-preprocessing.html#cb585-1" tabindex="-1"></a>beispiel_engl <span class="ot">&lt;-</span> <span class="st">&quot;Hello I went swimming yesterday&quot;</span></span>
+<span id="cb585-2"><a href="textanalyse-ii-preprocessing.html#cb585-2" tabindex="-1"></a></span>
+<span id="cb585-3"><a href="textanalyse-ii-preprocessing.html#cb585-3" tabindex="-1"></a>beispiel_lemmatized_2 <span class="ot">&lt;-</span> <span class="fu">tokens_replace</span>(<span class="fu">tokens</span>(beispiel_engl), <span class="at">pattern =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>token, <span class="at">replacement =</span> lexicon<span class="sc">::</span>hash_lemmas<span class="sc">$</span>lemma)</span>
+<span id="cb585-4"><a href="textanalyse-ii-preprocessing.html#cb585-4" tabindex="-1"></a><span class="fu">print</span>(beispiel_lemmatized_2, <span class="at">max_ntoken =</span> <span class="dv">200</span>)</span>
+<span id="cb585-5"><a href="textanalyse-ii-preprocessing.html#cb585-5" tabindex="-1"></a></span>
+<span id="cb585-6"><a href="textanalyse-ii-preprocessing.html#cb585-6" tabindex="-1"></a><span class="co"># dasselbe geht auch mit der Funktion dfm_replace()</span></span></code></pre></div>
 </div>
 <div id="methode-2-lemmatisierung-mit-udpipe" class="section level3 hasAnchor" number="7.7.2">
 <h3><span class="header-section-number">7.7.2</span> Methode 2: Lemmatisierung mit UDPipe<a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Diese Methode kann zur Lemmatisierung auch von deutsch- und anderssprachigen Texten angewandt werden. Das Verfahren ist ausführlich dokumentiert in den UDPipe-Dokumentationsseiten: <a href="https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html" class="uri">https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html</a>. In der Sitzung zum fortgeschrittenen Preprocessing werden wir noch einmal darauf zurückkommen und erarbeiten uns in diesem Abschnitt nur ein grundlegendes Verständnis der Lemmatisierung mithilfe des R Pakets <code>udpipe</code>. Zunächst muss das Paket <code>udpipe</code> installiert und geladen werden. Anschließend muss ein sogenanntes Sprachmodell heruntergeladen und eingelesen werden. Die <code>udpipe</code>-Sprachmodelle sind statistische Modelle, die auf einem bestimmten Datensatz “trainiert” wurden, also zum Beispiel auf einem Korpus deutschsprachiger Texte, die mit linguistischen Annotationen versehen wurden. Auf der Grundlage der Trainingsdaten können danach Bestandteile wie Wörter und Satzzeichen auch in unbekannten Texten erkannt werden: Zum Beispiel Wortarten, Grundformen und syntaktische Beziehungen. Genau das passiert, wenn wir einer udpipe-Funktion wie <code>udpipe()</code> oder <code>udpipe_annotate()</code> auf unser Beispielkorpus anwenden.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="textanalyse-ii-preprocessing.html#cb38-1" tabindex="-1"></a><span class="co"># 0. Vorbereitung</span></span>
-<span id="cb38-2"><a href="textanalyse-ii-preprocessing.html#cb38-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;udpipe&quot;</span>)</span>
-<span id="cb38-3"><a href="textanalyse-ii-preprocessing.html#cb38-3" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
-<span id="cb38-4"><a href="textanalyse-ii-preprocessing.html#cb38-4" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="textanalyse-ii-preprocessing.html#cb38-5" tabindex="-1"></a><span class="co"># Deutsches Sprachmodell herunterladen und laden</span></span>
-<span id="cb38-6"><a href="textanalyse-ii-preprocessing.html#cb38-6" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_download_model</span>(<span class="st">&quot;german&quot;</span>)</span>
-<span id="cb38-7"><a href="textanalyse-ii-preprocessing.html#cb38-7" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_load_model</span>(ud_model)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="textanalyse-ii-preprocessing.html#cb586-1" tabindex="-1"></a><span class="co"># 0. Vorbereitung</span></span>
+<span id="cb586-2"><a href="textanalyse-ii-preprocessing.html#cb586-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;udpipe&quot;</span>)</span>
+<span id="cb586-3"><a href="textanalyse-ii-preprocessing.html#cb586-3" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
+<span id="cb586-4"><a href="textanalyse-ii-preprocessing.html#cb586-4" tabindex="-1"></a></span>
+<span id="cb586-5"><a href="textanalyse-ii-preprocessing.html#cb586-5" tabindex="-1"></a><span class="co"># Deutsches Sprachmodell herunterladen und laden</span></span>
+<span id="cb586-6"><a href="textanalyse-ii-preprocessing.html#cb586-6" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_download_model</span>(<span class="st">&quot;german&quot;</span>)</span>
+<span id="cb586-7"><a href="textanalyse-ii-preprocessing.html#cb586-7" tabindex="-1"></a>ud_model <span class="ot">&lt;-</span> <span class="fu">udpipe_load_model</span>(ud_model)</span></code></pre></div>
 <p>Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werden können, also mit denen die Wörter in einem Text auf ihre Grundformen reduziert werden können. Die Funktion <code>udpipe()</code> gibt direkt einen Dataframe zurück (s.u.). Die Funktion <code>udpipe_annotate()</code> gibt eine Liste zurück, die in einem folgenden Schritt in einen Dataframe umgewandelt werden kann. Beide Funktionen lemmatisieren den Text nicht nur, sondern tokenisieren ihn auch und führen weitere Verarbeitungsschritte durch, auf die wir an dieser Stelle nicht weiter eingehen. Die Funktion <code>udpipe_annotate()</code> erlaubt es, mithilfe verschiedener Funktionsparameter festzulegen, welche dieser Verarbeitungsschritte beim Aufruf der Funktion durchgeführt werden sollen.</p>
 <p>Wir betrachten zunächst wieder unseren Beispielsatz:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="textanalyse-ii-preprocessing.html#cb39-1" tabindex="-1"></a><span class="co"># 1. Mit Beispieltext</span></span>
-<span id="cb39-2"><a href="textanalyse-ii-preprocessing.html#cb39-2" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="textanalyse-ii-preprocessing.html#cb40-1" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">udpipe</span>(beispiel, ud_model)</span>
-<span id="cb40-2"><a href="textanalyse-ii-preprocessing.html#cb40-2" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen </span></span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="textanalyse-ii-preprocessing.html#cb587-1" tabindex="-1"></a><span class="co"># 1. Mit Beispieltext</span></span>
+<span id="cb587-2"><a href="textanalyse-ii-preprocessing.html#cb587-2" tabindex="-1"></a>beispiel <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="textanalyse-ii-preprocessing.html#cb588-1" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">udpipe</span>(beispiel, ud_model)</span>
+<span id="cb588-2"><a href="textanalyse-ii-preprocessing.html#cb588-2" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen </span></span></code></pre></div>
 <pre style="max-height: 200px;"><code>##   doc_id paragraph_id sentence_id
 ## 1   doc1            1           1
 ## 2   doc1            1           1
@@ -621,9 +637,9 @@ woerter &lt;- satz %&gt;%
 ## 4 &lt;NA&gt; &lt;NA&gt;
 ## 5 &lt;NA&gt; &lt;NA&gt;
 ## 6 &lt;NA&gt; &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="textanalyse-ii-preprocessing.html#cb42-1" tabindex="-1"></a>beispiel_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, beispiel, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>)</span>
-<span id="cb42-2"><a href="textanalyse-ii-preprocessing.html#cb42-2" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(beispiel_annotated)</span>
-<span id="cb42-3"><a href="textanalyse-ii-preprocessing.html#cb42-3" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen</span></span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="textanalyse-ii-preprocessing.html#cb590-1" tabindex="-1"></a>beispiel_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, beispiel, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb590-2"><a href="textanalyse-ii-preprocessing.html#cb590-2" tabindex="-1"></a>beispiel_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(beispiel_annotated)</span>
+<span id="cb590-3"><a href="textanalyse-ii-preprocessing.html#cb590-3" tabindex="-1"></a><span class="fu">head</span>(beispiel_df) <span class="co"># erste fünf Zeilen des Dataframes anzeigen</span></span></code></pre></div>
 <pre style="max-height: 200px;"><code>##   doc_id paragraph_id sentence_id
 ## 1   doc1            1           1
 ## 2   doc1            1           1
@@ -659,42 +675,42 @@ woerter &lt;- satz %&gt;%
 ## 4 &lt;NA&gt; &lt;NA&gt;
 ## 5 &lt;NA&gt; &lt;NA&gt;
 ## 6 &lt;NA&gt; &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="textanalyse-ii-preprocessing.html#cb44-1" tabindex="-1"></a><span class="co">#View(beispiel_df)</span></span>
-<span id="cb44-2"><a href="textanalyse-ii-preprocessing.html#cb44-2" tabindex="-1"></a><span class="co"># ?udpipe_annotate</span></span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="textanalyse-ii-preprocessing.html#cb592-1" tabindex="-1"></a><span class="co">#View(beispiel_df)</span></span>
+<span id="cb592-2"><a href="textanalyse-ii-preprocessing.html#cb592-2" tabindex="-1"></a><span class="co"># ?udpipe_annotate</span></span></code></pre></div>
 <p>Beachtet Zeile 29: Hier wurde das Token “am” in zwei Lemmata aufgeteilt: “an” und “der”. Dieses Verhalten müssen wir bei der Weiterverarbeitung der Lemmata beachten!</p>
 <p>Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="textanalyse-ii-preprocessing.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
-<span id="cb45-2"><a href="textanalyse-ii-preprocessing.html#cb45-2" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb45-3"><a href="textanalyse-ii-preprocessing.html#cb45-3" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="textanalyse-ii-preprocessing.html#cb45-4" tabindex="-1"></a>ger_texte <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;korpus/*.txt&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, <span class="at">dvsep =</span> <span class="st">&quot;_&quot;</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">&quot;Autor_in&quot;</span>, <span class="st">&quot;Titel&quot;</span>, <span class="st">&quot;Jahr&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb45-5"><a href="textanalyse-ii-preprocessing.html#cb45-5" tabindex="-1"></a>ger_korpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(ger_texte)</span>
-<span id="cb45-6"><a href="textanalyse-ii-preprocessing.html#cb45-6" tabindex="-1"></a>kafka_korpus <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(ger_korpus, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="textanalyse-ii-preprocessing.html#cb593-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb593-2"><a href="textanalyse-ii-preprocessing.html#cb593-2" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb593-3"><a href="textanalyse-ii-preprocessing.html#cb593-3" tabindex="-1"></a></span>
+<span id="cb593-4"><a href="textanalyse-ii-preprocessing.html#cb593-4" tabindex="-1"></a>ger_texte <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;korpus/*.txt&quot;</span>, <span class="at">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, <span class="at">dvsep =</span> <span class="st">&quot;_&quot;</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">&quot;Autor_in&quot;</span>, <span class="st">&quot;Titel&quot;</span>, <span class="st">&quot;Jahr&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb593-5"><a href="textanalyse-ii-preprocessing.html#cb593-5" tabindex="-1"></a>ger_korpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(ger_texte)</span>
+<span id="cb593-6"><a href="textanalyse-ii-preprocessing.html#cb593-6" tabindex="-1"></a>kafka_korpus <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(ger_korpus, Autor_in <span class="sc">==</span> <span class="st">&quot;kafka&quot;</span>)</span></code></pre></div>
 <p>Anschließend können wir die Funktion <code>udpipe_annotate()</code> auf unser Kafka-Korpus anwenden:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="textanalyse-ii-preprocessing.html#cb46-1" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
-<span id="cb46-2"><a href="textanalyse-ii-preprocessing.html#cb46-2" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="textanalyse-ii-preprocessing.html#cb46-3" tabindex="-1"></a><span class="co"># 3. Mit Korpus zur Weiterverarbeitung in quanteda</span></span>
-<span id="cb46-4"><a href="textanalyse-ii-preprocessing.html#cb46-4" tabindex="-1"></a>kafka_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, kafka_korpus, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>, <span class="at">doc_id =</span> kafka_korpus<span class="sc">$</span>Titel)</span>
-<span id="cb46-5"><a href="textanalyse-ii-preprocessing.html#cb46-5" tabindex="-1"></a>kafka_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(kafka_annotated)</span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="textanalyse-ii-preprocessing.html#cb594-1" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
+<span id="cb594-2"><a href="textanalyse-ii-preprocessing.html#cb594-2" tabindex="-1"></a></span>
+<span id="cb594-3"><a href="textanalyse-ii-preprocessing.html#cb594-3" tabindex="-1"></a><span class="co"># 3. Mit Korpus zur Weiterverarbeitung in quanteda</span></span>
+<span id="cb594-4"><a href="textanalyse-ii-preprocessing.html#cb594-4" tabindex="-1"></a>kafka_annotated <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(ud_model, kafka_korpus, <span class="at">tagger=</span><span class="st">&quot;default&quot;</span>, <span class="at">parser=</span><span class="st">&quot;none&quot;</span>, <span class="at">doc_id =</span> kafka_korpus<span class="sc">$</span>Titel)</span>
+<span id="cb594-5"><a href="textanalyse-ii-preprocessing.html#cb594-5" tabindex="-1"></a>kafka_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(kafka_annotated)</span></code></pre></div>
 <p>Da bei der Lemmatisierung Tokens wie “am” in zwei Lemmata aufgeteilt werden (“an” und “dem”), gibt es im Dataframe <code>kafka_df</code> einige Zeilen, in denen in der Spalte <code>lemma</code> der Wert <code>NA</code> steht. Außerdem fällt auf, dass es einige Zeilen gibt, in denen zwei mögliche Lemmata angegeben werden, die mit einem <code>|</code> getrennt sind, zum Beispiel fallen|fällen. Diese Zeilen sollten zunächst bereinigt werden und es muss entschieden werden, welche Variante die richtige ist.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="textanalyse-ii-preprocessing.html#cb47-1" tabindex="-1"></a><span class="co"># Zeilen mit NA-Werten entfernen</span></span>
-<span id="cb47-2"><a href="textanalyse-ii-preprocessing.html#cb47-2" tabindex="-1"></a>kafka_cleaned_df <span class="ot">&lt;-</span> kafka_df[<span class="sc">!</span><span class="fu">is.na</span>(kafka_df<span class="sc">$</span>lemma), ]</span>
-<span id="cb47-3"><a href="textanalyse-ii-preprocessing.html#cb47-3" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="textanalyse-ii-preprocessing.html#cb47-4" tabindex="-1"></a><span class="co"># Alle Zeilen mit zwei verschiedenen Varianten in der Spalte lemma auswählen: Hier muss ggf. im Einzelfall entschieden werden, welche Variante richtig ist!</span></span>
-<span id="cb47-5"><a href="textanalyse-ii-preprocessing.html#cb47-5" tabindex="-1"></a>kafka_cleaned_df[<span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">|&quot;</span>, kafka_cleaned_df<span class="sc">$</span>lemma), ]</span>
-<span id="cb47-6"><a href="textanalyse-ii-preprocessing.html#cb47-6" tabindex="-1"></a></span>
-<span id="cb47-7"><a href="textanalyse-ii-preprocessing.html#cb47-7" tabindex="-1"></a><span class="co"># Als &quot;quick and dirty&quot; Methode kann z.B. einfach immer die letzte Variante ausgewählt werden</span></span>
-<span id="cb47-8"><a href="textanalyse-ii-preprocessing.html#cb47-8" tabindex="-1"></a>kafka_cleaned_df<span class="sc">$</span>lemma <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">|(</span><span class="sc">\\</span><span class="st">|</span><span class="sc">\\</span><span class="st">w+)?&quot;</span>, <span class="st">&quot;&quot;</span>, kafka_cleaned_df<span class="sc">$</span>lemma)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="textanalyse-ii-preprocessing.html#cb595-1" tabindex="-1"></a><span class="co"># Zeilen mit NA-Werten entfernen</span></span>
+<span id="cb595-2"><a href="textanalyse-ii-preprocessing.html#cb595-2" tabindex="-1"></a>kafka_cleaned_df <span class="ot">&lt;-</span> kafka_df[<span class="sc">!</span><span class="fu">is.na</span>(kafka_df<span class="sc">$</span>lemma), ]</span>
+<span id="cb595-3"><a href="textanalyse-ii-preprocessing.html#cb595-3" tabindex="-1"></a></span>
+<span id="cb595-4"><a href="textanalyse-ii-preprocessing.html#cb595-4" tabindex="-1"></a><span class="co"># Alle Zeilen mit zwei verschiedenen Varianten in der Spalte lemma auswählen: Hier muss ggf. im Einzelfall entschieden werden, welche Variante richtig ist!</span></span>
+<span id="cb595-5"><a href="textanalyse-ii-preprocessing.html#cb595-5" tabindex="-1"></a>kafka_cleaned_df[<span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">|&quot;</span>, kafka_cleaned_df<span class="sc">$</span>lemma), ]</span>
+<span id="cb595-6"><a href="textanalyse-ii-preprocessing.html#cb595-6" tabindex="-1"></a></span>
+<span id="cb595-7"><a href="textanalyse-ii-preprocessing.html#cb595-7" tabindex="-1"></a><span class="co"># Als &quot;quick and dirty&quot; Methode kann z.B. einfach immer die letzte Variante ausgewählt werden</span></span>
+<span id="cb595-8"><a href="textanalyse-ii-preprocessing.html#cb595-8" tabindex="-1"></a>kafka_cleaned_df<span class="sc">$</span>lemma <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">|(</span><span class="sc">\\</span><span class="st">|</span><span class="sc">\\</span><span class="st">w+)?&quot;</span>, <span class="st">&quot;&quot;</span>, kafka_cleaned_df<span class="sc">$</span>lemma)</span></code></pre></div>
 <p>Wir haben jetzt einen bereinigten Dataframe <code>kafka_cleaned_df</code>, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte <code>lemma</code> vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Dazu kombinieren wir die Lemmata aus jedem der Texte in einer einzigen Zeile, sodass wir einen Dataframe mit einer Zeile je Text erhalten, der in einer neuen Spalte “text” einen character Vektor mit den Lemmata aus diesem Text enthält. Ein Dataframe mit dieser Struktur ist kompatibel mit der Quanteda-<code>corpus()</code>-Funktion. Um unseren Dataframe zu bearbeiten, verwenden wir die Funktionen <code>group_by()</code> und <code>summarise()</code> aus dem Paket <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="textanalyse-ii-preprocessing.html#cb48-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb48-2"><a href="textanalyse-ii-preprocessing.html#cb48-2" tabindex="-1"></a><span class="co"># Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden </span></span>
-<span id="cb48-3"><a href="textanalyse-ii-preprocessing.html#cb48-3" tabindex="-1"></a>kafka_grouped <span class="ot">&lt;-</span> kafka_cleaned_df <span class="sc">%&gt;%</span> </span>
-<span id="cb48-4"><a href="textanalyse-ii-preprocessing.html#cb48-4" tabindex="-1"></a>  <span class="fu">group_by</span>(doc_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-5"><a href="textanalyse-ii-preprocessing.html#cb48-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(lemma, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)) </span>
-<span id="cb48-6"><a href="textanalyse-ii-preprocessing.html#cb48-6" tabindex="-1"></a><span class="fu">View</span>(kafka_grouped)</span>
-<span id="cb48-7"><a href="textanalyse-ii-preprocessing.html#cb48-7" tabindex="-1"></a><span class="co"># In Quanteda corpus-Objekt umwandeln</span></span>
-<span id="cb48-8"><a href="textanalyse-ii-preprocessing.html#cb48-8" tabindex="-1"></a>kafka_lemmatized <span class="ot">&lt;-</span> <span class="fu">corpus</span>(kafka_grouped)</span>
-<span id="cb48-9"><a href="textanalyse-ii-preprocessing.html#cb48-9" tabindex="-1"></a><span class="co"># Korpus-Objekt mit den lemmatisierten Texten speichern</span></span>
-<span id="cb48-10"><a href="textanalyse-ii-preprocessing.html#cb48-10" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_lemmatized, <span class="at">file=</span><span class="st">&quot;kafka_lemmatized.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="textanalyse-ii-preprocessing.html#cb596-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb596-2"><a href="textanalyse-ii-preprocessing.html#cb596-2" tabindex="-1"></a><span class="co"># Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden </span></span>
+<span id="cb596-3"><a href="textanalyse-ii-preprocessing.html#cb596-3" tabindex="-1"></a>kafka_grouped <span class="ot">&lt;-</span> kafka_cleaned_df <span class="sc">%&gt;%</span> </span>
+<span id="cb596-4"><a href="textanalyse-ii-preprocessing.html#cb596-4" tabindex="-1"></a>  <span class="fu">group_by</span>(doc_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb596-5"><a href="textanalyse-ii-preprocessing.html#cb596-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(lemma, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)) </span>
+<span id="cb596-6"><a href="textanalyse-ii-preprocessing.html#cb596-6" tabindex="-1"></a><span class="fu">View</span>(kafka_grouped)</span>
+<span id="cb596-7"><a href="textanalyse-ii-preprocessing.html#cb596-7" tabindex="-1"></a><span class="co"># In Quanteda corpus-Objekt umwandeln</span></span>
+<span id="cb596-8"><a href="textanalyse-ii-preprocessing.html#cb596-8" tabindex="-1"></a>kafka_lemmatized <span class="ot">&lt;-</span> <span class="fu">corpus</span>(kafka_grouped)</span>
+<span id="cb596-9"><a href="textanalyse-ii-preprocessing.html#cb596-9" tabindex="-1"></a><span class="co"># Korpus-Objekt mit den lemmatisierten Texten speichern</span></span>
+<span id="cb596-10"><a href="textanalyse-ii-preprocessing.html#cb596-10" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_lemmatized, <span class="at">file=</span><span class="st">&quot;kafka_lemmatized.rds&quot;</span>)</span></code></pre></div>
 <p>Mit dem Objekt <code>kafka_lemmatized</code> könnte jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wir werden uns diesen Code und auch den Dataframe <code>kafka_df</code> in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen.</p>
 </div>
 </div>
@@ -764,6 +780,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -62,6 +62,70 @@ set in the _output.yml file.</p>" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -222,9 +286,36 @@ set in the _output.yml file.</p>" />
 <ul>
 <li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
 <li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.4</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
+<li class="chapter" data-level="8.3.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#relative-häufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#wörter-im-kontext-gemeinsames-vorkommen-von-wörtern"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
+<li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.5</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.4.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen-pmi"><i class="fa fa-check"></i><b>8.4.6</b> Kookkurrenzen: PMI</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
+<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
+<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
+<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispielanalyse-märchen"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
+<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
+<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
+<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -306,6 +397,8 @@ set in the _output.yml file.</p>" />
 <li>Gius, Evelyn und Jacke, Janina (2022). <em>Are Computational Literary Studies Structuralist?</em>, in: Journal of Cultural Analytics 7, no. 4, <a href="https://doi.org/10.22148/001c.46662" class="uri">https://doi.org/10.22148/001c.46662</a>.</li>
 <li>Pichler, Axel und Reiter, Nils (2021), <em>Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse</em>, in: Journal of Literary Theory 15, no. 1-2, <a href="https://doi.org/10.1515/jlt-2021-2008" class="uri">https://doi.org/10.1515/jlt-2021-2008</a>.</li>
 <li>Bhattacharyya, Sayan (2021). <em>Text Analysis for Thought in the Black Atlantic</em>, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, <a href="https://muse.jhu.edu/book/84470" class="uri">https://muse.jhu.edu/book/84470</a>.</li>
+<li>Pichler, Axel und Reiter, Nils (2022). <em>From Concepts to Texts and Back: Operationalization as a Core Activity of Digital Humanities</em>, <a href="https://culturalanalytics.org/article/57195" class="uri">https://culturalanalytics.org/article/57195</a></li>
+<li>Bubenhofer, Noah und Scharloth, Joachim (2013). <em>Korpuslinguistische Diskursanalyse</em>, in: Ulrike Hanna Meinhof, Martin Reisigl und Ingo Warnke (Hrsg.), Diskurslinguistik im Spannungsfeld von Deskription und Kritik, S. 147-167. <a href="https://doi.org/10.1524/9783050061047.147" class="uri">https://doi.org/10.1524/9783050061047.147</a></li>
 </ul>
 
 </div>
@@ -360,6 +453,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

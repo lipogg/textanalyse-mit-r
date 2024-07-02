@@ -491,7 +491,7 @@ stats_freq <- txt_freq(stats_subset$term)
 schoen_plot <- ggplot(stats_freq, aes(x = key, y = freq)) +
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90)) +
-  labs(x = "Adjektiv-Substantiv Paare mit schön-Tokens", y = "Anzahl")
+  labs(x = "Adjektiv-Substantiv Paare mit häßlich-Tokens", y = "Anzahl")
 ggplotly(schoen_plot)
 
 # Adjektiv-Substantiv Paare mit König

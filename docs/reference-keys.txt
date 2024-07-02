@@ -106,3 +106,4 @@ analyse-mit-dependency-relations
 fazit
 pmi
 pointwise-mutual-information-pmi
+zwischenfazit

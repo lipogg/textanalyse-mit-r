@@ -1393,7 +1393,7 @@ textstat_collocations(test_toks, min_count=1)
 
 Im letzten Abschnitt haben wir uns angesehen, wie untersucht werden kann, ob zwei direkt aufeinanderfolgende Wörter (N-Gramm) so häufig gemeinsam vorkommen, dass das gemeinsame Vorkommen als statistisch signifikant angesehen werden kann. In diesem Abschnitt werden wir ein weiteres Assoziationsmaß kennenlernen, das untersucht, ob zwei Wörter in einem bestimmten Kontext (Kookkurrenzen) häufiger gemeinsam vorkommen, als es durch Zufall zu erwarten wäre. Dazu gewichten wir die Document-Feature-Matrix (FCM). Es gibt aktuell keine `fcm_weight()` Funktion, die ein einfaches Gewichten der Kookkurrrenzen erlaubt, so wie es für einzelne Begriffe mit der `dfm_weight()` oder der `dfm_tfidf()` Funktion möglich ist (siehe Abschnitt "Worthäufigkeiten verstehen"). Eine `fcm_weight()` Funktion [wurde zwar vor einigen Jahren Mal als mögliche Erweiterung für das Quanteda-Paket angekündigt](https://github.com/quanteda/quanteda/issues/2149), aber nie umgesetzt. So etwas kommt häufig vor: R Pakete werden von Privatpersonen und von Angestellten an anderen Institutionen entwickelt, und manchmal liegen deren Prioritäten oder Anwendungsfälle woanders, sodass die Entwicklung einschläft oder nicht in die Richtung läuft, wie wir es uns wünschen würden. 
 
-Aber wenn ein Paket nicht genau die Funktionalität bietet, die wir brauchen, können wir einfach unsere eigene Funktion schreiben. In der [oben erwähnten Diskussion über eine mögliche Quanteda-Erweiterung](https://github.com/quanteda/quanteda/issues/2149) hat einer der Entwickler:innen des Pakets Quanteda eine Funktion `fcm_pmi()` geteilt, welche eine Feature-Co-occurrence-Matrix (FCM) als Argument annimmt, für jeden Wert in der Matrix ein Assoziationsmaß berechnet, das Pointwise Mutual Information genannt wird, und als Rückgabewert die auf diese Weise gewichtete FCM zurückgibt. Diese Funktion wurde, wie gesagt, nie in Quanteda integriert, aber wir können die Funktion natürlich trotzdem verwenden und für unsere Zwecke adaptieren.
+Aber wenn ein Paket nicht genau die Funktionalität bietet, die wir brauchen, können wir einfach unsere eigene Funktion schreiben. In der [oben erwähnten Diskussion über eine mögliche Quanteda-Erweiterung](https://github.com/quanteda/quanteda/issues/2149) hat Kohei Watanabe, einer der Entwickler:innen des Pakets Quanteda, eine Definition für eine Funktion `fcm_pmi()` geteilt, welche eine Feature-Co-occurrence-Matrix (FCM) als Argument annimmt, für jeden Wert in der Matrix ein Assoziationsmaß berechnet, das Pointwise Mutual Information genannt wird, und als Rückgabewert die auf diese Weise gewichtete FCM zurückgibt. Diese Funktion wurde, wie gesagt, nie in Quanteda integriert, aber wir können die Funktion natürlich trotzdem verwenden und für unsere Zwecke adaptieren.
 
 Bevor wir loslegen, erstmal eine Definition für das hier betrachtete Assoziationsmaß **Pointwise Mutual Information (PMI)** bzw. dessen Sonderform **Positive Pointwise Mutual Information (PPMI)**: 
 
@@ -1401,13 +1401,13 @@ Bevor wir loslegen, erstmal eine Definition für das hier betrachtete Assoziatio
 
 Dieses Maß hat einen informationstheoretischen und wahrscheinlichkeitstheoretischen Hintergrund: Die PMI-Werte drücken das Verhältnis zwischen der Wahrscheinlichkeit, dass zwei Worte in einem Kontext gemeinsam auftreten, und dem Produkt der Wahrscheinlichkeiten, dass jedes Wort einzeln auftritt, aus. Für eine ausführlichere Diskussion zur Berechnung der PPMI-Werte schaut in den optionalen Abschnitt "Mathematischer Hintergrund: PMI".
 
-Zur Berechnung der PPMI-Werte verwenden wir die folgende Funktion von Kohei Watanabe, einem der Entwickler des Quanteda-Pakets: 
+Zur Berechnung der PPMI-Werte verwenden wir wie angekündigt die folgende Funktion von Kohei Watanabe: 
 
 ```{r}
 # Funktionsdefinition von Kohei Watanabe
 fcm_pmi <- function(x) {
   m <- x@meta$object$margin
-  x <- as(x, "TsparseMatrix") # im Original steht hier "dgTMatrix"
+  x <- as(x, "TsparseMatrix") # Im Original steht hier "dgTMatrix" (das verursacht eine Warnmeldung)
   x@x <- log(x@x / (m[x@i + 1] * m[x@j + 1]) * sum(m))
   x@x[x@x < 0] <- 0
   as.fcm(x)
@@ -1426,13 +1426,13 @@ fcm_pmi2 <- function(toks) {
   m <- colSums(dfm(toks))
   # FCM erstellen und in Basis-R-Matrix konvertieren
   x <- as.matrix(fcm(toks)) 
-  # x@x - nicht-null Einträge in der Matrix x
+  # x@x - nicht-Null Einträge in der Matrix x
   xx <- x[x != 0]
   # x@i - Zeilenindizes der nicht-Null Einträge in der Matrix x
   xi <- which(x != 0, arr.ind = TRUE)[, 1]
   # x@j - Spaltenindizes der nicht-Null Einträge in der Matrix x
   xj <- which(x != 0, arr.ind = TRUE)[, 2]
-  # PMI Werte berechnen: Alle nicht-null Einträge in der FCM-Matrix x teilen durch Produkt aus der absoluten Häufigkeit der jeweiligen Tokens sowie die Gesamtanzahl an Tokens im Korpus
+  # PMI Werte berechnen: Alle nicht-Null Einträge in der FCM-Matrix x teilen durch Produkt aus der absoluten Häufigkeit der jeweiligen Tokens sowie die Gesamtanzahl an Tokens im Korpus
   xx <- log(xx / (m[xi] * m[xj]) * sum(m))
   # In PPMI-Werte umwandeln: Negative Werte durch 0 ersetzen 
   xx[xx < 0] <- 0

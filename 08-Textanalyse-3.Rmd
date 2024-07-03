@@ -1170,7 +1170,6 @@ Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betra
 
 
 
-
 ### Kollokationen
 
 Der Begriff Kollokation hat verschiedene Bedeutungen und ist deswegen durchaus umstritten. Stephanie Evert nennt Kollokationen sogar "eines der kontroversesten Konzepte in der Linguistik" (s. [Evert 2009, S. 1212f.](https://doi.org/10.1515/9783110213881.2.1212)). Die folgende Definition von Noah Bubenhofer sollte deswegen nur als eine von vielen verschiedenen Interpretationen betrachtet werden: 
@@ -1394,18 +1393,18 @@ textstat_collocations(test_toks, min_count=1)
 
 Im letzten Abschnitt haben wir uns angesehen, wie untersucht werden kann, ob zwei direkt aufeinanderfolgende Wörter (N-Gramm) so häufig gemeinsam vorkommen, dass das gemeinsame Vorkommen als statistisch signifikant angesehen werden kann. In diesem Abschnitt werden wir ein weiteres Assoziationsmaß kennenlernen, das untersucht, ob zwei Wörter in einem bestimmten Kontext (Kookkurrenzen) häufiger gemeinsam vorkommen, als es durch Zufall zu erwarten wäre. Dazu gewichten wir die Document-Feature-Matrix (FCM). Es gibt aktuell keine `fcm_weight()` Funktion, die ein einfaches Gewichten der Kookkurrrenzen erlaubt, so wie es für einzelne Begriffe mit der `dfm_weight()` oder der `dfm_tfidf()` Funktion möglich ist (siehe Abschnitt "Worthäufigkeiten verstehen"). Eine `fcm_weight()` Funktion [wurde zwar vor einigen Jahren Mal als mögliche Erweiterung für das Quanteda-Paket angekündigt](https://github.com/quanteda/quanteda/issues/2149), aber nie umgesetzt. So etwas kommt häufig vor: R Pakete werden von Privatpersonen und von Angestellten an anderen Institutionen entwickelt, und manchmal liegen deren Prioritäten oder Anwendungsfälle woanders, sodass die Entwicklung einschläft oder nicht in die Richtung läuft, wie wir es uns wünschen würden. 
 
-Aber wenn ein Paket nicht genau die Funktionalität bietet, die wir brauchen, können wir einfach unsere eigene Funktion schreiben. In diesem Abschnitt werden wir eine Funktion mit dem Namen `fcm_pmi()` definieren, welche eine Feature-Co-occurrence-Matrix (FCM) als Argument annimmt, für jeden Wert in der Matrix ein Assoziationsmaß berechnet, das Pointwise Mutual Information genannt wird, und als Rückgabewert die auf diese Weise gewichtete FCM zurückgibt. Die Funktion wird parallel zur Quanteda-Funktion dfm_tfidf() benannt und der Code ist adaptiert von https://github.com/quanteda/quanteda/issues/2149.
+Aber wenn ein Paket nicht genau die Funktionalität bietet, die wir brauchen, können wir einfach unsere eigene Funktion schreiben. In der [oben erwähnten Diskussion über eine mögliche Quanteda-Erweiterung](https://github.com/quanteda/quanteda/issues/2149) hat einer der Entwickler:innen des Pakets Quanteda eine Funktion `fcm_pmi()` geteilt, welche eine Feature-Co-occurrence-Matrix (FCM) als Argument annimmt, für jeden Wert in der Matrix ein Assoziationsmaß berechnet, das Pointwise Mutual Information genannt wird, und als Rückgabewert die auf diese Weise gewichtete FCM zurückgibt. Diese Funktion wurde, wie gesagt, nie in Quanteda integriert, aber wir können die Funktion natürlich trotzdem verwenden und für unsere Zwecke adaptieren.
 
 Bevor wir loslegen, erstmal eine Definition für das hier betrachtete Assoziationsmaß **Pointwise Mutual Information (PMI)** bzw. dessen Sonderform **Positive Pointwise Mutual Information (PPMI)**: 
 
 >An alternative weighting function to tf-idf, PPMI (positive pointwise mutual information), is used for term-term-matrices, when the vector dimensions correspond to words rather than documents. PPMI draws on the intuition that the best way to weigh the association between two words is to ask how much more the two words co-occur in our corpus than we would have a priori expected them to appear by chance. (Jurafsky/Martin 2023, S. 118)
 
-Dieses Maß hat einen informationstheoretischen und wahrscheinlichkeitstheoretischen Hintergrund (s. optionaler Abschnitt "Mathematischer Hintergrund: PMI"). 
+Dieses Maß hat einen informationstheoretischen und wahrscheinlichkeitstheoretischen Hintergrund: Die PMI-Werte drücken das Verhältnis zwischen der Wahrscheinlichkeit, dass zwei Worte in einem Kontext gemeinsam auftreten, und dem Produkt der Wahrscheinlichkeiten, dass jedes Wort einzeln auftritt, aus. Für eine ausführlichere Diskussion zur Berechnung der PPMI-Werte schaut in den optionalen Abschnitt "Mathematischer Hintergrund: PMI".
 
 Zur Berechnung der PPMI-Werte verwenden wir die folgende Funktion von Kohei Watanabe, einem der Entwickler des Quanteda-Pakets: 
 
 ```{r}
-
+# Funktionsdefinition von Kohei Watanabe
 fcm_pmi <- function(x) {
   m <- x@meta$object$margin
   x <- as(x, "TsparseMatrix") # im Original steht hier "dgTMatrix"
@@ -1418,15 +1417,54 @@ fcm_pmi <- function(x) {
 
 Quelle: https://github.com/quanteda/quanteda/issues/2149. 
 
-Bevor wir die Funktion auf unser Korpus anwenden, betrachten wir ein Beispiel: 
+Watanabe verwendet in der Funktionsdefinition fortgeschrittene Programmierkonzepte, die wir in diesem Einführungsseminar nicht besprechen können. Wer neugierig ist, der kann [hier](https://adv-r.hadley.nz/s4.html) nachlesen. Damit die Funktionsdefinition für euch keine Black Box ist, habe ich sie mit den euch bereits bekannten Konzepten umgeschrieben. Die Variablennamen habe ich dabei versucht beizubehalten:  
 
 ```{r}
+# Funktion mit bekannten Konzepten umschreiben 
+fcm_pmi2 <- function(toks) {
+  # Zusammenzählen, wie oft jedes Token vorkommt: Spaltensummen der DFM berechnen
+  m <- colSums(dfm(toks))
+  # FCM erstellen und in Basis-R-Matrix konvertieren
+  x <- as.matrix(fcm(toks)) 
+  # x@x - nicht-null Einträge in der Matrix x
+  xx <- x[x != 0]
+  # x@i - Zeilenindizes der nicht-Null Einträge in der Matrix x
+  xi <- which(x != 0, arr.ind = TRUE)[, 1]
+  # x@j - Spaltenindizes der nicht-Null Einträge in der Matrix x
+  xj <- which(x != 0, arr.ind = TRUE)[, 2]
+  # PMI Werte berechnen: Alle nicht-null Einträge in der FCM-Matrix x teilen durch Produkt aus der absoluten Häufigkeit der jeweiligen Tokens sowie die Gesamtanzahl an Tokens im Korpus
+  xx <- log(xx / (m[xi] * m[xj]) * sum(m))
+  # In PPMI-Werte umwandeln: Negative Werte durch 0 ersetzen 
+  xx[xx < 0] <- 0
+  # Matrix in der Form der Matrix x erstellen
+  xx_mat <- matrix(0, nrow = nrow(x), ncol = ncol(x), dimnames = list(features=rownames(x), features=colnames(x)))
+  # berechnete Werte in die entsprechende Position in der neuen Matrix xx_mat setzen
+  xx_mat[cbind(xi, xj)] <- xx
+  # Matrix zurück in ein fcm-Objekt konvertieren
+  xx_mat <- as.fcm(xx_mat)
+  return(xx_mat)
+}
+
+```
+
+Bevor wir die Funktion auf unser Korpus anwenden, betrachten wir ein Beispiel. Um die Funktion von Watanabe anzuwenden, müsste der Code so aussehen: 
+
+```{r }
 toks <- tokens(c("a b c", "a b d e"))
 fcmt <- fcm(toks)
 fcm_pmi(fcmt)
 
 ```
 
+Die umgeschriebene Funktion erwartet allerdings ein Quanteda tokens-Objekt als Argument. Um diese Funktion anzuwenden, muss der Code so aussehen: 
+
+```{r }
+toks <- tokens(c("a b c", "a b d e"))
+fcm_pmi2(toks)
+
+```
+
+Da die Funktion von Watanabe aber etwas effizienter ist, verwenden wir im Folgenden die ursprüngliche Funktion, um die PPMI-Werte für unser Märchenkorpus zu berechnen. 
 Die Funktion wenden wir anschließend auf das Märchen-Korpus an:
 
 ```{r attr.output='style="max-height: 150px;"'}
@@ -1490,7 +1528,8 @@ ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = pmi)) +
 :::task
 
 Verständnisfragen: 
-- Vergleicht diese Diagramme mit den Diagrammen aus dem Abschnitt "Kookkurrenzen". Was fällt euch auf?
+
+- Vergleicht die hier dargestellten Wörter mit den höchsten PMI-Werten mit den häufigsten Wörtern aus dem Abschnitt "Kookkurrenzen". Was fällt euch auf?
 
 :::
 
@@ -1545,7 +1584,7 @@ Eine Fragestellung theoretisch und mathematisch fundiert für eine Textanalyse m
 
 >*Mapping*, by contrast, is not about extraction. It is about *reduction* to aid interpretation. When mapping texts, we simplify their information, but always for particular uses. Many useful cartographies are based on the same territory: road maps, contour maps, political maps, to name a few. Wrangling, pruning, stopping, and transforming text all involve a decision informed by a particular goal. To put it plainly: *there is not a sole kernel of truth to be extracted, but rather a range of empirical patterns.*" (Stoltz/Taylor 2024, S. XIII)
 
-So, wie auch verschiedene Karten verschiedene Sichten oder Perspektiven auf eine Landschaft darstellen, Dinge auslassen, betonen oder verzerren können, heben absolute Häufigkeiten, relative Häufigkeiten und die TF-IDF-Werte jeweils verschiedene Tokens hervor; Kollokationen und die mit den PPMI-Werten gewichtete Feature Co-occurrence Matrix bieten verschiedene quantitative Perspektiven auf Wörter, die in einem bestimmten Kontext gemeinsam vorkommen. Die Auswertung muss dabei nicht unbedingt quantitativ erfolgen: Erinnert euch an den Beitrag von Evelyn Gius und Janina Jacke, in dem zwischen "konfirmatorischen" und "explorativen" Ansätzen bei der Textanalyse unterschieden wurde. Betrachtet die hier vorgestellten Methoden also als zusätzliche Perspektiven, die ihr mit "klassischen" Methoden der Textanalyse kombinieren könnt, und die, wenn sie reflektiert und kritisch angewandt werden, zu interessanten Erkenntnissen verhelfen können (ein Blick in die Anwendungsbeispiele lohnt sich auf jeden Fall!). 
+So, wie auch verschiedene Karten verschiedene Sichten oder Perspektiven auf eine Landschaft darstellen, Dinge auslassen, betonen oder verzerren können, heben absolute Häufigkeiten, relative Häufigkeiten und die TF-IDF-Werte jeweils verschiedene Wörter in einem Korpus hervor; Kollokationen und die mit den PPMI-Werte bieten verschiedene quantitative Perspektiven auf Wörter, die in einem bestimmten Kontext gemeinsam vorkommen. All diese Methoden rücken also verschiedene "Textoberflächenphänomene" (Pichler/Reiter) bzw. "Sprachgebrauchsmuster" (Bubenhofer) in einem Korpus hervor. Die Auswertung muss dabei nicht unbedingt quantitativ erfolgen: Erinnert euch an den Beitrag von Evelyn Gius und Janina Jacke, in dem zwischen "konfirmatorischen" und "explorativen" Ansätzen bei der Textanalyse unterschieden wurde. Betrachtet die hier vorgestellten Methoden also als zusätzliche Perspektiven, die ihr mit "klassischen" Methoden der Textanalyse kombinieren könnt, und die, wenn sie reflektiert und kritisch angewandt werden, zu interessanten Erkenntnissen verhelfen können (ein Blick in die Anwendungsbeispiele lohnt sich auf jeden Fall!). 
 
 Ganz fertig sind wir mit unserer Märchenanalyse aber noch nicht: Schließlich wissen wir immer noch nicht, ob sich Wörter, die gemeinsam vorkommen, auch aufeinander beziehen. Bisher haben wir unsere Analyse außerdem auf Tochter-Tokens begrenzt. Als nächstes werden wir zwei Methoden kennenlernen, mit denen untersucht werden kann, ob sich zwei Wörter aufeinander beziehen, und wir werden die Analyse auf andere Märchencharaktere ausweiten. 
 

@@ -823,7 +823,6 @@ Allerdings sind diese N-Gramme für unsere Fragestellung nicht besonders aufschl
 **Um N-Gramme auf Satzebene zu erhalten, muss zuerst das corpus-Objekt so umgeformt werden, dass es einzelne Sätze enthält, und nicht einzelne Texte:**
 
 ```{r}
-
 maerchen_sentences <- corpus_reshape(maerchen_corpus, to="sentences")
 
 ```
@@ -880,8 +879,7 @@ maerchen_grouped <- maerchen_cleaned_df %>%
   mutate(doc_id = paste0(doc_id, "_", row_number()))
 maerchen_grouped$sentence <- NULL
 # Dataframe in Quanteda corpus-Objekt umwandeln
-maerchen_sentences <- corpus(maerchen_grouped) 
-
+maerchen_sl <- corpus(maerchen_grouped) 
 ```
 
 Jetzt wiederholen wir das Preprocessing und lassen uns die häufigsten Bigramme ausgeben, diemal mit den Lemmata:
@@ -889,10 +887,9 @@ Jetzt wiederholen wir das Preprocessing und lassen uns die häufigsten Bigramme 
 ```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
 # Code aus diesem Abschnitt wird hier für das lemmatiserte Korpus wiederholt
 
-maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+maerchen_sl_toks <- tokens(maerchen_sl, remove_punct=TRUE) %>%
   tokens_tolower()
-
-toks_bigram_tochter <- maerchen_sentences_toks %>%
+toks_bigram_tochter <- maerchen_sl_toks %>%
   tokens_compound(pattern = phrase("* *tochter*")) %>%
   tokens_select(pattern = phrase("*_*tochter*"))
 print(toks_bigram_tochter, max_ndoc=100) 
@@ -911,7 +908,7 @@ Die Bigramme mit "tochter" und "schön" können wir auch visualisieren:
 library(quanteda.textstats)
 library(ggplot2)
 
-bigram_freq <- tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *tochter*")) %>%
+bigram_freq <- tokens_compound(maerchen_sl_toks, pattern = phrase("*schön* *tochter*")) %>%
   tokens_select(pattern = phrase("*schön*_*tochter*")) %>%
   dfm() %>%
   textstat_frequency()
@@ -931,7 +928,7 @@ Zuletzt könnten wir noch untersuchen, welche anderen Tokens zusammen mit dem Wo
 ```{r attr.output='style="max-height: 200px;"'}
 library(quanteda.textstats)
 
-tokens_compound(maerchen_sentences_toks, pattern = phrase("*schön* *")) %>%
+tokens_compound(maerchen_sl_toks, pattern = phrase("*schön* *")) %>%
   tokens_select(pattern = phrase("*schön*_*")) %>%
   dfm() %>%
   textstat_frequency()
@@ -964,12 +961,12 @@ fcm(maerchen_toks_lemmata)
 
 ```
 
-Alternativ kann der Kontext aber auch auf einzelne Sätze eingeschränkt werden, indem wir stattdessen das Objekt `maerchen_sentences_toks` aus dem Abschnitt "N-Gramme" zum Erstellen der FCM verwenden. 
+Alternativ kann der Kontext aber auch auf einzelne Sätze eingeschränkt werden, indem wir stattdessen das Objekt `maerchen_sl_toks` aus dem Abschnitt "N-Gramme" zum Erstellen der FCM verwenden. 
 
 ```{r attr.output='style="max-height: 200px;"'}
 # FCM mit Kookkurrenzen auf Satzebene
 # Code für das Preprocessing aus dem Abschnitt "N-Gramme"
-maerchen_fcm <- fcm(maerchen_sentences_toks)
+maerchen_fcm <- fcm(maerchen_sl_toks)
 maerchen_fcm
 
 ```
@@ -1049,7 +1046,7 @@ Vergleicht man die Heat Map mit den Kookkurrenzen mit dem Säulendiagramm der Bi
 Uns fehlt außerdem der Vergleich: Wie häufig kommt "königstochter" in den Märchen mit anderen Wörtern in einem Kontext vor? Um diese Frage zu klären, weiten wir die Perspektive und lassen uns zunächst alle Wörter ausgeben, mit denen "königstochter" in einem Satz gemeinsam vorkommt. Da uns das gemeinsame Vorkommen von Funktionswörtern nicht interessiert, entfernen wir die Stoppwörter, bevor wir die Feature Co-occurrence Matrix (FCM) erstellen: 
 
 ```{r}
-maerchen_fcm <- maerchen_sentences_toks %>%
+maerchen_fcm <- maerchen_sl_toks %>%
   tokens_remove(pattern = stopwords("de")) %>%
   tokens_remove(pattern = "dass") %>%
   fcm()
@@ -1077,8 +1074,8 @@ Den Code aus der letzten Codezelle können wir (mit ein paar kleinen Änderungen
 
 ```{r attr.output='style="max-height: 150px;"'}
 # Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
-docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
-froschkoenig_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
+docvars(maerchen_sl_toks, "Titel") <- docnames(maerchen_sl_toks)
+froschkoenig_fcm <- tokens_subset(maerchen_sl_toks, grepl("Froschkoenig", Titel)) %>%
   tokens_remove(pattern = stopwords("de")) %>%
   tokens_remove(pattern = "dass") %>%
   fcm()
@@ -1091,7 +1088,7 @@ fr_df <- fr_df[order(fr_df$königstochter, decreasing=TRUE), ]
 fr_df <- head(fr_df, 10)
 
 # Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
-brueder_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+brueder_fcm <- tokens_subset(maerchen_sl_toks, grepl("Die-zwei-Brueder", Titel)) %>%
   tokens_remove(pattern = stopwords("de")) %>%
   tokens_remove(pattern = "dass") %>%
   fcm()
@@ -1117,11 +1114,67 @@ ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = count)) +
   coord_flip() +
   scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
   labs(x = NULL, y = "Count") +
-  ggtitle("Häufigste Kookkurrenzen mit dem Token 'königstochter'")
+  ggtitle("Häufigste Kookkurrenzen mit Token 'königstochter' (UDPipe, lemmatisiert)")
 
 ```
 
-Die Beobachtung, die wir gerade eben in Bezug auf das gesamte Korpus gemacht haben, spiegelt sich offenbar im Märchen "Der Froschkönig": Auch hier kommen "golden" und "schön" am häufigsten gemeinsam mit "königstochter" vor. Betrachtet die beiden Diagramme: Was fällt euch noch auf? 
+Die Beobachtung, die wir gerade eben in Bezug auf das gesamte Korpus gemacht haben, spiegelt sich offenbar im Märchen "Der Froschkönig": Hier kommt neben "golden" auch "schön" scheinbar am häufigsten gemeinsam mit "königstochter" vor. **Aber Achtung! Bei so kleinen Zahlen kann ein ganz anderes Bild entstehen, wenn andere Preprocessingentscheidungen getroffen werden.** Vergleicht beispielsweise dieses Diagramm. Es zeigt auch die häufigsten Kookkurrenzen mit "königstochter" in den beiden Märchen, aber anstelle der Lemmata werden die ursprünglichen Tokens verwendet, und anstelle der Segmentierung mithilfe der Quanteda-Funktion corpus_reshape() werden die Satzgrenzen mithilfe der UDPipe-Funktion udpipe() erkannt: 
+
+```{r attr.output='style="max-height: 150px;"'}
+# Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
+docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
+froschkoenig_fcm_qtda <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Jetzt erstellen wir einen Dataframe mit den zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+fr_cooc <- froschkoenig_fcm_qtda[,"königstochter"]
+fr_df <- convert(fr_cooc, to="data.frame")
+colnames(fr_df)[1] <- "feature"
+fr_df$doc_id <- "Der-Froschkoenig"
+fr_df <- fr_df[order(fr_df$königstochter, decreasing=TRUE), ]
+fr_df <- head(fr_df, 10)
+
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm_qtda <- tokens_subset(maerchen_sentences_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Dataframe mit zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+br_cooc <- brueder_fcm_qtda[,"königstochter"]
+br_df <- convert(br_cooc, to="data.frame")
+colnames(br_df)[1] <- "feature"
+br_df$doc_id <- "Die-zwei-Brueder"
+br_df <- br_df[order(br_df$königstochter, decreasing=TRUE), ]
+br_df <- head(br_df, 10)
+
+cooc_df <- rbind(fr_df, br_df)
+colnames(cooc_df)[2] <- "count"
+```
+
+```{r}
+library(ggplot2)
+# Kookkurrenzen mit "königstochter" für die beiden Märchen plotten
+# Code aus dem Abschnitt "Relative Häufigkeiten und TF-IDF" 
+ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = count)) +
+  geom_point() +
+  facet_wrap(~ doc_id, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
+  labs(x = NULL, y = "Count") +
+  ggtitle("Häufigste Kookkurrenzen mit Token 'königstochter' (Quanteda, nicht lemmat.)")
+
+```
+
+:::task
+
+Verständnisfragen: 
+
+- Betrachtet die beiden Diagramme: Was fällt euch noch auf? 
+- Vergleicht stichprobenartig die beiden Objekte `maerchen_sentences_toks` und `maerchen_sl_toks`. Wo haben Quanteda und UDPipe verschiedene Satzgrenzen erkannt?  
+
+:::
+
 
 Zuletzt können wir uns auch noch die Kookkurrenzen ansehen, die in den beiden Märchen "Froschkönig" und "Die zwei Brüder" insgesamt am häufigsten auftreten, unabhängig von den "königstochter"-Tokens. Zur Visualisierung dieser Kookkurrenzen kann die Quanteda-Funktion `textplot_network()` verwendet werden. Die Funktion bildet Tokens als Knoten ab und das gemeinsame Vorkommen als Verbindung (Kante) zwischen zwei Knoten. Die Breite der Kante deutet an, wie häufig zwei Tokens im angegebenen Kontext gemeinsam auftreten. 
 
@@ -1476,7 +1529,7 @@ Die gewichtete FCM verwenden wir zuletzt, um den unseren Vergleich der Märchen 
 
 ```{r attr.output='style="max-height: 150px;"'}
 # Code aus dem Abschnitt "Kookkurrenzen"
-# Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
+# Preprocessing: allerdings entfernen wir diesmal zusätzlich Stoppwörter und wir verwenden das nicht-lemmatisierte Korpus
 docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
 froschkoenig_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
   tokens_remove(pattern = stopwords("de")) %>%
@@ -1521,15 +1574,17 @@ ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = pmi)) +
   coord_flip() +
   scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
   labs(x = NULL, y = "PMI") +
-  ggtitle("Höchste PMI-Werte für Kookkurrenzen mit 'königstochter'")
+  ggtitle("Kookkurrenzen mit 'königstochter' mit den höchsten PMI-Werten")
 
 ```
+
 
 :::task
 
 Verständnisfragen: 
 
 - Vergleicht die hier dargestellten Wörter mit den höchsten PMI-Werten mit den häufigsten Wörtern aus dem Abschnitt "Kookkurrenzen". Was fällt euch auf?
+- Welche Preprocessingentscheidungen wurden getroffen? 
 
 :::
 

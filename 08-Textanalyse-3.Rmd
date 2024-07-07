@@ -1606,9 +1606,7 @@ Verständnisfragen:
 <details>
 <summary><b>Mathematischer Hintergrund: PMI</b></summary>
 
-(wird noch ergänzt)
-
-Mathematisch formuliert lässt sich PMI wie folgt beschreiben (in Jurafky/Martin 2023, S. 119): 
+Mathematisch lässt sich PMI wie folgt beschreiben (nach Jurafky/Martin 2023, S. 119): 
 
 >Pointwise mutual information (Fano, 1961) is one of the most important concepts in NLP [Natural Language Processing]. It is a measure of how often two events x and y occur, compared with what we would expect if they were independent. [...] The pointwise mutual information between a target word w and a context word c (Church and Hanks 1989, Church and Hanks 1990) is then defined as:
 
@@ -1616,7 +1614,9 @@ $PMI(w,c) = log_2 ( \frac{P(w,c)}{P(w)*P(c)} )$
 
 >PMI values range from negative to positive infinity. But negative PMI values (which imply things are co-occurring less often than we would expect by chance) tend to be unreliable unless our corpora are enormous. Positive PMI (called PPMI) [...] replaces all negative PMI values with zero.
 
-Wie kommt diese Formel zustande? 
+Einfach gesagt: "If two terms have a high PMI, this means whenever we see on term, we'll probably see the other term nearby" (Stoltz/Taylor S. 94).
+
+Aber steigen wir ein bisschen tiefer ein. Wie kommt diese Formel zustande? 
 
 - $w$ = target word
 - $c$ = context word
@@ -1624,9 +1624,49 @@ Wie kommt diese Formel zustande?
 - $P(w)$ = Wahrscheinlichkeit, dass $w$ einzeln auftritt
 - $P(c)$ = Wahrscheinlichkeit, dass $c$ einzeln auftritt
 
-Ein Beispiel folgt noch. 
+Zur Berechnung der Wahrscheinlichkeiten können absolute Häufigkeiten verwendet werden:
 
-Eine aktuelle (März 2024) [Übersicht über die Bestimmung verschiedener Assoziationsmaße in R](https://ladal.edu.au/coll.html) mit vielen Codebeispielen bietet Martin Schweinberger. Für einen Überblick über verschiedene Assoziationsmaße und eine Diskussion der verschiedenen mathematischen Hintergründe dieser Maße empfehle ich das Kapitel 3 "Association Measures", insbesondere das Unterkapitel 3.1 "An inventory of association measures" aus [Stephanie Everts Dissertation "The Statistics of Word Cooccurrences"](https://elib.uni-stuttgart.de/bitstream/11682/2573/1/Evert2005phd.pdf). 
+- $P(c) = \frac{\text{Anzahl Wort c}}{\text{Anzahl Wörter im Korpus}}$
+- $P(w) = \frac{\text{Anzahl Wort w}}{\text{Anzahl Wörter im Korpus}}$
+- $P(w,c) = \frac{\text{Anzahl gemeinsames Vorkommen von Wort w und c}}{\text{Anzahl Wörter im Korpus}}$
+
+Ein Beispiel: Angenommen, wir haben ein Korpus aus drei Sätzen, "I like flowers", "I like apple trees", "I like animals. 
+
+```{r}
+toks <- tokens(c("I like flowers", "I like apple trees", "I love animals")) 
+fcm(toks)
+sum(ntoken(toks))
+```
+
+Das Korpus hat insgesamt 10 Tokens, das ist die "Anzahl Wörter im Korpus". Die Kookkurrenzen ("I", "like") kommt zweimal vor; alle anderen Kookkurrenzen nur einmal. Wir berechnen beispielhaft die PMI-Werte für die beiden Kookkurrenzen ("I", "like"), ("I", "love") und ("love", "animals"):
+
+$PMI(I, love) = log_2(\frac{P(I, love)}{P(I) * P(love)}) = log_2(\frac{\frac{1}{10}}{\frac{3}{10}*\frac{1}{10}}) = 1,737$
+
+$PMI(I, like) = log_2(\frac{P(I, like)}{P(I) * P(like)}) = log_2(\frac{\frac{2}{10}}{\frac{3}{10}*\frac{2}{10}}) = 1,737$
+
+$PMI(love, animals) = log_2(\frac{P(love, animals)}{P(love) * P(animals)}) = log_2(\frac{\frac{1}{10}}{\frac{1}{10}*\frac{1}{10}}) = 3,321$
+
+
+Stimmt das mit den Werten überein, welche die `fcm_pmi()`-Funktion berechnet? Probieren wir es aus! 
+
+```{r}
+fcm_pmi(fcm(toks))
+```
+
+Die Werte ähneln sich, stimmen aber nicht ganz überein! Woran liegt das? Per Default bestimmt die `log()`-Funktion in R den Logarithmus zur Basis e, also den natürlichen Logarithmus. Die Funktion sieht jedoch den Logarithmus zur Basis 2 vor. Das führt zwar zu verschiedenen Werten, aber das Verhältnis zwischen den berechneten Werten ist (abgesehen von Rundungsfehlern) dasselbe: 
+
+```{r}
+2.303 / 1.204
+3.321 / 1.737
+```
+
+
+Das Beispiel zeigt dieselbe Tendenz, die wir schon bei der Berechnung der PMI-Werte für das Märchenkorpus bemerkt haben: Durch Gewichten der Häufigkeiten für die Kookkurrenzen mit PPMI-Werten werden seltene Kookkurrenzen betont. Bei sehr seltenen Wörtern kann dieser Effekt ggf. zu stark sein. Ein weg, die Bevorteilung von seltenen Wörtern etwas zu mitigieren, ist, die Zahlen im Nenner zu vergrößern, damit der Ausdruck im Gesamten kleiner wird. Eine erprobte Methode ist, die Wahrscheinlichkeit, dass das Kontextwort auftritt anzupassen, und $P(c) = \frac{\text{Anzahl Wort c}^{0.75}}{\text{Anzahl Wörter im Korpus}^{0.75}}$ statt $P(c) = \frac{\text{Anzahl Wort c}}{\text{Anzahl Wörter im Korpus}}$ zu rechnen. Das lässt sich bei Jurafsky und Martin (2024, S. 119 f.) nachlesen. Die Erfinder:innen des PMI-Assoziationsmaßes, Kenneth Church und Patrick Hanks, empfehlen außerdem, PPMI-Werte nur für Kookkurrenzen zu bestimmen, die häufiger als fünf Mal vorkommen. Das lässt sich bei Church und Hanks (1990, S. 24) nachlesen.  
+
+Ein weiteres Beispiel findet sich in Jurafsky und Martin (2024, S. 119).
+
+Wer noch tiefer in das Thema PMI und Assoziationsmaße einsteigen möchte, dem empfehle ich folgende weiterführende Lektüre: Eine aktuelle (März 2024) [Übersicht über die Bestimmung verschiedener Assoziationsmaße in R](https://ladal.edu.au/coll.html) mit vielen Codebeispielen bietet Martin Schweinberger. Für einen Überblick über verschiedene Assoziationsmaße und eine Diskussion der verschiedenen mathematischen Hintergründe dieser Maße empfehle ich das Kapitel 3 "Association Measures", insbesondere das Unterkapitel 3.1 "An inventory of association measures" aus [Stephanie Everts Dissertation "The Statistics of Word Cooccurrences"](https://elib.uni-stuttgart.de/bitstream/11682/2573/1/Evert2005phd.pdf). Zum informationstheoretischen Hintergrund von "Mutual Information" allgemein, siehe [Justin Grimmer, Margaret Roberts und Brandon Stewart, Text as Data](https://press.princeton.edu/books/hardcover/9780691207544/text-as-data), S. 112f. 
+
 
 
 </details>
@@ -1655,14 +1695,17 @@ Ganz fertig sind wir mit unserer Märchenanalyse aber noch nicht: Schließlich w
 - Heiberger, Raphael and Munoz-Najar Galvez, Sebastian (2021). *Text Mining and Topic Modeling*, in: Engel et al. (eds.), Handbook of Computational Social Science. Vol. 2: Data Science, Statistical Modelling, and Machine Learning Methods, https://www.routledgehandbooks.com/doi/10.4324/9781003025245-24. 
 - Szudarski, Paweł (2023). *Collocations, Corpora and Language Learning*, Cambridge: Cambridge Univ. Press, https://doi.org/10.1017/9781108992602. 
 - Gabrielatos, Costas (2018). *Keyness Analysis. Nature, Metrics and Techniques*, in: Taylor, C. and Marchi, A. (eds.), Corpus Approaches to Discourse. A Critical Review, Oxford: Routledge, https://core.ac.uk/download/pdf/227092349.pdf.
-- Evert, Stefan (2009). *Corpora and Collocations*, in: Anke Lüdeling and Merja Kytö (eds.), Corpus Linguistics. An International Handbook. Vol. 2, pp. 1212-1248, https://doi.org/10.1515/9783110213881.2.1212.
+- Evert, Stephanie (2009). *Corpora and Collocations*, in: Anke Lüdeling and Merja Kytö (eds.), Corpus Linguistics. An International Handbook. Vol. 2, pp. 1212-1248, https://doi.org/10.1515/9783110213881.2.1212.
 - Schmid, Hans-Jörg (2003). *Collocation: Hard to Pin Down, But Bloody Useful*, in: Zeitschrift für Anglistik und Amerikanistik 513 (3), pp. 235-258, https://www.anglistik.uni-muenchen.de/personen/professoren/schmid/schmid_publ/collocation.pdf. 
 - Desagulier, Guillaume (2017). *Corpus Linguistics and Statistics with R. Ch. 9.3. Association Measures*, pp. 203-213, https://doi.org/10.1007/978-3-319-64572-8.
 - Xiao, Richard et al. (2006). *Corpus-Based Language Studies. Ch. 6: Making Statistical Claims*, https://www.lancaster.ac.uk/fass/projects/corpus/ZJU/xCBLS/chapters/A06.pdf. 
 - Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3: Advanced Representation of Text*, https://cssbook.net/content/chapter10.html#sec-ngram.
 - Levshina, Natalia (2015). *How to Do Linguistics with R. Ch. 3.3: Zipf's Law and Word Frequency*, pp. 62-68, https://doi.org/10.1075/z.195.
 - Maj, Michal (2019). *Investigating Word Distribution with R - Zipf's Law*, https://www.r-bloggers.com/2019/02/investigating-words-distribution-with-r-zipfs-law/.
-- Stoltz, Dustin und Taylor, Marshall (2024), *Mapping Texts. Computational Text Analysis for the Social Sciences, Ch. 6: From Text to Numbers*, Oxford: Oxford Univ. Press. 
+- Stoltz, Dustin und Taylor, Marshall (2024). *Mapping Texts. Computational Text Analysis for the Social Sciences, Ch. 6: From Text to Numbers*, Oxford: Oxford Univ. Press. 
+- Justin Grimmer, Margaret Roberts und Brandon Stewart (2022). *Text as Data. A New Framework for Machine Learning and the Social Sciences*, Princeton: Princeton Univ. Press, Ch. 5, 6, 7.
 - Dan Jurafsky und James Martin (2024). *Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector*, https://web.stanford.edu/~jurafsky/slp3/.
 - Manning, Christopher, Raghavan, Prabhakar, und Schütze, Hinrich (2008). *Introduction to Information Retrieval. Ch. 6.2 Term Frequency and Weighting*, pp. 117-120,  https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf
 - Bubenhofer, Noah (2009). *Sprachgebrauchsmuster. Korpuslinguistik als Methode der Diskurs- und Kulturanalyse. Kap. 6.1 Kollokationen, Kookkurrenzen, n-Gramme*,  https://www.zora.uzh.ch/id/eprint/111287/1/BubenhoferSprachgebrauchsmusterPub.pdf
+- Evert, Stephanie (2005) *The Statistics of Word Cooccurrences. Word Pairs and Collocations*, Dissertation Universität Stuttgart, http://dx.doi.org/10.18419/opus-2556, insb. Kap. 3.1., 2.2. 
+- Church, Kenneth und Hanks, Patrick (1990). *Word Association Norms, Mutual Information, and Lexicography*, https://aclanthology.org/J90-1003/.

@@ -299,7 +299,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
 <li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
 <li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.5</b> Kollokationen</a></li>
-<li class="chapter" data-level="8.4.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen-pmi"><i class="fa fa-check"></i><b>8.4.6</b> Kookkurrenzen: PMI</a></li>
+<li class="chapter" data-level="8.4.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi"><i class="fa fa-check"></i><b>8.4.6</b> Pointwise Mutual Information (PMI)</a></li>
+<li class="chapter" data-level="8.4.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#zwischenfazit"><i class="fa fa-check"></i><b>8.4.7</b> Zwischenfazit</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
@@ -316,6 +317,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
 <li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html"><i class="fa fa-check"></i><b>10</b> Word Embeddings und NER</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#word-embeddings"><i class="fa fa-check"></i><b>10.1</b> Word Embeddings</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-static-word-embeddings-mit-quanteda-und-glove"><i class="fa fa-check"></i><b>10.1.1</b> Prediction-Based Static Word Embeddings mit Quanteda und GloVe</a></li>
+<li class="chapter" data-level="10.1.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-contextual-word-embeddings-mit-flair"><i class="fa fa-check"></i><b>10.1.2</b> Prediction-Based Contextual Word Embeddings mit FlaiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#named-entity-recognition-ner"><i class="fa fa-check"></i><b>10.2</b> Named Entity Recognition (NER)</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#was-ist-named-entity-recognition"><i class="fa fa-check"></i><b>10.2.1</b> Was ist Named Entity Recognition?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.3</b> Korpus einlesen</a></li>
+<li class="chapter" data-level="10.4" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.4</b> Beispiel mit SpaCy / Spacyr</a></li>
+<li class="chapter" data-level="10.5" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.5</b> Beispiel mit Flair / FlaiR</a></li>
+<li class="chapter" data-level="10.6" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.6</b> Vergleich und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -422,8 +440,8 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 <b>Hier verbirgt sich ein optionaler Abschnitt</b>
 </summary>
 <p>Das Verhältnis zwischen “wie interessant ist die Analyse” und “verstehe ich überhaupt was hier passiert” lässt sich anfangs vielleicht ungefähr so darstellen:</p>
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d45392461d15c0ee6567" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d45392461d15c0ee6567">{"x":{"visdat":{"dac26fb42cd7":["function () ","plotlyVisDat"]},"cur_data":"dac26fb42cd7","attrs":{"dac26fb42cd7":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-250b0cf5a79c3b47c07f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-250b0cf5a79c3b47c07f">{"x":{"visdat":{"941f16fdef5b":["function () ","plotlyVisDat"]},"cur_data":"941f16fdef5b","attrs":{"941f16fdef5b":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </details>
 </div>
 <div id="überblick-textanalyse-mit-quanteda" class="section level2 hasAnchor" number="5.4">
@@ -557,7 +575,7 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 ##   .. ..$ system         : Named chr [1:3] &quot;Darwin&quot; &quot;arm64&quot; &quot;lipogg&quot;
 ##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;sysname&quot; &quot;machine&quot; &quot;user&quot;
 ##   .. ..$ directory      : chr &quot;/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r&quot;
-##   .. ..$ created        : Date[1:1], format: &quot;2024-06-30&quot;
+##   .. ..$ created        : Date[1:1], format: &quot;2024-07-09&quot;
 ##   .. ..$ source         : chr &quot;data.frame&quot;
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr &quot;documents&quot;
@@ -786,7 +804,7 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 ##   .. ..$ system         : Named chr [1:3] &quot;Darwin&quot; &quot;arm64&quot; &quot;lipogg&quot;
 ##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;sysname&quot; &quot;machine&quot; &quot;user&quot;
 ##   .. ..$ directory      : chr &quot;/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r&quot;
-##   .. ..$ created        : Date[1:1], format: &quot;2024-06-30&quot;
+##   .. ..$ created        : Date[1:1], format: &quot;2024-07-09&quot;
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr &quot;documents&quot;
 ##   .. ..$ what        : chr &quot;word&quot;

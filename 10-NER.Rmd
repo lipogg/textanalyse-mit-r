@@ -2,14 +2,227 @@
 options(width = 9999)
 ```
 
-# Named Entity Recognition
+# Word Embeddings und NER
+
+Bisher haben wir Worthäufigkeiten und das gemeinsame Vorkommen verschiedener Wörter in einem Korpus aus frequentistischer und probabilistischer Perspektive betrachtet. Um Worthäufigkeiten zu deuten und zu vergleichen, haben wir dabei untersucht, wie wahrscheinlich es ist, dass zwei Wörter in einem Korpus gemeinsam vorkommen. In diesem Kapitel untersuchen wir das gemeinsame Vorkommen von Wörtern in einem Korpus aus einer anderen mathematischen Perspektive, und zwar aus der Perspektive der linearen Algebra. Ausgangspunkt dieser Betrachtungsweise ist wieder die Feature Co-Occurrence Matrix (FCM). Aber die Zeilen und Spalten der Matrix werden jetzt nicht nur als Vektoren im Sinne von R aufgefasst, sondern als Vektoren im Sinne der linearen Algebra. Da jede Zeile der Matrix einem Wort im Korpus entspricht, beschreiben die Einträge in dem Wort-Vektor, wie oft die anderen Wörter im Korpus mit diesem Wort gemeinsam vorkommen. Wörter werden nach diesem Modell also durch ihren Kontext repräsentiert. 
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("images/jurafsky-martin_vector_representation.png")
+```
+
+Quelle: Jurafsky/Martin 2024, S. 113. [Hier](https://www.youtube.com/watch?v=xtD47WHNhxk) in Videoform.  
+
+In die Sprache der linearen Algebra übersetzt (und geometrisch interpretiert) beschreibt jeder Wort-Vektor einen Punkt in einem mehrdimensionalen Raum. Dieser Raum hat nicht nur zwei oder drei Dimensionen, sondern hundert oder tausend. Diese höheren Dimensionen kann man sich geometrisch also nicht mehr vorstellen, aber es hilft, sich das Konzept für einen zweidimensionalen Raum zu veranschaulichen:
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("images/jurafsky-martin_vector_space.png")
+```
+
+Quelle: Jurafsky/Martin 2024, S. 113. [Hier](https://www.youtube.com/watch?v=xtD47WHNhxk) in Videoform. 
+
+Abstrakt könnt ihr euch diesen Raum als einen "semantischen Raum" vorstellen, in dem alle Wörter in einem Korpus eine bestimmte Position haben, und deren Entfernung voneinander davon abhängt, wie viele Einträge in den Vektoren übereinstimmen. Diese Auffassung von Wörtern als Vektoren erlaubt es, die Ähnlichkeit von zwei Wörtern mithilfe von **Ähnlichkeitsmaßen** wie der **Kosinus-Ähnlichkeit (cosine similariy)** zu untersuchen ([hier](https://youtu.be/-_i9Cg81rXA) eine kurze Erläuterung im Videoformat). Dieses Maß geht davon aus, dass ähnliche Wörter in einem semantischen Raum nah beieinander liegen (Jurafsky 2022). "Ähnlichkeit" wird hier gemessen über die Richtung und den Winkel von zwei Vektoren zueinander: Wenn zwei Vektoren dieselbe Richtung haben und der Winkel zwsichen den Vektoren sehr klein sind, dann haben sie einen ähnlichen Kontext, und sind sich ähnlich.
+
+## Word Embeddings
+
+Die Kookkurrenzmatrizen, mit denen wir bisher gearbeitet haben, eignen sich jedoch noch nicht für eine solche Darstellung. Erinnert euch daran, dass die meisten Einträge in jeder Zeile Nullen sind, weil Wörter nur mit einer kleinen Anzahl anderer Wörter gemeinsam vorkommen, aber die Matrix alle Wörter aus dem Korpus enthält. Diese Art von Vektoren werden "lang und spärlich" (long and sparse) genannt. Das Rechnen mit solchen Vektoren ist sehr aufwändig, und deswegen werden die Wort-Vektoren meist in "kurze und dichte" (short and dense) Vektoren umgewandelt, bevor Ähnlichkeitsmaße bestimmt werden (mehr dazu [hier](https://www.youtube.com/watch?v=FHhKmf1iPvw)). Solche "kurzen und dichten" Vektoren, die den Kontext eines bestimmten Wortes repräsentieren, werden **Word Embeddings** genannt. Word Embeddings können entweder direkt für eine Analyse verwendet werden, oder sie werden als Zwischenschritt in verschiedenen Methoden des "Natural Language Processing" verwendet. Im Folgenden werden wir beispielhaft zunächst Word Embeddings selbst erstellen und danach eine Methode kennenlernen, welche Word Embeddings als Zwischenschritt verwendet: Die sogenannte Named Entity Recognition. 
+
+In diesem Abschnitt betrachten wir Word Embeddings zunächst als Analysewerkzeug kennenlernen. In der Literatur wird Word Embeddings oft die Eigenschaft zugeschrieben, die Bedeutung von Wörtern darzustellen: 
+
+>"Embeddings represent meaning by leveraging the distributional hypothesis of language, an idea that goes back to at least Wittgenstein (1953). The distributional hypothesis has been succinctly summarized by an oft-repreated quote in this literature: 'you shall know a word by the company it keeps' (Firth, 1957). It posits that we can learn something about the semantic meanings of words on the basis of the words that appear frequently in a small context window around the focal word." (Grimmer et al. 2022, S. 79)
+
+Dabei kann die in diesem Sinne verstandene semantische Bedeutung eines Wortes auf **Type- oder auf Tokenebene** erfasst werden: Entweder, ein Wort wird als Type betrachtet. Dann ist der Kontext jedes Wort, das im gesamten Korpus in einem bestimmten Abstand ("context window") mit diesem Wort gemeinsam vorkommt. Oder ein Wort wird als Token betrachtet und der Kontext ist für jedes Vorkommen verschieden. Die erste Art der Word Embeddings auf Type-Ebene wird als **"Static Word Embeddings"** bezeichnet. Embeddings auf Token-Ebene werden als "Contextualized" oder **"Contextual Word Embeddings"** beezeichnet. 
+
+Mit unserer kleinen Beispielanalyse zu den Grimm'schen Märchen sind wir ja schon fertig, aber wir betrachten im Folgenden noch ein letztes Mal die mittlerweile vermutlich leidigen, aber dafür bereits vertrauten Märchen.
+
+```{r eval=FALSE}
+library(readtext)
+library(quanteda)
+
+# Märchen von 1857 und 1812/15 einlesen und Informationen aus dem Dateinamen extrahieren
+maerchen_alle <- readtext("maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
+
+```
+
+```{r echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+library(readtext)
+library(quanteda)
+maerchen_alle <- readtext("data/maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
+```
+
+```{r}
+maerchen_corpus <- corpus(maerchen_alle) %>%
+  corpus_subset(Jahr == 1857)
+```
+
+
+### Count-Based Word Embeddings mit Quanteda und PMI-Werten
+
+Code adaptiert von Stoltz/Taylor 2024, Mapping Texts, S. 210-214.
+
+```{r}
+# Funktion cos_sim() aus Stoltz/Taylor 2024, S. 91. 
+cos_sim <- function(A, B) {
+  sum(A * B) / sqrt(sum(A^2) * sum(B^2))
+}
+
+# Funktion fcm_pmi() von Kohei Watanabe (s. Abschnitt "Pointwise Mutual Information")
+fcm_pmi <- function(x) {
+  m <- x@meta$object$margin
+  x <- as(x, "TsparseMatrix") #"dgTMatrix"
+  x@x <- log(x@x / (m[x@i + 1] * m[x@j + 1]) * sum(m))
+  x@x[x@x < 0] <- 0
+  as.fcm(x)
+}
+```
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda)
+
+# Sätze als Dokumente festlegen
+maerchen_sentences <- corpus_reshape(maerchen_corpus, to="sentences")
+maerchen_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") 
+
+# seltene Kookkurrenzen herausfiltern
+feats <- dfm(maerchen_toks, verbose = TRUE) %>%
+  dfm_trim(min_termfreq = 5) %>%
+  featnames()
+maerchen_toks <- tokens_select(maerchen_toks, feats, padding = FALSE)
+
+# FCM erstellen und nach PPMI-Werten gewichten
+maerchen_fcm <- fcm(maerchen_toks, context="document")
+maerchen_pmi <- fcm_pmi(maerchen_fcm)
+```
+```{r}
+# spärliche Matrix in dichte Matrix umwandeln
+maerchen_svd <- svd(maerchen_pmi)
+# saveRDS(maerchen_svd, "maerchen_svd.rds")
+```
+
+```{r}
+# Dimensionen auswählen 
+maerchen_svd <- maerchen_svd$v[, 1:100]  
+# Zeilennamen wieder hinzufügen
+rownames(maerchen_svd) <- rownames(maerchen_pmi)
+```
+
+
+```{r}
+
+vec <- maerchen_svd["Königstochter", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["Königssohn", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["Frosch", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["Fuchs", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["Schloss", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["Tochter", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+vec <- maerchen_svd["ging", , drop=FALSE]
+similarities <- apply(maerchen_svd, 1, cos_sim, B = vec)
+similarities %>%
+  sort(decreasing = TRUE) %>%
+  head(n=30)
+
+
+```
+
+
+### Prediction-Based Static Word Embeddings mit Quanteda und GloVe 
+
+Code nach https://quanteda.io/articles/pkgdown/replication/text2vec.html
+
+```{r}
+library(quanteda)
+library(quanteda.textstats)
+library(text2vec)
+
+maerchen_toks <- tokens(maerchen_corpus)
+
+feats <- dfm(maerchen_toks, verbose = TRUE) %>%
+  dfm_trim(min_termfreq = 5) %>%
+  featnames()
+
+maerchen_toks <- tokens_select(maerchen_toks, feats, padding = TRUE)
+maerchen_fcm <- fcm(maerchen_toks, context = "window", count = "weighted", weights = 1 / (1:5), tri = TRUE)
+
+glove <- GlobalVectors$new(rank = 50, x_max = 10)
+wv_main <- glove$fit_transform(maerchen_fcm, n_iter = 10,
+                               convergence_tol = 0.01, n_threads = 8)
+
+wv_context <- glove$components
+dim(wv_context)
+
+word_vectors <- wv_main + t(wv_context) # sum up u and v vectors (column and row vectors), https://youtu.be/ASn7ExxLZws?si=W8MGBXKGDF3E0WVK&t=2519
+
+vec <- word_vectors["Königstochter", , drop = FALSE]
+cossim <- textstat_simil(x = as.dfm(word_vectors), y = as.dfm(vec),
+                          method = "cosine")
+head(sort(cossim[, 1], decreasing = TRUE), 10)
+
+vec <- word_vectors["Königssohn", , drop = FALSE]
+cossim <- textstat_simil(x = as.dfm(word_vectors), y = as.dfm(vec),
+                          method = "cosine")
+head(sort(cossim[, 1], decreasing = TRUE), 10)
+
+vec <- word_vectors["Schloss", , drop = FALSE]
+cossim <- textstat_simil(x = as.dfm(word_vectors), y = as.dfm(vec),
+                          method = "cosine")
+head(sort(cossim[, 1], decreasing = TRUE), 10)
+
+vec <- word_vectors["Wald", , drop = FALSE]
+cossim <- textstat_simil(x = as.dfm(word_vectors), y = as.dfm(vec),
+                          method = "cosine")
+head(sort(cossim[, 1], decreasing = TRUE), 10)
+
+```
+
+
+### Prediction-Based Contextual Word Embeddings mit FlaiR und ELMo 
+
+(folgt noch)
+
+## Named Entity Recognition (NER)
+
+Word Embeddings sind im Bereich Natural Language Processing oft nur ein Schritt in einer Reihe von Textverarbeitungsmethoden. Mithilfe von statischen und kontextuellen Word Embeddings (aber eher nicht mit unseren simplen count-based embeddings) können sogenannte "benannte Entitäten" in Texten identifiziert werden, also Wörter, die auf eine bestimmte Art von Entität verweisen: Personen, Orte, Organisationen sind die gängigsten Beispiele:
 
 > "A **named entity** is, roughly speaking, anything that can be referred to with a proper name: a person, a location, an organization. The task of **named entity recognition (NER)** is to find spans of text that constitute proper names and tag the type of the entity. Four entity tags are most common: **PER** (person), **LOC** (location), **ORG** (organization), or **GPE** (geo-political entity). However, the term **named entity** is commonly extended to include things that aren’t entities per se, including dates, times, and other kinds of temporal expressions, and even numerical expressions like prices."
 ([Jurafsky/Martin 2023, Ch.8, S.6](https://web.stanford.edu/~jurafsky/slp3/8.pdf))
 
+Ähnlich wie beim POS Tagging geht es also bei der Named Entity Recognition (NER) darum, bestimmte Tokens (oder auch Tokenkombinationen) automatisiert zu identifizieren und mit einem Tag oder Label zu versehen. Anders als beim POS Tagging ist das Ziel bei der NER aber, semantische Strukturen zu erkennen und nicht syntaktische. Named Entity Recognition Systeme machen sich zur Erkennung der Entitäten die Eigenschaft von Word Embeddings zunutze, dass Wörter, die in ähnlichen semantischen Kontexten vorkommen (z.B. Städte, Personen, ...), im mehrdimensionalen Raum enger beeinanderliegen als Wörter, deren Kontexte sehr verschiedenen sind. 
 
+Im folgenden werden beispielhaft zwei der populärsten NER-Systeme vorgestellt: SpaCy und Flair. Beide sind eigentlich für Python entwickelt, können aber mithilfe von sogenannten "Wrappern" auch aus R heraus angewandt werden. Beide Systeme nutzen Word Embeddings in Kombination mit einer Reihe anderer Verarbeitungsschritte, um Entitäten zu erkennen: SpaCy nutzt statische Embeddings (zumindest für deutsche Texte) und FlaiR nutzt kontextuelle Embeddings (allerdings nicht mehr ELMo, sondern eigentlich Character Embeddings, also Vektoren, die den Kontext einzelner Buchstaben repräsentieren). Dabei ist wichtig zu beachten, dass die Embeddings bei der hier vorgestellten simplen Anwendung dieser Systeme nicht alle auf der Grundlage der Eingabetexte erstellt werden, sondern dass ähnlich wie beim POS-Tagging andere Textkorpora verwendet werden, um Word Embeddings zu generieren und ein Sprachmodell zu trainieren, das Named Entities erkennen kann. 
 
-## Korpus einlesen 
+Als Beispiel dient uns diesmal ein sehr kleines Korpus von Briefen aus der Korrespondenz von Karl Marx und Friedrich Engels aus der [digitalen Edition der Marx-Engels-Gesamtausgabe](https://megadigital.bbaw.de).  
+
 
 ```{r}
 library(readtext)
@@ -198,7 +411,17 @@ Aber trotz dieser Schwierigkeiten ist Named Entity Recognition eine wichtige Met
 
 ## Quellen {-}
 
+- Jurafsky, Daniel und Martin, James H. (2024), *Speech and Language Processing. Chapter 6: Vector Semantics and Embeddings*,  https://web.stanford.edu/~jurafsky/slp3/ed3bookfeb3_2024.pdf.
+- Grimmer, Justin, Roberts, Margaret und Stewart, Brandon (2022). *Text as Data. Ch. 7: The Vector Space Model and Similarity Metrics*. 
+- Stoltz, Dustin und Taylor, Marshall (2024). *Mapping Texts. Ch. 11: Extended Inductive*, insb. Word Embeddings: The First Generation, Word Embeddings: The Next Generation und Inductive Analysis with Word Embeddings. 
+- Stoltz, Dustin und Taylor, Marshall (2024). *Mapping Texts. Ch. 6: From Text to Numbers*,  insb. Term Features. 
 - Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. Chapter 8.3: Named Entities and Named Entity Tagging*, https://web.stanford.edu/~jurafsky/slp3/8.pdf.
+- Jurafsky, Daniel (2022). *Vector 6 Word2Vec*, https://www.youtube.com/watch?v=FHhKmf1iPvw.
+- Jurafsky, Daniel (2022). *Vector 4 Cosine Similarity*, https://www.youtube.com/watch?v=FHhKmf1iPvw.
+- Kriegel, Klaus (2020). Skript zur Vorlesung "Lineare Algebra für Informatik" im Sommersemester 2020 an der Freien Universität Berlin. 
+- Manning, Chris und Socher, Richard (2017). *Vorlesung "GloVe: Global Vectors for Word Representation"*, Stanford University, https://www.youtube.com/watch?v=ASn7ExxLZws. 
+- Selinvanov, Dmitriy (2020). *GloVe Word Embeddings*, https://text2vec.org/glove.html.
+- Akbik, Alan (2020). *Vortrag "Das Flair Framework zur automatischen Analyse von Texten"*, Gesellschaft für Informatik,  https://www.youtube.com/watch?v=LqElF1eZ_ps. 
 - Benoit, Kenneth und Matsuo, Akitaka (2023). *A Guide to Using Spacyr*, https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html. 
 - Explosion AI, SpaCy Dokumentationsseiten, https://spacy.io/.
 - Explosion AI, SpaCy Dokumentationsseiten: Models & Languages, https://spacy.io/usage/models. 
@@ -212,7 +435,7 @@ Aber trotz dieser Schwierigkeiten ist Named Entity Recognition eine wichtige Met
 - Charles Univ. Prague (ed.). *NameTag 2 Models*, https://ufal.mff.cuni.cz/nametag/2/models.
 - BNOSAC. Nametagger R Package, https://github.com/bnosac/nametagger. 
 - Arnold, Taylor. CleanNLP: A Tidy Data Model for Natural Language Processing, https://statsmaths.github.io/cleanNLP/. 
-- Stanford Natural Language Processing Group. Using CoreNLP within Other Programming Languages and Packages, https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran. 
+- Stanford Natural Language Processing Group. Using CoreNLP within Other Programming Languages and Packages, https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran.
 - Super User (2018). *A Comparison Between SpaCy and UDPipe for Natural Language Processing for R Users*, https://www.r-bloggers.com/2018/02/a-comparison-between-spacy-and-udpipe-for-natural-language-processing-for-r-users/
 - The HashTag Magazine (2023). *Uncover the Subtleties of Language - Flair is the new Advanced AI*, https://hashtagmagazine.medium.com/uncover-the-subtleties-of-language-flair-is-the-new-advanced-ai-307e22218178. 
 - CodeTrade (2023). *The Battle of the NLP Libraries: Flair vs SpaCy*, https://www.codetrade.io/blog/the-battle-of-the-nlp-libraries-flair-vs-spacy/. 
@@ -234,6 +457,6 @@ https://doi.org/10.48550/arXiv.2201.07281.
 - Zeman, Daniel and Rosa, Rudolf (2021). *Contextual Word Embeddings*, https://www.youtube.com/watch?v=J9uSXZTW5Oc, und https://ufal.mff.cuni.cz/courses/npfl120#lectures. 
 - Ghassemi, Mohammad (2021). *NLP Lecture 4(a) - Simple Word Embeddings*, https://www.youtube.com/watch?v=LGJSZCvBT3g  und https://github.com/deskool/nlp-class
 - Herremans, Dorien (2022), Word Embeddings, https://www.youtube.com/watch?v=QldIe6N5-Lc. 
-- Mei, Ted (2020). *From Static Embedding to Contextualized Embedding*, https://ted-mei.medium.com/from-static-embedding-to-contextualized-embedding-fe604886b2bc. 
+- Mei, Ted (2020). *From Static Embedding to Contextualized Embedding*, https://ted-mei.medium.com/from-static-embedding-to-contextualized-embedding-fe604886b2bc.
 - Ethayarajh, Kawin (2020). *BERT, ELMo, & GPT-2: How Contextual are Contextualized Word Representations?*,  https://ai.stanford.edu/blog/contextual/.
 - Chang, Ting-Yun und Chen, Yun-Nung (2019). *What Does This Word Mean? Explaining Contextualized Embeddings with Natural Language Definition*, in: Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processingand the 9th International Joint Conference on Natural Language Processing, pp. 6064–6070, https://aclanthology.org/D19-1627/.

@@ -370,13 +370,13 @@ stats <- merge(maerchen_df, maerchen_df,
 stats
 ```
 
-Was macht dieser Code? Dem Dataframe `maerchen_df` werden einige Spalten mit weiteren Informationen hinzugefügt. Genauer gesagt wird jedem Token durch Abgleich der Werte in den Spalten `doc_id`, `paragraph_id`, `sentence_id`, `token_id` und `head_token_id` sein "Head"-Token zugeordnet, also das Token, von dem das aktuelle Token syntaktisch abhängt.  Die Metainformationen zu dem so identifizierten Head-Token werden an den ursprünglichen Dataframe  `maerchen_df` angehängt. Die Spalten, die die Informationen zum Head-Token enthalten, werden dabei jeweils mit dem Zusatz "_parent" benannt, also `token_parent`, `lemma_parent`, `upos_parent`, usw. Anschließend kann der Dataframe nach Werten in den Spalten `upos` und `upos_parent` gefiltert werden. 
+Was macht dieser Code? Dem Dataframe `maerchen_df` werden einige Spalten mit weiteren Informationen hinzugefügt. Genauer gesagt wird jedem Token durch Abgleich der Werte in den Spalten `doc_id`, `paragraph_id`, `sentence_id`, `token_id` und `head_token_id` sein "Head"-Token zugeordnet, also das Token, von dem das aktuelle Token syntaktisch abhängt.  Die Metainformationen zu dem so identifizierten Head-Token werden an den ursprünglichen Dataframe  `maerchen_df` angehängt. Die Spalten, die die Informationen zum Head-Token enthalten, werden dabei jeweils mit dem Zusatz "_parent" benannt, also `token_parent`, `lemma_parent`, `upos_parent`, usw. Anschließend kann der Dataframe nach Werten in den Spalten `upos` und `upos_parent` gefiltert werden. Zum Verständnis der Funktion `merge()` empfehle ich [diesen Beitrag](https://rforhr.com/join.html#join_mergefunction) von David Caughlin.
 
 Aber Achtung: Beim Filtern des Dataframes müssen wir alle verschiedenen Beziehungen berücksichtigen, in denen die gesuchten Wörter zueinander stehen können. Das lässt sich an einigen Beispielsätzen verdeutlichen: 
 
 "Die Königstochter war so schön wie die Sonne."
 
-* Head von "Königstochter" ist "schön" (s. Spalte `head_token_id`)
+* Head von "Königstochter" ist "war" (s. Spalte `head_token_id`)
 * `dep_rel` von "Königstochter" ist `nsubj`, "schön" ist `root` 
 
 "Die schöne Königstochter ging in den Wald."
@@ -386,7 +386,7 @@ Aber Achtung: Beim Filtern des Dataframes müssen wir alle verschiedenen Beziehu
 
 "Der König hatte eine schöne Königstochter."
 
-* Head von "Königstochter" ist "schön"
+* Head von "Königstochter" ist "hatte"
 * `dep_rel` von "Königstochter" ist `obj`, von "schön" `amod` 
 
 Nachdem alle Head-Tokens der neuen Spalte `upos_parent` hinzugefügt wurden (s.o.), haben wir also im Grunde zwei Fälle: Entweder "schön" steht in der Spalte `upos` und "Königstochter" in der Spalte `upos_parent`, oder andersherum; in diesem Fall ist `dep_rel` von "Königstochter" `nsubj`.

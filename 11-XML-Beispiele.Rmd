@@ -165,7 +165,19 @@ charstats_sorted <- charstats[order(-charstats$tokens),]
 charstats_sorted
 ```
 
-Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html
+Und auch Visualisierungen können in wenigen Zeilen Code erstellt werden. Die folgende Grafik zeigt beispielsweise an, zu welchem Zeitpunkt im Drama die verschiedenen Charaktere sprechen. Die horizontalen Linien markieren dabei die Grenzen der Akte. Der Code ist dem Tutorial entnommen und [hier](https://quadrama.github.io/DramaAnalysis/tutorial/3/who-how-often.html#adding-act-boundaries) zu finden. 
+
+```{r }
+library(magrittr)
+
+par(mar=c(2,8,2,2))
+utteranceStatistics(d) %>%
+  characterNames(d) %>%
+  plot(d, # adding the `QDDrama` object here creates the act boundaries.
+       main=dramaNames(d)) 
+
+```
+Für weitere Anwendungsmöglichkeiten des Pakets DramaAnalaysis empfehle ich das Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html.
 
 Neben DramaAnalysis bietet auch DraCor die Möglichkeit, direkt vorgefilterte Daten herunterzuladen, so zum Beispiel nur die Sprechtexte der Charaktere, oder nur Informationen zum gemeinsamen Auftreten von Charakteren im Drama. 
 
@@ -183,7 +195,7 @@ Verständnisfragen:
 
 ## Beispiel Geomapping
 
-Unser zweites Beispiel widmet sich dem Reisetagebuch eines der Reisebegleiter Alexander von Humboldts während seiner Reise durch das Russische (bzw. eigentlich Russländische) Reich. Das Tagebuch wurde durch das Projekt edition humboldt digital in XML-TEI ausgezeichnet. Zunächst betrachten wir wieder die Datei im [Browser](https://edition-humboldt.de/H0016785.xml) und laden die Datei [hier](https://edition-humboldt.de/themen/detail.xql?id=H0016785&l=de) herunter. Im Folgenden wollen wir alle Orte, die der Autor erwähnt, extrahieren und auf einer Karte visualisieren. Dieser Vorgang nennt sich auch "Geomapping" und ist eine beliebte Methode insbesondere in den digitalen Geschichtswissenschaften. Wir gehen dabei wie folgt vor: Zunächst extrahieren wir die Links zu Ortsangaben in der Datenbank [Geonames](https://www.geonames.org/) aus den placeName-Elementen in der XML-TEI Datei. Diese Links enthalten eine ID, die wir nutzen können, um Metadaten zu dem entsprechenden Ort über eine sogenannte Anwendungsprogrammierschnittstelle, oder kurz API, abzufragen. Über diese Schnittstelle können wir die Metadaten direkt in unsere Sitzung im RStudio importieren und weiterverarbeiten. Die Längen- und Breitengrade zu jedem Ort können anschließend dazu genutzt werden, um die Orte auf einer Karte abzubilden. Zur Darstellung der Karte werden wir das bereits bekannte Paket ggplot2 verwenden. 
+Unser zweites Beispiel widmet sich dem Reisetagebuch eines der Reisebegleiter Alexander von Humboldts während seiner Reise durch das Russische (bzw. eigentlich Russländische) Reich. Eine geschichtswissenschaftliche Analyse des Tagesbuchs könnte zum Beispiel die Verstrickung von Wissenschaft und Imperialismus untersuchen. Für eine solche Fragestellung wäre es vielleicht interessant, zunächst die Reiseroute nachzuzeichnen. Auch solche Metaanalysen werden durch das Auszeichnen der Texte in XML-TEI ermöglicht. Das Tagebuch wurde durch das Projekt edition humboldt digital in XML-TEI ausgezeichnet. Zunächst betrachten wir wieder die Datei im [Browser](https://edition-humboldt.de/H0016785.xml) und laden die Datei [hier](https://edition-humboldt.de/themen/detail.xql?id=H0016785&l=de) herunter. Im Folgenden wollen wir alle Orte, die der Autor erwähnt, extrahieren und auf einer Karte visualisieren. Dieser Vorgang wird manchmal "Geomapping" genannt und ist eine beliebte Methode insbesondere in den digitalen Geschichtswissenschaften. Wir gehen dabei wie folgt vor: Zunächst extrahieren wir die Links zu Ortsangaben in der Datenbank [Geonames](https://www.geonames.org/) aus den placeName-Elementen in der XML-TEI Datei. Diese Links enthalten eine ID, die wir nutzen können, um Metadaten zu dem entsprechenden Ort über eine sogenannte Anwendungsprogrammierschnittstelle, oder kurz API, abzufragen. Über diese Schnittstelle können wir die Metadaten direkt in unsere Sitzung im RStudio importieren und weiterverarbeiten. Die Längen- und Breitengrade zu jedem Ort können anschließend dazu genutzt werden, um die Orte auf einer Karte abzubilden. Zur Darstellung der Karte werden wir das bereits bekannte Paket ggplot2 verwenden. 
 
 ### Geoname-IDs aus der XML-TEI-Datei extrahieren
 
@@ -387,6 +399,7 @@ Verständnisfrage:
 - Welche anderen Forschungsfragen ließen sich auf der Grundlage der XML-TEI-Datei beantworten? Welche weiteren Informationen könnten wir der Karte hinzufügen?  
  
 :::
+
 
 ## Quellen {-}
 

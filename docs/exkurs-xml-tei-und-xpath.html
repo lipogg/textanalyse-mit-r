@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Exkurs: XML, TEI und XPath | Einführung in R: Programmieren für die Geisteswissenschaften</title>
+  <title>11 Exkurs: XML, TEI und XPath | Textanalyse mit R für die Geisteswissenschaften</title>
   <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Exkurs: XML, TEI und XPath | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta property="og:title" content="11 Exkurs: XML, TEI und XPath | Textanalyse mit R für die Geisteswissenschaften" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
-  <meta name="github-repo" content="lipogg/einfuehrung-in-r" />
+  <meta name="github-repo" content="lipogg/textanalyse-mit-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Exkurs: XML, TEI und XPath | Einführung in R: Programmieren für die Geisteswissenschaften" />
+  <meta name="twitter:title" content="11 Exkurs: XML, TEI und XPath | Textanalyse mit R für die Geisteswissenschaften" />
   
   <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
@@ -31,7 +31,7 @@ set in the _output.yml file.</p>" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="named-entity-recognition.html"/>
+<link rel="prev" href="word-embeddings-und-ner.html"/>
 <link rel="next" href="arbeit-mit-xml-tei-dokumenten.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -74,7 +74,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -208,43 +208,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.1</b> Bedingte Anweisungen</a></li>
-<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.2</b> Verzweigungen</a></li>
-<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.3</b> while-Schleifen</a></li>
-<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.4</b> for-Schleifen</a></li>
-<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.5</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.2</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.3</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.4</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.5</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.6</b> Schleifen abbrechen</a></li>
 <li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.1</b> Was sind Funktionen?</a></li>
-<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.2</b> Funktionen definieren</a></li>
-<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.3</b> Funktionen aufrufen</a></li>
-<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.4</b> Funktionen verstehen</a></li>
-<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.5</b> Wozu werden Funktionen verwendet?</a></li>
-<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.6</b> Schleifen ersetzen mithilfe von Funktionen</a>
+<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#grundlegende-begriffe-3"><i class="fa fa-check"></i><b>4.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.2</b> Was sind Funktionen?</a></li>
+<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.3</b> Funktionen definieren</a></li>
+<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.4</b> Funktionen aufrufen</a></li>
+<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.5</b> Funktionen verstehen</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.6</b> Wozu werden Funktionen verwendet?</a></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.7</b> Schleifen ersetzen mithilfe von Funktionen</a>
 <ul>
-<li class="chapter" data-level="4.6.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.6.1</b> Die Apply-Funktionen</a></li>
+<li class="chapter" data-level="4.7.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.7.1</b> Die Apply-Funktionen</a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.7</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
-<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.8</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
-<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.9</b> Was sind Pakete?</a></li>
-<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.10</b> Pakete installieren</a></li>
-<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.11</b> Pakete laden</a></li>
-<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.12</b> Wozu werden Pakete verwendet?</a></li>
-<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.13</b> Welche Pakete gibt es denn alles?</a></li>
+<li class="chapter" data-level="4.8" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#gültigkeit-der-funktionsargumente-überprüfen"><i class="fa fa-check"></i><b>4.8</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
+<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.9</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
+<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.10</b> Was sind Pakete?</a></li>
+<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.11</b> Pakete installieren</a></li>
+<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.12</b> Pakete laden</a></li>
+<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.13</b> Wozu werden Pakete verwendet?</a></li>
+<li class="chapter" data-level="4.14" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.14</b> Welche Pakete gibt es denn alles?</a></li>
 <li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
 <li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
-<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.3</b> Überblick: Textanalyse mit Quanteda</a></li>
-<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.4</b> Textdateien einlesen</a></li>
-<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.5</b> Quanteda corpus-Objekte</a></li>
-<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda tokens-Objekte</a></li>
-<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda DFM-Objekte</a></li>
-<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.8</b> Daten schreiben</a></li>
+<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#vom-korpus-zur-analyse"><i class="fa fa-check"></i><b>5.3</b> Vom Korpus zur Analyse</a></li>
+<li class="chapter" data-level="5.4" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#überblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.4</b> Überblick: Textanalyse mit Quanteda</a></li>
+<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.5</b> Textdateien einlesen</a></li>
+<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.6</b> Quanteda corpus-Objekte</a></li>
+<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda tokens-Objekte</a></li>
+<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.8</b> Quanteda DFM-Objekte</a></li>
+<li class="chapter" data-level="5.9" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.9</b> Daten schreiben</a></li>
 <li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="exkurs-reguläre-ausdrücke.html"><a href="exkurs-reguläre-ausdrücke.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
@@ -282,16 +285,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#märchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
-<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-preprocessing"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und Preprocessing</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#token-häufigkeitsanalyse"><i class="fa fa-check"></i><b>8.3</b> Token-Häufigkeitsanalyse</a></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4</b> Keywords in Context (KWIC)</a></li>
-<li class="chapter" data-level="8.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.5</b> N-Gramme</a></li>
-<li class="chapter" data-level="8.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.6</b> Kookkurrenzen</a></li>
-<li class="chapter" data-level="8.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.7</b> Kollokationen</a></li>
-<li class="chapter" data-level="8.8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keyness-analyse"><i class="fa fa-check"></i><b>8.8</b> Keyness-Analyse</a></li>
-<li class="chapter" data-level="8.9" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#tf-idf"><i class="fa fa-check"></i><b>8.9</b> TF-IDF</a></li>
-<li class="chapter" data-level="8.10" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#exkurs-lexikalische-vielfalt"><i class="fa fa-check"></i><b>8.10</b> Exkurs: Lexikalische Vielfalt</a></li>
-<li class="chapter" data-level="8.11" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#recap-und-ausblick"><i class="fa fa-check"></i><b>8.11</b> Recap und Ausblick</a></li>
+<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
+<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
+<li class="chapter" data-level="8.3.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#absolute-häufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
+<li class="chapter" data-level="8.3.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#relative-häufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#wörter-im-kontext-gemeinsames-vorkommen-von-wörtern"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
+<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
+<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
+<li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kollokationen"><i class="fa fa-check"></i><b>8.4.5</b> Kollokationen</a></li>
+<li class="chapter" data-level="8.4.6" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi"><i class="fa fa-check"></i><b>8.4.6</b> Pointwise Mutual Information (PMI)</a></li>
+<li class="chapter" data-level="8.4.7" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#zwischenfazit"><i class="fa fa-check"></i><b>8.4.7</b> Zwischenfazit</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
@@ -308,13 +318,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
 <li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>10</b> Named Entity Recognition</a>
+<li class="chapter" data-level="10" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html"><i class="fa fa-check"></i><b>10</b> Word Embeddings und NER</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#korpus-einlesen"><i class="fa fa-check"></i><b>10.1</b> Korpus einlesen</a></li>
-<li class="chapter" data-level="10.2" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.2</b> Beispiel mit SpaCy / Spacyr</a></li>
-<li class="chapter" data-level="10.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit Flair / FlaiR</a></li>
-<li class="chapter" data-level="10.4" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.4</b> Vergleich und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
+<li class="chapter" data-level="10.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#word-embeddings"><i class="fa fa-check"></i><b>10.1</b> Word Embeddings</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#count-based-word-embeddings-mit-quanteda-und-pmi-werten"><i class="fa fa-check"></i><b>10.1.1</b> Count-Based Word Embeddings mit Quanteda und PMI-Werten</a></li>
+<li class="chapter" data-level="10.1.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-static-word-embeddings-mit-quanteda-und-glove"><i class="fa fa-check"></i><b>10.1.2</b> Prediction-Based Static Word Embeddings mit Quanteda und GloVe</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#named-entity-recognition-ner"><i class="fa fa-check"></i><b>10.2</b> Named Entity Recognition (NER)</a></li>
+<li class="chapter" data-level="10.3" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit SpaCy / Spacyr</a></li>
+<li class="chapter" data-level="10.4" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.4</b> Beispiel mit Flair / FlaiR</a></li>
+<li class="chapter" data-level="10.5" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.5</b> Vergleich und Ausblick</a></li>
+<li class="chapter" data-level="" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>11</b> Exkurs: XML, TEI und XPath</a>
 <ul>
@@ -349,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in R: Programmieren für die Geisteswissenschaften</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Textanalyse mit R für die Geisteswissenschaften</a>
           </h1>
         </div>
 
@@ -376,56 +391,56 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
 <h2><span class="header-section-number">11.2</span> Aufbau von XML-TEI Dokumenten<a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>XML-Dokumente sind streng hierarchisch aufgebaut und bestehen aus verschiedenen, in einer Baumstruktur ineinander verschachtelten Elementen. Diese Baumstruktur bedeutet, dass jedes Element, das “geöffnet” wird, auch “geschlossen” werden muss, es besteht also aus einem Öffnungstag (oder “opening tag”) und einem Schließtag (oder “closing tag”). Elemente können Fließtext, Attribute oder auch weitere Elemente enthalten; sie können aber auch leer sein. Attribute werden direkt in den Öffnungstag hineingeschrieben und definieren Eigenschaften des entsprechenden Elements.</p>
 <p>Aufbau eines XML-Dokuments:</p>
-<div class="sourceCode" id="cb743"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb743-1"><a href="exkurs-xml-tei-und-xpath.html#cb743-1" tabindex="-1"></a><span class="co">&lt;!-- Prolog: optional; definiert die verwendete XML-Version --&gt;</span></span>
-<span id="cb743-2"><a href="exkurs-xml-tei-und-xpath.html#cb743-2" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="fu">?&gt;</span> </span>
-<span id="cb743-3"><a href="exkurs-xml-tei-und-xpath.html#cb743-3" tabindex="-1"></a><span class="co">&lt;!-- Wurzelelement --&gt;</span></span>
-<span id="cb743-4"><a href="exkurs-xml-tei-und-xpath.html#cb743-4" tabindex="-1"></a>&lt;<span class="kw">root</span>&gt; </span>
-<span id="cb743-5"><a href="exkurs-xml-tei-und-xpath.html#cb743-5" tabindex="-1"></a><span class="co">&lt;!-- irgendein Element --&gt;</span></span>
-<span id="cb743-6"><a href="exkurs-xml-tei-und-xpath.html#cb743-6" tabindex="-1"></a>  &lt;<span class="kw">child</span>&gt; </span>
-<span id="cb743-7"><a href="exkurs-xml-tei-und-xpath.html#cb743-7" tabindex="-1"></a>  <span class="co">&lt;!-- noch ein Element, mit Attribut &quot;attribute&quot; und dem Attributwert &quot;some_property&quot; --&gt;</span></span>
-<span id="cb743-8"><a href="exkurs-xml-tei-und-xpath.html#cb743-8" tabindex="-1"></a>    &lt;<span class="kw">subchild</span><span class="ot"> attribute=</span><span class="st">&quot;some_property&quot;</span>&gt;...some content...&lt;/<span class="kw">subchild</span>&gt;</span>
-<span id="cb743-9"><a href="exkurs-xml-tei-und-xpath.html#cb743-9" tabindex="-1"></a>  &lt;/<span class="kw">child</span>&gt;</span>
-<span id="cb743-10"><a href="exkurs-xml-tei-und-xpath.html#cb743-10" tabindex="-1"></a>&lt;/<span class="kw">root</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb875"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb875-1"><a href="exkurs-xml-tei-und-xpath.html#cb875-1" tabindex="-1"></a><span class="co">&lt;!-- Prolog: optional; definiert die verwendete XML-Version --&gt;</span></span>
+<span id="cb875-2"><a href="exkurs-xml-tei-und-xpath.html#cb875-2" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="fu">?&gt;</span> </span>
+<span id="cb875-3"><a href="exkurs-xml-tei-und-xpath.html#cb875-3" tabindex="-1"></a><span class="co">&lt;!-- Wurzelelement --&gt;</span></span>
+<span id="cb875-4"><a href="exkurs-xml-tei-und-xpath.html#cb875-4" tabindex="-1"></a>&lt;<span class="kw">root</span>&gt; </span>
+<span id="cb875-5"><a href="exkurs-xml-tei-und-xpath.html#cb875-5" tabindex="-1"></a><span class="co">&lt;!-- irgendein Element --&gt;</span></span>
+<span id="cb875-6"><a href="exkurs-xml-tei-und-xpath.html#cb875-6" tabindex="-1"></a>  &lt;<span class="kw">child</span>&gt; </span>
+<span id="cb875-7"><a href="exkurs-xml-tei-und-xpath.html#cb875-7" tabindex="-1"></a>  <span class="co">&lt;!-- noch ein Element, mit Attribut &quot;attribute&quot; und dem Attributwert &quot;some_property&quot; --&gt;</span></span>
+<span id="cb875-8"><a href="exkurs-xml-tei-und-xpath.html#cb875-8" tabindex="-1"></a>    &lt;<span class="kw">subchild</span><span class="ot"> attribute=</span><span class="st">&quot;some_property&quot;</span>&gt;...some content...&lt;/<span class="kw">subchild</span>&gt;</span>
+<span id="cb875-9"><a href="exkurs-xml-tei-und-xpath.html#cb875-9" tabindex="-1"></a>  &lt;/<span class="kw">child</span>&gt;</span>
+<span id="cb875-10"><a href="exkurs-xml-tei-und-xpath.html#cb875-10" tabindex="-1"></a>&lt;/<span class="kw">root</span>&gt;</span></code></pre></div>
 <p>Mehr zur XML-Syntax <a href="https://www.w3schools.com/xml/xml_syntax.asp">hier</a>.</p>
 <p>Die konkrete Benennung der Elemente ist dabei nicht durch die XML-Syntax vorgegeben und ist grundsätzlich beliebig, muss jedoch einheitlich sein. Der Benennungsstil und Regeln für die Verwendung bestimmter Elemente und Attribute bei der Auszeichnung von Texten können auch durch ein Kodierungsschema und einen XML-Auszeichnungsstandard am Anfang des Dokuments festgelegt werden. In den Geisteswissenschaften hat sich mit TEI ein solcher einheitlicher Auszeichnungsstandard für Texte durchgesetzt.</p>
 <p>Nach den TEI-Guidelines besteht jedes TEI-Dokument aus einem Wurzelelement, welches das TEI-Dokument mit den Tags <code>&lt;TEI&gt;&lt;/TEI&gt;</code> öffnet und schließt, sowie aus zwei Kindelementen, dem Header (<code>&lt;teiHeader&gt;&lt;/teiHeader&gt;</code>) und einem Text-Element (<code>&lt;text&gt;&lt;/text&gt;</code>). Der Header beinhaltet Metadaten zu dem ausgezeichneten Text, beispielsweise eine “file description” (<code>&lt;fileDesc&gt;&lt;/fileDesc&gt;</code>), die bibliographische Informationen zur ausgezeichneten Datei enthält. Die file description ist als einziges Header-Element für alle TEI-Header zwingend erforderlich, damit das Dokument als valide gelten kann (zur Validierung siehe nächster Abschnitt). Der <code>&lt;TEI&gt;</code>-Öffnungstag enthält standardmäßig den <a href="https://de.wikipedia.org/wiki/Namensraum_(XML)">TEI-Namensraum</a> (oder “namespace”) <a href="http://www.tei-c.org/ns/1.0" class="uri">http://www.tei-c.org/ns/1.0</a>, manchmal auch die Sprache des ausgezeichneten Texts und die verwendete TEI-Version. Der Namensraum dient dazu, die verwendeten Elemente und Attribute eindeutig einer bestimmten XML-Sprache bzw. einem Auszeichnungsstandard zuzuordnen, in diesem Fall also TEI.</p>
 <p>In den TEI-Guidelines findet sich das folgende Beispiel für ein <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ref-TEI.html#index-egXML-d54e49512">minimales valides TEI-Dokument</a>:</p>
-<div class="sourceCode" id="cb744"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb744-1"><a href="exkurs-xml-tei-und-xpath.html#cb744-1" tabindex="-1"></a>&lt;<span class="kw">TEI</span><span class="ot"> version=</span><span class="st">&quot;3.3.0&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.tei-c.org/ns/1.0&quot;</span>&gt;</span>
-<span id="cb744-2"><a href="exkurs-xml-tei-und-xpath.html#cb744-2" tabindex="-1"></a> &lt;<span class="kw">teiHeader</span>&gt;</span>
-<span id="cb744-3"><a href="exkurs-xml-tei-und-xpath.html#cb744-3" tabindex="-1"></a>  &lt;<span class="kw">fileDesc</span>&gt;</span>
-<span id="cb744-4"><a href="exkurs-xml-tei-und-xpath.html#cb744-4" tabindex="-1"></a>   &lt;<span class="kw">titleStmt</span>&gt;</span>
-<span id="cb744-5"><a href="exkurs-xml-tei-und-xpath.html#cb744-5" tabindex="-1"></a>    &lt;<span class="kw">title</span>&gt;The shortest TEI Document Imaginable&lt;/<span class="kw">title</span>&gt;</span>
-<span id="cb744-6"><a href="exkurs-xml-tei-und-xpath.html#cb744-6" tabindex="-1"></a>   &lt;/<span class="kw">titleStmt</span>&gt;</span>
-<span id="cb744-7"><a href="exkurs-xml-tei-und-xpath.html#cb744-7" tabindex="-1"></a>   &lt;<span class="kw">publicationStmt</span>&gt;</span>
-<span id="cb744-8"><a href="exkurs-xml-tei-und-xpath.html#cb744-8" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;First published as part of TEI P2, this is the P5</span>
-<span id="cb744-9"><a href="exkurs-xml-tei-und-xpath.html#cb744-9" tabindex="-1"></a>         version using a namespace.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb744-10"><a href="exkurs-xml-tei-und-xpath.html#cb744-10" tabindex="-1"></a>   &lt;/<span class="kw">publicationStmt</span>&gt;</span>
-<span id="cb744-11"><a href="exkurs-xml-tei-und-xpath.html#cb744-11" tabindex="-1"></a>   &lt;<span class="kw">sourceDesc</span>&gt;</span>
-<span id="cb744-12"><a href="exkurs-xml-tei-und-xpath.html#cb744-12" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;No source: this is an original work.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb744-13"><a href="exkurs-xml-tei-und-xpath.html#cb744-13" tabindex="-1"></a>   &lt;/<span class="kw">sourceDesc</span>&gt;</span>
-<span id="cb744-14"><a href="exkurs-xml-tei-und-xpath.html#cb744-14" tabindex="-1"></a>  &lt;/<span class="kw">fileDesc</span>&gt;</span>
-<span id="cb744-15"><a href="exkurs-xml-tei-und-xpath.html#cb744-15" tabindex="-1"></a> &lt;/<span class="kw">teiHeader</span>&gt;</span>
-<span id="cb744-16"><a href="exkurs-xml-tei-und-xpath.html#cb744-16" tabindex="-1"></a> &lt;<span class="kw">text</span>&gt;</span>
-<span id="cb744-17"><a href="exkurs-xml-tei-und-xpath.html#cb744-17" tabindex="-1"></a>  &lt;<span class="kw">body</span>&gt;</span>
-<span id="cb744-18"><a href="exkurs-xml-tei-und-xpath.html#cb744-18" tabindex="-1"></a>   &lt;<span class="kw">p</span>&gt;This is about the shortest TEI document imaginable.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb744-19"><a href="exkurs-xml-tei-und-xpath.html#cb744-19" tabindex="-1"></a>  &lt;/<span class="kw">body</span>&gt;</span>
-<span id="cb744-20"><a href="exkurs-xml-tei-und-xpath.html#cb744-20" tabindex="-1"></a> &lt;/<span class="kw">text</span>&gt;</span>
-<span id="cb744-21"><a href="exkurs-xml-tei-und-xpath.html#cb744-21" tabindex="-1"></a>&lt;/<span class="kw">TEI</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb876-1"><a href="exkurs-xml-tei-und-xpath.html#cb876-1" tabindex="-1"></a>&lt;<span class="kw">TEI</span><span class="ot"> version=</span><span class="st">&quot;3.3.0&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.tei-c.org/ns/1.0&quot;</span>&gt;</span>
+<span id="cb876-2"><a href="exkurs-xml-tei-und-xpath.html#cb876-2" tabindex="-1"></a> &lt;<span class="kw">teiHeader</span>&gt;</span>
+<span id="cb876-3"><a href="exkurs-xml-tei-und-xpath.html#cb876-3" tabindex="-1"></a>  &lt;<span class="kw">fileDesc</span>&gt;</span>
+<span id="cb876-4"><a href="exkurs-xml-tei-und-xpath.html#cb876-4" tabindex="-1"></a>   &lt;<span class="kw">titleStmt</span>&gt;</span>
+<span id="cb876-5"><a href="exkurs-xml-tei-und-xpath.html#cb876-5" tabindex="-1"></a>    &lt;<span class="kw">title</span>&gt;The shortest TEI Document Imaginable&lt;/<span class="kw">title</span>&gt;</span>
+<span id="cb876-6"><a href="exkurs-xml-tei-und-xpath.html#cb876-6" tabindex="-1"></a>   &lt;/<span class="kw">titleStmt</span>&gt;</span>
+<span id="cb876-7"><a href="exkurs-xml-tei-und-xpath.html#cb876-7" tabindex="-1"></a>   &lt;<span class="kw">publicationStmt</span>&gt;</span>
+<span id="cb876-8"><a href="exkurs-xml-tei-und-xpath.html#cb876-8" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;First published as part of TEI P2, this is the P5</span>
+<span id="cb876-9"><a href="exkurs-xml-tei-und-xpath.html#cb876-9" tabindex="-1"></a>         version using a namespace.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb876-10"><a href="exkurs-xml-tei-und-xpath.html#cb876-10" tabindex="-1"></a>   &lt;/<span class="kw">publicationStmt</span>&gt;</span>
+<span id="cb876-11"><a href="exkurs-xml-tei-und-xpath.html#cb876-11" tabindex="-1"></a>   &lt;<span class="kw">sourceDesc</span>&gt;</span>
+<span id="cb876-12"><a href="exkurs-xml-tei-und-xpath.html#cb876-12" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;No source: this is an original work.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb876-13"><a href="exkurs-xml-tei-und-xpath.html#cb876-13" tabindex="-1"></a>   &lt;/<span class="kw">sourceDesc</span>&gt;</span>
+<span id="cb876-14"><a href="exkurs-xml-tei-und-xpath.html#cb876-14" tabindex="-1"></a>  &lt;/<span class="kw">fileDesc</span>&gt;</span>
+<span id="cb876-15"><a href="exkurs-xml-tei-und-xpath.html#cb876-15" tabindex="-1"></a> &lt;/<span class="kw">teiHeader</span>&gt;</span>
+<span id="cb876-16"><a href="exkurs-xml-tei-und-xpath.html#cb876-16" tabindex="-1"></a> &lt;<span class="kw">text</span>&gt;</span>
+<span id="cb876-17"><a href="exkurs-xml-tei-und-xpath.html#cb876-17" tabindex="-1"></a>  &lt;<span class="kw">body</span>&gt;</span>
+<span id="cb876-18"><a href="exkurs-xml-tei-und-xpath.html#cb876-18" tabindex="-1"></a>   &lt;<span class="kw">p</span>&gt;This is about the shortest TEI document imaginable.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb876-19"><a href="exkurs-xml-tei-und-xpath.html#cb876-19" tabindex="-1"></a>  &lt;/<span class="kw">body</span>&gt;</span>
+<span id="cb876-20"><a href="exkurs-xml-tei-und-xpath.html#cb876-20" tabindex="-1"></a> &lt;/<span class="kw">text</span>&gt;</span>
+<span id="cb876-21"><a href="exkurs-xml-tei-und-xpath.html#cb876-21" tabindex="-1"></a>&lt;/<span class="kw">TEI</span>&gt;</span></code></pre></div>
 <p>Für ein <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#index-egXML-d54e16887">Minimalbeispiel für einen validen Header</a> siehe den Abschnitt “2 The TEI Header” in den TEI-Guidelines. Für Informationen zum Aufbau des Text-Elements siehe <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/DS.html">“4 Default Text Structure”</a>.</p>
 <p>Während dieser Minimalaufbau für alle TEI-Dokumente einheitlich vorgegeben ist, hängt die Wahl der konkreten Elemente und Attribute innerhalb des Headers und des Textkörpers davon ab, welche Textart ausgezeichnet wird. Für bestimmte Textarten finden sich in den <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/">TEI-Guidelines</a> verschiedene <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STMA">Module</a>, die flexibel zu einem <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STIN">TEI Schema</a> kombiniert werden können. Alle Elemente und Attribute, die in einem TEI-Header verwendet werden können, finden sich beispielsweise im Modul “header”. Elemente und Attribute, die zur Auszeichnung von “Performance Texts” wie Dramen verwendet werden können, finden sich im Modul “drama”.</p>
 <p>Der <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/VE.html#index-egXML-d54e59340">Text eines einzelnen Gedichts</a> würde unter Verwendung der Moduls “verse” wie folgt ausgezeichnet werden:</p>
-<div class="sourceCode" id="cb745"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb745-1"><a href="exkurs-xml-tei-und-xpath.html#cb745-1" tabindex="-1"></a>&lt;<span class="kw">text</span>&gt;</span>
-<span id="cb745-2"><a href="exkurs-xml-tei-und-xpath.html#cb745-2" tabindex="-1"></a> &lt;<span class="kw">front</span>&gt;</span>
-<span id="cb745-3"><a href="exkurs-xml-tei-und-xpath.html#cb745-3" tabindex="-1"></a>  &lt;<span class="kw">head</span>&gt;1755&lt;/<span class="kw">head</span>&gt;</span>
-<span id="cb745-4"><a href="exkurs-xml-tei-und-xpath.html#cb745-4" tabindex="-1"></a> &lt;/<span class="kw">front</span>&gt;</span>
-<span id="cb745-5"><a href="exkurs-xml-tei-und-xpath.html#cb745-5" tabindex="-1"></a> &lt;<span class="kw">body</span>&gt;</span>
-<span id="cb745-6"><a href="exkurs-xml-tei-und-xpath.html#cb745-6" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;To make a prairie it takes a clover and one bee,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb745-7"><a href="exkurs-xml-tei-und-xpath.html#cb745-7" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;One clover, and a bee,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb745-8"><a href="exkurs-xml-tei-und-xpath.html#cb745-8" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;And revery.&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb745-9"><a href="exkurs-xml-tei-und-xpath.html#cb745-9" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;The revery alone will do,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb745-10"><a href="exkurs-xml-tei-und-xpath.html#cb745-10" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;If bees are few.&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb745-11"><a href="exkurs-xml-tei-und-xpath.html#cb745-11" tabindex="-1"></a> &lt;/<span class="kw">body</span>&gt;</span>
-<span id="cb745-12"><a href="exkurs-xml-tei-und-xpath.html#cb745-12" tabindex="-1"></a>&lt;/<span class="kw">text</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb877"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb877-1"><a href="exkurs-xml-tei-und-xpath.html#cb877-1" tabindex="-1"></a>&lt;<span class="kw">text</span>&gt;</span>
+<span id="cb877-2"><a href="exkurs-xml-tei-und-xpath.html#cb877-2" tabindex="-1"></a> &lt;<span class="kw">front</span>&gt;</span>
+<span id="cb877-3"><a href="exkurs-xml-tei-und-xpath.html#cb877-3" tabindex="-1"></a>  &lt;<span class="kw">head</span>&gt;1755&lt;/<span class="kw">head</span>&gt;</span>
+<span id="cb877-4"><a href="exkurs-xml-tei-und-xpath.html#cb877-4" tabindex="-1"></a> &lt;/<span class="kw">front</span>&gt;</span>
+<span id="cb877-5"><a href="exkurs-xml-tei-und-xpath.html#cb877-5" tabindex="-1"></a> &lt;<span class="kw">body</span>&gt;</span>
+<span id="cb877-6"><a href="exkurs-xml-tei-und-xpath.html#cb877-6" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;To make a prairie it takes a clover and one bee,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb877-7"><a href="exkurs-xml-tei-und-xpath.html#cb877-7" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;One clover, and a bee,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb877-8"><a href="exkurs-xml-tei-und-xpath.html#cb877-8" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;And revery.&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb877-9"><a href="exkurs-xml-tei-und-xpath.html#cb877-9" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;The revery alone will do,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb877-10"><a href="exkurs-xml-tei-und-xpath.html#cb877-10" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;If bees are few.&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb877-11"><a href="exkurs-xml-tei-und-xpath.html#cb877-11" tabindex="-1"></a> &lt;/<span class="kw">body</span>&gt;</span>
+<span id="cb877-12"><a href="exkurs-xml-tei-und-xpath.html#cb877-12" tabindex="-1"></a>&lt;/<span class="kw">text</span>&gt;</span></code></pre></div>
 </div>
 <div id="wohlgeformtheit-und-validität" class="section level2 hasAnchor" number="11.3">
 <h2><span class="header-section-number">11.3</span> Wohlgeformtheit und Validität<a href="exkurs-xml-tei-und-xpath.html#wohlgeformtheit-und-validität" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -554,7 +569,7 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
           </div>
         </div>
       </div>
-<a href="named-entity-recognition.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-embeddings-und-ner.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="arbeit-mit-xml-tei-dokumenten.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -600,6 +615,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

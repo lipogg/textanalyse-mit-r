@@ -2,21 +2,21 @@
 
 
 
-|Sitzung Nr. |Datum       |Thema                                                             |
-|:-----------|:-----------|:-----------------------------------------------------------------|
-|1           |16.4.       |Einstieg                                                          |
-|2           |23.4.       |R Basics I: Datentypen, Variablen und Operatoren                  |
-|3, 4        |30.4., 7.5. |R Basics II: Datenstrukturen                                      |
-|5           |14.5.       |R Basics III: Kontrollstrukturen                                  |
-|6           |21.5.       |R Basics IV: Funktionen und Pakete                                |
-|7           |28.5.       |R Basics Wiederholung                                             |
-|8           |4.6.        |Textanalyse mit Quanteda I: Korpus, Tokens, Daten und Dateien     |
-|9           |11.6.       |Textanalyse mit Quanteda II: Preprocessing und Reguläre Ausdrücke |
-|10          |18.6.       |Textanalyse mit Quanteda III: Wortfrequenzanalysen                |
-|11          |25.6.       |Part of Speech Tagging und Dependency Parsing mit UDPipe          |
-|12          |2.7.        |Textanalyse Wiederholung                                          |
-|13          |9.7.        |Named Entity Recognition                                          |
-|14          |16.7.       |Arbeit mit XML-TEI Dateien: XML, TEI und XPath                    |
+|Sitzung Nr. |Datum          |Thema                                                             |
+|:-----------|:--------------|:-----------------------------------------------------------------|
+|1           |15.10.         |Einstieg                                                          |
+|2           |22.10.         |R Basics I: Datentypen, Variablen und Operatoren                  |
+|3           |29.10.         |R Basics II: Datenstrukturen                                      |
+|4           |5.11.          |R Basics III: Kontrollstrukturen                                  |
+|5           |12.11.         |R Basics IV: Funktionen und Pakete                                |
+|6           |19.11.         |R Basics Wiederholung                                             |
+|7           |26.11.         |Textanalyse mit Quanteda I: Korpus, Tokens, Daten und Dateien     |
+|8           |3.12.          |Textanalyse mit Quanteda II: Preprocessing und Reguläre Ausdrücke |
+|9, 10       |10. und 17.12. |Textanalyse mit Quanteda III: Wortfrequenzanalysen                |
+|11          |7.1.           |Part of Speech Tagging und Dependency Parsing mit UDPipe          |
+|12          |14.1.          |Textanalyse Wiederholung                                          |
+|13, 14      |21.1., 28.1.   |Named Entity Recognition                                          |
+|15, 16      |4.2., 11.2.    |Arbeit mit XML-TEI Dateien: XML, TEI und XPath                    |
 
 \
 Die Sitzung am 11.6. findet ONLINE statt.
@@ -30,6 +30,6 @@ Da wir viele Themen besprechen werden, erfordert dieses Seminar ein hohes Maß a
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8e14f6786ef7d49b9b65" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-8e14f6786ef7d49b9b65">{"x":{"visdat":{"10f6660efac54":["function () ","plotlyVisDat"]},"cur_data":"10f6660efac54","attrs":{"10f6660efac54":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Lernkurve für dieses Seminar","xaxis":{"domain":[0,1],"automargin":true,"title":"Sitzung Nr."},"yaxis":{"domain":[0,1],"automargin":true,"title":"Erlernte Inhalte"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14],"y":[2,12,22,31,37,46,52,55,58,60,62,65,67,69],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d55fc723c952419abf26" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-d55fc723c952419abf26">{"x":{"visdat":{"f3be40615f35":["function () ","plotlyVisDat"]},"cur_data":"f3be40615f35","attrs":{"f3be40615f35":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Lernkurve für dieses Seminar","xaxis":{"domain":[0,1],"automargin":true,"title":"Sitzung Nr."},"yaxis":{"domain":[0,1],"automargin":true,"title":"Erlernte Inhalte"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14],"y":[2,12,22,31,37,46,52,55,58,60,62,65,67,69],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```

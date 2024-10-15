@@ -5,11 +5,10 @@
 
 library(knitr)
 
-no <- c("1","2","3, 4","5","6","7","8","9","10","11","12","13","14")
-datum <- c("16.4.","23.4.","30.4., 7.5.","14.5.","21.5.",
-           "28.5.","4.6.","11.6.",
-           "18.6.","25.6.","2.7.",
-           "9.7.","16.7.")
+no <- c("1","2","3", "4","5","6","7","8","9, 10", "11","12","13, 14","15, 16")
+datum <- c("15.10.","22.10.","29.10.", "5.11.","12.11.","19.11.",
+           "26.11.","3.12.","10. und 17.12.", "7.1.","14.1.",
+           "21.1., 28.1.", "4.2., 11.2.")
 thema <- c("Einstieg", 
            "R Basics I: Datentypen, Variablen und Operatoren", 
            "R Basics II: Datenstrukturen", 
@@ -33,8 +32,7 @@ kable(df)
 ```
 
 \
-Die Sitzung am 11.6. findet ONLINE statt.
-\
+
 Der Seminarplan ist erst einmal vorläufig. Je nach Lerntempo und Interessen werden wir das ein oder andere Thema mehr oder weniger vertiefen. Die Inhalte bauen grundsätzlich aufeinander auf: Zunächst beschäftigen wir uns mit sogenannten "unstrukturierten" Daten und später mit "(semi-)strukturierten" Daten. Nach einem Einstieg in R steigen wir in die Arbeit mit "rohem Text", also Plaintext-Dateien, als Beispiel für unstrukturierte Daten ein und erarbeiten Grundkonzepte der quantitativen Textanalyse. Dabei werden wir auch diskutieren, was "geisteswissenschaftliche Daten" eigentlich sind. Danach behandeln wir zwei verschiedene Verfahren, wie Texte in R im Hinblick auf bestimmte Textinformationen strukturiert (man sagt auch "annotiert") werden können: das automatisierte Erkennen von Wortarten (Part of Speech Tagging) und von "Entitäten" wie Personennamen und Ortsnamen (Named Entity Recognition).
 Zuletzt widmen wir uns XML-TEI-Dateien als Beispiel für die Analyse (semi-)strukturierter Textdaten. XML-TEI ist ein in den Digital Humanities weit verbreiteter Standard zur digitalen Darstellung von Texten, beispielsweise literarsichen Werken, archivalischen Quellen oder wissenschaftlichen Arbeiten. Mithilfe von XML-TEI können Textinformationen, zum Beispiel Metadaten und bestimmte Bestandteile des Textes, strukturiert dargestellt werden. Die vorgestellten Verfahren können wir natürlich in der kurzen Zeit nur sehr, sehr oberflächlich behandeln. Das Ziel ist es, dass ihr am Ende des Semesters Grundkonzepte des Programmierens in R und grundlegende Anwendungen der Programmiersprache im Bereich der Textanalyse kennt und euch die Fertigkeiten erarbeitet habt, fortgeschrittenere Themen eigenständig weiter zu vertiefen. 
 

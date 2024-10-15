@@ -11,7 +11,7 @@ Hier findet ihr Informationen zu Teilnahmemodalitäten, Prüfungsleistungen und 
 **Leistungsschein:**
 
 * Wie Teilnahmeschein
-* Zusätzlich ein eigenständiges Projekt (ersetzt die Hausarbeit): Ihr plant und implementiert auf der Grundlage der Inhalte aus diesem Seminar ein kleines Digital Humanities Projekt. Im Laufe der Bearbeitung eurer Fragestellung erstellt ihr ein kleines Programmierportfolio mit allen Skripten, die ihr im Rahmen des Projekts erstellt habt. Das Portfolio sendet ihr als Zip-Ordner bis zum 30.09.2024 an l.poggel@fu-berlin.de. Die Anforderungen, Projektbeispiele und die Bewertungsgrundlage für das Portfolio besprechen wir rechtzeitig im Laufe des Semesters.
+* Zusätzlich ein eigenständiges Projekt (ersetzt die Hausarbeit): Ihr plant und implementiert auf der Grundlage der Inhalte aus diesem Seminar ein kleines Digital Humanities Projekt. Im Laufe der Bearbeitung eurer Fragestellung erstellt ihr ein kleines Programmierportfolio mit allen Skripten, die ihr im Rahmen des Projekts erstellt habt. Das Portfolio sendet ihr als Zip-Ordner bis zum 31.03.2025 an l.poggel@fu-berlin.de. Die Anforderungen, Projektbeispiele und die Bewertungsgrundlage für das Portfolio besprechen wir rechtzeitig im Laufe des Semesters.
 
 **Kommunikation:**
 
@@ -20,7 +20,7 @@ Bei Fragen, Kritik oder falls ihr mal eine Sitzung nicht kommen könnt, schreibt
 **Bewertungskriterien für das Abschlussprojekt:** 
 
 * Umfang: Programmierportfolio, bestehend aus mindestens zwei verschiedenen R Skripten und einer Dokumentationsseite, die die Fragestellung, das Korpus, den Forschungsstand und die gewählten Verfahren vorstellt und begründet, sowie die Ergebnisse in Bezug auf die Fragestellung auswertet (4-8 Seiten).
-* Abgabefrist: 30.09.2024
+* Abgabefrist: 31.03.2025
 * Abgabeformat: Programmierportfolio als Zip-Ordner
 
 Beispielportfolio: 

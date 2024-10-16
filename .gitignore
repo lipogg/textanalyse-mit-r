@@ -13,5 +13,5 @@ einfuehrung-in-r.rds
 # Conda environment for Spacy and Flair setup 
 nlp-env/
 
-# Language models
+# Language models 
 models/

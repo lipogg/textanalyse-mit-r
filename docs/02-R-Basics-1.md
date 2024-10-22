@@ -133,7 +133,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 
 
 ```r
-5+4 
+5 + 4 
 ```
 
 ```
@@ -141,7 +141,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 ```
 
 ```r
-10/5
+10 / 5
 ```
 
 ```
@@ -149,7 +149,15 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 ```
 
 ```r
-10%%5
+3 * 6.3
+```
+
+```
+#> [1] 18.9
+```
+
+```r
+10 %% 5
 ```
 
 ```
@@ -424,7 +432,7 @@ Beispiele:
 
 
 ```r
-4+10 > 3+5*2 
+4 + 10 > 3 + 5 * 2 
 ```
 
 ```
@@ -432,7 +440,7 @@ Beispiele:
 ```
 
 ```r
-4+10 > (3+5)*2 
+4 + 10 > (3 + 5) * 2 
 ```
 
 ```

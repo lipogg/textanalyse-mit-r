@@ -118,9 +118,10 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
   `^` oder `**` wird zum Exponieren verwendet. 
 
 ```{r}
-5+4 
-10/5
-10%%5
+5 + 4 
+10 / 5
+3 * 6.3
+10 %% 5
 10^2
 10**2
 
@@ -298,8 +299,8 @@ Beispiele:
 
 ```{r}
 
-4+10 > 3+5*2 
-4+10 > (3+5)*2 
+4 + 10 > 3 + 5 * 2 
+4 + 10 > (3 + 5) * 2 
 FALSE & TRUE == FALSE
 (FALSE & TRUE) == FALSE
 

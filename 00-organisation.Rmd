@@ -19,7 +19,7 @@ Bei Fragen, Kritik oder falls ihr mal eine Sitzung nicht kommen könnt, schreibt
 
 **Bewertungskriterien für das Abschlussprojekt:** 
 
-* Umfang: Programmierportfolio, bestehend aus mindestens zwei verschiedenen R Skripten und einer Dokumentationsseite, die die Fragestellung, das Korpus, den Forschungsstand und die gewählten Verfahren vorstellt und begründet, sowie die Ergebnisse in Bezug auf die Fragestellung auswertet (4-8 Seiten).
+* Umfang: Programmierportfolio, bestehend aus mindestens zwei verschiedenen R Skripten und einer Dokumentationsseite, die die Fragestellung, das Korpus, den Forschungsstand und die gewählten Verfahren vorstellt und begründet, sowie die Ergebnisse in Bezug auf die Fragestellung auswertet. Der Umfang der Dokumentationstextes (exklusive Code) sollte 4-8 Seiten (ca. 1200-3000 Wörter) entsprechen.
 * Abgabefrist: 31.03.2025
 * Abgabeformat: Programmierportfolio als Zip-Ordner
 

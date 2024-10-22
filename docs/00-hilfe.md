@@ -32,10 +32,10 @@ Allgemein:
 
 Lehrbuch-Klassiker (für Grundlagen, bei speziellen Anwendungen zum Teil nicht mehr aktuell): 
 
+* Arnold, Taylor und Tilton, Lauren (2024). Humanities Data in R. Exploring Networks, Geospatial Data, Images, and Text:  https://doi.org/10.1007/978-3-031-62566-4
 * Jockers, Matthew und Thalken, Rosamond (2020). Text Analysis with R for Students of Literature: https://doi.org/10.1007/978-3-030-39643-5
-* Levshina, Natalia (2015). How to Do Linguistics with R: https://doi.org/10.1075/z.195
-* Arnold, Taylor und Tilton, Lauren (2015, Neuauflage kommt 2023). Humanities Data in R:  https://doi.org/10.1007/978-3-319-20702-5
 * Desagulier, Guillaume (2017). Corpus Linguistics and Statistics with R: https://doi.org/10.1007/978-3-319-64572-8
+* Levshina, Natalia (2015). How to Do Linguistics with R: https://doi.org/10.1075/z.195
 
 Textanalyse mit Quanteda: 
 
@@ -56,7 +56,9 @@ Statistik:
 
 * (grundlegend) Handl, Andreas und Kuhlenkasper, Torben (2018). Einführung in die Statistik. Theorie und Praxis mit R: https://doi.org/10.1007/978-3-662-56440-0
 * (grundlegend) Gries, Stefan (2021). Statistics for Linguistics with R: https://doi.org/10.1515/9783110718256
+* (grundlegend) Blitzstein, Joe. Vorlesungsvideos, interaktiver Kurs und Buch Statistics 110: Probability, https://projects.iq.harvard.edu/stat110/home
 * (fortgeschritten) Kroonenberg, Pieter (2021). Multivariate Humanities: https://doi.org/10.1007/978-3-030-69150-9
+* (fortgeschritten) Handl, Andreas und Kuhlenkasper, Torben (2017). Multivariate Analysemethoden. Theorie und Praxis mit R: https://doi.org/10.1007/978-3-662-54754-0
 
 Hintergrund Preprocessing und Natural Language Processing (POS Tagging, Dependency Parsing, NER,...): 
 
@@ -66,8 +68,25 @@ Hintergrund Preprocessing und Natural Language Processing (POS Tagging, Dependen
 
 Theorie (wird fortlaufend ergänzt):
 
-* Gius, Evelyn und Jacke, Janina (2022). *Are Computational Literary Studies Structuralist?*, in: Journal of Cultural Analytics 7, no. 4, https://doi.org/10.22148/001c.46662.
-* Pichler, Axel und Reiter, Nils (2021), *Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse*, in: Journal of Literary Theory 15, no. 1-2,  https://doi.org/10.1515/jlt-2021-2008. 
-* Bhattacharyya, Sayan (2021). *Text Analysis for Thought in the Black Atlantic*, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, https://muse.jhu.edu/book/84470. 
+* Gius, Evelyn und Jacke, Janina (2022). *Are Computational Literary Studies Structuralist?*, in: Journal of Cultural Analytics 7, no. 4, https://doi.org/10.22148/001c.46662. <mark>(Woche 1)</mark>
+* Pichler, Axel und Reiter, Nils (2021), *Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse*, in: Journal of Literary Theory 15, no. 1-2,  https://doi.org/10.1515/jlt-2021-2008. <mark>(W1)</mark>
+* Bhattacharyya, Sayan (2021). *Text Analysis for Thought in the Black Atlantic*, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, https://muse.jhu.edu/book/84470. <mark>(W1)</mark>
+* Stoltz, Dustin und Taylor, Marshall (2024). *Mapping Texts*. S. XIII und Ch. 1: Text in Context, https://doi.org/10.1093/oso/9780197756874.001.0001. <mark>(W1)</mark>
 * Pichler, Axel und Reiter, Nils (2022). *From Concepts to Texts and Back: Operationalization as a Core Activity of Digital Humanities*, https://culturalanalytics.org/article/57195
+* Risam, Roopika (2019). *New Digital Worlds. Postcolonial Digital Humanities in Theory, Praxis, and Pedagogy.* Ch. 1: The Stakes of Postcolonial Digital Humanities (insb. Abschnitt World Making in Digital Humanities), https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9961448530002883.
 * Bubenhofer, Noah und Scharloth, Joachim (2013). *Korpuslinguistische Diskursanalyse*, in: Ulrike Hanna Meinhof, Martin Reisigl und Ingo Warnke (Hrsg.), Diskurslinguistik im Spannungsfeld von Deskription und Kritik, S. 147-167. https://doi.org/10.1524/9783050061047.147
+* Bode, Katherine (2017), *The Equivalence of "Close" and "Distant" Reading; or, Toward a New Object for Data-Rich Literary History*, 
+https://doi.org/10.1215/00267929-3699787. 
+* Kleymann, Rabea (2022). *Datendiffraktion: Von Mixed zu Entangled Methods in den Digital Humanities*, https://doi.org/10.17175/sb005_008. 
+* Eve, Martin Paul (2022). *The Digital Humanities and Literary Studies.* Introduction,  https://doi.org/10.1093/oso/9780198850489.003.0001 (für Skeptiker:innen)
+* Bond, Sarah, Long, Hoyt und Underwood, Ted (2017). *'Digital' Is Not the Opposite of 'Humanities'*, https://www.chronicle.com/article/digital-is-not-the-opposite-of-humanities/. (für Skeptiker:innen)
+
+Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu Theorie, Operationalisierung, Daten, ...): https://zfdg.de/wp_2023_001. 
+
+Einige Digital Humanities Zeitschriften (für die eigene Recherche): 
+
+* Zeitschrift für digitale Geisteswissenschaften, https://zfdg.de/
+* Digital Humanities Quarterly, https://www.digitalhumanities.org/dhq/
+* Journal of Cultural Analytics, https://culturalanalytics.org/
+* Journal of Computational Literary Studies, https://jcls.io/
+* Journal of Digital History, https://journalofdigitalhistory.org/ 

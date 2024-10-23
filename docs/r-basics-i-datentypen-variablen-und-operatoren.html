@@ -432,7 +432,7 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <li>Variablennamen dürfen keine Sonderzeichen außer Punkte und Unterstriche enthalten (Regel!).</li>
 <li>Zwei Wörter oder ein Wort und eine Zahl können mit Unterstrich, Punkt, oder camelCase getrennt werden. Wickhams Empfehlung ist hier die Verwendung des Unterstrichs.</li>
 <li>Variablen dürfen nicht mit einer Zahl oder einem Unterstrich anfangen (Regel!).</li>
-<li>R ist “case sensitive”, das heißt: die Variable <code>baum</code> ist nicht dasselbe wie die Variable <code>Baum</code>!</li>
+<li>R ist “case sensitive”, das heißt: die Variable <code>baum</code> ist nicht dasselbe wie die Variable <code>Baum</code>! Wickham empfiehlt, alle Variablennamen klein zu schreiben.</li>
 <li>Mit dem Zuweisungsoperator <code>&lt;-</code> bzw. <code>=</code> kann ein Wert einem Namen zugewiesen werden. <code>&lt;-</code> und <code>=</code> sind gleichbedeutend; Wickham empfiehlt aber die Verwendung des Operators <code>&lt;-</code>.</li>
 </ul>
 <p>Beim Ausführen einer Zuweisung wird nichts auf dem Bildschirm (auf der Rstudio Konsole) ausgegeben. Nach der Zuweisung können Werte, die einer Variable zugeordnet sind, mithilfe der Funktion <code>print()</code> auf dem Bildschirm ausgegeben werden. Alternativ kann auch einfach der Variablennamen erneut eingegeben und ausgeführt werden.</p>
@@ -466,8 +466,8 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <li>Warum wird das erste Mal, dass die Anweisung <code>print(satz)</code> ausgeführt wird, ein anderer Wert ausgegeben, als beim zweiten Mal?</li>
 <li>Warum wird der Ausdruck <code>satz == Satz</code> zu <code>FALSE</code> evaluiert?</li>
 <li>Warum ist es nicht korrekt zu sagen, dass bei der Zuweisung ein Wert in einer Variable gespeichert wird?</li>
-<li>Wie könn die Ausdrücke <code>1 &gt; 2 &amp; 1 &lt; 4</code>, <code>1 &gt; 2 &amp;&amp; 1 &lt; 4</code> und <code>1 == 1 &amp;&amp; 1 &lt; 4</code> mithilfe von Variablen so umgeschrieben werden, dass sich die Zahl 1 nicht wiederholt?</li>
-<li>Was passiert, wenn <code>23 -&gt; zahl</code> ausgeführt wird?</li>
+<li>Wie könn die Ausdrücke <code>1 &gt; 2 &amp; 1 &lt; 4</code>, <code>1 &gt; 2 | 1 &lt; 4</code> und <code>(1 &lt; 4) == "Hund"</code> mithilfe von Variablen so umgeschrieben werden, dass sich die Zahl 1 nicht wiederholt?</li>
+<li>Was passiert, wenn der Code <code>23 -&gt; zahl</code> ausgeführt wird?</li>
 </ul>
 </div>
 <p>Nicht nur einzelne Werte können Variablen zugewiesen werden, sondern auch ganze Ausdrücke. In der nächsten Stunde werden wir außerdem sehen, dass auch Datenstrukturen Variablen zugewiesen werden können.</p>
@@ -501,47 +501,51 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <tbody>
 <tr>
 <td>1</td>
-<td>$</td>
+<td>()</td>
 </tr>
 <tr>
 <td>2</td>
-<td>[], [[]]</td>
+<td>$</td>
 </tr>
 <tr>
 <td>3</td>
-<td>^</td>
+<td>[], [[]]</td>
 </tr>
 <tr>
 <td>4</td>
-<td>[:]</td>
+<td>^</td>
 </tr>
 <tr>
 <td>5</td>
-<td>*, /</td>
+<td>[:]</td>
 </tr>
 <tr>
 <td>6</td>
-<td>+, -</td>
+<td>*, /</td>
 </tr>
 <tr>
 <td>7</td>
-<td>&lt;, &gt;, &lt;=, &gt;=, ==, !=</td>
+<td>+, -</td>
 </tr>
 <tr>
 <td>8</td>
-<td>!</td>
+<td>&lt;, &gt;, &lt;=, &gt;=, ==, !=</td>
 </tr>
 <tr>
 <td>9</td>
-<td>&amp;, &amp;&amp;</td>
+<td>!</td>
 </tr>
 <tr>
 <td>10</td>
-<td>⎮, ⎮⎮</td>
+<td>&amp;, &amp;&amp;</td>
 </tr>
 <tr>
 <td>11</td>
-<td>&lt;-</td>
+<td>⎮, ⎮⎮</td>
+</tr>
+<tr>
+<td>12</td>
+<td>&lt;-, =</td>
 </tr>
 </tbody>
 </table>

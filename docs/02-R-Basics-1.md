@@ -304,7 +304,7 @@ Bei der Benennung von Variablen sollten bestimmte **Regeln und die Konventionen*
 - Variablennamen dürfen keine Sonderzeichen außer Punkte und Unterstriche enthalten (Regel!).
 - Zwei Wörter oder ein Wort und eine Zahl können mit Unterstrich, Punkt, oder camelCase getrennt werden. Wickhams Empfehlung ist hier die Verwendung des Unterstrichs.
 - Variablen dürfen nicht mit einer Zahl oder einem Unterstrich anfangen (Regel!). 
-- R ist "case sensitive", das heißt: die Variable `baum` ist nicht dasselbe wie die Variable `Baum`! 
+- R ist "case sensitive", das heißt: die Variable `baum` ist nicht dasselbe wie die Variable `Baum`! Wickham empfiehlt, alle Variablennamen klein zu schreiben. 
 - Mit dem Zuweisungsoperator `<-` bzw. `=` kann ein Wert einem Namen zugewiesen werden. `<-` und `=` sind gleichbedeutend; Wickham empfiehlt aber die Verwendung des Operators `<-`.  
 
 Beim Ausführen einer Zuweisung wird nichts auf dem Bildschirm (auf der Rstudio Konsole) ausgegeben. Nach der Zuweisung können Werte, die einer Variable zugeordnet sind, mithilfe der Funktion `print()` auf dem Bildschirm ausgegeben werden. Alternativ kann auch einfach der Variablennamen erneut eingegeben und ausgeführt werden. 
@@ -376,8 +376,8 @@ Verständnisfragen:
 - Warum wird das erste Mal, dass die Anweisung `print(satz)` ausgeführt wird, ein anderer Wert ausgegeben, als beim zweiten Mal? 
 - Warum wird der Ausdruck `satz == Satz` zu `FALSE` evaluiert? 
 - Warum ist es nicht korrekt zu sagen, dass bei der Zuweisung ein Wert in einer Variable gespeichert wird? 
-- Wie könn die Ausdrücke `1 > 2 & 1 < 4`, `1 > 2 && 1 < 4` und `1 == 1 && 1 < 4` mithilfe von Variablen so umgeschrieben werden, dass sich die Zahl 1 nicht wiederholt? 
-- Was passiert, wenn `23 -> zahl` ausgeführt wird? 
+- Wie könn die Ausdrücke `1 > 2 & 1 < 4`, `1 > 2 | 1 < 4` und `(1 < 4) == "Hund"` mithilfe von Variablen so umgeschrieben werden, dass sich die Zahl 1 nicht wiederholt? 
+- Was passiert, wenn der Code `23 -> zahl` ausgeführt wird? 
 :::
 
 Nicht nur einzelne Werte können Variablen zugewiesen werden, sondern auch ganze Ausdrücke. In der nächsten Stunde werden wir außerdem sehen, dass auch Datenstrukturen Variablen zugewiesen werden können. 
@@ -414,17 +414,18 @@ Wir haben bereits einige Beispiele für Ausdrücke kennengelernt, die mehrere Op
 
  | Rang |  Operator       |
   |---------|-------------------|
-  | 1      |  $  |
-  | 2     |  [], [[]]  |
-  | 3      |  ^     |
-  | 4      |  [:]   |
-  | 5    |  *, /    |
-  | 6   |  +, -    |
-  | 7 | <, >, <=, >=, ==, != |
-  | 8 | !    |
-  | 9 | &, && |
-  | 10 | ⎮, ⎮⎮ |
-  | 11 | <- |
+  | 1       | \(\)  |
+  | 2      |  $  |
+  | 3     |  [], [[]]  |
+  | 4      |  ^     |
+  | 5      |  [:]   |
+  | 6    |  *, /    |
+  | 7   |  +, -    |
+  | 8 | <, >, <=, >=, ==, != |
+  | 9 | !    |
+  | 10 | &, && |
+  | 11 | ⎮, ⎮⎮ |
+  | 12 | <-, = |
 
 Wenn diese Auswertungsreihenfolge geändert werden soll, müssen runde Klammern verwendet werden. 
 

@@ -451,10 +451,11 @@ Sehr anschaulich illustriert dieser Abschnitt in [Hadley Wickham's Lehrbuch "Adv
 ```{r, echo = FALSE, out.width = NULL}
 knitr::include_graphics("images/wickham-train.png")
 knitr::include_graphics("images/wickham-train-single.png")
+```
+```{r, echo = FALSE, out.width = NULL, fig.cap = "Quelle: Hadley Wickham (2019),  https://adv-r.hadley.nz/subsetting.html#subset-single"}
 knitr::include_graphics("images/wickham-train-multiple.png")
 ```
 
-Quelle: Hadley Wickham, Advanced R,  https://adv-r.hadley.nz/subsetting.html#subset-single
 
 Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `einkauf_gesamt` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
 
@@ -524,6 +525,8 @@ print(weather_list)
 knitr::include_graphics("images/matrix.png")
 ```
 
+### Matrizen erstellen 
+
 Da Matrizen aus Vektoren bestehen, können Matrizen erstellt werden, indem mehrere Vektoren kombiniert werden, oder, indem ein einzelner Vektor in verschiedene Spalten aufgeteilt wird. Dabei wird bei der Erstellung der Matrix mithilfe dem Zusatz  `ncol` festgelegt, in wie viele Spalten die Elemente des Vektors organisiert werden sollen. 
 
 Wir betrachten zunächst ein ganz simples Beispiel:  
@@ -536,7 +539,7 @@ print(fruechte)
 dim(fruechte) # Dimension ist 2 x 3
 ```
 
-Die Matrix `fruechte` ist jedoch nicht sehr informativ. Häufig haben die Spalten und Zeilen einer Matrix eine Bedeutung, sodass es sinnvoll ist, die Zeilen und/oder Spalten zu benennen. Wenn die Matrix wie im Beispiel oben aus einem einzelnen Vektor erstellt wird, können direkt beim Erstellen der Matrix die Zeilen- und Spaltennamen angegeben werden. In unserem Beispiel macht es nicht so viel Sinn, auch den Zeilen eine Bedeutung zu geben. Deswegen verwenden wir in der Funktion `list()` innerhalb der Funktion `matrix()` hier den Wert `NULL` (siehe dazu den Abschnitt "Fehlende und ungültige Werte in Datenstrukturen"). Wenn Zeilennamen festgelegt werden sollen, kann `NULL` einfach durch einen Vektor mit den Zeilennamen ausgetauscht werden.
+Die Matrix `fruechte` ist jedoch nicht sehr informativ. Häufig haben die Spalten und Zeilen einer Matrix eine Bedeutung, sodass es sinnvoll ist, die Zeilen und/oder Spalten zu benennen. Wenn die Matrix wie im Beispiel oben aus einem einzelnen Vektor erstellt wird, können direkt beim Erstellen der Matrix die **Zeilen- und Spaltennamen** angegeben werden. In unserem Beispiel macht es nicht so viel Sinn, auch den Zeilen eine Bedeutung zu geben. Deswegen verwenden wir in der Funktion `list()` innerhalb der Funktion `matrix()` hier den Wert `NULL` (siehe dazu den Abschnitt "Fehlende und ungültige Werte in Datenstrukturen"). Wenn Zeilennamen festgelegt werden sollen, kann `NULL` einfach durch einen Vektor mit den Zeilennamen ausgetauscht werden.
 Beachtet, dass es einen Unterschied macht, ob die Elemente der Liste einen Namen haben oder nicht: 
 
 ```{r}
@@ -557,7 +560,7 @@ matrix(c("Apfel", "Orange", "Banane", "Kiwi", "Birne", "Erdbeere"),
 
 ```
 
-Wenn Matrizen aus mehreren Vektoren erstellt werden, sind die Spalten- bzw. Zeilennamen automatisch die Namen der Vektoren, aus denen die Matrix erstellt wurde. Um Matrizen aus bereits existierenden Vektoren zu erstellen, kann entweder die Funktion `rbind()` oder die Funktion `cbind()` verwendet werden. `rbind()` fügt die Vektoren als Zeilen, also übereinander, zusammen. `cbind()` fügt die Vektoren als Spalten, also nebeneinander, zusammen.  
+Wenn Matrizen aus mehreren Vektoren erstellt werden, sind die Spalten- bzw. Zeilennamen automatisch die Namen der Vektoren, aus denen die Matrix erstellt wurde. Um **Matrizen aus bereits existierenden Vektoren** zu erstellen, kann entweder die Funktion `rbind()` oder die Funktion `cbind()` verwendet werden. `rbind()` fügt die Vektoren als Zeilen, also übereinander, zusammen. `cbind()` fügt die Vektoren als Spalten, also nebeneinander, zusammen.  
 
 ```{r}
 
@@ -575,40 +578,61 @@ fruechte_einkauf
 
 ```
 
+Matrizen können auch **aus anderen bereits existierenden Matrizen** erstellt werden. Hierzu könen ebenfalls die Funktionen `rbind()` und `cbind()` verwendet werden:
+
+```{r}
+# Matrizen zeilenweise kombinieren
+mat_3 <- rbind(nicht_vorraetig, vorraetig)
+mat_3
+
+# Matrizen spaltenweise kombinieren
+mat_4 <- cbind(nicht_vorraetig, vorraetig)
+mat_4
+```
+ 
+
 Matrizen können auch in Dataframes umgewandelt werden und umgekehrt. Das behandeln wir im Abschnitt "Dataframes". 
 
 ### Operationen auf Matrizen 
 
+Zugriff auf eine Zeile und Zeilen (um)benennen: 
 ```{r}
 # Zugriff auf Zeile 1
-fruechte[1,]
-
-# Zugriff auf Spalte 1
-fruechte[,1]
-
-# Zugriff auf das Element in Zeile 1 und Spalte 2
-fruechte[1,2]
-
-# Zugriff auf Spalte mit dem Namen "vorraetig"
-fruechte_einkauf[, "vorraetig"]
-
+fruechte[1, ]
 # Zeilen nachträglich (um)benennen
 rownames(fruechte_einkauf) <- c("kuehlschrank", "vorratskammer", "regal")
 fruechte_einkauf
-
 # Zugriff auf Zeile mit dem Namen "kuehlschrank"
 fruechte_einkauf["kuehlschrank", ]
+```
 
-# Zugriff auf alle Elemente mit dem Wert "Banane"
-fruechte[fruechte == "Banane"]
 
+Zugriff auf eine Spalte und Spalten (um)benennen: 
+```{r}
+# Zugriff auf Spalte mit Index 1
+fruechte[, 1]
+# Zugriff auf Spalte mit dem Namen "vorraetig"
+fruechte_einkauf[, "vorraetig"]
 # Spalten nachträglich (um)benennen
 colnames(fruechte_einkauf) <- c("vorhanden", "nicht_vorhanden")
 
+```
+
+Zugriff auf ein Element: 
+```{r}
+# Zugriff auf das Element in Zeile 1 und Spalte 2
+fruechte[1, 2]
+```
+
+Bedingter Zugriff, hier Zugriff auf alle Elemente mit dem Wert "Banane": 
+
+```{r}
+# Zugriff auf alle Elemente mit dem Wert "Banane"
+fruechte[fruechte == "Banane"]
 
 ```
 
-Da Matrizen aus Vektoren bestehen, können wie auf Vektoren  auch auf Matrizen die bereits bekannten Operatoren angewendet werden. Dabei wird wieder der Mechanismus der Vektorisierung aktiviert: Wenn Operatoren auf Matrizen angewandt werden, wird die Operation automatisch elementweise auf jedes Element der Matrix angewandt: 
+Da Matrizen aus Vektoren bestehen, können wie auf Vektoren auch auf Matrizen die bereits bekannten Operatoren angewendet werden. Dabei wird wieder der Mechanismus der Vektorisierung aktiviert: Wenn Operatoren auf Matrizen angewandt werden, wird die Operation automatisch elementweise auf jedes Element der Matrix angewandt: 
 
 ```{r}
 
@@ -621,7 +645,7 @@ mat_1 + mat_2
 
 ```
 
-Matrizen können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren die Funktionen `rbind()` und `cbind()` verwendet. 
+Matrizen können auch kombiniert werden. Wir haben ja bereits beim Erstellen von Matrizen aus bereits existierenden Vektoren oder Matrizen die Funktionen `rbind()` und `cbind()` verwendet:
 
 ```{r}
 # Matrizen zeilenweise kombinieren
@@ -634,7 +658,7 @@ mat_4
  
 ```
 
-Eine Voraussetzung dafür, dass Matrizen kombiniert werden können, ist, dass sie dieselbe Anzahl von Zeilen und Spalten (also dieselbe Dimension) haben. Die beiden Matrizen `mat_3` und `mat_4` haben beispielsweise umgekehrte Dimensionen: `mat_3` ist eine 4x2-Matrix, und `mat_4` ist eine 2x4-Matrix. Wenn die beiden Matrizen kombiniert werden sollen, müssen sie erst in dieselbe Form gebracht werden. Das geht ganz einfach mithilfe der Funktion `t()`. Das `t` steht dabei für "Transponieren". 
+Matrizen können aber nicht immer kombiniert werden. Eine Voraussetzung dafür, dass Matrizen kombiniert werden können, ist, dass sie dieselbe Anzahl von Zeilen und Spalten (also dieselbe Dimension) haben. Die beiden Matrizen `mat_3` und `mat_4` haben beispielsweise umgekehrte Dimensionen: `mat_3` ist eine 4x2-Matrix, und `mat_4` ist eine 2x4-Matrix. Wenn die beiden Matrizen kombiniert werden sollen, müssen sie erst in dieselbe Form gebracht werden. Das geht ganz einfach mithilfe der Funktion `t()`. Das `t` steht dabei für "**Transponieren**". 
 
 ```{r}
 # Matrix mat_3 transponieren
@@ -685,14 +709,26 @@ Die Dimension des Arrays `fruechte_array` lässt sich an der Länge des Vektors 
 
 ### Operationen auf Arrays 
 
+Zugriff auf eine Matrix:
 ```{r}
 # Zugriff auf die erste Matrix 
-fruechte_array[,,1]
+fruechte_array[,, 1]
+```
+
+Zugriff auf eine Spalte einer Matrix:
+```{r}
 # Zugriff auf die zweite Spalte der ersten Matrix 
-fruechte_array[,2,1]
+fruechte_array[, 2, 1]
+```
+
+Zugriff auf ein Element: 
+```{r}
 # Zugriff auf das Element in der ersten Zeile und zweiten Spalte der ersten Matrix 
-fruechte_array[1,2,1]
-# Dimensionen benennen 
+fruechte_array[1, 2, 1]
+```
+
+Dimensionen benennen:
+```{r}
 dimnames(fruechte_array) <- list(
   Vorratsstatus = c("vorraetig", "nicht_vorraetig"),
   Vorratsort = c("kuehlschrank", "vorratskammer", "regal"),
@@ -704,13 +740,15 @@ fruechte_array
 
 ## Dataframes
 
-**Dataframes werden zur Darstellung tabellarischer Daten verwendet.** Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: **Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können.** **Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste, bei der jedes Element dieselbe Länge haben muss**: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden. 
+**Dataframes werden zur Darstellung tabellarischer Daten verwendet.** Sie ähneln auf den ersten Blick Matrizen, jedoch können sie Elemente unterschiedlichen Typs beinhalten: **Jede Spalte eines Dataframes ist ein Vektor, aber anders als bei Matrizen können die Zeilen nicht als Vektoren aufgefasst werden, da die Elemente in den verschiedenen Spalten unterschiedliche Datentypen haben können.** **Genauer gesagt ist ein Dataframe also eigentlich eine Art von Liste von Vektoren, bei der jedes Element, also jeder Vektor, dieselbe Länge haben muss**: Eine Liste mit fünf Elementen vom Typ numeric könnte bespielsweise genausogut als Dataframe mit einer Zeile und fünf Spalten dargestellt werden. Eine Liste mit vier Elementen, wobei die Elemente Vektoren mit jeweils zwei Elementen sind, könnte als Dataframe mit zwei Zeilen und vier Spalten dargestellt werden. **Anders als bei einer Liste hat in einem Dataframe aber nicht nur jede Spalte, sondern auch jede Zeile einen Index.** Darauf kommen wir im Abschnitt "Operationen auf Dataframes" zurück.
 
 ```{r, echo = FALSE, out.width = NULL}
 knitr::include_graphics("images/dataframe.png")
 ```
 
-Weil die Spalten eines Dataframes Vektoren sind, kann man Dataframes "spaltenweise" erstellen. Dazu erstellt man zunächst entweder einen Vektor für jede Spalte und kombiniert diese dann mithilfe der Funktion `data.frame()` in ein Dataframe-Objekt: 
+### Dataframes erstellen
+
+Weil die Spalten eines Dataframes Vektoren sind, kann man Dataframes "spaltenweise" **aus Vektoren** erstellen. Dazu erstellt man zunächst entweder einen Vektor für jede Spalte und kombiniert diese dann mithilfe der Funktion `data.frame()` in ein Dataframe-Objekt: 
 
 ```{r}
 
@@ -729,7 +767,7 @@ print(fruechte_df)
 
 ```
 
-Oder man erstellt eine Liste, bei der jedes Element ein Vektor ist und stellt die Liste anschließend mit der Funktion `as.data.frame()` als Dataframe dar: 
+Dataframes können aber auch **aus Listen** erstellt werden. Dabei wird zuerst eine Liste erstellt, bei der jedes Element ein Vektor ist und stellt die Liste anschließend mit der Funktion `as.data.frame()` als Dataframe dar: 
 
 ```{r}
 
@@ -742,7 +780,7 @@ fruechte_df <- as.data.frame(liste_von_vektoren)
 print(fruechte_df) 
 ```
 
-Dataframes können auch aus Matrizen erstellt werden, zum Beispiel aus unserer Matrix `fruechte_einkauf`: 
+Dataframes können auch **aus Matrizen** erstellt werden, zum Beispiel aus unserer Matrix `fruechte_einkauf`: 
 
 ```{r}
 # Dataframe aus Matrix erstellen 
@@ -755,7 +793,7 @@ fruechte_df <- as.data.frame(fruechte_einkauf)
 fruechte_df
 ```
 
-Allerdings sind in diesem Fall noch einige Operationen notwendig, um zusätzliche Informationen hinzuzufügen und den Dataframe in die gewünschte Form zu bringen. In einem Dataframe wäre es üblich, die Früchte in einer Spalte aufzulisten und für den Vorratsstatus wie in den Beispielen zuvor eine eigene Spalte anzulegen:
+Allerdings sind in diesem Fall noch einige Operationen notwendig, um zusätzliche Informationen hinzuzufügen und den Dataframe in die gewünschte Form zu bringen. In unserem Beispiel wäre es sinnvoll, die Früchte in einer Spalte aufzulisten und für den Vorratsstatus wie in den Beispielen zuvor eine eigene Spalte anzulegen:
 
 ```{r}
 # Dataframe mithilfe der Funktion stack() umformen 
@@ -773,44 +811,69 @@ fruechte_df
 
 ```
 
-Der Dataframe ist immer noch nicht ideal. Zum Beispiel sind die Spaltennamen nicht besonders intuitiv und sollten lieber umbenannt werden, und es fehlt noch die Spalte `anzahl` mit der Anzahl der vorrätigen Früchte.  
+Der Dataframe ist immer noch nicht ideal. Zum Beispiel sind die Spaltennamen nicht besonders intuitiv und sollten lieber umbenannt werden, und es fehlt noch die Spalte `anzahl` mit der Anzahl der vorrätigen Früchte. Im folgenden Abschnitt werden Operationen zum Zugriff und zur Transformation von Dataframes vorgestellt, mit denen solche Umformungen umgesetzt werden können.  
 
 ### Operationen auf Dataframes 
 
+Spalten umbenennen:
 ```{r}
-# Spalten umbenennen - Option 1
+# Option 1
 colnames(fruechte_df) <- c("frucht", "vorraetig")
-# Spalten umbenennen - Option 2
-# fruechte_df$values <- fruechte_df$frucht
-# fruechte_df$ind <- fruechte_df$vorraetig
+```
+```{r eval=FALSE}
+# Option 2
+fruechte_df$values <- fruechte_df$frucht
+fruechte_df$ind <- fruechte_df$vorraetig
+```
 
-# Spalte hinzufügen
+Spalte hinzufügen:
+```{r}
 fruechte_df$anzahl <- c(0, 0, 0, 5, 20, 32)
 fruechte_df
+```
 
-# Anordnung der Spalten ändern
+Anordnung der Spalten ändern:
+```{r}
 fruechte_df <- fruechte_df[c("frucht", "anzahl", "vorraetig")]
 fruechte_df
+```
 
-# Zugriff auf eine Spalte über den Namen der Spalte - Option 1
+Zugriff auf eine Spalte über den Namen der Spalte:
+```{r}
+# Option 1
 fruechte_df$frucht
-# Zugriff auf eine Spalte über den Namen der Spalte - Option 2
+# Option 2
 fruechte_df[["frucht"]]
+```
 
-# Zugriff auf einzelne Elemente über den Spaltennamen und den Index der Zeile
+Zugriff auf eine Spalte über den Spaltenindex:
+```{r}
+fruechte_df[, 1]
+```
+
+Zugriff auf eine Zeile:
+```{r}
+fruechte_df[1, ]
+```
+
+Zugriff auf einzelne Elemente über den Spaltennamen und den Index der Zeile:
+```{r}
+# Zugriff auf Element in Spalte "frucht" und Zeile 3
 fruechte_df$frucht[3]
-fruechte_df$frucht[c(1,4)]
+# Zugriff auf Elemente in Spalte "frucht" und Zeilen 1 und 4
+fruechte_df$frucht[c(1, 4)]
+# Zugriff auf Elemente in Spalte "frucht" und Zeilen 1 bis 4
 fruechte_df$frucht[c(1:4)]
+```
 
-# Zugriff auf eine Spalte über die Indexposition
-fruechte_df[,1]
-
-# Zugriff auf eine Zeile
-fruechte_df[1,]
-
+Zugriff auf einzelne Elemente über den Spaltenindex und den Zeilenindex:
+```{r}
 # Zugriff auf das Element in Zeile 1 und Spalte 2
-fruechte_df[1,2]
+fruechte_df[1, 2]
+```
 
+Bedingter Zugriff auf Zeilen oder Elemente, die eine bestimmte Bedingung erfüllen: 
+```{r}
 # Zugriff auf alle Zeilen, in denen in der Spalte anzahl der Wert 20 steht
 fruechte_df[fruechte_df$anzahl == 20, ]
 
@@ -819,14 +882,15 @@ fruechte_df$frucht[fruechte_df$anzahl == 20]
 
 # Zugriff auf alle Elemente in der Spalte frucht, für die in der Spalte anzahl ein Wert kleiner als 20 steht
 fruechte_df$frucht[fruechte_df$anzahl < 20]
-
-# Spalte entfernen: hier auskommentiert, da wir die Spalte für unser Beispiel behalten wollen
-# fruechte_df$anzahl <- NULL 
-
 ```
 
-Zugriffsoperationen der Art `fruechte_df$frucht[fruechte_df$anzahl == 20]` und `fruechte_df$frucht[fruechte_df$anzahl < 20]` sehen auf den ersten Blick unübersichtlich aus, aber hier passiert im Grunde genau dasselbe, was wir bereits vom bedingten Zugriff auf Vektoren kennen: Zunächst wird der Ausdruck in den eckigen Klammern ausgewertet. Da jede Spalte in einem Dataframe ein Vektor ist, wird dabei der Mechanismus der Vektorisierung aktiviert und der Ausdruck wird zu einem logischen Vektor aus Wahrheitswerten evaluiert. In diesem Vektor steht `TRUE`, wenn ein Element in der Spalte `fruechte_df$anzahl` genau 20 bzw. kleiner als 20 ist, und `FALSE` sonst. Mit der Zugriffsoperation `fruechte_df$frucht[]` wird dann auf alle Elemente in der Spalte `frucht` zugegriffen, für die in der Spalte `anzahl` in derselben Zeile ein Wert genau 20 bzw. kleiner 20 steht. 
+Spalte entfernen:
+```{r}
+# hier auskommentiert, da wir die Spalte für unser Beispiel behalten wollen
+# fruechte_df$anzahl <- NULL 
+```
 
+Zugriffsoperationen der Art `fruechte_df$frucht[fruechte_df$anzahl == 20]` und `fruechte_df$frucht[fruechte_df$anzahl < 20]` sehen auf den ersten Blick unübersichtlich aus, aber hier passiert im Grunde genau dasselbe, was wir bereits vom bedingten Zugriff auf Vektoren kennen: Zunächst wird der Ausdruck in den eckigen Klammern ausgewertet. Da jede Spalte in einem Dataframe ein Vektor ist, wird dabei wieder der Mechanismus der Vektorisierung aktiviert und der Ausdruck wird zu einem logischen Vektor aus Wahrheitswerten evaluiert. In diesem Vektor steht `TRUE`, wenn ein Element in der Spalte `fruechte_df$anzahl` genau 20 bzw. kleiner als 20 ist, und `FALSE` sonst. Mit der Zugriffsoperation `fruechte_df$frucht[]` wird dann auf alle Elemente in der Spalte `frucht` zugegriffen, für die in der Spalte `anzahl` in derselben Zeile ein Wert genau 20 bzw. kleiner 20 steht. 
 
 Da die Spalten eines Dataframes Vektoren sind, können auf die Spalten alle Operationen angewandt werden, die auch auf Vektoren angewandt werden können, zum Beispiel: 
 
@@ -852,7 +916,7 @@ cbind(fruechte_df, neue_fruechte)
  
 ```
 
-Beachtet, dass beim Zusammenfügen der beiden Dataframes Duplikate entstehen: In dem neuen Dataframe, der mit `rbind()` erstellt wurde, gibt es zweimal "Apfel", obwohl sich alle Werte in der Zeile wiederholen. In dem neuen Dataframe, der mit `cbind()` erstellt wurde, wiederholen sich sogar die Spalten und alle Elemente im Dataframe `df_2` werden noch einmal dupliziert. Das hat den Grund, dass `cbind()` nur Dataframes mit derselben Anzahl an Zeilen zusammenfügen kann. 
+Achtung: Beachtet, dass beim Zusammenfügen der beiden Dataframes Duplikate entstehen: In dem neuen Dataframe, der mit `rbind()` erstellt wurde, gibt es zweimal "Apfel", obwohl sich alle Werte in der Zeile wiederholen. In dem neuen Dataframe, der mit `cbind()` erstellt wurde, wiederholen sich sogar die Spalten und alle Elemente im Dataframe `df_2` werden noch einmal dupliziert. Das hat den Grund, dass `cbind()` nur Dataframes mit derselben Anzahl an Zeilen zusammenfügen kann. 
 
 Um zwei Dataframes so zusammenzufügen, dass gleiche Zeilen nicht dupliziert werden und nur die neuen Zeilen und Spalten hinzugefügt werden, kann die Funktion `merge()` verwendet werden. 
 
@@ -884,7 +948,7 @@ In diesem Abschnitt werden die Unterschiede zwischen Matrizen, Arrays und Datafr
 ```{r}
 # Array: Ein dreidimensionales Modell zur Speicherung von Temperaturdaten über eine Woche, gemessen zu verschiedenen Tageszeiten in verschiedenen Städten.
 # Ein 3x7x3 Array erstellen für 3 Städte, 7 Tage und 3 Tageszeiten
-temperature_array <- array(sample(10:30, 63, replace = TRUE), dim = c(3,7,3))
+temperature_array <- array(sample(10:30, 63, replace = TRUE), dim = c(3, 7, 3))
 dimnames(temperature_array) <- list(
   Stadt = c("Berlin", "Hamburg", "München"),
   Tag = c("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"),
@@ -929,7 +993,7 @@ morning_temp_dataframe
 
 ## Datenstrukturen untersuchen 
 
-Jetzt haben wir schon ganz schön viele verschiedene Datenstrukturen kennengelernt, da kommt man durcheinander. Letzte Woche haben wir bereits die `typeof()`-Funktion kennengelernt, um den Datentyp eines Werts herauszufinden. Wenn die Funktion `typeof()` auf Datenstrukturen angewandt wird, gibt die Funktion Auskunft darüber, wie die Datenstruktur im Speicher abgebildet wird. Ein Dataframe wird im Speicher zum Beispiel immer als Liste repräsentiert:
+Jetzt haben wir schon ganz schön viele verschiedene Datenstrukturen kennengelernt, da kommt man leicht durcheinander. Letzte Woche haben wir bereits die `typeof()`-Funktion kennengelernt, um den Datentyp eines Werts herauszufinden. Wenn die Funktion `typeof()` auf Datenstrukturen angewandt wird, gibt die Funktion Auskunft darüber, wie die Datenstruktur im Speicher abgebildet wird. Ein Dataframe wird im Speicher zum Beispiel immer als Liste repräsentiert:
 
 ```{r}
 typeof(morning_temp_dataframe)
@@ -952,11 +1016,11 @@ Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Date
 ```{r}
 
 # Jedes Element hat in einer Matrix hat den Datentyp character
-typeof(fruechte_einkauf[1,1]) # character
+typeof(fruechte_einkauf[1, 1]) # character
 # Jede Spalte in einem Dataframe ist ein Vektor
-typeof(morning_temp_dataframe[3,])
+typeof(morning_temp_dataframe[3, ])
 # Jede Zeile in einem Dataframe ist eine Liste
-typeof(morning_temp_dataframe[,3])
+typeof(morning_temp_dataframe[, 3])
 ```
 
 Zuletzt gibt es eine Reihe hilfreicher Funktionen, mit denen Datenstrukturen auf bestimmte Aspekte hin untersucht werden können. `length()` liefert die Anzahl der Elemente in einer Datenstruktur; `nchar()` gibt die Anzahl der Zeichen in einer Zeichenkette aus. `ncol()` und `nrow()` geben Auskunft über die Anzahl an Spalten und Zeilen in einer Datenstruktur und die bereits bekannte Funktion `dim()` liefert die Dimension. Für Datenstrukturen mit numerischen Werten kann zusätzlich auch das Minimum, das Maximum oder statistische Maße wie der Median oder das arithmetische Mittel bestimmt werden, und zwar mit den Funktionen `min()`, `max()`, `median()`, `mean()`. 
@@ -1009,12 +1073,12 @@ Wir haben in der vergangenen Woche besprochen, dass bei der Zuweisung einer Vari
 Dieser Frage gehen wir an einem Beispiel nach. Wir weisen zunächst einer Variable x einen Vektor c(1, 2, 3) als Wert zu: 
 
 ```{r bind1}
-x <- c(1,2,3)
+x <- c(1, 2, 3)
 ```
 
-Die folgende Grafik aus dem Buch "Advanced R" von Hadley Wickham illustriert, was bei der Zuweisungsoperation passiert:  
+Die folgende Grafik aus dem Buch ["Advanced R" von Hadley Wickham](https://adv-r.hadley.nz/names-values.html#binding-basics) illustriert, was bei der Zuweisungsoperation passiert:  
 
-```{r, echo = FALSE, out.width = NULL}
+```{r, echo = FALSE, out.width = NULL, fig.cap = "Hadley Wickham (2019), https://adv-r.hadley.nz/names-values.html#binding-basics"}
 knitr::include_graphics("images/binding-1.png")
 ```
 
@@ -1025,9 +1089,10 @@ Wenn die Variable `x` einer neuen Variable `y` zugewiesen wird, dann referenzier
 ```{r bind2, dependson = "bind1"}
 y <- x
 ```
-```{r, echo = FALSE, out.width = NULL}
+```{r, echo = FALSE, out.width = NULL, fig.cap = "Hadley Wickham (2019), https://adv-r.hadley.nz/names-values.html#binding-basics"}
 knitr::include_graphics("images/binding-2.png")
 ```
+
 
 Aber was passiert mit der Variable `x`, wenn die Variable `y` verändert wird? Oder, korrekter formuliert: Welchen Wert referenziert `x`, wenn mithilfe von `y` auf den der Wert `c(1, 2, 3)` zugegriffen und ein Element verändert wird? 
 
@@ -1041,7 +1106,7 @@ x
 
 `y` wird zwar verändert, aber `x` nicht! Der Wert, der mit `y` verknüpft ist, wurde verändert, aber das ursprüngliche Objekt nicht. Stattdessen wurde ein neues Objekt erstellt, das eine Kopie des ursprünglichen Objekts mit dem veränderten Wert ist. 
 
-```{r, echo = FALSE, out.width = NULL}
+```{r, echo = FALSE, out.width = NULL, fig.cap = "Hadley Wickham (2019), https://adv-r.hadley.nz/names-values.html#binding-basics"}
 knitr::include_graphics("images/binding-3.png")
 ```
 

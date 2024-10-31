@@ -35,3 +35,15 @@ operationen-auf-listen
 operationen-auf-matrizen
 operationen-auf-arrays
 operationen-auf-dataframes
+matrizen-erstellen
+dataframes-erstellen
+fig:unnamed-chunk-87
+fig:unnamed-chunk-39-1
+fig:unnamed-chunk-39-2
+fig:unnamed-chunk-39-3
+fig:unnamed-chunk-86
+fig:unnamed-chunk-89
+fig:unnamed-chunk-40
+fig:unnamed-chunk-88
+fig:unnamed-chunk-90
+fig:unnamed-chunk-39

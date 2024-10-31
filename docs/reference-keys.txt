@@ -28,3 +28,10 @@ datenstrukturen-untersuchen
 fehlende-und-ungültige-werte-in-datenstrukturen
 der-mitgliedschaftsoperator-in
 unveränderbarkeit-von-objekten-in-r
+vektoren-erstellen
+listen-erstellen
+operationen-auf-vektoren
+operationen-auf-listen
+operationen-auf-matrizen
+operationen-auf-arrays
+operationen-auf-dataframes

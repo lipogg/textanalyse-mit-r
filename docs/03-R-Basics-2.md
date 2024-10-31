@@ -3,7 +3,7 @@
 
 
 
-Bisher haben wir Variablen als Platzhalter für Werte vom Typ character, integer, numeric oder logical genutzt. Variablen können aber auch Platzhalter für strukturierte Sammlungen von Werten sein. **Die verschiedenen Weisen, wie Daten in R organisiert und im Speicher repräsentiert werden können, werden Datenstrukturen genannt**. Solche **Datenstrukturen können entweder nur Elemente vom selben Typ aufnehmen (wie z.B. Vektoren und Matrizen), oder Elemente unterschiedlichen Typs (wie z.B. Listen und Dataframes)**. Wir werden in diesem Kapitel alle wichtigsten Datenstrukturen besprechen. In der Praxis werden wir aber vor allem mit Vektoren und Dataframes arbeiten. 
+Bisher haben wir Variablen als Platzhalter für Werte vom Typ character, integer, numeric oder logical genutzt. Variablen können aber auch Platzhalter für strukturierte Sammlungen von Werten sein. Datenstrukturen können anstelle von einfachen Werten auch selbst wieder Datenstrukturen enthalten. **Die verschiedenen Weisen, wie Daten in R organisiert und im Speicher repräsentiert werden können, werden Datenstrukturen genannt**. Solche **Datenstrukturen können entweder nur Elemente vom selben Typ aufnehmen (wie z.B. Vektoren und Matrizen), oder Elemente unterschiedlichen Typs (wie z.B. Listen und Dataframes)**. Wir werden in diesem Kapitel alle wichtigsten Datenstrukturen besprechen. In der Praxis werden wir aber vor allem mit Vektoren und Dataframes arbeiten. 
 
 ## Grundlegende Begriffe
 
@@ -19,32 +19,13 @@ Bisher haben wir Variablen als Platzhalter für Werte vom Typ character, integer
 
 ## Vektoren
 
-Eigentlich haben wir in der letzten Stunde schon Vektoren kennengelernt. Denn in R ist jeder einzelne Wert zugleich ein Vektor der Länge 1. **Vektoren sind nämlich im Grunde Sequenzen verschiedener Werte desselben Datentyps.** Die Werte innerhalb eines Vektors werden **Elemente** genannt. Jedes Element in einem Vektor hat eine Position (auch "**Index**" genannt). Über diesen Index kann auf jedes Element einzeln zugegriffen werden. Der Zugriff auf Elemente des Vektors erfolgt mithilfe von eckigen Klammern (s.u.). 
+Eigentlich haben wir in der letzten Stunde schon Vektoren kennengelernt. Denn in R ist jeder einzelne Wert zugleich ein Vektor der Länge 1. **Vektoren sind nämlich im Grunde Sequenzen verschiedener Werte desselben Datentyps.** Die Werte innerhalb eines Vektors werden **Elemente** genannt. Die Elemente in einem Vektor haben eine festgelegte Reihenfolge. Jedes Element in einem Vektor hat deswegen eine Position (auch "**Index**" genannt) zwischen 1 und n, wobei n eine beliebige ganze Zahl > 1 ist. Über den Index kann auf jedes Element einzeln zugegriffen werden oder es können mehrere Elemente gleichzeitig ausgewählt werden. Der Zugriff auf Elemente des Vektors erfolgt mithilfe von eckigen Klammern und wird im Abschnitt 2.2.4 erläutert. 
 
 <img src="images/vektor.png" width="964" />
 
-Vektoren können mithilfe von bestimmten Funktionen (lernen wir noch) erstellt werden. Wenn bei der Erstellung bekannt ist,welchen Datentyp die Elemente haben sollen, können die Funktionen `character()` oder `numeric()` zur Erstellung verwendet werden: 
+### Vektoren erstellen
 
-
-```r
-# leeren character-Vektor erstellen: character(0) bedeutet, dass der Vektor keine Elemente hat
-character() 
-```
-
-```
-#> character(0)
-```
-
-```r
-# numeric-Vektor mit drei Elementen vom Typ numeric erstellen
-numeric(3) 
-```
-
-```
-#> [1] 0 0 0
-```
-
-Im Regelfall ist aber die Anzahl der Elemente und/oder deren Datentyp bei der Erstellung noch nicht bekannt. In diesem Fall wird zur Erstellung die Funktion `c()` verwendet:  
+Vektoren können mithilfe von bestimmten Funktionen (lernen wir noch) erstellt werden. Wenn bei der Erstellung bekannt ist, welchen Datentyp die Elemente haben sollen, können die Funktionen `character()` oder `numeric()` zur Erstellung verwendet werden. Im Regelfall ist aber die Anzahl der Elemente und/oder deren Datentyp bei der Erstellung noch nicht bekannt. In diesem Fall wird zur **Erstellung eines leeren Vektors** die Funktion `c()` verwendet:  
 
 
 ```r
@@ -58,7 +39,7 @@ c()
 
 Wenn ein leerer Vektor erstellt wird, wird dieser mithilfe des Werts `NULL` repräsentiert. Darauf kommen wir am Ende der Sitzung noch einmal zurück. 
 
-Mithilfe der Funktion `c()` können auch Vektoren aus bereits bekannten Elementen erstellt werden: 
+Mithilfe der Funktion `c()` können auch **Vektoren aus bereits bekannten Elementen** erstellt werden: 
 
 
 ```r
@@ -77,7 +58,7 @@ leckere_fruechte <- c("Apfel", "Banane", "Erdbeere")
 coole_zahlen <- c(45, 7, 420)
 ```
 
-Vektoren können auch in einen neuen Vektor zusammengefügt werden. Wenn die Funktion `c()` auf zwei Vektoren oder einen Vektor und ein Element angewandt wird, dann werden die beiden Vektoren in der angegebenen Reihenfolge in einen neuen Vektor kombiniert: 
+Vektoren können auch durch **Zusammenfügen zweier bestehender Vektoren** erstellt werden. Wenn die Funktion `c()` auf zwei Vektoren oder einen Vektor und ein Element angewandt wird, dann werden die beiden Vektoren in der angegebenen Reihenfolge in einen neuen Vektor kombiniert: 
 
 
 ```r
@@ -91,7 +72,7 @@ print(fruechte_und_zahlen)
 #> [1] "Apfel"    "Banane"   "Erdbeere" "45"       "7"        "420"
 ```
 
-Bei der Erstellung von Vektoren muss beachtet werden, dass der Typ der Elemente automatisch vereinhetilicht wird, wenn Elemente mit unterschiedlichen Datentypen in einen Vektor kombiniert werden:  
+Achtung: Bei der Erstellung von Vektoren muss beachtet werden, dass der Typ der Elemente automatisch vereinhetilicht wird, wenn Elemente mit unterschiedlichen Datentypen in einen Vektor kombiniert werden:  
 
 
 ```r
@@ -116,6 +97,14 @@ typeof(vec)
 ```
 Nur, wenn ein Element des Vektors eine Liste ist, gilt dieses Prinzip nicht. Darauf kommen wir im Abschnitt "Listen" noch einmal zurück. 
 
+Während es jeden Index nur einmal gibt, können sich die Werte in einem Vektor wiederholen: 
+
+
+```r
+fruechte <- c("Apfel", "Apfel", "Orange")
+```
+
+In diesem Vektor gibt es den Wert "Apfel" zwar zweimal, aber die Werte haben verschiedene Indexpositionen (1 bzw. 2). 
 
 ### Sets (Mengen)
 
@@ -158,17 +147,6 @@ setdiff(c("Apfel", "Banane"), c("Erdbeere", "Apfel"))
 #> [1] "Banane"
 ```
 
-Die Funktion `unique()` kann mit der Funktion `length()` kombiniert werden, um herauszufinden, wie viele einzigartige Werte es in einem Vektor gibt: 
-
-
-```r
-length(unique(c("Apfel", "Banane", "Erdbeere", "Apfel")))
-```
-
-```
-#> [1] 3
-```
-
 
 ### Named Vectors
 
@@ -190,11 +168,13 @@ einkauf <- c(Apfel=4, Banane=3, Erdbeere=20)
 
 ### Faktoren 
 
-Da R ursprünglich für die Statistik entwickelt wurde, haben sich die Entwickler:innen der Programmiersprache überlegt, dass es praktisch wäre, wenn es eine Datenstruktur speziell für kategorische (auch "kategoriale") Daten gäbe. Kategorische Daten sind Daten, die in bestimmte Kategorien oder Gruppen fallen, also beispielsweise Farben, Regionen, Beschäftigungsstatus. Speziell zur Organisation solcher Daten gibt es in R Faktoren. **Ein Faktor ist eine spezielle Art von Vektor, der kategorische Daten repräsentiert.** 
+Da R ursprünglich für die Statistik entwickelt wurde, haben sich die Entwickler:innen der Programmiersprache überlegt, dass es praktisch wäre, wenn es eine Datenstruktur speziell für kategorische (auch "kategoriale") Daten gäbe. Kategorische Daten sind Daten, die in bestimmte Kategorien oder Gruppen fallen, also beispielsweise Farben, Regionen, Beschäftigungsstatus. Speziell zur Organisation solcher Daten gibt es in R Faktoren. **Ein Faktor ist eine spezielle Art von Vektor, der kategorische Daten repräsentiert. Es handelt sich dabei eigentlich um einen "einfachen" Vektor, dem eine zusätzliche Metainformation hinzugefügt wurde: die Information, welche verschiedenen Arten oder Kategorien von Werten der Vektor enthält (="Levels").** 
 
 <img src="images/factor.png" width="968" />
 
-Faktoren werden mithilfe der Funktion `factor()` erstellt. Faktoren werden stets aus bereits existierenden Vektoren erstellt, beispielsweise aus dem Vektor `fruechte`, den wir hier noch einmal neu erstellen: 
+Im Beispiel oben hat der Vektor vier Elemente, aber nur drei verschiedene Elemente, nämlich "Apfel", "Banane" und "Erdbeere". Die Levels entsprechen also im Grunde genau den einzigartigen Werten eines Vektors, die wir im Abschnitt zu Sets (Mengen) mithilfe der Funktion `unique(c("Apfel", "Banane", "Erdbeere", "Apfel"))` erhalten haben. Faktoren erlauben also, sowohl die ursprünglichen, möglicherweise wiederholt vorkommenden Werte als auch die einzigartigen Werte in einem Vektor zu repräsentieren. 
+
+Faktoren werden mithilfe der Funktion `factor()` erstellt. **Faktoren werden stets aus bereits existierenden Vektoren erstellt**, beispielsweise aus dem Vektor `fruechte`, den wir hier noch einmal neu erstellen: 
 
 
 ```r
@@ -208,53 +188,12 @@ factor(fruechte)
 #> Levels: Apfel Banane Erdbeere
 ```
 
-Wann würde man also Faktoren verwenden? Wenn man nur die einzigartigen Werte braucht, dann kann einfach die Funktion `unique()` auf einen "einfachen" Vektor angewandt werden und braucht keine Faktoren (s. "Sets"). Aber wenn man herausfinden möchte, wie oft jeder Wert jeweils vorkommt, dann ist das mithilfe der `unique()` Funktion kompliziert: 
 
+In der Praxis werden wir nicht häufig Faktoren selbst erstellen. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn Faktoren werden in R häufig automatisch "unter der Motorhaube" beim Anwenden vieler Funktionen erstellt. Ein Beispiel dafür besprechen wir im nächsten Abschnitt. Faktoren vereinfachen viele Operationen und Berechnungen und sind einer der Gründe dafür, warum sich R von anderen Programmiersprachen unterscheidet. Deswegen sind Faktoren zum Verständnis von R und von manchen Funktionen wichtig, auch, wenn wir selbst damit nicht häufig arbeiten. 
 
-```r
-# Diesen Code müsst ihr nicht verstehen, er dient nur, um die Komplexität zu illustrieren
-haeufigkeiten <- sapply(unique(fruechte), function(x) sum(fruechte == x))
-haeufigkeiten
-```
+### Operationen auf Vektoren 
 
-```
-#>    Apfel   Banane Erdbeere 
-#>        2        1        1
-```
-
-Mithilfe von Faktoren können wir viel einfacher herausfinden, wie oft jeder Wert vorkommt, und zwar mithilfe der Funktion `table()`. Sie erlaubt, die Anzahl der einzigartigen Werte ausgeben zu lassen: 
-
-
-```r
-table(factor(fruechte)) 
-```
-
-```
-#> 
-#>    Apfel   Banane Erdbeere 
-#>        2        1        1
-```
-
-Tatsächlich wandelt die Funktion `table()` automatisch den Vektor in einen Faktor um. Wenn wir herausfinden wollen, wie oft jeder Wert in einem Vektor vorkommt, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die `table()`-Funktion direkt auf den Vektor anwenden:
-
-
-```r
-table(fruechte) 
-```
-
-```
-#> fruechte
-#>    Apfel   Banane Erdbeere 
-#>        2        1        1
-```
-
-Wie wir gesehen haben, greifen Funktionen wie `table()` unter der Motorhaube auf Faktoren zurück und wandeln einen Vektor automatisch in einen Faktor um. Auch in anderen Kontexten werden Faktoren oft automatisch erstellt. Trotzdem solltet ihr zumindest von Faktoren gehört haben. Denn selbst, wenn wir in der Praxis nicht unbedingt viel mit Faktoren arbeiten werden und selten Faktoren selbst erstellen, spielen Faktoren in R beim Umgang mit kategorialen Daten eine große Rolle und sind zum Verständnis von manchen Funktionen wichtig. 
-
-
-
-### Zugriffsoperationen auf Vektoren 
-
-Den Zugriff auf ein Element oder mehrere Elemente in einer Datenstruktur nennt man auch **Indexierung**. Dabei wird mithilfe von einem **Zugriffsoperator** über den Index oder den Namen (Schlüssel) eines Elements zugegriffen. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `fruechte` an, den wir hier erneut erstellen: 
+Wir haben gesehen, dass alle Vektoren, egal ob einfache Vektoren, benannte Vektoren oder Faktoren, Elemente in einer festgelegten Reihenfolge enthalten, Wir haben auch gesehen, dass jedes Element einen Index hat, also eine Zahl, welche die Position des Elements in dem Vektor beschreibt. Um auf ein oder mehrere Elemente in einem Vektor zuzugreifen, wird der **Zugriffsoperator** [] verwendet. Diesen Operator tauchte in der letzten Woche bereits in der Tabelle im Abschnitt "Operatorpräzedenz" auf. In die eckigen Klammern wird der Index oder, bei benannten Vektoren, der Name des ausgewählten Elements geschrieben. Als Beispiel für den Zugriff über den Index sehen wir uns einige Zugriffsoperationen auf den Vektor `fruechte` an, den wir hier erneut erstellen: 
 
 
 ```r
@@ -295,6 +234,13 @@ fruechte[fruechte == "Banane"]
 #> [1] "Banane"
 ```
 
+Die Zugriffsoperation `fruechte[fruechte == "Banane"]` bedarf vielleicht einer kurzen Erläuterung. Wie funktioniert diese Operation? Warum werden nur die Elemente ausgegeben, deren Wert "Banane" ist? 
+
+Zunächst wird der Ausdruck in den eckigen Klammern evaluiert, `fruechte == "Banane"`. Dabei wird ein Mechanismus aktiviert, der sich Vektorisierung nennt (s. nächster Abschnitt): Beim Auswerten des Ausdrucks `fruechte == "Banane"` wird einzeln für jedes Element überprüft, ob dieses Element dem Wert "Banane" entspricht. Der Ausdruck wird also zu einem Vektor aus Wahrheitswerten ausgewertet wird und nicht zu einem einzelnen Wahrheitswert wie in den Beispielen aus der letzten Woche. Wenn im Vektor `fruechte` der Wert  "Banane" steht, steht in diesem Vektor `TRUE` und sonst  `FALSE`. Danach wird die eigentliche Zugriffsoperation ausgeführt, allerdings mit dem logischen Vektor anstelle der Indizes: `fruechte[c(FALSE, TRUE, FALSE, FALSE)]`. Bei einer solchen Zugriffsoperation werden alle Elemente ausgegeben, für die in dem logischen Vektor `TRUE` steht. Eine Zugriffsoperation der Art `fruechte == "Banane"`, wird deswegen auch **bedingter Zugriff** genannt. Anstelle des logischen Operators == kann hier auch ein anderer logischer Operator oder ein Vergleichsoperator stehen.  
+
+Elemente in einem Vektor können auch **ausgetauscht, hinzugefügt oder entfernt** werden: 
+
+
 ```r
 # Element an Indexposition 1 austauschen
 fruechte[1] <- "Orange"
@@ -316,10 +262,6 @@ fruechte[-1]
 #> [1] "Orange"   "Banane"   "Erdbeere" "Apfel"    "Birne"    "Melone"
 ```
 
-Die Zugriffsoperation `fruechte[fruechte == "Banane"]` bedarf vielleicht einer kurzen Erläuterung. Wie funktioniert diese Operation? Warum werden nur die Elemente ausgegeben, deren Wert "Banane" ist? 
-
-Zunächst wird der Ausdruck in den eckigen Klammern evaluiert, `fruechte == "Banane"`. Dabei wird der Mechanismus der Vektorisierung aktiviert, sodass der Ausdruck zu einem Vektor aus Wahrheitswerten ausgewertet wird: Wenn im Vektor `fruechte` der Wert  "Banane" steht, steht in diesem Vektor `TRUE` und sonst  `FALSE`. Danach wird die eigentliche Zugriffsoperation ausgeführt, allerdings mit dem logischen Vektor anstelle der Indices: `fruechte[c(FALSE, TRUE, FALSE, FALSE)]`. Bei einer solchen Zugriffsoperation werden alle Elemente ausgegeben, für die in dem logischen Vektor `TRUE` steht. Eine Zugriffsoperation der Art `fruechte == "Banane"`, wird deswegen auch **bedingter Zugriff** genannt. Anstelle des logischen Operators == kann hier auch ein anderer logischer Operator oder ein Vergleichsoperator stehen.  
-
 Elemente können auch direkt einer neuen Variable zugewiesen werden: 
 
 
@@ -332,7 +274,30 @@ print(erste_frucht)
 #> [1] "Traube"
 ```
 
-Um auf die Elemente eines named vectors zuzugreifen, kann entweder der Index oder der Name des Elements verwendet werden: 
+Um sich die **Anzahl der Werte in einem Vektor** (also dessen "Länge") ausgeben zu lassen, kann die Funktion `length()` verwendet werden: 
+
+
+```r
+length(c("Apfel", "Banane", "Erdbeere", "Apfel"))
+```
+
+```
+#> [1] 4
+```
+
+Die Funktion `length()` kann mit der Funktion `unique()` kombiniert werden, um die **Anzahl der einzigartigen Werte in einem Vektor** auszugeben: 
+
+
+```r
+length(unique(c("Apfel", "Banane", "Erdbeere", "Apfel")))
+```
+
+```
+#> [1] 3
+```
+
+
+Um auf die **Elemente eines benannten Vektors** zuzugreifen, kann entweder der Index oder der Name des Elements verwendet werden: 
 
 
 ```r
@@ -399,6 +364,62 @@ einkauf
 #>       12        4        5       20        5        1
 ```
 
+Um nur auf die **Level, also die verschiedenen Arten von Werten in einem Faktor** zuzugreifen, wird die Funktion `levels()` verwendet: 
+
+
+```r
+fruechte <- c("Apfel", "Banane", "Erdbeere", "Apfel")
+fruechte_fct <- factor(fruechte)
+levels(fruechte_fct)
+```
+
+```
+#> [1] "Apfel"    "Banane"   "Erdbeere"
+```
+
+
+Wir haben bereits gesehen, dass die Funktion `length()` mit der Funktion `unique()` kombiniert werden kann, um sich die Anzahl der einzigartigen Werte in einem Vektor ausgeben zu lassen. Aber wenn man herausfinden möchte, wie oft jeder Wert jeweils vorkommt, dann ist das mithilfe der `unique()` Funktion kompliziert: 
+
+
+```r
+# Diesen Code müsst ihr nicht verstehen, er dient nur, um die Komplexität zu illustrieren
+haeufigkeiten <- sapply(unique(fruechte), function(x) sum(fruechte == x))
+haeufigkeiten
+```
+
+```
+#>    Apfel   Banane Erdbeere 
+#>        2        1        1
+```
+
+Mithilfe von Faktoren können wir viel einfacher herausfinden, wie oft jeder Wert vorkommt, und zwar mithilfe der Funktion `table()`: 
+
+
+```r
+table(factor(fruechte)) 
+```
+
+```
+#> 
+#>    Apfel   Banane Erdbeere 
+#>        2        1        1
+```
+
+Tatsächlich wandelt die Funktion `table()` automatisch den Vektor in einen Faktor um. Wenn wir herausfinden wollen, **wie oft jeder Wert in einem Vektor vorkommt**, dann brauchen wir also nicht unbedingt erst den Vektor in einen Faktor umwandeln. Wir können die `table()`-Funktion direkt auf den Vektor anwenden:
+
+
+```r
+table(fruechte) 
+```
+
+```
+#> fruechte
+#>    Apfel   Banane Erdbeere 
+#>        2        1        1
+```
+
+Wie wir gesehen haben, greift die Funktion `table()` unter der Motorhaube auf Faktoren zurück und wandeln einen Vektor automatisch in einen Faktor um.  
+
 
 :::task
 Verständnisfragen:
@@ -412,7 +433,7 @@ Verständnisfragen:
 
 ### Vektorisierung 
 
-Auf Vektoren können auch die bereits bekannten Operatoren angewendet werden. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element des Vektors angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
+Im Abschnitt "Operationen auf Vektoren" habt ihr bereits gesehen, dass die bereits bekannten Operatoren wie `==`, `>` oder `+` auch auf Vektoren angewendet werden können. Wenn Operatoren auf Vektoren angewandt werden, wird die Operation automatisch elementweise auf jedes Element des Vektors angewandt. Dieser Mechanismus nennt sich **Vektorisierung**. Wir werden in der Sitzung zu Funktionen noch einmal darauf zurückkommen. Wichtig ist dabei zu beachten, dass beide Vektoren die gleiche Länge haben müssen. 
 
 Auf Vektoren vom Typ numeric oder integer (also Vektoren, deren Elemente alle numerics oder integers sind) können die arithmetischen Operatoren angewandt werden, zum Beispiel: 
 
@@ -425,14 +446,6 @@ vec_1 + vec_2
 
 ```
 #> [1] 4 7 9
-```
-
-```r
-vec_1 / vec_2
-```
-
-```
-#> [1] 0.3333333 0.4000000 0.5000000
 ```
 
 Wird ein Vektor nicht mit einem anderen Vektor, sondern mit einem einzelnen Wert addiert (oder subtrahiert, dividiert, ... ), dann wird jedes Element des Vektors mit diesem Wert verrechnet: 
@@ -505,11 +518,13 @@ Verständnisfragen:
 
 ## Listen
 
-**Listen enthalten wie Vektoren eine Sequenz verschiedener Werte.** Im Abschnitt zu Vektoren haben wir bereits gelernt, dass diese Werte auch Elemente genannt werden. **Anders als bei Vektoren können die Elemente einer Liste aber verschiedene Datentypen haben. Ähnlich wie bei benannten Vektoren kann man den Elementen einer Liste einen Namen (wird manchmal auch Schlüssel genannt) zuordnen, über den auf den Wert zugegriffen werden kann.** 
+**Listen enthalten wie Vektoren eine Sequenz von Werten.**  Im Abschnitt zu Vektoren haben wir bereits gelernt, dass diese Werte auch Elemente genannt werden. Genau wie bei Vektoren können sich Werte in einer Liste wiederholen. Die Elemente einer Liste sind ebenfalls geordnet, das heißt jedes Element hat einen Index, genau wie bei Vektoren. Ähnlich wie bei benannten Vektoren kann man den Elementen einer Liste außerdem einen Namen (wird manchmal auch Schlüssel genannt) zuordnen, über den auf den Wert zugegriffen werden kann. **Anders als bei Vektoren können die Elemente einer Liste aber verschiedene Datentypen haben.** 
 
 <img src="images/liste.png" width="724" />
 
-Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren (also named vectors) müssen die Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
+### Listen erstellen
+
+Listen werden mithilfe der Funktion `list()` erstellt. Genau wie bei benannten Vektoren müssen die Namen oder Schlüssel der Werte Zeichenketten sein. Wenn keine Anführungszeichen angegeben werden, erkennt R auch hier automatisch, dass eine Zeichenkette gemeint ist. 
 
 
 ```r
@@ -548,7 +563,7 @@ list("Apfel", 20, TRUE)
 #> [1] TRUE
 ```
 
-Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im letzteren Fall wird die Liste dann "Liste von Listen" oder "verschachtelte Liste" genannt. 
+Die Elemente einer Liste können auch Vektoren oder selbst Listen sein. Im ersten Fall wird die Liste dann "**Liste von Vektoren**" und im letzteren Fall "**Liste von Listen**"   genannt. Ein allgemeiner Begriff für solche Listen ist "verschachtelte Liste".
 
 
 ```r
@@ -605,17 +620,19 @@ print(liste_von_listen)
 #> [1] TRUE
 ```
 
-Schematisch sieht eine Liste von Vektoren in etwa so aus: 
+Achtung: In der Liste `liste_von_vektoren` sind alle Vektoren gleich lang und beziehen sich aufeinander: Von der Frucht Apfel sind noch 20 Stück da, sodass Äpfel vorrätig sind. Dies muss aber nicht unbedingt der Fall sein! **Die Elemente einer verschachtelten Liste können unterschiedlich lang sein** und müssen sich nicht unbedingt aufeinander beziehen. 
+
+Schematisch sieht eine Liste von Vektoren (hier mit Vektoren derselben Länge) in etwa so aus: 
 
 <img src="images/liste_von_vektoren.png" width="1204" />
 
 Das Bild illustriert auch, wie auf die Elemente in einer Liste von Vektoren zugegriffen werden kann. Der Zugriff auf Elemente in einer Liste ist nämlich etwas komplizierter als bei einem Vektor. Darum geht es im folgenden Abschnitt. 
 
-### Zugriffsoperationen auf Listen
+### Operationen auf Listen
 
+Auf Elemente und ihre Namen über den Index zugreifen: 
 
 ```r
-# Auf Elemente und ihre Namen über den Index zugreifen
 einkauf_liste[1]
 ```
 
@@ -624,8 +641,9 @@ einkauf_liste[1]
 #> [1] "Apfel"
 ```
 
+Auf Elemente ohne Namen über den Index zugreifen:
+
 ```r
-# Auf Elemente ohne Namen über den Index zugreifen
 einkauf_liste[[1]]
 ```
 
@@ -633,8 +651,10 @@ einkauf_liste[[1]]
 #> [1] "Apfel"
 ```
 
+Auf Elemente über den Namen (Schlüssel) zugreifen: 
+
 ```r
-# Auf Elemente über den Namen (Schlüssel) zugreifen - Option 1 
+# Option 1 
 einkauf_liste$frucht
 ```
 
@@ -643,7 +663,7 @@ einkauf_liste$frucht
 ```
 
 ```r
-# Auf Elemente über den Namen (Schlüssel) zugreifen - Option 2
+# Option 2
 einkauf_liste[["frucht"]]
 ```
 
@@ -651,8 +671,9 @@ einkauf_liste[["frucht"]]
 #> [1] "Apfel"
 ```
 
+Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Index zugreifen: 
+
 ```r
-# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Index zugreifen 
 liste_von_vektoren[[1]][1]
 ```
 
@@ -660,8 +681,10 @@ liste_von_vektoren[[1]][1]
 #> [1] "Apfel"
 ```
 
+Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen 
+
 ```r
-# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 1
+# Option 1
 liste_von_vektoren[["frucht"]][1]
 ```
 
@@ -670,7 +693,7 @@ liste_von_vektoren[["frucht"]][1]
 ```
 
 ```r
-# Auf das erste Element des ersten Vektors in einer Liste von Vektoren über den Schlüssel zugreifen - Option 2
+# Option 2
 liste_von_vektoren$frucht[1]
 ```
 
@@ -678,8 +701,9 @@ liste_von_vektoren$frucht[1]
 #> [1] "Apfel"
 ```
 
+Listen kombinieren mit der Funktion c(): 
+
 ```r
-# Listen kombinieren mit der Funktion c()
 einkauf_bananen <- list(frucht="Banane", anzahl=0, vorraetig=FALSE)
 einkauf_gesamt <- c(einkauf_liste, einkauf_bananen) 
 ```
@@ -692,6 +716,11 @@ Verständnisfragen:
 - Was ist der Unterschied zwischen Listen und Named Vectors? 
 :::
 
+Sehr anschaulich illustriert dieser Abschnitt in [Hadley Wickham's Lehrbuch "Advanced R"](https://adv-r.hadley.nz/subsetting.html#subset-single) den Unterschied zwischen dem Zugriff mit einfachen und mit doppelten eckigen Klammern: 
+
+<img src="images/wickham-train.png" width="555" /><img src="images/wickham-train-single.png" width="555" /><img src="images/wickham-train-multiple.png" width="555" />
+
+Quelle: Hadley Wickham, Advanced R,  https://adv-r.hadley.nz/subsetting.html#subset-single
 
 Im letzten Beispiel haben wir die bereits bekannte Funktion `c()` verwendet, um zwei Listen in eine neue Liste  `einkauf_gesamt` zu kombinieren. Das heißt: Wenn wir die Funktion `c()` verwenden, um zwei Listen zu kombinieren, dann kommt auch eine Liste dabei raus. Man kann mit der Funktion `c()` aber keine Listen aus einzelnen Werten erstellen:
 
@@ -1007,7 +1036,7 @@ fruechte_einkauf
 
 Matrizen können auch in Dataframes umgewandelt werden und umgekehrt. Das behandeln wir im Abschnitt "Dataframes". 
 
-### Zugriffsoperationen auf Matrizen 
+### Operationen auf Matrizen 
 
 
 ```r
@@ -1205,7 +1234,7 @@ print(fruechte_array)
 
 Die Dimension des Arrays `fruechte_array` lässt sich an der Länge des Vektors `dim=c(2, 3, 2)` ablesen: Da der Vektor drei Elemente hat, handelt es sich um ein dreidimensionales Array. Das erste Element des Vektors `dim` legt fest, dass jede Matrix zwei Zeilen hat, das zweite Element legt fest, dass jede Matrix drei Spalten hat, und das dritte Element legt fest, dass es zwei Matrizen gibt.
 
-### Zugriffsoperationen auf Arrays 
+### Operationen auf Arrays 
 
 
 ```r
@@ -1386,7 +1415,7 @@ fruechte_df
 
 Der Dataframe ist immer noch nicht ideal. Zum Beispiel sind die Spaltennamen nicht besonders intuitiv und sollten lieber umbenannt werden, und es fehlt noch die Spalte `anzahl` mit der Anzahl der vorrätigen Früchte.  
 
-### Zugriffsoperationen auf Dataframes 
+### Operationen auf Dataframes 
 
 
 ```r
@@ -1643,7 +1672,7 @@ print(temperature_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      24      17      11
+#>      30      15      19
 ```
 
 ```r
@@ -1655,25 +1684,25 @@ print(temperature_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  24 20 22 25 21 29 14
-#>   Hamburg 17 13 14 15 29 30 23
-#>   München 11 21 30 26 30 22 14
+#>   Berlin  30 13 18 20 19 27 19
+#>   Hamburg 15 21 24 23 12 24 21
+#>   München 19 23 20 14 12 16 25
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  11 15 16 13 20 30 17
-#>   Hamburg 28 30 30 17 24 27 29
-#>   München 10 21 12 30 21 20 17
+#>   Berlin  11 14 20 20 19 16 30
+#>   Hamburg 26 29 22 23 30 18 11
+#>   München 13 15 24 27 25 29 30
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  21 10 17 13 13 12 21
-#>   Hamburg 18 13 27 21 26 18 22
-#>   München 27 12 27 29 13 10 20
+#>   Berlin  23 16 24 15 13 28 24
+#>   Hamburg 24 11 22 15 23 16 19
+#>   München 25 13 18 12 26 13 25
 ```
 
 ```r
@@ -1686,13 +1715,13 @@ print(morning_temp_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     24      14      30
-#> Di     17      30      29
-#> Mi     11      25      30
-#> Do     20      15      22
-#> Fr     13      26      14
-#> Sa     21      21      23
-#> So     22      29      14
+#> Mo     30      24      12
+#> Di     15      20      27
+#> Mi     19      20      24
+#> Do     13      23      16
+#> Fr     21      14      19
+#> Sa     23      19      21
+#> So     18      12      25
 ```
 
 ```r
@@ -1707,13 +1736,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     24      17      11
-#> Di     20      13      21
-#> Mi     22      14      30
-#> Do     25      15      26
-#> Fr     21      29      30
-#> Sa     29      30      22
-#> So     14      23      14
+#> Mo     30      15      19
+#> Di     13      21      23
+#> Mi     18      24      20
+#> Do     20      23      14
+#> Fr     19      12      12
+#> Sa     27      24      16
+#> So     19      21      25
 ```
 
 ```r
@@ -1726,13 +1755,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     24      17      11 Morgen Celsius
-#> Di     20      13      21 Morgen Celsius
-#> Mi     22      14      30 Morgen Celsius
-#> Do     25      15      26 Morgen Celsius
-#> Fr     21      29      30 Morgen Celsius
-#> Sa     29      30      22 Morgen Celsius
-#> So     14      23      14 Morgen Celsius
+#> Mo     30      15      19 Morgen Celsius
+#> Di     13      21      23 Morgen Celsius
+#> Mi     18      24      20 Morgen Celsius
+#> Do     20      23      14 Morgen Celsius
+#> Fr     19      12      12 Morgen Celsius
+#> Sa     27      24      16 Morgen Celsius
+#> So     19      21      25 Morgen Celsius
 ```
 
 ```r
@@ -1753,13 +1782,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     24      17      11 Morgen Celsius      24
-#> Di     20      13      21 Morgen Celsius      21
-#> Mi     22      14      30 Morgen Celsius      30
-#> Do     25      15      26 Morgen Celsius      26
-#> Fr     21      29      30 Morgen Celsius      30
-#> Sa     29      30      22 Morgen Celsius      30
-#> So     14      23      14 Morgen Celsius      23
+#> Mo     30      15      19 Morgen Celsius      30
+#> Di     13      21      23 Morgen Celsius      23
+#> Mi     18      24      20 Morgen Celsius      24
+#> Do     20      23      14 Morgen Celsius      23
+#> Fr     19      12      12 Morgen Celsius      19
+#> Sa     27      24      16 Morgen Celsius      27
+#> So     19      21      25 Morgen Celsius      25
 ```
 
 ```r
@@ -1770,13 +1799,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     24      17      11 Morgen Celsius    75.2
-#> Di     20      13      21 Morgen Celsius    69.8
-#> Mi     22      14      30 Morgen Celsius    86.0
-#> Do     25      15      26 Morgen Celsius    78.8
-#> Fr     21      29      30 Morgen Celsius    86.0
-#> Sa     29      30      22 Morgen Celsius    86.0
-#> So     14      23      14 Morgen Celsius    73.4
+#> Mo     30      15      19 Morgen Celsius    86.0
+#> Di     13      21      23 Morgen Celsius    73.4
+#> Mi     18      24      20 Morgen Celsius    75.2
+#> Do     20      23      14 Morgen Celsius    73.4
+#> Fr     19      12      12 Morgen Celsius    66.2
+#> Sa     27      24      16 Morgen Celsius    80.6
+#> So     19      21      25 Morgen Celsius    77.0
 ```
 
 ```r
@@ -1788,13 +1817,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     24      17      11 Morgen Celsius               75.2
-#> Di     20      13      21 Morgen Celsius               69.8
-#> Mi     22      14      30 Morgen Celsius               86.0
-#> Do     25      15      26 Morgen Celsius               78.8
-#> Fr     21      29      30 Morgen Celsius               86.0
-#> Sa     29      30      22 Morgen Celsius               86.0
-#> So     14      23      14 Morgen Celsius               73.4
+#> Mo     30      15      19 Morgen Celsius               86.0
+#> Di     13      21      23 Morgen Celsius               73.4
+#> Mi     18      24      20 Morgen Celsius               75.2
+#> Do     20      23      14 Morgen Celsius               73.4
+#> Fr     19      12      12 Morgen Celsius               66.2
+#> Sa     27      24      16 Morgen Celsius               80.6
+#> So     19      21      25 Morgen Celsius               77.0
 ```
 
 ```r
@@ -1834,12 +1863,12 @@ str(morning_temp_dataframe)
 
 ```
 #> 'data.frame':	7 obs. of  6 variables:
-#>  $ Berlin            : int  24 20 22 25 21 29 14
-#>  $ Hamburg           : int  17 13 14 15 29 30 23
-#>  $ München           : int  11 21 30 26 30 22 14
+#>  $ Berlin            : int  30 13 18 20 19 27 19
+#>  $ Hamburg           : int  15 21 24 23 12 24 21
+#>  $ München           : int  19 23 20 14 12 16 25
 #>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
 #>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
-#>  $ Maximum_Fahrenheit: num  75.2 69.8 86 78.8 86 86 73.4
+#>  $ Maximum_Fahrenheit: num  86 73.4 75.2 73.4 66.2 80.6 77
 ```
 Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
 

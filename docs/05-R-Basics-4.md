@@ -83,7 +83,8 @@ increment_value <- function(x) {
 }
 ```
 
-Am Anfang empfiehlt es sich aber, den Rückgabewert immer  explizit mit `return()` anzugeben. 
+Der [Style Guide](https://style.tidyverse.org/functions.html#return), nach dem wir uns richten, empfiehlt, `return()` nur für frühzeitige Rückgaben zu verwenden, also wenn eine Bedingung erfüllt ist und die Funktion an dieser Stelle beendet werden soll.    
+**Am Anfang empfiehlt es sich aber trotzdem, den Rückgabewert immer  explizit mit `return()` anzugeben und an dieser Stelle vom Style Guide abzuweichen.** 
 
 Manchmal ist es sinnvoll, bei der Funktionsdefinition einen Default-Wert für einen oder mehrere Parameter anzugeben:  
 
@@ -489,7 +490,7 @@ ist_grossstadt <- function(stadt) {
 }
 ```
 
-Die Funktion ist so definiert, dass sie nur auf einzelne Zeichenketten angewandt werden kann, nicht auf character-Vektoren. Beim Versuch, die Funktion mit einem Vektor als Argument auszuführen, wird eine Fehlermeldung ausgegeben. 
+Die Funktion ist etwas gestellt so definiert, dass sie nur auf einzelne Zeichenketten angewandt werden kann, nicht auf character-Vektoren. Beim Versuch, die Funktion mit einem Vektor als Argument auszuführen, wird eine Fehlermeldung ausgegeben. 
 
 
 ```r
@@ -523,14 +524,13 @@ lapply(c("Berlin", "Bremen"), ist_grossstadt)
 ## [1] "Bremen ist keine Großstadt"
 ```
 
-Im Fall unserer Beispielfunktion `ist_grosstadt()` wäre es natürlich auch möglich (und eleganter), die Funktion direkt so zu definieren, dass sie auch auf Vektoren angewandt werden kann. Aber das ist nicht immer so einfach möglich. 
+Im Fall unserer Beispielfunktion `ist_grosstadt()` wäre es natürlich auch möglich (und eleganter), die Funktion direkt so zu definieren, dass sie auch auf Vektoren angewandt werden kann. Dabei wird die Funktion außerdem so umgeschrieben, dass Wahrheitswerte statt Textnachrichten ausgegeben werden. Das hat den zusätzlichen Vorteil, dass das Ergebnis der Überprüfung flexibel weiterverwendet werden kann.   
 
 
 ```r
 ist_grossstadt <- function(stadt) {
   grossstaedte <- c("Berlin", "Hamburg", "Frankfurt", "München")
-  rueckgabewert <- stadt %in% grossstaedte
-  return(rueckgabewert)
+  return(stadt %in% grossstaedte)
 }
 
 ist_grossstadt(c("Berlin", "Bremen"))
@@ -556,20 +556,22 @@ Deswegen ist es oft sinnvoll, im Funktionskörper zu überprüfen, ob die gewäh
 
 ```r
 ist_grossstadt <- function(stadt) {
-  grossstaedte <- c("Berlin", "Hamburg", "Frankfurt", "München")
-  if (is.character(stadt)) {
-    rueckgabewert <- stadt %in% grossstaedte
-  } else {
-    stop("Ungültiges Argument: Keine Zeichenkette")
+  
+  if (!is.character(stadt)) {
+    stop("Das Argument 'stadt' muss ein Charaktervektor sein.")
   }
-  return(rueckgabewert)
+  
+  grossstaedte <- c("Berlin", "Hamburg", "Frankfurt", "München")
+  
+  return(stadt %in% grossstaedte)
 }
+
 
 ist_grossstadt(c(1, 2))
 ```
 
 ```
-## Error in ist_grossstadt(c(1, 2)): Ungültiges Argument: Keine Zeichenkette
+## Error in ist_grossstadt(c(1, 2)): Das Argument 'stadt' muss ein Charaktervektor sein.
 ```
 
 
@@ -692,6 +694,21 @@ library(quanteda)
 library(readtext)
 ```
 
+Wenn nur eine einzige oder einige wenige Funktionen aus einem Paket benötigt werden, können diese auch augerufen werden, ohne dass direkt das gesamte Paket geladen wird: 
+
+
+```r
+quanteda::tokens("Guten Morgen")
+```
+
+```
+## Tokens consisting of 1 document.
+## text1 :
+## [1] "Guten"  "Morgen"
+```
+
+Die Angabe des Namens des Pakets beim Aufruf von Funktionen aus Paketen erleichtert dabei außerdem, zwischen R base-Funktionen und Funktionen aus Paketen zu unterscheiden und stellt sicher, dass bei mehreren geladenen Paketen nicht versehentlich eine gleichnamige Funktion aus einem anderen Paket aufgerufen wird. 
+
 
 ## Wozu werden Pakete verwendet? 
 
@@ -705,7 +722,7 @@ Das Paket quanteda, das wir vorhin installiert haben, bietet zum Beispiel eine F
 ```r
 lyrics <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 
-# Funktionsaufruf der Funktion tokens() aus dem Paket quanteda. Die beiden Doppelpunkte kennzeichnen, dass die Funktion tokens() aus dem Paket quanteda gemeint ist, und nicht irgendeine andere Funktion aus einem anderen Paket, die vielleicht zufällig denselben Namen hat.
+# Aufruf der Funktion tokens() aus dem Paket quanteda
 lyrics_toks <- quanteda::tokens(lyrics)
 print(lyrics_toks)
 ```
@@ -756,17 +773,17 @@ Dieses Paket ermöglicht es, den sogenannten **Pipe-Operator** zu verwenden. Der
 
 
 ```r
-satz <- "Hallo, wie geht es dir"
-satz <- paste0(satz, "?")
-woerter <- strsplit(satz, " ")
+greeting <- "Guten Tag"
+greeting <- paste0(greeting, "!")
+greeting_toks <- strsplit(greeting, " ")
 ```
 
 Oder verschachtelte Funktionsaufrufe der Art: 
 
 
 ```r
-satz <- "Hallo, wie geht es dir"
-woerter <- strsplit(paste0(satz, "?"), " ")
+greeting <- "Guten Tag"
+greeting_toks <- strsplit(paste0(greeting, "!"), " ")
 ```
 
 Mit dem Pipe-Operator können solche aufeinanderfolgenden oder verschachtelten Funktionsaufrufe vereinfacht werden. Um den Operator zu verwenden, muss zunächst das Paket magrittr installiert und geladen werden: 
@@ -787,10 +804,10 @@ Jetzt kann der Pipe-Operator verwendet werden:
 
 
 ```r
-satz <- "Hallo, wie geht es dir"
+greeting <- "Guten Tag"
 
-woerter <- satz %>%
-  paste0("?") %>%
+greeting_toks <- greeting %>%
+  paste0("!") %>%
   strsplit(" ")
 ```
 
@@ -831,19 +848,6 @@ head(summary(quanteda::data_corpus_inaugural))
 ## 5 Democratic-Republican
 ## 6 Democratic-Republican
 ```
-
-:::tip
-Style Tip
-
-Wickham empfiehlt, im Code zwischen R base-Funktionen und Funktionen aus Paketen zu unterscheiden, indem beim Aufruf von Funktionen aus Paketen der Name des Pakets mitgenannt wird, also: 
-
-`quanteda::tokens("Dieser Satz soll in Tokens zerlegt werden")`
-
-statt nur:
-
-`tokens("Dieser Satz soll in Tokens zerlegt werden")` 
-
-:::
 
 
 ## Welche Pakete gibt es denn alles? 

@@ -51,17 +51,7 @@ Textkorpora liegen zunächst als **Dateien** vor, z.B. als PDF-Dateien, XML-Date
 Ein Korpus kann direkt aus Plaintext- oder XML-Dateien in R eingelesen werden. Beim **Einlesen** von Plaintext-Dateien können **Metadaten** zu jedem Text aus dem Dateinamen extrahiert werden, zum Beispiel der Name der Autor:in, das Publikationsjahr und der Titel eines Textes. Der Text selbst repräsentiert die eigentlichen Daten, die noch unstrukturiert vorliegen: In einem Korpus von Texten verschiedener Autor:innen können wir zum Beispiel davon ausgehen, dass sich das verwendete Vokabular unterscheidet oder dass vielleicht ein:e Autor:in im Schnitt kürzere Sätze schreibt als ein:e andere:r, aber diese Merkmale sind implizit und liegen nicht in strukturierter Form vor. Welche Merkmale oder Aspekte uns interessieren, hängt wiederum von der Auswahl der Texte und unserer Forschungsfrage ab; wir finden also diese Merkmale nicht einfach als "Daten" vor.
 Wenn Texte dagegen aus XML-Dateien eingelesen werden, ist der Text bereits vor dem Einlesen teilweise strukturiert (oder "semi-strukturiert") und mit Metainformationen versehen. Darauf kommen wir in der Sitzung zu XML-TEI noch einmal zurück. 
 
-:::tip
-Unicode und Encodings
-
-Text wird im Computer eigentlich als Abfolge von Zeichen abgebildet, und jedes Zeichen wird im Computer durch eine Zahlenfolge repräsentiert. Wie genau diese Folge aussieht, hängt davon ab, welche Kodierung (Encoding) dazu verwendet wird. 
-Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem lateinischen Alphabet repräsentiert werden können. Heutzutage gibt es mit Unicode einen international anerkannten Standard-Zeichensatz. Dieser Zeichensatz ordnet nicht nur allen Zeichen im lateinischen Alphabet, sondern allen Zeichen in allen Schriftsprachen und sogar Symbolen wie Emojis einen einzigartigen Zahlenwert zu. Solche Unicode-Zahlenwerte heißen "Codepunkte". Zeichenketten, die als Unicode-Codepunkte repräsentiert werden, können mithilfe von Kodierungen wie UTF-8 in Zahlenfolgen, die nur aus Nullen und Einsen bestehen (Bytes) umgewandelt werden. 
-
-Beim Einlesen und Speichern von Dateien muss in R auf die Wahl des richtigen Encodings geachtet werden, insbesondere beim Umgang mit nicht-lateinischen Schriften. Das werden wir später in der Praxis genauer betrachten.
-
-:::
-
-Text wird im Computer also als Abfolge von Zeichen abgebildet. In R ist eine Abfolge von Zeichen ein Objekt vom Typ character. Wie wir bereits gesehen haben, kann aber auf Zeichen in R nicht einzeln zugegriffen werden. Verschiedene Wörter bilden dieselbe Zeichenkette und können nicht unterschieden werden. Deswegen wird Text tokenisiert: Das **Tokenisieren**, also das Zerlegen des Textes in sinnvolle Einheiten (Tokens), ermöglicht zum einen den Zugriff auf einzelne Wörter oder Äußerungen im Text, und zum anderen deren quantitative Auswertung. 
+Text wird im Computer als Abfolge von Zeichen abgebildet. In R ist eine Abfolge von Zeichen ein Objekt vom Typ character. Wie wir bereits gesehen haben, kann aber auf Zeichen in R nicht einzeln zugegriffen werden. Verschiedene Wörter bilden dieselbe Zeichenkette und können nicht unterschieden werden. Deswegen wird Text tokenisiert: Das **Tokenisieren**, also das Zerlegen des Textes in sinnvolle Einheiten (Tokens), ermöglicht zum einen den Zugriff auf einzelne Wörter oder Äußerungen im Text, und zum anderen deren quantitative Auswertung. 
 
 Was genau eine Einheit (also ein Wort oder eine Äußerung) in einem Text bildet, ist jedoch **kontextabhängig**: In einem Korpus von Social Media Posts zum Beispiel hat das Rautezeichen eine besondere Bedeutung und Raute-Wortkombinationen wie #digitalhumanities bilden ein Token. Aber das Rautezeichen kann in einem anderen Kontext etwas ganz anderes bedeuten; zum Beispiel kommt es auch in URLs vor, um Ankerelemente zu kennzeichnen. Ein Punkt kann das Ende eines Satzes kennzeichnen, oder er ist Teil eines Titels wie Prof. oder Mr. Nach welchen Regeln ein Text tokenisiert werden soll und was dabei als Token gezählt wird, hängt nicht zuletzt auch von der Forschungsfrage ab. In seinem Werk ["Enumerations: Data and Literary Study"](https://press.uchicago.edu/ucp/books/book/chicago/E/bo28465405.html) hat Andrew Piper beispielsweise ein ganzes Kapitel einer quantitativen Analyse der  Bedeutung von Satzzeichen in der Lyrik gewidment: Ein Satzzeichen ist für eine solche Analyse offensichtlich ein sehr wichtiges Token. In anderen Analysen spielen Satzzeichen dagegen gar keine Rolle. **Schon beim Tokenisieren treffen Forscher:innen also aktive Entscheidungen, wie Textdaten strukturiert und repräsentiert werden: sie konstruieren die Daten und finden sie nicht einfach vor.** 
 
@@ -113,8 +103,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9bd621153b68ddd2b9b8" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9bd621153b68ddd2b9b8">{"x":{"visdat":{"10ff96f0124fb":["function () ","plotlyVisDat"]},"cur_data":"10ff96f0124fb","attrs":{"10ff96f0124fb":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3402bebaf6edc62abb98" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3402bebaf6edc62abb98">{"x":{"visdat":{"14d6665e4b494":["function () ","plotlyVisDat"]},"cur_data":"14d6665e4b494","attrs":{"14d6665e4b494":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -173,15 +163,15 @@ install.packages("readtext")
 library(readtext)
 
 # einen Text einlesen und einer Variable zuweisen
-kafka_3 <- readtext("kafka_verwandlung_1915.txt")
+kafka_3 <- readtext("kafka_verwandlung_1915.txt", encoding = "UTF-8")
 # zwei Texte einlesen 
-kafka_3 <- readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"))
+kafka_3 <- readtext(c("kafka_verwandlung_1915.txt", "kafka_prozess_1925.txt"), encoding = "UTF-8")
 kafka_3
 # alle Texte in einem Ordner einlesen 
-ein_korpus <- readtext("korpus/*.txt")
+ein_korpus <- readtext("korpus/*.txt", encoding = "UTF-8")
 ein_korpus
 # Texte in einem Unterordner einlesen 
-noch_ein_korpus <- readtext("Unterordner/*.txt") # oder /Unterordner/*.txt
+noch_ein_korpus <- readtext("Unterordner/*.txt", encoding = "UTF-8") # oder /Unterordner/*.txt
 noch_ein_korpus
 # Texte in einem Ordner einlesen und Metadaten aus den Dateinamen extrahieren
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
@@ -237,6 +227,48 @@ table(ger_texte$Jahr)
 ## 1883 1888 1894 1896 1899 1901 1903 1905 1913 1915 1918 1919 1920 1924 1925 1926 
 ##    1    1    1    1    1    1    2    1    2    1    1    1    1    2    2    1
 ```
+
+
+## Character Encodings
+
+Text wird im Computer eigentlich als Abfolge von Zeichen abgebildet, und jedes Zeichen wird im Computer durch eine Zahlenfolge repräsentiert. Wie genau diese Folge aussieht, hängt davon ab, welche Kodierung (Encoding) dazu verwendet wird. Das folgende Beispiel aus Kevin Usheys Beitrag ["String Encoding and R"](https://kevinushey.github.io/blog/2018/02/21/string-encoding-and-r/) illustriert diesen Umstand: 
+
+
+```r
+utf8 <- "\u00fb"  # 'û'
+latin1 <- iconv(utf8, to = "latin1")
+paste(latin1, "(latin1):", pryr::bits(latin1))
+```
+
+```
+## [1] "û (latin1): 11111011"
+```
+
+```r
+paste(utf8,   "(UTF-8) :", pryr::bits(utf8))
+```
+
+```
+## [1] "û (UTF-8) : 11000011 10111011"
+```
+
+Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem lateinischen Alphabet, Zahlen und einige Sonderzeichen repräsentiert werden können. Heutzutage gibt es mit Unicode einen international anerkannten Standard-Zeichensatz. Dieser Zeichensatz ordnet nicht nur allen Zeichen im lateinischen Alphabet, sondern allen Zeichen in allen Schriftsprachen und sogar Symbolen wie Emojis einen einzigartigen Zahlenwert zu. Solche Unicode-Zahlenwerte heißen "Codepunkte". Zeichenketten, die als Unicode-Codepunkte repräsentiert werden, können mithilfe von Kodierungen wie UTF-8 in Zahlenfolgen, die nur aus Nullen und Einsen bestehen (Bytes) umgewandelt werden. R unterstützt mehrere Kodierungen, aber es empfiehlts sich, beim Einlesen und Schreiben von Textdateien die Kodierung UTF-8 zu verwenden. Beim Einlesen der Textdateien in den Beispielen oben haben wir deswegen die readtext-Funktion mit dem zusätzlichen Argument `encoding = "UTF-8"` aufgerufen. 
+
+Mit der Funktion `Encoding()` kann nach dem  Einlesen überprüft werden, ob das Encoding korrekt erkannt wird: 
+
+
+```r
+Encoding(ger_texte[1, 2])
+```
+
+```
+## [1] "UTF-8"
+```
+
+
+
+Beim Einlesen und Speichern von Dateien muss in R auf die Wahl des richtigen Encodings geachtet werden, insbesondere beim Umgang mit nicht-lateinischen Schriften. Das werden wir später in der Praxis genauer betrachten.
+
 
 ## Quanteda corpus-Objekte 
 
@@ -299,13 +331,13 @@ str(ger_korpus)
 ##  - attr(*, "meta")=List of 3
 ##   ..$ system:List of 6
 ##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
-##   .. .. ..$ : int [1:3] 4 0 2
+##   .. .. ..$ : int [1:3] 4 1 0
 ##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
 ##   .. .. ..$ : int [1:3] 4 3 3
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
-##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-07-16"
+##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
+##   .. ..$ created        : Date[1:1], format: "2024-11-26"
 ##   .. ..$ source         : chr "data.frame"
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr "documents"
@@ -633,13 +665,13 @@ str(kafka_toks)
 ##  - attr(*, "meta")=List of 3
 ##   ..$ system:List of 5
 ##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
-##   .. .. ..$ : int [1:3] 4 0 2
+##   .. .. ..$ : int [1:3] 4 1 0
 ##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
 ##   .. .. ..$ : int [1:3] 4 3 3
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
-##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse_SS24/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-07-16"
+##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
+##   .. ..$ created        : Date[1:1], format: "2024-11-26"
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr "documents"
 ##   .. ..$ what        : chr "word"
@@ -785,9 +817,9 @@ https://cssbook.net/content/chapter05.html#sec-encodings.
 - Pichler, Axel und Reiter, Nils (2021), *Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse*, in: Journal of Literary Theory 15, no. 1-2,  https://doi.org/10.1515/jlt-2021-2008. 
 - Bhattacharyya, Sayan (2021). *Text Analysis for Thought in the Black Atlantic*, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, https://muse.jhu.edu/book/84470. 
 - Grimmer, Justin, Roberts, Margaret und Stewart, Brandon (2022), *Text as Data. A New Framework for Machine Learning and the Social Sciences*,  https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9960725495502883.
-- Jurafsky, Daniel und Martin, James H. (2023). Speech and Language Processing, Ch. 3 und 6,  https://web.stanford.edu/~jurafsky/slp3/.
+- Jurafsky, Daniel und Martin, James H. (2023). *Speech and Language Processing, Ch. 3 und 6*,  https://web.stanford.edu/~jurafsky/slp3/.
 - Quanteda-Website: https://quanteda.io/
 - Quanteda Tutorials: https://tutorials.quanteda.io/
 - Quanteda Quick Start Guide: https://quanteda.io/articles/quickstart.html
-
-
+- Sanchez, Gaston (2014), *Handling and Processing Strings in R*, https://gotellilab.github.io/Bio381/Scripts/Feb07/HandlingAndProcessingStringsInR.pdf
+- Ushey, Kevin (2018), *String Encoding and R*, https://kevinushey.github.io/blog/2018/02/21/string-encoding-and-r/

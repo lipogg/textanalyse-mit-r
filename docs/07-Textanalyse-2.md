@@ -1,6 +1,6 @@
 # Textanalyse II: Preprocessing
 
-Im Kapitel "Textanalyse I" haben wir bereits die grundlegenden Quanteda-Objekte kennengelernt: korpus-Objekte, tokens-Objekte und DFM-Objekte. Bei der Erstellung des tokens-Objekts wurden die Texte tokenisiert, also in einzelne Tokens zerlegt. Vor und/oder nach der Tokenisierung erfolgen häufig noch weitere Operationen zur Bereinigung und Vorbereitung der Texte, die wir im folgenden kennenlernen werden. Solche Operationen zur Vorbereitung und Bereinigung von Texten zur Analyse werden allgemein **Preprocessing** genannt. Dazu gehören z.B. die Entfernung von Satzzeichen und von bestimmten Wörtern, die sehr häufig vorkommen (sogenannte "Stoppwörter"), die Umwandlung aller Tokens in Kleinbuchstaben, die sogenannte "Lemmatisierung" der Texte oder die manuelle Bereinigung einzelner Tokens mithilfe von speziellen Ausdrücken, die sich "Reguläre Ausdrücke" (oder engl. "Regular Expressions") nennen. Im Folgenden schauen wir uns diese und einige weitere Preprocessing-Schritte am Beispiel unseres Korpus deutschsprachiger belletristischer Texte an. 
+Im Kapitel "Textanalyse I" haben wir bereits die grundlegenden Quanteda-Objekte kennengelernt: Korpus-Objekte, Tokens-Objekte und DFM-Objekte. Bei der Erstellung des Tokens-Objekts wurden die Texte tokenisiert, also in einzelne Tokens zerlegt. Vor und/oder nach der Tokenisierung erfolgen häufig noch weitere Operationen zur Bereinigung und Vorbereitung der Texte, die wir im folgenden kennenlernen werden. Solche Operationen zur Vorbereitung und Bereinigung von Texten zur Analyse werden allgemein **Preprocessing** genannt. Dazu gehören z.B. das Entfernen von Satzzeichen und von bestimmten Wörtern, die sehr häufig vorkommen (sogenannte "Stoppwörter"), die Umwandlung aller Tokens in Kleinbuchstaben, die sogenannte "Lemmatisierung" der Texte oder die manuelle Bereinigung einzelner Tokens mithilfe von speziellen Ausdrücken, die sich "Reguläre Ausdrücke" (oder engl. "Regular Expressions") nennen. Im Folgenden schauen wir uns diese und einige weitere Preprocessing-Schritte am Beispiel unseres Korpus deutschsprachiger belletristischer Texte an. 
 
 Welche Preprocessing-Schritte im Einzelnen durchgeführt werden, hängt vom Kontext, von der Qualität der Texte und von der Forschungsfrage ab. Für manche Forschungsfragen kann es z.B. interessant sein, manche Stoppwörter beizubehalten oder zusätzliche Wörter zu entfernen. In anderen Fällen soll dagegen vielleicht mit den Grundformen der Wörter (Lemma) gearbeitet werden; die Texte müssen also "lemmatisiert" werden. 
 
@@ -8,14 +8,15 @@ Welche Preprocessing-Schritte im Einzelnen durchgeführt werden, hängt vom Kont
 :::tip
 Der Pipe-Operator `%>%`
 
-In den Beispielen in diesem Kapitel kommt manchmal der sogenannte Pipe-Operator `%>%` vor. Diesen Operator habt ihr bereits im Kapitel ["R Basics IV: Funktionen und Pakete"](https://lipogg.github.io/textanalyse-mit-r/r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet) kurz kennengelernt. Der Pipe-Operator wird verwendet, um mehrere Funktionsaufrufe miteinander zu verketten. Dabei übernimmt die nachfolgende Funktion als erstes Argument jeweils den Rückgabewert der vorhergehenden Funktion. Im folgenden Beispiel übergibt der Pipe-Operator der Funktion `paste0()` das Objekt `satz` als Argument. Die `paste0()`-Funktion fügt an den Satz ein Fragezeichen an und übergibt die bearbeitete Zeichenkette "Hallo, wie geht es dir?" an die Funktion `strsplit()`. Die Funktion `strsplit()` teilt dann den Satz anhand der Leerzeichen in einzelne Einheiten auf und gibt einen character-Vektor zurück. Dieser character-Vektor wird zuletzt der Variable `woerter` zugewiesen. 
+In den Beispielen in diesem Kapitel kommt manchmal der sogenannte Pipe-Operator `%>%` vor. Diesen Operator habt ihr bereits im Kapitel ["R Basics IV: Funktionen und Pakete"](https://lipogg.github.io/textanalyse-mit-r/r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet) und in den Übungsaufgaben kurz kennengelernt. Zur Erinnerung: Der Pipe-Operator wird verwendet, um mehrere Funktionsaufrufe miteinander zu verketten. Dabei übernimmt die nachfolgende Funktion als erstes Argument jeweils den Rückgabewert der vorhergehenden Funktion. Im folgenden Beispiel übergibt der Pipe-Operator der Funktion `paste0()` das Objekt `greeting` als Argument. Die `paste0()`-Funktion fügt an die Begrüßung ein Ausrufezeichen an und übergibt die bearbeitete Zeichenkette "Guten Tag!" an die Funktion `strsplit()`. Die Funktion `strsplit()` teilt dann den Satz anhand der Leerzeichen in einzelne Einheiten auf und gibt einen character-Vektor zurück. Dieser character-Vektor wird zuletzt der Variable `greeting_toks` zugewiesen. 
 
 ```
-satz <- "Hallo, wie geht es dir"
+greeting <- "Guten Tag"
 
-woerter <- satz %>%
-  paste0("?") %>%
+greeting_toks <- greeting %>%
+  paste0("!") %>%
   strsplit(" ")
+
 ```
 
 Ein Ausdruck der Art `x %>% f` ist also äquivalent zu `f(x)`.
@@ -173,7 +174,7 @@ tokens(beispiel_1, verbose = TRUE)
 ## [ ... and 17 more ]
 ```
 
-Die `tokens()`-Funktion kann auch zum Tokenisieren von japanisch- und chinesischsprachigen Texten verwendet werden, hierbei wird unter der Motorhaube eine morphologische Analyse durchgeführt. Ein Beispiel aus den [Quanteda-Dokumentationsseiten](https://tutorials.quanteda.io/multilingual/overview/): 
+Die `tokens()`-Funktion kann auch zum Tokenisieren von japanisch- und chinesischsprachigen Texten verwendet werden. Hierbei wird unter der Motorhaube eine morphologische Analyse durchgeführt. Ein Beispiel aus den [Quanteda-Dokumentationsseiten](https://tutorials.quanteda.io/multilingual/overview/): 
 
 
 ```r
@@ -192,6 +193,12 @@ toks
 ## [ ... and 281 more ]
 ```
 
+:::task
+Verständnisfragen: 
+
+* Im Abschnitt 5.2 "Korpus, Tokens und Types" haben wir uns [zwei Tweets von Greta Thunberg und Andrew Tate](https://x.com/GretaThunberg/status/1608056944501178368) angesehen und inhaltlich zusammenhängende Einheiten identifiziert. Kopiert die beiden Tweets in R und tokenisiert sie mithilfe der Quanteda-Funktion tokens(). Werden alle Sinneinheiten richtig erkannt?
+
+:::
 
 ## Reguläre Ausdrücke im Preprocessing
 
@@ -229,6 +236,7 @@ Verständnisfragen:
 * Was passiert, wenn man die \\\\ weglässt?
 * Was passiert, wenn man das Leerzeichen am Anfang des regulären Ausdrucks `" \\[[1-9]+\\]"` weglässt?
 * Was machen die Funktionen `gregexpr()` und `regmatches()`?
+* Wie könnte man die beiden Tweets aus der Verständnisfrage zum vorigen Abschnitt bearbeiten, damit "quad turbo" als Sinneinheit erkannt wird?
 
 :::
 
@@ -583,6 +591,16 @@ saveRDS(kafka_lemmatized, file="kafka_lemmatized.rds")
 ```
 
 Mit dem Objekt `kafka_lemmatized` könnte jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wir werden uns diesen Code und auch den Dataframe `kafka_df` in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen. 
+
+:::task
+Verständnisfragen: 
+
+* Was ist der Unterschied zwischen Stemming und Lemmatisierung?
+* Was macht der reguläre Ausdruck `"\\w+\\|(\\|\\w+)?"`? 
+* Welchen Vorteil hat es, wenn die Texte nach dem Preprocessing in einer RDS-Datei anstelle einer Textdatei gespeichert werden? Wann ist das keine gute Idee? 
+* Was machen die Funktionen `group_by()` und `summarise()` aus dem Paket dplyr? Ruft die R-Dokumentationsseiten auf und lest nach. 
+
+:::
 
 
 ## Quellen {-}

@@ -79,7 +79,7 @@ Verständnisfragen:
 
 **Wir haben bereits gesehen, dass sowohl die Auswahl und Zusammenstellung des Korpus als auch die Wahl eines Verfahrens zum Tokenisieren der Texte Entscheidungen voraussetzen, bevor wir überhaupt mit der eigentlichen Analyse begonnen haben. Also wo beginnt man bei einem Textanalyseprojekt? Wie trifft man diese Entscheidungen?** Es gibt verschiedene Zugänge, die bereits in den Lektüren zur ersten Sitzung angedeutet wurden. Zur Erinnerung: 
 
-Evelyn Gius und Janina Jacke haben zwischen **"explorativen"** und **"konfirmatorischen"** Methoden unterschieden ([Gius/Jacke, S. 10f.](https://doi.org/10.22148/001c.46662)). Beim explorativen Zugriff wird ein Korpus demnach mit programmatischen Methoden untersucht, um über die geänderte oder auch entfremdete Perspektive eine Fragestellung zu entwickeln, der im Anschluss mithilfe quantitativer oder aber auch "klassischer" qualitativer Analysemethoden nachgegangen werden kann. Beim konfirmatorischen Zugriff steht dagegen die Fragestellung vorab fest und es werden ganz gezielt Methoden der quantitativen Textanalyse angewandt, um eine Hypothese zu testen. Bei diesem Zugriff ist eine vorsichtige und kritische **Operationalisierung** der Fragestellung notwendig. Dem Begriff Operationalisierung seid ihr im Text von Axel Pichler und Nils Reiter begegnet: Operationalisierung ist der "Arbeitsprozess, einem theoretischen Begriff messbare Textoberflächenphänomene zuzuordnen" ([Pichler/Reiter 2021, S. 12](https://doi.org/10.1515/jlt-2021-2008)), also das Werkzeug, mit dem Fragestellungen von den "klassischen" in die digitalen Geisteswissenschaften überführt werden können. Der Operationalisierungsprozess ist oft das schwierigste an der gesamten Textanalyse, denn dabei müssen laut Pichler und Reiter sowohl die "**mitbestimmenden literaturtheoretischen Hintergrundannahmen**" (oder andere fachspezifische theoretische Hintergründe) als auch die "**Hintergrundannahmen der algortihmischen Textanalyse**" verstanden und berücksichtigt werden (S. 24). Was bedeutet das? 
+Evelyn Gius und Janina Jacke haben zwischen **"explorativen"** und **"konfirmatorischen"** Methoden unterschieden ([Gius/Jacke, S. 10f.](https://doi.org/10.22148/001c.46662)). Beim explorativen Zugriff wird ein Korpus demnach mit programmatischen Methoden untersucht, um über die geänderte oder auch entfremdete Perspektive eine Fragestellung zu entwickeln, der im Anschluss mithilfe quantitativer oder aber auch "klassischer" qualitativer Analysemethoden nachgegangen werden kann. Beim konfirmatorischen Zugriff steht dagegen die Fragestellung vorab fest und es werden ganz gezielt Methoden der quantitativen Textanalyse angewandt, um eine Hypothese zu testen. Bei diesem Zugriff ist eine vorsichtige und kritische **Operationalisierung** der Fragestellung notwendig. Dem Begriff Operationalisierung seid ihr im Text von Axel Pichler und Nils Reiter begegnet: Operationalisierung ist der "Arbeitsprozess, einem theoretischen Begriff messbare Textoberflächenphänomene zuzuordnen" ([Pichler/Reiter 2021, S. 12](https://doi.org/10.1515/jlt-2021-2008)), also das Werkzeug, mit dem Fragestellungen von den "klassischen" in die digitalen Geisteswissenschaften überführt werden können. Der Operationalisierungsprozess ist oft das schwierigste an der gesamten Textanalyse, denn dabei müssen laut Pichler und Reiter sowohl die "**mitbestimmenden literaturtheoretischen Hintergrundannahmen**" (oder andere fachspezifische theoretische Hintergründe) als auch die "**Hintergrundannahmen der algorithmischen Textanalyse**" verstanden und berücksichtigt werden (S. 24). Was bedeutet das? 
 
 Die Betrachtung von Kookkurrenzen, also von Wörtern, die mit bestimmten Begriffen in einem bestimmten Kontext gemeinsam vorkommen, ist eine gängige Operationalisierung für Fragestellungen, bei denen es um kontextuelle Bedeutungen von Begriffen oder auch den Bedeutungswandel über die Zeit geht. Diese Art der Operationalisierung wurde auch in dem Text von Sayan Bhattacharyya aus der ersten Woche diskutiert ([Bhattacharyya 2021, S. 81](https://muse.jhu.edu/book/84470)). Bhattacharyya kritisiert Textanalysemethoden, welche die Häufigkeit einzelner Wörter in einem Korpus über die Zeit hinweg vergleichen, um daran einen Bedeutungswandel festzumachen. Diesem Vorgehen liege ein Verständnis von Wörtern als "neutrale, unproblematische Objekte" zugrunde, die als "Stellvertreter für Konzepte innerhalb einer stabilen Architektur von Konzepten fungieren" (S. 81). Diese theoretische Annahme sei aber für das Verständnis der "polysemischen und mehrsprachigen Textwelt" des Black Atlantic gänzlich ungeeignet, da sich die Bedeutungen europäischer Wörter darin fortlaufend verändern und oft zusätzliche Bedeutungsebenen annähmen (S.82). Bhattacharyya hebt dagegen Analysemethoden, die Kookkurrenzen und Word Embeddings betrachten, positiv hervor: 
 
@@ -103,8 +103,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9e8be5f616157b2a3190" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9e8be5f616157b2a3190">{"x":{"visdat":{"12fbc707f60":["function () ","plotlyVisDat"]},"cur_data":"12fbc707f60","attrs":{"12fbc707f60":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fd9399cb94c0f2ed2b8e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-fd9399cb94c0f2ed2b8e">{"x":{"visdat":{"ff8d1d50daef":["function () ","plotlyVisDat"]},"cur_data":"ff8d1d50daef","attrs":{"ff8d1d50daef":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -337,7 +337,7 @@ str(ger_korpus)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-11-27"
+##   .. ..$ created        : Date[1:1], format: "2024-12-03"
 ##   .. ..$ source         : chr "data.frame"
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr "documents"
@@ -671,7 +671,7 @@ str(kafka_toks)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2024-11-27"
+##   .. ..$ created        : Date[1:1], format: "2024-12-03"
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr "documents"
 ##   .. ..$ what        : chr "word"
@@ -747,11 +747,11 @@ Tabellarische Daten (Dataframes) können zum Beispiel in csv-Dateien gespeichert
 
 ```r
 # Dataframe in csv-Datei schreiben
-write.csv2(ger_info, "ger_info.csv")
+write.csv2(ger_info, "ger_info.csv", fileEncoding="UTF-8")
 # Können wir verhindern, dass die Zeilenindizes als eigene Spalte gespeichert werden? 
 ?write.csv2
 # Ja, mit dem Parameter row.names:
-write.csv2(ger_info, "ger_info.csv", row.names=FALSE)
+write.csv2(ger_info, "ger_info.csv", row.names=FALSE, fileEncoding="UTF-8")
 ```
 
 Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel quanteda tokens-Objekte oder auch der ger_info Dataframe, können außerdem in R-internen Datenformaten gespeichert werden: 
@@ -783,7 +783,7 @@ Und csv-Dateien könne eingelesen werden mit:
 
 
 ```r
-ger_info <- read.csv2(file="ger_info.csv")
+ger_info <- read.csv2(file="ger_info.csv", fileEncoding="UTF-8")
 ```
 
 Um Änderungen zu speichern, die wir ggf. an den eingelesenen Texten vorgenommen haben, können wir diese  einfach in eine neue Textdatei schreiben: 
@@ -797,7 +797,8 @@ write.table(kafka_1,
             file = "kafka_bearbeitet.txt", 
             quote=FALSE,
             col.names=FALSE,
-            row.names=FALSE)
+            row.names=FALSE, 
+            fileEncoding="UTF-8")
 ```
 
 ## Quellen {-}

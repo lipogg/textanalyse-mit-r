@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Exkurs: Reguläre Ausdrücke | Textanalyse mit R für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Exkurs: Reguläre Ausdrücke | Textanalyse mit R für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/textanalyse-mit-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Exkurs: Reguläre Ausdrücke | Textanalyse mit R für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="textanalyse-i-korpus-tokens-daten-und-dateien.html"/>
+<link rel="next" href="textanalyse-ii-preprocessing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#%C3%BCber-diesen-kurs"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path=""><a href="#was-ist-r-%C3%BCberhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="07-Regex.html"><a href="#operatorpr%C3%A4zedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html"><i class="fa fa-check"></i><b>2</b> R Basics II: Datenstrukturen</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#grundlegende-begriffe-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektoren"><i class="fa fa-check"></i><b>2.2</b> Vektoren</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektoren-erstellen"><i class="fa fa-check"></i><b>2.2.1</b> Vektoren erstellen</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#sets-mengen"><i class="fa fa-check"></i><b>2.2.2</b> Sets (Mengen)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#named-vectors"><i class="fa fa-check"></i><b>2.2.3</b> Named Vectors</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#faktoren"><i class="fa fa-check"></i><b>2.2.4</b> Faktoren</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#operationen-auf-vektoren"><i class="fa fa-check"></i><b>2.2.5</b> Operationen auf Vektoren</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#vektorisierung"><i class="fa fa-check"></i><b>2.2.6</b> Vektorisierung</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#listen"><i class="fa fa-check"></i><b>2.3</b> Listen</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#listen-erstellen"><i class="fa fa-check"></i><b>2.3.1</b> Listen erstellen</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#operationen-auf-listen"><i class="fa fa-check"></i><b>2.3.2</b> Operationen auf Listen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-vektoren-vs-benannte-vektoren-vs-faktoren-vs-listen"><i class="fa fa-check"></i><b>2.4</b> Auf einen Blick: Vektoren vs benannte Vektoren vs Faktoren vs Listen</a></li>
+<li class="chapter" data-level="2.5" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#matrizen"><i class="fa fa-check"></i><b>2.5</b> Matrizen</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#matrizen-erstellen"><i class="fa fa-check"></i><b>2.5.1</b> Matrizen erstellen</a></li>
+<li class="chapter" data-level="2.5.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#operationen-auf-matrizen"><i class="fa fa-check"></i><b>2.5.2</b> Operationen auf Matrizen</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#arrays"><i class="fa fa-check"></i><b>2.6</b> Arrays</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#operationen-auf-arrays"><i class="fa fa-check"></i><b>2.6.1</b> Operationen auf Arrays</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#dataframes"><i class="fa fa-check"></i><b>2.7</b> Dataframes</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#dataframes-erstellen"><i class="fa fa-check"></i><b>2.7.1</b> Dataframes erstellen</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#operationen-auf-dataframes"><i class="fa fa-check"></i><b>2.7.2</b> Operationen auf Dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#auf-einen-blick-matrizen-vs-arrays-vs-dataframes"><i class="fa fa-check"></i><b>2.8</b> Auf einen Blick: Matrizen vs Arrays vs Dataframes</a></li>
+<li class="chapter" data-level="2.9" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#datenstrukturen-untersuchen"><i class="fa fa-check"></i><b>2.9</b> Datenstrukturen untersuchen</a></li>
+<li class="chapter" data-level="2.10" data-path="07-Regex.html"><a href="#fehlende-und-ung%C3%BCltige-werte-in-datenstrukturen"><i class="fa fa-check"></i><b>2.10</b> Fehlende und ungültige Werte in Datenstrukturen</a></li>
+<li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
+<li class="chapter" data-level="2.12" data-path="07-Regex.html"><a href="#unver%C3%A4nderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
+<li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.2</b> Bedingte Anweisungen</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.3</b> Verzweigungen</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.4</b> while-Schleifen</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.5</b> for-Schleifen</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.6</b> Schleifen abbrechen</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#grundlegende-begriffe-3"><i class="fa fa-check"></i><b>4.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.2</b> Was sind Funktionen?</a></li>
+<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.3</b> Funktionen definieren</a></li>
+<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.4</b> Funktionen aufrufen</a></li>
+<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.5</b> Funktionen verstehen</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.6</b> Wozu werden Funktionen verwendet?</a></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.7</b> Schleifen ersetzen mithilfe von Funktionen</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.7.1</b> Die Apply-Funktionen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="07-Regex.html"><a href="#g%C3%BCltigkeit-der-funktionsargumente-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>4.8</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
+<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.9</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
+<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.10</b> Was sind Pakete?</a></li>
+<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.11</b> Pakete installieren</a></li>
+<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.12</b> Pakete laden</a></li>
+<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.13</b> Wozu werden Pakete verwendet?</a></li>
+<li class="chapter" data-level="4.14" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.14</b> Welche Pakete gibt es denn alles?</a></li>
+<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
+<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
+<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#vom-korpus-zur-analyse"><i class="fa fa-check"></i><b>5.3</b> Vom Korpus zur Analyse</a></li>
+<li class="chapter" data-level="5.4" data-path="07-Regex.html"><a href="#%C3%BCberblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.4</b> Überblick: Textanalyse mit Quanteda</a></li>
+<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.5</b> Textdateien einlesen</a></li>
+<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#character-encodings"><i class="fa fa-check"></i><b>5.6</b> Character Encodings</a></li>
+<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda corpus-Objekte</a></li>
+<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.8</b> Quanteda tokens-Objekte</a></li>
+<li class="chapter" data-level="5.9" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.9</b> Quanteda DFM-Objekte</a></li>
+<li class="chapter" data-level="5.10" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.10</b> Daten schreiben</a></li>
+<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="07-Regex.html"><a href="#was-sind-regul%C3%A4re-ausdr%C3%BCcke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
+<li class="chapter" data-level="6.2" data-path="07-Regex.html"><a href="#regul%C3%A4re-ausdr%C3%BCcke-in-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="regex.html"><a href="regex.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
+<li class="chapter" data-level="6.2.2" data-path="regex.html"><a href="regex.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regex.html"><a href="regex.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="regex.html"><a href="regex.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regex.html"><a href="regex.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regex.html"><a href="regex.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="07-Regex.html"><a href="#regex-f%C3%BCr-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
+<li class="chapter" data-level="7.2" data-path="07-Regex.html"><a href="#regul%C3%A4re-ausdr%C3%BCcke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
+<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
+<li class="chapter" data-level="7.4" data-path="07-Regex.html"><a href="#stoppw%C3%B6rter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
+<li class="chapter" data-level="7.5" data-path="07-Regex.html"><a href="#gro%C3%9F--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
+<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
+<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
+<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Textanalyse mit R für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regex" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Exkurs: Reguläre Ausdrücke<a href="regex.html#regex" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="was-sind-reguläre-ausdrücke" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Was sind reguläre Ausdrücke?<a href="#was-sind-regul%C3%A4re-ausdr%C3%BCcke" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Reguläre Ausdrücke (oder engl. Regular Expression, kurz: RegEx, RegExp) sind verallgemeinerte Suchmuster (patterns) für Zeichenketten. Mithilfe von regulären Ausdrücken können syntaktische Konstrukte so beschrieben werden, dass sie ein Computer versteht. Ein syntaktisches Konstrukt ist zum Beispiel eine Zahl zwischen 1900 und 2000, eine Telefonnummer, eine Adresse, eine URL oder auch ein bestimmtes Wort in verschiedenen Flexionsformen. Mithilfe von regulären Ausdrücken können also Texte nach bestimmten Mustern durchsucht werden, und die gefundenen Konstrukte können anschließend z.B. entfernt oder bearbeitet werden. Die meisten Programmiersprachen, darunter auch R, stellen Funktionen bereit, welche die Verwendung von regulären Ausdrücken erlauben. In den Beispielen in diesem Kapitel werden wir nach Mustern in zwei deutschsprachigen Märchentexten suchen. Zur Formulierung der Suchmuster verwenden wir deswegen das deutsche Alphabet. Reguläre Ausdrücke können aber genauso für andere Alphabete, Schriftsysteme und</p>
+</div>
+<div id="reguläre-ausdrücke-in-r" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Reguläre Ausdrücke in R<a href="#regul%C3%A4re-ausdr%C3%BCcke-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Als Beispieltexte nutzen wir die beiden Märchen Rapunzel und Aschenputtel. <br />
+Zur Vorbereitung installieren wir die folgenden Pakete…</p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="regex.html#cb498-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;readtext&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;quanteda&quot;</span>))</span></code></pre></div>
+<p>…und laden die installierten Pakete:</p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="regex.html#cb499-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb499-2"><a href="regex.html#cb499-2" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb499-3"><a href="regex.html#cb499-3" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
+<div id="r-base-funktionen" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> R Base Funktionen<a href="regex.html#r-base-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R können Texte nach regulären Ausdrücken entweder mithilfe von R-Basisfunktionen durchsucht werden, oder mithilfe von Funktionen aus spezialisierten Paketen. Zunächst betrachten wir die Basisfunktionen, und lernen später reguläre Ausdrücke selbst kennen:</p>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="68%" />
+</colgroup>
+<thead>
+<tr>
+<th>Funktion</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>grep(), grepl()</td>
+<td>Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match.</td>
+</tr>
+<tr>
+<td>regexpr(), gregexpr()</td>
+<td>Search a character vector for regular expression matches and return the indices of the string where the match begins and the length of the match.</td>
+</tr>
+<tr>
+<td>sub(), gsub()</td>
+<td>Search a character vector for regular expression matches and replace that match with another string.</td>
+</tr>
+</tbody>
+</table>
+<p>Quelle: <a href="https://www.youtube.com/watch?v=q8SzNKib5-4" class="uri">https://www.youtube.com/watch?v=q8SzNKib5-4</a> <br />
+Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/grep" class="uri">https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/grep</a></p>
+<p>Wir verwenden die <code>readtext()</code>-Funktion zum Einlesen unserer Märchen.</p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="regex.html#cb500-1" tabindex="-1"></a>maerchen_df <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">c</span>(<span class="st">&quot;data/Rapunzel_(1850).txt&quot;</span>, <span class="st">&quot;data/Aschenputtel_(1850).txt&quot;</span>))</span>
+<span id="cb500-2"><a href="regex.html#cb500-2" tabindex="-1"></a><span class="fu">length</span>(maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="regex.html#cb502-1" tabindex="-1"></a>maerchen_df</span></code></pre></div>
+<pre><code>## readtext object consisting of 2 documents and 0 docvars.
+## $text
+## [1] &quot;# A data frame: 2 × 2&quot;                                
+## [2] &quot;  doc_id                  text                &quot;       
+## [3] &quot;  &lt;chr&gt;                   &lt;chr&gt;               &quot;       
+## [4] &quot;1 Aschenputtel_(1850).txt \&quot;\\\&quot;\\nEinem rei\\\&quot;...\&quot;&quot;
+## [5] &quot;2 Rapunzel_(1850).txt     \&quot;\\\&quot;\\nEs war ei\\\&quot;...\&quot;&quot;
+## 
+## $summary
+## $summary[[1]]
+## NULL
+## 
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;trunc_mat&quot;</code></pre>
+<p>Durch Einlesen des Märchens mithilfe der <code>readtext()</code>-Funktion haben wir einen Dataframe mit zwei Spalten und zwei Zeilen erhalten. Wir wollen nicht den gesamten Datafrmae, sondern nur die Märchentexte nach Matches zu durchsuchen und wählen deswegen nur die Spalte <code>text</code> als Eingabe:</p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="regex.html#cb504-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text, <span class="at">value=</span>F) </span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="regex.html#cb506-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<pre><code>## [1] FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="regex.html#cb508-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<pre><code>## [1]  -1 625
+## attr(,&quot;match.length&quot;)
+## [1] -1  8</code></pre>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="regex.html#cb510-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] -1
+## attr(,&quot;match.length&quot;)
+## [1] -1
+## 
+## [[2]]
+##  [1]  625  751 1005 1176 1334 1903 2077 2334 2672 2709 3006 3016 3056 3527 3972
+## [16] 3982 4026 4287 4297 4415 4729 5380 5782 6006 6117 6264 6274 6406 6697 7162
+## [31] 7376
+## attr(,&quot;match.length&quot;)
+##  [1] 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8</code></pre>
+<p>Die Funktionen können aber auch auf jeden Text einzeln angewandt werden, indem separat auf beide Texte zugegriffen wird:</p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="regex.html#cb512-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">value=</span>F) </span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="regex.html#cb514-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="regex.html#cb516-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>## [1] 625
+## attr(,&quot;match.length&quot;)
+## [1] 8</code></pre>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="regex.html#cb518-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1]  625  751 1005 1176 1334 1903 2077 2334 2672 2709 3006 3016 3056 3527 3972
+## [16] 3982 4026 4287 4297 4415 4729 5380 5782 6006 6117 6264 6274 6406 6697 7162
+## [31] 7376
+## attr(,&quot;match.length&quot;)
+##  [1] 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="regex.html#cb520-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">value=</span>F) </span></code></pre></div>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="regex.html#cb522-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="regex.html#cb524-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [1] -1
+## attr(,&quot;match.length&quot;)
+## [1] -1</code></pre>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="regex.html#cb526-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] -1
+## attr(,&quot;match.length&quot;)
+## [1] -1</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Interpretiert die Ausgabe der vier Funktionen. Welche Informationen liefern die verschiedenen Funktionen? Wonach wird gesucht?</li>
+<li>Was wird ausgegeben, wenn das Muster nicht gefunden wird?</li>
+</ul>
+</div>
+<p>Die Funktionen <code>regexpr()</code> und <code>gregexpr()</code> können um die Funktion <code>regmatches</code> ergänzt werden, um statt Funstellen die tatsächlich gefundenen Zeichenketten anzuzeigen:</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="regex.html#cb528-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [1] &quot;Rapunzel&quot;</code></pre>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="regex.html#cb530-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [[1]]
+##  [1] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+##  [7] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [13] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [19] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [25] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [31] &quot;Rapunzel&quot;</code></pre>
+<p>Da wir nur nach genau der Zeichenkette “Rapunzel” gesucht haben, wird natürlich auch nur “Rapunzel” gefunden.</p>
+<p>Mithilfe der Funktionen <code>sub()</code> und <code>gsub()</code> können gefundene Zeichenketten gelöscht oder ersetzt werden. Mit der bereits bekannten Funktion <code>grep()</code> können wir daraufhin überprüfen, ob die Zeichenketten erfolgreich ersetzt wurden.</p>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="regex.html#cb532-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit gsub()</span></span>
+<span id="cb532-2"><a href="regex.html#cb532-2" tabindex="-1"></a>peterpan_1 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb532-3"><a href="regex.html#cb532-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_1)</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="regex.html#cb534-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Peter Pan&quot;</span>, peterpan_1)</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="regex.html#cb536-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit sub()</span></span>
+<span id="cb536-2"><a href="regex.html#cb536-2" tabindex="-1"></a>peterpan_2 <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb536-3"><a href="regex.html#cb536-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_2)</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="regex.html#cb538-1" tabindex="-1"></a><span class="co"># Zeichenkette löschen mit gsub() - geht auch mit sub()</span></span>
+<span id="cb538-2"><a href="regex.html#cb538-2" tabindex="-1"></a>rapunzel_cleaned <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb538-3"><a href="regex.html#cb538-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, rapunzel_cleaned)</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [1] FALSE</code></pre>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Überprüfen wir die Ergebnisse, so fällt auf, dass bei Anwendung der Funktion <code>sub()</code> nicht alle Instanzen der Zeichenkette “Rapunzel” ersetzt wurden. Woran liegt das?</li>
+<li>Wie unterscheidet sich folglich das Verhalten der Funktionen <code>gsub()</code> und <code>sub()</code>?</li>
+</ul>
+</div>
+<p>Im Beispiel oben haben wir die Funktionen auf das readtext-Objekt angewandt. Es kann aber auch ein Quanteda corpus-Objekt mithilfe von regulären Ausdrücken durchsucht werden:</p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="regex.html#cb540-1" tabindex="-1"></a>maerchen_korpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(maerchen_df)</span>
+<span id="cb540-2"><a href="regex.html#cb540-2" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="regex.html#cb542-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="regex.html#cb544-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus)</span></code></pre></div>
+<pre><code>## [1] FALSE  TRUE</code></pre>
+</div>
+<div id="spezielle-pakete-stringr" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Spezielle Pakete: stringr<a href="regex.html#spezielle-pakete-stringr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die Suche mithilfe von R-base-Funktionen kann etwas kompliziert werden, insbesondere, wenn die gefundenen Zeichenketten mithilfe von <code>regmatches()</code> und <code>gregexpr()</code> ausgegeben werden sollen. Außerdem ist es nicht immer möglich, die R-base-Funktionen mithilfe des Pipe-Operators zu verketten. Deswegen gibt es <code>stringr</code>, ein Paket aus dem Tidyverse (s. Kapitel R Basics IV), welches spezialisierte Funktionen zur Arbeit mit regulären Ausdrücken bietet. Die unübersichtliche Kombination von <code>regmatches()</code> und <code>gregexpr()</code> kann beispielsweise durch die stringr-Funktion <code>str_extract_all()</code> ersetzt werden:</p>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="regex.html#cb546-1" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;Rapunzel&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+##  [7] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [13] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [19] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [25] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
+## [31] &quot;Rapunzel&quot;</code></pre>
+<p>Für eine Übersicht über stringr-Funktionen und einen Vergleich mit den R-base-Funktionen siehe: <a href="https://stringr.tidyverse.org/articles/from-base.html" class="uri">https://stringr.tidyverse.org/articles/from-base.html</a> <br /></p>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Welche stringr Funktionen können anstelle der bereits kennengelernten R base Funktionen verwendet werden?</li>
+<li>Googelt das Paket stringi. Was ist der Unterschied zu stringr?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="regex-syntax" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Regex Syntax<a href="regex.html#regex-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basics-syntax" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Basics Syntax<a href="regex.html#basics-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bisher haben wir nur nach einzelnen Worten gesucht. Oft interessieren wir
+uns aber für komplexere Ausdrücke, Zeichen, oder verschiedene Varianten desselben Worts. Um solche syntaktischen Strukturen zu beschreiben, gibt es verschiedene Regex-Symbole, die im Folgenden vorgestellt werden.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="23%" />
+<col width="51%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr>
+<th>Zeichen</th>
+<th>Bedeutung</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\</code></td>
+<td>Escaped character: s.o.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>⎮</code></td>
+<td>Veroderung (ohne Leerzeichen!)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Achtung: Auf Eindeutigkeit achten!</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Klammern nutzen!</td>
+<td></td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td>Gruppen: Einheiten können mit runden</td>
+<td>Baum(krone⎮stamm)</td>
+</tr>
+<tr>
+<td></td>
+<td>Klammern begrenzt werden</td>
+<td>199(4⎮5)</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>Zeichenklasse</td>
+<td>[a-zA-ZäöüÄÖÜß]</td>
+</tr>
+<tr>
+<td></td>
+<td>- Bindestrich für Zahlen- oder</td>
+<td>[0-9]</td>
+</tr>
+<tr>
+<td></td>
+<td>Buchstabenreihen</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>- Reihenfolge innerhalb von Klassen</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>nicht festgelegt</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>- Sucht nach allen Kombinationen der</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Zeichen, wenn kein “oder” spezifiz.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[^]</code></td>
+<td>Verneinung</td>
+<td>[^aeo]</td>
+</tr>
+<tr>
+<td><code>{}</code></td>
+<td>Quantifizierer</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>- zwischen 1 und 4</td>
+<td>[a-z]{1,4}</td>
+</tr>
+<tr>
+<td></td>
+<td>- mindestens 1</td>
+<td>[a-z]{1,}</td>
+</tr>
+<tr>
+<td></td>
+<td>- genau 4</td>
+<td>[a-z]{4}</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>“mindestens einmal”, bis unendlich</td>
+<td>[1986]+</td>
+</tr>
+<tr>
+<td></td>
+<td>(Frage: Was ist der Unterschied?)</td>
+<td>(1986)+</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>“beliebig oft”, 0 bis unendlich</td>
+<td>[1986]*</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>(1986)*</td>
+</tr>
+<tr>
+<td><code>.*</code></td>
+<td>Wildcard: matcht Zeichen beliebig oft</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>(Aber: außer new line characters)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Mögliches, aber optionales Match</td>
+<td></td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>Positionsmarker: ^ außerhalb einer</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Zeichenklasse markiert Zeilenanfang</td>
+<td></td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>Positionsmarker: Markiert Zeilenende</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Merkt euch: Reguläre Ausdrücke stehen immer in doppelten Anführungszeichen!
+Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen diese “escaped” werden. Dazu nutzt man den Backslash <code>\</code>. Das gilt auch für alle anderen Zeichen, die eine “Regex-interne” Bedeutung haben, wie Punkte, Bindestriche, Klammern, u.ä.</p>
+<div class="task">
+<p>Verständnisfragen:</p>
+<ul>
+<li>Wie hätte sich die Ausgabe der “Rapunzel”-Beispiele oben verändert, wenn wir statt nach “Rapunzel” nach “Rapunzeln?” gesucht hätten?</li>
+<li>Wie hätten wir nach allen Varianten des Namens “Rapunzel” suchen können?</li>
+</ul>
+</div>
+</div>
+<div id="zeichenklassen" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Zeichenklassen<a href="regex.html#zeichenklassen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nach manchen Zeichen wird so oft gesucht, dass sich bereits nützliche Abkürzungen dafür entwickelt haben. Sowohl die R-base-Funktionen als auch die stringr-Funktionen unterstützen per Default die Suche nach den gängigsten Regex-Zeichenklassen.</p>
+<table>
+<thead>
+<tr>
+<th>Klasse</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\w</code></td>
+<td>Wortzeichen = [a-zA-Z]</td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>kein Wortzeichen</td>
+</tr>
+<tr>
+<td><code>\d</code></td>
+<td>Zahlzeichen = [0-9]</td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>kein Zahlzeichen</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>Leerzeichen</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>kein Leerzeichen</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>carriage return (andere Art von Leerzeichen)</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>new line character (neue Zeile)</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>Tabulatorzeichen</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="regex.html#cb548-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
+<span id="cb548-2"><a href="regex.html#cb548-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot; Hoffnung &quot;  &quot; Zauberin &quot;  &quot; bekommen &quot;  &quot; erschrak &quot;  &quot; sogleich &quot; 
+##  [6] &quot; Begierde &quot;  &quot; erschrak &quot;  &quot; Zauberin &quot;  &quot; zornigem &quot;  &quot; schlecht &quot; 
+## [11] &quot; Zauberin &quot;  &quot; erschien &quot;  &quot; Rapunzel &quot;  &quot;\nRapunzel &quot; &quot; schönste &quot; 
+## [16] &quot; Zauberin &quot;  &quot; Zauberin &quot;  &quot;\nRapunzel &quot; &quot; Zauberin &quot;  &quot; wickelte &quot; 
+## [21] &quot; Zauberin &quot;  &quot; Zauberin &quot;  &quot; Rapunzel &quot;  &quot; Zauberin &quot;  &quot; erschrak &quot; 
+## [26] &quot; gewaltig &quot;  &quot; erblickt &quot;  &quot; erzählte &quot;  &quot; Rapunzel &quot;  &quot; jedesmal &quot; 
+## [31] &quot; flechten &quot;  &quot; herunter &quot;  &quot; Zauberin &quot;  &quot; Rapunzel &quot;  &quot; schwerer &quot; 
+## [36] &quot; Flechten &quot;  &quot; Rapunzel &quot;  &quot; Wüstenei &quot;  &quot; Rapunzel &quot;  &quot; Zauberin &quot; 
+## [41] &quot; Flechten &quot;  &quot; giftigen &quot;  &quot; Rapunzel &quot;  &quot; liebsten &quot;  &quot; wanderte &quot; 
+## [46] &quot; Rapunzel &quot;  &quot; erkannte &quot;  &quot; Rapunzel &quot;</code></pre>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="regex.html#cb550-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
+<span id="cb550-2"><a href="regex.html#cb550-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot; Hoffnung &quot;  &quot; Zauberin &quot;  &quot; bekommen &quot;  &quot; erschrak &quot;  &quot; sogleich &quot; 
+##  [6] &quot; Begierde &quot;  &quot; erschrak &quot;  &quot; Zauberin &quot;  &quot; zornigem &quot;  &quot; schlecht &quot; 
+## [11] &quot; Zauberin &quot;  &quot; erschien &quot;  &quot; Rapunzel &quot;  &quot;\nRapunzel &quot; &quot; schönste &quot; 
+## [16] &quot; Zauberin &quot;  &quot; Zauberin &quot;  &quot;\nRapunzel &quot; &quot; Zauberin &quot;  &quot; wickelte &quot; 
+## [21] &quot; Zauberin &quot;  &quot; Zauberin &quot;  &quot; Rapunzel &quot;  &quot; Zauberin &quot;  &quot; erschrak &quot; 
+## [26] &quot; gewaltig &quot;  &quot; erblickt &quot;  &quot; erzählte &quot;  &quot; Rapunzel &quot;  &quot; jedesmal &quot; 
+## [31] &quot; flechten &quot;  &quot; herunter &quot;  &quot; Zauberin &quot;  &quot; Rapunzel &quot;  &quot; schwerer &quot; 
+## [36] &quot; Flechten &quot;  &quot; Rapunzel &quot;  &quot; Wüstenei &quot;  &quot; Rapunzel &quot;  &quot; Zauberin &quot; 
+## [41] &quot; Flechten &quot;  &quot; giftigen &quot;  &quot; Rapunzel &quot;  &quot; liebsten &quot;  &quot; wanderte &quot; 
+## [46] &quot; Rapunzel &quot;  &quot; erkannte &quot;  &quot; Rapunzel &quot;</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Was bedeutet das Muster <code>\\s\\w{8}\\s</code>? Wonach wird gesucht?</li>
+</ul>
+</div>
+</div>
+<div id="lookarounds" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Lookarounds<a href="regex.html#lookarounds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sogenannte Lookarounds kommen zur Anwendung, wenn nach einem Muster gesucht wird, das den Anfang oder das Ende von einem gesuchten String markiert, aber selbst nicht gematcht werden soll.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="66%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sequenz</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(?=foo) Lookahead</td>
+<td>Asserts that what immediately follows the current position in the string is foo</td>
+</tr>
+<tr>
+<td>(?&lt;=foo) Lookbehind</td>
+<td>Asserts that what immediately precedes the current position in the string is foo</td>
+</tr>
+<tr>
+<td>(?!foo) Negative Lookahead</td>
+<td>Asserts that what immediately follows the current position in the string is not foo</td>
+</tr>
+<tr>
+<td>(?&lt;!foo) Negative Lookbehind</td>
+<td>Asserts that what immediately precedes the current position in the string is not foo</td>
+</tr>
+</tbody>
+</table>
+<p>Quelle: <a href="https://www.rexegg.com/regex-lookarounds.html" class="uri">https://www.rexegg.com/regex-lookarounds.html</a></p>
+<p>Die stringr-Funktionen unterstützen per Default die Suche mithilfe von Lookarounds. Um Lookarounds im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument <code>perl = TRUE</code> übergeben werden.</p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="regex.html#cb552-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
+<span id="cb552-2"><a href="regex.html#cb552-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot;Hoffnung&quot; &quot;Zauberin&quot; &quot;bekommen&quot; &quot;erschrak&quot; &quot;sogleich&quot; &quot;Begierde&quot;
+##  [7] &quot;erschrak&quot; &quot;Zauberin&quot; &quot;zornigem&quot; &quot;schlecht&quot; &quot;Zauberin&quot; &quot;erschien&quot;
+## [13] &quot;sogleich&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Zauberin&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot;
+## [19] &quot;Zauberin&quot; &quot;wickelte&quot; &quot;Zauberin&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot; &quot;Zauberin&quot;
+## [25] &quot;erschrak&quot; &quot;Rapunzel&quot; &quot;gewaltig&quot; &quot;erblickt&quot; &quot;Rapunzel&quot; &quot;jedesmal&quot;
+## [31] &quot;flechten&quot; &quot;herunter&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot; &quot;schwerer&quot; &quot;Flechten&quot;
+## [37] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Zauberin&quot; &quot;Flechten&quot; &quot;giftigen&quot; &quot;Rapunzel&quot;
+## [43] &quot;liebsten&quot; &quot;wanderte&quot; &quot;Rapunzel&quot; &quot;erkannte&quot; &quot;Rapunzel&quot;</code></pre>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="regex.html#cb554-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
+<span id="cb554-2"><a href="regex.html#cb554-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot;Hoffnung&quot; &quot;Zauberin&quot; &quot;bekommen&quot; &quot;erschrak&quot; &quot;sogleich&quot; &quot;Begierde&quot;
+##  [7] &quot;erschrak&quot; &quot;Zauberin&quot; &quot;zornigem&quot; &quot;schlecht&quot; &quot;Zauberin&quot; &quot;erschien&quot;
+## [13] &quot;sogleich&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;schönste&quot; &quot;Zauberin&quot; &quot;Zauberin&quot;
+## [19] &quot;Rapunzel&quot; &quot;Zauberin&quot; &quot;wickelte&quot; &quot;Zauberin&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot;
+## [25] &quot;Zauberin&quot; &quot;erschrak&quot; &quot;Rapunzel&quot; &quot;gewaltig&quot; &quot;erblickt&quot; &quot;erzählte&quot;
+## [31] &quot;Rapunzel&quot; &quot;jedesmal&quot; &quot;flechten&quot; &quot;herunter&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot;
+## [37] &quot;schwerer&quot; &quot;Flechten&quot; &quot;Rapunzel&quot; &quot;Wüstenei&quot; &quot;Rapunzel&quot; &quot;Zauberin&quot;
+## [43] &quot;Flechten&quot; &quot;giftigen&quot; &quot;Rapunzel&quot; &quot;liebsten&quot; &quot;wanderte&quot; &quot;Rapunzel&quot;
+## [49] &quot;erkannte&quot; &quot;Rapunzel&quot;</code></pre>
+<div class="task">
+<p>Verständnisfrage:</p>
+<ul>
+<li>Wie unterscheiden sich die Ergebnisse der Suche mithilfe von Lookarounds von den Ergebnissen der Suche nach <code>\\s\\w{8}\\s</code> im vorigen Abschnitt? Warum ist das so?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="regex-für-nicht-lateinische-schriften" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Regex für nicht-lateinische Schriften<a href="#regex-f%C3%BCr-nicht-lateinische-schriften" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Reguläre Ausdrücke können natürlich auch zur Suche in Texten mit nicht-lateinischen Schriften oder in multilingualen Texten verwendet werden: Entweder explizit, indem einfach das Muster in der entsprechenden Sprache formuliert wird, oder aber mithilfe der Unicode-Zeichenklasse <code>\p</code> (s.u.).</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="regex.html#cb556-1" tabindex="-1"></a>rapunzel_rus <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;data/Колокольчик_(Гримм;_Полевой).txt&quot;</span>)</span>
+<span id="cb556-2"><a href="regex.html#cb556-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Колокольчик&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>]))</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot;
+## [6] &quot;Колокольчик&quot; &quot;Колокольчик&quot;</code></pre>
+<p>Zur Suche nach Mustern in verschiedenen Schriften kann auch eine spezielle Zeichenklasse für Unicode-Zeichen verwendet werden, <code>\p</code>. Diese Zeichenklasse erlaubt es, ein bestimmtes Alphabet zu spezifizieren, oder alphabetübergreifend nach einem Zeichen in allen in Unicode abgebildeten Schriften zu suchen. Die stringr-Funktionen unterstützen per Default die Suche mithilfe der Unicode-Zeichenklasse <code>\p</code>. Um diese Zeichenklasse im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument <code>perl = TRUE</code> übergeben werden.</p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="regex.html#cb558-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben aus dem kyrillischen Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
+<span id="cb558-2"><a href="regex.html#cb558-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{Cyrillic}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [[1]]
+##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
+##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
+##  [17] &quot; что &quot;  &quot; мне &quot;  &quot; что &quot;  &quot; мне &quot;  &quot; сад &quot;  &quot; это &quot;  &quot; так &quot;  &quot; что &quot; 
+##  [25] &quot; еще &quot;  &quot; его &quot;  &quot; как &quot;  &quot; что &quot;  &quot; мой &quot;  &quot; Это &quot;  &quot; это &quot;  &quot; моя &quot; 
+##  [33] &quot; тут &quot;  &quot; это &quot;  &quot; как &quot;  &quot; мне &quot;  &quot; нем &quot;  &quot; как &quot;  &quot; все &quot;  &quot; его &quot; 
+##  [41] &quot; Бог &quot;  &quot; той &quot;  &quot; ней &quot;  &quot; как &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; два &quot;  &quot; тем &quot; 
+##  [49] &quot; ему &quot;  &quot; той &quot;  &quot; той &quot;  &quot; так &quot;  &quot; что &quot;  &quot;\nЭто &quot; &quot; она &quot;  &quot; это &quot; 
+##  [57] &quot; так &quot;  &quot; его &quot;  &quot; что &quot;  &quot; лес &quot;  &quot; все &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; как &quot; 
+##  [65] &quot; ним &quot;  &quot; так &quot;  &quot; ним &quot;  &quot; ней &quot;  &quot; она &quot;  &quot; нею &quot;  &quot; как &quot;  &quot; как &quot; 
+##  [73] &quot; тех &quot;  &quot; мог &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; его &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot; 
+##  [81] &quot; чем &quot;  &quot; она &quot;  &quot; ему &quot;  &quot;\nОна &quot; &quot; как &quot;  &quot; мне &quot;  &quot; мне &quot;  &quot; раз &quot; 
+##  [89] &quot; она &quot;  &quot; ней &quot;  &quot;\nОни &quot; &quot; что &quot;  &quot; нее &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; это &quot; 
+##  [97] &quot; вас &quot;  &quot; Тот &quot;  &quot; миг &quot;  &quot; Что &quot;  &quot; что &quot;  &quot; все &quot;  &quot; она &quot;  &quot; ими &quot; 
+## [105] &quot; два &quot;  &quot; что &quot;  &quot; где &quot;  &quot; тот &quot;  &quot; под &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; там &quot; 
+## [113] &quot; она &quot;  &quot; эта &quot;  &quot; уже &quot;  &quot; еще &quot;  &quot; что &quot;  &quot; тот &quot;  &quot; ему &quot;  &quot; Так &quot; 
+## [121] &quot; лет &quot;  &quot; где &quot;  &quot; его &quot;  &quot; нее &quot;  &quot; ему &quot;  &quot; его &quot;  &quot; ему &quot;  &quot; Две &quot; 
+## [129] &quot; ему &quot;  &quot; мог &quot;  &quot; все &quot;  &quot; как &quot;  &quot; где &quot;  &quot; они &quot;</code></pre>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="regex.html#cb560-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben, egal aus welchem Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
+<span id="cb560-2"><a href="regex.html#cb560-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [[1]]
+##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
+##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
+##  [17] &quot; что &quot;  &quot; мне &quot;  &quot; что &quot;  &quot; мне &quot;  &quot; сад &quot;  &quot; это &quot;  &quot; так &quot;  &quot; что &quot; 
+##  [25] &quot; еще &quot;  &quot; его &quot;  &quot; как &quot;  &quot; что &quot;  &quot; мой &quot;  &quot; Это &quot;  &quot; это &quot;  &quot; моя &quot; 
+##  [33] &quot; тут &quot;  &quot; это &quot;  &quot; как &quot;  &quot; мне &quot;  &quot; нем &quot;  &quot; как &quot;  &quot; все &quot;  &quot; его &quot; 
+##  [41] &quot; Бог &quot;  &quot; той &quot;  &quot; ней &quot;  &quot; как &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; два &quot;  &quot; тем &quot; 
+##  [49] &quot; ему &quot;  &quot; той &quot;  &quot; той &quot;  &quot; так &quot;  &quot; что &quot;  &quot;\nЭто &quot; &quot; она &quot;  &quot; это &quot; 
+##  [57] &quot; так &quot;  &quot; его &quot;  &quot; что &quot;  &quot; лес &quot;  &quot; все &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; как &quot; 
+##  [65] &quot; ним &quot;  &quot; так &quot;  &quot; ним &quot;  &quot; ней &quot;  &quot; она &quot;  &quot; нею &quot;  &quot; как &quot;  &quot; как &quot; 
+##  [73] &quot; тех &quot;  &quot; мог &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; его &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot; 
+##  [81] &quot; чем &quot;  &quot; она &quot;  &quot; ему &quot;  &quot;\nОна &quot; &quot; как &quot;  &quot; мне &quot;  &quot; мне &quot;  &quot; раз &quot; 
+##  [89] &quot; она &quot;  &quot; ней &quot;  &quot;\nОни &quot; &quot; что &quot;  &quot; нее &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; это &quot; 
+##  [97] &quot; вас &quot;  &quot; Тот &quot;  &quot; миг &quot;  &quot; Что &quot;  &quot; что &quot;  &quot; все &quot;  &quot; она &quot;  &quot; ими &quot; 
+## [105] &quot; два &quot;  &quot; что &quot;  &quot; где &quot;  &quot; тот &quot;  &quot; под &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; там &quot; 
+## [113] &quot; она &quot;  &quot; эта &quot;  &quot; уже &quot;  &quot; еще &quot;  &quot; что &quot;  &quot; тот &quot;  &quot; ему &quot;  &quot; Так &quot; 
+## [121] &quot; лет &quot;  &quot; где &quot;  &quot; его &quot;  &quot; нее &quot;  &quot; ему &quot;  &quot; его &quot;  &quot; ему &quot;  &quot; Две &quot; 
+## [129] &quot; ему &quot;  &quot; мог &quot;  &quot; все &quot;  &quot; как &quot;  &quot; где &quot;  &quot; они &quot;</code></pre>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="regex.html#cb562-1" tabindex="-1"></a><span class="co"># Suche mit stringr-Funktion str_extract_all()</span></span>
+<span id="cb562-2"><a href="regex.html#cb562-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
+<pre style="max-height: 100px;"><code>## [[1]]
+##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
+##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
+##  [17] &quot; что &quot;  &quot; мне &quot;  &quot; что &quot;  &quot; мне &quot;  &quot; сад &quot;  &quot; это &quot;  &quot; так &quot;  &quot; что &quot; 
+##  [25] &quot; еще &quot;  &quot; его &quot;  &quot; как &quot;  &quot; что &quot;  &quot; мой &quot;  &quot; Это &quot;  &quot; это &quot;  &quot; моя &quot; 
+##  [33] &quot; тут &quot;  &quot; это &quot;  &quot; как &quot;  &quot; мне &quot;  &quot; нем &quot;  &quot; как &quot;  &quot; все &quot;  &quot; его &quot; 
+##  [41] &quot; Бог &quot;  &quot; той &quot;  &quot; ней &quot;  &quot; как &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; два &quot;  &quot; тем &quot; 
+##  [49] &quot; ему &quot;  &quot; той &quot;  &quot; той &quot;  &quot; так &quot;  &quot; что &quot;  &quot;\nЭто &quot; &quot; она &quot;  &quot; это &quot; 
+##  [57] &quot; так &quot;  &quot; его &quot;  &quot; что &quot;  &quot; лес &quot;  &quot; все &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; как &quot; 
+##  [65] &quot; ним &quot;  &quot; так &quot;  &quot; ним &quot;  &quot; ней &quot;  &quot; она &quot;  &quot; нею &quot;  &quot; как &quot;  &quot; как &quot; 
+##  [73] &quot; тех &quot;  &quot; мог &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; его &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot; 
+##  [81] &quot; чем &quot;  &quot; она &quot;  &quot; ему &quot;  &quot;\nОна &quot; &quot; как &quot;  &quot; мне &quot;  &quot; мне &quot;  &quot; раз &quot; 
+##  [89] &quot; она &quot;  &quot; ней &quot;  &quot;\nОни &quot; &quot; что &quot;  &quot; нее &quot;  &quot; что &quot;  &quot; ней &quot;  &quot; это &quot; 
+##  [97] &quot; вас &quot;  &quot; Тот &quot;  &quot; миг &quot;  &quot; Что &quot;  &quot; что &quot;  &quot; все &quot;  &quot; она &quot;  &quot; ими &quot; 
+## [105] &quot; два &quot;  &quot; что &quot;  &quot; где &quot;  &quot; тот &quot;  &quot; под &quot;  &quot; она &quot;  &quot; ним &quot;  &quot; там &quot; 
+## [113] &quot; она &quot;  &quot; эта &quot;  &quot; уже &quot;  &quot; еще &quot;  &quot; что &quot;  &quot; тот &quot;  &quot; ему &quot;  &quot; Так &quot; 
+## [121] &quot; лет &quot;  &quot; где &quot;  &quot; его &quot;  &quot; нее &quot;  &quot; ему &quot;  &quot; его &quot;  &quot; ему &quot;  &quot; Две &quot; 
+## [129] &quot; ему &quot;  &quot; мог &quot;  &quot; все &quot;  &quot; как &quot;  &quot; где &quot;  &quot; они &quot;</code></pre>
+</div>
+<div id="weiterführende-links" class="section level2 unnumbered hasAnchor">
+<h2>Weiterführende Links<a href="#weiterf%C3%BChrende-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Wickham, Hadley, Çetinkaya-Rundel, Mine und Grolemund, Garrett (2023), <em>R for Data Science. Chapter 15: Regular Expressions</em>, <a href="https://r4ds.hadley.nz/regexps" class="uri">https://r4ds.hadley.nz/regexps</a>.</li>
+<li>Hase, Valerie (2021), <em>Text as Data Methods in R - Applications for Automated Analyses of News Content. Tutorial 9: Searching &amp; Manipulating String Patterns</em>, <a href="https://bookdown.org/valerie_hase/TextasData_HS2021/tutorial-9-searching-manipulating-string-patterns.html" class="uri">https://bookdown.org/valerie_hase/TextasData_HS2021/tutorial-9-searching-manipulating-string-patterns.html</a>.</li>
+<li>Regex Debugging: <a href="https://regex101.com/" class="uri">https://regex101.com/</a></li>
+<li>Erläuterungen zum Regex-Syntax: <a href="https://danielfett.de/2006/03/20/regulaere-ausdruecke-tutorial/" class="uri">https://danielfett.de/2006/03/20/regulaere-ausdruecke-tutorial/</a></li>
+<li>Interaktives Tutorial zum Regex-Syntax: <a href="https://regexone.com/" class="uri">https://regexone.com/</a></li>
+<li>Video zu den R Base-Funktionen: <a href="https://www.youtube.com/watch?v=q8SzNKib5-4" class="uri">https://www.youtube.com/watch?v=q8SzNKib5-4</a></li>
+<li>Lookarounds erläutert: <a href="https://www.regular-expressions.info/lookaround.html" class="uri">https://www.regular-expressions.info/lookaround.html</a></li>
+<li>PCRE Cheatsheet: <a href="https://www.debuggex.com/cheatsheet/regex/pcre" class="uri">https://www.debuggex.com/cheatsheet/regex/pcre</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="textanalyse-i-korpus-tokens-daten-und-dateien.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textanalyse-ii-preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

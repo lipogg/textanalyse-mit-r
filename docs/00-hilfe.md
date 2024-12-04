@@ -85,6 +85,7 @@ Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu T
 
 Einige Digital Humanities Zeitschriften (für die eigene Recherche): 
 
+* Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
 * Zeitschrift für digitale Geisteswissenschaften, https://zfdg.de/
 * Digital Humanities Quarterly, https://www.digitalhumanities.org/dhq/
 * Journal of Cultural Analytics, https://culturalanalytics.org/

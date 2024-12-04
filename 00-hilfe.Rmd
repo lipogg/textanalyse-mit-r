@@ -85,9 +85,22 @@ Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu T
 
 Einige Digital Humanities Zeitschriften (für die eigene Recherche): 
 
-* Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
 * Zeitschrift für digitale Geisteswissenschaften, https://zfdg.de/
 * Digital Humanities Quarterly, https://www.digitalhumanities.org/dhq/
 * Journal of Cultural Analytics, https://culturalanalytics.org/
 * Journal of Computational Literary Studies, https://jcls.io/
 * Journal of Digital History, https://journalofdigitalhistory.org/ 
+
+Datensätze und Korpora (wird fortlaufend ergänzt): 
+
+* Links zu verschiedenen Listen von DH Korpora und Datensätzen (unter "Resources for finding humanities data"):  https://cdh.princeton.edu/programs/humanities-data-new/; https://guides.lib.ua.edu/datasources/humanities
+* Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
+* Deutsches Textarchiv: https://www.deutschestextarchiv.de/download
+* European Literary Text Collection (ELTeC): https://github.com/COST-ELTeC/ELTeC
+Download über Github, z.B. für die deutschen Texte: https://github.com/COST-ELTeC/ELTeC-deu
+Assoziiertes Projekt: https://www.distant-reading.net/
+* SlaveVoyages Datenbank: https://www.slavevoyages.org/american/downloads#intra-american-database-downloads/0/en/
+* Digitale Sammlung Deutscher Kolonialismus: https://www.deutschestextarchiv.de/dsdk/
+* HathiTrust derived datasets: https://analytics.hathitrust.org/deriveddatasets; https://htrc.atlassian.net/wiki/spaces/COM/pages/43287791/HTRC+Derived+Datasets
+* Somar Social Media Archive: https://socialmediaarchive.org/
+* Digitale Sammlungen der Österreichischen Nationalbibliothek: https://labs.onb.ac.at/de/datasets/

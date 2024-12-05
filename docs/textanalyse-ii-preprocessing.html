@@ -13267,7 +13267,7 @@ greeting_toks &lt;- greeting %&gt;%
 <pre><code>## [1] FALSE</code></pre>
 <p>Zum Schluss speichern wir das lemmatisierte und tokenisierte Korpus in einer RDS-Datei (-&gt; Kapitel “Textanalyse I”).</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="textanalyse-ii-preprocessing.html#cb57-1" tabindex="-1"></a><span class="fu">saveRDS</span>(kafka_toks, <span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span></code></pre></div>
-<p>Mit dem Objekt <code>kafka_lemmatized</code> kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden:</p>
+<p>Mit dem Objekt <code>kafka_toks</code> kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="textanalyse-ii-preprocessing.html#cb58-1" tabindex="-1"></a>kafka_toks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">&quot;kafka_toks.rds&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="textanalyse-ii-preprocessing.html#cb59-1" tabindex="-1"></a><span class="co"># Eingelesenes Tokens-Objekt in DFM umwandeln</span></span>
 <span id="cb59-2"><a href="textanalyse-ii-preprocessing.html#cb59-2" tabindex="-1"></a>kafka_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(kafka_toks)</span>
@@ -13305,7 +13305,6 @@ greeting_toks &lt;- greeting %&gt;%
 <li>Wijffels, Jan (2023), <em>UDPipe Natural Language Processing - Text Annotation</em>, <a href="https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html" class="uri">https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html</a>.</li>
 <li>Van Atteweldt, Wouter et al. (2022). <em>Computational Analysis of Communication. Ch. 10.3.4: Linguistic Preprocessing</em>, <a href="https://cssbook.net/content/chapter10.html#sec-nlp" class="uri">https://cssbook.net/content/chapter10.html#sec-nlp</a>.</li>
 <li>Desagulier, Guillaume (2017). <em>Corpus Linguistics and Statistics with R. Ch. 4.4. Regular Expressions</em>, pp. 73-82, <a href="https://doi.org/10.1007/978-3-319-64572-8" class="uri">https://doi.org/10.1007/978-3-319-64572-8</a>.</li>
-<li>Wijffels, Jan (2023). <em>UDPipe Natural Language Processing - Text Annotation</em>, <a href="https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html" class="uri">https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html</a></li>
 </ul>
 
 </div>

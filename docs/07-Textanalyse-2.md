@@ -13207,7 +13207,7 @@ Zum Schluss speichern wir das lemmatisierte und tokenisierte Korpus in einer RDS
 saveRDS(kafka_toks, file="kafka_toks.rds")
 ```
 
-Mit dem Objekt `kafka_lemmatized` kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden: 
+Mit dem Objekt `kafka_toks` kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden: 
 
 
 ```r
@@ -13257,5 +13257,5 @@ Verständnisfragen:
 - Wijffels, Jan (2023), *UDPipe Natural Language Processing - Text Annotation*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html.
 - Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3.4: Linguistic Preprocessing*, https://cssbook.net/content/chapter10.html#sec-nlp.
 - Desagulier, Guillaume (2017). *Corpus Linguistics and Statistics with R. Ch. 4.4. Regular Expressions*, pp. 73-82, https://doi.org/10.1007/978-3-319-64572-8.
-- Wijffels, Jan (2023). *UDPipe Natural Language Processing - Text Annotation*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html
+
 

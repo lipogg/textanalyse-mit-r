@@ -250,11 +250,15 @@ print(beispiel_lemmatized_2, max_ntoken = 200)
 
 ### Methode 2: Lemmatisierung mit UDPipe 
 
+```{r setup, include=FALSE}
+options(width = 9999)
+```
+
+
 Diese Methode kann zur Lemmatisierung auch von deutsch- und anderssprachigen Texten angewandt werden. Das Verfahren ist ausführlich dokumentiert in den UDPipe-Dokumentationsseiten: https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html. In der Sitzung zum fortgeschrittenen Preprocessing werden wir noch einmal darauf zurückkommen und erarbeiten uns in diesem Abschnitt nur ein grundlegendes Verständnis der Lemmatisierung mithilfe des R Pakets `udpipe`. Zunächst muss das Paket `udpipe` installiert und geladen werden. Anschließend muss ein sogenanntes Sprachmodell heruntergeladen und eingelesen werden. Die `udpipe`-Sprachmodelle sind statistische Modelle, die auf einem bestimmten Datensatz "trainiert" wurden, also zum Beispiel auf einem Korpus deutschsprachiger Texte, die mit linguistischen Annotationen versehen wurden. Auf der Grundlage der Trainingsdaten können danach Bestandteile wie Wörter und Satzzeichen auch in unbekannten Texten erkannt werden: Zum Beispiel Wortarten, Grundformen und syntaktische Beziehungen. Genau das passiert, wenn wir einer udpipe-Funktion wie `udpipe()` oder `udpipe_annotate()` auf unser Beispielkorpus anwenden. 
 
 
 ```{r eval=FALSE}
-# 0. Vorbereitung
 install.packages("udpipe")
 library(udpipe)
 
@@ -274,7 +278,7 @@ Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werde
 Wir betrachten zunächst wieder unseren Beispielsatz: 
 
 ```{r}
-# 1. Mit Beispieltext
+
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 ```
 
@@ -291,7 +295,7 @@ head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
 
 Beachtet Zeile 29: Hier wurde das Token "am" in zwei Lemmata aufgeteilt: "an" und "der". Dieses Verhalten müssen wir bei der Weiterverarbeitung der Lemmata beachten!
 
-Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten: 
+Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten und Tokenisieren das Korpus: 
 
 ```{r eval=FALSE}
 library(readtext)
@@ -300,23 +304,31 @@ library(quanteda)
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
 ger_korpus <- corpus(ger_texte)
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
+kafka_toks <- tokens(kafka_korpus)
 
 ```
 
-Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden: 
+Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden. Dazu muss jedoch erst das Quanteda-Tokens-Objekt in eine Form gebracht werden, den die udpipe_annotate()-Funktion als Argument annehmen kann. Den Code dafür entnehmen wir dieser [Anleitung von Jan Wijffels](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html), einem der Entwickler:innen von UDPipe. 
 
-```{r eval=FALSE}
+```{r eval = FALSE}
 library(udpipe)
 
-# 3. Mit Korpus zur Weiterverarbeitung in quanteda
-kafka_annotated <- udpipe_annotate(ud_model, kafka_korpus, tagger="default", parser="none", doc_id = kafka_korpus$Titel)
+# Put every token on a new line and use tokenizer: vertical, Code von Jan Wijffels
+kafka_txt <- sapply(kafka_toks, FUN=function(x) paste(x, collapse = "\n"))
+kafka_annotated <- udpipe_annotate(ud_model, kafka_txt, tagger="default", parser="none", doc_id = kafka_toks$Titel, tokenizer = "vertical", trace=TRUE)
 kafka_df <- as.data.frame(kafka_annotated)
+head(kafka_df, n=100)
+```
 
+
+```{r attr.output='style="max-height: 200px;"', echo = FALSE}
+kafka_df <- readRDS("data/kafka_df.rds")
+head(kafka_df, n=100)
 ```
 
 Da bei der Lemmatisierung Tokens wie "am" in zwei Lemmata aufgeteilt werden ("an" und "dem"), gibt es im Dataframe `kafka_df` einige Zeilen, in denen in der Spalte `lemma` der Wert `NA` steht. Außerdem fällt auf, dass es einige Zeilen gibt, in denen zwei mögliche Lemmata angegeben werden, die mit einem `|` getrennt sind, zum Beispiel fallen|fällen. Diese Zeilen sollten zunächst bereinigt werden und es muss entschieden werden, welche Variante die richtige ist. 
 
-```{r eval=FALSE}
+```{r attr.output='style="max-height: 200px;"'}
 # Zeilen mit NA-Werten entfernen
 kafka_cleaned_df <- kafka_df[!is.na(kafka_df$lemma), ]
 
@@ -325,26 +337,55 @@ kafka_cleaned_df[grep("\\|", kafka_cleaned_df$lemma), ]
 
 # Als "quick and dirty" Methode kann z.B. einfach immer die letzte Variante ausgewählt werden
 kafka_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", kafka_cleaned_df$lemma)
+kafka_cleaned_df
+```
+
+Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte `lemma` vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Deswegen wird das Korpus nach dem Lemmatisieren wieder in ein Quanteda-Tokens-Objekt umgewandelt. Dazu können einfach die beiden Spalten lemma und doc_id extrahiert und in die entsprechende Datenstruktur (also eine Liste) zusammengefügt werden. 
+
+```{r}
+# Spalten des Dataframes in Liste von Vektoren konvertieren
+kafka_split <- split(kafka_cleaned_df$lemma, kafka_cleaned_df$doc_id)
+# In Quanteda-Tokens-Objekt umwandeln
+kafka_toks <- tokens(kafka_split)
+
+```
+Wenn die Funktion tokens() auf eine Liste von Vektoren angewandt wird, wird diese einfach nur in ein Quanteda tokens-Objekt umgewandelt, ohne, dass sie erneut tokenisiert wird. Es gibt also keinen Unterschied zwischen den Tokens in der Spalte lemma im UDPipe-Dataframe und den Tokens im Quanteda-Tokens-Objekt. Der einzige Unterschied ist, dass es sich bei kafka_split um eine "normale" Liste von Vektoren handelt, und bei kafka_toks um eine spezielle Liste von Vektoren, nämlich ein Quanteda-Tokens-Objekt.
+
+```{r}
+identical(kafka_split[[1]], kafka_toks[[1]])
+```
+
+Das ist natürlich anders, wenn nach dem Lemmatisieren noch Satzzeichen, Zahlen oder Sonderzeichen entfernt werden sollen. Dann unterscheiden sich die beiden Objekte durch die fehlenden Tokens:  
+
+```{r}
+kafka_toks_2 <- tokens(kafka_split, remove_punct = TRUE)
+identical(kafka_split[[1]], kafka_toks_2[[1]])
+```
+
+
+Zum Schluss speichern wir das lemmatisierte und tokenisierte Korpus in einer RDS-Datei (-> Kapitel "Textanalyse I").
+
+
+```{r eval=FALSE}
+saveRDS(kafka_toks, file="kafka_toks.rds")
 
 ```
 
-Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte `lemma` vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Dazu kombinieren wir die Lemmata aus jedem der Texte in einer einzigen Zeile, sodass wir einen Dataframe mit einer Zeile je Text erhalten, der in einer neuen Spalte "text" einen character Vektor mit den Lemmata aus diesem Text enthält. Ein Dataframe mit dieser Struktur ist kompatibel mit der Quanteda-`corpus()`-Funktion. Um unseren Dataframe zu bearbeiten, verwenden wir die Funktionen `group_by()` und `summarise()` aus dem Paket `dplyr`: 
+Mit dem Objekt `kafka_lemmatized` kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden: 
 
-```{r eval = FALSE}
-library(dplyr)
-# Dataframe umformen, sodass jede Zeile einem Dokument entspricht und die Lemmata zu einem zusammenhängenden Text zusammengefügt werden 
-kafka_grouped <- kafka_cleaned_df %>% 
-  group_by(doc_id) %>% 
-  summarise(text = paste(lemma, collapse = " ")) 
-View(kafka_grouped)
-# In Quanteda corpus-Objekt umwandeln
-kafka_lemmatized <- corpus(kafka_grouped)
-# Korpus-Objekt mit den lemmatisierten Texten speichern
-saveRDS(kafka_lemmatized, file="kafka_lemmatized.rds")
-
+```{r eval=FALSE}
+kafka_toks <- readRDS(file="kafka_toks.rds")
+```
+```{r echo=FALSE}
+kafka_toks <- readRDS(file="data/kafka_toks.rds")
+```
+```{r}
+# Eingelesenes Tokens-Objekt in DFM umwandeln
+kafka_dfm <- dfm(kafka_toks)
+kafka_dfm
 ```
 
-Mit dem Objekt `kafka_lemmatized` könnte jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wir werden uns diesen Code und auch den Dataframe `kafka_df` in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen. 
+Wir werden uns diesen Code und auch die anderen Spalten im UDPipe-Dataframe in der Sitzung zum fortgeschrittenen Preprocessing mit UDPipe noch einmal genauer ansehen. 
 
 :::task
 Verständnisfragen: 
@@ -367,3 +408,5 @@ Verständnisfragen:
 - Wijffels, Jan (2023), *UDPipe Natural Language Processing - Text Annotation*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html.
 - Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3.4: Linguistic Preprocessing*, https://cssbook.net/content/chapter10.html#sec-nlp.
 - Desagulier, Guillaume (2017). *Corpus Linguistics and Statistics with R. Ch. 4.4. Regular Expressions*, pp. 73-82, https://doi.org/10.1007/978-3-319-64572-8.
+- Wijffels, Jan (2023). *UDPipe Natural Language Processing - Text Annotation*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html
+

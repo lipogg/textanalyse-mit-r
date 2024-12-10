@@ -1745,7 +1745,7 @@ print(temperature_array[,"Mo", "Morgen"])
 
 ```
 #>  Berlin Hamburg München 
-#>      12      14      17
+#>      13      28      11
 ```
 
 ```r
@@ -1757,25 +1757,25 @@ print(temperature_array)
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  12 19 27 12 30 18 27
-#>   Hamburg 14 29 12 10 22 26 10
-#>   München 17 25 21 11 22 30 21
+#>   Berlin  13 16 18 20 30 23 15
+#>   Hamburg 28 26 25 13 29 30 24
+#>   München 11 16 25 10 12 17 13
 #> 
 #> , , Zeit = Mittag
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  28 28 19 20 15 14 24
-#>   Hamburg 12 22 28 12 13 28 25
-#>   München 22 21 16 20 25 20 16
+#>   Berlin  19 20 17 30 12 15 11
+#>   Hamburg 14 13 28 18 21 27 21
+#>   München 28 11 24 12 12 29 10
 #> 
 #> , , Zeit = Abend
 #> 
 #>          Tag
 #> Stadt     Mo Di Mi Do Fr Sa So
-#>   Berlin  22 18 26 12 11 12 11
-#>   Hamburg 13 21 10 26 27 30 30
-#>   München 20 19 12 30 20 29 28
+#>   Berlin  26 15 16 20 24 18 16
+#>   Hamburg 24 24 17 18 15 24 18
+#>   München 12 21 26 16 16 19 28
 ```
 
 ```r
@@ -1788,13 +1788,13 @@ print(morning_temp_matrix)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     12      12      22
-#> Di     14      21      18
-#> Mi     17      12      26
-#> Do     19      10      30
-#> Fr     29      11      27
-#> Sa     25      30      10
-#> So     27      22      21
+#> Mo     13      25      12
+#> Di     28      25      23
+#> Mi     11      20      30
+#> Do     16      13      17
+#> Fr     26      10      15
+#> Sa     16      30      24
+#> So     18      29      13
 ```
 
 ```r
@@ -1809,13 +1809,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München
-#> Mo     12      14      17
-#> Di     19      29      25
-#> Mi     27      12      21
-#> Do     12      10      11
-#> Fr     30      22      22
-#> Sa     18      26      30
-#> So     27      10      21
+#> Mo     13      28      11
+#> Di     16      26      16
+#> Mi     18      25      25
+#> Do     20      13      10
+#> Fr     30      29      12
+#> Sa     23      30      17
+#> So     15      24      13
 ```
 
 ```r
@@ -1828,13 +1828,13 @@ print(morning_temp_dataframe)
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala
-#> Mo     12      14      17 Morgen Celsius
-#> Di     19      29      25 Morgen Celsius
-#> Mi     27      12      21 Morgen Celsius
-#> Do     12      10      11 Morgen Celsius
-#> Fr     30      22      22 Morgen Celsius
-#> Sa     18      26      30 Morgen Celsius
-#> So     27      10      21 Morgen Celsius
+#> Mo     13      28      11 Morgen Celsius
+#> Di     16      26      16 Morgen Celsius
+#> Mi     18      25      25 Morgen Celsius
+#> Do     20      13      10 Morgen Celsius
+#> Fr     30      29      12 Morgen Celsius
+#> Sa     23      30      17 Morgen Celsius
+#> So     15      24      13 Morgen Celsius
 ```
 
 ```r
@@ -1855,13 +1855,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     12      14      17 Morgen Celsius      17
-#> Di     19      29      25 Morgen Celsius      29
-#> Mi     27      12      21 Morgen Celsius      27
-#> Do     12      10      11 Morgen Celsius      12
-#> Fr     30      22      22 Morgen Celsius      30
-#> Sa     18      26      30 Morgen Celsius      30
-#> So     27      10      21 Morgen Celsius      27
+#> Mo     13      28      11 Morgen Celsius      28
+#> Di     16      26      16 Morgen Celsius      26
+#> Mi     18      25      25 Morgen Celsius      25
+#> Do     20      13      10 Morgen Celsius      20
+#> Fr     30      29      12 Morgen Celsius      30
+#> Sa     23      30      17 Morgen Celsius      30
+#> So     15      24      13 Morgen Celsius      24
 ```
 
 ```r
@@ -1872,13 +1872,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum
-#> Mo     12      14      17 Morgen Celsius    62.6
-#> Di     19      29      25 Morgen Celsius    84.2
-#> Mi     27      12      21 Morgen Celsius    80.6
-#> Do     12      10      11 Morgen Celsius    53.6
-#> Fr     30      22      22 Morgen Celsius    86.0
-#> Sa     18      26      30 Morgen Celsius    86.0
-#> So     27      10      21 Morgen Celsius    80.6
+#> Mo     13      28      11 Morgen Celsius    82.4
+#> Di     16      26      16 Morgen Celsius    78.8
+#> Mi     18      25      25 Morgen Celsius    77.0
+#> Do     20      13      10 Morgen Celsius    68.0
+#> Fr     30      29      12 Morgen Celsius    86.0
+#> Sa     23      30      17 Morgen Celsius    86.0
+#> So     15      24      13 Morgen Celsius    75.2
 ```
 
 ```r
@@ -1890,13 +1890,13 @@ morning_temp_dataframe
 
 ```
 #>    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#> Mo     12      14      17 Morgen Celsius               62.6
-#> Di     19      29      25 Morgen Celsius               84.2
-#> Mi     27      12      21 Morgen Celsius               80.6
-#> Do     12      10      11 Morgen Celsius               53.6
-#> Fr     30      22      22 Morgen Celsius               86.0
-#> Sa     18      26      30 Morgen Celsius               86.0
-#> So     27      10      21 Morgen Celsius               80.6
+#> Mo     13      28      11 Morgen Celsius               82.4
+#> Di     16      26      16 Morgen Celsius               78.8
+#> Mi     18      25      25 Morgen Celsius               77.0
+#> Do     20      13      10 Morgen Celsius               68.0
+#> Fr     30      29      12 Morgen Celsius               86.0
+#> Sa     23      30      17 Morgen Celsius               86.0
+#> So     15      24      13 Morgen Celsius               75.2
 ```
 
 ```r
@@ -1936,12 +1936,12 @@ str(morning_temp_dataframe)
 
 ```
 #> 'data.frame':	7 obs. of  6 variables:
-#>  $ Berlin            : int  12 19 27 12 30 18 27
-#>  $ Hamburg           : int  14 29 12 10 22 26 10
-#>  $ München           : int  17 25 21 11 22 30 21
+#>  $ Berlin            : int  13 16 18 20 30 23 15
+#>  $ Hamburg           : int  28 26 25 13 29 30 24
+#>  $ München           : int  11 16 25 10 12 17 13
 #>  $ Zeit              : chr  "Morgen" "Morgen" "Morgen" "Morgen" ...
 #>  $ Skala             : chr  "Celsius" "Celsius" "Celsius" "Celsius" ...
-#>  $ Maximum_Fahrenheit: num  62.6 84.2 80.6 53.6 86 86 80.6
+#>  $ Maximum_Fahrenheit: num  82.4 78.8 77 68 86 86 75.2
 ```
 Die Funktion `typeof()` kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden: 
 

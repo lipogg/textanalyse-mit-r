@@ -90,3 +90,10 @@ stemming
 lemmatisierung
 methode-1-lemmatisierung-mit-lexikon
 methode-2-lemmatisierung-mit-udpipe
+textanalyse-iii-wortfrequenzanalysen
+märchenkorpus-einlesen-und-pakete-installieren
+corpus-objekt-erstellen-und-erste-preprocessingschritte
+worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten
+absolute-häufigkeiten-und-das-zipfsche-gesetz
+absolute-häufigkeiten-und-lemmata
+relative-häufigkeiten-und-tf-idf

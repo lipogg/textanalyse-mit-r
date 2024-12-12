@@ -60,6 +60,7 @@ Statistik:
 * (fortgeschritten) Kroonenberg, Pieter (2021). Multivariate Humanities: https://doi.org/10.1007/978-3-030-69150-9
 * (fortgeschritten) Handl, Andreas und Kuhlenkasper, Torben (2017). Multivariate Analysemethoden. Theorie und Praxis mit R: https://doi.org/10.1007/978-3-662-54754-0
 
+
 Hintergrund Preprocessing und Natural Language Processing (POS Tagging, Dependency Parsing, NER,...): 
 
 * Jurafsky, Daniel und Martin, James H. (2023). Speech and Language Processing, https://web.stanford.edu/~jurafsky/slp3/ (insbesondere Kapitel 2, 8, 17, 18).
@@ -78,10 +79,13 @@ Theorie (wird fortlaufend ergänzt):
 * Bode, Katherine (2017), *The Equivalence of "Close" and "Distant" Reading; or, Toward a New Object for Data-Rich Literary History*, 
 https://doi.org/10.1215/00267929-3699787. 
 * Kleymann, Rabea (2022). *Datendiffraktion: Von Mixed zu Entangled Methods in den Digital Humanities*, https://doi.org/10.17175/sb005_008. 
+* Alessandro Lenci und Magnus Sahlgren (2023). *Distributional Semantics, Ch. 1: From Usage to Meaning. The Foundations of Distributional Semantics*, pp. 3-25, https://doi.org/10.1017/9780511783692.002 <mark>(Woche 9)</mark>
 * Eve, Martin Paul (2022). *The Digital Humanities and Literary Studies.* Introduction,  https://doi.org/10.1093/oso/9780198850489.003.0001 (für Skeptiker:innen)
 * Bond, Sarah, Long, Hoyt und Underwood, Ted (2017). *'Digital' Is Not the Opposite of 'Humanities'*, https://www.chronicle.com/article/digital-is-not-the-opposite-of-humanities/. (für Skeptiker:innen)
 
 Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu Theorie, Operationalisierung, Daten, ...): https://zfdg.de/wp_2023_001. 
+
+**Literaturhinweise zu den verschiedenen Analysemethoden findet ihr in den optionalen ausklappbaren Abschnitten im jeweiligen Kapitel.**
 
 Einige Digital Humanities Zeitschriften (für die eigene Recherche): 
 
@@ -91,7 +95,7 @@ Einige Digital Humanities Zeitschriften (für die eigene Recherche):
 * Journal of Computational Literary Studies, https://jcls.io/
 * Journal of Digital History, https://journalofdigitalhistory.org/ 
 
-Datensätze und Korpora (wird fortlaufend ergänzt): 
+Datensätze und Korpora für die Textanalyse (wird fortlaufend ergänzt): 
 
 * Links zu verschiedenen Listen von DH Korpora und Datensätzen (unter "Resources for finding humanities data"):  https://cdh.princeton.edu/programs/humanities-data-new/; https://guides.lib.ua.edu/datasources/humanities
 * Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
@@ -104,3 +108,4 @@ Assoziiertes Projekt: https://www.distant-reading.net/
 * HathiTrust derived datasets: https://analytics.hathitrust.org/deriveddatasets; https://htrc.atlassian.net/wiki/spaces/COM/pages/43287791/HTRC+Derived+Datasets
 * Somar Social Media Archive: https://socialmediaarchive.org/
 * Digitale Sammlungen der Österreichischen Nationalbibliothek: https://labs.onb.ac.at/de/datasets/
+* Verzeichnis linguistischer Korpora (Daten zu den Korpora sind aber z.T. nicht mehr aktuell): https://www.lancaster.ac.uk/fass/projects/corpus/cbls/corpora.asp

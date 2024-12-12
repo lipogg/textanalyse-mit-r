@@ -686,7 +686,7 @@ In other words, $tf-idf_{t,d}$ assigns to term $t$ a weight in document $d$ that
 documents (thus offering a less pronounced relevance signal);
 3. lowest when the term occurs in virtually all documents."
 
-Die term frequency $tf_t,d$ ist einfach die absolute Häufigkeit für das Wort $t$ im Dokument $d$. Die inverse document frequency $idf_t$ berechnet sich wie folgt: 
+Die term frequency $tf_{t,d}$ ist einfach die absolute Häufigkeit für das Wort $t$ im Dokument $d$. Die inverse document frequency $idf_t$ berechnet sich wie folgt: 
 
 $idf_t = log (\frac{N}{df_t})$
 

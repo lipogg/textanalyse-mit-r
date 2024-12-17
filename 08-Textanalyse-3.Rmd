@@ -776,6 +776,500 @@ tfidf_br
 </details>
 
 
+## Wörter im Kontext: gemeinsames Vorkommen von Wörtern 
+
+Bisher haben wir absolute und relative Häufigkeiten sowie TF-IDF-Werte für die Wörter in unserem Märchenkorpus betrachtet. Dabei haben wir versucht, über die am häufigsten vorkommenden Wörter Märchencharaktere zu identifizieren, die für unsere Fragestellung interessant sind, und wir haben uns beispielhaft die Tokens "tochter" und "königstochter" etwas näher angesehen. In diesem Abschnitt operationalisieren wir die ursprüngliche Fragestellung, wie Geschlechterstereotype oder Geschlechterrollen in unserem Märchenkorpus konstruiert werden, auf eine naive Art: Wir betrachten zunächst explorativ ausgewählte Märchencharaktere (zum Beispiel die Königstochter-Tokens) in ihrem Kontext. Danach betrachten wir diesen Kontext etwas genauer und untersuchen, welche Wörter mit den Tochter-Tokens gemeinsam vorkommen und wie oft, und wir werden versuchen, mit Mitteln der Statistik zu bewerten, was dieses gemeinsame Vorkommen bedeutet. 
+
+### Keywords in Context (KWIC)
+
+Zunächst interessiert uns: In welchem Satz- bzw. Sinnzusammenhang stehen Wörter wie Königstochter und Tochter in den Märchen? 
+Mithilfe der Quanteda-Funktion `kwic()` können Tokens in ihrem Kontext übersichtlich dargestellt werden. Solche Listen von Tokens in ihrem  Zusammenhang nennt man auch **Konkordanzen** (oder "concordances"). Die Funktion `kwic()` unterstützt keine regulären Ausdrücke, aber eine **unscharfe Suche mithilfe des Platzhalters `*` und dem Argument `case_insensitive=TRUE`** ist möglich. Da es uns darum geht, die Schlüsselwörter in ihrem Kontext zu sehen, verwenden wir in diesem Fall das tokens-Objekt ohne weitere Preprocessing-Schritte: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+maerchen_kwic <- kwic(maerchen_toks_raw, pattern = c("*tochter*", "*töchter*"), case_insensitive = TRUE)
+maerchen_kwic # RStudio: View(maerchen_kwic)
+```
+
+Bei der Durchsicht der Kontexte im Hinblick auf unsere Fragestellung fällt vielleicht auf, dass die Tochter-Tokens häufig im Kontext von Beschreibungen vorkommen, in denen die Tochter als schön beschrieben wird, entweder durch das Adjektiv schön oder in einer Aussage der Art "...die Müllerstochter war ein schönes und frommes...". Allein 25 Textstellen enthalten Wortpaare der Art "schöne Tochter": 
+
+
+```{r attr.output='style="max-height: 200px;"'}
+
+kwic_multiword <- kwic(maerchen_toks_raw, phrase(c("*schön* *tochter*", "*schön* *töchter*")), case_insensitive = TRUE)
+kwic_multiword # RStudio: View(maerchen_kwic)
+
+```
+
+
+Diese Wortpaare werden wir im Folgenden etwas genauer untersuchen. 
+
+<details>
+<summary><b>Anwendungsbeispiele: KWIC</b></summary>
+
+- Maëlle Le Roux (2021), Digital History of Representations: Analysing Identity and Nationalism in the Capuchin Annual Periodical (1930-1977),  https://journalofdigitalhistory.org/en/article/L2gBr3BzwH8Z
+- Mark Dang-Anh und Stefan Scholl (2022), *Chapter 5. Digital Discourse Analysis of Language Use under National Socialism: Methodological Reflections and Applications*, in: Julia Timpe und Frederike Buda (Hrsg.), Writing the Digital History of Nazi Germany, pp. 99-129, https://doi.org/10.1515/9783110714692 
+
+</details>
+
+### N-Gramme
+
+Bei der Durchsicht der Keywords in Context sind uns Textstellen aufgefallen, in denen Töchter als schön beschrieben werden. Zwar nehmen wir natürlich aus unserem Vorwissen an, dass dies natürlich kein Zufall sondern ein verbreitetes Motiv in Märchen sein wird. Aber bisher haben wir erst einmal nur eine  Beobachtung gemacht. Der Eindruck könnte schließlich auch täuschen, und andere Wörter könnten ebenso häufig mit dem Schlüsselwort "Tochter" zusammen vorkommen. Wir untersuchen also zunächst, welche Wörter häufig zusammen mit Tokens wie Königstochter und Tochter zusammen vorkommen. Wir betrachten dabei ganz allgemein das gemeinsame Vorkommen, unabhängig vom Bezug der Wörter zueinander. 
+
+**Sequenzen von N aufeinanderfolgenden Tokens werden auch N-Gramme (engl. n-grams) genannt. N-Gramme aus zwei Tokens werden Bigramme genannt.** N-Gramme können mithilfe der Quanteda-Funktion `tokens_ngrams()` entweder für jeden Text im Gesamten bestimmt werden, oder für jeden Satz einzeln. Um N-Gramme über die Satzgrenzen hinweg zu bestimmen, kann der `tokens_ngrams()`-Funktion einfach unser tokens-Objekt übergeben werden:
+
+```{r attr.output='style="max-height: 200px;"'}
+
+toks_ngrams <- tokens_ngrams(maerchen_toks, n=3)
+toks_ngrams # erste fünf Zeilen anzeigen
+```
+
+Allerdings sind diese N-Gramme für unsere Fragestellung nicht besonders aufschlussreich, denn das Bigramm "schöne tochter" könnte auch dadurch zustande kommen, dass ein vorhergehender Satz mit "schöne" endet, und der darauffolgende mit "tochter" beginnt. Durch das Entfernen der Satzzeichen und Vereinheitlichen der Groß- und Kleinschreibung würde uns dieser Umstand jedoch nicht auffallen. Es wäre deswegen für unsere explorative Analyse besser, wenn beim Bilden der N-Gramme die Satzgrenzen berücksichtigt würden.  
+
+**Um N-Gramme auf Satzebene zu erhalten, muss zuerst das corpus-Objekt so umgeformt werden, dass es einzelne Sätze enthält, und nicht einzelne Texte:**
+
+```{r}
+maerchen_sentences <- corpus_reshape(maerchen_corpus, to="sentences")
+
+```
+ 
+Anschließend muss das corpus-Objekt wieder mit denselben Preprocessing-Schritten wie zuvor tokenisiert werden: 
+
+```{r}
+maerchen_sentences_toks <- tokens(maerchen_sentences, remove_punct=TRUE) %>%
+  tokens_tolower()
+
+```
+ 
+Zuletzt kann das neue tokens-Objekt mit der `tokens_ngrams()` Funktion verwendet werden. Da wir uns aber speziell für Bigramme mit dem Wort "tochter" oder "schön" interessieren, müssen wir das Vorgehen etwas anpassen: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+toks_bigram_tochter <- maerchen_sentences_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+
+```
+
+Die Ausgabe ist jedoch immer noch nicht sonderlich übersichtlich: Sie enthält keine Angabe zur Häufigkeit der jeweiligen Bigramme. Einen Dataframe mit den Häufigkeiten zu allen Bigrammen erhalten wir, indem wir zunächst aus dem tokens_Objekt eine DFM machen und anschließend Informationen zu den häufigsten Bigrammen mithilfe der bereits bekannten Funktion `textstat_frequency()` abrufen. 
+
+:::tip
+Achtung
+
+Zwar haben wir am Anfang besprochen, dass eine DFM für bag-of-words-Analysen verwendet wird. Die Bestimmung der N-Gramme ist allerdings trotzdem eine string-of-words-Methode. Wir erstellen die DFM in diesem Fall erst, nachdem wir bereits aufeinanderfolgende Tokens bestimmt haben. Die Reihenfolge der so bestimmten Bigramme in den Texten ist dann egal, sodass die zusammengesetzen Tokens als DFM repräsentiert werden können.
+:::
+
+Die Verarbeitungsschritte verketten wir mit Pipes: 
+
+```{r attr.output='style="max-height: 200px;"'}
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+
+
+```
+
+22 der 69 so bestimmten Bigramme enthalten eine Kombination aus den Wörtern "tochter" und "schön". Wenn wir die Suche auf "töchter" ausweiten würden, würden vermutlich noch einige Bigramme hinzukommen. Daneben finden sich aber auch andere Adjektive in den Bigrammen, zum Beispiel "einzige", "älteste" oder "fremde". Wie eingangs erwähnt wurde, bedeutet dies natürlich noch nicht unbedingt, dass die Töchter auch tatsächlich mit diesen Adjektiven beschrieben werden; bei der Interpretation ist also Vorsicht geboten.  
+
+Für jede Kombination von zwei Tokens müssen jedoch alle Flexionsformen beider Wörter betrachtet werden, weil "fremde_töchter", "fremden_töchtern", "fremder_töchtern", usw. jeweils als unterschiedliche Bigramme gezählt werden. Um solche Bigramme zusammenzufassen können wieder Lemmata verwendet werden. Beim Lemmatisieren wollen wir aber diesmal ein corpus-Objekt erstellen, dessen Dokumente Sätze der einzelnen Märchen sind, das also dieselbe Form hat wie das mit `corpus_reshape()` erzeugte corpus-Objekt. Dazu nehmen wir einige Änderungen am Code aus Abschnitt 7.7 vor, damit die Satzgrenzen aus dem mit `corpus_reshape()` erzeugten corpus-Objekt in den UDPipe-Dataframe übernommen werden:  
+
+```{r message=FALSE, warning=FALSE}
+# Mit corpus_reshape() erzeugtes Corpus-Objekt in Tokens-Objekt umwandeln
+maerchen_sentences_toks_raw <- tokens(maerchen_sentences)
+# Tokens-Objekt lemmatisieren und Satzgrenzen aus dem mit corpus_reshape() erzeugten Objekt übernehmen
+maerchen_sentences_toks_raw$Titel = paste0(maerchen_sentences_toks_raw$Titel, "_", seq_along(maerchen_sentences_toks_raw$Titel))
+head(maerchen_sentences_toks_raw$Titel)
+
+```
+```{r eval=FALSE}
+ud_model <- udpipe_download_model("german")
+ud_model <- udpipe_load_model(ud_model)
+maerchen_sentences_txt <- sapply(maerchen_sentences_toks_raw, FUN=function(x) paste(x, collapse = "\n"))
+maerchen_sentences_annotated <- udpipe_annotate(ud_model, maerchen_sentences_txt, tagger="default", parser="none", doc_id = maerchen_sentences_toks_raw$Titel, tokenizer = "vertical", trace=TRUE)
+
+```
+```{r echo=FALSE}
+maerchen_sentences_annotated <- readRDS("data/maerchen_sentences_annotated.rds")
+
+```
+```{r attr.output='style="max-height: 200px;"'}
+maerchen_sentences_df <- as.data.frame(maerchen_sentences_annotated)
+# Satzgrenzen aus der Spalte doc_id in die Spalte sentence_ids kopieren
+# entweder mit for-Schleife...
+doc_ids <- strsplit(maerchen_sentences_df$doc_id, split="_") 
+sentence_ids <- c()
+for (i in seq_along(doc_ids)) {
+  sentence_ids <- c(sentence_ids, doc_ids[[i]][2]) 
+}
+maerchen_sentences_df$sentence_id <- sentence_ids
+# ...oder kurz mit sapply()
+maerchen_sentences_df$sentence_id <- sapply(strsplit(maerchen_sentences_df$doc_id, split = "_"), `[`, 2)
+maerchen_sentences_df
+# Dataframe bereinigen und zurück in Quanteda-Tokens-Objekt umwandeln wie sonst auch
+maerchen_sentences_cleaned_df <- maerchen_sentences_df[!is.na(maerchen_sentences_df$lemma), ]
+maerchen_sentences_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", maerchen_sentences_cleaned_df$lemma)
+maerchen_sentences_split <- split(maerchen_sentences_cleaned_df$lemma, maerchen_sentences_cleaned_df$doc_id)
+maerchen_sl_toks <- tokens(maerchen_sentences_split, remove_punct=TRUE) %>%
+  tokens_tolower()
+```
+
+Jetzt wiederholen wir das Preprocessing und lassen uns die häufigsten Bigramme ausgeben, diesmal mit den Lemmata:
+
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+# Code aus diesem Abschnitt wird hier für das lemmatiserte Korpus wiederholt
+toks_bigram_tochter <- maerchen_sl_toks %>%
+  tokens_compound(pattern = phrase("* *tochter*")) %>%
+  tokens_select(pattern = phrase("*_*tochter*"))
+print(toks_bigram_tochter, max_ndoc=100) 
+
+library(quanteda.textstats)
+
+toks_bigram_tochter %>%
+  dfm() %>%
+  textstat_frequency()
+
+```
+
+Die Bigramme mit "tochter" und "schön" können wir auch visualisieren: 
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda.textstats)
+library(ggplot2)
+
+bigram_freq <- tokens_compound(maerchen_sl_toks, pattern = phrase("*schön* *tochter*")) %>%
+  tokens_select(pattern = phrase("*schön*_*tochter*")) %>%
+  dfm() %>%
+  textstat_frequency()
+
+bigram_filtered <- bigram_freq[bigram_freq$frequency >= 1,]
+
+ggplot(bigram_filtered, aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, max(bigram_filtered$frequency), by = 2)) + 
+  labs(x = "Feature", y = "Frequency")
+
+```
+
+Zuletzt könnten wir noch untersuchen, welche anderen Tokens zusammen mit dem Wort "schön" auftreten. Dabei verketten wir alle Schritte mit Pipes:  
+
+```{r attr.output='style="max-height: 200px;"'}
+library(quanteda.textstats)
+
+tokens_compound(maerchen_sl_toks, pattern = phrase("*schön* *")) %>%
+  tokens_select(pattern = phrase("*schön*_*")) %>%
+  dfm() %>%
+  textstat_frequency()
+
+```
+
+
+<details>
+<summary><b>Anwendungsbeispiele: N-Gramme</b></summary>
+
+- Turo Hiltunen, Jenni Räikkönen und Jukka Tyrkkö (2020), Investigating colloquialization in the British parliamentary record in the late 19th and early 20th century,  https://doi.org/10.1016/j.langsci.2020.101270
+- Colin Sippl et al. (2016), Korpusbasierte Analyse österreichischer Parlamentsreden, https://epub.uni-regensburg.de/35705/
+
+</details>
+
+
+### Kookkurrenzen 
+
+Bisher haben wir nur direkt aufeinanderfolgende Tokens betrachtet. Aber in den Keywords in Context haben wir gesehen, dass "Tochter" und "schön" auch häufig gemeinsam auftreten, ohne, dass sie direkt aufeinanderfolgen, beispielsweise in Sätzen wie "...die Tochter war so schön, dass...". 
+Diese Fälle wollen wir im Folgenden untersuchen, indem wir Kookkurrenzen bestimmen. **Der Begriff Kookkurrenz  beschreibt das gemeinsame Auftreten von zwei oder mehr Tokens innerhalb eines bestimmten Kontexts**. **Im Grunde sind N-Gramme auch spezielle Kookkurrenzen, mit der Besonderheit, dass die Tokens genau aufeinanderfolgen.** 
+
+Zur Bestimmung und Repräsentation von Kookkurrenzen gibt es in Quanteda ein weiteres Objekt, das wir bisher noch nicht behandelt haben: eine **Feature Co-Occurrence Matrix (FCM)**. Wenn das tokens-Objekt maerchen_toks zum Erstellen der FCM verwendet wird und kein zusätzliches Argument beim Funktionsaufruf übergeben wird, dann gibt die Matrix standardmäßig die Kookkurrenzen aller Wörter in einem Text aus, unabhängig von den Satzgrenzen. Solche Kookkurrenzen auf Dokumentenebene sind zum Beispiel dann interessant, wenn wir herausfinden wollen, welche Charaktere in Märchen gemeinsam auftreten. 
+
+In diesem Abschnitt betrachten wir wieder die Lemmata anstelle der absoluten Häufigkeiten wie im Abschnitt mit den N-Grammen. Prinzipiell können aber sowohl N-Gramme als auch Kookkurrenzen für ein lemmatisiertes oder nichtlemmatisiertes Korpus bestimmt werden.
+
+
+```{r attr.output='style="max-height: 200px;"'}
+# FCM mit Kookkurrenzen auf Dokumentenebene
+fcm(maerchen_lemmata_rm)
+
+```
+
+Alternativ kann der Kontext aber auch auf einzelne Sätze eingeschränkt werden, indem wir stattdessen das Objekt `maerchen_sl_toks` aus dem Abschnitt "N-Gramme" zum Erstellen der FCM verwenden. 
+
+```{r attr.output='style="max-height: 200px;"'}
+# FCM mit Kookkurrenzen auf Satzebene
+# Code für das Preprocessing aus dem Abschnitt "N-Gramme"
+maerchen_fcm <- fcm(maerchen_sl_toks)
+maerchen_fcm
+
+```
+
+Mithilfe des Arguments `context="window"` gibt es die zusätzliche Möglichkeit, manuell eine feste Anzahl von Tokens als Kontext festzulegen:
+
+```{r attr.output='style="max-height: 200px;"'}
+#  FCM mit Kookkurrenzen in einem manuell festgelegten Kontext
+fcm(maerchen_lemmata_rm, context="window", window=6)
+
+```
+
+
+Wir verwenden aber den Satz als Kontext, da für unsere Fragestellung die Satzübergänge wichtig sind. Da wir uns speziell für die Kookkurrenzen der Tokens mit "tochter" und "schön" interessieren, filtern wir unsere FCM: 
+
+```{r attr.output='style="max-height: 200px;"'}
+
+fcm_select(maerchen_fcm, 
+                  pattern = c("*tochter*", 
+                              "*schön*"),
+                  selection = "keep")
+
+```
+
+Diese Matrix ist für einige Weiterverarbeitungsschritte zwar praktisch, aber für uns nicht sonderlich übersichtlich, da jedes Token einmal als Spalte und noch einmal als Zeile vorkommt. Da für uns die Reihenfolge der Kookkurrenzen erst einmal nicht interessant ist, kombinieren wir diese Kookkurrenzen und bringen die Daten in ein übersichtlicheres Format:  
+
+```{r attr.output='style="max-height: 200px;"'}
+# Separat erst Spalten, dann Zeilen mit den gesuchten Werten extrahieren
+fcm_tochter_cols <- maerchen_fcm[, grepl("tochter", colnames(maerchen_fcm))] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_cols <- fcm_tochter_cols[grepl("schön", rownames(maerchen_fcm)),]
+matrix_cols
+fcm_tochter_rows <- maerchen_fcm[grepl("tochter", rownames(maerchen_fcm)), ] # hier ohne *, da grepl() einen regulären Ausdruck erwartet
+matrix_rows <- fcm_tochter_rows[, grepl("schön", colnames(maerchen_fcm))]
+matrix_rows
+# matrix_cols transponieren, damit Tochter-Tokens ebenfalls in den Zeilen stehen
+matrix_rows_2 <- t(matrix_cols) 
+matrix_rows_2
+# überprüfen, ob Spaltennamen der Matrizen übereinstimmen
+colnames(matrix_rows) == colnames(matrix_rows_2)
+# überprüfen, ob Zeilennamen der Matrizen übereinstimmen
+rownames(matrix_rows) == rownames(matrix_rows_2)
+# Dimension der Matrix matrix_rows
+dim(matrix_rows)
+# Dimension der Matrix matrix_rows_2 nach dem Transponieren
+dim(matrix_rows_2)
+# Matrizen addieren: Geht nur, wenn beide Matrizen dieselbe Dimension haben 
+matrix_tochter <- matrix_rows + matrix_rows_2
+# Komplett anzeigen (in "nicht spärliche" Matrix  umwandeln)
+matrix_tochter <- as.matrix(matrix_tochter)
+# Spalten mit nur Nullen löschen 
+matrix_tochter <- matrix_tochter[, colSums(matrix_tochter) != 0]
+matrix_tochter
+# So lassen sich Zeilen mit nur Nullen löschen: lassen wir aber erstmal drin  
+# matrix_tochter <- matrix_tochter[rowSums(matrix_tochter) != 0,]
+# In Dataframe umwandeln: Beachtet den Zusatz Table, dieser bestimmt, wie der Dataframe organisiert ist
+df_tochter <- as.data.frame.table(matrix_tochter)
+df_tochter$cooccurrence <- paste(df_tochter$features, df_tochter$features.1, sep="_")
+df_tochter$Freq[df_tochter$Freq == 0] <- NA
+df_tochter
+
+```
+
+Die Daten können wir in dieser Form auch visualisieren, zum Beispiel als **Heat Map**: 
+
+```{r}
+ggplot(df_tochter, aes(x = features, y = features.1, fill = Freq)) +
+  geom_tile() + 
+  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value="white") + 
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) + 
+  labs(x = "Tokens mit tochter", y = "Tokens mit schön") + 
+  geom_text(data = subset(df_tochter, !is.na(Freq)), aes(label = Freq), size = 2) + 
+  theme_bw()
+```
+
+Vergleicht man die Heat Map mit den Kookkurrenzen mit dem Säulendiagramm der Bigramme, so fällt auf, dass es mehr Kookkurrenzen als Bigramme gibt: Während das Bigramm "schön königstochter" 8 Mal vorkommt, finden sich in unserer FCM 28 Kookkurrenzen von "schön" und "königstochter". Die zusätzlichen Kookkurrenzen könnten beispielsweise durch ein Konstrukt wie "eine schöne und kluge königstochter" zustandekommen, oder aber auch durch einen Satz wie "ein schöner Königssohn und eine Königstochter". 
+
+Uns fehlt außerdem der Vergleich: Wie häufig kommt "königstochter" in den Märchen mit anderen Wörtern in einem Kontext vor? Um diese Frage zu klären, weiten wir die Perspektive und lassen uns zunächst alle Wörter ausgeben, mit denen "königstochter" in einem Satz gemeinsam vorkommt. Da uns das gemeinsame Vorkommen von Funktionswörtern nicht interessiert, entfernen wir die Stoppwörter, bevor wir die Feature Co-occurrence Matrix (FCM) erstellen: 
+
+```{r}
+maerchen_fcm <- maerchen_sl_toks %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+```
+
+Anschließend erstellen wir einen Dataframe, der alle Tokens enthält, die mit "königstocher" gemeinsam vorkommen. Zuerst wählen wir aus der Matrix `maerchen_fcm` nur die Spalte "königstochter" aus, und danach nur die Zeile "königstochter". Das gibt uns zwei Matrizen `cols` ("königstochter" als Spalte) und `rows` ("königstochter" als Zeile). Die Matrix `rows` wird transponiert (s.o. und Kapitel "R Basics II"), um die Matrizen in die gleiche Form zu bringen. Danach werden die Matrizen zusammengefügt und zu einem Dataframe konvertiert. Zuletzt ordnen wir den Dataframe absteigend nach der Spalte "königstochter".
+
+```{r attr.output='style="max-height: 150px;"'}
+cols <- maerchen_fcm[, "königstochter"]
+rows <- maerchen_fcm["königstochter", ]
+rows <- t(rows) 
+cols_df <- convert(cols, to="data.frame")
+rows_df <- convert(rows, to="data.frame")
+
+coocs_df <- rbind(cols_df, rows_df)
+# Zeilen mit Null entfernen
+coocs_df <- coocs_df[coocs_df$königstochter != 0, ]
+coocs_df <- coocs_df[order(coocs_df$königstochter, decreasing=TRUE), ]
+coocs_df
+```
+
+Tatsächlich zeigt der Dataframe, dass "schön" das Adjektiv ist, das am häufigsten in einem Satz zusammen mit "königstochter" vorkommt, dicht gefolgt von "golden". Zwar wissen wir an diesem Punkt noch nicht, ob sich "schön" wirklich auf "königstochter" bezieht, aber ein Vergleich der häufigsten Kookkurrenzen mit anderen Tokens wie "königssohn" oder "könig" könnte bereits interessante Beobachtungen erlauben. 
+
+Den Code aus der letzten Codezelle können wir (mit ein paar kleinen Änderungen) auch verwenden, um zu vergleichen, welche Wörter in bestimmten Märchen am häufigsten zusammen mit unserem Schlüsselwort "königstochter" vorkommen. Als Beispiel vergleichen wir wieder die Märchen "Froschkönig" und "Die zwei Brüder": 
+
+```{r attr.output='style="max-height: 150px;"'}
+# Preprocessing: diesmal entfernen wir zusätzlich Stoppwörter
+docvars(maerchen_sl_toks, "Titel") <- docnames(maerchen_sl_toks)
+froschkoenig_fcm <- tokens_subset(maerchen_sl_toks, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Jetzt erstellen wir einen Dataframe mit den zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+fr_cooc <- froschkoenig_fcm[,"königstochter"]
+fr_df <- convert(fr_cooc, to="data.frame")
+colnames(fr_df)[1] <- "feature"
+fr_df$doc_id <- "Der-Froschkoenig"
+fr_df <- fr_df[order(fr_df$königstochter, decreasing=TRUE), ]
+fr_df <- head(fr_df, 10)
+
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm <- tokens_subset(maerchen_sl_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Dataframe mit zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+br_cooc <- brueder_fcm[,"königstochter"]
+br_df <- convert(br_cooc, to="data.frame")
+colnames(br_df)[1] <- "feature"
+br_df$doc_id <- "Die-zwei-Brueder"
+br_df <- br_df[order(br_df$königstochter, decreasing=TRUE), ]
+br_df <- head(br_df, 10)
+
+cooc_df <- rbind(fr_df, br_df)
+colnames(cooc_df)[2] <- "count"
+```
+
+```{r}
+library(ggplot2)
+# Kookkurrenzen mit "königstochter" für die beiden Märchen plotten
+# Code aus dem Abschnitt "Relative Häufigkeiten und TF-IDF" 
+ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = count)) +
+  geom_point() +
+  facet_wrap(~ doc_id, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
+  labs(x = NULL, y = "Count") +
+  ggtitle("Häufigste Kookkurrenzen mit Token 'königstochter' (Quanteda, lemmatisiert)")
+
+```
+
+Die Beobachtung, die wir gerade eben in Bezug auf das gesamte Korpus gemacht haben, spiegelt sich offenbar im Märchen "Der Froschkönig": Hier kommt neben "jung" "golden" und "schön" scheinbar am häufigsten gemeinsam mit "königstochter" vor. **Aber Achtung! Bei so kleinen Zahlen kann ein ganz anderes Bild entstehen, wenn andere Preprocessingentscheidungen getroffen werden.** Vergleicht beispielsweise das folgende Diagramm. Es zeigt ebenfalls die häufigsten Kookkurrenzen mit "königstochter" in den beiden Märchen, aber anstelle der Tokenisierung und Segmentierung mit den Quanteda-Funktionen tokens() und corpus_reshape() werden Satzgrenzen und Tokens direkt beim Lemmatisieren des Korpus mit udpipe_annotate() erkannt. Hierzu wird anstelle des Quanteda Tokens-Objekts ein Quanteda-Corpus-Objekt zum Lemmatisieren verwendet, denn dann erfolgt das Tokenisieren und die Satzgrenzenerkennung durch UDPipe. UDPipe verwendet dazu einen anderen Tokenizer als Quanteda, aber genau wie bei der Quanteda tokens()-Funktion kann das Verhalten bei der Tokenisierung mithilfe von zusätzlichen Argumenten gesteuert werden. Mehr dazu könnt ihr [hier](https://ufal.mff.cuni.cz/udpipe/1/users-manual#run_udpipe_tokenizer) nachlesen. 
+
+```{r eval=FALSE}
+# Diesen Code müsst ihr euch nicht merken
+# Lemmatisierung erfolgt wie bisher, aber mit Objekt maerchen_corpus statt maerchen_toks_raw bzw maerchen_sentences_toks
+maerchen_sentences_annotated <- udpipe_annotate(ud_model, maerchen_corpus, tagger="default", parser="none", doc_id = maerchen_corpus$Titel)
+```
+```{r echo=FALSE}
+maerchen_sentences_annotated <- readRDS("data/maerchen_sentences_annotated_udpipe.rds")
+```
+```{r}
+maerchen_sentences_df <- maerchen_sentences_df <- as.data.frame(maerchen_sentences_annotated)
+maerchen_sentences_cleaned_df <- maerchen_sentences_df[!is.na(maerchen_sentences_df$lemma), ]
+maerchen_sentences_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", maerchen_sentences_cleaned_df$lemma)
+maerchen_sentences_cleaned_df$doc_id = paste0(maerchen_sentences_cleaned_df$doc_id, "_", maerchen_sentences_cleaned_df$sentence_id)
+maerchen_sentences_split <- split(maerchen_sentences_cleaned_df$lemma, maerchen_sentences_cleaned_df$doc_id)
+maerchen_sl_toks_ub <- tokens(maerchen_sentences_split, remove_punct=TRUE) %>%
+  tokens_tolower()
+```
+
+```{r attr.output='style="max-height: 150px;"'}
+# Preprocessing: wir entfernen wieder zusätzlich Stoppwörter
+docvars(maerchen_sl_toks_ub, "Titel") <- docnames(maerchen_sl_toks_ub)
+froschkoenig_fcm_ud <- tokens_subset(maerchen_sl_toks_ub, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Jetzt erstellen wir einen Dataframe mit den zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+fr_cooc <- froschkoenig_fcm_ud[,"königstochter"]
+fr_df <- convert(fr_cooc, to="data.frame")
+colnames(fr_df)[1] <- "feature"
+fr_df$doc_id <- "Der-Froschkoenig"
+fr_df <- fr_df[order(fr_df$königstochter, decreasing=TRUE), ]
+fr_df <- head(fr_df, 10)
+
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm_ud <- tokens_subset(maerchen_sl_toks_ub, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+# Dataframe mit zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+br_cooc <- brueder_fcm_ud[,"königstochter"]
+br_df <- convert(br_cooc, to="data.frame")
+colnames(br_df)[1] <- "feature"
+br_df$doc_id <- "Die-zwei-Brueder"
+br_df <- br_df[order(br_df$königstochter, decreasing=TRUE), ]
+br_df <- head(br_df, 10)
+
+cooc_df <- rbind(fr_df, br_df)
+colnames(cooc_df)[2] <- "count"
+```
+
+```{r}
+library(ggplot2)
+# Kookkurrenzen mit "königstochter" für die beiden Märchen plotten
+# Code aus dem Abschnitt "Relative Häufigkeiten und TF-IDF" 
+ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = count)) +
+  geom_point() +
+  facet_wrap(~ doc_id, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
+  labs(x = NULL, y = "Count") +
+  ggtitle("Häufigste Kookkurrenzen mit Token 'königstochter' (UDPipe, lemmatisiert)")
+
+```
+
+:::task
+
+Verständnisfragen: 
+
+- Worin unterscheiden sich die beiden Diagramme? Verändern die verschiedenen Preprocessingentscheidungen die Kookkurrenzen beider Märchen gleichermaßen? 
+- Vergleicht stichprobenartig die beiden Objekte `maerchen_sl_toks` und `maerchen_sl_toks_ub`. Wo haben Quanteda und UDPipe verschiedene Satzgrenzen erkannt?  
+
+:::
+
+
+Zuletzt können wir uns auch noch die Kookkurrenzen ansehen, die in den beiden Märchen "Froschkönig" und "Die zwei Brüder" insgesamt am häufigsten auftreten, unabhängig von den "königstochter"-Tokens. Zur Visualisierung dieser Kookkurrenzen kann die Quanteda-Funktion `textplot_network()` verwendet werden. Die Funktion bildet Tokens als Knoten ab und das gemeinsame Vorkommen als Verbindung (Kante) zwischen zwei Knoten. Die Breite der Kante deutet an, wie häufig zwei Tokens im angegebenen Kontext gemeinsam auftreten. 
+
+```{r}
+
+library(quanteda.textplots)
+
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Froschkönig"
+textplot_network(froschkoenig_fcm, min_freq=4)
+
+# Zusätzliches Preprocessing ist notwendig, wenn texplot_network() auf längere Texte angewandt werden soll, siehe https://search.r-project.org/CRAN/refmans/quanteda.textplots/html/textplot_network.html
+feat <- colSums(brueder_fcm) %>%
+  sort(decreasing = TRUE) %>%
+  head(30) %>%
+  names()
+# Netzwerk der häufigsten Kookkurrenzen im Märchen "Die zwei Brüder"
+fcm_select(brueder_fcm, pattern = feat) %>%
+  textplot_network(min_freq = 10)
+
+```
+
+
+Ihr habt gesehen: Die Bestimmung der Kookkurrenzen auf Satzebene gibt uns weitere möglicherweise relevante Wortkombinationen und erlaubt es, auch nicht genau aufeinanderfolgende Wortkombinationen zu betrachten. Aber genau wie bei den N-Grammen können wir auch aus den Kookkurrenzen noch nicht ableiten, dass die Töchter in den Märchen tatsächlich als "schön" beschrieben werden, denn Kookkurrenzen können auch dadurch zustande kommen, dass ein nachfolgender Satz auf den vorhergehenden Bezug nimmt, und, dass sich das Wort schön im selben Satz auf ein anderes Wort bezieht. Trotzdem kann das häufige gemeinsame Auftreten von zwei Tokens statistisch beschrieben werden und es kann untersucht werden, ob das gemeinsame Auftreten statistisch signifikant ist. Damit beschäftigen wir uns in der nächsten Woche.  
+
+<details>
+<summary><b>Anwendungsbeispiele: Kookkurrenzen</b></summary>
+
+- Andrew Piper, Enumerations, Chapter 5. Characterization (Constraint), https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9958928373502883 (Netzwerkvisualisierungen finden sich auf S. 137 und S. 146. Piper verwendet den Begriff "semantic field"). 
+
+- Axel Pichler et al., Algorithmische Mikrolektüren philosophischer Texte
+Ein auf der digitalen Netzwerkanalyse basierender Vergleich der ‚Begriffsnetzwerke‘ bei Adorno und Carnap, https://doi.org/10.1515/9783110693973-014 (die Autor:innen verwenden den Begriff "Begriffsnetzwerk")
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kookkurrenzen</b></summary>
+- Magnus Sahlgren (2008). The Distributional Hypothesis, https://www.italian-journal-linguistics.com/app/uploads/2021/05/Sahlgren-1.pdf. Dieser Text stellt die sogenannte "distributional hypothesis" vor und argumentiert, dass diese eine strukturalistische Sicht auf das gemeinsame Vorkommen von Wörtern in einem bestimmten Kontext begründet. Erinnert euch an den Artikel von Evelyn Gius und Janina Jacke, "Are Computational Literary Studies Structuralist?". Wie bewertet Sahlgren den Strukturalismus als theoretische Strömung? Wie verhält sich unsere Beispielanalyse zu den Annahmen der "distributional hypothesis", und zu der Kritik von Gius und Jacke? 
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch. 1: From Usage to Meaning: The Foundations of Distributional Semantics, https://doi.org/10.1017/9780511783692.002 
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences, und 2.3: The Co-occurrence Matrix,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+
+### Was bedeutet das gemeinsame Vorkommen zweier Wörter? 
+
+Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betrachtet. Aber wie auch bei einzelnen Wörtern sind auch die absoluten Häufigkeiten des gemeinsamen Vorkommens zweier Wörter schwierig zu interpretieren. Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen wir noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" häufig oder selten im Verhältnis zur Länge der Märchen und Größe des Korpus? Und, wenn es "häufig" ist, was bedeutet das? Die Bedeutung von Kookkurrenzen kann mathematisch aus verschiedenen Perspektiven betrachtet werden: aus einer statistischen bzw. frequentistischen Perspektive (Abschnitt "Kollokationen"), aus einer informationstheoretischen und probabilistischen Perspektive (Abschnitt "Pointwise Mutual Information"), oder aus einer algebraischen Perspektive (kommt noch; Kapitel "Word Embeddings und NER"). 
+
 
 
 ## Quellen {-}

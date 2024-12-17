@@ -97,3 +97,11 @@ worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten
 absolute-häufigkeiten-und-das-zipfsche-gesetz
 absolute-häufigkeiten-und-lemmata
 relative-häufigkeiten-und-tf-idf
+wörter-im-kontext-gemeinsames-vorkommen-von-wörtern
+keywords-in-context-kwic
+n-gramme
+kookkurrenzen
+was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter
+kollokationen
+pointwise-mutual-information-pmi
+zwischenfazit

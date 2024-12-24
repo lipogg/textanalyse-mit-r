@@ -1268,7 +1268,607 @@ https://doi.org/10.1017/9780511783692.003
 
 ### Was bedeutet das gemeinsame Vorkommen zweier Wörter? 
 
-Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betrachtet. Aber wie auch bei einzelnen Wörtern sind auch die absoluten Häufigkeiten des gemeinsamen Vorkommens zweier Wörter schwierig zu interpretieren. Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen wir noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" häufig oder selten im Verhältnis zur Länge der Märchen und Größe des Korpus? Und, wenn es "häufig" ist, was bedeutet das? Die Bedeutung von Kookkurrenzen kann mathematisch aus verschiedenen Perspektiven betrachtet werden: aus einer statistischen bzw. frequentistischen Perspektive (Abschnitt "Kollokationen"), aus einer informationstheoretischen und probabilistischen Perspektive (Abschnitt "Pointwise Mutual Information"), oder aus einer algebraischen Perspektive (kommt noch; Kapitel "Word Embeddings und NER"). 
+Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betrachtet. Aber wie auch bei einzelnen Wörtern sind auch die absoluten Häufigkeiten des gemeinsamen Vorkommens zweier Wörter schwierig zu interpretieren. Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen wir noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" häufig oder selten im Verhältnis zur Länge der Märchen und Größe des Korpus? Und, wenn es "häufig" ist, was bedeutet das? Die Bedeutung von Kookkurrenzen kann mathematisch aus verschiedenen Perspektiven betrachtet werden: aus einer statistischen bzw. frequentistischen Perspektive (Abschnitt "Kollokationen"), aus einer informationstheoretischen und wahrscheinlichkeitstheoretischen Perspektive (Abschnitt "Pointwise Mutual Information"), oder aus einer algebraischen Perspektive (kommt noch; Kapitel "Word Embeddings und NER"). 
+
+
+#### Kollokationen
+
+Der Begriff Kollokation hat verschiedene Bedeutungen und ist deswegen durchaus umstritten. Stephanie Evert nennt Kollokationen sogar "eines der kontroversesten Konzepte in der Linguistik" (s. [Evert 2009, S. 1212f.](https://doi.org/10.1515/9783110213881.2.1212)). Eine der Schwierigkeiten mit dem Begriff Kollokation liegt darin, dass damit manchmal ein empirisches Phänomen gemeint ist, manchmal ein theoretisches Konzept aus der Phraseologie und manchmal eine Mischung aus beidem ([Evert 2008, S. 2f.](https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf)). Die folgende Definition von Noah Bubenhofer sollte deswegen nur als eine von vielen verschiedenen Interpretationen betrachtet werden: 
+
+>"Unter Kollokationen werden also häufig auftretende Wortverbindungen verstanden, die für eine Sprache oder einen Teilbereich einer Sprache charakteristisch sind. Diese Teilbereiche können z. B. eine bestimmte Textsorte, ein bestimmtes Thema oder Sprachäußerungen einer bestimmten sozialen Gruppe etc. umfassen. Wie nun 'charakteristisch' und 'häufig  auftretend' operationalisiert werden kann, ist unklarer, als es scheinen mag." ([Bubenhofer 2009](https://www.zora.uzh.ch/id/eprint/111287/1/BubenhoferSprachgebrauchsmusterPub.pdf)) 
+
+Solche charakteristischen Wortverbindungen nennt Bubenhöfer auch "**Sprachgebrauchsmuster**". Dass es in der Praxis tatsächlich nicht immer eindeutig ist, was "charakteristisch" und "häufig auftretend" bedeutet, werden wir in diesem Abschnitt sehen. **In diesem Abschnitt sind mit "Kollokationen" in einem empirischen Sinn Wortkombinationen gemeint, die wiederholt in einem Korpus vorkommen und für dieses Korpus charakteristisch sind. Es kann sich dabei um Bigramme handeln, aber auch mehr als zwei aufeinanderfolgende Wörter können als Kollokation betrachtet werden. Wörter, die nicht aufeinander folgen, werden in diesem Abschnitt allerdings nicht als Kollokation betrachtet.** Für eine ausführliche Diskussion verschiedener Arten von Kollokationen empfehle ich [Evert (2008, S.11-16)](https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf). Nicht alle Wortkombinationen, die häufig in einem Korpus auftreten, sind jedoch in diesem Sinne "charakteristisch" für eine Sprache oder einen Teilbereich einer Sprache: Zum Beispiel kommt die Wortkombination "und er" in vielen deutschsprachigen Texten vor, ist aber nicht charakteristisch für die Texte, in denen sie vorkommt. Beispiele für "echte" Kollokationen, also Wortkombinationen, die für bestimmte Sprachen, Texte oder Korpora charakteristisch sind, sind etwa "Frohe Weihnachten", "Grüß Gott", oder im Englischen "to make up" und "the rich and powerful". Nach unserer Definition können aber grundsätzlich alle Arten von Wortkombinationen Kollokationen sein; sie sind nicht auf bestimmte Phrasen oder Wortarten beschränkt. 
+
+Es existieren viele verschiedene Methoden, wie in Textkorpora Wortkombinationen identifiziert werden können, die möglicherweise Kollokationen sein könnten. Viele dieser Methoden bauen auf Statistik auf und verwenden statistische Tests, um Wortkombinationen nach ihrer statistischen Signifikanz zu hierarchisieren. **Eine engere Definition von Kollokationen wäre deswegen vielleicht "statistisch signifikante N-Gramme".** Um die Signifikanz verschiedener Kollokationen zu bestimmen, können statistische Parameter bestimmt werden. **Assoziationsmaße** beschreiben dabei die Stärke der Bindung zwischen zwei Wörtern. 
+
+:::tip
+Statistische Signifikanz 
+
+In diesem Abschnitt wird der Begriff "statistisch signifikant" verwendet. Aber Vorsicht: der Begriff wird vielfach kritisiert, weil er eine inhaltliche Relevanz suggeriert und weil die "statistische Signifikanz" von berechneten Daten häufig anhand einfacher Schwellenwerte, wie einem "p-Wert" von < 0.05 in statistischen Hypothesentests, festgemacht wird. Als der Begriff im 19. Jahrhundert aufkam, sollte er aber ursprünglich nur bedeuten, dass das Ergebnis einer statistischen Analyse weiterer Aufmerksamkeit bedarf. Eine konkrete Bewertung des Ergebnisses war damit noch nicht verbunden ([Wasserstein, Schirm und Lazar 2019](https://www.tandfonline.com/doi/full/10.1080/00031305.2019.1583913)). Ohne ein umfassendes Verständnis der in diesem Abschnitt vorgestellten Maße und ihrer mathematischen Grundlage können die berechneten Werte nur als heuristisches Mittel dienen, um Wortpaare zu identifizieren, die vielleicht für eine genauere Betrachtung mit anderen Methoden in Frage kommen. Für einen tieferen Einstieg in die hier vorgestellten Maße und Methoden verweise ich auf den optionalen Abschnitt zum mathematischen Hintergrund.  
+
+:::
+
+In diesem Abschnitt betrachten wir, wie Kollokationen im Rahmen einer Textanalyse mit Quanteda bestimmt werden können. Unser Ziel ist dabei, die Kookkurrenzen mit unserem Schlüsselwort "Königstochter" statistisch zu bewerten und zu überprüfen, ob wir nicht vielleicht bei der explorativen Analyse interessante Kookkurenzen übersehen haben: Vielleicht gibt es Kombinationen mit "königstochter" oder mit "schön", die wir bisher übersehen haben, die aber für das Korpus charakteristisch sind, oder vielleicht können wir mithilfe der berechneten statistischen Werte noch weitere charakteristische Wortkombinationen identifizieren, die es lohnt, genauer zu untersuchen. 
+
+In Quanteda können Kollokationen mithilfe der Funktion `textstat_collocations()` bestimmt werden:
+
+```{r eval=FALSE}
+?textstat_collocations
+```
+
+
+Zunächst machen wir uns mit der Funktion vertraut. Ein Blick in die [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) verrät uns einige wichtige Dinge: Als Argument erwartet die `textstat_collocations()`-Funktion ein character, corpus oder tokens Objekt, allerdings muss bei Verwenden eines tokens-Objekts ein bestimmtes Preprocessing erfolgen: 
+
+> The tokens object should include punctuation, and if any words have been removed, these should have been removed with padding = TRUE. While identifying collocations for tokens objects is supported, you will get better results with character or corpus objects due to relatively imperfect detection of sentence boundaries from texts already tokenized.
+
+Wir folgen dieser Empfehlung und verwenden deswegen lieber kein tokens-Objekt, sondern unser corpus-Objekt `maerchen_corpus`: 
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda.textstats)
+
+collocs_10 <- textstat_collocations(maerchen_corpus, min_count = 10, size = 2, tolower = TRUE) 
+```
+
+Kollokationen können theoretisch auch für das bereits lemmatisierte Korpus bestimmt werden, allerdings muss hierfür das Objekt `maerchen_sentences_toks` verwendet und es muss bedacht werden, dass diese Preprocessingentscheidung die berechneten Werte und deren Bedeutung beeinflusst. 
+
+Der Dokumentationsseite können wir auch entnehmen, dass die Funktion `textstat_collocations()` per Default Satzübergänge berücksichtigt ("Documents are grouped for the purposes of scoring, but collocations will not span sentences"). Es werden aber nur direkt aufeinanderfolgende Wörter als Kollokationen gezählt (sog. "multi-word expressions"). Die Anzahl der aufeinanderfolgenden Wörter wird dabei mit dem Parameter `size` beim Funktionsaufruf angegeben. Wir betrachten zunächst Bigramme und wählen `size = 2`. Die so identifizierten Wortkombinationen und die berechneten statistischen Maße lassen wir uns anschließend ausgeben:  
+
+```{r attr.output='style="max-height: 200px;"'}
+collocs_10
+```
+
+Der Dataframe enthält die folgenden Spalten, deren Bedeutung wir wieder der Dokumentationsseite entnehmen können (wenn auch mit etwas Mühe): 
+
+* `count` ist die absolute Häufigkeit des Wortpaars im Korpus. 
+* `lambda` ($\lambda$) ist ein Assoziationsmaß, das die **Stärke der Assoziation** oder Bindung der Wörter in einem Wortpaar angibt. Ein hoher Wert von λ deutet auf eine starke Assoziation zwischen den Wörtern hin: Ein positiver Wert legt nahe, dass die Wörter häufiger gemeinsam auftreten als aufgrund ihrer individuellen Häufigkeiten im Korpus zu erwarten wäre. Ein negativer Wert deutet darauf hin, dass die Wörter seltener gemeinsam auftreten als erwartet und ein Wert um Null legt nahe, dass das gemeinsame Auftreten der Wörter zufällig ist: Denn Wörter, die insgesamt häufiger in einem Korpus vorkommen, kommen auch häufiger gemeinsam vor.
+* `z` ist eine Teststatistik, die verwendet wird, um die **Signifikanz der Assoziation** zwischen den Wörtern in einem Wortpaar zu bewerten. Insbesondere wenn die Wörter in einer Wortkombination selten vorkommen oder das Korpus sehr klein ist, können die λ-Werte stark variieren. Die z-Werte korrigieren deswegen die λ-Werte, indem sie diese ins Verhältnis zu den individuellen Häufigkeiten der Wörter und zur Korpusgröße setzen. Die statistische Signifikanz wird bewertet, indem die Hypothese getestet wird, dass λ = 0 ist und keine Assoziation vorliegt ("Nullhypothese"). Der z-Wert gibt an, wie stark das berechnete Assoziationsmaß λ von dem "unter der Nullhypothese" erwarteten Wert von 0 abweicht. Ein hoher z-Wert deutet darauf hin, dass die Nullhypothese (keine Assoziation) mit hoher Wahrscheinlichkeit abgelehnt wird, was darauf hindeutet, dass die Assoziation (statistisch gesehen) signifikant sein könnte. Als Schwellenwert wird häufig der Wert 1.96 angegeben: Wenn z > 1.96 ist, dann wir die Nullhypothese abgelehnt. Die Höhe der z-Werte hängen aber selbst von einigen Faktoren ab, sodass ein Schwellenwert für verschiedene Korpora etwas anderes bedeuten kann. Solche Schwellenwerten erleichtern Anfänger:innen zwar scheinbar den Umgang mit den berechneten Werten, sie führen aber gerade dann, wenn sie ohne tiefere statistische Kenntnisse eingesetzt werden zu Missinterpretationen. 
+
+Die Interpretation dieser Werte ist also nicht trivial und hängt von einigen Faktoren ab, die wir uns im Folgenden genauer ansehen. Für eine tiefergehende Beschäftigung mit dem Thema verweise ich auf den optionalen Abschnitt "Mathematischer Hintergrund: Kollokationen". 
+
+Unter den Wortpaaren mit den höchsten Werten in den Spalten `lambda` und `z` finden sich Wortkombinationen, die erst einmal wenig interessant erscheinen wie "in den", "der könig" oder "als er". Aber daneben finden sich auch Wortpaare, die irgendwie "märchenspezifisch" erscheinen, z.B. "sieben jahre", "drei tage" oder "bruder lustig" und andere, die inhaltlich weniger spezifisch sind wie "guten tag" oder "von herzen", "nach haus". Eine Suche nach "tochter" und "schön" zeigt, dass einzig die Wortkombination "schöne jungfrau" in der Spalte `collocation` auftaucht, aber keine Kombination von "schön" und "tochter". Das liegt daran, dass wir den `min_count`, also die minimale Anzahl der Vorkommen des Wortpaars, beim Aufruf der Funktion `textstat_collocations()` auf 10 eingestellt haben. Aus der Liste der N-Gramme wissen wir bereits, dass Wortpaare mit "schön" und "tochter" in vielen verschiedenen Flexionsformen vorkommen und dass sowohl "schöne königstochter" als auch "schöne tochter" einzeln nur achtmal vorkommen. Wenn wir zur Bestimmung der Kollokationen Lemmata verwendet hätten, dann hätten die Wortpaare "schön tochter" und "schön königstochter" vermutlich einen insgesamt höheren Count. Um die Wortpaare mit "schön" und "tochter" zu betrachten, müssen wir also den Schwellenwert herabsetzen. Da wir uns ja besonders für die Kollokationen mit "Tochter" interessieren, filtern wir unseren Dataframe außerdem nach Kollokationen mit "tochter". Um alle Wortpaare zu erhalten, setzen wir den min_count zunächst auf 1. In einer richtigen Analyse ist es natürlich nicht sinnvoll, Wortpaare als "charakteristisch" zu betrachten, die nur einmal vorkommen. Aber um zu verstehen, wie die $\lambda$- und z-Werte für unsere Wortpaare aussehen, betrachten wir hier ausnahmsweise auch Wortpaare, die nur einmal vorkommen. 
+
+```{r attr.output='style="max-height: 200px;"'}
+# size = 2 ist der Defaultwert und kann auch weggelassen werden
+collocs_1 <- textstat_collocations(maerchen_corpus, min_count = 1)
+subset_collocs <- collocs_1[grepl("tochter", collocs_1$collocation), ]
+subset_collocs
+```
+
+Wenn wir die Werte aus dem Dataframe `collocs_1` mit den Werten aus dem Dataframe `collocs_10` vergleichen, sehen wir, dass der niedrigere Schwellenwert die Werte nicht beeinflusst: der Funktionsparameter `min_count` bestimmt nur, welche Wortpaare ausgegeben werden.
+
+Fast alle Wortpaare mit `schön` und `tochter` haben z-Werte von > 8 und Lambda-Werte von > 4, darunter allerdings auch vier Wortpaare, die jeweils nur einmal vorkommen. Aber was bedeuten diese Werte? Unter den Wortpaaren mit einem Count von 1 lassen sich sowohl vergleichsweise hohe Lambda-Werte finden als auch vergleichsweise geringe. Z.B. hat das Wortpaar "stieftochter spinnefeind" einen Lamda-Wert von über 8; andere Wortpaare, die nur einmal vorkommen, wie beispielsweise "unsere tochter" haben einen deutlich niedrigeren Lambda-Wert. Wortpaare, die vergleichsweise häufig vorkommen, haben dagegen allgemein eher mittlere Lambda-Werte. Mit den z-Werten verhält es sich ähnlich: Wortpaare, die nur einmal vorkommen, können ebenfalls sowohl vergleichsweise geringe als auch hohe z-Werte aufweisen. Die höchsten z-Werte finden sich jedoch, anders als bei den Lambda-Werten, bei Wortpaaren, die im Vergleich häufiger vorkommen. 
+
+Wir können uns diesen Umstand erklären? Und wie können wir die Werte in Bezug auf unser Korpus und unsere Fragestellung deuten?
+
+Um ein besseres Verständnis für die berechneten Werte zu erhalten, visualisieren wir das Verhältnis zwischen der absoluten Häufigkeit (Spalte count) der Wortpaare und den berechneten Lambda-Werten. Ein Streudiagramm der absoluten Häufigkeit der Kollokationen im Korpus (x-Achse) und ihren zugehörigen Lambda-Werte (y-Achse) zeigt, dass die Lambda-Werte tatsächlich am stärksten auseinandergehen für selten vorkommende Wortpaare: 
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+
+ggplot(collocs_1, aes(x = count, y = lambda)) +
+  geom_point() +
+    labs(x = "Collocation Count", y = "Lambda Score")
+
+```
+
+Für ein tiefergehendes Verständnis der Lambda- und z-Werte solltet ihr den optionalen Abschnitt "Mathematischer Hintergrund: Kollokationen" zurate ziehen. An dieser Stelle solltet ihr euch vor allem einprägen: Bei der Interpretation der Lambda- und z-Werte muss sowohl die Häufigkeit eines Wortpaars im Korpus als auch die Gesamthäufigkeit der beiden Wörter berücksichtigt werden. Das Wortpaar "er so", das 53 mal vorkommt, hat beispielsweise sowohl einen negativen Lambda-Wert (-0.02236963) als auch einen negativen z-Wert (-0.1609824). Die beiden Tokens "er" und "so" kommen beide so häufig im Gesamtkorpus vor, dass das häufige gemeinsame Auftreten der beiden Wörter nicht statistisch siginfikant ist: Ein häufiges gemeinsames Auftreten von häufig auftreteneden Wörtern wird erwartet und deutet nicht auf eine besondere Assoziation der Wörter hin. Anders formuliert: Das Wortpaar "er so" kommt zwar häufig vor, aber nicht häufiger, als es aufgrund der Einzelfrequenzen der Wörter "er" und "so" statistisch zu erwarten wäre. Tatsächlich zeigt der negative λ-Wert an, dass die Wörter vielleicht sogar seltener zusammen auftreten, als man erwarten würde. **Denn grundsätzlich würde man erwarten, dass häufige Wörter tendenziell auch häufig zusammen auftreten, ohne dass dies auf eine besondere linguistische oder konzeptuelle Verbindung zwischen ihnen hinweist.**
+
+Wir können an diesem Punkt also erst einmal festhalten: **Die Interpretation von Assoziationsmaßen bei der Kollokationsanalyse ist nicht trivial und hängt sowohl vom jeweiligen Korpus als auch vom eigenen Ermessen ab. In der Praxis ist es wichtig, statistische Parameter wie λ und z im Kontext der Gesamthäufigkeit der betrachteten Wörter zu interpretieren. Sonst kann es schnell passieren, dass Kollokationen fälschlicherweise als signifikant bewertet werden, die es nicht sind, oder dass signifikante Kollokationen übersehen werden. In der Praxis wird zudem häufig ein Schwellenwert festgelegt, um seltene Wortpaare auszuschließen.** 
+
+Was bedeuten diese Beobachtungen nun für unsere Kollokationen mit "schön" und "tochter"? Wir können annehmen, dass die hohen Werte für nur einmal vorkommende Wortpaare darauf zurückgeführt werden können, dass die einzelnen Wörter insgesamt im Korpus seltener vorkommen, zum Beispiel "stieftochter" und "spinnefeind". Dies wird zu einem geringeren Maße auch bei "schön" und "tochter" der Fall sein, die im Vergleich zu Funktionswörtern wie "auch" und "sie" natürlich seltener vorkommen, jedoch haben wir anfangs gesehen, dass die Tokens "Tochter" und "Königstochter" zu den häufigsten Tokens zählten, wenn Stoppwörter entfernt wurden (s. Token-Häufigkeitsanalyse). Trotzdem können Wortpaare, die nur einmal vorkommen, offensichtlich nicht als signifikant betrachtet werden, und nach unserer Definition streng genommen auch nicht als Kollokationen. 
+Anders verhält es sich mit den Wortpaaren "schöne königstochter", "schöne tochter" und "schönen königstochter" mit 8, 7 und 4 Vorkommen, Lambda-Werten > 4 und z-Werte > 8. Diese Wörter kommen im Gesamtkorpus so häufig vor, dass eine fälschliche Erhöhung der Werte nicht wahrscheinlich erscheint. Wenn man die Wortpaare mit "tochter" und "schön" jedoch mit anderen Wortpaaren mit "schön" vergleicht, erscheint die Assoziation von Tokens mit "tochter" und "schön" zwar auffällig, aber nicht außergewöhnlich:  Unter den Wortpaaren mit dem Wort "schön" finden sich außerdem weitere Wortpaare mit anderen Tokens, zum Beispiel mit "jungfrau" (16) und "mädchen" (7), aber auch mit "knaben" (3), "jüngling" (3) und "mann" (4):
+
+```{r attr.output='style="max-height: 200px;"'}
+collocs_1 <- textstat_collocations(maerchen_corpus, min_count = 1)
+subset_collocs <- collocs_1[grepl("schön", collocs_1$collocation), ]
+subset_collocs
+
+```
+
+
+Während die Werte für Wortpaare mit "knaben" und "jüngling" durch die geringe Häufigkeit der Wortpaare sowie durch die relative Seltenheit der Wörter "knaben" und "jüngling" im Gesamtkorpus beeinflusst sein wird, erscheinen die Werte insbesondere für "schöne jungfrau", aber auch für "schöner mann" auf einen signifikante Assoziation hinzuweisen. Wir könnten in einem nächsten Schritt zum Beispiel einen Count von 8 oder 10 und einen Lambda-Wert von 4 als **Schwellenwerte** festlegen und nur solche N-Gramme mit unserem Schlüsselwort "schön" oder "tochter" als signifikant bewerten: 
+
+
+```{r attr.output='style="max-height: 200px;"'}
+collocs_1 <- textstat_collocations(maerchen_corpus, min_count = 1)
+subset_collocs <- collocs_1[grepl("tochter", collocs_1$collocation), ]
+subset_collocs[subset_collocs$lambda >= 4 & subset_collocs$count >= 8, ]
+```
+
+
+In unserem kleinen Beispiel konnten wir zumindest unsere ursprüngliche Beobachtung bestärken, dass "schön" häufiger als zufällig gemeinsam mit Tokens, die Tochter-Charaktere beschreiben, vorkommt. Wir können jedoch noch nicht sagen, ob "schön" tatsächlich zur Beschreibung dieser Charaktere verwendet wird, da wir bisher nur Wortpaare betrachtet haben, die im selben Satz vorkommen und/oder direkt aufeinander folgen. Wir haben uns außerdem bisher auf ein einzelnes Adjektiv beschränkt, aber wir wissen noch nicht, welche anderen Adjektive vielleicht gemeinsam mit diesen Tokens vorkommen. Bei unserer Analyse sind wir auch auf weitere Wortpaare gestoßen, die für unsere Fragestellung interessant sein könnten, beispielsweise Wortkombinationen mit "schön" und "jungfrau".   
+
+**Wenn das gemeinsame Vorkommen zweier Wörter im Rahmen einer Kollokationsanalyse als statistisch signifikant bewertet wird, bedeutet das nicht automatisch, dass die Wörter auch tatsächlich in einem konzeptuellen oder linguistischen Zusammenhang stehen. Aber die in einer Kollokationsanalyse ermittelten Werte deuten daraufhin, dass es zumindest *irgendeinen* Grund dafür geben muss, dass diese Wörter gehäuft zusammen auftreten. Eine Kollokationsanalyse kann also vor allem dabei helfen, sprachliche Muster in einem Korpus zu identifizieren und abzuschätzen, ob ein beobachtetes gemeinsames Vorkommen von zwei aufeinanderfolgenden Wörtern weiterer Aufmerksamkeit bedarf. Im Rahmen unserer Analyse haben wir Kollokationen bestimmt, um das Vorkommen verschiedener Wortkombinationen besser vergleichen zu können und die absoluten Häufigkeiten ins Verhältnis der individuellen Häufigkeiten der beteiligten Wörter zu setzen.** 
+
+
+:::task
+Verständnisfrage 
+
+Die in diesem Abschnitt vorgestellte Methode zur Bestimmung von Kollokationen mithilfe der Funktion `textstat_collocations()` folgt dem "konfirmatorischen" Ansatz der Textanalyse, den Evelyn Gius und Janina Jacke in ihrem Beitrag "Are computational literary studies structuralist?" aus der ersten Woche erwähnt haben.
+
+- Wie bewertet ihr nach diesem kleinen Beispiel die Bedenken von Gius und Jacke?   
+ 
+
+:::
+
+<details>
+<summary><b>Anwendungsbeispiele: Kollokationen</b></summary>
+
+- Melanie Schröter et al. (2019). *Chapter 1. A comparative analysis of the keyword multicultural(ism) in French, British, German and Italian migration discourse*, in: Lorella Viola und Andreas Musolff (Hg.), Migration and Media. Discourses about identities in crisis, https://www.jbe-platform.com/content/books/9789027262707-dapsac.81.02sch
+- Paul Baker und Robbie Love (2021). *Corpus Linguistics and Sexuality*, in: Kira Hall und Rusty Barrett (Hrsg.), The Oxford Handbook of Language and Sexuality, Paul Baker und Robbie Love, Corpus Linguistics and Sexuality, https://academic.oup.com/edited-volume/42645/chapter/358158005
+- Noah Bubenhofer (2014). *GeoCollocations – Diskurse zu Orten: Visuelle Korpusanalyse*, in: Mitteilungen des Deutschen Germanistenverbandes 1, https://www.bubenhofer.com/publikationen/PreprintBubenhofer2014.pdf
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: Kollokationen </b></summary>
+- Noah Bubenhofer (2009). Sprachgebrauchsmuster. Korpuslinguistik als Methode der Diskurs- und Kulturanalyse. Kap. 6.1 Kollokationen, Kookkurrenzen, n-Gramme,  https://www.zora.uzh.ch/id/eprint/111287/1/BubenhoferSprachgebrauchsmusterPub.pdf
+- Evert, Stephanie (2008). Corpora and Collocations, in: Lüdeling A, Kytö M (Eds.), Corpus Linguistics. An International Handbook. (pp. 1212-1248). Berlin, New York: Mouton de Gruyter, https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf.
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.2: Extracting Co-Occurrences,
+https://doi.org/10.1017/9780511783692.003 
+</details>
+
+<details>
+<summary><b>Mathematischer Hintergrund: Kollokationen </b></summary>
+
+Dieser Abschnitt bezieht sich auf die Berechnung der Kollokationen mit der Quanteda-Funktion `textstat_collocations()`. 
+
+Die beste Strategie, um zu verstehen, wie eine Funktion funktioniert, ist die Formel aus den Dokumentationsseiten manuell (das heißt mit Taschenrechner, aber ohne R) nachzurechnen. Im Folgenden berechnen wir manuell die Werte für Lambda ($\lambda$) und $z$ nach den Formeln aus der [Dokumentationsseite zur Funktion `textstat_collocations()`](https://quanteda.io/reference/textstat_collocations.html) für das folgende Beispiel: 
+
+* Beispielsatz (unser Korpus): "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+* $K$-word target expression $x$ = "Guten Tag"
+* $K$ = 2 (weil "Guten Tag" aus zwei Wörtern besteht)
+* $z_r$ = "Guten Tag", "Tag Max", "Max Mustermann", "Mustermann wie", "wie geht", "geht es", "es Ihnen", "Ihnen Guten", "Guten Tag" 
+
+Der Dokumentationsseite können wir die folgende Formel entnehmen: 
+
+$\lambda = \sum_{i=1}^M (-1)^{K-b_i} * \log n_i$
+
+$z = \frac{\lambda}{[\sum_{i=1}^M n_i^{-1}]^{(1/2)}}$
+
+$\log(n_i)$ bedeutet hier Logarithmus zur Basis $e$, also $\log_e(n_i)$. Dafür wird kurz auch $\ln(n_i)$ geschrieben.
+
+Wir müssen zunächst klären, was $M$, $n_i$ und $b_i$ sind. 
+
+$M$ = $2^K$, also 4. Das sind die möglichen Werte ("possible values") für $c_i$. 
+
+$c_i$ sind die möglichen Fälle, die beim Vergleich der Wortkombination "Guten Tag" mit allen Wortkombinationen $z_r$ auftreten können: 
+ 
+- $c_1$ = (0,0) (sowohl das erste als auch das zweite Wort in x ist ungleich dem ersten und zweiten Wort in z: Beispiel "Max Mustermann")
+- $c_2$ = (1,0) (das erste Wort in $x$ ist gleich dem ersten Wort in $z$, aber das zweite Wort ist nicht gleich dem zweiten Wort: Beispiel "\underline{Guten} Abend")
+- $c_3$ = (0,1) (das zweite Wort in $x$ ist gleich dem zweiten Wort in z, aber das erste Wort ist nicht gleich dem ersten Wort: Beispiel "schönen \underline{Tag}") 
+- $c_4$ = (1,1) (beide Wörter in $x$ und $z$ sind gleich: In unserem Fall "\underline{Guten} \underline{Tag}") 
+
+$b_i$ sind die Anzahl an Einsen in den verschiedenen Fällen $c_i$. In unserem Beispiel: 
+ 
+- $b_1$ = 0 (weil $c_1$ keine 1 enthält) 
+- $b_2$ = 1 (weil $c_2$ eine 1 enthält) 
+- $b_3$ = 1 (weil $c_3$ eine 1 enthält) 
+- $b_4$ = 2 (weil $c_4$ zweimal 1 enthält)
+ 
+$n_i$ sind die Anzahl der Wortkombinationen aus $z_r$, für die der jeweilige Fall $c_i$ zutrifft, also: 
+ 
+- $n_1$ = 7 (es gibt 7 Wortkombinationen, die weder "Guten" noch "Tag" an der richtigen Stelle enthalten, z.B. "Tag Max", "Max Mustermann", "Mustermann wie", .....) 
+- $n_2$ = 0 (es gibt keine Wortkombination mit "Guten" an der ersten Stelle) 
+- $n_3$ = 0 (es gibt keine Wortkombination mit "Tag" an der zweiten Stelle) 
+- $n_4$ = 2 ("Guten Tag" kommt zweimal vor)
+
+Jedes $n_i$ wird noch mit dem "smoothing parameter" addiert (dieser soll verhindern, dass Operationen der Art $\ln(0)$ oder $0^{-1}$ notwendig werden). Der smoothing Parameter ist per Default 0.5.
+Daraus ergibt sich: $n_1$ = 7.5, $n_2$ = 0.5, $n_3$ = 0.5, $n_4$ = 2.5 
+
+Wenn wir diese Werte in die Formel einsetzen, erhalten wir: 
+
+$\lambda = ((-1)^2*\ln(7.5)) + ((-1)^1*\ln(0.5)) + ((-1)^1*\ln(0.5)) + ((-1)^0*\ln(2.5)) = 4.317488114$
+
+Und entsprechend für $z$: 
+
+$z = \frac{\lambda}{(n_1^{-1} + n_2^{-1} + n_3^{-1} + n_4^{-1})^{(\frac{1}{2})}}$
+$= \frac{\lambda}{(7.5^{-1} + 0.5^{-1} + 0.5^{-1} + 2.5^{-1})^{(\frac{1}{2})}} = \frac{4.317488114}{2.12916259} = 2.02778695$
+
+Vergleicht die berechneten Werte mit den Werten, welche die Quanteda `textstat_collocations()`-Funktion berechnet, indem ihr den folgenden Code ausführt. Stimmen die Werte überein? 
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda)
+library(quanteda.textstats)
+test <- "Guten Tag Max Mustermann wie geht es Ihnen Guten Tag"
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+Wir haben im Abschnitt "Kollokationen" bereits beobachtet, dass die Gesamthäufigkeit der Tokens in einer Wortkombination die $\lambda$-und $z$-Werte beeinträchtigt. Das können wir anhand der beiden Formeln für $\lambda$ und $z$ etwas genauer untersuchen und die Interpretation schärfen. 
+
+Zunächst betrachten wir die Formel für $\lambda$. Wir haben gesehen, dass durch den Zusatz $(-1)^{K-b_i}$ die Vorzeichen der Summanden entweder positiv oder negativ werden. In unserem Beispiel mit $K = 2$ sind zwei Summanden negativ ($\ln(0.5)$ und $\ln(0.5)$) und zwei positiv ($\ln(2.5)$ und $\ln(7.5)$). 
+Wofür stehen die Summanden? $n_1$ ist die Anzahl der Wortkombinationen im Korpus, in denen keins der Wörter aus der Wortkombination $x$ vorkommt (Fall $c_1$). $n_2$ und $n_3$ sind die Anzahl der Wortkombinationen, in denen nur eins der Wörter vorkommt (Fälle $c_2$ und $c_3$), und $n_4$ ist die Anzahl der Wortkombinationen $x$ (Fall $c_4$).
+
+- $\lambda = 0$. Angenommen, es kommen alle Fälle $c_i$ gleich oft vor, das heißt die Wortkombination $x$ kommt in $z_r$ genauso oft vor wie Wortkombinationen ohne die Wörter aus $x$. Dann haben alle Summanden $n_i$ in der Formel für $\lambda$ den gleichen Wert. Da $M = 2^K$ immer eine gerade Zahl sein muss, und die Formel für $\lambda$ $M$ Summanden enthält, gibt es immer eine gerade Anzahl von Summanden, sodass immer genau die Hälfte der Summanden addiert wird und die Hälfte subtrahiert wird. Wenn alle Summanden den gleichen Wert haben, ist das Ergebnis einer solchen Summe natürlich 0. 
+
+Wenn dagegen einer der Fälle $c_i$ besonders häufig vorkommt, dann ist $\lambda$ weiter von 0 entfernt. $\lambda$ wird positiv, wenn der entsprechende Summand ein positives Vorzeichen hat, und negativ, wenn der entsprechende Summand ein negatives Vorzeichen hat.
+
+- $\lambda > 0$. Der Summand mit dem Wert $n_4$, der beschreibt, wie oft die Wortkombination $x$ vorkommt, hat immer ein positives Vorzeichen. Wenn die Wortkombination sehr häufig vorkommt, treibt dieser Summand den Wert für $\lambda$ in die Höhe. Aber Achtung: Der $\lambda$-Wert kann auch dann sehr hoch sein, wenn beide Wörter in der Wortkombination sehr selten sind. Wenn es insgesamt sehr viele Wortkombinationen gibt, in denen keins der beiden Worte vorkommt (weil die Wörter selten sind), hat der Summand mit $n_1$ einen hohen positiven Wert und treibt den Wert für $\lambda$ in die Höhe. Wie stark der Einfluss von dem Wert $n_1$ sein kann, hängt aber auch davon ab, wieviele Wörter es insgesamt im Korpus gibt.
+- $\lambda < 0$. Wenn die beiden Summanden mit $n_2$ und $n_3$ stärker ins Gewicht fallen als die anderen beiden Summanden, wird der Wert für $\lambda$ negativ. Dies ist zum Beispiel dann der Fall, wenn die Wortkombination $x$ zwar häufig vorkommt, aber die Wörter aus $x$ aber noch häufiger gemeinsam mit anderen Wörtern vorkommen. 
+
+Ein Beispiel: Wir nehmen an, eine Wortkombination $x$ kommt nur einmal vor ($n_4$ = 1.5) und es kommen sonst 10 Wortkombinationen vor ohne irgendeines der beiden Wörter aus $x$ ($n_1$ = 10.5). Wenn eines der beiden Wörter aus der Wortkombination $x$ im Gesamtkorpus häufig vorkommt, dann wird es höhere Werte für $n_2$ oder $n_3$ geben, weil dieses Wort dann nicht nur alleine häufig vorkommt sondern auch mit anderen Wörtern zusammen auftritt. Das könnt ihr selbst nachrechnen:  
+
+* Wie groß ist Lambda für $n_2$ = 8.5 und $n_3$ = 0.5?
+* Wie groß ist Lambda für $n_2$ = 0.5 und $n_3$ = 0.5? 
+
+Ein hoher $\lambda$-Wert bedeutet also nicht automatisch, dass die gesamte Wortkombination häufig auftritt. 
+
+Genau aus diesem Grund können hohe $\lambda$-Werte nicht ohne einen Blick auf die $z$-Werte interpretiert werden. Die $z$-Werte helfen nämlich genau dabei, den Fall, dass $\lambda$ hoch ist, weil ein einzelnes Wort in der Wortkombination häufig vorkommt, von dem Fall zu unterscheiden, dass die Wortkombination im Gesamten häufig vorkommt. Wie funktioniert das? Wie wir gesehen haben, werden die $z$-Werte als Bruch mit $\lambda$ im Zähler definiert. Um zu verstehen, wie die Formel funktioniert, können wir zunächst einige grundsätzliche Fragen betrachten:
+
+* Wie wirkt sich ein hohes Lambda im Zähler auf den z-Wert aus? 
+* Wie wirkt sich ein niedriger Wert für Lambda auf den z-Wert aus? 
+* Wie beeinflussen die Werte im Nenner das Ergebnis? 
+
+Der Ausdruck $n_i^{-1}$ im Nenner der Formel für den $z$-Wert wird groß, wenn $n_i$ klein ist, und klein, wenn $n_i$ groß ist (weil z.B. $0.05^{-1} = 20$, aber $5^{-1} = 0.2$). Wenn also viele $n_i$-Werte klein sind, wird der Nenner groß, und wenn der Nenner groß ist, wird der $z$-Wert klein. In welchen Szenarien sind viele $n_i$-Werte klein? Zum Beispiel, wenn die Wörter in der Wortkombination einzeln selten vorkommen und nur als Teil der Wortkombination auftreten.     
+
+Ohne tief in die Statistik einzusteigen, können wir also schon durch einfaches Nachrechnen nachvollziehen, warum die Gesamthäufigkeit der Tokens in einer Wortkombination einen Einfluss auf die Lambda- und z-Werte haben muss. 
+
+Wer aber doch etwas tiefer einsteigen möchte, kann an dieser Stelle noch weiterlesen. Zusätzlich könnt ihr die folgende Literatur zurate ziehen: Zur Berechnung der Lambda-Werte könnt ihr euch den Artikel von Blaheta und Johnson aus der Funktionsdokumentation zur `textstat_collocations()`-Funktion vornehmen. Das von uns beobachtete Problem, dass hohe Lambda-Werte aufgrund verschiedener Häufigkeiten nicht immer dasselbe bedeuten, formulieren die Autor:innen darin so: "In cases where the counts are small the estimates of λ [...] may be noisy, and so high values from small count data should be discounted in some way when being compared with values from large count data." ([Blaheta/Johnson 2001, S. 4](https://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf)). Wer den Wald-Test verstehen möchte und bereits ein paar Vorkenntnisse in Statistik mitbringt, dem empfehle ich den [Mitschnitt zur Vorlesung "Lecture 9: Parametric Hypothesis Testing (cont.)" von Philippe Rigollet](https://www.youtube.com/watch?v=QXkOaifVfW4&t=1420s) (ab ca. Minute 23:41). Eine Kontextualisierung der verwendeten statistischen Verfahren zur Berechnung von $\lambda$ bieten Alfred Hamerle und Gerhard Tutz im [Kapitel 10 ihres Lehrbuchs "Multivariate statistische Verfahren"](https://www.degruyter.com/document/doi/10.1515/9783110816020-012). Eine aktuelle (März 2024) [Übersicht über die Bestimmung verschiedener Assoziationsmaße in R](https://ladal.edu.au/coll.html) mit vielen Codebeispielen bietet Martin Schweinberger. Für einen Überblick über verschiedene Assoziationsmaße und eine Diskussion der verschiedenen mathematischen Hintergründe dieser Maße empfehle ich das Kapitel 3 "Association Measures", insbesondere das Unterkapitel 3.1 "An inventory of association measures" aus [Stephanie Everts Dissertation "The Statistics of Word Cooccurrences"](https://elib.uni-stuttgart.de/bitstream/11682/2573/1/Evert2005phd.pdf). Für einen etwas weniger detaillierten Einstieg in den mathematischen Hintergrund verschiedener Assoziationsmaße empfehle ich [Stephanie Everts Beitrag "Corpora and Collocations" ](https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf).
+
+Zuletzt ein anschauliches Beispiel, das noch einmal verdeutlichen soll, dass die mithilfe der `textstat_collocations()`-Funktion berechneten Assoziationsmaße die Beziehung zwischen zwei Wörtern rein statistisch beschreiben: die Wortpaare "schöne Königstochter" und "Königstochter schöne" kommen in den folgenden Beispielen gleich oft vor und haben fast dieselben Lambda- und z-Werte. Aber auch wenn wir auf der Grundlage dieser Werte entscheiden, dass beide Wortpaare statistisch signikant (oder insignifikant) sind, ist nur "schöne Königstochter" im Hinblick auf unsere Fragestellung relevant.
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda)
+library(quanteda.textstats)
+test <- "Es war einmal eine schöne Königstochter. Die schöne Königstochter hatte einen Bruder, den Königssohn."
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+```{r warning=FALSE, message=FALSE}
+library(quanteda)
+library(quanteda.textstats)
+test <- "Der Königssohn gab der Königstochter schöne Kleider. Der Königstochter schöne Kleider gefielen der Königin."
+test_cor <- corpus(test)
+test_toks <- tokens(test)
+textstat_collocations(test_toks, min_count=1)
+```
+
+
+Manchen von euch hat dieses Praxisbeispiel vielleicht nicht gereicht, ihr habt die Erläuterungen aus der  Funktionsdokumentation gelesen und ihr fragt euch: Woher kommt diese Formel? Und was sind Interaktionen? Was ist ein log-lineares Modell? Was ist ein statistischer Test? Im Folgenden betrachten wir die Begriffe aus der Dokumentationsseite etwas genauer:  
+
+>The lambda computed for a size = 𝐾-word target multi-word expression the coefficient for the **𝐾-way interaction parameter** in the **saturated log-linear model** fitted to the counts of the terms forming the set of eligible multi-word expressions. This is the same as the "lambda" computed in Blaheta and Johnson's (2001), where all multi-word expressions are considered (rather than just verbs, as in that paper). The z is the **Wald 𝑧-statistic** computed as the quotient of lambda and the Wald statistic for lambda as described below. ([Quanteda 2.1.2 Documentation](https://quanteda.io/reference/textstat_collocations.html))
+
+
+Zunächst zum Begriff **Log-Linear Model**. Log-Lineare Modelle kommen in verschiedenen Analysemethoden und Anwendungen vor und können deswegen unterschiedliche Bedeutungen haben. Das log-lineare Modell, das die Quanteda Entwickler:innen meinen, ist ein statistisches Modell, das für Zusammenhanganalysen in mehrdimensionalen Kontingenztabellen verwendet wird (mehr dazu Tutz 1996, Kap. 10). Was hat es damit auf sich? 
+
+Blaheta und Johnson, deren Beitrag die Quanteda-Entwickler:innen die Formel für $\lambda$ entnommen haben, schreiben: "Log-linear models provide a general framework for constructing models under various assumptions about which combinations of variables interact" (Blaheta und Johnson 2001, S.3). Etwas konkreter erklärt es Kenneth Benoit, einer der Entwickler:innen von Quanteda: 
+
+>Suppose we examine a corpus of text which has been turned into a dataset of observed K-word sequences $z_1, ... , z_{N∗}$. Our target expression is $x = (x_1, x_2)$, and the comparisons between $x$ and the sequences $z_j$ observed in the corpus are summarised in a 2 × 2 contingency table. Denote the dimensions of the table so that the probabilities $p_i$ are written as $p_{c_1c_2}$ for $c_1, c_2 = 0, 1$. These are the probabilities that neither word of a $z_j$ matches the corresponding word of $x = (x_1, x_2)$ (probability $p_{00}$), the first word matches but the second does not ($p_{10}$), the second word matches but the first does not ($p_{01}$), and that an observed expression matches the target exactly ($p_{11}$). ([Benoit 2019](https://statmath.wu.ac.at/research/talks/resources/2019_11_Benoit_1.pdf))
+
+Eine solche Kontingenztabelle sieht in etwa so aus: 
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/kontingenztabelle.png")
+```
+
+In der Analysemethode, die die Quanteda-Entwickler:innen anwenden, werden die Wahrscheinlichkeiten in der Kontingenztabelle als Funktion von Parametern ausgedrückt, die Zusammenhänge zwischen den Variablen in den Spalten und Zeilen der Tabelle beschreiben. In unserem Fall sind diese Variablen die Fälle $c_1$ und $c_2$, die das Vorkommen der Wörter $x_1$ und $x_2$ aus der Wortkombination x ("target expression") im Korpus beschreiben. Eine solche Funktion wird log-lineares Modell genannt und wird laut Benoit (2019) so definiert: 
+
+$\log p_{c_1c_2} = λ_0 + λ_1I (c_1 = 1) + λ_2I (c_2 = 1) + λ I (c_1c_2 = 1)$  
+
+Dieses Modell basiert auf der Annahme, dass die logarithmierte Wahrscheinlichkeit $p_{c_1c_2}$ für einen bestimmten Fall in der Kontingenztabelle als lineare Kombination (einfach gesagt: eine Summe) von Parametern modelliert werden kann. Dabei wird angenommen, dass die Wahrscheinlichkeit sich aus einer Grundwahrscheinlichkeit (Parameter λ_0), den Effekten der einzelnen Wörter (Parameter λ_1 und λ_2, "Haupteffekte") und ihrer Interaktion (Parameter λ, "Interaktionseffekt") zusammensetzt (vgl. Tutz et al. 1996: 546):
+
+- $\lambda_0$ beschreibt die Grundwahrscheinlichkeit, die unabhängig von den Variablen $c_1$ und $c_2$ existiert
+- $\lambda_1$ beschreibt, wie die Wahrscheinlichkeit durch das Vorhandensein von $x_1$ beeinflusst wird, ohne dass Wechselwirkungen mit $x_2$ berücksichtigt werden (erster Haupteffekt).
+- $\lambda_2$ beschreibt, wie die Wahrscheinlichkeit durch das Vorhandensein von $x_2$ beeinflusst wird, ohne dass Wechselwirkungen mit $x_1$ berücksichtigt werden (zweiter Haupteffekt).
+- $\lambda$ beschreibt die Wahrscheinlichkeit der Wortkombinationen $x$, also das Auftreten von $x_1$ und $x_2$ miteinander.
+
+Das Modell beschreibt also eine Art gewichtete Wahrscheinlichkeit, die von den Parametern und der Struktur der Daten abhängt. Die Parameter werden mithilfe der sogenannten "Indikatorfunktion" $I$ in Zusammenhang mit den Fällen $c_i$ gebracht. $I$ ist genau dann 1, wenn der Fall in der Klammer erfüllt ist (also z.B. $c_1=1$), und 0 sonst. Für die Wahrscheinlichkeiten $p_{ij}$ aus der Tabelle bekommen wir durch Auswerten der Indikatorfunktionen für die jeweiligen Fälle: 
+
+- Für $c_1 = 0, c_2 = 0 \ (p_{00})$: 
+$\log p_{00} = \lambda_0$
+- Für $c_1 = 1, c_2 = 0 \ (p_{10})$:
+$\log p_{10} = \lambda_0 + \lambda_1$
+- Für $c_1 = 0, c_2 = 1 \ (p_{01})$:
+$\log p_{01} = \lambda_0 + \lambda_2$
+- Für $c_1 = 1, c_2 = 1 \ (p_{11})$:
+$\log p_{11} = \lambda_0 + \lambda_1 + \lambda_2 + \lambda$
+
+Zur Erinnerung: Die Tabelle deckt die Fälle ab, dass zwei Wörter gemeinsam ($c_1 = 1, c_2 = 1$), separat ($c_1 = 0, c_2 = 1$ und $c_1 = 1, c_2 = 0$) oder gar nicht ($c_1 = 0, c_2 = 0$) auftreten. In der Funktionsdokumentation wird erwähnt, dass das Modell "gesättigt" ist (saturated). Das bedeutet, dass das Modell eben genau all diese Fälle und deren mögliche Effekte berücksichtigt. 
+
+Der Parameter, der uns im Rahmen einer Kollokationsanalyse hauptsächlich interessiert, ist $\lambda$, denn dieser Parameter repräsentiert den Effekt, den das gemeinsame Vorkommen der beiden Wörter auf die Wahrscheinlichkeit für das gemeinsame Auftreten der Wörter hat (den "Interaktionseffekt"). Er wird deswegen auch **Interaktionsparameter** (engl. "interaction parameter") genannt. Aus der log-linearen Formel können wir das $\lambda$ extrahieren, indem nach $\lambda$ umgestellt wird:
+
+$\lambda = \log\left(\frac{p_{00}p_{11}}{p_{01}p_{10}}\right)$ 
+
+Diese Formel für $\lambda$ nennt man dann **Log Odds Ratio**. Sie beschreibt laut Benoit "the association between the two dimensions of the table" (Benoit 2019). Was bedeutet das? Stephanie Evert erklärt es etwas ausführlicher (hier mit den Zellenbeschriftungen aus unserem Beispiel): 
+
+>The odds ratio quantifies association strength by comparing the column ratios $p_{11}/p_{01}$ and $p_{10}/p_{00}$ in the contingency table (or, equivalently, the row ratios). [...]. In the case of a positive association, [...], we will find that the first column ratio $p_{11}/p_{01}$ is larger than the second ratio $p_{10}/p_{00}$, while it is smaller for a negative association. This motivates the fraction $\frac{p_{11}/p_{01}}{p_{10}/p_{00}} = \frac{p_{11} p_{00}}{p_{10} p_{01}}$ as an association coefficient. It is known as "odds ratio" because the column ratios are sometimes called "odds", as in gambling. The logarithm of the odds ratio satisfies both conventions for association scores, with a value of 0 in the case of independence." (Evert 2009, S. 29).
+
+Die Odds Ratio-Formel quantifiziert also den Interaktionseffekt $\lambda$, indem sie die Wahrscheinlichkeit des gemeinsamen Auftretens der Wörter $x_1$ und $x_2$ ($p_{11}$) relativ zu den anderen Wahrscheinlichkeiten ($p_{01}, p_{10}, p_{00}$) bewertet. Die Wahrscheinlichkeiten $p_{ij}$ in der Odds Ratio-Formel müssen dabei auf der Grundlage der Häufigkeiten in einem konkreten Korpus geschätzt werden. 
+
+Laut Benoit (2019) gilt für die so berechneten $\lambda$-Werte:
+
+- λ = 0 if the words $x_1$ and $x_2$ occur independently in the corpus as first and second words of two-word sequences
+- λ > 0 if the words $x_1$ and $x_2$ occur together (and in this order) more often than would be expected
+
+Wenn $\lambda$ > 0 deutet dies auf eine starke positive Assoziation hin ([Evert 2009 S. 29](https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf)).
+
+Zum besseren Verständnis berechnen wir Lambda im Folgenden für unser Beispiel mit der Wortkombination "Guten Tag" mithilfe der Odds Ratio-Formel. Als Wahrscheinlichkeit für die verschiedenen Fälle nehmen wir einfach die relativen Häufigkeiten für jeden Fall: 
+
+
+```{r, echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/kontingenztabelle-beispiel.png")
+```
+
+Die Werte können wir in die Log Odds Ratio-Funktion einsetzen. Dazu muss allerdings zu jeder der Häufigkeiten in der Tabelle wieder 0.5 addiert werden, unser Smoothing-Parameter, und wir müssen entsprechend durch 11 statt durch 9 dividieren (da 7.5 + 2.5 + 0.5 + 0.5 = 11): 
+
+$\lambda = \log\left(\frac{\frac{7.5}{11}*\frac{2.5}{11}}{(0.5*0.5}\right) = 4.317$ 
+
+Der berechnete Wert entspricht genau dem Wert, den wir am Anfang dieses Abschnitts mithilfe der Formel aus den Dokumentationsseiten zur `textstat_collocations()`-Funktion berechnet haben, also der Formel: 
+
+$\lambda = \sum_{i=1}^M (-1)^{K-b_i} * \log n_i$ 
+$\lambda = ((-1)^2*\log(7.5)) + ((-1)^1*\log(0.5)) + ((-1)^1*\log(0.5)) + ((-1)^0*\log(2.5)) = 4.317$
+
+Dass die Werte übereinstimmen ist kein Zufall! Denn diese Formel für $\lambda$ stellt eine Generalisierung der Odds Ratio-Formel für Wortkombinationen aus K Wörtern dar, also formal gesagt für Interaktionen zwischen K Variablen (Blaheta und Johnson 2001, S.4). In unserem Beispiel war K=2, und in diesem Fall sind beide Formeln gleichbedeutend. Das ist aber nicht der Fall für K>2, da die Odds Ratio-Formel nur für Wortkombinationen aus zwei Wörtern (2-Wortkombinationen) verwendet werden kann. 
+
+Jetzt sollte euch etwas klarer geworden sein, warum in der Formel $\lambda = \sum_{i=1}^M (-1)^{K-b_i} * \log n_i$ die Summanden mit $n_2$ und $n_3$ subtrahiert werden. Diese Summanden beschreiben die Fälle, in denen nur ein Teil der Wortkombination $x = (x_1, x_2)$ mit anderen Wortkombinationen im Korpus übereinstimmt. Indem diese Häufigkeiten subtrahiert werden, reduziert die Formel den Einfluss solcher teilweisen Übereinstimmungen, um die tatsächliche Interaktion zwischen den beiden Wörtern $x_1$ und $x_2$ besser herauszustellen. Die Summanden mit $n_1$ (keine Übereinstimmung) und $n_4$ (komplette Übereinstimmung) tragen dagegen positiv zu $\lambda$ bei. Dieser Umstand begründet auch unsere anfängliche Beobachtung, dass ein hoher $\lambda$-Wert nicht automatisch bedeutet, dass die Wörter $x_1$ und $x_2$ stark assoziiert sind. Ein hoher $\lambda$-Wert kann beispielsweise auch entstehen, wenn die Wörter $x_1$ und $x_2$ insgesamt selten sind, weil dann Wortkombinationen ohne Übereinstimmung überwiegen und $n_1$ stark zum Wert von $\lambda$ beiträgt. Wenn ein Korpus klein ist, dann ist $n_1$ im Verhältnis zu $n_4$ kleiner und der $n_4$-Wert hat  relativ mehr Gewicht, selbst wenn die tatsächliche Assoziation nicht besonders stark ist.
+
+Weil die $\lambda$-Werte für die individuellen Häufigkeiten der Wörter $x_1$ und $x_2$ und für die Gesamtanzahl der Wortkombinationen im Korpus (also die Größe des Korpus) empfindlich sind, kann der $\lambda$-Wert allein nicht zur Bewertung der Assoziation zwischen den Wörtern verwendet werden. Eine Orientierungshilfe, welche $\lambda$-Werte vielleicht nicht ganz so aussagekräftig sind, bietet der z-Wert der **Wald z-Statistik**, der beim Aufruf der `textstat_collocations()`-Funktion berechnet wird. Dieser Wert kommt durch Division von $\lambda$ durch den sogenannten Standardfehler zustande. Der Standadfehler ist hoch, wenn entweder $n_1$ klein ist (also es insgesamt wenige Wortkombinationnen gibt, weil das Korpus klein ist), oder wenn die Wörter der Wortkombination x selten vorkommen (also wenn $n_1$ im Vergleich zu $n_2$, $n_3$ und $n_4$ groß ist), oder wenn $n_2, n_3$ und $n_4$ allgemein klein sind, weil die Wörter $x_1$ und $x_2$ selten vorkommen. 
+
+Die Wald-Test-Statistik berechnet also, wie groß der Parameter $\lambda$ im Verhältnis zu seinem Standardfehler (SE) ist:
+
+$z = \frac{\text{geschätzter Wert}}{\text{Standardfehler}} = \frac{\lambda}{SE(\lambda)}$.
+
+Die Formel
+
+$z = \frac{\lambda}{\left[\sum_{i=1}^M n_i^{-1}\right]^{1/2}}$
+
+aus den Dokumentationsseiten der `textstat_collocations()`-Funktion beruht auf der Idee, dass der Standardfehler $\text{SE}(\lambda)$ durch die inversen beobachteten Häufigkeiten ($n_i^{-1}$) abgeschätzt werden kann.
+
+Nachdem wir in diesem Abschnitt etwas tiefer in den Hintergrund der berechneten Maße eingestiegen sind, seht ihr, dass die Unterscheidung zwischen "frequentistischen" und "wahrscheinlichkeitstheoretischen" Ansätzen bei der Analyse von Kookkurrenzen nicht immer eindeutig ist: auch dem hier vorgestellten frequentistischen Ansatz liegen in diesem Fall wahrscheinlichkeitstheoretische Annahmen zugrunde.  
+
+
+</details>
+
+#### Pointwise Mutual Information (PMI)
+
+Im letzten Abschnitt haben wir uns angesehen, wie untersucht werden kann, ob zwei direkt aufeinanderfolgende Wörter (N-Gramm) so häufig gemeinsam vorkommen, dass das gemeinsame Vorkommen als statistisch signifikant angesehen werden kann. In diesem Abschnitt werden wir ein weiteres Assoziationsmaß kennenlernen, das untersucht, ob zwei Wörter in einem bestimmten Kontext (Kookkurrenzen) häufiger gemeinsam vorkommen, als es durch Zufall zu erwarten wäre. Dazu gewichten wir die Document-Feature-Matrix (FCM). Es gibt aktuell keine `fcm_weight()` Funktion, die ein einfaches Gewichten der Kookkurrrenzen erlaubt, so wie es für einzelne Begriffe mit der `dfm_weight()` oder der `dfm_tfidf()` Funktion möglich ist (siehe Abschnitt "Worthäufigkeiten verstehen"). Eine `fcm_weight()` Funktion [wurde zwar vor einigen Jahren Mal als mögliche Erweiterung für das Quanteda-Paket angekündigt](https://github.com/quanteda/quanteda/issues/2149), aber nie umgesetzt. So etwas kommt häufig vor: R Pakete werden von Privatpersonen und von Angestellten an anderen Institutionen entwickelt, und manchmal liegen deren Prioritäten oder Anwendungsfälle woanders, sodass die Entwicklung einschläft oder nicht in die Richtung läuft, wie wir es uns wünschen würden. 
+
+Aber wenn ein Paket nicht genau die Funktionalität bietet, die wir brauchen, können wir einfach unsere eigene Funktion schreiben. In der [oben erwähnten Diskussion über eine mögliche Quanteda-Erweiterung](https://github.com/quanteda/quanteda/issues/2149) hat Kohei Watanabe, einer der Entwickler:innen des Pakets Quanteda, eine Definition für eine Funktion `fcm_pmi()` geteilt, welche eine Feature-Co-occurrence-Matrix (FCM) als Argument annimmt, für jeden Wert in der Matrix ein Assoziationsmaß berechnet, das Pointwise Mutual Information genannt wird, und als Rückgabewert die auf diese Weise gewichtete FCM zurückgibt. Diese Funktion wurde, wie gesagt, nie in Quanteda integriert, aber wir können die Funktion natürlich trotzdem verwenden und für unsere Zwecke adaptieren.
+
+Bevor wir loslegen, erstmal eine Definition für das hier betrachtete Assoziationsmaß **Pointwise Mutual Information (PMI)** bzw. dessen Sonderform **Positive Pointwise Mutual Information (PPMI)**: 
+
+>An alternative weighting function to tf-idf, PPMI (positive pointwise mutual information), is used for term-term-matrices, when the vector dimensions correspond to words rather than documents. PPMI draws on the intuition that the best way to weigh the association between two words is to ask how much more the two words co-occur in our corpus than we would have a priori expected them to appear by chance. (Jurafsky/Martin 2023, S. 118)
+
+Dieses Maß hat einen informationstheoretischen und wahrscheinlichkeitstheoretischen Hintergrund: Die PMI-Werte drücken das Verhältnis zwischen der Wahrscheinlichkeit, dass zwei Worte in einem Kontext gemeinsam auftreten, und der Wahrscheinlichkeit, dass sie "per Zufall" gemeinsam auftreten, aus. "Zufall" ist hier nicht intuitiv zu verstehen, sondern damit ist in einem wahrscheinlichkeitstheoretischen Sinne gemeint, dass die Worte unabhängig voneinander im Korpus auftreten, dass also das Auftreten des einen Worts keine Information darüber liefert, ob das andere Wort auftritt oder nicht. Für eine ausführlichere Diskussion zur Berechnung der PPMI-Werte schaut in den optionalen Abschnitt "Mathematischer Hintergrund: PMI".
+
+Zur Berechnung der PPMI-Werte verwenden wir wie angekündigt die folgende Funktion von Kohei Watanabe: 
+
+```{r}
+# Funktionsdefinition von Kohei Watanabe
+fcm_pmi <- function(x) {
+  m <- x@meta$object$margin
+  x <- as(x, "TsparseMatrix") # Im Original steht hier "dgTMatrix" (das verursacht eine Warnmeldung)
+  x@x <- log(x@x / (m[x@i + 1] * m[x@j + 1]) * sum(m))
+  x@x[x@x < 0] <- 0
+  as.fcm(x)
+}
+
+```
+
+Quelle: https://github.com/quanteda/quanteda/issues/2149. 
+
+Watanabe verwendet in der Funktionsdefinition fortgeschrittene Programmierkonzepte, die wir in diesem Einführungsseminar nicht besprechen können. Wer neugierig ist, der kann [hier](https://adv-r.hadley.nz/s4.html) nachlesen. Damit die Funktionsdefinition für euch keine Black Box ist, habe ich sie mit den euch bereits bekannten Konzepten umgeschrieben. Die Variablennamen habe ich dabei versucht beizubehalten:  
+
+```{r}
+# Funktion mit bekannten Konzepten umschreiben 
+fcm_pmi2 <- function(toks) {
+  # Zusammenzählen, wie oft jedes Token vorkommt: Spaltensummen der DFM berechnen
+  m <- colSums(dfm(toks))
+  # FCM erstellen und in Basis-R-Matrix konvertieren
+  x <- as.matrix(fcm(toks)) 
+  # x@x - nicht-Null Einträge in der Matrix x
+  xx <- x[x != 0]
+  # x@i - Zeilenindizes der nicht-Null Einträge in der Matrix x
+  xi <- which(x != 0, arr.ind = TRUE)[, 1]
+  # x@j - Spaltenindizes der nicht-Null Einträge in der Matrix x
+  xj <- which(x != 0, arr.ind = TRUE)[, 2]
+  # PMI Werte berechnen: Alle nicht-Null Einträge in der FCM-Matrix x teilen durch Produkt aus der absoluten Häufigkeit der jeweiligen Tokens sowie die Gesamtanzahl an Tokens im Korpus
+  xx <- log(xx / (m[xi] * m[xj]) * sum(m))
+  # In PPMI-Werte umwandeln: Negative Werte durch 0 ersetzen 
+  xx[xx < 0] <- 0
+  # Matrix in der Form der Matrix x erstellen
+  xx_mat <- matrix(0, nrow = nrow(x), ncol = ncol(x), dimnames = list(features=rownames(x), features=colnames(x)))
+  # berechnete Werte in die entsprechende Position in der neuen Matrix xx_mat setzen
+  xx_mat[cbind(xi, xj)] <- xx
+  # Matrix zurück in ein fcm-Objekt konvertieren
+  xx_mat <- as.fcm(xx_mat)
+  return(xx_mat)
+}
+
+```
+
+Bevor wir die Funktion auf unser Korpus anwenden, betrachten wir ein Beispiel. Um die Funktion von Watanabe anzuwenden, müsste der Code so aussehen: 
+
+```{r }
+toks <- tokens(c("a b c", "a b d e"))
+fcmt <- fcm(toks)
+fcm_pmi(fcmt)
+
+```
+
+Die umgeschriebene Funktion erwartet allerdings ein Quanteda tokens-Objekt als Argument. Um diese Funktion anzuwenden, muss der Code so aussehen: 
+
+```{r }
+toks <- tokens(c("a b c", "a b d e"))
+fcm_pmi2(toks)
+
+```
+
+Da die Funktion von Watanabe aber etwas effizienter ist, verwenden wir im Folgenden die ursprüngliche Funktion, um die PPMI-Werte für unser Märchenkorpus zu berechnen. 
+Die Funktion wenden wir anschließend auf das Märchen-Korpus an:
+
+```{r attr.output='style="max-height: 150px;"'}
+fcm_pmi(maerchen_fcm)
+```
+
+Die gewichtete FCM verwenden wir zuletzt, um den unseren Vergleich der Märchen "Froschkönig" und "Zwei Brüder" aus dem Abschnitt "Kookkurrenzen" zu wiederholen. In dem Abschnitt hatten wir verglichen, welche Wörter in den beiden Märchen am häufigsten zusammen mit unserem Schlüsselwort "königstochter" vorkommen. Dazu verwenden wir den Code aus dem Abschnitt "Kookkurrenzen". Das Einzige, was wir ändern müssen, ist, die fcm mit unserer Funktion zu gewichten, also z.B. `froschkoenig_pmi <- fcm_pmi(froschkoenig_fcm)`.
+
+
+```{r attr.output='style="max-height: 150px;"'}
+# Code aus dem Abschnitt "Kookkurrenzen"
+# Preprocessing: allerdings entfernen wir diesmal zusätzlich Stoppwörter und wir verwenden das nicht-lemmatisierte Korpus
+docvars(maerchen_sentences_toks, "Titel") <- docnames(maerchen_sentences_toks)
+froschkoenig_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Froschkoenig", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+froschkoenig_pmi <- fcm_pmi(froschkoenig_fcm)
+# Jetzt erstellen wir einen Dataframe mit den zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+fr_cooc <- froschkoenig_pmi[,"königstochter"]
+fr_df <- convert(fr_cooc, to="data.frame")
+colnames(fr_df)[1] <- "feature"
+fr_df$doc_id <- "Der-Froschkoenig"
+fr_df <- fr_df[order(fr_df$königstochter, decreasing=TRUE), ]
+fr_df <- head(fr_df, 10)
+
+# Und nochmal dasselbe für das Märchen "Die Zwei Brüder": 
+brueder_fcm <- tokens_subset(maerchen_sentences_toks, grepl("Die-zwei-Brueder", Titel)) %>%
+  tokens_remove(pattern = stopwords("de")) %>%
+  tokens_remove(pattern = "dass") %>%
+  fcm()
+brueder_pmi <- fcm_pmi(brueder_fcm)
+
+# Dataframe mit zehn häufigsten Kookkurrenzen mit dem Schlüsselwort "königstochter"
+br_cooc <- brueder_pmi[,"königstochter"]
+br_df <- convert(br_cooc, to="data.frame")
+colnames(br_df)[1] <- "feature"
+br_df$doc_id <- "Die-zwei-Brueder"
+br_df <- br_df[order(br_df$königstochter, decreasing=TRUE), ]
+br_df <- head(br_df, 10)
+
+cooc_df <- rbind(fr_df, br_df)
+colnames(cooc_df)[2] <- "pmi"
+```
+
+```{r}
+# Code aus dem Abschnitt "Kookkurrenzen"
+library(ggplot2)
+# Kookkurrenzen mit "königstochter" für die beiden Märchen plotten
+# Code aus dem Abschnitt "Relative Häufigkeiten und TF-IDF" 
+ggplot(data = cooc_df, aes(x = factor(nrow(cooc_df):1), y = pmi)) +
+  geom_point() +
+  facet_wrap(~ doc_id, scales = "free_y") +
+  coord_flip() +
+  scale_x_discrete(breaks = factor(nrow(cooc_df):1), labels = cooc_df$feature) +
+  labs(x = NULL, y = "PMI") +
+  ggtitle("Kookkurrenzen mit 'königstochter' mit den höchsten PMI-Werten")
+
+```
+
+
+:::task
+
+Verständnisfragen: 
+
+- Vergleicht die hier dargestellten Wörter mit den höchsten PMI-Werten mit den häufigsten Wörtern aus dem Abschnitt "Kookkurrenzen". Was fällt euch auf?
+- Welche Preprocessingentscheidungen wurden getroffen? 
+
+:::
+
+
+<details>
+<summary><b>Anwendungsbeispiele: PMI</b></summary>
+
+(folgt noch)
+
+</details>
+<details>
+<summary><b>Theoretischer Hintergrund: PMI</b></summary>
+
+- Dan Jurafsky und James Martin (2024). Speech and Language Processing. Ch. 6.6: Pointwise Mutual Information (PMI), https://web.stanford.edu/~jurafsky/slp3/.
+- Alessandro Lenci und Magnus Sahlgren (2023). Distributional Semantics. Ch.2.3.1: Co-occurrence Weighting Functions, https://doi.org/10.1017/9780511783692.003
+
+
+</details>
+<details>
+<summary><b>Mathematischer Hintergrund: PMI</b></summary>
+
+Mathematisch lässt sich PMI wie folgt beschreiben (nach Jurafky/Martin 2023, S. 119): 
+
+>Pointwise mutual information (Fano, 1961) is one of the most important concepts in NLP [Natural Language Processing]. It is a measure of how often two events x and y occur, compared with what we would expect if they were independent. [...] The pointwise mutual information between a target word w and a context word c (Church and Hanks 1989, Church and Hanks 1990) is then defined as:
+
+$PMI(w,c) = log_2 ( \frac{P(w,c)}{P(w)*P(c)} )$
+
+>PMI values range from negative to positive infinity. But negative PMI values (which imply things are co-occurring less often than we would expect by chance) tend to be unreliable unless our corpora are enormous. Positive PMI (called PPMI) [...] replaces all negative PMI values with zero.
+
+Einfach gesagt: "If two terms have a high PMI, this means whenever we see one term, we'll probably see the other term nearby" (Stoltz/Taylor S. 94).
+
+Aber steigen wir ein bisschen tiefer ein. Wie kommt diese Formel zustande? 
+
+- $w$ = target word
+- $c$ = context word
+- $P(w,c)$ = Wahrscheinlichkeit, dass $w$ und $c$ gemeinsam auftreten 
+- $P(w)$ = Wahrscheinlichkeit, dass $w$ einzeln auftritt
+- $P(c)$ = Wahrscheinlichkeit, dass $c$ einzeln auftritt
+- $P(w) * P(c)$ = erwartete gemeinsame Wahrscheinlichkeit, wenn $w$ und $c$ unabhängig voneinander auftreten.   
+
+Zur Berechnung der Wahrscheinlichkeiten können absolute Häufigkeiten verwendet werden:
+
+- $P(c) = \frac{\text{Anzahl Wort c}}{\text{Anzahl Wörter im Korpus}}$
+- $P(w) = \frac{\text{Anzahl Wort w}}{\text{Anzahl Wörter im Korpus}}$
+- $P(w,c) = \frac{\text{Anzahl gemeinsames Vorkommen von Wort w und c}}{\text{Anzahl Wörter im Korpus}}$
+
+Während $P(w,c)$ die aus den Daten beobachtete Wahrscheinlichkeit ausdrückt, dass $w$ und $c$ gemeinsam vorkommen, drückt $P(w)*P(c)$ eine theoretische Wahrscheinlichkeit aus: So häufig würden $w$ und $c$ gemeinsam auftreten, wenn sie unabhängig voneinander auftreten würden, also wenn  das Auftreten von $w$ keine Information darüber liefert, ob $c$ auftritt oder nicht (und umgekehrt).
+
+Von den berechneten Werte wird anschließend der Logarithmus zur Basis 2 genommen, also $\log_2$. Dies hat den Grund, dass in der Informationstheorie, aus der dieses Maß entstanden ist, Informationen in Bits gemessen werden. Der PMI-Wert beschreibt also die Anzahl der Bits an "gemeinsamer Information" zwischen zwei Wörtern ([Evert 2008, S.19](https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf)).  Konkret gibt der Wert an, wie viel zusätzliche Information das Auftreten eines Wortes über das Auftreten des anderen liefert, verglichen mit einer Situation, in der beide unabhängig voneinander auftreten. Ein PMI-Wert von 0 Bit bedeutet zum Beispiel, dass das Auftreten des einen Worts keine Information über das Auftreten des anderen Worts liefert. Die gemeinsame Wahrscheinlichkeit entspricht genau dem Produkt der Einzelwahrscheinlichkeiten($P(w,c) = P(w) * P(c)$). Ein PMI-Wert von 1 Bit bedeutet, dass die beiden Wörter doppelt so häufig gemeinsam auftreten, wie es bei Unabhängigkeit zu erwarten wäre ($P(w,c) = 2 * P(w) * P(c)$). Das Auftreten eines Worts liefert also 1 Bit an zusätzlicher Information über das Auftreten des anderen Worts. Ein PMI-Wert von 2 Bits bedeutet, dass die beiden Wörter viermal so häufig gemeinsam auftreten, wie es bei Unabhängigkeit zu erwarten wäre ($P(w,c) = 4 * P(w) * P(c)$), und das Auftreten des einen Worts liefert 2 Bit zusätzliche Information über das Auftreten des anderen Worts, und so weiter.
+
+Ein Beispiel: Angenommen, wir haben ein Korpus aus drei Sätzen, "I like flowers", "I like apple trees", "I like animals. 
+
+```{r}
+toks <- tokens(c("I like flowers", "I like apple trees", "I love animals")) 
+fcm(toks)
+sum(ntoken(toks))
+```
+
+Das Korpus hat insgesamt 10 Tokens, das ist die "Anzahl Wörter im Korpus". Die Kookkurrenzen ("I", "like") kommt zweimal vor; alle anderen Kookkurrenzen nur einmal. Wir berechnen beispielhaft die PMI-Werte für die beiden Kookkurrenzen ("I", "like"), ("I", "love") und ("love", "animals"):
+
+$PMI(I, love) = \log_2(\frac{P(I, love)}{P(I) * P(love)}) = \log_2(\frac{\frac{1}{10}}{\frac{3}{10}*\frac{1}{10}}) = 1,737$
+
+$PMI(I, like) = \log_2(\frac{P(I, like)}{P(I) * P(like)}) = \log_2(\frac{\frac{2}{10}}{\frac{3}{10}*\frac{2}{10}}) = 1,737$
+
+$PMI(love, animals) = \log_2(\frac{P(love, animals)}{P(love) * P(animals)}) = \log_2(\frac{\frac{1}{10}}{\frac{1}{10}*\frac{1}{10}}) = 3,321$
+
+
+Stimmt das mit den Werten überein, welche die `fcm_pmi()`-Funktion berechnet? Probieren wir es aus! 
+
+```{r}
+fcm_pmi(fcm(toks))
+```
+
+Die Werte ähneln sich, stimmen aber nicht ganz überein! Woran liegt das? Per Default bestimmt die `log()`-Funktion in R den Logarithmus zur Basis e, also den natürlichen Logarithmus. Die Funktion sieht jedoch den Logarithmus zur Basis 2 vor. Das führt zwar zu verschiedenen Werten, aber das Verhältnis zwischen den berechneten Werten ist (abgesehen von Rundungsfehlern) dasselbe: 
+
+```{r}
+2.303 / 1.204
+3.321 / 1.737
+```
+
+
+Das Beispiel zeigt dieselbe Tendenz, die wir schon bei der Berechnung der PMI-Werte für das Märchenkorpus bemerkt haben: Durch Gewichten der Häufigkeiten für die Kookkurrenzen mit PPMI-Werten werden seltene Kookkurrenzen betont. Bei sehr seltenen Wörtern kann dieser Effekt ggf. zu stark sein. Ein weg, die Bevorteilung von seltenen Wörtern etwas zu mitigieren, ist, die Zahlen im Nenner zu vergrößern, damit der Ausdruck im Gesamten kleiner wird. Eine erprobte Methode ist, die Wahrscheinlichkeit, dass das Kontextwort auftritt anzupassen, und $P(c) = \frac{\text{Anzahl Wort c}^{0.75}}{\text{Anzahl Wörter im Korpus}^{0.75}}$ statt $P(c) = \frac{\text{Anzahl Wort c}}{\text{Anzahl Wörter im Korpus}}$ zu rechnen. Das lässt sich bei Jurafsky und Martin (2024, S. 119 f.) nachlesen. Die Erfinder:innen des PMI-Assoziationsmaßes, Kenneth Church und Patrick Hanks, empfehlen außerdem, PPMI-Werte nur für Kookkurrenzen zu bestimmen, die häufiger als fünf Mal vorkommen. Das lässt sich bei Church und Hanks (1990, S. 24) nachlesen.  
+
+Ein weiteres Beispiel findet sich in Jurafsky und Martin (2024, S. 119).
+
+Wer noch tiefer in das Thema PMI und Assoziationsmaße einsteigen möchte, dem empfehle ich folgende weiterführende Lektüre: Eine aktuelle (März 2024) [Übersicht über die Bestimmung verschiedener Assoziationsmaße in R](https://ladal.edu.au/coll.html) mit vielen Codebeispielen bietet Martin Schweinberger. Für einen Überblick über verschiedene Assoziationsmaße und eine Diskussion der verschiedenen mathematischen Hintergründe dieser Maße empfehle ich das Kapitel 3 "Association Measures", insbesondere das Unterkapitel 3.1 "An inventory of association measures" aus [Stephanie Everts Dissertation "The Statistics of Word Cooccurrences"](https://elib.uni-stuttgart.de/bitstream/11682/2573/1/Evert2005phd.pdf). Zum informationstheoretischen Hintergrund von "Mutual Information" allgemein, siehe [Justin Grimmer, Margaret Roberts und Brandon Stewart, Text as Data](https://press.princeton.edu/books/hardcover/9780691207544/text-as-data), S. 112f. 
+
+
+
+</details>
+
+### Zwischenfazit
+
+Ihr habt gesehen: Der Gewichtung von N-Grammen und Kookkurrenzen können unterschiedliche mathematische Konzepte und Ansätze zugrunde liegen. Die Funktion textstat_collocations() ermöglicht es, die statistische Signifikanz von N-Grammen mithilfe statistischer Tests zu bestimmen. Unsere Funktion `fcm_pmi()` zur Gewichtung der Kookkurrenzmatrizen verwendet dagegen Konzepte aus der Informationstheorie und der Wahrscheinlichkeitstheorie, um die Assoziation von zwei Wörtern in einem Kontext zu quantifizieren. Diese verschiedenen mathematischen Hintergründe müssen neben den Folgen verschiedener Preprocessingentscheidungen und dem theoretischen Rahmen der Fragestellung bei der Interpretation der Werte berücksichtigt werden. Dabei ist eine mathematische Interpretation ("Die Kollokation x y ist statistisch signifikant") natürlich nicht gleichbedeutend mit einer geisteswissenschaftilchen Interpretation. 
+
+Eine Fragestellung theoretisch und mathematisch fundiert für eine Textanalyse mit R zu operationalisieren und zu interpretieren ist also ziemlich voraussetzungsreich. Aber hoffentlich ist etwas deutlich geworden, dass Wortfrequenzanalysen nicht "regulären"  geisteswissenschaftlichen Methoden entgegengesetzt sind. Erinnert euch an dieser Stelle an das Vorwort aus "Mapping Texts" von Dustin Stoltz und Marshall Taylor, das ihr in der ersten Woche gelesen habt: 
+
+>*Mapping*, by contrast, is not about extraction. It is about *reduction* to aid interpretation. When mapping texts, we simplify their information, but always for particular uses. Many useful cartographies are based on the same territory: road maps, contour maps, political maps, to name a few. Wrangling, pruning, stopping, and transforming text all involve a decision informed by a particular goal. To put it plainly: *there is not a sole kernel of truth to be extracted, but rather a range of empirical patterns.*" (Stoltz/Taylor 2024, S. XIII)
+
+So, wie auch verschiedene Karten verschiedene Sichten oder Perspektiven auf eine Landschaft darstellen, Dinge auslassen, betonen oder verzerren können, heben absolute Häufigkeiten, relative Häufigkeiten und die TF-IDF-Werte jeweils verschiedene Wörter in einem Korpus hervor; Kollokationen und die PPMI-Werte bieten verschiedene quantitative Perspektiven auf Wörter, die in einem bestimmten Kontext gemeinsam vorkommen. All diese Methoden rücken also verschiedene "Textoberflächenphänomene" (Pichler/Reiter) bzw. "Sprachgebrauchsmuster" (Bubenhofer) in einem Korpus in den Vordergrund. Die Auswertung muss dabei nicht unbedingt quantitativ erfolgen: Erinnert euch an den Beitrag von Evelyn Gius und Janina Jacke, in dem zwischen "konfirmatorischen" und "explorativen" Ansätzen bei der Textanalyse unterschieden wurde. Betrachtet die hier vorgestellten Methoden also als zusätzliche Perspektiven, die ihr mit "klassischen" Methoden der Textanalyse kombinieren könnt, und die, wenn sie reflektiert und kritisch angewandt werden, zu interessanten Erkenntnissen verhelfen können (ein Blick in die Anwendungsbeispiele lohnt sich auf jeden Fall!). 
+
+Ganz fertig sind wir mit unserer Märchenanalyse aber noch nicht: Schließlich wissen wir immer noch nicht, ob sich Wörter, die gemeinsam vorkommen, auch aufeinander beziehen. Bisher haben wir unsere Analyse außerdem auf Tochter-Tokens begrenzt. Als nächstes werden wir zwei Methoden kennenlernen, mit denen untersucht werden kann, ob sich zwei Wörter aufeinander beziehen, und wir werden die Analyse auf andere Märchencharaktere ausweiten. 
+
+
 
 
 
@@ -1279,7 +1879,7 @@ Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betra
 - Quanteda Quick Start Guide: https://quanteda.io/articles/quickstart.html
 - Beispiel “Textual Data Visualization”: https://quanteda.io/articles/pkgdown/examples/plotting.html
 - Universität Stuttgart (2015), DH-Lexikon. Kollokation, https://www.ilw.uni-stuttgart.de/abteilungen/digital-humanities/dda/dhlexikon/index.html#K. 
-- Heiberger, Raphael and Munoz-Najar Galvez, Sebastian (2021). *Text Mining and Topic Modeling*, in: Engel et al. (eds.), Handbook of Computational Social Science. Vol. 2: Data Science, Statistical Modelling, and Machine Learning Methods, https://www.routledgehandbooks.com/doi/10.4324/9781003025245-24. 
+- Heiberger, Raphael and Munoz-Najar Galvez, Sebastian (2021). *Text Mining and Topic Modeling*, in: Engel et al. (eds.), Handbook of Computational Social Science. Vol. 2: Data Science, Statistical Modelling, and Machine Learning Methods, https://www.routledgehandbooks.com/doi/10.4324/9781003025245-24.
 - Szudarski, Paweł (2023). *Collocations, Corpora and Language Learning*, Cambridge: Cambridge Univ. Press, https://doi.org/10.1017/9781108992602. 
 - Gabrielatos, Costas (2018). *Keyness Analysis. Nature, Metrics and Techniques*, in: Taylor, C. and Marchi, A. (eds.), Corpus Approaches to Discourse. A Critical Review, Oxford: Routledge, https://core.ac.uk/download/pdf/227092349.pdf.
 - Evert, Stephanie (2009). *Corpora and Collocations*, in: Anke Lüdeling and Merja Kytö (eds.), Corpus Linguistics. An International Handbook. Vol. 2, pp. 1212-1248, https://doi.org/10.1515/9783110213881.2.1212.
@@ -1296,3 +1896,8 @@ Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betra
 - Bubenhofer, Noah (2009). *Sprachgebrauchsmuster. Korpuslinguistik als Methode der Diskurs- und Kulturanalyse. Kap. 6.1 Kollokationen, Kookkurrenzen, n-Gramme*,  https://www.zora.uzh.ch/id/eprint/111287/1/BubenhoferSprachgebrauchsmusterPub.pdf
 - Evert, Stephanie (2005) *The Statistics of Word Cooccurrences. Word Pairs and Collocations*, Dissertation Universität Stuttgart, http://dx.doi.org/10.18419/opus-2556, insb. Kap. 3.1., 2.2. 
 - Church, Kenneth und Hanks, Patrick (1990). *Word Association Norms, Mutual Information, and Lexicography*, https://aclanthology.org/J90-1003/.
+- Manning, Christopher und Schütze, Hinrich (1999). *Foundations of Statistical Natural Language Processing. Ch.5: Collocations*, https://nlp.stanford.edu/fsnlp/promo/colloc.pdf.
+- Evert, Stephanie (2008). *Corpora and collocations*, in: Lüdeling A, Kytö M (Eds.), Corpus Linguistics. An International Handbook. (pp. 1212-1248). Berlin, New York: Mouton de Gruyter, https://stephanie-evert.de/PUB/Evert2007HSK_extended_manuscript.pdf.
+- Wasserstein, Ronald, Schirm, Allen und Lazar, Nicole (2019). *Moving to a World Beyond "p < 0.05"*, in: The American Statistician Vol. 73, https://www.tandfonline.com/doi/full/10.1080/00031305.2019.1583913.
+- Benoit, Kenneth (2019). *More than Unigrams Can Say. Detecting Meaningful Multi-word Expressions in Political Text* (Folien), https://statmath.wu.ac.at/research/talks/resources/2019_11_Benoit_1.pdf.
+- Hamerle, Alfred und Tutz, Gerhard (1996). *Multivariate statistische Verfahren. Kap. 10: Zusammenhanganalysen in mehrdimensionalen Kontingenztabellen - das loglineare Modell.*, https://www.degruyter.com/document/doi/10.1515/9783110816020-012, S. 537-550.

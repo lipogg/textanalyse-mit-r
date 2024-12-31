@@ -1568,7 +1568,7 @@ $\log p_{11} = \lambda_0 + \lambda_1 + \lambda_2 + \lambda$
 
 Zur Erinnerung: Die Tabelle deckt die Fälle ab, dass zwei Wörter gemeinsam ($c_1 = 1, c_2 = 1$), separat ($c_1 = 0, c_2 = 1$ und $c_1 = 1, c_2 = 0$) oder gar nicht ($c_1 = 0, c_2 = 0$) auftreten. In der Funktionsdokumentation wird erwähnt, dass das Modell "gesättigt" ist (saturated). Das bedeutet, dass das Modell eben genau all diese Fälle und deren mögliche Effekte berücksichtigt. 
 
-Der Parameter, der uns im Rahmen einer Kollokationsanalyse hauptsächlich interessiert, ist $\lambda$, denn dieser Parameter repräsentiert den Effekt, den das gemeinsame Vorkommen der beiden Wörter auf die Wahrscheinlichkeit für das gemeinsame Auftreten der Wörter hat (den "Interaktionseffekt"). Er wird deswegen auch **Interaktionsparameter** (engl. "interaction parameter") genannt. Aus der log-linearen Formel können wir das $\lambda$ extrahieren, indem nach $\lambda$ umgestellt wird:
+Der Parameter, der uns im Rahmen einer Kollokationsanalyse hauptsächlich interessiert, ist $\lambda$, denn dieser Parameter repräsentiert den Effekt, den das gemeinsame Vorkommen der beiden Wörter auf die Wahrscheinlichkeit, dass eine bestimmte Wortkombination im Korpus beobachtet wird, hat (den "Interaktionseffekt"). Er wird deswegen auch **Interaktionsparameter** (engl. "interaction parameter") genannt. Aus der log-linearen Formel können wir das $\lambda$ extrahieren, indem nach $\lambda$ umgestellt wird:
 
 $\lambda = \log\left(\frac{p_{00}p_{11}}{p_{01}p_{10}}\right)$ 
 

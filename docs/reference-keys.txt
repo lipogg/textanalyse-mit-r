@@ -72,7 +72,7 @@ quanteda-dfm-objekte
 daten-schreiben
 regex
 was-sind-reguläre-ausdrücke
-reguläre-ausdrücke-in-r
+regex-r
 r-base-funktionen
 spezielle-pakete-stringr
 regex-syntax
@@ -93,15 +93,15 @@ methode-2-lemmatisierung-mit-udpipe
 textanalyse-iii-wortfrequenzanalysen
 märchenkorpus-einlesen-und-pakete-installieren
 corpus-objekt-erstellen-und-erste-preprocessingschritte
-worthäufigkeiten-verstehen-absolute-und-relative-häufigkeiten
+frequencies
 absolute-häufigkeiten-und-das-zipfsche-gesetz
 absolute-häufigkeiten-und-lemmata
 relative-häufigkeiten-und-tf-idf
-wörter-im-kontext-gemeinsames-vorkommen-von-wörtern
+cooccurrences
 keywords-in-context-kwic
 n-gramme
 kookkurrenzen
-was-bedeutet-das-gemeinsame-vorkommen-zweier-wörter
+interpretation
 kollokationen
 pointwise-mutual-information-pmi
 zwischenfazit

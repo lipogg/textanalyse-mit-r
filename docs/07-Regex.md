@@ -4,7 +4,7 @@
 
 Reguläre Ausdrücke (oder engl. Regular Expression, kurz: RegEx, RegExp) sind verallgemeinerte Suchmuster (patterns) für Zeichenketten. Mithilfe von regulären Ausdrücken können syntaktische Konstrukte so beschrieben werden, dass sie ein Computer versteht. Ein syntaktisches Konstrukt ist zum Beispiel eine Zahl zwischen 1900 und 2000, eine Telefonnummer, eine Adresse, eine URL oder auch ein bestimmtes Wort in verschiedenen Flexionsformen. Mithilfe von regulären Ausdrücken können also Texte nach bestimmten Mustern durchsucht werden, und die gefundenen Konstrukte können anschließend z.B. entfernt oder bearbeitet werden. Die meisten Programmiersprachen, darunter auch R, stellen Funktionen bereit, welche die Verwendung von regulären Ausdrücken erlauben. In den Beispielen in diesem Kapitel werden wir nach Mustern in zwei deutschsprachigen Märchentexten suchen. Zur Formulierung der Suchmuster verwenden wir deswegen das deutsche Alphabet. Reguläre Ausdrücke können aber genauso für andere Alphabete, Schriftsysteme und  
 
-## Reguläre Ausdrücke in R
+## Reguläre Ausdrücke in R {#regex-r}
 
 Als Beispieltexte nutzen wir die beiden Märchen Rapunzel und Aschenputtel. <br />
 Zur Vorbereitung installieren wir die folgenden Pakete...

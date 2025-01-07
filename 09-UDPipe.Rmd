@@ -11,7 +11,7 @@ In dieser Woche werden wir uns zwei Verfahren ansehen, mit denen die Wortart und
  
 ## Recap UDPipe
 
-In der Sitzung zum Preprocessing haben wir das Paket UDPipe bereits kennengelernt und UDPipe-Funktionen zur Lemmatisierung unseres Beispielkorpus verwendet. Die Funktion `udpipe()` erzeugt einen Dataframe, der neben den Lemmata auch weitere Spalten mit Daten zu den Tokens in unserem Korpus enthält, zum Beispiel `upos`, `xpos` und `dep_rel`. Zur Erinnerung:  
+In der Sitzung zum Preprocessing haben wir das Paket UDPipe bereits kennengelernt und UDPipe-Funktionen zur Lemmatisierung unseres Beispielkorpus verwendet. Die Funktion `udpipe()` erzeugt einen Dataframe, der neben den Lemmata auch weitere Spalten mit Daten zu den Tokens in unserem Korpus enthält, zum Beispiel `upos`, `xpos` und `dep_rel`. Derselbe Dataframe kann auch wie in den Abschnitten Textanalyse II und Textanalyse III durch Kombination der Funktionen `udpipe_annotate()` und `as.data.frame()` erzeugt werden. Zur Erinnerung:  
 
 ```{r eval=FALSE}
 install.packages("udpipe")
@@ -39,7 +39,7 @@ head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
 
 ```
 
-Tatsächlich führt die Funktion `udpipe()` nicht nur eine Lemmatisierung durch, sondern auch Part of Speech Tagging und Dependency Parsing, und der Dataframe, den die Funktion zurückgibt, enthält die Ergebnisse dieser Verfahren. In den folgenden beiden Abschnitten werden wir uns deswegen etwas genauer mit diesen Daten beschäftigen.  Im Abschnitt "Part of Speech Tagging mit UDPipe" betrachten wir zunächst die beiden Spalten `upos` und `xpos`:
+Tatsächlich führt die Funktion `udpipe()` (ebenso wie die Funktion `udpipe_annotate()`) nicht nur die Lemmatisierung durch, sondern auch Part of Speech Tagging und Dependency Parsing, und der Dataframe, den die Funktion zurückgibt, enthält die Ergebnisse dieser Verfahren. In den folgenden beiden Abschnitten werden wir uns deswegen etwas genauer mit diesen Daten beschäftigen.  Im Abschnitt "Part of Speech Tagging mit UDPipe" betrachten wir zunächst die beiden Spalten `upos` und `xpos`:
 
 * `upos`: The universal parts of speech tag of the token.
 * `xpos`: The treebank-specific parts of speech tag of the token. 
@@ -187,9 +187,11 @@ Gleicht eure Ergebnisse mit den Werten in den Spalten `head_token_id` und `dep_r
 
 :::
 
-## Beispielanalyse: Märchen
+## Beispielanalyse: Märchen {#beispiel}
 
 ### Korpus einlesen und Preprocessing
+
+Zunächst lesen wir unsere Märchen genau wie im Kapitel "Textanalyse III" ein und erstellen ein Quanteda-Tokens-Objekt. 
 
 ```{r warning=FALSE, message=FALSE}
 
@@ -225,6 +227,8 @@ maerchen_corpus <- corpus_subset(maerchen_corpus_alle, Jahr == 1857)
 maerchen_toks_raw <- tokens(maerchen_corpus)
 ```
 
+Anschließend können wir die Funktionen `udpipe()` oder `udpipe_annotate()` (in diesem Fall in Kombination mit der Funktion `as.data.frame()`) verwenden, um das POS Tagging und Dependency Parsing durchzuführen. Aber Achtung: wie wir bereits im Kapitel Textanalyse II besprochen haben, kann die `udpipe()`-Funktion nicht auf bereits mit Quanteda tokenisierte Objekte angewendet werden:    
+
 ```{r eval=FALSE}
 # UDPipe Modell herunterladen und laden: Per Default ist das UD_German-GSD, wenn nur "german" angegeben wird
 ud_model <- udpipe_download_model("german")
@@ -233,11 +237,11 @@ ud_model <- udpipe_load_model(ud_model)
 
 ```{r error=TRUE}
 # Dieser Code produziert eine Fehlermeldung: udpipe() kann nicht auf bereits tokenisiertes Objekt angewandt werden
-x <- udpipe(maerchen_toks_raw, ud_model)
+udpipe(maerchen_toks_raw, ud_model)
 
 ```
 
-Beim Versuch, die Funktion `udpipe()` auf unser Quanteda tokens-Objekt anzuwenden, bekommen wir eine Fehlermeldung, die uns mitteilt, dass `udpipe()` nicht auf ein bereits tokenisiertes Objekt angewandt werden kann. In den [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) können wir nachlesen, wie wir POS Tagging und Dependency Parsing für ein bereits tokenisiertes Korpus durchführen können: Anstelle der Funktion `udpipe()` muss dafür die Funktion `udpipe_annotate()` verwendet werden, und zwar mit den Argumenten `tagger="default"` (für das POS Tagging),  `parser="default"` (für das Dependency Parsing) und `tokenizer = "vertical"` (damit die Tokens beibehalten werden). Die [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) geben außerdem die folgende Codezeile (die mit sapply()) zur Vorbereitung des Tokens-Objekts für die Annotation mit udpipe an:  
+Beim Versuch, die Funktion `udpipe()` auf unser Quanteda tokens-Objekt anzuwenden, bekommen wir eine Fehlermeldung, die uns mitteilt, dass `udpipe()` nicht auf ein bereits tokenisiertes Objekt angewandt werden kann. In den [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) können wir nachlesen, wie wir POS Tagging und Dependency Parsing für ein bereits tokenisiertes Korpus durchführen können: Anstelle der Funktion `udpipe()` muss dafür die Funktion `udpipe_annotate()` verwendet werden, und zwar mit den Argumenten `tagger="default"` (für das POS Tagging),  `parser="default"` (für das Dependency Parsing) und `tokenizer = "vertical"` (damit die Tokens beibehalten werden). Die [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) geben außerdem die folgende Codezeile (die mit sapply()) zur Vorbereitung des Tokens-Objekts für die Annotation mit udpipe an. Diesen Code haben wir bereits in den Kapiteln Textanalyse II und Textanalyse III verwendet, um ein Quanteda-Tokens-Objekt zu lemmatisieren. Da es uns in den vorigen Kapiteln aber nur um das Lemmatisieren ging, hatten wir beim Funktionsaufruf das Argument `parser="none"` angegeben. Jetzt soll auch Dependency Parsing durchgeführt werden und wir wählen deswegen mit `parser="default"` die Defaulteinstellungen. 
 
 ```{r eval=FALSE}
 # Quanteda tokens-Objekt für die Verarbeitung mit der Funktion udpipe_annotate() vorbereiten
@@ -259,6 +263,15 @@ maerchen_annotated <- readRDS(file="data/maerchen_udpipe.rds")
 
 ```
 
+Wenn euer Computer mehr als einen CPU Kern hat (haben die meisten modernen Laptops und Desktop-PCs) könnt ihr die Ausführungszeit der Funktion `udpipe()` verringern, indem ihr mit einem zusätzlichen Argument `parallel.cores` angebt, über wie viele CPU Kerne die Ausführung des Codes verteilt werden soll. Dadurch können verschiedene Texte parallel annotiert werden anstatt nacheinander. Das geht so einfach aber nur mit der Funktion `udpipe()`, mit `udpipe_annotate()` ist es etwas komplizierter. [Hier](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-parallel.html) könnt ihr mehr dazu nachlesen.
+
+```{r eval=FALSE}
+# Achtung: hier nicht alle Kerne anzugeben, sondern mindestens einen weniger als auf eurem Computer vorhanden.
+udpipe(maerchen_alle, ud_model, parallel.cores = 4)
+
+```
+
+
 Zuletzt muss das annotierte Korpus noch in einen Dataframe umgewandelt werden:
 
 ```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
@@ -272,7 +285,7 @@ maerchen_df # View(maerchen_df) im RStudio
 
 ### Analyse mit POS Tags
 
-Mithilfe der POS Tags in der Spalte `upos` können wir zum Beispiel eine **Token-Häufigkeitsanalyse auf bestimmte Wortarten eingrenzen**. Wir wiederholen beispielhaft die Token-Häufigkeitsanalyse aus der vergangenen Woche für alle Substantive in unserem Märchenkorpus:
+Mithilfe der POS Tags in der Spalte `upos` können wir zum Beispiel unsere **Wortfrequenzanalyse auf bestimmte Wortarten eingrenzen**. Wir wiederholen beispielhaft die Token-Häufigkeitsanalyse aus der vergangenen Woche für alle Substantive in unserem Märchenkorpus:
 
 ```{r warning=FALSE, message=FALSE}
 # Auf Lemmata zugreifen, die Substantive sind

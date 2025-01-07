@@ -434,9 +434,9 @@ ud_model <- udpipe_load_model(ud_model)
 
 
 
-Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werden können, also mit denen die Wörter in einem Text auf ihre Grundformen reduziert werden können. Die Funktion `udpipe()` gibt direkt einen Dataframe zurück (s.u.). Die Funktion `udpipe_annotate()` gibt eine Liste zurück, die in einem folgenden Schritt in einen Dataframe umgewandelt werden kann. Beide Funktionen lemmatisieren den Text nicht nur, sondern tokenisieren ihn auch und führen weitere Verarbeitungsschritte durch, auf die wir an dieser Stelle nicht weiter eingehen. Die Funktion `udpipe_annotate()` erlaubt es, mithilfe verschiedener Funktionsparameter festzulegen, welche dieser Verarbeitungsschritte beim Aufruf der Funktion durchgeführt werden sollen. 
+Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werden können, also mit denen die Wörter in einem Text auf ihre Grundformen reduziert werden können. Die Funktion `udpipe()` gibt direkt einen Dataframe zurück (s.u.). Die Funktion `udpipe_annotate()` gibt eine Liste zurück, die in einem folgenden Schritt in einen Dataframe umgewandelt werden kann. Beide Funktionen lemmatisieren den Text bzw. die Texte nicht nur, sondern tokenisieren sie auch und führen weitere Verarbeitungsschritte durch, auf die wir an dieser Stelle nicht weiter eingehen. Die Funktion `udpipe_annotate()` erlaubt es, mithilfe verschiedener Funktionsparameter festzulegen, welche dieser Verarbeitungsschritte beim Aufruf der Funktion durchgeführt werden sollen. Die von UDPipe verwendeten Tokenisierungsverfahren und Default-Einstellungen unterscheiden sich aber von dem Tokenisierungsverhalten der Quanteda `tokens()`-Funktion. Wenn Quanteda statt UDPipe zum Tokenisieren verwendet werden soll, kann das Korpus mit Quanteda tokenisiert werden und anschließend in eine Form gebracht werden, die die `udpipe_annotate()`-Funktion als Argument akzeptiert. 
 
-Wir betrachten zunächst wieder unseren Beispielsatz: 
+Wir betrachten zunächst wieder unseren Beispielsatz und lemmatisieren den Satz zur Illustration einmal mit der Funktion `udpipe()` und danach noch einmal mit der Funktion `udpipe_annotate()`. Die Tokenisierung erfolgt dabei durch UDPipe. 
 
 
 ```r
@@ -482,7 +482,7 @@ head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
 
 Beachtet Zeile 29: Hier wurde das Token "am" in zwei Lemmata aufgeteilt: "an" und "der". Dieses Verhalten müssen wir bei der Weiterverarbeitung der Lemmata beachten!
 
-Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von udpipe lemmatisiert werden kann. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten und Tokenisieren das Korpus: 
+Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von UDpipe lemmatisiert werden kann. Das Korpus tokenisieren wir in diesem Fall bereits mit Quanteda und verwenden UDPipe nur zum Lemmatisieren. Aus diesem Grund verwenden wir hier die Funktion `udpipe_annotate()` anstatt der Funktion `udpipe()`. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten und Tokenisieren das Korpus: 
 
 
 ```r
@@ -492,10 +492,11 @@ library(quanteda)
 ger_texte <- readtext("korpus/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Autor_in", "Titel", "Jahr"), encoding = "UTF-8")
 ger_korpus <- corpus(ger_texte)
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
+# Achtung: an dieser Stelle dürfen noch keine weiteren Preprocessing-Schritte erfolgen!
 kafka_toks <- tokens(kafka_korpus)
 ```
 
-Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden. Dazu muss jedoch erst das Quanteda-Tokens-Objekt in eine Form gebracht werden, den die udpipe_annotate()-Funktion als Argument annehmen kann. Den Code dafür entnehmen wir dieser [Anleitung von Jan Wijffels](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html), einem der Entwickler:innen von UDPipe. 
+Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden. Dazu muss jedoch erst das Quanteda-Tokens-Objekt in eine Form gebracht werden, den die udpipe_annotate()-Funktion als Argument annehmen kann. Den Code dafür entnehmen wir dieser [Anleitung von Jan Wijffels](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html), einem der Entwickler:innen von UDPipe. Auf diesen Code kommen wir im Kapitel 9 noch einmal zurück, wenn wir uns mit Part of Speech Tagging und Dependency Parsing beschäftigen.
 
 
 ```r

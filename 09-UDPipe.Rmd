@@ -576,4 +576,4 @@ Jurafsky, Daniel und Martin, James H. (2023), *Speech and Language Processing. C
 - Universal Dependencies Contributors (2022). *UD German GSD*, https://universaldependencies.org/treebanks/de_gsd/index.html. 
 - Universal Dependencies Contributors (2022). *Universal POS Tags*, https://universaldependencies.org/u/pos/index.html. 
 - Caughlin, David (2023). *R for HR. Ch. 17: Joining (Merging) Data*, https://rforhr.com/join.html. 
-
+- Wijffels, Jan (2023). *UDPipe Natural Language Processing - Parallel*, https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-parallel.html. 

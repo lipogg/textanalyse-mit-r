@@ -114,3 +114,11 @@ korpus-einlesen-und-preprocessing
 analyse-mit-pos-tags
 analyse-mit-dependency-relations
 fazit
+word-embeddings-und-ner
+word-embeddings
+count-based-word-embeddings-mit-quanteda-und-pmi-werten
+prediction-based-static-word-embeddings-mit-quanteda-und-glove
+named-entity-recognition-ner
+beispiel-mit-spacy-spacyr
+beispiel-mit-flair-flair
+vergleich-und-ausblick

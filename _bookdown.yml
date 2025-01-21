@@ -18,7 +18,7 @@ rmd_files: ["index.Rmd",
             "07-Textanalyse-2.Rmd", 
             "08-Textanalyse-3.Rmd",
             "09-UDPipe.Rmd", 
-            #"10-NER.Rmd", 
+            "10-NER.Rmd", 
             #"11-XML-XPath.Rmd", 
             #"11-XML-Beispiele.Rmd"
             ]

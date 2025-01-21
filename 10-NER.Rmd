@@ -24,13 +24,13 @@ Abstrakt könnt ihr euch diesen Raum als einen "semantischen Raum" vorstellen, i
 
 ## Word Embeddings
 
-Die Kookkurrenzmatrizen, mit denen wir bisher gearbeitet haben, eignen sich jedoch noch nicht für eine solche Darstellung. Erinnert euch daran, dass die meisten Einträge in jeder Zeile Nullen sind, weil Wörter nur mit einer kleinen Anzahl anderer Wörter gemeinsam vorkommen, aber die Matrix alle Wörter aus dem Korpus enthält. Diese Art von Vektoren werden "lang und spärlich" (long and sparse) genannt. Das Rechnen mit solchen Vektoren ist sehr aufwändig, und deswegen werden die Wort-Vektoren meist in "kurze und dichte" (short and dense) Vektoren umgewandelt, bevor Ähnlichkeitsmaße bestimmt werden (mehr dazu [hier](https://www.youtube.com/watch?v=FHhKmf1iPvw)). Solche "kurzen und dichten" Vektoren, die den Kontext eines bestimmten Wortes repräsentieren, werden **Word Embeddings** genannt. Word Embeddings können entweder direkt für eine Analyse verwendet werden, oder sie werden als Zwischenschritt in verschiedenen Methoden des "Natural Language Processing" verwendet. Im Folgenden werden wir beispielhaft zunächst Word Embeddings selbst erstellen und danach eine Methode kennenlernen, welche Word Embeddings als Zwischenschritt verwendet: die sogenannte Named Entity Recognition. 
+Die Kookkurrenzmatrizen, mit denen wir bisher gearbeitet haben, eignen sich jedoch noch nicht für eine solche Darstellung. Erinnert euch daran, dass die meisten Einträge in jeder Zeile Nullen sind, weil Wörter nur mit einer kleinen Anzahl anderer Wörter gemeinsam vorkommen, aber die Matrix alle Wörter aus dem Korpus enthält. Diese Art von Vektoren werden "lang und spärlich" (long and sparse) genannt. Das Rechnen mit solchen Vektoren ist sehr aufwändig, und deswegen werden die Wort-Vektoren meist in "kurze und dichte" (short and dense) Vektoren umgewandelt, bevor Ähnlichkeitsmaße bestimmt werden (mehr dazu [hier](https://www.youtube.com/watch?v=FHhKmf1iPvw)). Solche "kurzen und dichten" Vektoren, die den Kontext eines bestimmten Wortes repräsentieren, werden **Word Embeddings** genannt. Word Embeddings können entweder direkt für eine Analyse verwendet werden, oder sie werden als Zwischenschritt in verschiedenen Methoden des "Natural Language Processing" verwendet. Im Folgenden werden wir beispielhaft zunächst Word Embeddings selbst erstellen und danach eine Methode kennenlernen, welche Word Embeddings als Zwischenschritt verwendet: die sogenannte Named Entity Recognition. Streng genommen haben wir sogar bereits mit POS Tagging und Dependency Parsing zwei Methoden kennengelernt, für die im Rahmen von UDPipe ebenfalls Word Embeddings verwendet werden. 
 
-In diesem Abschnitt betrachten wir Word Embeddings zunächst als Analysewerkzeug kennenlernen. In der Literatur wird Word Embeddings oft die Eigenschaft zugeschrieben, die Bedeutung von Wörtern darzustellen: 
+In diesem Abschnitt betrachten wir Word Embeddings zunächst als Analysewerkzeug. In der Literatur wird Word Embeddings oft die Eigenschaft zugeschrieben, die Bedeutung von Wörtern darzustellen: 
 
 >"Embeddings represent meaning by leveraging the distributional hypothesis of language, an idea that goes back to at least Wittgenstein (1953). The distributional hypothesis has been succinctly summarized by an oft-repreated quote in this literature: 'you shall know a word by the company it keeps' (Firth, 1957). It posits that we can learn something about the semantic meanings of words on the basis of the words that appear frequently in a small context window around the focal word." (Grimmer et al. 2022, S. 79)
 
-Dabei kann die in diesem Sinne verstandene semantische Bedeutung eines Wortes auf **Type- oder auf Tokenebene** erfasst werden: Entweder, ein Wort wird als Type betrachtet. Dann ist der Kontext jedes Wort, das im gesamten Korpus in einem bestimmten Abstand ("context window") mit diesem Wort gemeinsam vorkommt. Oder ein Wort wird als Token betrachtet und der Kontext ist für jedes Vorkommen verschieden. Die erste Art der Word Embeddings auf Type-Ebene wird als **"Static Word Embeddings"** bezeichnet. Embeddings auf Token-Ebene werden als "Contextualized" oder **"Contextual Word Embeddings"** bezeichnet. 
+Dabei kann die in diesem Sinne verstandene semantische Bedeutung eines Wortes auf **Type- oder auf Tokenebene** erfasst werden: Entweder, ein Wort wird als Type betrachtet. Dann ist der Kontext jedes Wort, das im gesamten Korpus in einem bestimmten Abstand ("context window") mit diesem Wort gemeinsam vorkommt. Oder ein Wort wird als Token betrachtet und der Kontext ist für jedes Vorkommen verschieden. Die erste Art der Word Embeddings auf Type-Ebene wird als **"Static Word Embeddings"** bezeichnet. Embeddings auf Token-Ebene werden als "Contextualized" oder **"Contextual Word Embeddings"** bezeichnet. Daneben gibt es noch **Character Embeddings**, die (wie auch im Rahmen von UDPipe) häufig mit Word Embeddings im engeren Sinne kombiniert werden. Character Embeddings repräsentieren den Kontext einzelner Zeichen, also zum Beispiel alle Buchstaben, mit denen der Buchstabe "a" in einem bestimmten Kontextfenster vorkommt. 
 
 Mit unserer kleinen Beispielanalyse zu den Grimm'schen Märchen sind wir ja schon fertig, aber wir betrachten im Folgenden noch ein letztes Mal die mittlerweile vermutlich leidigen, aber dafür bereits vertrauten Märchen.
 
@@ -156,6 +156,17 @@ similarities %>%
 ```
 
 
+<details>
+<summary><b>Mathematischer Hintergrund: SVD </b></summary>
+
+Folgt noch.
+
+Für den mathematischen Hintergrund zu PMI verweise ich auf den Abschnitt [8.4.4.2 "Pointwise Mutual Information (PMI)"](https://lipogg.github.io/textanalyse-mit-r/textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi).
+
+</details>
+
+
+
 ### Prediction-Based Static Word Embeddings mit Quanteda und GloVe 
 
 Code nach https://quanteda.io/articles/pkgdown/replication/text2vec.html
@@ -206,6 +217,13 @@ head(sort(cossim[, 1], decreasing = TRUE), 10)
 ```
 
 Ein Beispiel zu Contextual Word Embeddings folgt noch.
+
+<details>
+<summary><b>Mathematischer Hintergrund: GloVe </b></summary>
+
+Folgt noch.
+
+</details>
 
 ## Named Entity Recognition (NER)
 
@@ -291,7 +309,7 @@ briefe_pers
 library(ggplot2)
 
 marx_pers_plot <- ggplot(briefe_pers, aes(x = doc_id, y = entity)) +
-  geom_point() +
+  geom_point(alpha=0.6) +
   theme(axis.text.y = element_text(size=3), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
   labs(x = "Brief", y = "Person")
@@ -359,7 +377,7 @@ results_pers
 library(ggplot2)
 
 marx_pers_plot <- ggplot(results_pers, aes(x = doc_id, y = entity)) +
-  geom_point() +
+  geom_point(alpha=0.6) +
   theme(axis.text.y = element_text(size=3), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size=5)) + 
   labs(x = "Brief", y = "Person")

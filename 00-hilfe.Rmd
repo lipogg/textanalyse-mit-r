@@ -32,6 +32,7 @@ Allgemein:
 
 Lehrbuch-Klassiker (für Grundlagen, bei speziellen Anwendungen zum Teil nicht mehr aktuell): 
 
+* Andresen, Melanie (2024). Computerlinguistische Methoden für die Digital Humanities, https://doi.org/10.24053/9783823395799 (hervorragendes Lehrbuch vor allem zum theoretischen und mathematischen Hintergrund der verschiedenen Methoden)
 * Arnold, Taylor und Tilton, Lauren (2024). Humanities Data in R. Exploring Networks, Geospatial Data, Images, and Text:  https://doi.org/10.1007/978-3-031-62566-4
 * Jockers, Matthew und Thalken, Rosamond (2020). Text Analysis with R for Students of Literature: https://doi.org/10.1007/978-3-030-39643-5
 * Desagulier, Guillaume (2017). Corpus Linguistics and Statistics with R: https://doi.org/10.1007/978-3-319-64572-8
@@ -63,9 +64,11 @@ Statistik:
 
 Hintergrund Preprocessing und Natural Language Processing (POS Tagging, Dependency Parsing, NER,...): 
 
-* Jurafsky, Daniel und Martin, James H. (2023). Speech and Language Processing, https://web.stanford.edu/~jurafsky/slp3/ (insbesondere Kapitel 2, 8, 17, 18).
+* Jurafsky, Daniel und Martin, James H. (2025). Speech and Language Processing, https://web.stanford.edu/~jurafsky/slp3/ (insbesondere Kapitel 2, 8, 17, 18).
+* Andresen, Melanie (2024). Computerlinguistische Methoden für die Digital Humanities, https://doi.org/10.24053/9783823395799
 * Grimmer, Justin, Roberts, Margaret E. und Stewart, Brandon M. (2022), Text as Data. A New Framework for Machine Learning and the Social Sciences,  https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9960725495502883 
 * Biemann, Chris, Heyer, Gerhard und Quasthoff, Uwe (2013). Wissensrohstoff Text. Eine Einführung in das Text Mining, https://doi.org/10.1007/978-3-658-35969-0 (insbesondere Kapitel 1, 2).
+
 
 Theorie (wird fortlaufend ergänzt):
 

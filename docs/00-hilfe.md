@@ -100,6 +100,7 @@ Einige Digital Humanities Zeitschriften (für die eigene Recherche):
 
 Datensätze und Korpora für die Textanalyse (wird fortlaufend ergänzt): 
 
+* Datensätze im Social Sciences and Humanities Open Marketplace: https://marketplace.sshopencloud.eu/search?categories=dataset
 * Links zu verschiedenen Listen von DH Korpora und Datensätzen (unter "Resources for finding humanities data"):  https://cdh.princeton.edu/programs/humanities-data-new/; https://guides.lib.ua.edu/datasources/humanities
 * Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
 * Deutsches Textarchiv: https://www.deutschestextarchiv.de/download

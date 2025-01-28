@@ -122,3 +122,12 @@ named-entity-recognition-ner
 beispiel-mit-spacy-spacyr
 beispiel-mit-flair-flair
 vergleich-und-ausblick
+exkurs-daten-beschaffen
+beispiel-dracor-datenextraktion-mit-api
+beispiel-projekt-gutenberg-web-scraping
+exkurs-web-scraping-und-apis
+daten-beschaffen-web-scraping-und-apis
+korpuserstellung-web-scraping-und-apis
+beispiel-api-dracor
+beispiel-web-scraping-projekt-gutenberg
+beispiel-web-scraping-wikisource

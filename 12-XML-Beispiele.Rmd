@@ -392,7 +392,7 @@ ggplotly(humboldt_map)
 ```
 
 :::task
-Verständnisfrage:
+Verständnisfragen:
 
 - Ist es uns gelungen, die Reiseroute auf der Grundlage der Ortsangaben in den Tagebucheinträgen nachzuzeichnen? 
 - Warum enthält unsere Karte auch Orte, die ganz offensichtlich nicht zur Reiseroute gehören (wie z.B. Beijing)?
@@ -400,6 +400,10 @@ Verständnisfrage:
  
 :::
 
+Weiterführende Literatur zur Arbeit mit Geodaten in den DH:
+
+* Kapitel "Spatial Data" aus Taylor Arnold und Lauren Tilton (2024), Humanities Data in R, https://doi.org/10.1007/978-3-031-62566-4_9
+* Mit literaturwissenschaftlichem Bezug: Kapitel "Maps and Place" aus Martin Paul Eve (2022), The Digital Humanities and Literary Studies, https://doi.org/10.1093/oso/9780198850489.003.0004. 
 
 ## Quellen {-}
 

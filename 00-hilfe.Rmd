@@ -98,9 +98,19 @@ Einige Digital Humanities Zeitschriften (für die eigene Recherche):
 * Journal of Computational Literary Studies, https://jcls.io/
 * Journal of Digital History, https://journalofdigitalhistory.org/ 
 
+Volltextrepositorien mit Texten im Plaintext- oder XML-TEI-Format: 
+
+* https://wikisource.org/ (Plaintext, PDF, eBook-Formate)
+* https://www.projekt-gutenberg.org/ (Volltexte nur online, zum Download ist Webscraping erforderlich)
+* https://gutenberg.org (Plaintext, HTML, eBook-Formate)
+* https://textgridrep.org/ (XML-TEI, Bildformate) 
+* https://archive.org/ (Volltexte im Plaintextformat aber häufig mittels OCR erstellt und in fragwürdiger Qualität)
+
 Datensätze und Korpora für die Textanalyse (wird fortlaufend ergänzt): 
 
 * Datensätze im Social Sciences and Humanities Open Marketplace: https://marketplace.sshopencloud.eu/search?categories=dataset
+* Datensätze im Hamburger Zentrum für Sprachkorpora: https://www.fdr.uni-hamburg.de/communities/hzsk/
+* Links zu historischen Textkorpora in der Perseus Digital Library: https://www.perseus.tufts.edu/hopper/collections
 * Links zu verschiedenen Listen von DH Korpora und Datensätzen (unter "Resources for finding humanities data"):  https://cdh.princeton.edu/programs/humanities-data-new/; https://guides.lib.ua.edu/datasources/humanities
 * Journal of Open Humanities Data, https://openhumanitiesdata.metajnl.com/articles
 * Deutsches Textarchiv: https://www.deutschestextarchiv.de/download

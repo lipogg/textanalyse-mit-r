@@ -125,3 +125,10 @@ vergleich-und-ausblick
 exkurs-web-scraping-und-apis
 beispiel-api-dracor
 beispiel-web-scraping-wikisource
+exkurs-xml-tei-und-xpath
+was-ist-xml-was-ist-tei
+aufbau-von-xml-tei-dokumenten
+wohlgeformtheit-und-validität
+wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind
+was-ist-xpath
+basics-xpath-syntax

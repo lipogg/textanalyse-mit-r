@@ -401,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="exkurs-web-scraping-und-apis.html#cb1-8" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="exkurs-web-scraping-und-apis.html#cb1-9" tabindex="-1"></a><span class="co"># Informationen zu allen Stücken aus dem deutschsprachigen DraCor Korpus abfragen</span></span>
 <span id="cb1-10"><a href="exkurs-web-scraping-und-apis.html#cb1-10" tabindex="-1"></a><span class="co"># Abfrage-URL für das ausgewählte Korpus vorbereiten</span></span>
-<span id="cb1-11"><a href="exkurs-web-scraping-und-apis.html#cb1-11" tabindex="-1"></a>full_url <span class="ot">&lt;-</span> <span class="fu">paste</span>(base_url, <span class="st">&quot;/corpora/&quot;</span>, corpusname, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-11"><a href="exkurs-web-scraping-und-apis.html#cb1-11" tabindex="-1"></a>full_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base_url, <span class="st">&quot;/corpora/&quot;</span>, corpusname)</span>
 <span id="cb1-12"><a href="exkurs-web-scraping-und-apis.html#cb1-12" tabindex="-1"></a>full_url <span class="co">#zum Überprüfen in der Konsole ausgeben lassen</span></span>
 <span id="cb1-13"><a href="exkurs-web-scraping-und-apis.html#cb1-13" tabindex="-1"></a><span class="co"># API call </span></span>
 <span id="cb1-14"><a href="exkurs-web-scraping-und-apis.html#cb1-14" tabindex="-1"></a>api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_url)</span>
@@ -540,7 +540,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-41"><a href="exkurs-web-scraping-und-apis.html#cb2-41" tabindex="-1"></a>  </span>
 <span id="cb2-42"><a href="exkurs-web-scraping-und-apis.html#cb2-42" tabindex="-1"></a>  <span class="co"># maerchentext in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern</span></span>
 <span id="cb2-43"><a href="exkurs-web-scraping-und-apis.html#cb2-43" tabindex="-1"></a>  <span class="fu">write.table</span>(maerchentext, </span>
-<span id="cb2-44"><a href="exkurs-web-scraping-und-apis.html#cb2-44" tabindex="-1"></a>              <span class="at">file =</span> <span class="fu">paste</span>(filename, <span class="st">&quot;.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>), </span>
+<span id="cb2-44"><a href="exkurs-web-scraping-und-apis.html#cb2-44" tabindex="-1"></a>              <span class="at">file =</span> <span class="fu">paste0</span>(filename, <span class="st">&quot;.txt&quot;</span>), </span>
 <span id="cb2-45"><a href="exkurs-web-scraping-und-apis.html#cb2-45" tabindex="-1"></a>              <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
 <span id="cb2-46"><a href="exkurs-web-scraping-und-apis.html#cb2-46" tabindex="-1"></a>              <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
 <span id="cb2-47"><a href="exkurs-web-scraping-und-apis.html#cb2-47" tabindex="-1"></a>              <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>

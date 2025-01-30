@@ -36,7 +36,7 @@ author <- "goethe"
 
 # Informationen zu allen Stücken aus dem deutschsprachigen DraCor Korpus abfragen
 # Abfrage-URL für das ausgewählte Korpus vorbereiten
-full_url <- paste(base_url, "/corpora/", corpusname, sep="")
+full_url <- paste0(base_url, "/corpora/", corpusname)
 full_url #zum Überprüfen in der Konsole ausgeben lassen
 # API call 
 api_response <- GET(full_url)
@@ -188,7 +188,7 @@ for(i in seq_along(suburls)) {
   
   # maerchentext in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern
   write.table(maerchentext, 
-              file = paste(filename, ".txt", sep=""), 
+              file = paste0(filename, ".txt"), 
               quote=FALSE,
               col.names=FALSE,
               row.names=FALSE)

@@ -39,20 +39,34 @@ author <- "goethe"
 full_url <- paste(base_url, "/corpora/", corpusname, sep="")
 full_url #zum Überprüfen in der Konsole ausgeben lassen
 # API call 
-api_response <- httr::GET(full_url)
+api_response <- GET(full_url)
 ?GET #Informationen zur Funktion GET anzeigen lassen
 # API response ansehen
 api_response$status_code
 api_response$content
-httr::content(api_response, "text", encoding = "UTF-8")
+content(api_response, "text", encoding = "UTF-8")
 # API Antwort lesbar machen und in einem Dataframe (~Tabelle) speichern
-api_df <- jsonlite::fromJSON(content(api_response, "text", encoding = "UTF-8"), simplifyDataFrame = TRUE)
+api_lst <- fromJSON(content(api_response, "text", encoding = "UTF-8"), simplifyDataFrame = TRUE, flatten=TRUE)
 # Output überprüfen
-View(api_df)
-View(api_df$plays)
+View(api_lst)
+View(api_lst$plays)
 
 # Sprechtexte weiblich und männlich codierter Charaktere aus allen Dramen eine:r bestimmten Autor:in abrufen
-# Aufgrund der verschachtelten Struktur des Dataframes ist der direkte Zugriff auf die Metadaten zu den Dramen etwas umständlich
+# Das Element plays in der Liste api_lst ist einen Dataframe: 
+plays_df <- api_lst$plays
+
+# Aufgrund der verschachtelten Struktur des plays_df Dataframes ist der direkte Zugriff auf die Metadaten zu den Dramen aber etwas umständlich
+plays_df$authors[[1]]["name"]
+
+# Um den Zugriff zu erleichtern, kann die Spalte authors erst in mehrere Spalten "entpackt" werden: 
+library(tidyr)
+plays_df <- unnest(plays_df, authors, names_sep="_")
+View(plays_df)
+
+# Jetzt können die Kurztitel der Dramen durch eine einfache bedingte Zugrffsoperation extrahiert werden. 
+# Aber Achtung: Wenn jedoch mehrere Autor:innen gelistet sind, dann wäre auch nach dem Entpacken der Direktzugriff noch nicht möglich und es wäre eine weitere Umformung notwendig. 
+plays_selected <- plays_df$name[plays_df$authors_shortname == "Goethe"] # hier kann alternativ auch die Spalte authors_fullname oder authors_name verwendet werden
+
 # Alternativ zum Direktzugriff können erst die Namen aller Dramen aus ger-Dracor in einer neuen Variable gespeichert werden...
 plays <- api_df$plays$name
 plays #überprüfen
@@ -61,11 +75,12 @@ plays_selected <- grep(pattern=author, plays, value=TRUE)
 plays_selected
 
 # URLs für die Abfrage vorbereiten
-first_url <- paste0(full_url, "/plays/")
-second_url <- paste0(plays_selected, '/spoken-text')
-full_urls <- mapply(paste0, first_url, second_url, USE.NAMES=FALSE)
-?mapply
+full_urls <- paste0(full_url, "/plays/", plays_selected, "/spoken-text")
 full_urls
+
+# Tatsächlich enthält der Dataframe plays_df in der Spalte uri bereits die komplett zusammengesetzten URLs zu den Dramen! 
+# Wir könnten uns die Arbeit also auch vereinfachen und einfach direkt die URLs aus dem Dataframe extrahieren: 
+full_urls <- plays_df$uri
 
 # neues Verzeichnis anlegen: in diesem Ordner werden die Textdateien gespeichert
 dir.create("spokentext_corpus")
@@ -74,8 +89,8 @@ setwd(paste0(getwd(), "/spokentext_corpus"))
 # API calls durchführen und Output speichern
 # Zuerst ohne Angabe des codierten Geschlechts als Query-Parameter
 for(i in seq_along(full_urls)){
-  api_response <- httr::GET(full_urls[i])
-  spokentext <- httr::content(api_response, "text", encoding = "UTF-8")
+  api_response <- GET(full_urls[i])
+  spokentext <- content(api_response, "text", encoding = "UTF-8")
   filename <- paste0(plays_selected[i], ".txt")
   writeLines(spokentext, filename)
 }
@@ -84,7 +99,7 @@ for(i in seq_along(full_urls)){
 gender_codes <- c("FEMALE", "MALE", "UNKNOWN")
 for(i in seq_along(full_urls)){
   for(j in seq_along(gender_codes)){
-    api_response <- httr::GET(full_urls[i], query=list(gender=gender_codes[j]))
+    api_response <- GET(full_urls[i], query=list(gender=gender_codes[j]))
     spokentext <- content(api_response, "text", encoding = "UTF-8")
     filename <- paste(plays_selected[i], gender_codes[j], ".txt", sep="_")
     writeLines(spokentext, filename)

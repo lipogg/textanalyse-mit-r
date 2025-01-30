@@ -410,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-17"><a href="exkurs-web-scraping-und-apis.html#cb1-17" tabindex="-1"></a>api_response<span class="sc">$</span>status_code</span>
 <span id="cb1-18"><a href="exkurs-web-scraping-und-apis.html#cb1-18" tabindex="-1"></a>api_response<span class="sc">$</span>content</span>
 <span id="cb1-19"><a href="exkurs-web-scraping-und-apis.html#cb1-19" tabindex="-1"></a><span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb1-20"><a href="exkurs-web-scraping-und-apis.html#cb1-20" tabindex="-1"></a><span class="co"># API Antwort lesbar machen und in einem Dataframe (~Tabelle) speichern</span></span>
+<span id="cb1-20"><a href="exkurs-web-scraping-und-apis.html#cb1-20" tabindex="-1"></a><span class="co"># API Antwort lesbar machen und in einer Liste speichern</span></span>
 <span id="cb1-21"><a href="exkurs-web-scraping-und-apis.html#cb1-21" tabindex="-1"></a>api_lst <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>), <span class="at">simplifyDataFrame =</span> <span class="cn">TRUE</span>, <span class="at">flatten=</span><span class="cn">TRUE</span>)</span>
 <span id="cb1-22"><a href="exkurs-web-scraping-und-apis.html#cb1-22" tabindex="-1"></a><span class="co"># Output überprüfen</span></span>
 <span id="cb1-23"><a href="exkurs-web-scraping-und-apis.html#cb1-23" tabindex="-1"></a><span class="fu">View</span>(api_lst)</span>

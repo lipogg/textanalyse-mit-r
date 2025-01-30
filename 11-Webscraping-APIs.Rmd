@@ -46,7 +46,7 @@ api_response <- GET(full_url)
 api_response$status_code
 api_response$content
 content(api_response, "text", encoding = "UTF-8")
-# API Antwort lesbar machen und in einem Dataframe (~Tabelle) speichern
+# API Antwort lesbar machen und in einer Liste speichern
 api_lst <- fromJSON(content(api_response, "text", encoding = "UTF-8"), simplifyDataFrame = TRUE, flatten=TRUE)
 # Output überprüfen
 View(api_lst)

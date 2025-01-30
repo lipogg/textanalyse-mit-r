@@ -117,6 +117,7 @@ Datensätze und Korpora für die Textanalyse (wird fortlaufend ergänzt):
 * European Literary Text Collection (ELTeC): https://github.com/COST-ELTeC/ELTeC
 Download über Github, z.B. für die deutschen Texte: https://github.com/COST-ELTeC/ELTeC-deu
 Assoziiertes Projekt: https://www.distant-reading.net/
+* DraCor (europäische Dramen in vielen verschiedenen Sprachen): https://dracor.org/
 * SlaveVoyages Datenbank: https://www.slavevoyages.org/american/downloads#intra-american-database-downloads/0/en/
 * Digitale Sammlung Deutscher Kolonialismus: https://www.deutschestextarchiv.de/dsdk/
 * HathiTrust derived datasets: https://analytics.hathitrust.org/deriveddatasets; https://htrc.atlassian.net/wiki/spaces/COM/pages/43287791/HTRC+Derived+Datasets

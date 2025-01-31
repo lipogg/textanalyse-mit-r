@@ -108,6 +108,7 @@ Volltextrepositorien mit Texten im Plaintext- oder XML-TEI-Format:
 
 Datensätze und Korpora für die Textanalyse (wird fortlaufend ergänzt): 
 
+* Korpora, Editionen und Repositorien im Text+ Registry: https://registry.text-plus.org/
 * Datensätze im Social Sciences and Humanities Open Marketplace: https://marketplace.sshopencloud.eu/search?categories=dataset
 * Datensätze im Hamburger Zentrum für Sprachkorpora: https://www.fdr.uni-hamburg.de/communities/hzsk/
 * Links zu historischen Textkorpora in der Perseus Digital Library: https://www.perseus.tufts.edu/hopper/collections

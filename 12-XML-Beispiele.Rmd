@@ -49,7 +49,7 @@ sp_elements # Empty Nodeset - hat nicht funktioniert!
 
 ```
 
-Warum ist das so? Viele XML-Dokumente verwenden sogenannte Namespaces, um Konflikte zwischen Elementnamen zu vermeiden, also um zu kennzeichnen, das ein Elementname beispielsweise dem TEI-Schema entnommen ist, und ein anderes, aber vielleicht gleichnamiges Element einem anderen Schema. Wenn XPath-Abfragen ausgeführt werden, ohne diese Namespaces zu berücksichtigen oder explizit in die Abfrage einzubeziehen, kann dies dazu führen, dass die gesuchten Elemente nicht gefunden werden. Durch das Entfernen der Namespaces mit `xml_ns_strip(xml_file)` wird das Dokument so modifiziert, dass alle Elemente als Teil des Standard-Namespaces behandelt werden, wodurch die XPath-Abfrage erfolgreich die Elemente findet. Da in unserem Dokument nur der TEI-Namespace verwendet wird (kann mit `xml_ns(xml_file)` überprüft werden), können wir den Namespace einfach entfernen und müssen nicht zwischen verschiedenen Namespaces unterscheiden: 
+Warum ist das so? Viele XML-Dokumente verwenden sogenannte Namespaces, um Konflikte zwischen Elementnamen zu vermeiden, also um zu kennzeichnen, dass ein Elementname beispielsweise einem TEI-Schema entnommen ist, und ein anderes, aber vielleicht gleichnamiges Element einem anderen Schema. Wenn XPath-Abfragen ausgeführt werden, ohne diese Namespaces zu berücksichtigen oder explizit in die Abfrage einzubeziehen, kann dies dazu führen, dass die gesuchten Elemente nicht gefunden werden. Durch das Entfernen der Namespaces mit `xml_ns_strip(xml_file)` wird das Dokument so modifiziert, dass alle Elemente als Teil des Standard-Namespaces behandelt werden, wodurch die XPath-Abfrage erfolgreich die Elemente findet. Da in unserem Dokument nur der TEI-Namespace verwendet wird (kann mit `xml_ns(xml_file)` überprüft werden), können wir den Namespace einfach entfernen und müssen nicht zwischen verschiedenen Namespaces unterscheiden: 
 
 ```{r attr.output='style="max-height: 200px;"'}
 
@@ -92,27 +92,13 @@ for (sp in sp_elements) {
 speakers_df # View(speakers_df)
 ```
 
-Wir haben also jetzt einen Dataframe, der chronologisch alle Charaktere und deren Sprechtexte enthält. Um herauszufinden, aus wie vielen Tokens der Sprechtext der Charaktere insgesamt besteht, müssen wir zunächst die einzelnen Sprechtexte zu einer langen Zeichenkette zusammenfügen. Wir müssen also den Dataframe so umformen, dass jede Zeile einem Charakter entspricht und in der Spalte `text` der gesamte Sprechtext dieses Charakters steht. Eine ähnliche Operation haben wir bereits in der Sitzung zum Preprocessing kennengelernt, und zwar im Abschnitt 7.7 "Lemmatisierung":
-
-```{r eval = FALSE}
-kafka_grouped <- kafka_cleaned_df %>%
-  group_by(doc_id) %>% 
-  summarise(text = paste(lemma, collapse = " ")) 
-```
-
-Zur Erinnerung: Dieser Code hat für jede der Dokumenten-IDs in der Spalte `doc_id` in dem Dataframe `kafka_cleaned_df` die Lemmata zu einer einzigen Zeichenkette zusammengefügt. 
-
-Wir wollen mit unserem Dataframe speakers_df etwas ganz ähnliches machen, nämlich für jeden Charakter in der Spalte `speaker` den Sprechtext in der Spalte `text` in einer Zeichenkette zusammenfassen:
+Wir haben also jetzt einen Dataframe, der chronologisch alle Charaktere und deren Sprechtexte enthält. Um herauszufinden, aus wie vielen Tokens der Sprechtext der Charaktere insgesamt besteht, müssen wir zunächst die einzelnen Sprechtexte zu einer langen Zeichenkette zusammenfügen. Dann können wir aus den Sprechtexten zum Beispiel ein Quanteda Corpus-Objekt machen und die Tokens mit der summary()-Funktion zählen. Die Quanteda corpus()-Funktion nimmt entweder einen Character Vektor oder einen Dataframe an. Wir haben also die Wahl, ob wir den Dataframe so umformen, dass jede Zeile einem Charakter entspricht und in der Spalte `text` der gesamte Sprechtext dieses Charakters steht, oder ob wir den  Dataframe in einen benannten Vektor umwandeln, bei dem jedes Element einem Charakter entspricht und den gesamten Sprechtext dieses Charakters enthält. Wir entscheiden uns dafür, den Dataframe in einen benannten Vektor umzuwandeln und verwenden die R-base-Funktion tapply(): 
 
 ```{r warning=FALSE, message=FALSE, attr.output='style="max-height: 200px;"'}
-# Dataframe so umformen, dass jede Zeile einem Charakter entspricht und in der Spalte text der gesamte Sprechtext dieses Charakters steht
+# Dataframe in benannten Vektor umwandeln, bei dem jedes Element einem Charakter entspricht und den gesamten Sprechtext dieses Charakters enthält
 
-library(dplyr)
-
-speakers_total <- speakers_df %>%
-  group_by(speaker) %>%
-  summarise(text = paste(text, collapse="\n"))
-speakers_total # View(speakers_total)
+all_speakers_vec <- tapply(speakers_df$text, speakers_df$speaker, paste, collapse = " ")
+all_speakers_vec[1:2] # erste zwei Elemente ausgeben
 ```
 
 Die Tokenanzahl können wir mithilfe von quanteda und der `summary()`-Funktion berechnen, genau so wie im [Abschnitt 8.3 auf der Kurswebsite](https://lipogg.github.io/einfuehrung-in-r/textanalyse-iii-wortfrequenzanalysen.html#token-h%C3%A4ufigkeitsanalyse): 
@@ -121,7 +107,8 @@ Die Tokenanzahl können wir mithilfe von quanteda und der `summary()`-Funktion b
 
 # Tokenanzahl für alle Charaktere berechnen mithilfe von quanteda und der summary()-Funktion
 library(quanteda)
-speakers_cor <- corpus(speakers_total)
+
+speakers_cor <- corpus(all_speakers_vec)
 speakers_summary <- summary(speakers_cor)
 speakers_summary # View(speakers_summary)
 ```
@@ -372,6 +359,7 @@ print(map_data)
 humboldt_map <- ggplot(data = map_data) +
   geom_sf() +
   geom_point(data = site_data, aes(x = longitude, y = latitude, text=name), size = 0.8, 
+             alpha=0.6,
              shape = 21, fill = "darkred") + # shape = 20, color = "darkred"
   theme_minimal() +
   ggtitle("Russisch-Sibirische Reise 1829") 

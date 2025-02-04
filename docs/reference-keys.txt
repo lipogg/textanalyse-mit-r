@@ -132,3 +132,9 @@ wohlgeformtheit-und-validität
 wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind
 was-ist-xpath
 basics-xpath-syntax
+arbeit-mit-xml-tei-dokumenten
+beispiel-dramenanalyse
+beispiel-geomapping
+geoname-ids-aus-der-xml-tei-datei-extrahieren
+koordinaten-über-die-geonames-api-abrufen
+koordinaten-auf-karte-abbilden

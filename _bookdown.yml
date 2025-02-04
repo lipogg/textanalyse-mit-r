@@ -21,7 +21,7 @@ rmd_files: ["index.Rmd",
             "10-NER.Rmd", 
             "11-Webscraping-APIs.Rmd",
             "12-XML-XPath.Rmd", 
-            #"12-XML-Beispiele.Rmd"
+            "12-XML-Beispiele.Rmd"
             ]
 new_session: yes
 output_dir: "docs"

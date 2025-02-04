@@ -32,7 +32,7 @@ set in the _output.yml file.</p>" />
   
   
 <link rel="prev" href="exkurs-web-scraping-und-apis.html"/>
-
+<link rel="next" href="arbeit-mit-xml-tei-dokumenten.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -349,6 +349,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>12.6</b> Basics XPath Syntax</a></li>
 <li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>13</b> Arbeit mit XML-TEI-Dokumenten</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>13.1</b> Beispiel Dramenanalyse</a></li>
+<li class="chapter" data-level="13.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>13.2</b> Beispiel Geomapping</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>13.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
+<li class="chapter" data-level="13.2.2" data-path="12-XML-XPath.html"><a href="#koordinaten-%C3%BCber-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>13.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
+<li class="chapter" data-level="13.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>13.2.3</b> Koordinaten auf Karte abbilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -388,56 +399,56 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
 <h2><span class="header-section-number">12.2</span> Aufbau von XML-TEI Dokumenten<a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>XML-Dokumente sind streng hierarchisch aufgebaut und bestehen aus verschiedenen, in einer Baumstruktur ineinander verschachtelten Elementen. Diese Baumstruktur bedeutet, dass jedes Element, das “geöffnet” wird, auch “geschlossen” werden muss, es besteht also aus einem Öffnungstag (oder “opening tag”) und einem Schließtag (oder “closing tag”). Elemente können Fließtext, Attribute oder auch weitere Elemente enthalten; sie können aber auch leer sein. Attribute werden direkt in den Öffnungstag hineingeschrieben und definieren Eigenschaften des entsprechenden Elements.</p>
 <p>Aufbau eines XML-Dokuments:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="exkurs-xml-tei-und-xpath.html#cb1-1" tabindex="-1"></a><span class="co">&lt;!-- Prolog: optional; definiert die verwendete XML-Version --&gt;</span></span>
-<span id="cb1-2"><a href="exkurs-xml-tei-und-xpath.html#cb1-2" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="fu">?&gt;</span> </span>
-<span id="cb1-3"><a href="exkurs-xml-tei-und-xpath.html#cb1-3" tabindex="-1"></a><span class="co">&lt;!-- Wurzelelement --&gt;</span></span>
-<span id="cb1-4"><a href="exkurs-xml-tei-und-xpath.html#cb1-4" tabindex="-1"></a>&lt;<span class="kw">root</span>&gt; </span>
-<span id="cb1-5"><a href="exkurs-xml-tei-und-xpath.html#cb1-5" tabindex="-1"></a><span class="co">&lt;!-- irgendein Element --&gt;</span></span>
-<span id="cb1-6"><a href="exkurs-xml-tei-und-xpath.html#cb1-6" tabindex="-1"></a>  &lt;<span class="kw">child</span>&gt; </span>
-<span id="cb1-7"><a href="exkurs-xml-tei-und-xpath.html#cb1-7" tabindex="-1"></a>  <span class="co">&lt;!-- noch ein Element, mit Attribut &quot;attribute&quot; und dem Attributwert &quot;some_property&quot; --&gt;</span></span>
-<span id="cb1-8"><a href="exkurs-xml-tei-und-xpath.html#cb1-8" tabindex="-1"></a>    &lt;<span class="kw">subchild</span><span class="ot"> attribute=</span><span class="st">&quot;some_property&quot;</span>&gt;...some content...&lt;/<span class="kw">subchild</span>&gt;</span>
-<span id="cb1-9"><a href="exkurs-xml-tei-und-xpath.html#cb1-9" tabindex="-1"></a>  &lt;/<span class="kw">child</span>&gt;</span>
-<span id="cb1-10"><a href="exkurs-xml-tei-und-xpath.html#cb1-10" tabindex="-1"></a>&lt;/<span class="kw">root</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb914"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb914-1"><a href="exkurs-xml-tei-und-xpath.html#cb914-1" tabindex="-1"></a><span class="co">&lt;!-- Prolog: optional; definiert die verwendete XML-Version --&gt;</span></span>
+<span id="cb914-2"><a href="exkurs-xml-tei-und-xpath.html#cb914-2" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="fu">?&gt;</span> </span>
+<span id="cb914-3"><a href="exkurs-xml-tei-und-xpath.html#cb914-3" tabindex="-1"></a><span class="co">&lt;!-- Wurzelelement --&gt;</span></span>
+<span id="cb914-4"><a href="exkurs-xml-tei-und-xpath.html#cb914-4" tabindex="-1"></a>&lt;<span class="kw">root</span>&gt; </span>
+<span id="cb914-5"><a href="exkurs-xml-tei-und-xpath.html#cb914-5" tabindex="-1"></a><span class="co">&lt;!-- irgendein Element --&gt;</span></span>
+<span id="cb914-6"><a href="exkurs-xml-tei-und-xpath.html#cb914-6" tabindex="-1"></a>  &lt;<span class="kw">child</span>&gt; </span>
+<span id="cb914-7"><a href="exkurs-xml-tei-und-xpath.html#cb914-7" tabindex="-1"></a>  <span class="co">&lt;!-- noch ein Element, mit Attribut &quot;attribute&quot; und dem Attributwert &quot;some_property&quot; --&gt;</span></span>
+<span id="cb914-8"><a href="exkurs-xml-tei-und-xpath.html#cb914-8" tabindex="-1"></a>    &lt;<span class="kw">subchild</span><span class="ot"> attribute=</span><span class="st">&quot;some_property&quot;</span>&gt;...some content...&lt;/<span class="kw">subchild</span>&gt;</span>
+<span id="cb914-9"><a href="exkurs-xml-tei-und-xpath.html#cb914-9" tabindex="-1"></a>  &lt;/<span class="kw">child</span>&gt;</span>
+<span id="cb914-10"><a href="exkurs-xml-tei-und-xpath.html#cb914-10" tabindex="-1"></a>&lt;/<span class="kw">root</span>&gt;</span></code></pre></div>
 <p>Mehr zur XML-Syntax <a href="https://www.w3schools.com/xml/xml_syntax.asp">hier</a>.</p>
 <p>Die konkrete Benennung der Elemente ist dabei nicht durch die XML-Syntax vorgegeben und ist grundsätzlich beliebig, muss jedoch einheitlich sein. Der Benennungsstil und Regeln für die Verwendung bestimmter Elemente und Attribute bei der Auszeichnung von Texten können auch durch ein Kodierungsschema und einen XML-Auszeichnungsstandard am Anfang des Dokuments festgelegt werden. In den Geisteswissenschaften hat sich mit TEI ein solcher einheitlicher Auszeichnungsstandard für Texte durchgesetzt.</p>
 <p>Nach den TEI-Guidelines besteht jedes TEI-Dokument aus einem Wurzelelement, welches das TEI-Dokument mit den Tags <code>&lt;TEI&gt;&lt;/TEI&gt;</code> öffnet und schließt, sowie aus zwei Kindelementen, dem Header (<code>&lt;teiHeader&gt;&lt;/teiHeader&gt;</code>) und einem Text-Element (<code>&lt;text&gt;&lt;/text&gt;</code>). Der Header beinhaltet Metadaten zu dem ausgezeichneten Text, beispielsweise eine “file description” (<code>&lt;fileDesc&gt;&lt;/fileDesc&gt;</code>), die bibliographische Informationen zur ausgezeichneten Datei enthält. Die file description ist als einziges Header-Element für alle TEI-Header zwingend erforderlich, damit das Dokument als valide gelten kann (zur Validierung siehe nächster Abschnitt). Der <code>&lt;TEI&gt;</code>-Öffnungstag enthält standardmäßig den <a href="https://de.wikipedia.org/wiki/Namensraum_(XML)">TEI-Namensraum</a> (oder “namespace”) <a href="http://www.tei-c.org/ns/1.0" class="uri">http://www.tei-c.org/ns/1.0</a>, manchmal auch die Sprache des ausgezeichneten Texts und die verwendete TEI-Version. Der Namensraum dient dazu, die verwendeten Elemente und Attribute eindeutig einer bestimmten XML-Sprache bzw. einem Auszeichnungsstandard zuzuordnen, in diesem Fall also TEI.</p>
 <p>In den TEI-Guidelines findet sich das folgende Beispiel für ein <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ref-TEI.html#index-egXML-d54e49512">minimales valides TEI-Dokument</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="exkurs-xml-tei-und-xpath.html#cb2-1" tabindex="-1"></a>&lt;<span class="kw">TEI</span><span class="ot"> version=</span><span class="st">&quot;3.3.0&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.tei-c.org/ns/1.0&quot;</span>&gt;</span>
-<span id="cb2-2"><a href="exkurs-xml-tei-und-xpath.html#cb2-2" tabindex="-1"></a> &lt;<span class="kw">teiHeader</span>&gt;</span>
-<span id="cb2-3"><a href="exkurs-xml-tei-und-xpath.html#cb2-3" tabindex="-1"></a>  &lt;<span class="kw">fileDesc</span>&gt;</span>
-<span id="cb2-4"><a href="exkurs-xml-tei-und-xpath.html#cb2-4" tabindex="-1"></a>   &lt;<span class="kw">titleStmt</span>&gt;</span>
-<span id="cb2-5"><a href="exkurs-xml-tei-und-xpath.html#cb2-5" tabindex="-1"></a>    &lt;<span class="kw">title</span>&gt;The shortest TEI Document Imaginable&lt;/<span class="kw">title</span>&gt;</span>
-<span id="cb2-6"><a href="exkurs-xml-tei-und-xpath.html#cb2-6" tabindex="-1"></a>   &lt;/<span class="kw">titleStmt</span>&gt;</span>
-<span id="cb2-7"><a href="exkurs-xml-tei-und-xpath.html#cb2-7" tabindex="-1"></a>   &lt;<span class="kw">publicationStmt</span>&gt;</span>
-<span id="cb2-8"><a href="exkurs-xml-tei-und-xpath.html#cb2-8" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;First published as part of TEI P2, this is the P5</span>
-<span id="cb2-9"><a href="exkurs-xml-tei-und-xpath.html#cb2-9" tabindex="-1"></a>         version using a namespace.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb2-10"><a href="exkurs-xml-tei-und-xpath.html#cb2-10" tabindex="-1"></a>   &lt;/<span class="kw">publicationStmt</span>&gt;</span>
-<span id="cb2-11"><a href="exkurs-xml-tei-und-xpath.html#cb2-11" tabindex="-1"></a>   &lt;<span class="kw">sourceDesc</span>&gt;</span>
-<span id="cb2-12"><a href="exkurs-xml-tei-und-xpath.html#cb2-12" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;No source: this is an original work.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb2-13"><a href="exkurs-xml-tei-und-xpath.html#cb2-13" tabindex="-1"></a>   &lt;/<span class="kw">sourceDesc</span>&gt;</span>
-<span id="cb2-14"><a href="exkurs-xml-tei-und-xpath.html#cb2-14" tabindex="-1"></a>  &lt;/<span class="kw">fileDesc</span>&gt;</span>
-<span id="cb2-15"><a href="exkurs-xml-tei-und-xpath.html#cb2-15" tabindex="-1"></a> &lt;/<span class="kw">teiHeader</span>&gt;</span>
-<span id="cb2-16"><a href="exkurs-xml-tei-und-xpath.html#cb2-16" tabindex="-1"></a> &lt;<span class="kw">text</span>&gt;</span>
-<span id="cb2-17"><a href="exkurs-xml-tei-und-xpath.html#cb2-17" tabindex="-1"></a>  &lt;<span class="kw">body</span>&gt;</span>
-<span id="cb2-18"><a href="exkurs-xml-tei-und-xpath.html#cb2-18" tabindex="-1"></a>   &lt;<span class="kw">p</span>&gt;This is about the shortest TEI document imaginable.&lt;/<span class="kw">p</span>&gt;</span>
-<span id="cb2-19"><a href="exkurs-xml-tei-und-xpath.html#cb2-19" tabindex="-1"></a>  &lt;/<span class="kw">body</span>&gt;</span>
-<span id="cb2-20"><a href="exkurs-xml-tei-und-xpath.html#cb2-20" tabindex="-1"></a> &lt;/<span class="kw">text</span>&gt;</span>
-<span id="cb2-21"><a href="exkurs-xml-tei-und-xpath.html#cb2-21" tabindex="-1"></a>&lt;/<span class="kw">TEI</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb915"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb915-1"><a href="exkurs-xml-tei-und-xpath.html#cb915-1" tabindex="-1"></a>&lt;<span class="kw">TEI</span><span class="ot"> version=</span><span class="st">&quot;3.3.0&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.tei-c.org/ns/1.0&quot;</span>&gt;</span>
+<span id="cb915-2"><a href="exkurs-xml-tei-und-xpath.html#cb915-2" tabindex="-1"></a> &lt;<span class="kw">teiHeader</span>&gt;</span>
+<span id="cb915-3"><a href="exkurs-xml-tei-und-xpath.html#cb915-3" tabindex="-1"></a>  &lt;<span class="kw">fileDesc</span>&gt;</span>
+<span id="cb915-4"><a href="exkurs-xml-tei-und-xpath.html#cb915-4" tabindex="-1"></a>   &lt;<span class="kw">titleStmt</span>&gt;</span>
+<span id="cb915-5"><a href="exkurs-xml-tei-und-xpath.html#cb915-5" tabindex="-1"></a>    &lt;<span class="kw">title</span>&gt;The shortest TEI Document Imaginable&lt;/<span class="kw">title</span>&gt;</span>
+<span id="cb915-6"><a href="exkurs-xml-tei-und-xpath.html#cb915-6" tabindex="-1"></a>   &lt;/<span class="kw">titleStmt</span>&gt;</span>
+<span id="cb915-7"><a href="exkurs-xml-tei-und-xpath.html#cb915-7" tabindex="-1"></a>   &lt;<span class="kw">publicationStmt</span>&gt;</span>
+<span id="cb915-8"><a href="exkurs-xml-tei-und-xpath.html#cb915-8" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;First published as part of TEI P2, this is the P5</span>
+<span id="cb915-9"><a href="exkurs-xml-tei-und-xpath.html#cb915-9" tabindex="-1"></a>         version using a namespace.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb915-10"><a href="exkurs-xml-tei-und-xpath.html#cb915-10" tabindex="-1"></a>   &lt;/<span class="kw">publicationStmt</span>&gt;</span>
+<span id="cb915-11"><a href="exkurs-xml-tei-und-xpath.html#cb915-11" tabindex="-1"></a>   &lt;<span class="kw">sourceDesc</span>&gt;</span>
+<span id="cb915-12"><a href="exkurs-xml-tei-und-xpath.html#cb915-12" tabindex="-1"></a>    &lt;<span class="kw">p</span>&gt;No source: this is an original work.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb915-13"><a href="exkurs-xml-tei-und-xpath.html#cb915-13" tabindex="-1"></a>   &lt;/<span class="kw">sourceDesc</span>&gt;</span>
+<span id="cb915-14"><a href="exkurs-xml-tei-und-xpath.html#cb915-14" tabindex="-1"></a>  &lt;/<span class="kw">fileDesc</span>&gt;</span>
+<span id="cb915-15"><a href="exkurs-xml-tei-und-xpath.html#cb915-15" tabindex="-1"></a> &lt;/<span class="kw">teiHeader</span>&gt;</span>
+<span id="cb915-16"><a href="exkurs-xml-tei-und-xpath.html#cb915-16" tabindex="-1"></a> &lt;<span class="kw">text</span>&gt;</span>
+<span id="cb915-17"><a href="exkurs-xml-tei-und-xpath.html#cb915-17" tabindex="-1"></a>  &lt;<span class="kw">body</span>&gt;</span>
+<span id="cb915-18"><a href="exkurs-xml-tei-und-xpath.html#cb915-18" tabindex="-1"></a>   &lt;<span class="kw">p</span>&gt;This is about the shortest TEI document imaginable.&lt;/<span class="kw">p</span>&gt;</span>
+<span id="cb915-19"><a href="exkurs-xml-tei-und-xpath.html#cb915-19" tabindex="-1"></a>  &lt;/<span class="kw">body</span>&gt;</span>
+<span id="cb915-20"><a href="exkurs-xml-tei-und-xpath.html#cb915-20" tabindex="-1"></a> &lt;/<span class="kw">text</span>&gt;</span>
+<span id="cb915-21"><a href="exkurs-xml-tei-und-xpath.html#cb915-21" tabindex="-1"></a>&lt;/<span class="kw">TEI</span>&gt;</span></code></pre></div>
 <p>Für ein <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#index-egXML-d54e16887">Minimalbeispiel für einen validen Header</a> siehe den Abschnitt “2 The TEI Header” in den TEI-Guidelines. Für Informationen zum Aufbau des Text-Elements siehe <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/DS.html">“4 Default Text Structure”</a>.</p>
 <p>Während dieser Minimalaufbau für alle TEI-Dokumente einheitlich vorgegeben ist, hängt die Wahl der konkreten Elemente und Attribute innerhalb des Headers und des Textkörpers davon ab, welche Textart ausgezeichnet wird. Für bestimmte Textarten finden sich in den <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/">TEI-Guidelines</a> verschiedene <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STMA">Module</a>, die flexibel zu einem <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STIN">TEI Schema</a> kombiniert werden können. Alle Elemente und Attribute, die in einem TEI-Header verwendet werden können, finden sich beispielsweise im Modul “header”. Elemente und Attribute, die zur Auszeichnung von “Performance Texts” wie Dramen verwendet werden können, finden sich im Modul “drama”.</p>
 <p>Der <a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/VE.html#index-egXML-d54e59340">Text eines einzelnen Gedichts</a> würde unter Verwendung der Moduls “verse” wie folgt ausgezeichnet werden:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="exkurs-xml-tei-und-xpath.html#cb3-1" tabindex="-1"></a>&lt;<span class="kw">text</span>&gt;</span>
-<span id="cb3-2"><a href="exkurs-xml-tei-und-xpath.html#cb3-2" tabindex="-1"></a> &lt;<span class="kw">front</span>&gt;</span>
-<span id="cb3-3"><a href="exkurs-xml-tei-und-xpath.html#cb3-3" tabindex="-1"></a>  &lt;<span class="kw">head</span>&gt;1755&lt;/<span class="kw">head</span>&gt;</span>
-<span id="cb3-4"><a href="exkurs-xml-tei-und-xpath.html#cb3-4" tabindex="-1"></a> &lt;/<span class="kw">front</span>&gt;</span>
-<span id="cb3-5"><a href="exkurs-xml-tei-und-xpath.html#cb3-5" tabindex="-1"></a> &lt;<span class="kw">body</span>&gt;</span>
-<span id="cb3-6"><a href="exkurs-xml-tei-und-xpath.html#cb3-6" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;To make a prairie it takes a clover and one bee,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb3-7"><a href="exkurs-xml-tei-und-xpath.html#cb3-7" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;One clover, and a bee,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb3-8"><a href="exkurs-xml-tei-und-xpath.html#cb3-8" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;And revery.&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb3-9"><a href="exkurs-xml-tei-und-xpath.html#cb3-9" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;The revery alone will do,&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb3-10"><a href="exkurs-xml-tei-und-xpath.html#cb3-10" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;If bees are few.&lt;/<span class="kw">l</span>&gt;</span>
-<span id="cb3-11"><a href="exkurs-xml-tei-und-xpath.html#cb3-11" tabindex="-1"></a> &lt;/<span class="kw">body</span>&gt;</span>
-<span id="cb3-12"><a href="exkurs-xml-tei-und-xpath.html#cb3-12" tabindex="-1"></a>&lt;/<span class="kw">text</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb916"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb916-1"><a href="exkurs-xml-tei-und-xpath.html#cb916-1" tabindex="-1"></a>&lt;<span class="kw">text</span>&gt;</span>
+<span id="cb916-2"><a href="exkurs-xml-tei-und-xpath.html#cb916-2" tabindex="-1"></a> &lt;<span class="kw">front</span>&gt;</span>
+<span id="cb916-3"><a href="exkurs-xml-tei-und-xpath.html#cb916-3" tabindex="-1"></a>  &lt;<span class="kw">head</span>&gt;1755&lt;/<span class="kw">head</span>&gt;</span>
+<span id="cb916-4"><a href="exkurs-xml-tei-und-xpath.html#cb916-4" tabindex="-1"></a> &lt;/<span class="kw">front</span>&gt;</span>
+<span id="cb916-5"><a href="exkurs-xml-tei-und-xpath.html#cb916-5" tabindex="-1"></a> &lt;<span class="kw">body</span>&gt;</span>
+<span id="cb916-6"><a href="exkurs-xml-tei-und-xpath.html#cb916-6" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;To make a prairie it takes a clover and one bee,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb916-7"><a href="exkurs-xml-tei-und-xpath.html#cb916-7" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;One clover, and a bee,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb916-8"><a href="exkurs-xml-tei-und-xpath.html#cb916-8" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;And revery.&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb916-9"><a href="exkurs-xml-tei-und-xpath.html#cb916-9" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;The revery alone will do,&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb916-10"><a href="exkurs-xml-tei-und-xpath.html#cb916-10" tabindex="-1"></a>  &lt;<span class="kw">l</span>&gt;If bees are few.&lt;/<span class="kw">l</span>&gt;</span>
+<span id="cb916-11"><a href="exkurs-xml-tei-und-xpath.html#cb916-11" tabindex="-1"></a> &lt;/<span class="kw">body</span>&gt;</span>
+<span id="cb916-12"><a href="exkurs-xml-tei-und-xpath.html#cb916-12" tabindex="-1"></a>&lt;/<span class="kw">text</span>&gt;</span></code></pre></div>
 <div class="task">
 <p>Verständnisfragen:</p>
 <p>Die XML-Syntax erinnert an HTML, das ihr in der letzten Woche kennengelernt habt. Lest <a href="https://aws.amazon.com/de/compare/the-difference-between-html-and-xml/">diesen Beitrag</a> und beantwortet anschließend die folgenden Fragen:</p>
@@ -586,8 +597,8 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
           </div>
         </div>
       </div>
-<a href="exkurs-web-scraping-und-apis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="exkurs-web-scraping-und-apis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="arbeit-mit-xml-tei-dokumenten.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -632,6 +643,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

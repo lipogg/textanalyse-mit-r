@@ -358,9 +358,11 @@ print(map_data)
 # Wir verwenden diese Karte, um unsere Koordinaten darauf zu plotten 
 humboldt_map <- ggplot(data = map_data) +
   geom_sf() +
-  geom_point(data = site_data, aes(x = longitude, y = latitude, text=name), size = 0.8, 
-             alpha=0.6,
-             shape = 21, fill = "darkred") + # shape = 20, color = "darkred"
+  geom_point(data = site_data, aes(x = longitude, y = latitude), 
+             size = 1,
+             shape = 21, 
+             fill = "darkred",
+             stroke = 0.2) + 
   theme_minimal() +
   ggtitle("Russisch-Sibirische Reise 1829") 
 humboldt_map

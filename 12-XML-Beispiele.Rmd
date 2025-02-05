@@ -180,6 +180,15 @@ Verständnisfragen:
 :::
 
 
+<details>
+<summary><b>Anwendungsbeispiele: Digitale Dramenanalyse</b></summary>
+
+- Botond Szemes und Mihály Nagy (2024). Repetition and Innovation in Dramatic Texts. An Attempt to
+Measure the Degree of Novelty in Character’s Speech, https://jcls.io/article/id/3923/.
+- Jonah Lubin, Anke Detken und Frank Fischer (2024). Das "ureigenste theatralische Element" — Automatische Extraktion von Requisiten aus deutschsprachigen Dramentexten, https://zenodo.org/records/10698448.
+
+</details>
+
 ## Beispiel Geomapping
 
 Unser zweites Beispiel widmet sich dem Reisetagebuch eines der Reisebegleiter Alexander von Humboldts während seiner Reise durch das Russische (bzw. eigentlich Russländische) Reich. Eine geschichtswissenschaftliche Analyse des Tagesbuchs könnte zum Beispiel die Verstrickung von Wissenschaft und Imperialismus untersuchen. Für eine solche Fragestellung wäre es vielleicht interessant, zunächst die Reiseroute nachzuzeichnen. Auch solche Metaanalysen werden durch das Auszeichnen der Texte in XML-TEI ermöglicht. Das Tagebuch wurde durch das Projekt edition humboldt digital in XML-TEI ausgezeichnet. Zunächst betrachten wir wieder die Datei im [Browser](https://edition-humboldt.de/H0016785.xml) und laden die Datei [hier](https://edition-humboldt.de/themen/detail.xql?id=H0016785&l=de) herunter. Im Folgenden wollen wir alle Orte, die der Autor erwähnt, extrahieren und auf einer Karte visualisieren. Dieser Vorgang wird manchmal "Geomapping" genannt und ist eine beliebte Methode insbesondere in den digitalen Geschichtswissenschaften. Wir gehen dabei wie folgt vor: Zunächst extrahieren wir die Links zu Ortsangaben in der Datenbank [Geonames](https://www.geonames.org/) aus den placeName-Elementen in der XML-TEI Datei. Diese Links enthalten eine ID, die wir nutzen können, um Metadaten zu dem entsprechenden Ort über eine sogenannte Anwendungsprogrammierschnittstelle, oder kurz API, abzufragen. Über diese Schnittstelle können wir die Metadaten direkt in unsere Sitzung im RStudio importieren und weiterverarbeiten. Die Längen- und Breitengrade zu jedem Ort können anschließend dazu genutzt werden, um die Orte auf einer Karte abzubilden. Zur Darstellung der Karte werden wir das bereits bekannte Paket ggplot2 verwenden. 
@@ -394,6 +403,15 @@ Weiterführende Literatur zur Arbeit mit Geodaten in den DH:
 
 * Kapitel "Spatial Data" aus Taylor Arnold und Lauren Tilton (2024), Humanities Data in R, https://doi.org/10.1007/978-3-031-62566-4_9
 * Mit literaturwissenschaftlichem Bezug: Kapitel "Maps and Place" aus Martin Paul Eve (2022), The Digital Humanities and Literary Studies, https://doi.org/10.1093/oso/9780198850489.003.0004. 
+* Beitrag speziell zu ethischen Aspekten und Fallstricken bei der Visualisierung von (Geo)daten von Katherine Hepworth und Christopher Church, http://digitalhumanities.org:8081/dhq/vol/12/4/000408/000408.html. 
+
+<details>
+<summary><b>Anwendungsbeispiele: Geomapping</b></summary>
+
+- Cécile Armand (2024). Shaping the Transnational Public Sphere in Republican China. Discourses and Practices of the Rotary Club in the Shanghai Press (1919-1949), https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5 ([hier](https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5?idx=165&layer=hermeneutics&lh=860&pidx=165&pl=narrative&y=390) ist der Abschnitt, in dem es um Geomapping geht). 
+
+
+</details>
 
 ## Quellen {-}
 

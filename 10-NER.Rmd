@@ -55,6 +55,14 @@ maerchen_corpus <- corpus(maerchen_alle) %>%
 ```
 
 
+<details>
+<summary><b>Anwendungsbeispiele: Word Embeddings</b></summary>
+
+- Nikhil Garg, Londa Schiebinger, Dan Jurafsky und James Zou (2018), Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes, https://www.pnas.org/doi/10.1073/pnas.1720347115.
+- Sandeep Soni, Lauren F. Klein und Jacob Eisenstein (2021). Abolitionist Networks. Modeling Language Change in Nineteenth-Century Activist Newspapers, https://doi.org/10.22148/001c.18841.
+
+</details>
+
 ### Count-Based Word Embeddings mit Quanteda und PMI-Werten
 
 Code adaptiert von Stoltz/Taylor 2024, Mapping Texts, S. 210-214.
@@ -164,6 +172,12 @@ Folgt noch.
 Für den mathematischen Hintergrund zu PMI verweise ich auf den Abschnitt [8.4.4.2 "Pointwise Mutual Information (PMI)"](https://lipogg.github.io/textanalyse-mit-r/textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi).
 
 </details>
+<details>
+<summary><b>Mathematischer Hintergrund: Kosinusähnlichkeit </b></summary>
+
+Folgt noch.
+
+</details>
 
 
 
@@ -246,6 +260,14 @@ marx_test <- readtext(file="./data/marx_briefe/Marx_Engels_London_25-1-1868.txt"
 marx_briefe <- readtext(file="./data/marx_briefe/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Von", "An", "Ort", "Datum"), encoding = "UTF-8")
 
 ```
+
+<details>
+<summary><b>Anwendungsbeispiele: NER</b></summary>
+
+- Lisa Mendelman and Anna Mukamal (2021). The Generative Dissensus of Reading the Feminist Novel, 1995-2020:  A Computational Analysis of Interpretive Communities, https://doi.org/10.22148/001c.30009.
+- Cécile Armand (2024). Shaping the Transnational Public Sphere in Republican China. Discourses and Practices of the Rotary Club in the Shanghai Press (1919-1949), https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5 ([hier](https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5?idx=94&layer=hermeneutics&lh=860&pidx=94&pl=narrative&y=85) ist der Abschnitt, in dem es um NER geht). 
+
+</details>
 
 ## Beispiel mit SpaCy / Spacyr
 
@@ -417,9 +439,13 @@ Die Übertragbarkeit dieser Modelle auf andere historische Perioden und Texte is
 https://doi.org/10.48550/arXiv.2201.07281
 )) Named Entity Recognition für historische Texte bleibt also wohl auch in den nächsten Jahren ein Forschungsthema.  
 
-Einen hervorragenden Überblick über Probleme und den Forschungsstand bei der Named Entity Recognition für historische Dokumente bieten: 
+Einen hervorragenden Überblick über Probleme und den Forschungsstand bei der Named Entity Recognition für historische Texte bieten: 
 
-* Ehrmann, Maud et al. (2023). Named Entity Recognition and Classification in Historical Documents: A Survey, in: ACM Computing Survey Vol. 56 / 2, pp. 1-47,  https://doi.org/10.1145/3604931. 
+* Maud Ehrmann et al. (2023). Named Entity Recognition and Classification in Historical Documents: A Survey, in: ACM Computing Survey Vol. 56 / 2, pp. 1-47,  https://doi.org/10.1145/3604931. 
+
+Eine etwas zugänglichere Diskussion zur Übertragbarkeit von Natural Language Processing Methoden wie NER auf historische Texte und Fragestellungen der Digital Humanities bieten: 
+
+* Barbara McGillivray, Thierry Poibeau und Pablo Ruiz Fabo (2020). Digital Humanities and Natural Language Processing: "Je t'aime... Moi non plus", in: Digital Humanities Quarterly Vol 14 / 2, http://digitalhumanities.org:8081/dhq/vol/14/2/000454/000454.html.
 
 Aber trotz dieser Schwierigkeiten ist Named Entity Recognition eine wichtige Methode: NER kann, sofern die Ergebnisse brauchbar sind, nicht nur zur Textanalyse verwendet werden, sondern zum Beispiel auch dazu, Dokumente im Rahmen einer digitalen Edition mit Metainformationen anzureichern und zu verknüpfen ([Beispiel 1](https://grandtourdig.hypotheses.org/949), [Beispiel 2](https://hal.sorbonne-universite.fr/hal-01396037/document)), oder aber auch zum Geomapping, also dem Hinzufügen von Metainformationen auf Karten ( [Beispiel](https://towardsdatascience.com/quick-guide-to-entity-recognition-and-geocoding-with-r-c0a915932895)).
 

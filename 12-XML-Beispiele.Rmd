@@ -368,7 +368,7 @@ print(map_data)
 # Wir verwenden diese Karte, um unsere Koordinaten darauf zu plotten 
 humboldt_map <- ggplot(data = map_data) +
   geom_sf() +
-  geom_point(data = site_data, aes(x = longitude, y = latitude), 
+  geom_point(data = site_data, aes(x = longitude, y = latitude, text = name), 
              size = 1,
              shape = 21, 
              fill = "darkred",
@@ -404,6 +404,7 @@ Weiterführende Literatur zur Arbeit mit Geodaten in den DH:
 
 * Kapitel "Spatial Data" aus Taylor Arnold und Lauren Tilton (2024), Humanities Data in R, https://doi.org/10.1007/978-3-031-62566-4_9
 * Mit literaturwissenschaftlichem Bezug: Kapitel "Maps and Place" aus Martin Paul Eve (2022), The Digital Humanities and Literary Studies, https://doi.org/10.1093/oso/9780198850489.003.0004. 
+* Theoretische Auseinandersetzung, wie historische Geodaten und Geomapping eine "klassische" geschichtswissenschaftliche Quellenanalyse ergänzen können: Vincent Brown (2015), Mapping a Slave Revolt. Visualizing Spatial History through the Archives of Slavery, https://doi.org/10.1215/01642472-3315826. 
 * Beitrag speziell zu ethischen Aspekten und Fallstricken bei der Visualisierung von (Geo)daten von Katherine Hepworth und Christopher Church, http://digitalhumanities.org:8081/dhq/vol/12/4/000408/000408.html. 
 
 <details>

@@ -126,7 +126,13 @@ UPOS:
 - Vergleich deutschsprachiger Treebanks und Sprachmodelle:  https://universaldependencies.org/treebanks/de-comparison.html 
 - Dokumentationsseite zum Modell German GSD: https://universaldependencies.org/treebanks/de_gsd/index.html 
 
+<details>
+<summary><b>Anwendungsbeispiele: POS Tagging</b></summary>
 
+- Peer Trilcke (2018). Zwischen »Weltverbesserungsleidenschaft« und »Schmetterlingsschlacht«. Seltenste Substantive in Fontanes Romanen, https://www.fontanearchiv.de/fileadmin/user_upload/pdfs/2018-12-15_Trilcke_et-al_Schmetterlingsschlacht.pdf
+- Benjamin Krautter, Janis Pagel, Nils Reiter und Marcus Willand (2020). "[E]in Vater, dächte ich, ist doch immer ein Vater". Figurentypen im Drama und ihre Operationalisierung,  https://zfdg.de/2020_007#hd16 (untersucht u.a. die Verwendung von Verben in Dramen)
+
+</details>
 
 ## Dependency Parsing mit UDPipe
 
@@ -188,6 +194,14 @@ Betrachtet die Beziehung zwischen den Wörtern "Königstochter" und "schön".
 Gleicht eure Ergebnisse mit den Werten in den Spalten `head_token_id` und `dep_rel` ab (der Dataframe befindet sich im Abschnitt 9.2). 
 
 :::
+
+<details>
+<summary><b>Anwendungsbeispiele: Dependency Parsing</b></summary>
+
+- Andrew Piper (2023). "What Do Characters Do? The Embodied Agency of Fictional Characters", Journal of Computational Literary Studies 2 (1): 1–12. doi: https://doi.org/10.48694/jcls.3589.
+- Luisa Gödeke et al. (2022). Generalisierungen als literarisches Phänomen. Charakterisierung, Annotation und automatische Erkennung, https://doi.org/10.17175/2022_010. 
+
+</details>
 
 ## Beispielanalyse: Märchen {#beispiel}
 

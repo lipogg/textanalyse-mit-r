@@ -125,3 +125,4 @@ Assoziiertes Projekt: https://www.distant-reading.net/
 * Somar Social Media Archive: https://socialmediaarchive.org/
 * Digitale Sammlungen der Österreichischen Nationalbibliothek: https://labs.onb.ac.at/de/datasets/
 * Verzeichnis linguistischer Korpora (Daten zu den Korpora sind aber z.T. nicht mehr aktuell): https://www.lancaster.ac.uk/fass/projects/corpus/cbls/corpora.asp
+* Heidelberg Open Research Data (heiDATA; Volltexte und XML-TEI-Editionen von Forschungsprojekten an der Uni Heidelberg, z.B. digitale Editionen der Kaiserchronik, des Maltechnik-Notizbuchs von Hans Emmenegger, der Korrespondenz von Nicodemus Frischlin, Index zu Artikeln der chinesischen Zeitschrift Shenbao, Metadaten zu allen Werken von Abou Naddara, uvm.), https://heidata.uni-heidelberg.de/dataverse/root 

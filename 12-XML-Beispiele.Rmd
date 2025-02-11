@@ -411,7 +411,7 @@ Weiterführende Literatur zur Arbeit mit Geodaten in den DH:
 <summary><b>Anwendungsbeispiele: Geomapping</b></summary>
 
 
-- Cécile Armand (2024). Shaping the Transnational Public Sphere in Republican China. Discourses and Practices of the Rotary Club in the Shanghai Press (1919-1949), https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5 ([hier](https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5?idx=165&layer=hermeneutics&lh=860&pidx=165&pl=narrative&y=390) ist der Abschnitt, in dem es um Geomapping geht). 
+- Cécile Armand (2024). Shaping the Transnational Public Sphere in Republican China. Discourses and Practices of the Rotary Club in the Shanghai Press (1919-1949), https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5 (in [diesem Abschnitt](https://journalofdigitalhistory.org/en/article/69Xry3ztPAk5?idx=165&layer=hermeneutics&lh=860&pidx=165&pl=narrative&y=390) geht es um Geomapping). 
 - Amanda Regan (2024). Secret Societies and Revolving Doors: Using Mapping the Gay Guides to Study LGBTQ Life in the United States, 1965-1989, https://journalofdigitalhistory.org/en/article/X3MGSKqAycaT.
 
 

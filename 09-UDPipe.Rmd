@@ -198,7 +198,8 @@ Gleicht eure Ergebnisse mit den Werten in den Spalten `head_token_id` und `dep_r
 <details>
 <summary><b>Anwendungsbeispiele: Dependency Parsing</b></summary>
 
-- Andrew Piper (2023). "What Do Characters Do? The Embodied Agency of Fictional Characters",  https://doi.org/10.48694/jcls.3589.
+- Matthew Jockers und Gabi Kirilloff (2017). Understanding Gender and Character Agency in the 19th Century Novel, https://doi.org/10.22148/16.010.
+- Andrew Piper (2023). What Do Characters Do? The Embodied Agency of Fictional Characters,  https://doi.org/10.48694/jcls.3589.
 - Luisa Gödeke et al. (2022). Generalisierungen als literarisches Phänomen. Charakterisierung, Annotation und automatische Erkennung, https://doi.org/10.17175/2022_010. 
 
 </details>

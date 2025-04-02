@@ -27,7 +27,7 @@ Bedingte Anweisungen, oder if-Anweisungen, haben die allgemeine Form:
 
 
 
-```r
+``` r
 if (Bedingung) {
   Anweisungsblock
 }
@@ -43,7 +43,7 @@ if (Bedingung) {
 Beispiel:
 
 
-```r
+``` r
 # Nachricht wird ausgegeben, wenn der Vektor autos ein Element mit dem Wert "Mercedes" enthält
 
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
@@ -56,7 +56,7 @@ if ("Mercedes" %in% autos) {
 ## [1] "Ein Mercedes steht in der Garage!"
 ```
 
-```r
+``` r
 # Nachricht wird ausgegeben, wenn der Wert, der dem Schlüssel "Mercedes" im Vektor autos zugeordnet ist, größer als 1 ist
 
 autos <- c(Mercedes=2, Fiat=1, Volvo=1, BMW=3)
@@ -75,7 +75,7 @@ Mit der Funktion `paste()` können character verkettet werden. Dabei werden auto
 :::
 
 
-```r
+``` r
 # Wenn der Vektor autos einen Schlüssel "Mercedes" enthält, wird überprüft, ob der Wert, der diesem Schlüssel zugeordnet ist, größer als 1 ist.
 # Falls ja, wird eine Nachricht ausgegeben.
 
@@ -105,7 +105,7 @@ Bedingungen können auch kombiniert werden. Dazu werden einfach zwei logische Au
 
 
 
-```r
+``` r
 # Beide Ausdrücke sind wahr:  die Nachricht wird ausgegeben
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
 if ("Mercedes" %in% autos && "Fiat" %in% autos) {
@@ -117,7 +117,7 @@ if ("Mercedes" %in% autos && "Fiat" %in% autos) {
 ## [1] "Ein Mercedes und ein Fiat stehen in der Garage!"
 ```
 
-```r
+``` r
 # Einer der Ausdrücke ist falsch: es passiert nichts
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
 if ("Mercedes" %in% autos && "Opel" %in% autos) {
@@ -126,7 +126,7 @@ if ("Mercedes" %in% autos && "Opel" %in% autos) {
 ```
 
 
-```r
+``` r
 # Einer der Ausdrücke ist falsch: die Nachricht wird ausgegeben
 autos <- c("Mercedes", "Fiat", "Volvo", "BMW")
 if ("Mercedes" %in% autos || "Opel" %in% autos) {
@@ -147,7 +147,7 @@ Es wird unterschieden zwischen einfachen und mehrfachen Verzweigungen.
 **Einfache Verzweigungen**, oder if-else-Anweisungen, haben die allgemeine Form:
 
 
-```r
+``` r
 if (Bedingung) {
   Anweisungsblock
 } else {
@@ -158,7 +158,7 @@ if (Bedingung) {
 Beispiel: 
 
 
-```r
+``` r
 # Wenn der Wert, der dem Schlüssel "Ibuprofen" zugeordnet ist, größer 0 ist, wird eine Nachricht ausgegeben.
 # Wenn der Wert 0 (oder im theoretischen Fall kleiner 0) ist, wird eine Warnung ausgegeben.
 
@@ -179,7 +179,7 @@ if (anzahl_ibus > 0) {
 Wenn mehr als zwei Fälle überprüft werden sollen, kann eine if-else-Anweisung mit beliebig vielen zusätzlichen bedingten Anweisungen kombiniert werden. **Mehrfache Verzweigungen** haben die allgemeine Form:
 
 
-```r
+``` r
 if (Bedingung) {
   Anweisungsblock
 } else if (Bedingung) {
@@ -190,7 +190,7 @@ if (Bedingung) {
 ```
 
 
-```r
+``` r
 # Wenn der Wert, der dem Schlüssel "Ibuprofen" zugeordnet ist, größer als 5 ist, wird eine Nachricht mit dem Wert ausgegeben.
 # Wenn der Wert genau dem Integer 5 entspricht, wird eine Warnung ausgegeben.
 # In allen anderen Fällen wird die Nachricht "Achtung! Weniger als 5 Ibuprofen da!" ausgegeben.
@@ -223,7 +223,7 @@ Achtung: Wenn zwei Bedingungen in einer Verzweigung zugleich erfüllt sind, wird
 
 
 
-```r
+``` r
 # Sowohl die if-Bedingung als auch die if else-Bedingung werden zu True evaluiert. 
 # Allerdings wird die if else-Bedingung nie ausgewertet. 
 # Es wird also nur die if-Anweisung ausgeführt. 
@@ -246,7 +246,7 @@ if ("Mercedes" %in% autos) {
 Dieses Verhalten gilt allerdings nur für Verzweigungen, nicht jedoch für zwei if-Anweisungen, die aufeinander folgen: 
 
 
-```r
+``` r
 # Beide if-Bedingungen werden nacheinander ausgewertet. Im ersten Schleifendurchlauf
 # werden beide zu True evaluiert und es werden beide Anweisungen ausgeführt.
 
@@ -261,7 +261,7 @@ if ("Mercedes" %in% autos) {
 ## [1] "Ein Mercedes steht in der Garage!"
 ```
 
-```r
+``` r
 if ("Fiat" %in% autos) {
   print("Ein Fiat steht in der Garage!")
 } 
@@ -274,7 +274,7 @@ if ("Fiat" %in% autos) {
 Eine spezielle Form von Verzweigung sind **bedingte Ausdrücke**. Diese werden verwendet, um einer Variable in Abhängigkeit von einer anderen Variable einen Wert zuzuweisen. Bedingte Ausdrücke stellen eine Kurzschreibweise für die folgende Verzweigung dar:
 
 
-```r
+``` r
 # Kompliziert
 x <- 2
 if (x == 2) {
@@ -284,7 +284,7 @@ if (x == 2) {
 }
 ```
 
-```r
+``` r
 # Einfach
 x <- 2
 var <- if (x == 2) 10 else 20
@@ -300,7 +300,7 @@ var <- ifelse(x == 2, 10, 20)
 while-Schleifen werden verwendet, wenn ein Code-Block (=nur ein anderes Wort für Anweisungsblock) so lange ausgeführt werden soll, wie eine bestimmte Bedingung erfüllt ist. Die Bedingung steht im **Schleifenkopf** und wird überprüft, bevor der Code im **Schleifenkörper** ausgeführt wird. Wenn die Bedingung nicht (mehr) erfüllt ist, **terminiert** die Schleife. `while`-Schleifen haben die allgemeine Form:
 
 
-```r
+``` r
 while (Bedingung) {
   Anweisungsblock
 } 
@@ -310,7 +310,7 @@ Beispiel:
 
 
 
-```r
+``` r
 # In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus > 0 ausgewertet.
 # Wenn der Ausdruck zu True evaluiert wird, wird die Anweisung im Schleifenkörper ausgeführt, d.h. der Wert der Variable anzahl_ibus wird um 1 verringert.
 # Wenn die Variable anzahl_ibus den Wert 0 annimmt, wird der Ausdruck im Schleifenkopf zu False evaluiert und die Schleife terminiert.
@@ -344,7 +344,7 @@ Verständnisfragen:
 Es ist auch möglich, `while`-Schleifen und bedingte Anweisungen zu kombinieren:
 
 
-```r
+``` r
 # In jedem Schleifendurchlauf wird zunächst der Ausdruck anzahl_ibus > 0 ausgewertet.
 # Wenn der Ausdruck zu True evaluiert wird, wird überprüft, ob der Wert dem Integer 5 entspricht.
 # Falls ja, wird eine Warnmeldung ausgegeben.
@@ -367,7 +367,7 @@ while (anzahl_ibus > 0) {
 ## [1] "Warnung: nur noch 5 Ibuprofen da!"
 ```
 
-```r
+``` r
 print("Achtung! Kein Ibuprofen mehr da!")
 ```
 
@@ -385,7 +385,7 @@ Verständnisfrage:
 Achtung: while-Schleifen laufen unendlich lange, wenn die Abbruchbedingung nie erfüllt ist:
 
 
-```r
+``` r
 # while (TRUE) {
 #   print("Dies ist eine unendliche Schleife")
 #}
@@ -402,7 +402,7 @@ Falls ihr versehentlich doch mal eine unendliche Schleife im RStudio ausgeführt
 `for`-Schleifen haben in R die allgemeine Form: 
 
 
-```r
+``` r
 for (Element in Objekt) {
   Anweisungsblock
 }
@@ -411,7 +411,7 @@ for (Element in Objekt) {
 Beispiel: 
 
 
-```r
+``` r
 # In jedem Schleifendurchlauf nimmt die Laufvariable zahl den Wert eines Elements aus dem
 # Vektor zahlen an und es wird der aktuelle Wert der Variable zahl, addiert mit 1, ausgegeben.
 woerter <- c("Netzwerkdurchsetzungsgesetz", "Abfallverzeichnisverordnung", "Haftpflichtversicherung", "Antivirenprogramm")
@@ -434,7 +434,7 @@ Mithilfe der Funktion `nchar()` kann die Anzahl der Zeichen in einer Zeichenkett
 Wie while-Schleifen können auch for-Schleifen mit bedingten Anweisungen kombiniert werden:
 
 
-```r
+``` r
 # In jedem Schleifendurchlauf nimmt die Laufvariable wort den Wert eines Elements aus dem Vektor woerter (s.o.) an.
 # Zunächst wird die Zeichenanzahl des aktuellen Strings der Variable laenge als Wert zugewiesen.
 # Dann wird geprüft, ob der Wert der Variable zeichen größer als 20 ist.
@@ -468,7 +468,7 @@ print(lange_woerter)
 Es muss jedoch beachtet werden, dass Elemente eines iterierbaren Objekts im Laufe einer Iteration nicht direkt verändert werden können:
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 
 for (tier in tiere) {
@@ -493,7 +493,7 @@ Das liegt daran, dass die Laufvariable nur für den Wert des aktuellen Elements 
 `for`-Schleifen werden deswegen in R meist als sogennante **Zählschleife** verwendet. Dazu wird die Funktion `seq_along()` verwendet, die einen Integer-Vektor erstellt, der genau so lang ist, wie das Objekt, das der Funktion übergeben wird. Solche `for`-Schleifen haben die allgemeine Form:
 
 
-```r
+``` r
 for (i in seq_along(Objekt)) {
   Anweisungsblock
 }
@@ -504,7 +504,7 @@ Das `i` steht für **iterator** und dient als **Zählvariable**: mit jedem Schle
 Klingt kompliziert, wird aber am folgenden Beispiel direkt deutlich:  
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 
 for (i in seq_along(tiere)) {
@@ -533,7 +533,7 @@ Verständnisfragen:
 Auch Zählschleifen können mit bedingten Anweisungen oder Verzweigungen kombiniert werden: 
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 
 for (i in seq_along(tiere)) {
@@ -555,7 +555,7 @@ print(tiere)
 Im Beispiel oben haben wir mehrmals `tiere[i]` verwendet. Falls wir uns irgendwann später dazu entscheiden sollten, die Variable `tiere` umzubenennen, müssten wir alle Vorkommnisse von `tiere[i]` im Schleifenkörper finden und austauschen. So entstehen schnell Fehler. Um das Problem zu umgehen, könnten wir jetzt auf die Idee kommen, eine "temporäre" Variable zu verwenden, der am Anfang jedes Schleifendurchlaufs das aktuelle Element zugewiesen wird:  
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 
 for (i in seq_along(tiere)) {
@@ -589,7 +589,7 @@ Der Grund für dieses Verhalten liegt wieder in der Unveränderbarkeit der Objek
 Um das Problem zu beheben, gibt es verschiedene Möglichkeiten. Die Änderungen, die am Objekt `tier` vorgenommen wurden, könnten zum Beispiel am Ende der Schleife wieder dem Objekt `tiere[i]` zugewiesen werden:
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 
 for (i in seq_along(tiere)) {
@@ -614,7 +614,7 @@ print(tiere)
 Alternativ kann auch der ursprüngliche Vektor beibehalten werden und die Änderungen in jedem Schleifendurchgang einem neuen Vektor `tiere_neu()` hinzuzufügt werden. Dafür kann in diesem Fall eine einfache for-Schleife verwendet werden:  
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 tiere_neu <- c() # leeren Vektor erstellen
 
@@ -635,7 +635,7 @@ print(tiere_neu)
 ## [1] "hund"    "ELEFANT" "IGEL"    "KATZE"
 ```
 
-```r
+``` r
 print(tiere) # Vektor tiere ist unverändert
 ```
 
@@ -651,7 +651,7 @@ Es ist zudem möglich, einen Schleifendurchlauf (Iteration) oder die gesamte Sch
 Die Signalworte `next` und `break` können sowohl mit while-Schleifen als auch mit for-Schleifen verwendet werden. Hier ein Beispiel mit einer for-Schleife:
 
 
-```r
+``` r
 # next Anweisung
 
 # Vektor mit NA-Werten
@@ -675,7 +675,7 @@ for (wort in beliebige_woerter) {
 ```
 
 
-```r
+``` r
 # break Anweisung
 
 # Vektor mit NA-Werten

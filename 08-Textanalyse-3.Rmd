@@ -220,7 +220,16 @@ Verständnisfragen:
 - Was passiert, wenn das - vor frequency in `reorder(feature, -frequency)` entfernt wird? 
 :::
 
-Die hier am Beispiel unseres Märchenkorpus aufgezeigte Eigenschaft natürlichsprachlicher Texte lässt sich formal mit dem **Zipf'schen Gesetz** beschreiben, nach dem in einem Korpus von natürlichsprachlichen Äußerungen die Häufigkeit irgendeines Wortes umgekehrt proportional zu seinem Rang in der Häufigkeitstabelle ist. Dieser Umstand begründet auch die Motivation, Funktionswörter und andere erwartungsgemäß besonders häufig vorkommende Tokens während des Preprocessing zu entfernen. Die folgende Grafik vergleicht die Verteilung der Wörter in unserem Märchenkorpus ("observed") mit einer idealtypischen oder theoretischen Verteilung nach dem Zipf'schen Gesetz (Zipf-Verteilung, "theoretical"): 
+Die hier am Beispiel unseres Märchenkorpus aufgezeigte Eigenschaft natürlichsprachlicher Texte lässt sich formal mit dem **Zipf'schen Gesetz** beschreiben, nach dem in einem Korpus von natürlichsprachlichen Äußerungen die Häufigkeit irgendeines Wortes umgekehrt proportional zu seinem Rang in der Häufigkeitstabelle ist. Oder, formell ausgedrückt: 
+
+>Zipfsche Verteilungen sind dadurch charakterisiert, dass einige wenige Einheiten sehr häufig auftreten und extrem viele Einheiten äußerst selten. In einer Zipfschen Verteilung ist das zweithäufigste Element halb so häufig wie das häufigste, das dritthäufigste ein Drittel so häufig wie das häufigste usw. (Zipf 1949, S. 22ff.). Weist man Wörtern gemäß ihrer Häufigkeit einen Häufigkeitsrang r zu, so ergibt sich die Häufigkeit eines Wortes an Rang r wie folgt, wobei $\alpha$ eine (im gegebenen Fall empirisch zu ermittelnde) Konstante ist, die ungefähr 1 beträgt:
+>
+>Zipf’s Gesetz: $f(r) = 1 / r^\alpha$
+>
+Das heißt, die Auftretenswahrscheinlichkeit eines Wortes ist umgekehrt proportional zu seinem Häufigkeitsrang. ([Engelberg 2015](https://doi.org/10.1515/9783110401592.205), S.210)
+
+
+Dieser Umstand begründet auch die Motivation, Funktionswörter und andere erwartungsgemäß besonders häufig vorkommende Tokens während des Preprocessing zu entfernen. Die folgende Grafik vergleicht die Verteilung der Wörter in unserem Märchenkorpus ("observed") mit einer idealtypischen oder theoretischen Verteilung nach dem Zipf'schen Gesetz (Zipf-Verteilung, "theoretical"): 
 
 ```{r}
 # Diesen Code könnt ihr ignorieren
@@ -1889,6 +1898,7 @@ Ganz fertig sind wir mit unserer Märchenanalyse aber noch nicht: Schließlich w
 - Van Atteweldt, Wouter et al. (2022). *Computational Analysis of Communication. Ch. 10.3: Advanced Representation of Text*, https://cssbook.net/content/chapter10.html#sec-ngram.
 - Levshina, Natalia (2015). *How to Do Linguistics with R. Ch. 3.3: Zipf's Law and Word Frequency*, pp. 62-68, https://doi.org/10.1075/z.195.
 - Maj, Michal (2019). *Investigating Word Distribution with R - Zipf's Law*, https://www.r-bloggers.com/2019/02/investigating-words-distribution-with-r-zipfs-law/.
+- Engelberg, Stefan (2015). *Quantitative Verteilungen im Wortschatz. Zu lexikologischen und lexikografischen Aspekten eines dynamischen Lexikons*, in: Ludwig M. Eichinger (Hrsg.), Sprachwissenschaft im Fokus, https://doi.org/10.1515/9783110401592.205. 
 - Stoltz, Dustin und Taylor, Marshall (2024). *Mapping Texts. Computational Text Analysis for the Social Sciences, Ch. 6: From Text to Numbers*, Oxford: Oxford Univ. Press. 
 - Grimmer, Justin, Roberts, Margaret und Stewart, Brandon (2022). *Text as Data. A New Framework for Machine Learning and the Social Sciences*, Princeton: Princeton Univ. Press, Ch. 5, 6, 7.
 - Jurafsky, Daniel und Martin, James (2024). *Speech and Language Processing. Ch. 6.5: TF-IDF. Weighing Terms in the Vector*, https://web.stanford.edu/~jurafsky/slp3/.

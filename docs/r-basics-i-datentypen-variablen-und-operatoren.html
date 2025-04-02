@@ -53,7 +53,8 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
@@ -391,49 +392,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col width="91%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">Begriff</th>
 <th align="left">Englische Entsprechung</th>
 <th align="left">Definition (im R-Kontext)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">Objekt</td>
 <td align="left">Object</td>
 <td align="left">Alles: Funktionen, Variablen, Datenstrukturen,..</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Anweisung</td>
 <td align="left">Statement</td>
 <td align="left">Syntaktische Einheit, die Aktionen beschreibt, die von einem Computer ausgeführt werden können. Wenn die Anweisung ausgeführt wird, wird die Aktion veranlasst und der Zustand des Speichers wird geändert.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Zuweisung</td>
 <td align="left">Assignment</td>
 <td align="left">Besondere Art von Anweisung, bei der einer Variable ein bestimmter Wert zugeordnet wird. Dabei wird ein Name festgelegt, der fortan für diesen Wert und für den Speicherplatz, in dem der Wert gespeichert wird, steht.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Ausdruck</td>
 <td align="left">Expression</td>
 <td align="left">Syntaktische Einheit, die zu einem Wert evaluiert (ausgewertet) werden kann. Ein Ausdruck ist immer Teil einer Anweisung. Ausdrücke stehen auf der rechten Seite von Zuweisungen: x &lt;- Ausdruck. Ausdrücke haben immer einen Typ, der dem Datentyp des Werts entspricht, zu dem sie evaluiert werden, z.B. 3 == 4 ist ein Ausdruck vom Typ boolean.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Aussage</td>
 <td align="left">Proposition</td>
 <td align="left">In der Aussagenlogik ein sprachliches Gebilde, von dem es sinnvoll ist zu sagen, dass es entweder wahr oder falsch ist (Aristoteles). Im R-Kontext ein Ausdruck, der entweder zu TRUE oder zu FALSE evaluiert werden kann.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Auswerten</td>
 <td align="left">Evaluate</td>
 <td align="left">Der Computer liest einen Ausdruck und wertet diesen aus: Er berechnet etwas und liefert einen Wert.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Ausführen</td>
 <td align="left">Execute</td>
 <td align="left">Der Computer liest eine Anweisung und führt diese aus: Er macht etwas und ändert den Zustand des Speichers.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Ausgeben</td>
 <td align="left">Output/Print</td>
 <td align="left">Das Ergebnis einer Berechnung oder die Ausgabe einer Funktion wird auf der Konsole angezeigt.</td>
@@ -533,37 +534,37 @@ zweier integers wird ein spezieller Divisionsoperator, <code>%/%</code>, verwend
 logischen Aussage zu überpüfen. Die <strong>Vergleichsoperatoren</strong> <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> sind allgemein bekannt. Außerdem sind folgende Operatoren wichtig:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Operator</th>
 <th>Bedeutung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>==</td>
 <td>genau gleich</td>
 </tr>
-<tr>
+<tr class="even">
 <td>!=</td>
 <td>ungleich</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>!x</td>
 <td>nicht x</td>
 </tr>
-<tr>
+<tr class="even">
 <td>x ⎮ y</td>
 <td>x oder y</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>x &amp; y</td>
 <td>x und y</td>
 </tr>
-<tr>
+<tr class="even">
 <td>x ⎮⎮ y</td>
 <td>x oder y in Kontrollstrukturen</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>x &amp;&amp; y</td>
 <td>x und y Kontrollstrukturen</td>
 </tr>
@@ -682,57 +683,57 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <p>Wir haben bereits einige Beispiele für Ausdrücke kennengelernt, die mehrere Operatoren beinhalten. Wie auch bei arithmetischen Operatoren gibt es bei allen anderen Operatoren eine festgelegte Reihenfolge, in der diese Operatoren ausgewertet werden, wenn sie im selben Ausdruck vorkommen und sich einen Operanden teilen. Für die bisher bekannten Operatoren gilt die folgende Rangfolge:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Rang</th>
 <th>Operator</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1</td>
 <td>()</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2</td>
 <td>$</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>3</td>
 <td>[], [[]]</td>
 </tr>
-<tr>
+<tr class="even">
 <td>4</td>
 <td>^</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>5</td>
 <td>[:]</td>
 </tr>
-<tr>
+<tr class="even">
 <td>6</td>
 <td>*, /</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>7</td>
 <td>+, -</td>
 </tr>
-<tr>
+<tr class="even">
 <td>8</td>
 <td>&lt;, &gt;, &lt;=, &gt;=, ==, !=</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>9</td>
 <td>!</td>
 </tr>
-<tr>
+<tr class="even">
 <td>10</td>
 <td>&amp;, &amp;&amp;</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>11</td>
 <td>⎮, ⎮⎮</td>
 </tr>
-<tr>
+<tr class="even">
 <td>12</td>
 <td>&lt;-, =</td>
 </tr>
@@ -785,33 +786,33 @@ sogenannten <strong>Zuweisungsoperator</strong> <code>&lt;-</code> bzw. <code>=<
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": null,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"toc_depth": 4
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
 });
 });
 </script>

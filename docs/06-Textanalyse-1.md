@@ -103,8 +103,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-507601ab6004a6c299a4" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-507601ab6004a6c299a4">{"x":{"visdat":{"8aa177d4bfcd":["function () ","plotlyVisDat"]},"cur_data":"8aa177d4bfcd","attrs":{"8aa177d4bfcd":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-9e97d1c75fc382e61f04" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-9e97d1c75fc382e61f04">{"x":{"visdat":{"65529e6f285":["function () ","plotlyVisDat"]},"cur_data":"65529e6f285","attrs":{"65529e6f285":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -136,7 +136,7 @@ In der heutigen Stunde werden wir die grundlegenden quanteda-Funktionen und quan
 Um Dateien in R einzulesen, muss zuerst das Arbeitsverzeichnis gesetzt werden. Das heißt, dass wir dem Computer mitteilen müssen, in welchem Ordner auf unserem Computer sich die Dateien befinden, die wir einlesen wollen. Um das Arbeitsverzeichnis zu setzen, gibt es mehrere Möglichkeiten: 
 
 
-```r
+``` r
 # Arbeitsverzeichnis setzen
 
 setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
@@ -149,7 +149,7 @@ Alternativ kann das Arbeitsverzeichnis auch über den Tab "Files" im Fenster unt
 Wenn wir das Arbeitsverzeichnis gesetzt haben, können wir die Dateien einlesen. Auch hier gibt es mehrere Möglichkeiten: Zum Einlesen von Dateien können entweder R-Basisfunktionen verwendet werden oder Funktionen aus einem R Paket. Die Entwickler:innen von quanteda empfehlen, zum Einlesen eines Textkorpus die Funktion `readtext()` aus dem Paket readtext zu verwenden. Beim Einlesen der Texte mithilfe der `readtext()`-Funktion können direkt Metadaten aus den Dateinamen extrahiert werden, im Beispiel unten Autor:innennamen, Titel und Publikationsjahre der Texte. Diese Metadaten auf Dokumentenebene heißen im readtext- und quanteda-Kontext dann "docvars". Wir vergleichen im Folgenden die verschiedenen Einlesefunktionen:  
 
 
-```r
+``` r
 # 1. R base Funktionen - Beispiele 
 
 # multi-purpose Funktion "scan"
@@ -199,7 +199,7 @@ Verständnisfragen:
 Bereits nach dem Einlesen können wir uns einen Überblick über das Korpus verschaffen. Dabei können auch die beim Einlesen aus den Dateinamen extrahierten Metadaten zu den einzelnen Texten abgefragt werden.  
 
 
-```r
+``` r
 # Alle Texte mit Publikationsjahr 1912 auswählen 
 ger_texte$doc_id[ger_texte$Jahr == 1912]
 ```
@@ -208,7 +208,7 @@ ger_texte$doc_id[ger_texte$Jahr == 1912]
 ## character(0)
 ```
 
-```r
+``` r
 # Wie viele Texte gibt es aus dem Jahr 1912? 
 length(ger_texte$doc_id[ger_texte$Jahr == 1912])
 ```
@@ -217,7 +217,7 @@ length(ger_texte$doc_id[ger_texte$Jahr == 1912])
 ## [1] 0
 ```
 
-```r
+``` r
 # Häufigkeitstabelle der Publikationsjahre
 table(ger_texte$Jahr)
 ```
@@ -234,7 +234,7 @@ table(ger_texte$Jahr)
 Text wird im Computer eigentlich als Abfolge von Zeichen abgebildet, und jedes Zeichen wird im Computer durch eine Zahlenfolge repräsentiert. Wie genau diese Folge aussieht, hängt davon ab, welche Kodierung (Encoding) dazu verwendet wird. Das folgende Beispiel aus Kevin Usheys Beitrag ["String Encoding and R"](https://kevinushey.github.io/blog/2018/02/21/string-encoding-and-r/) illustriert diesen Umstand: 
 
 
-```r
+``` r
 utf8 <- "\u00fb"  # 'û'
 latin1 <- iconv(utf8, to = "latin1")
 paste(latin1, "(latin1):", pryr::bits(latin1))
@@ -244,7 +244,7 @@ paste(latin1, "(latin1):", pryr::bits(latin1))
 ## [1] "û (latin1): 11111011"
 ```
 
-```r
+``` r
 paste(utf8,   "(UTF-8) :", pryr::bits(utf8))
 ```
 
@@ -257,7 +257,7 @@ Eine der ersten Kodierungen war ASCII, mit der allerdings nur Zeichen aus dem la
 Mit der Funktion `Encoding()` kann nach dem  Einlesen überprüft werden, ob das Encoding korrekt erkannt wird: 
 
 
-```r
+``` r
 Encoding(ger_texte[1, 2])
 ```
 
@@ -275,12 +275,12 @@ Beim Einlesen und Speichern von Dateien muss in R auf die Wahl des richtigen Enc
 Ein Quanteda corpus-Objekt enthält die eingelesenen Texte selbst, sowie Metadaten auf Dokument- und Korpusebene. 
 
 
-```r
+``` r
 install.packages("quanteda")
 ```
 
 
-```r
+``` r
 library(quanteda)
 
 # quanteda-Korpusobkjekt erstellen
@@ -314,7 +314,7 @@ ger_korpus
 Die Funktion `str()` kann verwendet werden, um einen Überblick über die Struktur des Objekts zu erhalten. Da ein Quanteda corpus-Objekt neben den Texten selbst auch Metadaten enthält, gibt die `str()`-Funktion einen Überblick über alle Metadaten. Die Metadaten der einzelnen Dokumente (z.B. Dateinamen, ggf. mithilfe der readtext-Funktion extrahierte docvars)  können unter `attr(*, "docvars")` eingesehen werden. `attr(*, "meta")` beschreibt dagegen alle Metadaten auf Korpusebene (z.B. Informationen zu Ort und Zeit der Erstellung des corpus-Objekts). 
 
 
-```r
+``` r
 str(ger_korpus)
 ```
 
@@ -337,7 +337,7 @@ str(ger_korpus)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2025-02-04"
+##   .. ..$ created        : Date[1:1], format: "2025-04-02"
 ##   .. ..$ source         : chr "data.frame"
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr "documents"
@@ -350,7 +350,7 @@ str(ger_korpus)
 Mit der Funktion `summary()` können Informationen zu den Texten selbst abgerufen werden. Die Funktion berechnet für jeden Text in einem Korpus die Anzahl der Tokens, der Types und der Sätze und bietet so einen ersten Überblick über das Korpus. 
 
 
-```r
+``` r
 # Weitere Informationen abrufen mit der summary()-Funktion
 ger_info <- summary(ger_korpus) 
 ger_info
@@ -407,7 +407,7 @@ ger_info
 Die `summary()`-Funktion gibt einen Dataframe zurück. Es können deswegen alle Zugriffsoperationen und Funktionen auf das Objekt `ger_info` angewendet werden, die auf Dataframes angewendet werden können:  
 
 
-```r
+``` r
 # Minimum und Maximum der Spalten Jahr und Tokens
 range(ger_info$Jahr) 
 ```
@@ -416,7 +416,7 @@ range(ger_info$Jahr)
 ## [1] 1883 1926
 ```
 
-```r
+``` r
 range(ger_info$Tokens) 
 ```
 
@@ -424,7 +424,7 @@ range(ger_info$Tokens)
 ## [1]   4793 321896
 ```
 
-```r
+``` r
 # Anzahl der verschiedenen Autor:innen 
 length(unique(ger_info$Autor_in)) 
 ```
@@ -433,7 +433,7 @@ length(unique(ger_info$Autor_in))
 ## [1] 4
 ```
 
-```r
+``` r
 # Gesamtzahl der Tokens im ger_korpus Korpus
 sum(ger_info$Tokens) 
 ```
@@ -442,7 +442,7 @@ sum(ger_info$Tokens)
 ## [1] 1534301
 ```
 
-```r
+``` r
 # Titel des Textes mit den meisten Tokens
 ger_info$Titel[ger_info$Tokens == max(ger_info$Tokens)]
 ```
@@ -451,7 +451,7 @@ ger_info$Titel[ger_info$Tokens == max(ger_info$Tokens)]
 ## [1] "zauberberg"
 ```
 
-```r
+``` r
 # Autor:in des Textes mit den meisten Tokens
 ger_info$Autor_in[ger_info$Tokens == max(ger_info$Tokens)]
 ```
@@ -460,7 +460,7 @@ ger_info$Autor_in[ger_info$Tokens == max(ger_info$Tokens)]
 ## [1] "mann"
 ```
 
-```r
+``` r
 # Titel des Textes mit einer Tokenanzahl zwischen 250000 und 300000
 ger_info$Titel[ger_info$Tokens >= 250000 & ger_info$Tokens <= 300000]
 ```
@@ -472,7 +472,7 @@ ger_info$Titel[ger_info$Tokens >= 250000 & ger_info$Tokens <= 300000]
 Oft ist bei der Textanalyse der Vergleich zwischen verschiedenen Teilkorpora oder Unterkorpora von Interesse, beispielsweise, wenn die Texte verschiedener Autor:innen verglichen werden sollen. Ein **Teilkorpus** kann unkompliziert nach dem Einlesen der Texte erstellt werden: 
 
 
-```r
+``` r
 # Teilkorpus aus Kafka-Texten erstellen mit R Base-Funktionen
 length(which(ger_korpus$Autor_in == "kafka"))
 ```
@@ -481,7 +481,7 @@ length(which(ger_korpus$Autor_in == "kafka"))
 ## [1] 6
 ```
 
-```r
+``` r
 which(ger_korpus$Autor_in == "kafka") # gibt aus 6 7 8 9 10 11
 ```
 
@@ -489,7 +489,7 @@ which(ger_korpus$Autor_in == "kafka") # gibt aus 6 7 8 9 10 11
 ## [1]  6  7  8  9 10 11
 ```
 
-```r
+``` r
 ger_korpus[6:11] 
 ```
 
@@ -514,7 +514,7 @@ ger_korpus[6:11]
 ## "Als Gregor Samsa eines Morgens aus unruhigen Träumen erwacht..."
 ```
 
-```r
+``` r
 # Teilkorpus aus Kafka-Texten erstellen: the quanteda way 
 kafka_korpus <- corpus_subset(ger_korpus, Autor_in == "kafka")
 kafka_korpus
@@ -542,7 +542,7 @@ kafka_korpus
 ```
 
 
-```r
+``` r
 # Teilkorpus erstellen und Korpusinformationen zusammenfassen in einer Zeile
 kafka_summary <- summary(corpus_subset(ger_korpus, Autor_in == "kafka"))
 # Wir können auch stattdessen den Dataframe ger_info nach Kafka-Texten filtern: 
@@ -558,7 +558,7 @@ View(kafka_summary)
 Ein Quanteda tokens-Objekt bildet ein tokenisiertes Korpus als eine Liste von Vektoren ab, wobei jedes Element der Liste einem Dokument aus dem Korpus entspricht. Die Reihenfolge der Tokens ist für alle Texte in einem tokens-Objekt beibehalten.
 
 
-```r
+``` r
 library(quanteda)
 
 # quanteda-Tokensobjekt erstellen 
@@ -577,7 +577,7 @@ print(kafka_toks[1]) # wird nicht komplett angezeigt
 ## [ ... and 100,240 more ]
 ```
 
-```r
+``` r
 print(kafka_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
 ```
 
@@ -640,7 +640,7 @@ print(kafka_toks[1], max_ntoken = 200) # 200 Tokens anzeigen
 Auch ein tokens-Objekt kann mithilfe der Funktion `str()` untersucht werden. Quanteda tokens-Objekte enthalten neben den Tokens selbst dieselben Metadaten wie quanteda corpus-Objekte. 
 
 
-```r
+``` r
 str(kafka_toks)
 ```
 
@@ -671,7 +671,7 @@ str(kafka_toks)
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2025-02-04"
+##   .. ..$ created        : Date[1:1], format: "2025-04-02"
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr "documents"
 ##   .. ..$ what        : chr "word"
@@ -688,7 +688,7 @@ str(kafka_toks)
 Auch aus Quanteda tokens-Objekten kann ein Teilkorpus gebildet werden:
 
 
-```r
+``` r
 # Tokens-Objekt nach Kafka-Texten filtern
 kafka_tokens <- tokens_subset(ger_toks, Autor_in == "kafka")
 ```
@@ -699,7 +699,7 @@ Für die meisten Analysemethoden wird eine sogenannte Document-Feature-Matrix (D
 
 
 
-```r
+``` r
 library(quanteda)
 
 # DFM erstellen
@@ -734,7 +734,7 @@ Alle Objekte, die wir bisher erstellt haben, existieren nur in unserer RStudio U
 Wenn Objekte in einem eigenen Ordner (="Verzeichnis") gespeichert werden sollen, kann dieser direkt aus R heraus erstellt werden: 
 
 
-```r
+``` r
 # Neuen Ordner erstellen: falls bereits ein Ordner "output" existiert, wird dieser gelöscht
 unlink("output", recursive = TRUE) 
 dir.create("output") 
@@ -745,7 +745,7 @@ getwd()
 Tabellarische Daten (Dataframes) können zum Beispiel in csv-Dateien gespeichert werden:  
 
 
-```r
+``` r
 # Dataframe in csv-Datei schreiben
 write.csv2(ger_info, "ger_info.csv", fileEncoding="UTF-8")
 # Können wir verhindern, dass die Zeilenindizes als eigene Spalte gespeichert werden? 
@@ -757,7 +757,7 @@ write.csv2(ger_info, "ger_info.csv", row.names=FALSE, fileEncoding="UTF-8")
 Objekte, die für die Weiterverarbeitung in R gedacht sind, wie zum Beispiel quanteda tokens-Objekte oder auch der ger_info Dataframe, können außerdem in R-internen Datenformaten gespeichert werden: 
 
 
-```r
+``` r
 # R-interne Datenformate: R Objekte speichern und laden
 
 # rds: Ein Objekt in einer Datei speichern
@@ -772,7 +772,7 @@ save(kafka_1, kafka_2, kafka_3, file="uebung.RData")
 RDS-, RDA- und RData-Dateien können später eingelesen werden mit: 
 
 
-```r
+``` r
 ger_info <- readRDS(file="ger_info.rds")
 kafka_toks <- readRDS(file="kafka_toks.rds")
 load(file="uebung.rda")
@@ -782,14 +782,14 @@ load(file="uebung.RData")
 Und csv-Dateien könne eingelesen werden mit: 
 
 
-```r
+``` r
 ger_info <- read.csv2(file="ger_info.csv", fileEncoding="UTF-8")
 ```
 
 Um Änderungen zu speichern, die wir ggf. an den eingelesenen Texten vorgenommen haben, können wir diese  einfach in eine neue Textdatei schreiben: 
 
 
-```r
+``` r
 # Textdateien Zeile für Zeile schreiben:
 writeLines(kafka_1, "kafka_bearbeitet.txt")
 # Alternativ mit write.table: Funktioniert auch für Textdateien!

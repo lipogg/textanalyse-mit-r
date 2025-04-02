@@ -27,7 +27,7 @@ Anders als beispielsweise in Python gibt es in R keinen allgemein anerkannten "C
 Um den eigenen Code für andere verständlicher zu gestalten und sich selbst an seinen Code zu erinnern, sollte man diesen immer gut kommentieren. 
 
 
-```r
+``` r
 # Das ist ein Kommentar 
 ```
 
@@ -49,7 +49,7 @@ Character ist kurz für "character string"; in anderen Programmiersprachen heiß
 Ein paar Beispiele:
 
 
-```r
+``` r
 2
 2L
 345682389 
@@ -65,7 +65,7 @@ FALSE
 Den Datentyp eines Objekts könnt ihr z.B. mit der Funktion `typeof()` abfragen. Wenn ihr jede Zeile nacheinander in ein R Skript kopiert und ausführt, wird auf der Konsole (Fenster Console im RStudio) der Wert ausgegeben, der hier von `#>` angeführt wird.
 
 
-```r
+``` r
 typeof(2)
 ```
 
@@ -73,7 +73,7 @@ typeof(2)
 #> [1] "double"
 ```
 
-```r
+``` r
 typeof(2L)
 ```
 
@@ -81,7 +81,7 @@ typeof(2L)
 #> [1] "integer"
 ```
 
-```r
+``` r
 typeof(4.6)
 ```
 
@@ -89,7 +89,7 @@ typeof(4.6)
 #> [1] "double"
 ```
 
-```r
+``` r
 typeof("Hello World")
 ```
 
@@ -97,7 +97,7 @@ typeof("Hello World")
 #> [1] "character"
 ```
 
-```r
+``` r
 typeof(TRUE)
 ```
 
@@ -132,7 +132,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
   `^` oder `**` wird zum Exponieren verwendet. 
 
 
-```r
+``` r
 5 + 4 
 ```
 
@@ -140,7 +140,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 #> [1] 9
 ```
 
-```r
+``` r
 10 / 5
 ```
 
@@ -148,7 +148,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 #> [1] 2
 ```
 
-```r
+``` r
 3 * 6.3
 ```
 
@@ -156,7 +156,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 #> [1] 18.9
 ```
 
-```r
+``` r
 10 %% 5
 ```
 
@@ -164,7 +164,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 #> [1] 0
 ```
 
-```r
+``` r
 10^2
 ```
 
@@ -172,7 +172,7 @@ Je nachdem, welchen Datentyp ein oder mehrere Objekte in R haben, können diese 
 #> [1] 100
 ```
 
-```r
+``` r
 10**2
 ```
 
@@ -204,7 +204,7 @@ Verständnisfragen:
 Beispiele: 
 
 
-```r
+``` r
 -5 < -10
 ```
 
@@ -212,7 +212,7 @@ Beispiele:
 #> [1] FALSE
 ```
 
-```r
+``` r
 5 >= 5
 ```
 
@@ -220,7 +220,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 3 != 5 
 ```
 
@@ -228,7 +228,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 "Hallo" != "Hello"
 ```
 
@@ -236,7 +236,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 3 == 3 & "c" == "c"
 ```
 
@@ -244,7 +244,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 3 == 3 | "c" == "a"
 ```
 
@@ -252,7 +252,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 "Eine Rose ist eine Pflanze" == "Eine Rose ist keine Pflanze" 
 ```
 
@@ -310,7 +310,7 @@ Bei der Benennung von Variablen sollten bestimmte **Regeln und die Konventionen*
 Beim Ausführen einer Zuweisung wird nichts auf dem Bildschirm (auf der Rstudio Konsole) ausgegeben. Nach der Zuweisung können Werte, die einer Variable zugeordnet sind, mithilfe der Funktion `print()` auf dem Bildschirm ausgegeben werden. Alternativ kann auch einfach der Variablennamen erneut eingegeben und ausgeführt werden. 
 
 
-```r
+``` r
 # Zuweisungen
 zahl <- 454
 satz <- "Eine Rose ist eine Pflanze"
@@ -319,7 +319,7 @@ noch_ein_satz <- "Noch eine Rose"
 Satz <- "Eine Rose ist keine Pflanze"
 ```
 
-```r
+``` r
 # Variable Satz auf dem Bildschirm ausgeben 
 print(Satz)
 ```
@@ -328,7 +328,7 @@ print(Satz)
 #> [1] "Eine Rose ist keine Pflanze"
 ```
 
-```r
+``` r
 # Variable satz auf dem Bildschirm ausgeben
 print(satz)
 ```
@@ -337,7 +337,7 @@ print(satz)
 #> [1] "Eine Rose ist eine Pflanze"
 ```
 
-```r
+``` r
 # Variable satz ohne die print()-Funktion auf dem Bildschirm ausgeben
 satz
 ```
@@ -346,12 +346,12 @@ satz
 #> [1] "Eine Rose ist eine Pflanze"
 ```
 
-```r
+``` r
 # Der Variable satz einen neuen Wert zuweisen
 satz <- "Ein Apfel ist keine Pflanze"
 ```
 
-```r
+``` r
 # Variable satz erneut ausgeben
 print(satz)
 ```
@@ -360,7 +360,7 @@ print(satz)
 #> [1] "Ein Apfel ist keine Pflanze"
 ```
 
-```r
+``` r
 # hier werden die Variablen satz und Satz aus dem Beispiel oben verglichen
 satz == Satz 
 ```
@@ -383,7 +383,7 @@ Verständnisfragen:
 Nicht nur einzelne Werte können Variablen zugewiesen werden, sondern auch ganze Ausdrücke. In der nächsten Stunde werden wir außerdem sehen, dass auch Datenstrukturen Variablen zugewiesen werden können. 
 
 
-```r
+``` r
 # Ausdrücke als Variablen  
 aussage_1 <- "c" == "c"
 aussage_2 <- 3 == 5
@@ -432,7 +432,7 @@ Wenn diese Auswertungsreihenfolge geändert werden soll, müssen runde Klammern 
 Beispiele: 
 
 
-```r
+``` r
 4 + 10 > 3 + 5 * 2 
 ```
 
@@ -440,7 +440,7 @@ Beispiele:
 #> [1] TRUE
 ```
 
-```r
+``` r
 4 + 10 > (3 + 5) * 2 
 ```
 
@@ -448,7 +448,7 @@ Beispiele:
 #> [1] FALSE
 ```
 
-```r
+``` r
 FALSE & TRUE == FALSE
 ```
 
@@ -456,7 +456,7 @@ FALSE & TRUE == FALSE
 #> [1] FALSE
 ```
 
-```r
+``` r
 (FALSE & TRUE) == FALSE
 ```
 

@@ -53,7 +53,8 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
@@ -392,39 +393,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col width="89%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">Begriff</th>
 <th align="left">Englische Entsprechung</th>
 <th align="left">Definition (im R-Kontext)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">Element</td>
 <td align="left">Element</td>
 <td align="left">Wert oder anderes Objekt innnerhalb einer Datenstruktur. Datenstrukturen können selbst Elemente einer anderen Datenstruktur sein. Elemente haben einen Index und manchmal zusätzlich einen Namen (oder ‘Schlüssel’), über den auf das Element zugegriffen werden kann.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Index</td>
 <td align="left">Index</td>
 <td align="left">Position eines Elements innerhalb einer Datenstruktur. Ein Index ist in R immer eine Zahl &gt;= 1.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Indexierung</td>
 <td align="left">Indexing</td>
 <td align="left">Überbegriff für verschiedene Operationen, mit denen auf Elemente in einer Datenstruktur zugegriffen werden kann.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Zugreifen</td>
 <td align="left">Access</td>
 <td align="left">Operation, bei der durch den Einsatz spezifischer Operatoren Elemente einer Datenstruktur ausgewählt, diese extrahiert oder modifiziert werden können.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Vektorisierung</td>
 <td align="left">Vectorization</td>
 <td align="left">Mechanismus, bei dem Funktionen oder Operationen automatisch auf alle Elemente eines Vektors angewandt werden, statt auf einzelne Elemente.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Dimension</td>
 <td align="left">Dimension</td>
 <td align="left">In Bezug auf Matrizen die Anzahl von Zeilen und Spalten (angegeben als Zeilen x Spalten). In Bezug auf Arrays allgemein die Anzahl der verschiedenen ‘Richtungen’, in denen Daten organisiert sind. Bei einem Array können das nicht nur Zeilen und Spalten sein, sondern auch ‘Schichten’ von Matrizen und andere Organisationsweisen.</td>
@@ -1395,44 +1396,44 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb269-8"><a href="r-basics-ii-datenstrukturen.html#cb269-8" tabindex="-1"></a>)</span>
 <span id="cb269-9"><a href="r-basics-ii-datenstrukturen.html#cb269-9" tabindex="-1"></a><span class="fu">print</span>(temperature_array[,<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Morgen&quot;</span>]) </span></code></pre></div>
 <pre><code>#&gt;  Berlin Hamburg München 
-#&gt;      22      22      22</code></pre>
+#&gt;      19      27      12</code></pre>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="r-basics-ii-datenstrukturen.html#cb271-1" tabindex="-1"></a><span class="fu">print</span>(temperature_array)</span></code></pre></div>
 <pre><code>#&gt; , , Zeit = Morgen
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  22 24 19 30 26 15 14
-#&gt;   Hamburg 22 26 16 24 23 27 22
-#&gt;   München 22 30 15 18 18 21 18
+#&gt;   Berlin  19 17 12 13 15 17 22
+#&gt;   Hamburg 27 10 10 22 22 12 21
+#&gt;   München 12 29 29 22 12 28 10
 #&gt; 
 #&gt; , , Zeit = Mittag
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  27 16 20 10 24 10 23
-#&gt;   Hamburg 28 23 25 15 30 11 19
-#&gt;   München 29 29 25 26 20 25 11
+#&gt;   Berlin  13 22 28 16 19 14 17
+#&gt;   Hamburg 20 22 23 20 22 24 25
+#&gt;   München 23 19 13 20 23 21 24
 #&gt; 
 #&gt; , , Zeit = Abend
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  10 10 29 22 28 30 15
-#&gt;   Hamburg 26 16 18 26 15 23 12
-#&gt;   München 21 12 25 26 11 13 28</code></pre>
+#&gt;   Berlin  13 17 26 30 15 10 22
+#&gt;   Hamburg 30 30 12 16 24 13 25
+#&gt;   München 24 20 11 24 19 12 25</code></pre>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="r-basics-ii-datenstrukturen.html#cb273-1" tabindex="-1"></a><span class="co"># Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb273-2"><a href="r-basics-ii-datenstrukturen.html#cb273-2" tabindex="-1"></a>morning_temp_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(temperature_array[ , , <span class="st">&quot;Morgen&quot;</span>], <span class="at">nrow =</span> <span class="dv">7</span>)</span>
 <span id="cb273-3"><a href="r-basics-ii-datenstrukturen.html#cb273-3" tabindex="-1"></a><span class="fu">rownames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>)</span>
 <span id="cb273-4"><a href="r-basics-ii-datenstrukturen.html#cb273-4" tabindex="-1"></a><span class="fu">colnames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
 <span id="cb273-5"><a href="r-basics-ii-datenstrukturen.html#cb273-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_matrix)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     22      16      18
-#&gt; Di     22      15      15
-#&gt; Mi     22      30      27
-#&gt; Do     24      24      21
-#&gt; Fr     26      18      14
-#&gt; Sa     30      26      22
-#&gt; So     19      23      18</code></pre>
+#&gt; Mo     19      10      12
+#&gt; Di     27      29      17
+#&gt; Mi     12      13      12
+#&gt; Do     17      22      28
+#&gt; Fr     10      22      22
+#&gt; Sa     29      15      21
+#&gt; So     12      22      10</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="r-basics-ii-datenstrukturen.html#cb275-1" tabindex="-1"></a><span class="co"># Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb275-2"><a href="r-basics-ii-datenstrukturen.html#cb275-2" tabindex="-1"></a>morning_temp_dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb275-3"><a href="r-basics-ii-datenstrukturen.html#cb275-3" tabindex="-1"></a>  <span class="at">Berlin =</span> temperature_array[<span class="st">&quot;Berlin&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
@@ -1441,26 +1442,26 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb275-6"><a href="r-basics-ii-datenstrukturen.html#cb275-6" tabindex="-1"></a>)</span>
 <span id="cb275-7"><a href="r-basics-ii-datenstrukturen.html#cb275-7" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe) </span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     22      22      22
-#&gt; Di     24      26      30
-#&gt; Mi     19      16      15
-#&gt; Do     30      24      18
-#&gt; Fr     26      23      18
-#&gt; Sa     15      27      21
-#&gt; So     14      22      18</code></pre>
+#&gt; Mo     19      27      12
+#&gt; Di     17      10      29
+#&gt; Mi     12      10      29
+#&gt; Do     13      22      22
+#&gt; Fr     15      22      12
+#&gt; Sa     17      12      28
+#&gt; So     22      21      10</code></pre>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="r-basics-ii-datenstrukturen.html#cb277-1" tabindex="-1"></a><span class="co"># Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. </span></span>
 <span id="cb277-2"><a href="r-basics-ii-datenstrukturen.html#cb277-2" tabindex="-1"></a><span class="co"># Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:</span></span>
 <span id="cb277-3"><a href="r-basics-ii-datenstrukturen.html#cb277-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span>
 <span id="cb277-4"><a href="r-basics-ii-datenstrukturen.html#cb277-4" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Skala <span class="ot">&lt;-</span> <span class="st">&quot;Celsius&quot;</span></span>
 <span id="cb277-5"><a href="r-basics-ii-datenstrukturen.html#cb277-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala
-#&gt; Mo     22      22      22 Morgen Celsius
-#&gt; Di     24      26      30 Morgen Celsius
-#&gt; Mi     19      16      15 Morgen Celsius
-#&gt; Do     30      24      18 Morgen Celsius
-#&gt; Fr     26      23      18 Morgen Celsius
-#&gt; Sa     15      27      21 Morgen Celsius
-#&gt; So     14      22      18 Morgen Celsius</code></pre>
+#&gt; Mo     19      27      12 Morgen Celsius
+#&gt; Di     17      10      29 Morgen Celsius
+#&gt; Mi     12      10      29 Morgen Celsius
+#&gt; Do     13      22      22 Morgen Celsius
+#&gt; Fr     15      22      12 Morgen Celsius
+#&gt; Sa     17      12      28 Morgen Celsius
+#&gt; So     22      21      10 Morgen Celsius</code></pre>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="r-basics-ii-datenstrukturen.html#cb279-1" tabindex="-1"></a><span class="co"># Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: </span></span>
 <span id="cb279-2"><a href="r-basics-ii-datenstrukturen.html#cb279-2" tabindex="-1"></a>morning_temp_matrix<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span></code></pre></div>
 <pre><code>#&gt; Warning in morning_temp_matrix$Zeit &lt;- &quot;Morgen&quot;: Coercing LHS to a list</code></pre>
@@ -1469,36 +1470,36 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb281-3"><a href="r-basics-ii-datenstrukturen.html#cb281-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="fu">pmax</span>(morning_temp_dataframe<span class="sc">$</span>Berlin, morning_temp_dataframe<span class="sc">$</span>Hamburg, morning_temp_dataframe<span class="sc">$</span>München)</span>
 <span id="cb281-4"><a href="r-basics-ii-datenstrukturen.html#cb281-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     22      22      22 Morgen Celsius      22
-#&gt; Di     24      26      30 Morgen Celsius      30
-#&gt; Mi     19      16      15 Morgen Celsius      19
-#&gt; Do     30      24      18 Morgen Celsius      30
-#&gt; Fr     26      23      18 Morgen Celsius      26
-#&gt; Sa     15      27      21 Morgen Celsius      27
-#&gt; So     14      22      18 Morgen Celsius      22</code></pre>
+#&gt; Mo     19      27      12 Morgen Celsius      27
+#&gt; Di     17      10      29 Morgen Celsius      29
+#&gt; Mi     12      10      29 Morgen Celsius      29
+#&gt; Do     13      22      22 Morgen Celsius      22
+#&gt; Fr     15      22      12 Morgen Celsius      22
+#&gt; Sa     17      12      28 Morgen Celsius      28
+#&gt; So     22      21      10 Morgen Celsius      22</code></pre>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="r-basics-ii-datenstrukturen.html#cb283-1" tabindex="-1"></a><span class="co"># Wir könnten auch die Werte in Fahrenheit umwandeln </span></span>
 <span id="cb283-2"><a href="r-basics-ii-datenstrukturen.html#cb283-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
 <span id="cb283-3"><a href="r-basics-ii-datenstrukturen.html#cb283-3" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     22      22      22 Morgen Celsius    71.6
-#&gt; Di     24      26      30 Morgen Celsius    86.0
-#&gt; Mi     19      16      15 Morgen Celsius    66.2
-#&gt; Do     30      24      18 Morgen Celsius    86.0
-#&gt; Fr     26      23      18 Morgen Celsius    78.8
-#&gt; Sa     15      27      21 Morgen Celsius    80.6
-#&gt; So     14      22      18 Morgen Celsius    71.6</code></pre>
+#&gt; Mo     19      27      12 Morgen Celsius    80.6
+#&gt; Di     17      10      29 Morgen Celsius    84.2
+#&gt; Mi     12      10      29 Morgen Celsius    84.2
+#&gt; Do     13      22      22 Morgen Celsius    71.6
+#&gt; Fr     15      22      12 Morgen Celsius    71.6
+#&gt; Sa     17      12      28 Morgen Celsius    82.4
+#&gt; So     22      21      10 Morgen Celsius    71.6</code></pre>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="r-basics-ii-datenstrukturen.html#cb285-1" tabindex="-1"></a><span class="co">#... und anschließend die Spalte umbenennen </span></span>
 <span id="cb285-2"><a href="r-basics-ii-datenstrukturen.html#cb285-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum_Fahrenheit <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum</span>
 <span id="cb285-3"><a href="r-basics-ii-datenstrukturen.html#cb285-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># entfernt die ursprüngliche &quot;Maximum&quot; Spalte</span></span>
 <span id="cb285-4"><a href="r-basics-ii-datenstrukturen.html#cb285-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#&gt; Mo     22      22      22 Morgen Celsius               71.6
-#&gt; Di     24      26      30 Morgen Celsius               86.0
-#&gt; Mi     19      16      15 Morgen Celsius               66.2
-#&gt; Do     30      24      18 Morgen Celsius               86.0
-#&gt; Fr     26      23      18 Morgen Celsius               78.8
-#&gt; Sa     15      27      21 Morgen Celsius               80.6
-#&gt; So     14      22      18 Morgen Celsius               71.6</code></pre>
+#&gt; Mo     19      27      12 Morgen Celsius               80.6
+#&gt; Di     17      10      29 Morgen Celsius               84.2
+#&gt; Mi     12      10      29 Morgen Celsius               84.2
+#&gt; Do     13      22      22 Morgen Celsius               71.6
+#&gt; Fr     15      22      12 Morgen Celsius               71.6
+#&gt; Sa     17      12      28 Morgen Celsius               82.4
+#&gt; So     22      21      10 Morgen Celsius               71.6</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="r-basics-ii-datenstrukturen.html#cb287-1" tabindex="-1"></a><span class="co"># Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. </span></span></code></pre></div>
 </div>
 <div id="datenstrukturen-untersuchen" class="section level2 hasAnchor" number="2.9">
@@ -1512,12 +1513,12 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <p>Neben <code>typeof()</code> und <code>class()</code> gibt es noch eine dritte Funktion, mit der die Datenstruktur eines Objekts untersucht werden kann. Die Funktion <code>str()</code> gibt Auskunft über die interne Struktur des Objekts:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="r-basics-ii-datenstrukturen.html#cb292-1" tabindex="-1"></a><span class="fu">str</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt; &#39;data.frame&#39;:    7 obs. of  6 variables:
-#&gt;  $ Berlin            : int  22 24 19 30 26 15 14
-#&gt;  $ Hamburg           : int  22 26 16 24 23 27 22
-#&gt;  $ München           : int  22 30 15 18 18 21 18
+#&gt;  $ Berlin            : int  19 17 12 13 15 17 22
+#&gt;  $ Hamburg           : int  27 10 10 22 22 12 21
+#&gt;  $ München           : int  12 29 29 22 12 28 10
 #&gt;  $ Zeit              : chr  &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; ...
 #&gt;  $ Skala             : chr  &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; ...
-#&gt;  $ Maximum_Fahrenheit: num  71.6 86 66.2 86 78.8 80.6 71.6</code></pre>
+#&gt;  $ Maximum_Fahrenheit: num  80.6 84.2 84.2 71.6 71.6 82.4 71.6</code></pre>
 <p>Die Funktion <code>typeof()</code> kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden:</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="r-basics-ii-datenstrukturen.html#cb294-1" tabindex="-1"></a><span class="co"># Jedes Element hat in einer Matrix hat den Datentyp character</span></span>
 <span id="cb294-2"><a href="r-basics-ii-datenstrukturen.html#cb294-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf[<span class="dv">1</span>, <span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>
@@ -1633,33 +1634,33 @@ Bei der Manipulation von Objekten sollte man also dieses Prinzip der Unveränder
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": null,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"toc_depth": 4
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
 });
 });
 </script>

@@ -31,7 +31,7 @@ Ein Ausdruck der Art `x %>% f` ist also äquivalent zu `f(x)`.
 Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon kennengelernt. Wir schauen uns als Beispiel wieder den Beispielsatz aus dem letzten Übungsblatt an, mit ein paar Zusätzen:
 
 
-```r
+``` r
 library(quanteda)
 
 beispiel_1 <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme"
@@ -56,7 +56,7 @@ print(beispiel_toks, max_ntoken = 200)
 In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird? 
 
 
-```r
+``` r
 beispiel_2 <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 
 beispiel_toks <- tokens(beispiel_2)
@@ -81,7 +81,7 @@ print(beispiel_toks, max_ntoken = 200)
 Dann werden die Telefonnummer und das Geburtsdatum nicht mehr als Sinneinheiten erkannt. In diesem Fall gibt es zwei Möglichkeiten: Entweder die Tokenisierungsregeln werden angepasst, oder die Tokens, die falsch erkannt werden, werden vor dem Tokenisieren so bearbeitet, dass sie nach den bestehenden Tokenisierungsregeln als Sinneinheit erkannt werden. Die manuelle Anpassung der Tokenisierungsregeln ist recht komplex und würde den Rahmen etwas sprengen; ihr könnt allerdings bei Interesse  [hier](https://quanteda.io/reference/tokenize_custom.html) nachlesen, wie das geht. Wir schauen uns stattdessen an, wie die Tokens so bearbeitet werden können, dass sie richtig erkannt werden. In unserem Beispiel geht das ganz einfach mit der R-Basisfunktion `gsub()`: 
 
 
-```r
+``` r
 beispiel_2 <- gsub("/", "-", beispiel_2)
 beispiel_toks <- tokens(beispiel_2) 
 print(beispiel_toks, max_ntoken = 200)
@@ -103,7 +103,7 @@ print(beispiel_toks, max_ntoken = 200)
 Wenn dagegen aus irgendeinem Grund die Telefonnummer und das Geburtsdatum nicht als Sinneinheit behandelt werden sollen, sondern die Zeichen jeweils eigene Tokens bilden sollen, kann dagegen einfach beim Aufruf der `tokens()`-Funktion das zusätzliche Argument `split_hyphens` übergeben werden:
 
 
-```r
+``` r
 beispiel_toks <- tokens(beispiel_1, split_tags = TRUE, split_hyphens = TRUE )
 print(beispiel_toks, max_ntoken = 200)
 ```
@@ -126,7 +126,7 @@ print(beispiel_toks, max_ntoken = 200)
 Zeichenketten können nicht nur wie bisher in Wörter und andere Äußerungen zerlegt werden. Manchmal ist es sinnvoll, Texte in kleinere oder größere Einheiten zu zerlegen, also z.B. in einzelne Zeichen oder einzelne Sätze. Wenn Texte in größere Segmente wie Sätze zerlegt werden, nennt man diese Operation **Segmentieren** (oder engl. "segmentation"). Dazu kann ebenfalls die Funktion `tokens()` verwendet werden, mit dem zusätzlichen Argument `what = "character"` bzw. `what = "sentence"`: 
 
 
-```r
+``` r
 # Segmentieren auf Satzebene
 beispiel_segments <- tokens(beispiel_1, what = "sentence")
 print(beispiel_segments, max_ntoken = 200)
@@ -139,7 +139,7 @@ print(beispiel_segments, max_ntoken = 200)
 ## [2] "Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02-04-1965. #callme"
 ```
 
-```r
+``` r
 # Tokenisieren auf Zeichenebene
 beispiel_chars <-  tokens(beispiel_1, what = "character")
 print(beispiel_chars, max_ntoken = 200)
@@ -162,7 +162,7 @@ print(beispiel_chars, max_ntoken = 200)
 Da Tokenisieren eine komplexe Operation ist, dauert es je nach Anzahl und Länge der Texte lange, bis der Computer ein komplettes Korpus tokenisiert hat. Wenn die  `tokens()`-Funktion mit dem zusätzlichen Argument `verbose = TRUE` aufgerufen wird, werden beim Ausführen der Funktion Updates zu jedem Bearbeitungsschritt auf der Konsole ausgegeben: 
 
 
-```r
+``` r
 tokens(beispiel_1, verbose = TRUE)
 ```
 
@@ -177,7 +177,7 @@ tokens(beispiel_1, verbose = TRUE)
 Die `tokens()`-Funktion kann auch zum Tokenisieren von japanisch- und chinesischsprachigen Texten verwendet werden. Hierbei wird unter der Motorhaube eine morphologische Analyse durchgeführt. Ein Beispiel aus den [Quanteda-Dokumentationsseiten](https://tutorials.quanteda.io/multilingual/overview/): 
 
 
-```r
+``` r
 library(readtext)
 declaration <- readtext("data/declaration_rights.txt")
 cor <- corpus(declaration)
@@ -207,7 +207,7 @@ Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bea
 Der Beispieltext `froschkoenig` enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen. Die bereits bekannte Funktion `gsub()` kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (`+`) Zahl zwischen 0 und 9 (`[0-9]`) innerhalb von eckigen Klammern (`\\[` oder `\\]`) sucht und durch einen leeren String (`""`) austauscht. Bevor wir die Seitenzahlen entfernen, sollten wir uns allerdings die Suchergebnisse anzeigen lassen, um zu überprüfen, ob der reguläre Ausdruck die richtigen Zeichenketten findet:  
 
 
-```r
+``` r
 froschkoenig <- "In den alten Zeiten [1], wo das Wünschen noch geholfen hat, lebte ein König [2], dessen Töchter waren alle schön, aber die jüngste Tochter [3] war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte so oft sie ihr ins Gesicht schien."
 
 regmatches(froschkoenig, gregexpr(" \\[[0-9]+\\]", froschkoenig))
@@ -218,7 +218,7 @@ regmatches(froschkoenig, gregexpr(" \\[[0-9]+\\]", froschkoenig))
 ## [1] " [1]" " [2]" " [3]"
 ```
 
-```r
+``` r
 froschkoenig <- gsub(" \\[[0-9]+\\]", "", froschkoenig)
 froschkoenig
 ```
@@ -246,7 +246,7 @@ Verständnisfragen:
 Für viele Analysemethoden spielen nur Wörter im eigentlichen Sinne eine Rolle. Satzzeichen, Zahlen und Sonderzeichen werden deswegen häufig beim Preprocessing entfernt. Dieser Vorbereitungsschritt ist so verbreitet, dass die Entwickler:innen des Pakets quanteda Parameter für die `tokens()`-Funktion definiert haben, die steuern, ob bei der Tokenisierung diese Zeichen direkt entfernt werden sollen oder nicht.  
 
 
-```r
+``` r
 froschkoenig_toks <- tokens(froschkoenig, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE)
 froschkoenig_toks
 ```
@@ -265,7 +265,7 @@ froschkoenig_toks
 Wenn Texte zur Analyse als "Bag of Words" repräsentiert werden sollen, dann spielt die Reihenfolge der einzelnen Worte keine Rolle und Funktionswörter wie Artikel, Konjunktionen, Präpositionen u.ä. sind außerhalb des Satzzusammenhangs für diese Analysemethoden häufig nicht von Interesse. Zugleich kommen diese Wörter aber deutlich häufiger vor als "bedeutungstragende" Wörter. Solche Wörter werden deswegen häufig beim Preprocessing entfernt. Dabei werden sogenannte Stoppwortlisten verwendet: Alle Tokens, die in der Liste vorkommen, werden nach dem Tokenisieren entfernt. Die Funktionen zum Tokenisieren und zum Entfernen der Stoppwörter kann in Quanteda mithilfe des Pipe-Operators verkettet werden:
 
 
-```r
+``` r
 # Funktion tokens_remove() zum entfernen der Stoppwörter verwenden 
 froschkoenig_toks <- tokens(froschkoenig) %>%
   tokens_remove(pattern = stopwords("de"))
@@ -294,7 +294,7 @@ Eine Stoppwortliste ist also im Grunde nur eine Plaintextdatei, in der in jeder 
 Die Liste kann angepasst werden, indem einfach Wörter in der Plaintext-Datei hinzugefügt oder entfernt werden. 
 
 
-```r
+``` r
 # Eigene Stoppwortliste einlesen
 custom_stopwords <- readLines("stopwords.txt", encoding = "UTF-8") 
 custom_stopwords <- readtext("stopwords.txt") 
@@ -306,7 +306,7 @@ froschkoenig_toks <- tokens_remove(froschkoenig_toks, pattern = custom_stopwords
 Alternativ kann auch die Default-Stoppwortliste der Funktion `stopwords()` durch eine andere Stoppwortliste ausgetauscht werden. Um zu überprüfen, welche Stoppwortlisten es gibt: 
 
 
-```r
+``` r
 library(stopwords)
 stopwords_getsources()
 ```
@@ -316,7 +316,7 @@ stopwords_getsources()
 ## [5] "marimo"        "ancient"       "nltk"          "perseus"
 ```
 
-```r
+``` r
 froschkoenig_toks <- tokens(froschkoenig) %>%
   tokens_remove(pattern = stopwords("de", source="nltk"))
 ```
@@ -324,7 +324,7 @@ froschkoenig_toks <- tokens(froschkoenig) %>%
 Zuletzt können mit der `tokens_remove()`-Funktion auch nachträglich einzelne Tokens entfernt werden, die in einem Text vielleicht besonders häufig vorkommen, aber nicht auf der Stoppwortliste stehen: 
 
 
-```r
+``` r
 froschkoenig_toks <- tokens_remove(froschkoenig_toks, pattern = "daß", padding=F)
 ```
 
@@ -333,7 +333,7 @@ froschkoenig_toks <- tokens_remove(froschkoenig_toks, pattern = "daß", padding=
 Wir haben bereits gesehen, dass dasselbe Wort groß- und kleingeschrieben als zwei verschiedene Types gezählt wird. Dieses Verhalten ist bei der Analyse oft nicht gewünscht, da die unterschiedliche Schreibweise meist nicht als inhaltlich bedeutungstragend angesehen wird. Beim Preprocessing kann deswegen zusätzlich der gesamte Text in Kleinbuchstaben umgewandelt werden: 
 
 
-```r
+``` r
 froschkoenig_toks <- froschkoenig %>% 
   tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>% 
   tokens_tolower()
@@ -357,7 +357,7 @@ Quelle: [Jurafsky/Martin 2023, S. 2](https://web.stanford.edu/~jurafsky/slp3/2.p
 Beim Stemming werden Wörter auf ihren Wortstamm reduziert, indem Wortendungen nach bestimmten Regeln entfernt werden. Das Stemming schauen wir uns nur äußerst kurz an, denn in der Praxis lohnt es sich selten, dieses Verfahren anzuwenden. Zum Stemming kann die quanteda-Funktion `tokens_wordstem()` verwendet werden: 
 
 
-```r
+``` r
 library(quanteda)
 
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
@@ -394,17 +394,17 @@ Lemmatisierung (engl. lemmatization) hat im Grunde dasselbe Ziel wie Stemming: B
 Diese Methode kann zur Lemmatisierung englischsprachiger Texte angewandt werden.
 
 
-```r
+``` r
 install.packages("lexicon")
 ```
 
 
-```r
+``` r
 library(lexicon)
 ```
 
 
-```r
+``` r
 beispiel_engl <- "Hello I went swimming yesterday"
 
 beispiel_lemmatized_2 <- tokens_replace(tokens(beispiel_engl), pattern = lexicon::hash_lemmas$token, replacement = lexicon::hash_lemmas$lemma)
@@ -423,7 +423,7 @@ Diese Methode kann zur Lemmatisierung auch von deutsch- und anderssprachigen Tex
 
 
 
-```r
+``` r
 install.packages("udpipe")
 library(udpipe)
 
@@ -439,12 +439,12 @@ Es gibt zwei Funktionen aus dem Paket udpipe, mit denen Texte lemmatisiert werde
 Wir betrachten zunächst wieder unseren Beispielsatz und lemmatisieren den Satz zur Illustration einmal mit der Funktion `udpipe()` und danach noch einmal mit der Funktion `udpipe_annotate()`. Die Tokenisierung erfolgt dabei durch UDPipe. 
 
 
-```r
+``` r
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 ```
 
 
-```r
+``` r
 beispiel_df <- udpipe(beispiel, ud_model)
 head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen 
 ```
@@ -459,7 +459,7 @@ head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
 ## 6   doc1            1           1 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.    25  30       6        6 Robert Robert PROPN     NE                      Case=Nom|Gender=Masc|Number=Sing             5     nmod <NA> <NA>
 ```
 
-```r
+``` r
 beispiel_annotated <- udpipe_annotate(ud_model, beispiel, tagger="default", parser="none")
 beispiel_df <- as.data.frame(beispiel_annotated)
 head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
@@ -475,7 +475,7 @@ head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen
 ## 6   doc1            1           1 Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322.        6 Robert Robert PROPN     NE                      Case=Nom|Gender=Masc|Number=Sing          <NA>    <NA> <NA> <NA>
 ```
 
-```r
+``` r
 #View(beispiel_df)
 # ?udpipe_annotate
 ```
@@ -485,7 +485,7 @@ Beachtet Zeile 29: Hier wurde das Token "am" in zwei Lemmata aufgeteilt: "an" un
 Jetzt schauen wir uns an, wie nicht nur ein einziger Text, sondern ein ganzes Korpus mithilfe von UDpipe lemmatisiert werden kann. Das Korpus tokenisieren wir in diesem Fall bereits mit Quanteda und verwenden UDPipe nur zum Lemmatisieren. Aus diesem Grund verwenden wir hier die Funktion `udpipe_annotate()` anstatt der Funktion `udpipe()`. Als Beispiel dient uns das Teilkorpus mit Kafka-Texten aus der letzten Stunde. Dazu erstellen wir, analog zur letzten Stunde, zunächst ein Teilkorpus aus Kafka-Texten und Tokenisieren das Korpus: 
 
 
-```r
+``` r
 library(readtext)
 library(quanteda)
 
@@ -499,7 +499,7 @@ kafka_toks <- tokens(kafka_korpus)
 Anschließend können wir die Funktion `udpipe_annotate()` auf unser Kafka-Korpus anwenden. Dazu muss jedoch erst das Quanteda-Tokens-Objekt in eine Form gebracht werden, den die udpipe_annotate()-Funktion als Argument annehmen kann. Den Code dafür entnehmen wir dieser [Anleitung von Jan Wijffels](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-annotation.html), einem der Entwickler:innen von UDPipe. Auf diesen Code kommen wir im Kapitel 9 noch einmal zurück, wenn wir uns mit Part of Speech Tagging und Dependency Parsing beschäftigen.
 
 
-```r
+``` r
 library(udpipe)
 
 # Put every token on a new line and use tokenizer: vertical, Code von Jan Wijffels
@@ -618,7 +618,7 @@ head(kafka_df, n=100)
 Da bei der Lemmatisierung Tokens wie "am" in zwei Lemmata aufgeteilt werden ("an" und "dem"), gibt es im Dataframe `kafka_df` einige Zeilen, in denen in der Spalte `lemma` der Wert `NA` steht. Außerdem fällt auf, dass es einige Zeilen gibt, in denen zwei mögliche Lemmata angegeben werden, die mit einem `|` getrennt sind, zum Beispiel fallen|fällen. Diese Zeilen sollten zunächst bereinigt werden und es muss entschieden werden, welche Variante die richtige ist. 
 
 
-```r
+``` r
 # Zeilen mit NA-Werten entfernen
 kafka_cleaned_df <- kafka_df[!is.na(kafka_df$lemma), ]
 
@@ -6014,7 +6014,7 @@ kafka_cleaned_df[grep("\\|", kafka_cleaned_df$lemma), ]
 ## 288727  verwandlung            1           1     <NA>    22287             sich                 er|es|sie  PRON    PRF      Case=Acc|Number=Sing|Person=3|PronType=Prs|Reflex=Yes          <NA>    <NA> <NA> <NA>
 ```
 
-```r
+``` r
 # Als "quick and dirty" Methode kann z.B. einfach immer die letzte Variante ausgewählt werden
 kafka_cleaned_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", kafka_cleaned_df$lemma)
 kafka_cleaned_df
@@ -13170,7 +13170,7 @@ kafka_cleaned_df
 Wir haben jetzt einen bereinigten Dataframe `kafka_cleaned_df`, der Lemmata zu jedem der Texte in unserem Korpus enthält. Die Lemmata liegen aber immer noch als Elemente der Spalte `lemma` vor. Einen Dataframe dieser Form können wir nicht mithilfe von quanteda-Funktionen weiter bearbeiten. Wir müssen also irgendwie den Dataframe in eine Form bringen, die mit quanteda-Funktionen kompatibel ist. Deswegen wird das Korpus nach dem Lemmatisieren wieder in ein Quanteda-Tokens-Objekt umgewandelt. Dazu können einfach die beiden Spalten lemma und doc_id extrahiert und in die entsprechende Datenstruktur (also eine Liste) zusammengefügt werden. 
 
 
-```r
+``` r
 # Spalten des Dataframes in Liste von Vektoren konvertieren
 kafka_split <- split(kafka_cleaned_df$lemma, kafka_cleaned_df$doc_id)
 # In Quanteda-Tokens-Objekt umwandeln
@@ -13179,7 +13179,7 @@ kafka_toks <- tokens(kafka_split)
 Wenn die Funktion tokens() auf eine Liste von Vektoren angewandt wird, wird diese einfach nur in ein Quanteda tokens-Objekt umgewandelt, ohne, dass sie erneut tokenisiert wird. Es gibt also keinen Unterschied zwischen den Tokens in der Spalte lemma im UDPipe-Dataframe und den Tokens im Quanteda-Tokens-Objekt. Der einzige Unterschied ist, dass es sich bei kafka_split um eine "normale" Liste von Vektoren handelt, und bei kafka_toks um eine spezielle Liste von Vektoren, nämlich ein Quanteda-Tokens-Objekt.
 
 
-```r
+``` r
 identical(kafka_split[[1]], kafka_toks[[1]])
 ```
 
@@ -13190,7 +13190,7 @@ identical(kafka_split[[1]], kafka_toks[[1]])
 Das ist natürlich anders, wenn nach dem Lemmatisieren noch Satzzeichen, Zahlen oder Sonderzeichen entfernt werden sollen. Dann unterscheiden sich die beiden Objekte durch die fehlenden Tokens:  
 
 
-```r
+``` r
 kafka_toks_2 <- tokens(kafka_split, remove_punct = TRUE)
 identical(kafka_split[[1]], kafka_toks_2[[1]])
 ```
@@ -13204,19 +13204,19 @@ Zum Schluss speichern wir das lemmatisierte und tokenisierte Korpus in einer RDS
 
 
 
-```r
+``` r
 saveRDS(kafka_toks, file="kafka_toks.rds")
 ```
 
 Mit dem Objekt `kafka_toks` kann jetzt ganz regulär mit Quanteda-Funktionen weitergearbeitet werden. Wenn die Weiterverarbeitung zu einem späteren Zeitpunkt erfolgen soll, kann das Objekt einfach aus der RDS-Datei eingelesen werden: 
 
 
-```r
+``` r
 kafka_toks <- readRDS(file="kafka_toks.rds")
 ```
 
 
-```r
+``` r
 # Eingelesenes Tokens-Objekt in DFM umwandeln
 kafka_dfm <- dfm(kafka_toks)
 kafka_dfm

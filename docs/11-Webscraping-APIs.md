@@ -25,7 +25,7 @@ Die Dramen-Datenbank DraCor verfügt über eine [gut dokumentierte API](https://
 Für eine Abfrage aller Sprechtexte in Dramen von Goethe könnte ein Skript beispielsweise so aussehen: 
 
 
-```r
+``` r
 install.packages(c("jsonlite", "httr"))
 library(jsonlite)
 library(httr)
@@ -144,7 +144,7 @@ Zur Übung schreiben wir ein Skript, das den Fließtext aller Märchen der Gebr�
 
 
 
-```r
+``` r
 # Vorbereitung
 install.packages("rvest")
 install.packages("stringi")
@@ -201,7 +201,7 @@ Anfang des Semesters haben wir bereits besprochen, dass Schleifen und andere Kon
 Der folgende Code illustriert, wie das Webscraping-Skript mithilfe von Funktionen vereinfacht werden kann. Dazu wird mehrfach die Funktion map() aus dem Paket purrr verwendet, um die Schleife zu ersetzen. Für mehr Informationen zu purrr und map() siehe die [purrr-Dokumentationsseiten](https://purrr.tidyverse.org/index.html) und das [Kapitel "Functional Programming"](https://modern-rstats.eu/functional-programming.html#functional-programming-with-purrr) aus Bruno Rodrigues' Kurs "Modern R with the tidyverse".
 
 
-```r
+``` r
 install.packages("rvest")
 install.packages("stringi")
 install.packages("purrr")

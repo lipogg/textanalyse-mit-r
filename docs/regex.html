@@ -53,7 +53,8 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
@@ -390,11 +391,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.2</span> Reguläre Ausdrücke in R<a href="regex.html#regex-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Als Beispieltexte nutzen wir die beiden Märchen Rapunzel und Aschenputtel. <br />
 Zur Vorbereitung installieren wir die folgenden Pakete…</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regex.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;readtext&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;quanteda&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="regex.html#cb498-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;readtext&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;quanteda&quot;</span>))</span></code></pre></div>
 <p>…und laden die installierten Pakete:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regex.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
-<span id="cb2-2"><a href="regex.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb2-3"><a href="regex.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="regex.html#cb499-1" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb499-2"><a href="regex.html#cb499-2" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb499-3"><a href="regex.html#cb499-3" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
 <div id="r-base-funktionen" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> R Base Funktionen<a href="regex.html#r-base-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In R können Texte nach regulären Ausdrücken entweder mithilfe von R-Basisfunktionen durchsucht werden, oder mithilfe von Funktionen aus spezialisierten Paketen. Zunächst betrachten wir die Basisfunktionen, und lernen später reguläre Ausdrücke selbst kennen:</p>
@@ -404,21 +405,21 @@ Zur Vorbereitung installieren wir die folgenden Pakete…</p>
 <col width="68%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Funktion</th>
 <th>Bedeutung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>grep(), grepl()</td>
 <td>Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match.</td>
 </tr>
-<tr>
+<tr class="even">
 <td>regexpr(), gregexpr()</td>
 <td>Search a character vector for regular expression matches and return the indices of the string where the match begins and the length of the match.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>sub(), gsub()</td>
 <td>Search a character vector for regular expression matches and replace that match with another string.</td>
 </tr>
@@ -427,10 +428,10 @@ Zur Vorbereitung installieren wir die folgenden Pakete…</p>
 <p>Quelle: <a href="https://www.youtube.com/watch?v=q8SzNKib5-4" class="uri">https://www.youtube.com/watch?v=q8SzNKib5-4</a> <br />
 Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/grep" class="uri">https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/grep</a></p>
 <p>Wir verwenden die <code>readtext()</code>-Funktion zum Einlesen unserer Märchen.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regex.html#cb3-1" tabindex="-1"></a>maerchen_df <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">c</span>(<span class="st">&quot;data/Rapunzel_(1850).txt&quot;</span>, <span class="st">&quot;data/Aschenputtel_(1850).txt&quot;</span>))</span>
-<span id="cb3-2"><a href="regex.html#cb3-2" tabindex="-1"></a><span class="fu">length</span>(maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="regex.html#cb500-1" tabindex="-1"></a>maerchen_df <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">c</span>(<span class="st">&quot;data/Rapunzel_(1850).txt&quot;</span>, <span class="st">&quot;data/Aschenputtel_(1850).txt&quot;</span>))</span>
+<span id="cb500-2"><a href="regex.html#cb500-2" tabindex="-1"></a><span class="fu">length</span>(maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regex.html#cb5-1" tabindex="-1"></a>maerchen_df</span></code></pre></div>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="regex.html#cb502-1" tabindex="-1"></a>maerchen_df</span></code></pre></div>
 <pre><code>## readtext object consisting of 2 documents and 0 docvars.
 ## $text
 ## [1] &quot;# A data frame: 2 × 2&quot;                                
@@ -447,15 +448,15 @@ Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/
 ## attr(,&quot;class&quot;)
 ## [1] &quot;trunc_mat&quot;</code></pre>
 <p>Durch Einlesen des Märchens mithilfe der <code>readtext()</code>-Funktion haben wir einen Dataframe mit zwei Spalten und zwei Zeilen erhalten. Wir wollen nicht den gesamten Datafrmae, sondern nur die Märchentexte nach Matches zu durchsuchen und wählen deswegen nur die Spalte <code>text</code> als Eingabe:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regex.html#cb7-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text, <span class="at">value=</span>F) </span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="regex.html#cb504-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text, <span class="at">value=</span>F) </span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regex.html#cb9-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="regex.html#cb506-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
 <pre><code>## [1] FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regex.html#cb11-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="regex.html#cb508-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
 <pre><code>## [1]  -1 625
 ## attr(,&quot;match.length&quot;)
 ## [1] -1  8</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regex.html#cb13-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="regex.html#cb510-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text)</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] -1
 ## attr(,&quot;match.length&quot;)
@@ -468,30 +469,30 @@ Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/
 ## attr(,&quot;match.length&quot;)
 ##  [1] 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8</code></pre>
 <p>Die Funktionen können aber auch auf jeden Text einzeln angewandt werden, indem separat auf beide Texte zugegriffen wird:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regex.html#cb15-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">value=</span>F) </span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="regex.html#cb512-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">value=</span>F) </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regex.html#cb17-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="regex.html#cb514-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regex.html#cb19-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="regex.html#cb516-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 625
 ## attr(,&quot;match.length&quot;)
 ## [1] 8</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="regex.html#cb21-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="regex.html#cb518-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1]  625  751 1005 1176 1334 1903 2077 2334 2672 2709 3006 3016 3056 3527 3972
 ## [16] 3982 4026 4287 4297 4415 4729 5380 5782 6006 6117 6264 6274 6406 6697 7162
 ## [31] 7376
 ## attr(,&quot;match.length&quot;)
 ##  [1] 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regex.html#cb23-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">value=</span>F) </span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="regex.html#cb520-1" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">value=</span>F) </span></code></pre></div>
 <pre><code>## integer(0)</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="regex.html#cb25-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="regex.html#cb522-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regex.html#cb27-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="regex.html#cb524-1" tabindex="-1"></a><span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] -1
 ## attr(,&quot;match.length&quot;)
 ## [1] -1</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="regex.html#cb29-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="regex.html#cb526-1" tabindex="-1"></a><span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] -1
 ## attr(,&quot;match.length&quot;)
@@ -504,9 +505,9 @@ Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/
 </ul>
 </div>
 <p>Die Funktionen <code>regexpr()</code> und <code>gregexpr()</code> können um die Funktion <code>regmatches</code> ergänzt werden, um statt Funstellen die tatsächlich gefundenen Zeichenketten anzuzeigen:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="regex.html#cb31-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="regex.html#cb528-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">regexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [1] &quot;Rapunzel&quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="regex.html#cb33-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="regex.html#cb530-1" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [[1]]
 ##  [1] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
 ##  [7] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
@@ -516,19 +517,19 @@ Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/
 ## [31] &quot;Rapunzel&quot;</code></pre>
 <p>Da wir nur nach genau der Zeichenkette “Rapunzel” gesucht haben, wird natürlich auch nur “Rapunzel” gefunden.</p>
 <p>Mithilfe der Funktionen <code>sub()</code> und <code>gsub()</code> können gefundene Zeichenketten gelöscht oder ersetzt werden. Mit der bereits bekannten Funktion <code>grep()</code> können wir daraufhin überprüfen, ob die Zeichenketten erfolgreich ersetzt wurden.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="regex.html#cb35-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit gsub()</span></span>
-<span id="cb35-2"><a href="regex.html#cb35-2" tabindex="-1"></a>peterpan_1 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
-<span id="cb35-3"><a href="regex.html#cb35-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_1)</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="regex.html#cb532-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit gsub()</span></span>
+<span id="cb532-2"><a href="regex.html#cb532-2" tabindex="-1"></a>peterpan_1 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb532-3"><a href="regex.html#cb532-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_1)</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="regex.html#cb37-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Peter Pan&quot;</span>, peterpan_1)</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="regex.html#cb534-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Peter Pan&quot;</span>, peterpan_1)</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="regex.html#cb39-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit sub()</span></span>
-<span id="cb39-2"><a href="regex.html#cb39-2" tabindex="-1"></a>peterpan_2 <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
-<span id="cb39-3"><a href="regex.html#cb39-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_2)</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="regex.html#cb536-1" tabindex="-1"></a><span class="co"># Zeichenkette ersetzen mit sub()</span></span>
+<span id="cb536-2"><a href="regex.html#cb536-2" tabindex="-1"></a>peterpan_2 <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;Peter Pan&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb536-3"><a href="regex.html#cb536-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, peterpan_2)</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="regex.html#cb41-1" tabindex="-1"></a><span class="co"># Zeichenkette löschen mit gsub() - geht auch mit sub()</span></span>
-<span id="cb41-2"><a href="regex.html#cb41-2" tabindex="-1"></a>rapunzel_cleaned <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
-<span id="cb41-3"><a href="regex.html#cb41-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, rapunzel_cleaned)</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="regex.html#cb538-1" tabindex="-1"></a><span class="co"># Zeichenkette löschen mit gsub() - geht auch mit sub()</span></span>
+<span id="cb538-2"><a href="regex.html#cb538-2" tabindex="-1"></a>rapunzel_cleaned <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Rapunzel&quot;</span>, <span class="st">&quot;&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>])</span>
+<span id="cb538-3"><a href="regex.html#cb538-3" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, rapunzel_cleaned)</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [1] FALSE</code></pre>
 <div class="task">
 <p>Verständnisfragen:</p>
@@ -538,18 +539,18 @@ Offizielle Dokumentation: <a href="https://www.rdocumentation.org/packages/base/
 </ul>
 </div>
 <p>Im Beispiel oben haben wir die Funktionen auf das readtext-Objekt angewandt. Es kann aber auch ein Quanteda corpus-Objekt mithilfe von regulären Ausdrücken durchsucht werden:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="regex.html#cb43-1" tabindex="-1"></a>maerchen_korpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(maerchen_df)</span>
-<span id="cb43-2"><a href="regex.html#cb43-2" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="regex.html#cb540-1" tabindex="-1"></a>maerchen_korpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(maerchen_df)</span>
+<span id="cb540-2"><a href="regex.html#cb540-2" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="regex.html#cb45-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="regex.html#cb542-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="regex.html#cb47-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus)</span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="regex.html#cb544-1" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">&quot;Rapunzel&quot;</span>, maerchen_korpus)</span></code></pre></div>
 <pre><code>## [1] FALSE  TRUE</code></pre>
 </div>
 <div id="spezielle-pakete-stringr" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Spezielle Pakete: stringr<a href="regex.html#spezielle-pakete-stringr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Die Suche mithilfe von R-base-Funktionen kann etwas kompliziert werden, insbesondere, wenn die gefundenen Zeichenketten mithilfe von <code>regmatches()</code> und <code>gregexpr()</code> ausgegeben werden sollen. Außerdem ist es nicht immer möglich, die R-base-Funktionen mithilfe des Pipe-Operators zu verketten. Deswegen gibt es <code>stringr</code>, ein Paket aus dem Tidyverse (s. Kapitel R Basics IV), welches spezialisierte Funktionen zur Arbeit mit regulären Ausdrücken bietet. Die unübersichtliche Kombination von <code>regmatches()</code> und <code>gregexpr()</code> kann beispielsweise durch die stringr-Funktion <code>str_extract_all()</code> ersetzt werden:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="regex.html#cb49-1" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;Rapunzel&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="regex.html#cb546-1" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;Rapunzel&quot;</span>)</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
 ##  [7] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Rapunzel&quot;
@@ -580,149 +581,149 @@ uns aber für komplexere Ausdrücke, Zeichen, oder verschiedene Varianten dessel
 <col width="24%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Zeichen</th>
 <th>Bedeutung</th>
 <th>Beispiel</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>\</code></td>
 <td>Escaped character: s.o.</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>⎮</code></td>
 <td>Veroderung (ohne Leerzeichen!)</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>Achtung: Auf Eindeutigkeit achten!</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>Klammern nutzen!</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>()</code></td>
 <td>Gruppen: Einheiten können mit runden</td>
 <td>Baum(krone⎮stamm)</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>Klammern begrenzt werden</td>
 <td>199(4⎮5)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>[]</code></td>
 <td>Zeichenklasse</td>
 <td>[a-zA-ZäöüÄÖÜß]</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>- Bindestrich für Zahlen- oder</td>
 <td>[0-9]</td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>Buchstabenreihen</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>- Reihenfolge innerhalb von Klassen</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>nicht festgelegt</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>- Sucht nach allen Kombinationen der</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>Zeichen, wenn kein “oder” spezifiz.</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>[^]</code></td>
 <td>Verneinung</td>
 <td>[^aeo]</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>{}</code></td>
 <td>Quantifizierer</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>- zwischen 1 und 4</td>
 <td>[a-z]{1,4}</td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>- mindestens 1</td>
 <td>[a-z]{1,}</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>- genau 4</td>
 <td>[a-z]{4}</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>+</code></td>
 <td>“mindestens einmal”, bis unendlich</td>
 <td>[1986]+</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>(Frage: Was ist der Unterschied?)</td>
 <td>(1986)+</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>*</code></td>
 <td>“beliebig oft”, 0 bis unendlich</td>
 <td>[1986]*</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td>(1986)*</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>.*</code></td>
 <td>Wildcard: matcht Zeichen beliebig oft</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td>(Aber: außer new line characters)</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>?</code></td>
 <td>Mögliches, aber optionales Match</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>^</code></td>
 <td>Positionsmarker: ^ außerhalb einer</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>Zeichenklasse markiert Zeilenanfang</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>$</code></td>
 <td>Positionsmarker: Markiert Zeilenende</td>
 <td></td>
@@ -744,52 +745,52 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 <p>Nach manchen Zeichen wird so oft gesucht, dass sich bereits nützliche Abkürzungen dafür entwickelt haben. Sowohl die R-base-Funktionen als auch die stringr-Funktionen unterstützen per Default die Suche nach den gängigsten Regex-Zeichenklassen.</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Klasse</th>
 <th>Bedeutung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>\w</code></td>
 <td>Wortzeichen = [a-zA-Z]</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>\W</code></td>
 <td>kein Wortzeichen</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>\d</code></td>
 <td>Zahlzeichen = [0-9]</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>\D</code></td>
 <td>kein Zahlzeichen</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>\s</code></td>
 <td>Leerzeichen</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>\S</code></td>
 <td>kein Leerzeichen</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>\r</code></td>
 <td>carriage return (andere Art von Leerzeichen)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>\n</code></td>
 <td>new line character (neue Zeile)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>\t</code></td>
 <td>Tabulatorzeichen</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="regex.html#cb51-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
-<span id="cb51-2"><a href="regex.html#cb51-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="regex.html#cb548-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
+<span id="cb548-2"><a href="regex.html#cb548-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>]))</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1] &quot; Hoffnung &quot;  &quot; Zauberin &quot;  &quot; bekommen &quot;  &quot; erschrak &quot;  &quot; sogleich &quot; 
 ##  [6] &quot; Begierde &quot;  &quot; erschrak &quot;  &quot; Zauberin &quot;  &quot; zornigem &quot;  &quot; schlecht &quot; 
@@ -801,8 +802,8 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 ## [36] &quot; Flechten &quot;  &quot; Rapunzel &quot;  &quot; Wüstenei &quot;  &quot; Rapunzel &quot;  &quot; Zauberin &quot; 
 ## [41] &quot; Flechten &quot;  &quot; giftigen &quot;  &quot; Rapunzel &quot;  &quot; liebsten &quot;  &quot; wanderte &quot; 
 ## [46] &quot; Rapunzel &quot;  &quot; erkannte &quot;  &quot; Rapunzel &quot;</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="regex.html#cb53-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
-<span id="cb53-2"><a href="regex.html#cb53-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="regex.html#cb550-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
+<span id="cb550-2"><a href="regex.html#cb550-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">w{8}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1] &quot; Hoffnung &quot;  &quot; Zauberin &quot;  &quot; bekommen &quot;  &quot; erschrak &quot;  &quot; sogleich &quot; 
 ##  [6] &quot; Begierde &quot;  &quot; erschrak &quot;  &quot; Zauberin &quot;  &quot; zornigem &quot;  &quot; schlecht &quot; 
@@ -830,25 +831,25 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 <col width="66%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Sequenz</th>
 <th>Bedeutung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>(?=foo) Lookahead</td>
 <td>Asserts that what immediately follows the current position in the string is foo</td>
 </tr>
-<tr>
+<tr class="even">
 <td>(?&lt;=foo) Lookbehind</td>
 <td>Asserts that what immediately precedes the current position in the string is foo</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>(?!foo) Negative Lookahead</td>
 <td>Asserts that what immediately follows the current position in the string is not foo</td>
 </tr>
-<tr>
+<tr class="even">
 <td>(?&lt;!foo) Negative Lookbehind</td>
 <td>Asserts that what immediately precedes the current position in the string is not foo</td>
 </tr>
@@ -856,8 +857,8 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 </table>
 <p>Quelle: <a href="https://www.rexegg.com/regex-lookarounds.html" class="uri">https://www.rexegg.com/regex-lookarounds.html</a></p>
 <p>Die stringr-Funktionen unterstützen per Default die Suche mithilfe von Lookarounds. Um Lookarounds im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument <code>perl = TRUE</code> übergeben werden.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="regex.html#cb55-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
-<span id="cb55-2"><a href="regex.html#cb55-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="regex.html#cb552-1" tabindex="-1"></a><span class="co"># Mit R-Basisfunktionen</span></span>
+<span id="cb552-2"><a href="regex.html#cb552-2" tabindex="-1"></a><span class="fu">regmatches</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>, maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1] &quot;Hoffnung&quot; &quot;Zauberin&quot; &quot;bekommen&quot; &quot;erschrak&quot; &quot;sogleich&quot; &quot;Begierde&quot;
 ##  [7] &quot;erschrak&quot; &quot;Zauberin&quot; &quot;zornigem&quot; &quot;schlecht&quot; &quot;Zauberin&quot; &quot;erschien&quot;
@@ -867,8 +868,8 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 ## [31] &quot;flechten&quot; &quot;herunter&quot; &quot;Zauberin&quot; &quot;Rapunzel&quot; &quot;schwerer&quot; &quot;Flechten&quot;
 ## [37] &quot;Rapunzel&quot; &quot;Rapunzel&quot; &quot;Zauberin&quot; &quot;Flechten&quot; &quot;giftigen&quot; &quot;Rapunzel&quot;
 ## [43] &quot;liebsten&quot; &quot;wanderte&quot; &quot;Rapunzel&quot; &quot;erkannte&quot; &quot;Rapunzel&quot;</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="regex.html#cb57-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
-<span id="cb57-2"><a href="regex.html#cb57-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="regex.html#cb554-1" tabindex="-1"></a><span class="co"># Mit stringr-Funktion</span></span>
+<span id="cb554-2"><a href="regex.html#cb554-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(maerchen_df<span class="sc">$</span>text[<span class="dv">2</span>], <span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">s)</span><span class="sc">\\</span><span class="st">w{8}(?=</span><span class="sc">\\</span><span class="st">s)&quot;</span>)</span></code></pre></div>
 <pre><code>## [[1]]
 ##  [1] &quot;Hoffnung&quot; &quot;Zauberin&quot; &quot;bekommen&quot; &quot;erschrak&quot; &quot;sogleich&quot; &quot;Begierde&quot;
 ##  [7] &quot;erschrak&quot; &quot;Zauberin&quot; &quot;zornigem&quot; &quot;schlecht&quot; &quot;Zauberin&quot; &quot;erschien&quot;
@@ -890,14 +891,14 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 <div id="regex-für-nicht-lateinische-schriften" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Regex für nicht-lateinische Schriften<a href="#regex-f%C3%BCr-nicht-lateinische-schriften" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Reguläre Ausdrücke können natürlich auch zur Suche in Texten mit nicht-lateinischen Schriften oder in multilingualen Texten verwendet werden: Entweder explizit, indem einfach das Muster in der entsprechenden Sprache formuliert wird, oder aber mithilfe der Unicode-Zeichenklasse <code>\p</code> (s.u.).</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="regex.html#cb59-1" tabindex="-1"></a>rapunzel_rus <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;data/Колокольчик_(Гримм;_Полевой).txt&quot;</span>)</span>
-<span id="cb59-2"><a href="regex.html#cb59-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Колокольчик&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="regex.html#cb556-1" tabindex="-1"></a>rapunzel_rus <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">&quot;data/Колокольчик_(Гримм;_Полевой).txt&quot;</span>)</span>
+<span id="cb556-2"><a href="regex.html#cb556-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;Колокольчик&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>]))</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot; &quot;Колокольчик&quot;
 ## [6] &quot;Колокольчик&quot; &quot;Колокольчик&quot;</code></pre>
 <p>Zur Suche nach Mustern in verschiedenen Schriften kann auch eine spezielle Zeichenklasse für Unicode-Zeichen verwendet werden, <code>\p</code>. Diese Zeichenklasse erlaubt es, ein bestimmtes Alphabet zu spezifizieren, oder alphabetübergreifend nach einem Zeichen in allen in Unicode abgebildeten Schriften zu suchen. Die stringr-Funktionen unterstützen per Default die Suche mithilfe der Unicode-Zeichenklasse <code>\p</code>. Um diese Zeichenklasse im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument <code>perl = TRUE</code> übergeben werden.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="regex.html#cb61-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben aus dem kyrillischen Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
-<span id="cb61-2"><a href="regex.html#cb61-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{Cyrillic}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="regex.html#cb558-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben aus dem kyrillischen Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
+<span id="cb558-2"><a href="regex.html#cb558-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{Cyrillic}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [[1]]
 ##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
 ##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
@@ -916,8 +917,8 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 ## [113] &quot; она &quot;  &quot; эта &quot;  &quot; уже &quot;  &quot; еще &quot;  &quot; что &quot;  &quot; тот &quot;  &quot; ему &quot;  &quot; Так &quot; 
 ## [121] &quot; лет &quot;  &quot; где &quot;  &quot; его &quot;  &quot; нее &quot;  &quot; ему &quot;  &quot; его &quot;  &quot; ему &quot;  &quot; Две &quot; 
 ## [129] &quot; ему &quot;  &quot; мог &quot;  &quot; все &quot;  &quot; как &quot;  &quot; где &quot;  &quot; они &quot;</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="regex.html#cb63-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben, egal aus welchem Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
-<span id="cb63-2"><a href="regex.html#cb63-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="regex.html#cb560-1" tabindex="-1"></a><span class="co"># Suche nach drei beliebigen Buchstaben, egal aus welchem Alphabet, angeführt und gefolgt von einem Leerzeichen</span></span>
+<span id="cb560-2"><a href="regex.html#cb560-2" tabindex="-1"></a><span class="fu">regmatches</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="fu">gregexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>, rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="at">perl =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [[1]]
 ##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
 ##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
@@ -936,8 +937,8 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 ## [113] &quot; она &quot;  &quot; эта &quot;  &quot; уже &quot;  &quot; еще &quot;  &quot; что &quot;  &quot; тот &quot;  &quot; ему &quot;  &quot; Так &quot; 
 ## [121] &quot; лет &quot;  &quot; где &quot;  &quot; его &quot;  &quot; нее &quot;  &quot; ему &quot;  &quot; его &quot;  &quot; ему &quot;  &quot; Две &quot; 
 ## [129] &quot; ему &quot;  &quot; мог &quot;  &quot; все &quot;  &quot; как &quot;  &quot; где &quot;  &quot; они &quot;</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="regex.html#cb65-1" tabindex="-1"></a><span class="co"># Suche mit stringr-Funktion str_extract_all()</span></span>
-<span id="cb65-2"><a href="regex.html#cb65-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="regex.html#cb562-1" tabindex="-1"></a><span class="co"># Suche mit stringr-Funktion str_extract_all()</span></span>
+<span id="cb562-2"><a href="regex.html#cb562-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(rapunzel_rus<span class="sc">$</span>text[<span class="dv">1</span>], <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">p{L}{3}</span><span class="sc">\\</span><span class="st">s&quot;</span>)</span></code></pre></div>
 <pre style="max-height: 100px;"><code>## [[1]]
 ##   [1] &quot; муж &quot;  &quot; уже &quot;  &quot; лет &quot;  &quot; что &quot;  &quot; был &quot;  &quot; был &quot;  &quot; что &quot;  &quot; все &quot; 
 ##   [9] &quot; что &quot;  &quot; нее &quot;  &quot; она &quot;  &quot; так &quot;  &quot; она &quot;  &quot; что &quot;  &quot; она &quot;  &quot; муж &quot; 
@@ -992,37 +993,51 @@ Soll innerhalb des Ausdrucks nach Anführungszeichen gesucht werden, müssen die
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": null,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"toc_depth": 4
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
 });
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

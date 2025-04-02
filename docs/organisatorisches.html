@@ -53,7 +53,8 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
@@ -415,33 +416,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col width="99%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">Note</th>
 <th align="left">Erläuterung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">1.0-1.3</td>
 <td align="left">Alle formalen Kriterien werden eingehalten. Die Forschungsfrage ist sinnvoll und mithilfe der gewählten Preprocessing- und Analyseverfahren sehr gut beantwortbar. Es gibt dabei unter den im Kurs kennengelernten Verfahren keine besser geeigneten Verfahren zur Beantwortung der Fragestellung. Die Wahl der verwendeten Verfahren, Vor- und Nachteile, die Aussagekraft sowie mögliche Auswirkungen auf die Beantwortung der Fragestellung werden kritisch diskutiert. Die Aussagekraft des Analyseverfahrens wird kritisch diskutiert. Die Ergebnisse werden in Bezug zum aktuellen Forschungsstand gesetzt. Der Code ist ausführlich kommentiert. Fremder Code wird nur dann verwendet, wenn der Code für die Umsetzung von Aufgaben, die über die Inhalte im Seminar hinausgehen, gebraucht wird, oder, wenn der Code eine Verbesserung zu den im Seminar vorgestellten Vorgehen darstellt. Fremder Code wird immer zitiert. Der Code produziert keine Fehlermeldungen und folgt immer gängigen stilistischen Konventionen und Regeln.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">1.3-2.3</td>
 <td align="left">Alle formalen Kriterien werden eingehalten. Die Fragestellung ist sinnvoll und mithilfe der gewählten Preprocessing- und Analyseverfahren beantwortbar, aber es gibt ein besser geeignetes Verfahren. Die Wahl des Verfahrens wird begründet, aber die Begründung ist nicht gänzlich überzeugend oder weniger wichtige Konsequenzen der Entscheidung werden nicht diskutiert. Die Aussagekraft des Analyseverfahrens wird kritisch diskutiert. Die Ergebnisse werden in Bezug zum aktuellen Forschungsstand gesetzt. Der Code ist ausführlich kommentiert. Fremder Code wird nur dann verwendet, wenn der Code für die Umsetzung von Aufgaben, die über die Inhalte im Seminar hinausgehen, gebraucht wird, oder, wenn der Code eine Verbesserung zu den im Seminar vorgestellten Vorgehen darstellt. Fremder Code wird immer zitiert. Der Code produziert keine Fehlermeldungen und folgt zumeist gängigen stilistischen Konventionen und Regeln.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">2.3-3.3</td>
 <td align="left">Alle formalen Kriterien werden eingehalten. Die Fragestellung ist sinnvoll und mithilfe der gewählten Preprocessing- und Analyseverfahren beantwortbar, aber es gibt ein besser geeignetes Verfahren. Die Wahl des Verfahrens wird begründet, aber die Begründung ist nicht überzeugend. Der Code ist an den wichtigsten Stellen kommentiert. Fremder Code wird nur dann verwendet, wenn der Code für die Umsetzung von Aufgaben, die über die Inhalte im Seminar hinausgehen, gebraucht wird, oder, wenn der Code eine Verbesserung zu den im Seminar vorgestellten Vorgehen darstellt. Fremder Code wird immer zitiert. Der Code produziert keine Fehlermeldungen.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">3.3-4.0</td>
 <td align="left">Formale Kriterien werden zumeist eingehalten. Die Fragestellung ist teilweise mithilfe der gewählten Preprocessing- und Analyseverfahren beantwortbar. Die Wahl des Verfahrens wird begründet, aber die Begründung ist nicht überzeugend. Fremder Code wird immer zitiert. Der Code produziert keine Fehlermeldungen.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">ab 4.0</td>
 <td align="left">Formale Kriterien werden zumeist eingehalten. Die Fragestellung ist teilweise mithilfe der gewählten Preprocessing- und Analyseverfahren beantwortbar. Die Wahl des Verfahrens wird nicht begründet. Fremder Code wird immer zitiert. Der Code produziert keine Fehlermeldungen.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">5.0</td>
 <td align="left">Formale Kriterien werden nicht eingehalten. Der Code ist nicht ausführbar und enthält schwerwiegende Fehler. Die Fragestellung ist nicht sinnvoll gewählt und die gewählten Preprocessing- und Analyseverfahren sind nicht geeignet, um die Fragestellung zu bearbeiten.</td>
 </tr>
@@ -469,33 +470,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": null,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"toc_depth": 4
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
 });
 });
 </script>

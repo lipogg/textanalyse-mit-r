@@ -13,14 +13,14 @@ Zur Vorbereitung installieren wir die folgenden Pakete...
 
 
 
-```r
+``` r
 install.packages(c("readtext", "stringr", "quanteda"))
 ```
 
 ...und laden die installierten Pakete: 
 
 
-```r
+``` r
 library(readtext)
 library(stringr)
 library(quanteda)
@@ -43,7 +43,7 @@ In R können Texte nach regulären Ausdrücken entweder mithilfe von R-Basisfunk
 Wir verwenden die `readtext()`-Funktion zum Einlesen unserer Märchen. 
 
 
-```r
+``` r
 maerchen_df <- readtext(c("data/Rapunzel_(1850).txt", "data/Aschenputtel_(1850).txt"))
 length(maerchen_df$text)
 ```
@@ -52,7 +52,7 @@ length(maerchen_df$text)
 ## [1] 2
 ```
 
-```r
+``` r
 maerchen_df
 ```
 
@@ -78,7 +78,7 @@ Durch Einlesen des Märchens mithilfe der `readtext()`-Funktion haben wir einen 
 
 
 
-```r
+``` r
 grep("Rapunzel", maerchen_df$text, value=F) 
 ```
 
@@ -86,7 +86,7 @@ grep("Rapunzel", maerchen_df$text, value=F)
 ## [1] 2
 ```
 
-```r
+``` r
 grepl("Rapunzel", maerchen_df$text)
 ```
 
@@ -94,7 +94,7 @@ grepl("Rapunzel", maerchen_df$text)
 ## [1] FALSE  TRUE
 ```
 
-```r
+``` r
 regexpr("Rapunzel", maerchen_df$text)
 ```
 
@@ -104,7 +104,7 @@ regexpr("Rapunzel", maerchen_df$text)
 ## [1] -1  8
 ```
 
-```r
+``` r
 gregexpr("Rapunzel", maerchen_df$text)
 ```
 
@@ -125,7 +125,7 @@ gregexpr("Rapunzel", maerchen_df$text)
 Die Funktionen können aber auch auf jeden Text einzeln angewandt werden, indem separat auf beide Texte zugegriffen wird: 
 
 
-```r
+``` r
 grep("Rapunzel", maerchen_df$text[2], value=F) 
 ```
 
@@ -133,7 +133,7 @@ grep("Rapunzel", maerchen_df$text[2], value=F)
 ## [1] 1
 ```
 
-```r
+``` r
 grepl("Rapunzel", maerchen_df$text[2])
 ```
 
@@ -141,7 +141,7 @@ grepl("Rapunzel", maerchen_df$text[2])
 ## [1] TRUE
 ```
 
-```r
+``` r
 regexpr("Rapunzel", maerchen_df$text[2])
 ```
 
@@ -151,7 +151,7 @@ regexpr("Rapunzel", maerchen_df$text[2])
 ## [1] 8
 ```
 
-```r
+``` r
 gregexpr("Rapunzel", maerchen_df$text[2])
 ```
 
@@ -164,7 +164,7 @@ gregexpr("Rapunzel", maerchen_df$text[2])
 ##  [1] 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
 ```
 
-```r
+``` r
 grep("Rapunzel", maerchen_df$text[1], value=F) 
 ```
 
@@ -172,7 +172,7 @@ grep("Rapunzel", maerchen_df$text[1], value=F)
 ## integer(0)
 ```
 
-```r
+``` r
 grepl("Rapunzel", maerchen_df$text[1])
 ```
 
@@ -180,7 +180,7 @@ grepl("Rapunzel", maerchen_df$text[1])
 ## [1] FALSE
 ```
 
-```r
+``` r
 regexpr("Rapunzel", maerchen_df$text[1])
 ```
 
@@ -190,7 +190,7 @@ regexpr("Rapunzel", maerchen_df$text[1])
 ## [1] -1
 ```
 
-```r
+``` r
 gregexpr("Rapunzel", maerchen_df$text[1])
 ```
 
@@ -213,7 +213,7 @@ Verständnisfragen:
 Die Funktionen ``regexpr()`` und ``gregexpr()`` können um die Funktion ``regmatches`` ergänzt werden, um statt Funstellen die tatsächlich gefundenen Zeichenketten anzuzeigen: 
 
 
-```r
+``` r
 regmatches(maerchen_df$text[2], regexpr("Rapunzel", maerchen_df$text[2]))
 ```
 
@@ -221,7 +221,7 @@ regmatches(maerchen_df$text[2], regexpr("Rapunzel", maerchen_df$text[2]))
 ## [1] "Rapunzel"
 ```
 
-```r
+``` r
 regmatches(maerchen_df$text[2], gregexpr("Rapunzel", maerchen_df$text[2]))
 ```
 
@@ -240,7 +240,7 @@ Da wir nur nach genau der Zeichenkette "Rapunzel" gesucht haben, wird natürlich
 Mithilfe der Funktionen ``sub()`` und ``gsub()`` können gefundene Zeichenketten gelöscht oder ersetzt werden. Mit der bereits bekannten Funktion ``grep()`` können wir daraufhin überprüfen, ob die Zeichenketten erfolgreich ersetzt wurden. 
 
 
-```r
+``` r
 # Zeichenkette ersetzen mit gsub()
 peterpan_1 <- gsub("Rapunzel", "Peter Pan", maerchen_df$text[2])
 grepl("Rapunzel", peterpan_1)
@@ -250,7 +250,7 @@ grepl("Rapunzel", peterpan_1)
 ## [1] FALSE
 ```
 
-```r
+``` r
 grepl("Peter Pan", peterpan_1)
 ```
 
@@ -258,7 +258,7 @@ grepl("Peter Pan", peterpan_1)
 ## [1] TRUE
 ```
 
-```r
+``` r
 # Zeichenkette ersetzen mit sub()
 peterpan_2 <- sub("Rapunzel", "Peter Pan", maerchen_df$text[2])
 grepl("Rapunzel", peterpan_2)
@@ -268,7 +268,7 @@ grepl("Rapunzel", peterpan_2)
 ## [1] TRUE
 ```
 
-```r
+``` r
 # Zeichenkette löschen mit gsub() - geht auch mit sub()
 rapunzel_cleaned <- gsub("Rapunzel", "", maerchen_df$text[2])
 grepl("Rapunzel", rapunzel_cleaned)
@@ -291,7 +291,7 @@ Verständnisfragen:
 Im Beispiel oben haben wir die Funktionen auf das readtext-Objekt angewandt. Es kann aber auch ein Quanteda corpus-Objekt mithilfe von regulären Ausdrücken durchsucht werden: 
 
 
-```r
+``` r
 maerchen_korpus <- corpus(maerchen_df)
 grepl("Rapunzel", maerchen_korpus[1])
 ```
@@ -300,7 +300,7 @@ grepl("Rapunzel", maerchen_korpus[1])
 ## [1] FALSE
 ```
 
-```r
+``` r
 grepl("Rapunzel", maerchen_korpus[2])
 ```
 
@@ -308,7 +308,7 @@ grepl("Rapunzel", maerchen_korpus[2])
 ## [1] TRUE
 ```
 
-```r
+``` r
 grepl("Rapunzel", maerchen_korpus)
 ```
 
@@ -322,7 +322,7 @@ grepl("Rapunzel", maerchen_korpus)
 Die Suche mithilfe von R-base-Funktionen kann etwas kompliziert werden, insbesondere, wenn die gefundenen Zeichenketten mithilfe von `regmatches()` und `gregexpr()` ausgegeben werden sollen. Außerdem ist es nicht immer möglich, die R-base-Funktionen mithilfe des Pipe-Operators zu verketten. Deswegen gibt es `stringr`, ein Paket aus dem Tidyverse (s. Kapitel R Basics IV), welches spezialisierte Funktionen zur Arbeit mit regulären Ausdrücken bietet. Die unübersichtliche Kombination von `regmatches()` und `gregexpr()` kann beispielsweise durch die stringr-Funktion `str_extract_all()` ersetzt werden: 
 
 
-```r
+``` r
 str_extract_all(maerchen_df$text[2], "Rapunzel")
 ```
 
@@ -418,7 +418,7 @@ Nach manchen Zeichen wird so oft gesucht, dass sich bereits nützliche Abkürzun
 
 
 
-```r
+``` r
 # Mit R-Basisfunktionen
 regmatches(maerchen_df$text[2], gregexpr("\\s\\w{8}\\s", maerchen_df$text[2]))
 ```
@@ -437,7 +437,7 @@ regmatches(maerchen_df$text[2], gregexpr("\\s\\w{8}\\s", maerchen_df$text[2]))
 ## [46] " Rapunzel "  " erkannte "  " Rapunzel "
 ```
 
-```r
+``` r
 # Mit stringr-Funktion
 str_extract_all(maerchen_df$text[2], "\\s\\w{8}\\s")
 ```
@@ -480,7 +480,7 @@ Quelle: https://www.rexegg.com/regex-lookarounds.html
 Die stringr-Funktionen unterstützen per Default die Suche mithilfe von Lookarounds. Um Lookarounds im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument `perl = TRUE` übergeben werden.
 
 
-```r
+``` r
 # Mit R-Basisfunktionen
 regmatches(maerchen_df$text[2], gregexpr("(?<=\\s)\\w{8}(?=\\s)", maerchen_df$text[2], perl = TRUE))
 ```
@@ -497,7 +497,7 @@ regmatches(maerchen_df$text[2], gregexpr("(?<=\\s)\\w{8}(?=\\s)", maerchen_df$te
 ## [43] "liebsten" "wanderte" "Rapunzel" "erkannte" "Rapunzel"
 ```
 
-```r
+``` r
 # Mit stringr-Funktion
 str_extract_all(maerchen_df$text[2], "(?<=\\s)\\w{8}(?=\\s)")
 ```
@@ -528,7 +528,7 @@ Reguläre Ausdrücke können natürlich auch zur Suche in Texten mit nicht-latei
 
 
 
-```r
+``` r
 rapunzel_rus <- readtext("data/Колокольчик_(Гримм;_Полевой).txt")
 regmatches(rapunzel_rus$text[1], gregexpr("Колокольчик", rapunzel_rus$text[1]))
 ```
@@ -542,7 +542,7 @@ regmatches(rapunzel_rus$text[1], gregexpr("Колокольчик", rapunzel_rus
 Zur Suche nach Mustern in verschiedenen Schriften kann auch eine spezielle Zeichenklasse für Unicode-Zeichen verwendet werden, `\p`. Diese Zeichenklasse erlaubt es, ein bestimmtes Alphabet zu spezifizieren, oder alphabetübergreifend nach einem Zeichen in allen in Unicode abgebildeten Schriften zu suchen. Die stringr-Funktionen unterstützen per Default die Suche mithilfe der Unicode-Zeichenklasse `\p`. Um diese Zeichenklasse im Zusammenhang mit R-base-Funktionen zu verwenden, muss beim Funktionsaufruf das zusätzliche Argument `perl = TRUE` übergeben werden.
 
 
-```r
+``` r
 # Suche nach drei beliebigen Buchstaben aus dem kyrillischen Alphabet, angeführt und gefolgt von einem Leerzeichen
 regmatches(rapunzel_rus$text[1], gregexpr("\\s\\p{Cyrillic}{3}\\s", rapunzel_rus$text[1], perl = TRUE))
 ```
@@ -568,7 +568,7 @@ regmatches(rapunzel_rus$text[1], gregexpr("\\s\\p{Cyrillic}{3}\\s", rapunzel_rus
 ## [129] " ему "  " мог "  " все "  " как "  " где "  " они "
 ```
 
-```r
+``` r
 # Suche nach drei beliebigen Buchstaben, egal aus welchem Alphabet, angeführt und gefolgt von einem Leerzeichen
 regmatches(rapunzel_rus$text[1], gregexpr("\\s\\p{L}{3}\\s", rapunzel_rus$text[1], perl = TRUE))
 ```
@@ -594,7 +594,7 @@ regmatches(rapunzel_rus$text[1], gregexpr("\\s\\p{L}{3}\\s", rapunzel_rus$text[1
 ## [129] " ему "  " мог "  " все "  " как "  " где "  " они "
 ```
 
-```r
+``` r
 # Suche mit stringr-Funktion str_extract_all()
 str_extract_all(rapunzel_rus$text[1], "\\s\\p{L}{3}\\s")
 ```

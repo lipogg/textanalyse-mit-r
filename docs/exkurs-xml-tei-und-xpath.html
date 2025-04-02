@@ -53,7 +53,8 @@ set in the _output.yml file.</p>" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
@@ -506,53 +507,53 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
 <col width="71%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Ausdruck</th>
 <th>Bedeutung</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>bookstore</code></td>
 <td>Alle Elemente mit dem Namen bookstore auswählen</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>bookstore/book</code></td>
 <td>Alle book-Elemente, die Kindelemente von bookstore sind</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>bookstore/book[1]</code></td>
 <td>Das erste Element auswählen, wenn bookstore mehrere Kindelemente mit dem Namen book hat</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>//book</code></td>
 <td>Alle book-Elemente irgendwo im XML-Baum</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>.//book</code></td>
 <td>Alle book-Elemente innerhalb des aktuellen Elements</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>bookstore//book</code></td>
 <td>Alle book-Elemente, die sich irgendwoe im Element bookstore befinden</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>//@lang</code></td>
 <td>Alle Attribute mit dem Namen lang auswählen</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>//title[@lang]</code></td>
 <td>Alle title-Elemente, die ein Attribut lang haben</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>//title[@lang='en']</code></td>
 <td>Alle title-Elemente, die ein Attribut lang mit dem Wert “en” haben</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>//*[@lang]</code></td>
 <td>Irgendein Element auswählen, das ein Attribut lang hat</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>title[contains(text(), 'History')]</code></td>
 <td>Alle title-Elemente, die den Text “History” enthalten</td>
 </tr>
@@ -612,33 +613,33 @@ Formale Definition (<a href="https://de.wikipedia.org/wiki/Text_Encoding_Initiat
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": null,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"toc_depth": 4
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
 });
 });
 </script>

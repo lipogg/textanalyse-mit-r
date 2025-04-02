@@ -32,7 +32,7 @@ Funktionen **werden aufgerufen**. Beim Funktionsaufruf werden ihnen **Argumente 
 **Funktionsdefinitionen** haben in R die allgemeine Form: 
 
 
-```r
+``` r
 mache_irgendwas <- function(Parameter_1, Parameter_2, ...) {
   Anweisungsblock
   return(Rückgabewert) 
@@ -56,7 +56,7 @@ Für Funktionsnamen gelten fast die selben Konventionen wie für Variablennamen:
 Ein Beispiel: 
 
 
-```r
+``` r
 increment_value <- function(x) {
   x <- x + 1
   return(x)
@@ -76,7 +76,7 @@ Verständnisfragen:
 Anders als in anderen Programmiersprachen kann in R bei einer Funktionsdefinition die `return()`-Anweisung auch weggelassen werden. Dann wird automatisch der Ausdruck als Rückgabewert zurückgegeben, der im Funktionskörper zuletzt evaluiert wurde: 
 
 
-```r
+``` r
 # x + 1 wird "implizit" als Rückgabewert zurückgegeben, wenn die return-Anweisung fehlt
 increment_value <- function(x) {
   x + 1
@@ -89,7 +89,7 @@ Der [Style Guide](https://style.tidyverse.org/functions.html#return), nach dem w
 Manchmal ist es sinnvoll, bei der Funktionsdefinition einen Default-Wert für einen oder mehrere Parameter anzugeben:  
 
 
-```r
+``` r
 # Funktion mit Default-Wert für einen Parameter
 add_values <- function(x, y=10) {
   return(x + y)
@@ -103,7 +103,7 @@ Dieser Default-Wert wird dann beim Funktionsaufruf eingesetzt, falls kein Wert f
 **Funktionsaufurfe** haben in R die allgemeine Form: 
 
 
-```r
+``` r
 mache_irgendwas(Argument_1, Argument_2, ...)
 ```
 
@@ -112,7 +112,7 @@ Wenn eine Funktion aufgerufen wird, dann werden die formalen Parameter aus der F
 Bisher haben wir bereits oft Funktionen aufgerufen und ihnen Argumente übergeben. Zum Beispiel: 
 
 
-```r
+``` r
 print("Hallo")
 ```
 
@@ -120,7 +120,7 @@ print("Hallo")
 ## [1] "Hallo"
 ```
 
-```r
+``` r
 tiere <- c("Hund", "Katze")
 paste0(tiere[1], "e")
 ```
@@ -129,7 +129,7 @@ paste0(tiere[1], "e")
 ## [1] "Hunde"
 ```
 
-```r
+``` r
 length(tiere)
 ```
 
@@ -140,7 +140,7 @@ length(tiere)
 Wenn wir die Funktion `increment_value()`, die wir vorhin definiert haben, aufrufen wollen, gehen wir genauso vor: 
 
 
-```r
+``` r
 increment_value(3)
 ```
 
@@ -151,7 +151,7 @@ increment_value(3)
 Wenn eine Funktion aufgerufen wird, für deren Parameter in der Funktionsdefinition ein Standardwert festgelegt wurde, dann ist die Angabe eines Werts für diesen Parameter beim Funktionsaufruf optional:  
 
 
-```r
+``` r
 # addiert 2 mit dem Standardwert 10
 add_values(2)
 ```
@@ -160,7 +160,7 @@ add_values(2)
 ## [1] 12
 ```
 
-```r
+``` r
 # addiert 2 mit 5
 add_values(2, 5)
 ```
@@ -198,7 +198,7 @@ Allgemein werden Funktionen verwendet...
 Beispiel: Wir wollen herausfinden, wie oft jedes Wort in den Songtexten eine:r Künstler:in vorkommt. Dazu haben wir uns die folgende for-Schleife ausgedacht: 
 
 
-```r
+``` r
 lyrics <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 
 lyrics_vec <- strsplit(lyrics, " ")[[1]]
@@ -244,7 +244,7 @@ Verständnisfragen:
 Um die Arbeitsschritte mit mehreren Liedern auszuführen, sähe unser Code so aus:
 
 
-```r
+``` r
 lyrics_gc <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 
 lyrics_gc_vec<- strsplit(lyrics_gc, " ")[[1]]
@@ -282,7 +282,7 @@ print(lyrics_dd_freq)
 In der Lösung oben haben wir die for-Schleife einfach kopiert und manuell die Variable `lyrics_gc` durch die Variable `lyrics_dd` ersetzt. Das geht bei zwei verschiedenen Liedtexten zwar noch, aber was, wenn wir drei, fünf oder zehn verschiedene Liedtexte haben? Dann produzieren wir extrem viel unnötigen und unübersichtlichen Code, der vielleicht auch noch drei, fünf oder zehnmal denselben Fehler enthält. Eine bessere Lösung ist deswegen hier die Verwendung einer Funktion: die for-Schleife kann damit für alle Liedtexte, die in R als character repräsentiert werden, verallgemeinert werden:
 
 
-```r
+``` r
 lyrics_to_frequencies <- function(lyrics) {
   lyrics_vec <- strsplit(lyrics, " ")[[1]]
 
@@ -302,7 +302,7 @@ lyrics_to_frequencies <- function(lyrics) {
 Die Funktion kann dann mit wechselndem Input aufgerufen werden: 
 
 
-```r
+``` r
 lyrics_gc <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 lyrics_dd <- "I'm dreamin', ay Truth be told I got the hardest ahead, yeah But I said I never let it get to my head I be in space, in a daze, while you tellin me things I see your face but I never really heard you say it Red light, green light, either I'ma go New place, corner store Ain't that close anymore Yeah let me get the greens, I'll be home by four If you wanna pour up, then I need me a four"
 
@@ -326,7 +326,7 @@ print(lyrics_gc_freq)
 ##        1        2        2
 ```
 
-```r
+``` r
 print(lyrics_dd_freq)
 ```
 
@@ -371,7 +371,7 @@ Man sagt, dass eine Funktion "vektorisiert" ist, wenn eine Funktion in der Lage 
 Tatsächlich haben wir bereits eine Funktion kennengelernt, welche auf Vektorisierung zurückgreift, um genau das zu machen, was wir in unserem Beispiel mit den Liedtexten mühsam mithilfe einer for-Schleife und später mithilfe unserer selbst definierten Funktion `lyrics_to_frequencies()` erreicht haben: die `table()`-Funktion. 
 
 
-```r
+``` r
 lyrics <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 
 lyrics_vec <- strsplit(lyrics, " ")[[1]]
@@ -401,7 +401,7 @@ Zur Erinnerung: Die `table()`-Funktion wandelt ihr Argument zunächst automatisc
 Auch andere for-Schleifen aus der letzten Stunde können durch eine Funktion ersetzt werden. Am Ende der letzten Stunde haben wir uns beispielsweise die folgende for-Schleife angesehen, welche eine Änderung an den Elementen eines Vektors `tiere` vornimmt und die geänderten Werte einem neuen Vektor `tiere_neu` zuweist: 
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 tiere_neu <- c() # leeren Vektor erstellen
 
@@ -426,7 +426,7 @@ print(tiere_neu)
 Dasselbe kann mithilfe der Funktion `ifelse()` in einer einzigen Zeile erreicht werden: 
 
 
-```r
+``` r
 tiere <- c("Hund", "Elefant", "Igel", "Katze")
 tiere_neu <- ifelse(tiere == "Hund", tolower(tiere), toupper(tiere))
 ```
@@ -436,7 +436,7 @@ Die Funktion `ifelse()` greift genau wie die `table()`-Funktion unter der Motorh
 Auch unsere for-Schleife zur Erstellung eines Vektors mit langen Wörtern können wir ersetzen, indem wir die Funktion `nchar()` vektorisiert wird, also indem ihr ein Vektor als Argument übergeben wird. Anstelle mithilfe einer if-Anweisung zu überprüfen, ob die Zeichenanzahl eines Wortes im Vektor `woerter` größer als 20 ist, wird die Funktion `which()` verwendet. Diese Funktion kann ebenfalls vektorisiert werden, also mit einem Vektor als Argument aufgerufen werden. Ihr Rückgabewert ist ein Vektor mit den Indizes der Elemente, für die der Ausdruck `wortlaengen > 20` zu `TRUE` evaluiert wurde.   
 
 
-```r
+``` r
 woerter <- c("Netzwerkdurchsetzungsgesetz", "Abfallverzeichnisverordnung", "Haftpflichtversicherung", "Antivirenprogramm")
 wortlaengen <- nchar(woerter)
 indizes <- which(wortlaengen > 20)
@@ -479,7 +479,7 @@ Verständnisfrage:
 Ein Beispiel: Angenommen, wir hätten die folgende (fragwürdige) Funktion definiert, die erkennen soll, ob eine Stadt in Deutschland eine Großstadt ist und eine entsprechende Nachricht zurückgibt.  
 
 
-```r
+``` r
 ist_grossstadt <- function(stadt) {
   grossstaedte <- c("Berlin", "Hamburg", "Frankfurt", "München")
   if (stadt %in% grossstaedte) {
@@ -493,7 +493,7 @@ ist_grossstadt <- function(stadt) {
 Die Funktion ist etwas gestellt so definiert, dass sie nur auf einzelne Zeichenketten angewandt werden kann, nicht auf character-Vektoren. Beim Versuch, die Funktion mit einem Vektor als Argument auszuführen, wird eine Fehlermeldung ausgegeben. 
 
 
-```r
+``` r
 ist_grossstadt(c("Berlin", "Bremen")) # produziert Fehlermeldung
 ```
 
@@ -501,7 +501,7 @@ ist_grossstadt(c("Berlin", "Bremen")) # produziert Fehlermeldung
 ## Error in if (stadt %in% grossstaedte) {: the condition has length > 1
 ```
 
-```r
+``` r
 ist_grossstadt("Berlin")
 ```
 
@@ -512,7 +512,7 @@ ist_grossstadt("Berlin")
 Um die Funktion trotzdem auf einen Vektor anzuwenden, kann die Funktion `lapply()` eingesetzt werden: 
 
 
-```r
+``` r
 lapply(c("Berlin", "Bremen"), ist_grossstadt)
 ```
 
@@ -527,7 +527,7 @@ lapply(c("Berlin", "Bremen"), ist_grossstadt)
 Im Fall unserer Beispielfunktion `ist_grosstadt()` wäre es natürlich auch möglich (und eleganter), die Funktion direkt so zu definieren, dass sie auch auf Vektoren angewandt werden kann. Dabei wird die Funktion außerdem so umgeschrieben, dass Wahrheitswerte statt Textnachrichten ausgegeben werden. Das hat den zusätzlichen Vorteil, dass das Ergebnis der Überprüfung flexibel weiterverwendet werden kann.   
 
 
-```r
+``` r
 ist_grossstadt <- function(stadt) {
   grossstaedte <- c("Berlin", "Hamburg", "Frankfurt", "München")
   return(stadt %in% grossstaedte)
@@ -554,7 +554,7 @@ In den Beispielfunktionen, die wir uns bisher angesehen haben, haben wir immer a
 Deswegen ist es oft sinnvoll, im Funktionskörper zu überprüfen, ob die gewählten Argumente gültig sind. Wenn dies nicht der Fall ist, kann eine spezielle Funktion mit dem Namen `stop()` verwendet werden, um die Ausführung der Funktion abzubrechen und eine Fehlermeldung auszugeben: 
 
 
-```r
+``` r
 ist_grossstadt <- function(stadt) {
   
   if (!is.character(stadt)) {
@@ -582,7 +582,7 @@ Wenn wir Variablen erstellt haben, sind wir immer davon ausgegangen, dass diese 
 Ein Beispiel: 
 
 
-```r
+``` r
 x <- 1
 y <- 2
 beispiel <- function() {
@@ -595,7 +595,7 @@ beispiel <- function() {
 Beim Funktionsaufruf werden die Variablen `x` und `y` aus dem Funktionskörper zurückgegeben:
 
 
-```r
+``` r
 beispiel()
 ```
 
@@ -606,7 +606,7 @@ beispiel()
 Aber die Variablen `x` und `y` aus dem Funktionskörper können nicht unabhängig von der Funktion abgerufen werden. Sie existieren nur in der Funktion selbst: 
 
 
-```r
+``` r
 print(c(x, y))
 ```
 
@@ -619,7 +619,7 @@ Für Variablen, die innerhalb einer Funktion definiert sind, sagt man deswegen a
 Aber Achtung: Wenn im Funktionskörper eine Variable verwendet wird, für die im Funktionskörper oder beim Funktionsaufruf kein Wert festgelegt wird, dann wird beim Funktionsaufruf außerhalb der Funktion nach dieser Variable gesucht: 
 
 
-```r
+``` r
 x <- 2
 beispiel <- function() {
   y <- 1
@@ -637,7 +637,7 @@ Der Bereich "außerhalb der Funktion" ist im Grunde genau das, was wir eingangs 
 Wenn der Wert der Variable `x` sich im Programmverlauf ändert, dann wird beim Funktionsaufruf der Wert eingesetzt, den die Variable zum Zeitpunkt des Funktionsaufrufs angenommen hat: 
 
 
-```r
+``` r
 x <- 4
 beispiel()
 ```
@@ -646,7 +646,7 @@ beispiel()
 ## [1] 4 1
 ```
 
-```r
+``` r
 x <- 6 
 beispiel()
 ```
@@ -673,7 +673,7 @@ Die Funktionen, die wir bisher kennengelernt haben, waren alle in R vordefiniert
 R Pakete können mithilfe der Funktion `install.packages()` installiert werden. Die Funktion nimmt entweder einen einzelnen Paketnamen als Argument oder einen character-Vektor, der mehrere Paketnamen enthält.
 
 
-```r
+``` r
 # Paket installieren
 install.packages("quanteda")
 # mehrere Pakete gleichzeitig installieren
@@ -689,7 +689,7 @@ Achtung: Manchmal wird auf der Konsole (RStudio Fenster R Console) bei der Insta
 Installierte Pakete müssen immer am Anfang eines R Skripts geladen werden, bevor sie verwendet werden können: 
 
 
-```r
+``` r
 library(quanteda)
 library(readtext)
 ```
@@ -697,7 +697,7 @@ library(readtext)
 Wenn nur eine einzige oder einige wenige Funktionen aus einem Paket benötigt werden, können diese auch augerufen werden, ohne dass direkt das gesamte Paket geladen wird: 
 
 
-```r
+``` r
 quanteda::tokens("Guten Morgen")
 ```
 
@@ -719,7 +719,7 @@ Das Paket quanteda, das wir vorhin installiert haben, bietet zum Beispiel eine F
 
 
 
-```r
+``` r
 lyrics <- "My mind won't let me rest Voice in my head I hear what it said I can't trust a thing If I picked up and left How fast did you forget? Resting while I'm inside your presence I don't want to think nothing bad This time I won't This time I won't"
 
 # Aufruf der Funktion tokens() aus dem Paket quanteda
@@ -751,7 +751,7 @@ Verständnisfrage:
 Pakete können aber zum Beispiel auch **zusätzliche Datenstrukturen** enthalten. Die quanteda-`tokens()`-Funktion, die wir gerade ausgetestet haben, erstellt beispielsweise ein sogenanntes "tokens"-Objekt (schauen wir uns noch an):
 
 
-```r
+``` r
 typeof(lyrics_toks)
 ```
 
@@ -759,7 +759,7 @@ typeof(lyrics_toks)
 ## [1] "list"
 ```
 
-```r
+``` r
 class(lyrics_toks)
 ```
 
@@ -772,7 +772,7 @@ Ein Paket, das keine zusätzliche Datenstruktur, sondern einen **zusätzlichen O
 Dieses Paket ermöglicht es, den sogenannten **Pipe-Operator** zu verwenden. Der Pipe-Operator kann verwendet werden, um mehrere Funktionsaufrufe miteinander zu verketten. Wenn dasselbe Objekt nacheinander durch verschiedene Funktionen bearbeitet wird, wäre ohne den Pipe-Operator entweder eine Folge von Anweisungen der folgenden Art notwendig: 
 
 
-```r
+``` r
 greeting <- "Guten Tag"
 greeting <- paste0(greeting, "!")
 greeting_toks <- strsplit(greeting, " ")
@@ -781,7 +781,7 @@ greeting_toks <- strsplit(greeting, " ")
 Oder verschachtelte Funktionsaufrufe der Art: 
 
 
-```r
+``` r
 greeting <- "Guten Tag"
 greeting_toks <- strsplit(paste0(greeting, "!"), " ")
 ```
@@ -789,21 +789,21 @@ greeting_toks <- strsplit(paste0(greeting, "!"), " ")
 Mit dem Pipe-Operator können solche aufeinanderfolgenden oder verschachtelten Funktionsaufrufe vereinfacht werden. Um den Operator zu verwenden, muss zunächst das Paket magrittr installiert und geladen werden: 
 
 
-```r
+``` r
 install.packages("magrittr")
 ```
 
 
 
 
-```r
+``` r
 library(magrittr)
 ```
 
 Jetzt kann der Pipe-Operator verwendet werden: 
 
 
-```r
+``` r
 greeting <- "Guten Tag"
 
 greeting_toks <- greeting %>%
@@ -827,7 +827,7 @@ Zuletzt solltet ihr wissen, dass manche Pakete sogar komplette **Datensätze ode
 Quanteda stellt beispielsweise zu Testzwecken ein komplettes Korpus aus Reden von US-Präsidenten zur Verfügung: 
 
 
-```r
+``` r
 # Einen Datensatz kann man laden, indem man einfach den Namen des Datensatzes eingibt. Die Funktion head() gibt die ersten fünf Zeilen eines Dataframes aus. Die Funktion summary() gibt einen Dataframe mit Metadaten zu einem bestimmten Objekt zurück. Wenn Funktionsaufrufe verschachtelt werden, wird immer zuerst die innere Funktion ausgeführt, und dann die äußere.
 head(summary(quanteda::data_corpus_inaugural))
 ```

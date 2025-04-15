@@ -4,19 +4,19 @@
 
 |Sitzung Nr. |Datum          |Thema                                                             |
 |:-----------|:--------------|:-----------------------------------------------------------------|
-|1           |15.10.         |Einstieg                                                          |
-|2           |22.10.         |R Basics I: Datentypen, Variablen und Operatoren                  |
-|3           |29.10.         |R Basics II: Datenstrukturen                                      |
-|4           |5.11.          |R Basics III: Kontrollstrukturen                                  |
-|5           |12.11.         |R Basics IV: Funktionen und Pakete                                |
-|6           |19.11.         |R Basics Wiederholung                                             |
-|7           |26.11.         |Textanalyse mit Quanteda I: Korpus, Tokens, Daten und Dateien     |
-|8           |3.12.          |Textanalyse mit Quanteda II: Preprocessing und Reguläre Ausdrücke |
-|9, 10       |10. und 17.12. |Textanalyse mit Quanteda III: Wortfrequenzanalysen                |
-|11          |7.1.           |Part of Speech Tagging und Dependency Parsing mit UDPipe          |
-|12          |14.1.          |Textanalyse Wiederholung                                          |
-|13, 14      |21.1., 28.1.   |Named Entity Recognition                                          |
-|15, 16      |4.2., 11.2.    |Arbeit mit XML-TEI Dateien: XML, TEI und XPath                    |
+|1           |15.04.         |Einstieg                                                          |
+|2           |22.04.         |R Basics I: Datentypen, Variablen und Operatoren                  |
+|3           |29.04.         |R Basics II: Datenstrukturen                                      |
+|4           |06.05.         |R Basics III: Kontrollstrukturen                                  |
+|5           |13.05.         |R Basics IV: Funktionen und Pakete                                |
+|6           |20.05.         |R Basics Wiederholung                                             |
+|7           |27.05.         |Textanalyse mit Quanteda I: Korpus, Tokens, Daten und Dateien     |
+|8           |03.06.         |Textanalyse mit Quanteda II: Preprocessing und Reguläre Ausdrücke |
+|9, 10       |10. und 17.06. |Textanalyse mit Quanteda III: Wortfrequenzanalysen                |
+|11          |24.06.         |Part of Speech Tagging und Dependency Parsing mit UDPipe          |
+|12          |01.07.         |Textanalyse Wiederholung                                          |
+|13          |08.07.         |Named Entity Recognition                                          |
+|14          |15.07.         |Arbeit mit XML-TEI Dateien: XML, TEI und XPath                    |
 
 \
 
@@ -29,6 +29,6 @@ Da wir viele Themen besprechen werden, erfordert dieses Seminar ein hohes Maß a
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item" id="htmlwidget-a7d213e8528c09e4e8de" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-a7d213e8528c09e4e8de">{"x":{"visdat":{"64c44da1f7b9":["function () ","plotlyVisDat"]},"cur_data":"64c44da1f7b9","attrs":{"64c44da1f7b9":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Lernkurve für dieses Seminar","xaxis":{"domain":[0,1],"automargin":true,"title":"Sitzung Nr."},"yaxis":{"domain":[0,1],"automargin":true,"title":"Erlernte Inhalte"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14],"y":[2,12,22,31,37,46,52,55,58,60,62,65,67,69],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-758ab213c534f97543a9" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-758ab213c534f97543a9">{"x":{"visdat":{"b639395a98b6":["function () ","plotlyVisDat"]},"cur_data":"b639395a98b6","attrs":{"b639395a98b6":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Lernkurve für dieses Seminar","xaxis":{"domain":[0,1],"automargin":true,"title":"Sitzung Nr."},"yaxis":{"domain":[0,1],"automargin":true,"title":"Erlernte Inhalte"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14],"y":[2,12,22,31,37,46,52,55,58,60,62,65,67,69],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```

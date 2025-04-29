@@ -32,7 +32,7 @@ set in the _output.yml file.</p>" />
   
   
 <link rel="prev" href="r-basics-i-datentypen-variablen-und-operatoren.html"/>
-<link rel="next" href="r-basics-iii-kontrollstrukturen.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -64,8 +64,9 @@ set in the _output.yml file.</p>" />
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -75,7 +76,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -210,156 +211,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.11" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#der-mitgliedschaftsoperator-in"><i class="fa fa-check"></i><b>2.11</b> Der Mitgliedschaftsoperator %in%</a></li>
 <li class="chapter" data-level="2.12" data-path="03-R-Basics-2.html"><a href="#unver%C3%A4nderbarkeit-von-objekten-in-r"><i class="fa fa-check"></i><b>2.12</b> Unveränderbarkeit von Objekten in R</a></li>
 <li class="chapter" data-level="" data-path="r-basics-ii-datenstrukturen.html"><a href="r-basics-ii-datenstrukturen.html#quellen-1"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html"><i class="fa fa-check"></i><b>3</b> R Basics III: Kontrollstrukturen</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#grundlegende-begriffe-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegende Begriffe</a></li>
-<li class="chapter" data-level="3.2" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#bedingte-anweisungen"><i class="fa fa-check"></i><b>3.2</b> Bedingte Anweisungen</a></li>
-<li class="chapter" data-level="3.3" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#verzweigungen"><i class="fa fa-check"></i><b>3.3</b> Verzweigungen</a></li>
-<li class="chapter" data-level="3.4" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#while-schleifen"><i class="fa fa-check"></i><b>3.4</b> while-Schleifen</a></li>
-<li class="chapter" data-level="3.5" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#for-schleifen"><i class="fa fa-check"></i><b>3.5</b> for-Schleifen</a></li>
-<li class="chapter" data-level="3.6" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#schleifen-abbrechen"><i class="fa fa-check"></i><b>3.6</b> Schleifen abbrechen</a></li>
-<li class="chapter" data-level="" data-path="r-basics-iii-kontrollstrukturen.html"><a href="r-basics-iii-kontrollstrukturen.html#quellen-2"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html"><i class="fa fa-check"></i><b>4</b> R Basics IV: Funktionen und Pakete</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#grundlegende-begriffe-3"><i class="fa fa-check"></i><b>4.1</b> Grundlegende Begriffe</a></li>
-<li class="chapter" data-level="4.2" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-funktionen"><i class="fa fa-check"></i><b>4.2</b> Was sind Funktionen?</a></li>
-<li class="chapter" data-level="4.3" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-definieren"><i class="fa fa-check"></i><b>4.3</b> Funktionen definieren</a></li>
-<li class="chapter" data-level="4.4" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-aufrufen"><i class="fa fa-check"></i><b>4.4</b> Funktionen aufrufen</a></li>
-<li class="chapter" data-level="4.5" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionen-verstehen"><i class="fa fa-check"></i><b>4.5</b> Funktionen verstehen</a></li>
-<li class="chapter" data-level="4.6" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-funktionen-verwendet"><i class="fa fa-check"></i><b>4.6</b> Wozu werden Funktionen verwendet?</a></li>
-<li class="chapter" data-level="4.7" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#schleifen-ersetzen-mithilfe-von-funktionen"><i class="fa fa-check"></i><b>4.7</b> Schleifen ersetzen mithilfe von Funktionen</a>
-<ul>
-<li class="chapter" data-level="4.7.1" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#die-apply-funktionen"><i class="fa fa-check"></i><b>4.7.1</b> Die Apply-Funktionen</a></li>
-</ul></li>
-<li class="chapter" data-level="4.8" data-path="03-R-Basics-2.html"><a href="#g%C3%BCltigkeit-der-funktionsargumente-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>4.8</b> Gültigkeit der Funktionsargumente überprüfen</a></li>
-<li class="chapter" data-level="4.9" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#funktionsumgebung-und-sichtbarkeitsbereich-von-variablen"><i class="fa fa-check"></i><b>4.9</b> Funktionsumgebung und Sichtbarkeitsbereich von Variablen</a></li>
-<li class="chapter" data-level="4.10" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#was-sind-pakete"><i class="fa fa-check"></i><b>4.10</b> Was sind Pakete?</a></li>
-<li class="chapter" data-level="4.11" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-installieren"><i class="fa fa-check"></i><b>4.11</b> Pakete installieren</a></li>
-<li class="chapter" data-level="4.12" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#pakete-laden"><i class="fa fa-check"></i><b>4.12</b> Pakete laden</a></li>
-<li class="chapter" data-level="4.13" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet"><i class="fa fa-check"></i><b>4.13</b> Wozu werden Pakete verwendet?</a></li>
-<li class="chapter" data-level="4.14" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#welche-pakete-gibt-es-denn-alles"><i class="fa fa-check"></i><b>4.14</b> Welche Pakete gibt es denn alles?</a></li>
-<li class="chapter" data-level="" data-path="r-basics-iv-funktionen-und-pakete.html"><a href="r-basics-iv-funktionen-und-pakete.html#quellen-3"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html"><i class="fa fa-check"></i><b>5</b> Textanalyse I: Korpus, Tokens, Daten und Dateien</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#was-sind-eigentlich-daten"><i class="fa fa-check"></i><b>5.1</b> Was sind eigentlich Daten?</a></li>
-<li class="chapter" data-level="5.2" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#korpus-tokens-und-types"><i class="fa fa-check"></i><b>5.2</b> Korpus, Tokens und Types</a></li>
-<li class="chapter" data-level="5.3" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#vom-korpus-zur-analyse"><i class="fa fa-check"></i><b>5.3</b> Vom Korpus zur Analyse</a></li>
-<li class="chapter" data-level="5.4" data-path="03-R-Basics-2.html"><a href="#%C3%BCberblick-textanalyse-mit-quanteda"><i class="fa fa-check"></i><b>5.4</b> Überblick: Textanalyse mit Quanteda</a></li>
-<li class="chapter" data-level="5.5" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#textdateien-einlesen"><i class="fa fa-check"></i><b>5.5</b> Textdateien einlesen</a></li>
-<li class="chapter" data-level="5.6" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#character-encodings"><i class="fa fa-check"></i><b>5.6</b> Character Encodings</a></li>
-<li class="chapter" data-level="5.7" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-corpus-objekte"><i class="fa fa-check"></i><b>5.7</b> Quanteda corpus-Objekte</a></li>
-<li class="chapter" data-level="5.8" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-tokens-objekte"><i class="fa fa-check"></i><b>5.8</b> Quanteda tokens-Objekte</a></li>
-<li class="chapter" data-level="5.9" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quanteda-dfm-objekte"><i class="fa fa-check"></i><b>5.9</b> Quanteda DFM-Objekte</a></li>
-<li class="chapter" data-level="5.10" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben"><i class="fa fa-check"></i><b>5.10</b> Daten schreiben</a></li>
-<li class="chapter" data-level="" data-path="textanalyse-i-korpus-tokens-daten-und-dateien.html"><a href="textanalyse-i-korpus-tokens-daten-und-dateien.html#quellen-4"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>6</b> Exkurs: Reguläre Ausdrücke</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="03-R-Basics-2.html"><a href="#was-sind-regul%C3%A4re-ausdr%C3%BCcke"><i class="fa fa-check"></i><b>6.1</b> Was sind reguläre Ausdrücke?</a></li>
-<li class="chapter" data-level="6.2" data-path="regex.html"><a href="regex.html#regex-r"><i class="fa fa-check"></i><b>6.2</b> Reguläre Ausdrücke in R</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="regex.html"><a href="regex.html#r-base-funktionen"><i class="fa fa-check"></i><b>6.2.1</b> R Base Funktionen</a></li>
-<li class="chapter" data-level="6.2.2" data-path="regex.html"><a href="regex.html#spezielle-pakete-stringr"><i class="fa fa-check"></i><b>6.2.2</b> Spezielle Pakete: stringr</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="regex.html"><a href="regex.html#regex-syntax"><i class="fa fa-check"></i><b>6.3</b> Regex Syntax</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="regex.html"><a href="regex.html#basics-syntax"><i class="fa fa-check"></i><b>6.3.1</b> Basics Syntax</a></li>
-<li class="chapter" data-level="6.3.2" data-path="regex.html"><a href="regex.html#zeichenklassen"><i class="fa fa-check"></i><b>6.3.2</b> Zeichenklassen</a></li>
-<li class="chapter" data-level="6.3.3" data-path="regex.html"><a href="regex.html#lookarounds"><i class="fa fa-check"></i><b>6.3.3</b> Lookarounds</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="03-R-Basics-2.html"><a href="#regex-f%C3%BCr-nicht-lateinische-schriften"><i class="fa fa-check"></i><b>6.4</b> Regex für nicht-lateinische Schriften</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links"><i class="fa fa-check"></i>Weiterführende Links</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html"><i class="fa fa-check"></i><b>7</b> Textanalyse II: Preprocessing</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#tokenisieren-und-segmentieren"><i class="fa fa-check"></i><b>7.1</b> Tokenisieren und segmentieren</a></li>
-<li class="chapter" data-level="7.2" data-path="03-R-Basics-2.html"><a href="#regul%C3%A4re-ausdr%C3%BCcke-im-preprocessing"><i class="fa fa-check"></i><b>7.2</b> Reguläre Ausdrücke im Preprocessing</a></li>
-<li class="chapter" data-level="7.3" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#satzzeichen-zahlen-und-sonderzeichen-entfernen"><i class="fa fa-check"></i><b>7.3</b> Satzzeichen, Zahlen und Sonderzeichen entfernen</a></li>
-<li class="chapter" data-level="7.4" data-path="03-R-Basics-2.html"><a href="#stoppw%C3%B6rter-entfernen"><i class="fa fa-check"></i><b>7.4</b> Stoppwörter entfernen</a></li>
-<li class="chapter" data-level="7.5" data-path="03-R-Basics-2.html"><a href="#gro%C3%9F--und-kleinschreibung-anpassen"><i class="fa fa-check"></i><b>7.5</b> Groß- und Kleinschreibung anpassen</a></li>
-<li class="chapter" data-level="7.6" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#stemming"><i class="fa fa-check"></i><b>7.6</b> Stemming</a></li>
-<li class="chapter" data-level="7.7" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#lemmatisierung"><i class="fa fa-check"></i><b>7.7</b> Lemmatisierung</a>
-<ul>
-<li class="chapter" data-level="7.7.1" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-1-lemmatisierung-mit-lexikon"><i class="fa fa-check"></i><b>7.7.1</b> Methode 1: Lemmatisierung mit Lexikon</a></li>
-<li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="03-R-Basics-2.html"><a href="#m%C3%A4rchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
-<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#frequencies"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="03-R-Basics-2.html"><a href="#absolute-h%C3%A4ufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
-<li class="chapter" data-level="8.3.2" data-path="03-R-Basics-2.html"><a href="#absolute-h%C3%A4ufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
-<li class="chapter" data-level="8.3.3" data-path="03-R-Basics-2.html"><a href="#relative-h%C3%A4ufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#cooccurrences"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
-<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
-<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
-<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#interpretation"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
-<li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#zwischenfazit"><i class="fa fa-check"></i><b>8.4.5</b> Zwischenfazit</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
-<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
-<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
-<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispiel"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
-<ul>
-<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
-<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
-<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
-<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html"><i class="fa fa-check"></i><b>10</b> Word Embeddings und NER</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#word-embeddings"><i class="fa fa-check"></i><b>10.1</b> Word Embeddings</a>
-<ul>
-<li class="chapter" data-level="10.1.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#count-based-word-embeddings-mit-quanteda-und-pmi-werten"><i class="fa fa-check"></i><b>10.1.1</b> Count-Based Word Embeddings mit Quanteda und PMI-Werten</a></li>
-<li class="chapter" data-level="10.1.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-static-word-embeddings-mit-quanteda-und-glove"><i class="fa fa-check"></i><b>10.1.2</b> Prediction-Based Static Word Embeddings mit Quanteda und GloVe</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#named-entity-recognition-ner"><i class="fa fa-check"></i><b>10.2</b> Named Entity Recognition (NER)</a></li>
-<li class="chapter" data-level="10.3" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit SpaCy / Spacyr</a></li>
-<li class="chapter" data-level="10.4" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.4</b> Beispiel mit Flair / FlaiR</a></li>
-<li class="chapter" data-level="10.5" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.5</b> Vergleich und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html"><i class="fa fa-check"></i><b>11</b> Exkurs: Web Scraping und APIs</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor"><i class="fa fa-check"></i><b>11.1</b> Beispiel API: DraCor</a></li>
-<li class="chapter" data-level="11.2" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource"><i class="fa fa-check"></i><b>11.2</b> Beispiel Web Scraping: Wikisource</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>12</b> Exkurs: XML, TEI und XPath</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>12.1</b> Was ist XML? Was ist TEI?</a></li>
-<li class="chapter" data-level="12.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>12.2</b> Aufbau von XML-TEI Dokumenten</a></li>
-<li class="chapter" data-level="12.3" data-path="03-R-Basics-2.html"><a href="#wohlgeformtheit-und-validit%C3%A4t"><i class="fa fa-check"></i><b>12.3</b> Wohlgeformtheit und Validität</a></li>
-<li class="chapter" data-level="12.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>12.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
-<li class="chapter" data-level="12.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>12.5</b> Was ist XPath?</a></li>
-<li class="chapter" data-level="12.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>12.6</b> Basics XPath Syntax</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>13</b> Arbeit mit XML-TEI-Dokumenten</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>13.1</b> Beispiel Dramenanalyse</a></li>
-<li class="chapter" data-level="13.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>13.2</b> Beispiel Geomapping</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>13.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
-<li class="chapter" data-level="13.2.2" data-path="03-R-Basics-2.html"><a href="#koordinaten-%C3%BCber-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>13.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
-<li class="chapter" data-level="13.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>13.2.3</b> Koordinaten auf Karte abbilden</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -1396,44 +1247,44 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb269-8"><a href="r-basics-ii-datenstrukturen.html#cb269-8" tabindex="-1"></a>)</span>
 <span id="cb269-9"><a href="r-basics-ii-datenstrukturen.html#cb269-9" tabindex="-1"></a><span class="fu">print</span>(temperature_array[,<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Morgen&quot;</span>]) </span></code></pre></div>
 <pre><code>#&gt;  Berlin Hamburg München 
-#&gt;      19      27      12</code></pre>
+#&gt;      26      13      17</code></pre>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="r-basics-ii-datenstrukturen.html#cb271-1" tabindex="-1"></a><span class="fu">print</span>(temperature_array)</span></code></pre></div>
 <pre><code>#&gt; , , Zeit = Morgen
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  19 17 12 13 15 17 22
-#&gt;   Hamburg 27 10 10 22 22 12 21
-#&gt;   München 12 29 29 22 12 28 10
+#&gt;   Berlin  26 10 19 12 10 16 24
+#&gt;   Hamburg 13 10 10 13 15 19 13
+#&gt;   München 17 25 19 16 30 25 27
 #&gt; 
 #&gt; , , Zeit = Mittag
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  13 22 28 16 19 14 17
-#&gt;   Hamburg 20 22 23 20 22 24 25
-#&gt;   München 23 19 13 20 23 21 24
+#&gt;   Berlin  15 20 10 11 14 23 18
+#&gt;   Hamburg 23 14 18 19 30 16 28
+#&gt;   München 29 21 27 29 28 10 20
 #&gt; 
 #&gt; , , Zeit = Abend
 #&gt; 
 #&gt;          Tag
 #&gt; Stadt     Mo Di Mi Do Fr Sa So
-#&gt;   Berlin  13 17 26 30 15 10 22
-#&gt;   Hamburg 30 30 12 16 24 13 25
-#&gt;   München 24 20 11 24 19 12 25</code></pre>
+#&gt;   Berlin  21 20 16 15 20 24 24
+#&gt;   Hamburg 15 28 29 21 29 16 20
+#&gt;   München 25 28 21 22 16 18 20</code></pre>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="r-basics-ii-datenstrukturen.html#cb273-1" tabindex="-1"></a><span class="co"># Matrix: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb273-2"><a href="r-basics-ii-datenstrukturen.html#cb273-2" tabindex="-1"></a>morning_temp_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(temperature_array[ , , <span class="st">&quot;Morgen&quot;</span>], <span class="at">nrow =</span> <span class="dv">7</span>)</span>
 <span id="cb273-3"><a href="r-basics-ii-datenstrukturen.html#cb273-3" tabindex="-1"></a><span class="fu">rownames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mo&quot;</span>, <span class="st">&quot;Di&quot;</span>, <span class="st">&quot;Mi&quot;</span>, <span class="st">&quot;Do&quot;</span>, <span class="st">&quot;Fr&quot;</span>, <span class="st">&quot;Sa&quot;</span>, <span class="st">&quot;So&quot;</span>)</span>
 <span id="cb273-4"><a href="r-basics-ii-datenstrukturen.html#cb273-4" tabindex="-1"></a><span class="fu">colnames</span>(morning_temp_matrix) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Berlin&quot;</span>, <span class="st">&quot;Hamburg&quot;</span>, <span class="st">&quot;München&quot;</span>)</span>
 <span id="cb273-5"><a href="r-basics-ii-datenstrukturen.html#cb273-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_matrix)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     19      10      12
-#&gt; Di     27      29      17
-#&gt; Mi     12      13      12
-#&gt; Do     17      22      28
-#&gt; Fr     10      22      22
-#&gt; Sa     29      15      21
-#&gt; So     12      22      10</code></pre>
+#&gt; Mo     26      10      30
+#&gt; Di     13      19      16
+#&gt; Mi     17      12      19
+#&gt; Do     10      13      25
+#&gt; Fr     10      16      24
+#&gt; Sa     25      10      13
+#&gt; So     19      15      27</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="r-basics-ii-datenstrukturen.html#cb275-1" tabindex="-1"></a><span class="co"># Dataframe: Die Temperaturmessungen für alle Städte über eine Woche zu einer bestimmten Tageszeit.</span></span>
 <span id="cb275-2"><a href="r-basics-ii-datenstrukturen.html#cb275-2" tabindex="-1"></a>morning_temp_dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb275-3"><a href="r-basics-ii-datenstrukturen.html#cb275-3" tabindex="-1"></a>  <span class="at">Berlin =</span> temperature_array[<span class="st">&quot;Berlin&quot;</span>, , <span class="st">&quot;Morgen&quot;</span>],</span>
@@ -1442,26 +1293,26 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb275-6"><a href="r-basics-ii-datenstrukturen.html#cb275-6" tabindex="-1"></a>)</span>
 <span id="cb275-7"><a href="r-basics-ii-datenstrukturen.html#cb275-7" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe) </span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München
-#&gt; Mo     19      27      12
-#&gt; Di     17      10      29
-#&gt; Mi     12      10      29
-#&gt; Do     13      22      22
-#&gt; Fr     15      22      12
-#&gt; Sa     17      12      28
-#&gt; So     22      21      10</code></pre>
+#&gt; Mo     26      13      17
+#&gt; Di     10      10      25
+#&gt; Mi     19      10      19
+#&gt; Do     12      13      16
+#&gt; Fr     10      15      30
+#&gt; Sa     16      19      25
+#&gt; So     24      13      27</code></pre>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="r-basics-ii-datenstrukturen.html#cb277-1" tabindex="-1"></a><span class="co"># Der Dataframe sieht auf den ersten Blick genauso aus wie die Matrix. </span></span>
 <span id="cb277-2"><a href="r-basics-ii-datenstrukturen.html#cb277-2" tabindex="-1"></a><span class="co"># Ein Dataframe kann aber zusätzliche Metadaten und Werte eines anderen Datentyps enthalten:</span></span>
 <span id="cb277-3"><a href="r-basics-ii-datenstrukturen.html#cb277-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span>
 <span id="cb277-4"><a href="r-basics-ii-datenstrukturen.html#cb277-4" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Skala <span class="ot">&lt;-</span> <span class="st">&quot;Celsius&quot;</span></span>
 <span id="cb277-5"><a href="r-basics-ii-datenstrukturen.html#cb277-5" tabindex="-1"></a><span class="fu">print</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala
-#&gt; Mo     19      27      12 Morgen Celsius
-#&gt; Di     17      10      29 Morgen Celsius
-#&gt; Mi     12      10      29 Morgen Celsius
-#&gt; Do     13      22      22 Morgen Celsius
-#&gt; Fr     15      22      12 Morgen Celsius
-#&gt; Sa     17      12      28 Morgen Celsius
-#&gt; So     22      21      10 Morgen Celsius</code></pre>
+#&gt; Mo     26      13      17 Morgen Celsius
+#&gt; Di     10      10      25 Morgen Celsius
+#&gt; Mi     19      10      19 Morgen Celsius
+#&gt; Do     12      13      16 Morgen Celsius
+#&gt; Fr     10      15      30 Morgen Celsius
+#&gt; Sa     16      19      25 Morgen Celsius
+#&gt; So     24      13      27 Morgen Celsius</code></pre>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="r-basics-ii-datenstrukturen.html#cb279-1" tabindex="-1"></a><span class="co"># Wenn wir dasselbe mit der Matrix versuchen, bekommen wir dagegen eine Warnmeldung, und einen wenig sinnvollen Output: </span></span>
 <span id="cb279-2"><a href="r-basics-ii-datenstrukturen.html#cb279-2" tabindex="-1"></a>morning_temp_matrix<span class="sc">$</span>Zeit <span class="ot">&lt;-</span> <span class="st">&quot;Morgen&quot;</span></span></code></pre></div>
 <pre><code>#&gt; Warning in morning_temp_matrix$Zeit &lt;- &quot;Morgen&quot;: Coercing LHS to a list</code></pre>
@@ -1470,36 +1321,36 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <span id="cb281-3"><a href="r-basics-ii-datenstrukturen.html#cb281-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="fu">pmax</span>(morning_temp_dataframe<span class="sc">$</span>Berlin, morning_temp_dataframe<span class="sc">$</span>Hamburg, morning_temp_dataframe<span class="sc">$</span>München)</span>
 <span id="cb281-4"><a href="r-basics-ii-datenstrukturen.html#cb281-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     19      27      12 Morgen Celsius      27
-#&gt; Di     17      10      29 Morgen Celsius      29
-#&gt; Mi     12      10      29 Morgen Celsius      29
-#&gt; Do     13      22      22 Morgen Celsius      22
-#&gt; Fr     15      22      12 Morgen Celsius      22
-#&gt; Sa     17      12      28 Morgen Celsius      28
-#&gt; So     22      21      10 Morgen Celsius      22</code></pre>
+#&gt; Mo     26      13      17 Morgen Celsius      26
+#&gt; Di     10      10      25 Morgen Celsius      25
+#&gt; Mi     19      10      19 Morgen Celsius      19
+#&gt; Do     12      13      16 Morgen Celsius      16
+#&gt; Fr     10      15      30 Morgen Celsius      30
+#&gt; Sa     16      19      25 Morgen Celsius      25
+#&gt; So     24      13      27 Morgen Celsius      27</code></pre>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="r-basics-ii-datenstrukturen.html#cb283-1" tabindex="-1"></a><span class="co"># Wir könnten auch die Werte in Fahrenheit umwandeln </span></span>
 <span id="cb283-2"><a href="r-basics-ii-datenstrukturen.html#cb283-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
 <span id="cb283-3"><a href="r-basics-ii-datenstrukturen.html#cb283-3" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum
-#&gt; Mo     19      27      12 Morgen Celsius    80.6
-#&gt; Di     17      10      29 Morgen Celsius    84.2
-#&gt; Mi     12      10      29 Morgen Celsius    84.2
-#&gt; Do     13      22      22 Morgen Celsius    71.6
-#&gt; Fr     15      22      12 Morgen Celsius    71.6
-#&gt; Sa     17      12      28 Morgen Celsius    82.4
-#&gt; So     22      21      10 Morgen Celsius    71.6</code></pre>
+#&gt; Mo     26      13      17 Morgen Celsius    78.8
+#&gt; Di     10      10      25 Morgen Celsius    77.0
+#&gt; Mi     19      10      19 Morgen Celsius    66.2
+#&gt; Do     12      13      16 Morgen Celsius    60.8
+#&gt; Fr     10      15      30 Morgen Celsius    86.0
+#&gt; Sa     16      19      25 Morgen Celsius    77.0
+#&gt; So     24      13      27 Morgen Celsius    80.6</code></pre>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="r-basics-ii-datenstrukturen.html#cb285-1" tabindex="-1"></a><span class="co">#... und anschließend die Spalte umbenennen </span></span>
 <span id="cb285-2"><a href="r-basics-ii-datenstrukturen.html#cb285-2" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum_Fahrenheit <span class="ot">&lt;-</span> morning_temp_dataframe<span class="sc">$</span>Maximum</span>
 <span id="cb285-3"><a href="r-basics-ii-datenstrukturen.html#cb285-3" tabindex="-1"></a>morning_temp_dataframe<span class="sc">$</span>Maximum <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># entfernt die ursprüngliche &quot;Maximum&quot; Spalte</span></span>
 <span id="cb285-4"><a href="r-basics-ii-datenstrukturen.html#cb285-4" tabindex="-1"></a>morning_temp_dataframe</span></code></pre></div>
 <pre><code>#&gt;    Berlin Hamburg München   Zeit   Skala Maximum_Fahrenheit
-#&gt; Mo     19      27      12 Morgen Celsius               80.6
-#&gt; Di     17      10      29 Morgen Celsius               84.2
-#&gt; Mi     12      10      29 Morgen Celsius               84.2
-#&gt; Do     13      22      22 Morgen Celsius               71.6
-#&gt; Fr     15      22      12 Morgen Celsius               71.6
-#&gt; Sa     17      12      28 Morgen Celsius               82.4
-#&gt; So     22      21      10 Morgen Celsius               71.6</code></pre>
+#&gt; Mo     26      13      17 Morgen Celsius               78.8
+#&gt; Di     10      10      25 Morgen Celsius               77.0
+#&gt; Mi     19      10      19 Morgen Celsius               66.2
+#&gt; Do     12      13      16 Morgen Celsius               60.8
+#&gt; Fr     10      15      30 Morgen Celsius               86.0
+#&gt; Sa     16      19      25 Morgen Celsius               77.0
+#&gt; So     24      13      27 Morgen Celsius               80.6</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="r-basics-ii-datenstrukturen.html#cb287-1" tabindex="-1"></a><span class="co"># Zur Datenmanipulation werden wir deswegen meist mit Dataframes zu tun haben. </span></span></code></pre></div>
 </div>
 <div id="datenstrukturen-untersuchen" class="section level2 hasAnchor" number="2.9">
@@ -1513,12 +1364,12 @@ Auch Arrays haben eine Dimension, allerdings ist damit in Bezug auf Arrays etwas
 <p>Neben <code>typeof()</code> und <code>class()</code> gibt es noch eine dritte Funktion, mit der die Datenstruktur eines Objekts untersucht werden kann. Die Funktion <code>str()</code> gibt Auskunft über die interne Struktur des Objekts:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="r-basics-ii-datenstrukturen.html#cb292-1" tabindex="-1"></a><span class="fu">str</span>(morning_temp_dataframe)</span></code></pre></div>
 <pre><code>#&gt; &#39;data.frame&#39;:    7 obs. of  6 variables:
-#&gt;  $ Berlin            : int  19 17 12 13 15 17 22
-#&gt;  $ Hamburg           : int  27 10 10 22 22 12 21
-#&gt;  $ München           : int  12 29 29 22 12 28 10
+#&gt;  $ Berlin            : int  26 10 19 12 10 16 24
+#&gt;  $ Hamburg           : int  13 10 10 13 15 19 13
+#&gt;  $ München           : int  17 25 19 16 30 25 27
 #&gt;  $ Zeit              : chr  &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; &quot;Morgen&quot; ...
 #&gt;  $ Skala             : chr  &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; &quot;Celsius&quot; ...
-#&gt;  $ Maximum_Fahrenheit: num  80.6 84.2 84.2 71.6 71.6 82.4 71.6</code></pre>
+#&gt;  $ Maximum_Fahrenheit: num  78.8 77 66.2 60.8 86 77 80.6</code></pre>
 <p>Die Funktion <code>typeof()</code> kann natürlich auch auf einzelne Elemente in einer Datenstruktur angewandt werden:</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="r-basics-ii-datenstrukturen.html#cb294-1" tabindex="-1"></a><span class="co"># Jedes Element hat in einer Matrix hat den Datentyp character</span></span>
 <span id="cb294-2"><a href="r-basics-ii-datenstrukturen.html#cb294-2" tabindex="-1"></a><span class="fu">typeof</span>(fruechte_einkauf[<span class="dv">1</span>, <span class="dv">1</span>]) <span class="co"># character</span></span></code></pre></div>
@@ -1619,8 +1470,8 @@ Bei der Manipulation von Objekten sollte man also dieses Prinzip der Unveränder
           </div>
         </div>
       </div>
-<a href="r-basics-i-datentypen-variablen-und-operatoren.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-basics-iii-kontrollstrukturen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="r-basics-i-datentypen-variablen-und-operatoren.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1665,20 +1516,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

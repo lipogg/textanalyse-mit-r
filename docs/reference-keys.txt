@@ -36,3 +36,10 @@ datenstrukturen-untersuchen
 fehlende-und-ungültige-werte-in-datenstrukturen
 der-mitgliedschaftsoperator-in
 unveränderbarkeit-von-objekten-in-r
+r-basics-iii-kontrollstrukturen
+grundlegende-begriffe-2
+bedingte-anweisungen
+verzweigungen
+while-schleifen
+for-schleifen
+schleifen-abbrechen

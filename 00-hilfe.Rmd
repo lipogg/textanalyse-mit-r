@@ -52,6 +52,7 @@ Datenvisualisierung mit ggplot2:
 * Healy, Kieran (2019). Data Visualization. A Practical Introduction, https://socviz.co/
 * Wickham, Hadley (2016). ggplot2. Elegant Graphics for Data Analysis, https://ggplot2-book.org/
 * ggplot2-Dokumentationsseiten: https://ggplot2.tidyverse.org/;  https://ggplot2.tidyverse.org/articles/ggplot2.html
+* Online-Tool das dabei hilft, eine passende Visualisierung zu finden, mit Links zu den Dokumentationsseiten geeigneter R Funktionen: https://www.data-to-viz.com/
 
 Statistik: 
 
@@ -93,6 +94,7 @@ Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu T
 Einige Digital Humanities Zeitschriften (für die eigene Recherche): 
 
 * Zeitschrift für digitale Geisteswissenschaften, https://zfdg.de/
+* Digital Scholarship in the Humanities, https://academic.oup.com/dsh
 * Digital Humanities Quarterly, https://www.digitalhumanities.org/dhq/
 * Journal of Cultural Analytics, https://culturalanalytics.org/
 * Journal of Computational Literary Studies, https://jcls.io/

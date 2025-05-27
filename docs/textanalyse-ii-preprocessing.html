@@ -32,7 +32,7 @@ set in the _output.yml file.</p>" />
   
   
 <link rel="prev" href="regex.html"/>
-<link rel="next" href="textanalyse-iii-wortfrequenzanalysen.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -64,8 +64,9 @@ set in the _output.yml file.</p>" />
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -75,7 +76,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -287,79 +288,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#methode-2-lemmatisierung-mit-udpipe"><i class="fa fa-check"></i><b>7.7.2</b> Methode 2: Lemmatisierung mit UDPipe</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="textanalyse-ii-preprocessing.html"><a href="textanalyse-ii-preprocessing.html#quellen-5"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html"><i class="fa fa-check"></i><b>8</b> Textanalyse III: Wortfrequenzanalysen</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="07-Textanalyse-2.html"><a href="#m%C3%A4rchenkorpus-einlesen-und-pakete-installieren"><i class="fa fa-check"></i><b>8.1</b> Märchenkorpus einlesen und Pakete installieren</a></li>
-<li class="chapter" data-level="8.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#corpus-objekt-erstellen-und-erste-preprocessingschritte"><i class="fa fa-check"></i><b>8.2</b> Corpus-Objekt erstellen und erste Preprocessingschritte</a></li>
-<li class="chapter" data-level="8.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#frequencies"><i class="fa fa-check"></i><b>8.3</b> Worthäufigkeiten verstehen: absolute und relative Häufigkeiten</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="07-Textanalyse-2.html"><a href="#absolute-h%C3%A4ufigkeiten-und-das-zipfsche-gesetz"><i class="fa fa-check"></i><b>8.3.1</b> Absolute Häufigkeiten und das Zipf’sche Gesetz</a></li>
-<li class="chapter" data-level="8.3.2" data-path="07-Textanalyse-2.html"><a href="#absolute-h%C3%A4ufigkeiten-und-lemmata"><i class="fa fa-check"></i><b>8.3.2</b> Absolute Häufigkeiten und Lemmata</a></li>
-<li class="chapter" data-level="8.3.3" data-path="07-Textanalyse-2.html"><a href="#relative-h%C3%A4ufigkeiten-und-tf-idf"><i class="fa fa-check"></i><b>8.3.3</b> Relative Häufigkeiten und TF-IDF</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#cooccurrences"><i class="fa fa-check"></i><b>8.4</b> Wörter im Kontext: gemeinsames Vorkommen von Wörtern</a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#keywords-in-context-kwic"><i class="fa fa-check"></i><b>8.4.1</b> Keywords in Context (KWIC)</a></li>
-<li class="chapter" data-level="8.4.2" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#n-gramme"><i class="fa fa-check"></i><b>8.4.2</b> N-Gramme</a></li>
-<li class="chapter" data-level="8.4.3" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#kookkurrenzen"><i class="fa fa-check"></i><b>8.4.3</b> Kookkurrenzen</a></li>
-<li class="chapter" data-level="8.4.4" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#interpretation"><i class="fa fa-check"></i><b>8.4.4</b> Was bedeutet das gemeinsame Vorkommen zweier Wörter?</a></li>
-<li class="chapter" data-level="8.4.5" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#zwischenfazit"><i class="fa fa-check"></i><b>8.4.5</b> Zwischenfazit</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="textanalyse-iii-wortfrequenzanalysen.html"><a href="textanalyse-iii-wortfrequenzanalysen.html#quellen-6"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html"><i class="fa fa-check"></i><b>9</b> POS Tagging und Dependency Parsing</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#recap-udpipe"><i class="fa fa-check"></i><b>9.1</b> Recap UDPipe</a></li>
-<li class="chapter" data-level="9.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#part-of-speech-tagging-mit-udpipe"><i class="fa fa-check"></i><b>9.2</b> Part of Speech Tagging mit UDpipe</a></li>
-<li class="chapter" data-level="9.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#dependency-parsing-mit-udpipe"><i class="fa fa-check"></i><b>9.3</b> Dependency Parsing mit UDPipe</a></li>
-<li class="chapter" data-level="9.4" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#beispiel"><i class="fa fa-check"></i><b>9.4</b> Beispielanalyse: Märchen</a>
-<ul>
-<li class="chapter" data-level="9.4.1" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#korpus-einlesen-und-preprocessing"><i class="fa fa-check"></i><b>9.4.1</b> Korpus einlesen und Preprocessing</a></li>
-<li class="chapter" data-level="9.4.2" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-pos-tags"><i class="fa fa-check"></i><b>9.4.2</b> Analyse mit POS Tags</a></li>
-<li class="chapter" data-level="9.4.3" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#analyse-mit-dependency-relations"><i class="fa fa-check"></i><b>9.4.3</b> Analyse mit Dependency Relations</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
-<li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html"><i class="fa fa-check"></i><b>10</b> Word Embeddings und NER</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#word-embeddings"><i class="fa fa-check"></i><b>10.1</b> Word Embeddings</a>
-<ul>
-<li class="chapter" data-level="10.1.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#count-based-word-embeddings-mit-quanteda-und-pmi-werten"><i class="fa fa-check"></i><b>10.1.1</b> Count-Based Word Embeddings mit Quanteda und PMI-Werten</a></li>
-<li class="chapter" data-level="10.1.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-static-word-embeddings-mit-quanteda-und-glove"><i class="fa fa-check"></i><b>10.1.2</b> Prediction-Based Static Word Embeddings mit Quanteda und GloVe</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#named-entity-recognition-ner"><i class="fa fa-check"></i><b>10.2</b> Named Entity Recognition (NER)</a></li>
-<li class="chapter" data-level="10.3" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit SpaCy / Spacyr</a></li>
-<li class="chapter" data-level="10.4" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.4</b> Beispiel mit Flair / FlaiR</a></li>
-<li class="chapter" data-level="10.5" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.5</b> Vergleich und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html"><i class="fa fa-check"></i><b>11</b> Exkurs: Web Scraping und APIs</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor"><i class="fa fa-check"></i><b>11.1</b> Beispiel API: DraCor</a></li>
-<li class="chapter" data-level="11.2" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource"><i class="fa fa-check"></i><b>11.2</b> Beispiel Web Scraping: Wikisource</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>12</b> Exkurs: XML, TEI und XPath</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>12.1</b> Was ist XML? Was ist TEI?</a></li>
-<li class="chapter" data-level="12.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>12.2</b> Aufbau von XML-TEI Dokumenten</a></li>
-<li class="chapter" data-level="12.3" data-path="07-Textanalyse-2.html"><a href="#wohlgeformtheit-und-validit%C3%A4t"><i class="fa fa-check"></i><b>12.3</b> Wohlgeformtheit und Validität</a></li>
-<li class="chapter" data-level="12.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>12.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
-<li class="chapter" data-level="12.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>12.5</b> Was ist XPath?</a></li>
-<li class="chapter" data-level="12.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>12.6</b> Basics XPath Syntax</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>13</b> Arbeit mit XML-TEI-Dokumenten</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>13.1</b> Beispiel Dramenanalyse</a></li>
-<li class="chapter" data-level="13.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>13.2</b> Beispiel Geomapping</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>13.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
-<li class="chapter" data-level="13.2.2" data-path="07-Textanalyse-2.html"><a href="#koordinaten-%C3%BCber-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>13.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
-<li class="chapter" data-level="13.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>13.2.3</b> Koordinaten auf Karte abbilden</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -13389,8 +13317,8 @@ greeting_toks &lt;- greeting %&gt;%
           </div>
         </div>
       </div>
-<a href="regex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="textanalyse-iii-wortfrequenzanalysen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regex.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -13435,20 +13363,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

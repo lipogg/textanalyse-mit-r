@@ -103,8 +103,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 
 
 ```{=html}
-<div class="plotly html-widget html-fill-item" id="htmlwidget-66b92f7b8f0440e6d7b2" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-66b92f7b8f0440e6d7b2">{"x":{"visdat":{"e86011161202":["function () ","plotlyVisDat"]},"cur_data":"e86011161202","attrs":{"e86011161202":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-f3c6e6ab1087ce34be7b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f3c6e6ab1087ce34be7b">{"x":{"visdat":{"bcb35d7edeaf":["function () ","plotlyVisDat"]},"cur_data":"bcb35d7edeaf","attrs":{"bcb35d7edeaf":{"x":{},"y":{},"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Interessantheit vs. Interpretierbarkeit","xaxis":{"domain":[0,1],"automargin":true,"title":"Interessantheit der Analyse"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Interpretierbarkeit der Methode"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[10,9,8,7,6,5,4,3,2,1],"y":[1,2,3,4,5,6,7,8,9,10],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -331,13 +331,13 @@ str(ger_korpus)
 ##  - attr(*, "meta")=List of 3
 ##   ..$ system:List of 6
 ##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
-##   .. .. ..$ : int [1:3] 4 2 0
+##   .. .. ..$ : int [1:3] 4 3 0
 ##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
 ##   .. .. ..$ : int [1:3] 4 3 3
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2025-05-20"
+##   .. ..$ created        : Date[1:1], format: "2025-05-27"
 ##   .. ..$ source         : chr "data.frame"
 ##   ..$ object:List of 2
 ##   .. ..$ unit   : chr "documents"
@@ -665,13 +665,13 @@ str(kafka_toks)
 ##  - attr(*, "meta")=List of 3
 ##   ..$ system:List of 5
 ##   .. ..$ package-version:Classes 'package_version', 'numeric_version'  hidden list of 1
-##   .. .. ..$ : int [1:3] 4 2 0
+##   .. .. ..$ : int [1:3] 4 3 0
 ##   .. ..$ r-version      :Classes 'R_system_version', 'package_version', 'numeric_version'  hidden list of 1
 ##   .. .. ..$ : int [1:3] 4 3 3
 ##   .. ..$ system         : Named chr [1:3] "Darwin" "arm64" "lipogg"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "sysname" "machine" "user"
 ##   .. ..$ directory      : chr "/Users/lipogg/Desktop/LV_Textanalyse/textanalyse-mit-r"
-##   .. ..$ created        : Date[1:1], format: "2025-05-20"
+##   .. ..$ created        : Date[1:1], format: "2025-05-27"
 ##   ..$ object:List of 7
 ##   .. ..$ unit        : chr "documents"
 ##   .. ..$ what        : chr "word"

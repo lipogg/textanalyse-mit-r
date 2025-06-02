@@ -38,8 +38,7 @@ tweet_tate <- "Hello @GretaThunberg
               I have 33 cars. 
               My Bugatti has a w16 8.0L quad turbo. 
               My TWO Ferrari 812 competizione have 6.5L v12s.
-              This is just the start.
-              Please provide your email address so I can send a complete list of my car               collection and their respective enormous emissions."
+              This is just the start."
 
 tate_toks <- tokens(tweet_tate)
 print(tate_toks, max_ntoken = 200)
@@ -55,13 +54,7 @@ print(tate_toks, max_ntoken = 200)
 ## [17] "My"             "TWO"            "Ferrari"        "812"           
 ## [21] "competizione"   "have"           "6.5L"           "v12s"          
 ## [25] "."              "This"           "is"             "just"          
-## [29] "the"            "start"          "."              "Please"        
-## [33] "provide"        "your"           "email"          "address"       
-## [37] "so"             "I"              "can"            "send"          
-## [41] "a"              "complete"       "list"           "of"            
-## [45] "my"             "car"            "collection"     "and"           
-## [49] "their"          "respective"     "enormous"       "emissions"     
-## [53] "."
+## [29] "the"            "start"          "."
 ```
 
 Der Twitter (bzw. X) Handle von Greta Thunberg wurde korrekt als zusammenhängendes Token erkannt. Aber es wäre denkbar, dass es für eine Fragestellung interessant sein könnte, welche Automodelle in den Tweets erwähnt werden, sodass "w16 8.0L quad turbo" eine wichtige Sinneinheit bildet. Beim Tokenisieren mit Quanteda wurden aus dieser Sinneinheit allerdings separate Tokens. Im folgenden Abschnitt werden wir auf dieses Problem zurückkommen und eine Methode kennenlernen, wie wir trotzdem mit einfachen Mitteln erreichen können, dass die Motorart als ein Token erfasst wird. 
@@ -240,7 +233,9 @@ Verständnisfragen:
 
 ## Reguläre Ausdrücke im Preprocessing
 
-Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Aber es ist nicht immer ganz so einfach zu beschreiben, nach welchen Regeln bestimmte Zeichenmuster durch andere Zeichen ersetzt werden sollen. Ein Beispiel sind die Motorangaben in dem Tweet von Andrew Tate aus dem vorherigen Abschnitt. Damit die Motorangaben "w16 8.0L quad turbo" und "6.5L v12s" als Sinneinheiten erkannt werden, müssen wir alle Leerzeichen durch Unterstriche ersetzen. Aber wie sagen wir R, dass nur in diesen Zeichenmustern die Leerzeichen ausgetauscht werden sollen, und nicht im gesamten Tweet? Dafür können wir sogenannte reguläre Ausdrücke verwenden. Reguläre Ausdrücke (oder engl. Regular Expression, kurz: RegEx, RegExp) sind verallgemeinerte Suchmuster (patterns) für Zeichenketten. Mithilfe von regulären Ausdrücken können syntaktische Konstrukte so beschrieben werden, dass sie ein Computer versteht. Eine ausführliche Einführung findet ihr in Kapitel 6 "Exkurs: Reguläre Ausdrücke". Es ist nicht ganz einfach, für unser Beispiel einen "guten" regulären Ausdruck zu finden, aber wir könnten z.B. eine Motorangabe definieren als eine Zeichenkette aus maximal vier Teilen, die durch ein Leerzeichen voneinander getrennt sind. Der erste Teil ist optional, und fängt immer mit einem "w" gefolgt von 1-2 Zahlen an. Der zweite Teil ist eine Dezimalzahl gefolgt von einem großen L und der dritte Teil ist entweder eine Kombination aus Zahlen und Buchstaben angeführt von einem v oder exakt die Wörter "quad turbo". Anstelle der R-Basis-Funktion `gsub()` verwenden wir hier Funktionen aus dem Paket stringr (Details s. Kapitel 6).
+Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Aber es ist nicht immer ganz so einfach zu beschreiben, nach welchen Regeln bestimmte Zeichenmuster durch andere Zeichen ersetzt werden sollen. Ein Beispiel sind die Motorangaben in dem Tweet von Andrew Tate aus dem vorherigen Abschnitt. Damit die Motorangaben "w16 8.0L quad turbo" und "6.5L v12s" als Sinneinheiten erkannt werden, müssen wir alle Leerzeichen durch Unterstriche ersetzen. Aber wie sagen wir R, dass nur in diesen Zeichenmustern die Leerzeichen ausgetauscht werden sollen, und nicht im gesamten Tweet? Dafür können wir sogenannte reguläre Ausdrücke verwenden. 
+
+Reguläre Ausdrücke (oder engl. Regular Expression, kurz: RegEx, RegExp) sind verallgemeinerte Suchmuster (patterns) für Zeichenketten. Mithilfe von regulären Ausdrücken können syntaktische Konstrukte so beschrieben werden, dass sie ein Computer versteht. Eine ausführliche Einführung findet ihr in Kapitel 6 "Exkurs: Reguläre Ausdrücke". Es ist nicht ganz einfach, für unser Beispiel einen "guten" regulären Ausdruck zu finden, aber wir könnten z.B. eine Motorangabe definieren als eine Zeichenkette aus maximal vier Teilen, die durch ein Leerzeichen voneinander getrennt sind. Der erste Teil ist optional, und fängt immer mit einem "w" gefolgt von 1-2 Zahlen an. Der zweite Teil ist eine Dezimalzahl gefolgt von einem großen L und der dritte Teil ist entweder eine Kombination aus Zahlen und Buchstaben angeführt von einem v oder exakt die Wörter "quad turbo". Anstelle der R-Basis-Funktion `gsub()` verwenden wir hier Funktionen aus dem Paket stringr (Details s. Kapitel 6).
 
 
 
@@ -272,7 +267,7 @@ print(motors)
 ```
 
 ``` r
-motors_matches <- setNames(motors, matches) # benannten Vektor erstellen
+motors_matches <- setNames(motors, matches) # benannten Vektor erstellen, das ist eine R Basisfunktion
 tweet_tate <- str_replace_all(tweet_tate, motors_matches)
 print(tweet_tate)
 ```

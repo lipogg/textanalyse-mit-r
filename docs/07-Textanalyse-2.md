@@ -227,7 +227,7 @@ toks
 :::task
 Verständnisfragen: 
 
-* Wir haben in diesem Abschnitt deutsch- und englischsprachige Texte tokenisiert. Können mit Quanteda auch Texte in anderen Sprachen tokenisiert werden? Lest im Abschnitt https://tutorials.quanteda.io/multilingual/ nach und probiert es anschließend mit einem Beispiel in einer Sprache eurer Wahl aus. 
+* Können mit Quanteda Texte in allen Sprachen tokenisiert werden? Lest im Abschnitt https://tutorials.quanteda.io/multilingual/ nach und probiert es anschließend mit einem Beispiel in einer Sprache eurer Wahl aus. 
 
 :::
 

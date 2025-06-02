@@ -11,10 +11,10 @@ Der Pipe-Operator `%>%`
 In den Beispielen in diesem Kapitel kommt manchmal der sogenannte Pipe-Operator `%>%` vor. Diesen Operator habt ihr bereits im Kapitel ["R Basics IV: Funktionen und Pakete"](https://lipogg.github.io/textanalyse-mit-r/r-basics-iv-funktionen-und-pakete.html#wozu-werden-pakete-verwendet) und in den Übungsaufgaben kurz kennengelernt. Zur Erinnerung: Der Pipe-Operator wird verwendet, um mehrere Funktionsaufrufe miteinander zu verketten. Dabei übernimmt die nachfolgende Funktion als erstes Argument jeweils den Rückgabewert der vorhergehenden Funktion. Im folgenden Beispiel übergibt der Pipe-Operator der Funktion `paste0()` das Objekt `greeting` als Argument. Die `paste0()`-Funktion fügt an die Begrüßung ein Ausrufezeichen an und übergibt die bearbeitete Zeichenkette "Guten Tag!" an die Funktion `strsplit()`. Die Funktion `strsplit()` teilt dann den Satz anhand der Leerzeichen in einzelne Einheiten auf und gibt einen character-Vektor zurück. Dieser character-Vektor wird zuletzt der Variable `greeting_toks` zugewiesen. 
 
 ```
-greeting <- "Guten Tag"
+greeting <- "Guten"
 
 greeting_toks <- greeting %>%
-  paste0("!") %>%
+  paste("Tag") %>%
   strsplit(" ")
 
 ```
@@ -28,7 +28,45 @@ Ein Ausdruck der Art `x %>% f` ist also äquivalent zu `f(x)`.
 
 ## Tokenisieren und segmentieren
 
-Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon kennengelernt. Wir schauen uns als Beispiel wieder den Beispielsatz aus dem letzten Übungsblatt an, mit ein paar Zusätzen:
+Das Tokenisieren, also das Zerlegen von Zeichenketten in Tokens, haben wir schon in der letzten Woche kennengelernt. Im Abschnitt 5.2 "Korpus, Tokens und Types" haben wir uns [zwei Tweets von Greta Thunberg und Andrew Tate](https://x.com/GretaThunberg/status/1608056944501178368) angesehen und inhaltlich zusammenhängende Einheiten identifiziert. Dabei habt ihr bemerkt, dass es gar nicht immer so einfach ist, Sinneinheiten zu identifizieren, und wir haben bereits vermutet, dass diese beim Tokenisieren nicht unbedingt per Default auch als zusammenhängende Tokens erkannt werden. Unsere Vermutung war korrekt: 
+
+
+``` r
+library(quanteda)
+
+tweet_tate <- "Hello @GretaThunberg
+              I have 33 cars. 
+              My Bugatti has a w16 8.0L quad turbo. 
+              My TWO Ferrari 812 competizione have 6.5L v12s.
+              This is just the start.
+              Please provide your email address so I can send a complete list of my car               collection and their respective enormous emissions."
+
+tate_toks <- tokens(tweet_tate)
+print(tate_toks, max_ntoken = 200)
+```
+
+```
+## Tokens consisting of 1 document.
+## text1 :
+##  [1] "Hello"          "@GretaThunberg" "I"              "have"          
+##  [5] "33"             "cars"           "."              "My"            
+##  [9] "Bugatti"        "has"            "a"              "w16"           
+## [13] "8.0L"           "quad"           "turbo"          "."             
+## [17] "My"             "TWO"            "Ferrari"        "812"           
+## [21] "competizione"   "have"           "6.5L"           "v12s"          
+## [25] "."              "This"           "is"             "just"          
+## [29] "the"            "start"          "."              "Please"        
+## [33] "provide"        "your"           "email"          "address"       
+## [37] "so"             "I"              "can"            "send"          
+## [41] "a"              "complete"       "list"           "of"            
+## [45] "my"             "car"            "collection"     "and"           
+## [49] "their"          "respective"     "enormous"       "emissions"     
+## [53] "."
+```
+
+Der Twitter (bzw. X) Handle von Greta Thunberg wurde korrekt als zusammenhängendes Token erkannt. Aber es wäre denkbar, dass es für eine Fragestellung interessant sein könnte, welche Automodelle in den Tweets erwähnt werden, sodass "w16 8.0L quad turbo" eine wichtige Sinneinheit bildet. Beim Tokenisieren mit Quanteda wurden aus dieser Sinneinheit allerdings separate Tokens. Im folgenden Abschnitt werden wir auf dieses Problem zurückkommen und eine Methode kennenlernen, wie wir trotzdem mit einfachen Mitteln erreichen können, dass die Motorart als ein Token erfasst wird. 
+
+Wie verhält es sich mit E-Mails, Telefonnummern und Hashtags? Wir schauen uns dazu ein zweites, diesmal fiktives Beispiel an, das ihr bereits aus dem letzten Übungsblatt kennt:
 
 
 ``` r
@@ -196,13 +234,83 @@ toks
 :::task
 Verständnisfragen: 
 
-* Im Abschnitt 5.2 "Korpus, Tokens und Types" haben wir uns [zwei Tweets von Greta Thunberg und Andrew Tate](https://x.com/GretaThunberg/status/1608056944501178368) angesehen und inhaltlich zusammenhängende Einheiten identifiziert. Kopiert die beiden Tweets in R und tokenisiert sie mithilfe der Quanteda-Funktion tokens(). Werden alle Sinneinheiten richtig erkannt?
+* Wir haben in diesem Abschnitt deutsch- und englischsprachige Texte tokenisiert. Können mit Quanteda auch Texte in anderen Sprachen tokenisiert werden? Lest im Abschnitt https://tutorials.quanteda.io/multilingual/ nach und probiert es anschließend mit einem Beispiel in einer Sprache eurer Wahl aus. 
 
 :::
 
 ## Reguläre Ausdrücke im Preprocessing
 
-Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. "regular expressions") verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel "Exkurs: Reguläre Ausdrücke". In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.  
+Manchmal ist es notwendig, eine Zeichenkette vor dem Tokenisieren manuell zu bearbeiten oder bereinigen, damit beim Preprocessing die Tokens für den jeweiligen Kontext richtig erkannt werden. Wir haben zum Beispiel gesehen, dass beim Tokenisieren manche Sinneinheiten richtig erfasst werden (z.B. Hashtags oder Telefonnummern mit `-`), aber andere nicht (z.B. Telefonnummern mit `/`, der Punkt nach einer Abkürzung wie Mr., der Nachname De Niro). Um eines dieser Probleme zu beheben, haben wir den Text manuell bearbeitet und mithilfe der Funktion `gsub()` alle Schrägstriche gegen Trennstriche ausgetauscht. Aber es ist nicht immer ganz so einfach zu beschreiben, nach welchen Regeln bestimmte Zeichenmuster durch andere Zeichen ersetzt werden sollen. Ein Beispiel sind die Motorangaben in dem Tweet von Andrew Tate aus dem vorherigen Abschnitt. Damit die Motorangaben "w16 8.0L quad turbo" und "6.5L v12s" als Sinneinheiten erkannt werden, müssen wir alle Leerzeichen durch Unterstriche ersetzen. Aber wie sagen wir R, dass nur in diesen Zeichenmustern die Leerzeichen ausgetauscht werden sollen, und nicht im gesamten Tweet? Dafür können wir sogenannte reguläre Ausdrücke verwenden. Reguläre Ausdrücke (oder engl. Regular Expression, kurz: RegEx, RegExp) sind verallgemeinerte Suchmuster (patterns) für Zeichenketten. Mithilfe von regulären Ausdrücken können syntaktische Konstrukte so beschrieben werden, dass sie ein Computer versteht. Eine ausführliche Einführung findet ihr in Kapitel 6 "Exkurs: Reguläre Ausdrücke". Es ist nicht ganz einfach, für unser Beispiel einen "guten" regulären Ausdruck zu finden, aber wir könnten z.B. eine Motorangabe definieren als eine Zeichenkette aus maximal vier Teilen, die durch ein Leerzeichen voneinander getrennt sind. Der erste Teil ist optional, und fängt immer mit einem "w" gefolgt von 1-2 Zahlen an. Der zweite Teil ist eine Dezimalzahl gefolgt von einem großen L und der dritte Teil ist entweder eine Kombination aus Zahlen und Buchstaben angeführt von einem v oder exakt die Wörter "quad turbo". Anstelle der R-Basis-Funktion `gsub()` verwenden wir hier Funktionen aus dem Paket stringr (Details s. Kapitel 6).
+
+
+
+``` r
+library(quanteda)
+library(stringr)
+
+tweet_tate <- "Hello @GretaThunberg
+              I have 33 cars. 
+              My Bugatti has a w16 8.0L quad turbo. 
+              My TWO Ferrari 812 competizione have 6.5L v12s.
+              This is just the start."
+regex <- "(?:w\\d{1,2} )?(\\d+\\.\\d+)L (?:v\\w+|quad turbo)"
+matches <- str_extract_all(tweet_tate, regex)[[1]]
+print(matches)
+```
+
+```
+## [1] "w16 8.0L quad turbo" "6.5L v12s"
+```
+
+``` r
+motors <- str_replace_all(matches, " ", "_")
+print(motors)
+```
+
+```
+## [1] "w16_8.0L_quad_turbo" "6.5L_v12s"
+```
+
+``` r
+motors_matches <- setNames(motors, matches) # benannten Vektor erstellen
+tweet_tate <- str_replace_all(tweet_tate, motors_matches)
+print(tweet_tate)
+```
+
+```
+## [1] "Hello @GretaThunberg\n              I have 33 cars. \n              My Bugatti has a w16_8.0L_quad_turbo. \n              My TWO Ferrari 812 competizione have 6.5L_v12s.\n              This is just the start."
+```
+
+``` r
+tate_toks <- tokens(tweet_tate)
+print(tate_toks, max_ntoken = 200)
+```
+
+```
+## Tokens consisting of 1 document.
+## text1 :
+##  [1] "Hello"               "@GretaThunberg"      "I"                  
+##  [4] "have"                "33"                  "cars"               
+##  [7] "."                   "My"                  "Bugatti"            
+## [10] "has"                 "a"                   "w16_8.0L_quad_turbo"
+## [13] "."                   "My"                  "TWO"                
+## [16] "Ferrari"             "812"                 "competizione"       
+## [19] "have"                "6.5L_v12s"           "."                  
+## [22] "This"                "is"                  "just"               
+## [25] "the"                 "start"               "."
+```
+
+:::task
+Verständnisfragen: 
+
+* Was passiert in dem Code? Was machen die Funktionen? 
+* Welche anderen Zeichenketten würde unser regulärer Ausdruck beschreiben? Gebt mindestens drei Beispiele an. 
+* Gibt es Motorangaben, die durch den Ausdruck nicht beschrieben werden? 
+* Kann es passieren, dass der reguläre Ausdruck Textbestandteile als Motorangaben identifiziert, die gar keine sind?
+
+:::
+
+Es kommt daneben auch vor, dass Texte bestimmte Zeichen enthalten, die keine inhaltliche Bedeutung tragen, zum Beispiel Fußnoten oder Seitenzahlen. Solche Zeichen können die Ergebnisse der Textanalyse beeinflussen und sollten deswegen im Rahmen des Preprocessing entfernt werden. Zur Suche, zum Bearbeiten und zur Entfernung von Zeichen in Zeichenketten können reguläre Ausdrücke (engl. "regular expressions") verwendet werden. Eine ausführliche Einführung in reguläre Ausdrücke findet ihr im Kapitel "Exkurs: Reguläre Ausdrücke". In diesem Abschnitt schauen wir uns nur an einem Beipsiel an, wie reguläre Ausdrücke beim Preprocessing zur Anwendung kommen können.  
 
 Der Beispieltext `froschkoenig` enthält Verweise auf Fußnoten in eckigen Klammern. Diese Verweise wollen wir nun entfernen. Die bereits bekannte Funktion `gsub()` kann verwendet werden, um mithilfe von regulären Ausdrücken Muster zu definieren, die in einer Zeichenkette ausgetauscht werden sollen. Um alle Verweise zu entfernen, definieren wir einen regulären Ausdruck, der nach einem Leerzeichen gefolgt von mehr als einer (`+`) Zahl zwischen 0 und 9 (`[0-9]`) innerhalb von eckigen Klammern (`\\[` oder `\\]`) sucht und durch einen leeren String (`""`) austauscht. Bevor wir die Seitenzahlen entfernen, sollten wir uns allerdings die Suchergebnisse anzeigen lassen, um zu überprüfen, ob der reguläre Ausdruck die richtigen Zeichenketten findet:  
 
@@ -236,7 +344,6 @@ Verständnisfragen:
 * Was passiert, wenn man die \\\\ weglässt?
 * Was passiert, wenn man das Leerzeichen am Anfang des regulären Ausdrucks `" \\[[1-9]+\\]"` weglässt?
 * Was machen die Funktionen `gregexpr()` und `regmatches()`?
-* Wie könnte man die beiden Tweets aus der Verständnisfrage zum vorigen Abschnitt bearbeiten, damit "quad turbo" als Sinneinheit erkannt wird?
 
 :::
 

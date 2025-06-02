@@ -108,8 +108,8 @@ Das Verhältnis zwischen "wie interessant ist die Analyse" und "verstehe ich üb
 library(plotly)
 library(dplyr)
 
-interessantheit <- rev(1:10)
-interpretierbarkeit <- 1:10
+interessantheit <- rev(0:10)
+interpretierbarkeit <- 0:10
 df <- data.frame(interessantheit, interpretierbarkeit)
 
 
@@ -118,9 +118,11 @@ fig <- plot_ly(df,
                y = ~interpretierbarkeit, 
                type = "scatter", 
                mode="lines") %>%
-  layout(title = "Interessantheit vs. Interpretierbarkeit",
-         xaxis = list(title = "Interessantheit der Analyse"),
-         yaxis = list(title = "Interpretierbarkeit der Methode"))
+  layout(title = "Interessantheit vs. Verständlichkeit",
+         xaxis = list(title = "Interessantheit der Analyse",
+                      zeroline = FALSE),
+         yaxis = list(title = "Verständlichkeit der Methode",
+                      zeroline = FALSE))
 
 fig
 

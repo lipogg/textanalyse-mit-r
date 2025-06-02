@@ -84,7 +84,7 @@ print(beispiel_toks, max_ntoken = 200)
 ## [29] "#callme"
 ```
 
-In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird? 
+Mit Ausnahme des zweiteiligen Nachnamens werden in dem Beispielsatz alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird? 
 
 
 ``` r

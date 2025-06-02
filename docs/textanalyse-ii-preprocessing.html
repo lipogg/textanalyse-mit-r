@@ -365,7 +365,7 @@ greeting_toks &lt;- greeting %&gt;%
 ## [21] &quot;niro@gmail.com&quot; &quot;und&quot;            &quot;ich&quot;            &quot;bin&quot;           
 ## [25] &quot;geboren&quot;        &quot;am&quot;             &quot;02-04-1965&quot;     &quot;.&quot;             
 ## [29] &quot;#callme&quot;</code></pre>
-<p>In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird?</p>
+<p>Mit Ausnahme des zweiteiligen Nachnamens werden in dem Beispielsatz alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="textanalyse-ii-preprocessing.html#cb6-1" tabindex="-1"></a>beispiel_2 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme&quot;</span></span>
 <span id="cb6-2"><a href="textanalyse-ii-preprocessing.html#cb6-2" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="textanalyse-ii-preprocessing.html#cb6-3" tabindex="-1"></a>beispiel_toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(beispiel_2)</span>

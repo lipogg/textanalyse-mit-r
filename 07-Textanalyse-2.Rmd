@@ -56,7 +56,7 @@ beispiel_toks <- tokens(beispiel_1)
 print(beispiel_toks, max_ntoken = 200)
 ```
 
-In dem Beispielsatz werden alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird? 
+Mit Ausnahme des zweiteiligen Nachnamens werden in dem Beispielsatz alle Sinneinheiten richtig als Tokens erkannt. Aber was passiert, wenn z.B. die Telefonnummer und das Geburtsdatum etwas anders aussehen und anstelle eines Trennstrichs ein Schrägstrich verwendet wird? 
 
 ```{r warning=FALSE, message=FALSE}
 beispiel_2 <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164/452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"

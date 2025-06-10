@@ -979,6 +979,7 @@ tokens_compound(maerchen_sl_toks, pattern = phrase("*schön* *")) %>%
 <details>
 <summary><b>Anwendungsbeispiele: N-Gramme</b></summary>
 
+- Pim Huijnen (2025), Everyday memory. A computational analysis of changing relations between past and present in Dutch newspapers in the 20th century, https://doi.org/10.1093/llc/fqad099
 - Turo Hiltunen, Jenni Räikkönen und Jukka Tyrkkö (2020), Investigating colloquialization in the British parliamentary record in the late 19th and early 20th century,  https://doi.org/10.1016/j.langsci.2020.101270
 - Colin Sippl et al. (2016), Korpusbasierte Analyse österreichischer Parlamentsreden, https://epub.uni-regensburg.de/35705/
 
@@ -1403,8 +1404,9 @@ Die in diesem Abschnitt vorgestellte Methode zur Bestimmung von Kollokationen mi
 <details>
 <summary><b>Anwendungsbeispiele: Kollokationen</b></summary>
 
-- Melanie Schröter et al. (2019). *Chapter 1. A comparative analysis of the keyword multicultural(ism) in French, British, German and Italian migration discourse*, in: Lorella Viola und Andreas Musolff (Hg.), Migration and Media. Discourses about identities in crisis, https://www.jbe-platform.com/content/books/9789027262707-dapsac.81.02sch
 - Paul Baker und Robbie Love (2021). *Corpus Linguistics and Sexuality*, in: Kira Hall und Rusty Barrett (Hrsg.), The Oxford Handbook of Language and Sexuality, Paul Baker und Robbie Love, Corpus Linguistics and Sexuality, https://academic.oup.com/edited-volume/42645/chapter/358158005
+- Melanie Schröter et al. (2019). *Chapter 1. A comparative analysis of the keyword multicultural(ism) in French, British, German and Italian migration discourse*, in: Lorella Viola und Andreas Musolff (Hg.), Migration and Media. Discourses about identities in crisis, https://www.jbe-platform.com/content/books/9789027262707-dapsac.81.02sch
+- Claire Hardaker et al. (2023). *The Victorian anti-vaccination discourse corpus (VicVaDis): construction and exploration*, in: Digital Scholarship in the Humanities,  https://doi.org/10.1093/llc/fqad075
 - Noah Bubenhofer (2014). *GeoCollocations – Diskurse zu Orten: Visuelle Korpusanalyse*, in: Mitteilungen des Deutschen Germanistenverbandes 1, https://www.bubenhofer.com/publikationen/PreprintBubenhofer2014.pdf
 
 </details>

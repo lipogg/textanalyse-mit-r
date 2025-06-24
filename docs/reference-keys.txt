@@ -105,3 +105,12 @@ interpretation
 kollokationen
 pointwise-mutual-information-pmi
 zwischenfazit
+pos-tagging-und-dependency-parsing
+recap-udpipe
+part-of-speech-tagging-mit-udpipe
+dependency-parsing-mit-udpipe
+beispiel
+korpus-einlesen-und-preprocessing
+analyse-mit-pos-tags
+analyse-mit-dependency-relations
+fazit

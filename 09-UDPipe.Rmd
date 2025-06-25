@@ -11,7 +11,7 @@ In dieser Woche werden wir uns zwei Verfahren ansehen, mit denen die Wortart und
  
 ## Recap UDPipe
 
-In der Sitzung zum Preprocessing haben wir das Paket UDPipe bereits kennengelernt und UDPipe-Funktionen zur Lemmatisierung unseres Beispielkorpus verwendet. Die Funktion `udpipe()` erzeugt einen Dataframe, der neben den Lemmata auch weitere Spalten mit Daten zu den Tokens in unserem Korpus enthält, zum Beispiel `upos`, `xpos` und `dep_rel`. Derselbe Dataframe kann auch wie in den Abschnitten Textanalyse II und Textanalyse III durch Kombination der Funktionen `udpipe_annotate()` und `as.data.frame()` erzeugt werden. Zur Erinnerung:  
+In der Sitzung zum Preprocessing haben wir das Paket UDPipe bereits kennengelernt und UDPipe-Funktionen zur Lemmatisierung unseres Beispielkorpus verwendet. Die Funktion `udpipe()` erzeugt einen Dataframe, der neben den Lemmata auch weitere Spalten mit Daten zu den Tokens in unserem Korpus enthält, zum Beispiel `upos`, `xpos` und `dep_rel`. Zur Erinnerung:  
 
 ```{r eval=FALSE}
 install.packages("udpipe")
@@ -33,13 +33,42 @@ ud_model <- udpipe_load_model("./models/german-gsd-ud-2.5-191206.udpipe")
 
 beispiel <- "Hallo mein Name ist Mr. Robert De Niro und das ist meine Telefonnummer: 0164-452954322. Meine E-Mail-Adresse ist niro@gmail.com und ich bin geboren am 02/04/1965. #callme"
 
+# Vorgehen, wenn mit UDPipe tokenisiert wird: 
 beispiel_df <- udpipe(beispiel, ud_model)
-head(beispiel_df) # erste fünf Zeilen des Dataframes anzeigen 
-#View(beispiel_df)
+beispiel_df
 
 ```
 
-Tatsächlich führt die Funktion `udpipe()` (ebenso wie die Funktion `udpipe_annotate()`) nicht nur die Lemmatisierung durch, sondern auch Part of Speech Tagging und Dependency Parsing, und der Dataframe, den die Funktion zurückgibt, enthält die Ergebnisse dieser Verfahren. In den folgenden beiden Abschnitten werden wir uns deswegen etwas genauer mit diesen Daten beschäftigen.  Im Abschnitt "Part of Speech Tagging mit UDPipe" betrachten wir zunächst die beiden Spalten `upos` und `xpos`:
+Tatsächlich führt die Funktion `udpipe()` standardmäßig nicht nur die Lemmatisierung durch, sondern auch Part of Speech Tagging und Dependency Parsing, und der Dataframe, den die Funktion zurückgibt, enthält die Ergebnisse dieser Verfahren. Derselbe Dataframe kann auch wie in den Abschnitten Textanalyse II und Textanalyse III durch Kombination der Funktionen `udpipe_annotate()` und `as.data.frame()` erzeugt werden. Wie wir bereits im Kapitel Textanalyse II besprochen haben, sind diese zusätzlichen Schritte notwendig, weil die `udpipe()`-Funktion nicht auf bereits mit Quanteda tokenisierte Objekte angewendet werden kann:    
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+# Dieser Code produziert eine Fehlermeldung: udpipe() kann nicht auf bereits tokenisiertes Objekt angewandt werden
+library(quanteda)
+
+beispiel_toks <- tokens(corpus(beispiel))
+udpipe(beispiel_toks, ud_model)
+
+```
+
+Beim Versuch, die Funktion `udpipe()` auf unser Quanteda tokens-Objekt anzuwenden, bekommen wir eine Fehlermeldung, die uns mitteilt, dass `udpipe()` nicht auf ein bereits tokenisiertes Objekt angewandt werden kann. In den [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) können wir nachlesen, wie wir POS Tagging und Dependency Parsing für ein bereits tokenisiertes Korpus durchführen können: Anstelle der Funktion `udpipe()` muss dafür die Funktion `udpipe_annotate()` verwendet werden, und zwar mit den Argumenten `tagger="default"` (für das POS Tagging),  `parser="default"` (für das Dependency Parsing) und `tokenizer = "vertical"` (damit die Tokens beibehalten werden). Die [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) geben außerdem die folgende Codezeile (die mit sapply()) zur Vorbereitung des Tokens-Objekts für die Annotation mit udpipe an. Diesen Code haben wir bereits in den Kapiteln Textanalyse II und Textanalyse III verwendet, um ein Quanteda-Tokens-Objekt zu lemmatisieren. Da es uns in den vorigen Kapiteln aber nur um das Lemmatisieren ging, hatten wir beim Funktionsaufruf das Argument `parser="none"` angegeben. Jetzt soll auch Dependency Parsing durchgeführt werden und wir wählen deswegen mit `parser="default"` die Defaulteinstellungen. 
+
+```{r warning=FALSE, message=FALSE, attr.output='style="max-height: 200px;"'}
+# Vorgehen, wenn mit Quanteda tokenisiert wird: 
+library(quanteda)
+
+beispiel_toks <- tokens(corpus(beispiel))
+beispiel_txt <- sapply(beispiel_toks, FUN=function(x) paste(x, collapse = "\n"))
+beispiel_annotated <- udpipe_annotate(ud_model, beispiel_txt, tagger="default", parser="default", tokenizer = "vertical")
+beispiel_df <- as.data.frame(beispiel_annotated)
+# optionale Bereinigunsschritte
+beispiel_df <- beispiel_df[!is.na(beispiel_df$lemma), ]
+beispiel_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", beispiel_df$lemma)
+beispiel_df
+
+```
+
+
+In den folgenden beiden Abschnitten werden wir uns etwas genauer mit den Spalten in dem UDPipe-Dataframe beschäftigen, die die Ergebnisse von POS Tagging und Dependency Parsing enthalten. Im Abschnitt "Part of Speech Tagging mit UDPipe" betrachten wir zunächst die beiden Spalten `upos` und `xpos`:
 
 * `upos`: The universal parts of speech tag of the token.
 * `xpos`: The treebank-specific parts of speech tag of the token. 
@@ -78,7 +107,52 @@ possible part-of-speech—and the goal is to find the correct tag for the situat
 
 Allerdings sind die offiziellen Angaben zur Performance der Modelle nicht das einzige Kriterium, nach dem entschieden werden sollte, welches Modell zur Bestimmung der Wortarten verwendet werden sollte. Ein weiteres **Auswahlkriterium** ist die Größe der Treebank, die zum Trainieren des Modells verwendet wurde, denn die  Ergebnisse werden genauer, je größer das Trainingskorpus ist. Die Art und der thematische Fokus der Texte, auf denen das Modell trainiert wurden, spielen ebenfalls eine Rolle: Je ähnlicher das Trainingskorpus zum Analysekorpus ist, desto besser. Dem [GSD-Modell](https://universaldependencies.org/treebanks/de_gsd/index.html) liegt eine Treebank mit dem Namen TIGER zugrunde, eine annotierte (also mit Metainformationen versehene) Sammlung von Artikeln der Frankfurter Rundschau mit breitem thematischen Fokus. Dem [Modell HDT](https://universaldependencies.org/treebanks/de_hdt/index.html) liegt dagegen die Hamburg Dependency Treebank zugrunde, eine große Sammlung von Artikeln mit zumeist technischem Inhalt der Online-Publikation heise.de. Daneben gibt es das [LIT-Modell]((https://universaldependencies.org/treebanks/de_lit/index.html)), welches auf einem vergleichsweise kleinen Korpus literaturgeschichtlicher Texte vornehmlich aus der Romantik trainiert wurde sowie [PUD](https://universaldependencies.org/treebanks/de_pud/index.html), welches auf dem kleinsten Korpus aus Nachrichten- und Wikipediaartikeln trainiert wurde. Ein Vergleich der vier Modelle für deutschsprachige Texte findet sich unter https://universaldependencies.org/treebanks/de-comparison.html. 
 
-Für unsere Märchentexte ist keines der Sprachmodelle ideal, aber wir können zumindest das bestmögliche auswählen: Am besten geeignet ist ein Sprachmodell, das auf vergleichsweise vielen Texten mit dem zumindest thematisch breiteren Fokus trainiert wurde. Aus diesem Grund wählen wir trotz der etwas schlechteren Erkennungsraten das gsd-Modell. Wie bereits erläutert wird dieses Modell automatisch mit "udpipe_download_model("german")" heruntergeladen. Die Dokumentation zum GSD-Modell findet ihr [hier](https://universaldependencies.org/treebanks/de_gsd/index.html). 
+Für unsere Märchentexte ist keines der Sprachmodelle ideal, aber wir können zumindest das bestmögliche auswählen: Am besten geeignet ist in diesem Fall meist ein Sprachmodell, das auf vergleichsweise vielen Texten mit dem zumindest thematisch breiteren Fokus trainiert wurde. Nach diesem Kriterium kommen die Modelle GSD und HDT in Frage. Vergleichen wir die Ergebnisse für ein Testtext, der für unsere Märchentexte typische Wörter und Sprache enthält: 
+
+```{r eval = FALSE}
+library(udpipe)
+
+model_hdt <- udpipe_download_model("german-hdt")
+model_gsd <- udpipe_download_model("german-gsd")
+model_hdt <- udpipe_load_model(model_hdt)
+model_gsd <- udpipe_load_model(model_gsd)
+```
+```{r echo=FALSE, message=FALSE}
+model_gsd <- udpipe_load_model("models/german-gsd-ud-2.5-191206.udpipe")
+model_hdt <- udpipe_load_model("models/german-hdt-ud-2.5-191206.udpipe")
+```
+```{r attr.output='style="max-height: 200px;"'}
+test <- "Die Königstochter war so schön wie die Sonne. Sie war das einzige Töchterlein am Königshof."
+test_hdt <- udpipe(test, model_hdt)
+test_hdt
+test_gsd <- udpipe(test, model_gsd)
+test_gsd
+
+```
+
+Wenn mit Quanteda tokenisiert wird, kann es zu weiteren Unterschieden kommen. Wenn wir den Beispielsatz mit Quanteda tokenisieren und anschließend mit UDPipe lemmatisieren sowie POS Tagging und Dependency Parsing durchführen, unterscheiden sich die Ergebnisse, auch wenn wir dasselbe Modell verwenden (hier GSD): 
+
+```{r attr.output='style="max-height: 200px;"'}
+test_toks <- tokens(corpus(test))
+test_txt <- sapply(test_toks, FUN=function(x) paste(x, collapse = "\n"))
+test_annotated <- udpipe_annotate(ud_model, test_txt, tagger="default", parser="default", tokenizer = "vertical")
+test_df <- as.data.frame(test_annotated)
+test_df
+
+```
+
+
+:::task
+Verständnisfragen:
+
+- Worin unterscheiden sich die drei Ergebnisse? 
+- Welches Modell und welches Preprocessing sind vorzuziehen, wenn wir mit den Lemmata weiterarbeiten wollen?
+- Welches Modell und welches Preprocessing sind vorzuziehen, wenn wir mit den Tokens und den Part of Speech Tags weiterarbeiten wollen? 
+- Welches Modell und welches Preprocessing sind vorzuziehen, wenn uns wichtig ist, dass Wörter wie "am", "vom", usw. beim Lemmatisieren in zugrundeliegene Präposition und den Artikel aufgetrennt werden? 
+
+:::
+
+Für unseren Beispielsatz erkennt das HDT-Modell offenbar die Parts of Speech besser, liefert aber schlechtere Ergebnisse bei der Lemmatisierung ("Töchterlein" wird nicht erkannt). Das GSD-Modell behandelt außerdem zusammengezogene Wörter wie "am", "vom", usw. anders. Wenn wir unsere Analyse mit den Tokens durchführen wollen und nicht mit den Lemmata, ist das Modell HDT besser geeignet. Aber da wir uns für die Lemmata interessieren und es uns besonders wichtig ist, dass alle Tochter-Tokens richtig lemmatisiert werden, wählen wir das Modell GSD trotz der etwas schlechteren Erkennungsraten bei den POS Tags. Wie bereits erläutert wird dieses Modell automatisch mit "udpipe_download_model("german")" heruntergeladen. Die Dokumentation zum GSD-Modell findet ihr [hier](https://universaldependencies.org/treebanks/de_gsd/index.html). 
 
 
 ```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
@@ -92,7 +166,7 @@ ud_model <- udpipe_download_model("german")
 ud_model <- udpipe_load_model(ud_model)
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(udpipe)
 ud_model <- udpipe_load_model("./models/german-gsd-ud-2.5-191206.udpipe")
 
@@ -208,7 +282,7 @@ Gleicht eure Ergebnisse mit den Werten in den Spalten `head_token_id` und `dep_r
 
 ### Korpus einlesen und Preprocessing
 
-Zunächst lesen wir unsere Märchen genau wie im Kapitel "Textanalyse III" ein und erstellen ein Quanteda-Tokens-Objekt. 
+Zunächst lesen wir unsere Märchen genau wie im Kapitel "Textanalyse III" ein. 
 
 ```{r warning=FALSE, message=FALSE}
 
@@ -225,6 +299,8 @@ library(plotly)
 maerchen_alle <- readtext("data/maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
 ```
 
+Jetzt gibt es zwei Möglichkeiten: Entweder, wir tokenisieren mit Quanteda (s. Abschnitt "Recap UDPipe"), oder wir nutzen UDPipe für das Tokenisieren. Im Abschnitt "Part of Speech Tagging mit UDPipe" haben wir uns bereits anhand eines kleinen Beispieltexts angeschaut, wie sich das Tokenisieren auswirkt. Für unsere Fragestellung ist es eigentlich nicht entscheidend, ob nun mit Quanteda oder mit UDPipe tokenisiert wird. Aber wir haben gesehen, dass es einen großen Unterschied macht, ob wir das Modell GSD oder das Modell HDT verwenden, und wir haben uns dafür entschieden, das Modell GSD zu verwenden, das beim Lemmatisieren bessere Ergebnisse geliefert hat. Wir lesen zunächst unsere Texte ein: 
+
 ```{r eval=FALSE}
 # Arbeitsverzeichnis setzen
 setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
@@ -233,68 +309,46 @@ setwd("/Users/gast/R-Seminar") # Setzt hier euren eigenen Pfad ein
 maerchen_alle <- readtext("maerchen_alle/*.txt", docvarsfrom = "filenames", dvsep = "_", docvarnames = c("Titel", "Jahr"), encoding = "UTF-8")
 ```
 
-```{r}
-# Quanteda-corpus-Objekt erstellen
-maerchen_corpus_alle <- corpus(maerchen_alle) 
-
-# Teilkorpus extrahieren
-maerchen_corpus <- corpus_subset(maerchen_corpus_alle, Jahr == 1857)
-
-# Quanteda tokens-Objekt erstellen ohne weiteres Preprocessing
-maerchen_toks_raw <- tokens(maerchen_corpus)
-```
-
-Anschließend können wir die Funktionen `udpipe()` oder `udpipe_annotate()` (in diesem Fall in Kombination mit der Funktion `as.data.frame()`) verwenden, um das POS Tagging und Dependency Parsing durchzuführen. Aber Achtung: wie wir bereits im Kapitel Textanalyse II besprochen haben, kann die `udpipe()`-Funktion nicht auf bereits mit Quanteda tokenisierte Objekte angewendet werden:    
+Anschließend tokenisieren und lemmatisieren wir unsere Texte mit UDPipe, und führen POS Tagging und Dependency Parsing durch:
 
 ```{r eval=FALSE}
 # UDPipe Modell herunterladen und laden: Per Default ist das UD_German-GSD, wenn nur "german" angegeben wird
 ud_model <- udpipe_download_model("german")
 ud_model <- udpipe_load_model(ud_model)
+
+maerchen_df <- udpipe(maerchen_alle, ud_model)
 ```
 
-```{r error=TRUE}
-# Dieser Code produziert eine Fehlermeldung: udpipe() kann nicht auf bereits tokenisiertes Objekt angewandt werden
-udpipe(maerchen_toks_raw, ud_model)
+Die Verarbeitung eines gesamten Korpus dauert je nach Rechenleistung des Computers sehr lange. Es ist deswegen ratsam, das annotierte Korpus bzw. den generierten Dataframe zwischenzuspeichern, damit es nicht für jede RStudio Sitzung neu erzeugt werden muss. Wir speichern unser Objekt `maerchen_df` als RDS-Datei, ein R-internes Datenformat, das zum Zwischenspeichern von R-Objekten verwendet werden kann (s. [Abschnitt 5.8](file:///Users/lipogg/Desktop/LV_Einfuehrung_WS2324/einfuehrung-in-r/docs/textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben)). RDS-Dateien können in eine R Sitzung eingelesen werden mit: 
 
-```
-
-Beim Versuch, die Funktion `udpipe()` auf unser Quanteda tokens-Objekt anzuwenden, bekommen wir eine Fehlermeldung, die uns mitteilt, dass `udpipe()` nicht auf ein bereits tokenisiertes Objekt angewandt werden kann. In den [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) können wir nachlesen, wie wir POS Tagging und Dependency Parsing für ein bereits tokenisiertes Korpus durchführen können: Anstelle der Funktion `udpipe()` muss dafür die Funktion `udpipe_annotate()` verwendet werden, und zwar mit den Argumenten `tagger="default"` (für das POS Tagging),  `parser="default"` (für das Dependency Parsing) und `tokenizer = "vertical"` (damit die Tokens beibehalten werden). Die [udpipe- Dokumentationsseiten](https://bnosac.github.io/udpipe/docs/doc2.html#my-text-data-is-already-tokenised) geben außerdem die folgende Codezeile (die mit sapply()) zur Vorbereitung des Tokens-Objekts für die Annotation mit udpipe an. Diesen Code haben wir bereits in den Kapiteln Textanalyse II und Textanalyse III verwendet, um ein Quanteda-Tokens-Objekt zu lemmatisieren. Da es uns in den vorigen Kapiteln aber nur um das Lemmatisieren ging, hatten wir beim Funktionsaufruf das Argument `parser="none"` angegeben. Jetzt soll auch Dependency Parsing durchgeführt werden und wir wählen deswegen mit `parser="default"` die Defaulteinstellungen. 
 
 ```{r eval=FALSE}
-# Quanteda tokens-Objekt für die Verarbeitung mit der Funktion udpipe_annotate() vorbereiten
-maerchen_txt <- sapply(maerchen_toks_raw, FUN=function(x) paste(x, collapse = "\n"))
-
-# Lemmatisierung, POS-Tagging und Dependency Parsing mit udpipe_annotate()
-maerchen_annotated <- udpipe_annotate(ud_model, maerchen_txt, tagger="default", parser="default", tokenizer = "vertical", doc_id = maerchen_toks_raw$Titel)
-
-# Annotiertes Korpus zwischenspeichern
-saveRDS(maerchen_annotated, file="data/maerchen_udpipe.rds")
-```
-
-Die Annotation eines gesamten Korpus dauert je nach Rechenleistung des Computers sehr lange. Es ist deswegen ratsam, das annotierte Korpus zwischenzuspeichern, damit es nicht für jede RStudio Sitzung neu erzeugt werden muss. Wir speichern unser Objekt `maerchen_annotated` als RDS-Datei, ein R-internes Datenformat, das zum Zwischenspeichern von R-Objekten verwendet werden kann (s. [Abschnitt 5.8](file:///Users/lipogg/Desktop/LV_Einfuehrung_WS2324/einfuehrung-in-r/docs/textanalyse-i-korpus-tokens-daten-und-dateien.html#daten-schreiben)). RDS-Dateien können in eine R Sitzung eingelesen werden mit: 
-
-
+# UDPipe Dataframe zwischenspeichern
+saveRDS(maerchen_df, file="data/maerchen_udpipe_df.rds")
+``` 
 ```{r}
-# So kann das annotierte Korpus eingelesen werden 
-maerchen_annotated <- readRDS(file="data/maerchen_udpipe.rds")
+# So kann der Dataframe wieder eingelesen werden 
+maerchen_df <- readRDS(file="data/maerchen_udpipe_df.rds")
 
 ```
+
+:::tip
+Pro Tip
 
 Wenn euer Computer mehr als einen CPU Kern hat (haben die meisten modernen Laptops und Desktop-PCs) könnt ihr die Ausführungszeit der Funktion `udpipe()` verringern, indem ihr mit einem zusätzlichen Argument `parallel.cores` angebt, über wie viele CPU Kerne die Ausführung des Codes verteilt werden soll. Dadurch können verschiedene Texte parallel annotiert werden anstatt nacheinander. Das geht so einfach aber nur mit der Funktion `udpipe()`, mit `udpipe_annotate()` ist es etwas komplizierter. [Hier](https://cran.r-project.org/web/packages/udpipe/vignettes/udpipe-parallel.html) könnt ihr mehr dazu nachlesen.
 
 ```{r eval=FALSE}
 # Achtung: hier nicht alle Kerne anzugeben, sondern mindestens einen weniger als auf eurem Computer vorhanden.
-udpipe(maerchen_alle, ud_model, parallel.cores = 4)
-
+maerchen_df <- udpipe(maerchen_alle, ud_model, parallel.cores = 4)
 ```
 
+:::
 
-Zuletzt muss das annotierte Korpus noch in einen Dataframe umgewandelt werden:
+
+Zuletzt sollte der Dataframe wieder bereinigt werden, um NA-Werte zu entfernen und bei mehreren möglichen Lemmata eine Variante zu wählen. Hierzu verwenden wir wieder die "Quick and Dirty" Methode aus dem Kapitel 7.7, aber in der Praxis erfordert die Bereinigung ggf. eine manuelle Durchsicht: 
 
 ```{r attr.output='style="max-height: 200px;"', warning=FALSE, message=FALSE}
-# Code aus Abschnitt 7.7
-library(dplyr)
-maerchen_df <- as.data.frame(maerchen_annotated)
+
 maerchen_df <- maerchen_df[!is.na(maerchen_df$lemma), ]
 maerchen_df$lemma <- gsub("\\w+\\|(\\|\\w+)?", "", maerchen_df$lemma)
 maerchen_df # View(maerchen_df) im RStudio

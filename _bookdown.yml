@@ -19,7 +19,7 @@ rmd_files: ["index.Rmd",
             "08-Textanalyse-3.Rmd",
             "09-UDPipe.Rmd", 
             #"10-NER.Rmd", 
-            #"11-Webscraping-APIs.Rmd",
+            "11-Webscraping-APIs.Rmd",
             #"12-XML-XPath.Rmd", 
             #"12-XML-Beispiele.Rmd"
             ]

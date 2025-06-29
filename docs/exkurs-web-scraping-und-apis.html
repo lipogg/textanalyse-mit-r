@@ -4,12 +4,12 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften</title>
+  <title>10 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften</title>
   <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften" />
+  <meta property="og:title" content="10 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
@@ -17,7 +17,7 @@ set in the _output.yml file.</p>" />
   <meta name="github-repo" content="lipogg/textanalyse-mit-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften" />
+  <meta name="twitter:title" content="10 Exkurs: Web Scraping und APIs | Textanalyse mit R für die Geisteswissenschaften" />
   
   <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
 set in the _output.yml file.</p>" />
@@ -31,8 +31,8 @@ set in the _output.yml file.</p>" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="word-embeddings-und-ner.html"/>
-<link rel="next" href="exkurs-xml-tei-und-xpath.html"/>
+<link rel="prev" href="pos-tagging-und-dependency-parsing.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -64,8 +64,9 @@ set in the _output.yml file.</p>" />
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -75,7 +76,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -322,44 +323,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#fazit"><i class="fa fa-check"></i><b>9.5</b> Fazit</a></li>
 <li class="chapter" data-level="" data-path="pos-tagging-und-dependency-parsing.html"><a href="pos-tagging-und-dependency-parsing.html#quellen-7"><i class="fa fa-check"></i>Quellen</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html"><i class="fa fa-check"></i><b>10</b> Word Embeddings und NER</a>
+<li class="chapter" data-level="10" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html"><i class="fa fa-check"></i><b>10</b> Exkurs: Web Scraping und APIs</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#word-embeddings"><i class="fa fa-check"></i><b>10.1</b> Word Embeddings</a>
-<ul>
-<li class="chapter" data-level="10.1.1" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#count-based-word-embeddings-mit-quanteda-und-pmi-werten"><i class="fa fa-check"></i><b>10.1.1</b> Count-Based Word Embeddings mit Quanteda und PMI-Werten</a></li>
-<li class="chapter" data-level="10.1.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#prediction-based-static-word-embeddings-mit-quanteda-und-glove"><i class="fa fa-check"></i><b>10.1.2</b> Prediction-Based Static Word Embeddings mit Quanteda und GloVe</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#named-entity-recognition-ner"><i class="fa fa-check"></i><b>10.2</b> Named Entity Recognition (NER)</a></li>
-<li class="chapter" data-level="10.3" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-spacy-spacyr"><i class="fa fa-check"></i><b>10.3</b> Beispiel mit SpaCy / Spacyr</a></li>
-<li class="chapter" data-level="10.4" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#beispiel-mit-flair-flair"><i class="fa fa-check"></i><b>10.4</b> Beispiel mit Flair / FlaiR</a></li>
-<li class="chapter" data-level="10.5" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#vergleich-und-ausblick"><i class="fa fa-check"></i><b>10.5</b> Vergleich und Ausblick</a></li>
-<li class="chapter" data-level="" data-path="word-embeddings-und-ner.html"><a href="word-embeddings-und-ner.html#quellen-8"><i class="fa fa-check"></i>Quellen</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html"><i class="fa fa-check"></i><b>11</b> Exkurs: Web Scraping und APIs</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor"><i class="fa fa-check"></i><b>11.1</b> Beispiel API: DraCor</a></li>
-<li class="chapter" data-level="11.2" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource"><i class="fa fa-check"></i><b>11.2</b> Beispiel Web Scraping: Wikisource</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html"><i class="fa fa-check"></i><b>12</b> Exkurs: XML, TEI und XPath</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xml-was-ist-tei"><i class="fa fa-check"></i><b>12.1</b> Was ist XML? Was ist TEI?</a></li>
-<li class="chapter" data-level="12.2" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#aufbau-von-xml-tei-dokumenten"><i class="fa fa-check"></i><b>12.2</b> Aufbau von XML-TEI Dokumenten</a></li>
-<li class="chapter" data-level="12.3" data-path="11-Webscraping-APIs.html"><a href="#wohlgeformtheit-und-validit%C3%A4t"><i class="fa fa-check"></i><b>12.3</b> Wohlgeformtheit und Validität</a></li>
-<li class="chapter" data-level="12.4" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#wo-findet-man-korpora-die-in-xml-tei-ausgezeichnet-sind"><i class="fa fa-check"></i><b>12.4</b> Wo findet man Korpora, die in XML-TEI ausgezeichnet sind?</a></li>
-<li class="chapter" data-level="12.5" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#was-ist-xpath"><i class="fa fa-check"></i><b>12.5</b> Was ist XPath?</a></li>
-<li class="chapter" data-level="12.6" data-path="exkurs-xml-tei-und-xpath.html"><a href="exkurs-xml-tei-und-xpath.html#basics-xpath-syntax"><i class="fa fa-check"></i><b>12.6</b> Basics XPath Syntax</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#weiterf%C3%BChrende-links-und-literatur"><i class="fa fa-check"></i>Weiterführende Links und Literatur</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html"><i class="fa fa-check"></i><b>13</b> Arbeit mit XML-TEI-Dokumenten</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-dramenanalyse"><i class="fa fa-check"></i><b>13.1</b> Beispiel Dramenanalyse</a></li>
-<li class="chapter" data-level="13.2" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#beispiel-geomapping"><i class="fa fa-check"></i><b>13.2</b> Beispiel Geomapping</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#geoname-ids-aus-der-xml-tei-datei-extrahieren"><i class="fa fa-check"></i><b>13.2.1</b> Geoname-IDs aus der XML-TEI-Datei extrahieren</a></li>
-<li class="chapter" data-level="13.2.2" data-path="11-Webscraping-APIs.html"><a href="#koordinaten-%C3%BCber-die-geonames-api-abrufen"><i class="fa fa-check"></i><b>13.2.2</b> Koordinaten über die Geonames-API abrufen</a></li>
-<li class="chapter" data-level="13.2.3" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#koordinaten-auf-karte-abbilden"><i class="fa fa-check"></i><b>13.2.3</b> Koordinaten auf Karte abbilden</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="arbeit-mit-xml-tei-dokumenten.html"><a href="arbeit-mit-xml-tei-dokumenten.html#quellen-9"><i class="fa fa-check"></i>Quellen</a></li>
+<li class="chapter" data-level="10.1" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor"><i class="fa fa-check"></i><b>10.1</b> Beispiel API: DraCor</a></li>
+<li class="chapter" data-level="10.2" data-path="exkurs-web-scraping-und-apis.html"><a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource"><i class="fa fa-check"></i><b>10.2</b> Beispiel Web Scraping: Wikisource</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -381,8 +348,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exkurs-web-scraping-und-apis" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">11</span> Exkurs: Web Scraping und APIs<a href="exkurs-web-scraping-und-apis.html#exkurs-web-scraping-und-apis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="exkurs-web-scraping-und-apis" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Exkurs: Web Scraping und APIs<a href="exkurs-web-scraping-und-apis.html#exkurs-web-scraping-und-apis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Wenn ihr für ein Forschungsprojekt ein großes Korpus von Texten zusammenstellen müsst, kann das ohne die richtigen Werkzeuge sehr lange dauern. Wenn ihr beispielsweise 200 Plaintext-Dateien von <a href="https://de.wikisource.org">wikisource.org</a> manuell herunterladen wollt, müsstet ihr jeden Text erst suchen, dann jedes Mal auf den “Herunterladen”-Button klicken und hier die Parameter für den Download jedes Mal erneut auswählen. Es gibt jedoch verschiedene Methoden, um diese Arbeit zu erleichtern:</p>
 <ol style="list-style-type: decimal">
 <li><strong>API</strong> der Website abrufen: Vielleicht verfügt die Website über eine Schnittstelle, eine sogenannte API, die ihr anzapfen könnt, um direkt die Dateien herunterzuladen. API steht für <strong>A</strong>pplication <strong>P</strong>rogramming <strong>I</strong>nterface und wird verwendet, um anderen den Zugriff auf Daten oder Funktionalitäten einer Anwendung zu ermöglichen, ohne dabei den Quellcode zu offenbaren. Die Inhalte können mit einer simplen Abfrage (“GET-Request”) über das Internet-Protokoll HTTP aus R heraus abgerufen werden. Solche Schnittstellen finden sich auf den Seiten vieler Bibliotheken, Institutionen, Archive, Forschungsprojekte, Social Media Plattformen, Medien und Unternehmen unter Menüpunkten wie “For Developers”, “API”, “Tools”, “Services”, “Dokumentation” o.Ä.</li>
@@ -399,91 +366,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Hintergründe zu Web Scraping Strategien, HTML, und dem rechtlichen Rahmen von Web Scraping findet ihr auf der <a href="https://lipogg.github.io/webscraping-mit-python/chapters/06/06_intro.html">Website zu meinem Seminar “Webscraping mit Python”</a></li>
 </ul>
 <p>Manchmal stellen Institutionen keine API bereit, sondern bieten direkt ganze Korpora zum Download als <strong>“Data Dump”</strong>. In diesem Fall sind natürlich weder Web Scraping noch eine API notwendig, um an die Daten zu gelangen, aber es muss beachtet werden, dass diese Daten nicht unbedingt tagesaktuell sind. Bevor ihr anfangt, ein Skript zum Scrapen einer Seite zu schreiben, solltet ihr immer überprüfen, ob die gesuchten Daten nicht vielleicht auch über eine API oder als Data Dump verfügbar sind. Eine Sammlung solcher Volltext-Datadumps findet ihr <a href="https://lipogg.github.io/textanalyse-mit-r/hilfe.html">hier</a>.</p>
-<div id="beispiel-api-dracor" class="section level2 hasAnchor" number="11.1">
-<h2><span class="header-section-number">11.1</span> Beispiel API: DraCor<a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beispiel-api-dracor" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Beispiel API: DraCor<a href="exkurs-web-scraping-und-apis.html#beispiel-api-dracor" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Die Dramen-Datenbank DraCor verfügt über eine <a href="https://dracor.org/doc/api">gut dokumentierte API</a>, welche den Zugriff auf verschiedene Inhalte ermöglicht, beispielsweise auf Metadaten zu Dramen oder ganzen Korpora, auf den Sprechtext der Figuren im Plaintext-Format und auch auf ganze, in XML-TEI (-&gt; nächste Woche!) ausgezeichnete Dramentexte. Die Abfrage dieser Daten für einzelne Dramen ist direkt über das Webinterface möglich. Um Daten zu mehreren Dramen zu bekommen, müssen wir ein Skript schreiben, das die API abruft und die URL für die API-Abfrage iterativ (also in mehreren Durchläufen) für jedes der uns interessierenden Dramen anpasst.</p>
 <p>Für eine Abfrage aller Sprechtexte in Dramen von Goethe könnte ein Skript beispielsweise so aussehen:</p>
-<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="exkurs-web-scraping-und-apis.html#cb911-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;httr&quot;</span>))</span>
-<span id="cb911-2"><a href="exkurs-web-scraping-und-apis.html#cb911-2" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
-<span id="cb911-3"><a href="exkurs-web-scraping-und-apis.html#cb911-3" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
-<span id="cb911-4"><a href="exkurs-web-scraping-und-apis.html#cb911-4" tabindex="-1"></a></span>
-<span id="cb911-5"><a href="exkurs-web-scraping-und-apis.html#cb911-5" tabindex="-1"></a>corpusname <span class="ot">&lt;-</span> <span class="st">&quot;ger&quot;</span></span>
-<span id="cb911-6"><a href="exkurs-web-scraping-und-apis.html#cb911-6" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://dracor.org/api/v1&quot;</span></span>
-<span id="cb911-7"><a href="exkurs-web-scraping-und-apis.html#cb911-7" tabindex="-1"></a>author <span class="ot">&lt;-</span> <span class="st">&quot;goethe&quot;</span></span>
-<span id="cb911-8"><a href="exkurs-web-scraping-und-apis.html#cb911-8" tabindex="-1"></a></span>
-<span id="cb911-9"><a href="exkurs-web-scraping-und-apis.html#cb911-9" tabindex="-1"></a><span class="co"># Informationen zu allen Stücken aus dem deutschsprachigen DraCor Korpus abfragen</span></span>
-<span id="cb911-10"><a href="exkurs-web-scraping-und-apis.html#cb911-10" tabindex="-1"></a><span class="co"># Abfrage-URL für das ausgewählte Korpus vorbereiten</span></span>
-<span id="cb911-11"><a href="exkurs-web-scraping-und-apis.html#cb911-11" tabindex="-1"></a>full_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base_url, <span class="st">&quot;/corpora/&quot;</span>, corpusname)</span>
-<span id="cb911-12"><a href="exkurs-web-scraping-und-apis.html#cb911-12" tabindex="-1"></a>full_url <span class="co">#zum Überprüfen in der Konsole ausgeben lassen</span></span>
-<span id="cb911-13"><a href="exkurs-web-scraping-und-apis.html#cb911-13" tabindex="-1"></a><span class="co"># API call </span></span>
-<span id="cb911-14"><a href="exkurs-web-scraping-und-apis.html#cb911-14" tabindex="-1"></a>api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_url)</span>
-<span id="cb911-15"><a href="exkurs-web-scraping-und-apis.html#cb911-15" tabindex="-1"></a>?GET <span class="co">#Informationen zur Funktion GET anzeigen lassen</span></span>
-<span id="cb911-16"><a href="exkurs-web-scraping-und-apis.html#cb911-16" tabindex="-1"></a><span class="co"># API response ansehen</span></span>
-<span id="cb911-17"><a href="exkurs-web-scraping-und-apis.html#cb911-17" tabindex="-1"></a>api_response<span class="sc">$</span>status_code</span>
-<span id="cb911-18"><a href="exkurs-web-scraping-und-apis.html#cb911-18" tabindex="-1"></a>api_response<span class="sc">$</span>content</span>
-<span id="cb911-19"><a href="exkurs-web-scraping-und-apis.html#cb911-19" tabindex="-1"></a><span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb911-20"><a href="exkurs-web-scraping-und-apis.html#cb911-20" tabindex="-1"></a><span class="co"># API Antwort lesbar machen und in einer Liste speichern</span></span>
-<span id="cb911-21"><a href="exkurs-web-scraping-und-apis.html#cb911-21" tabindex="-1"></a>api_lst <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>), <span class="at">simplifyDataFrame =</span> <span class="cn">TRUE</span>, <span class="at">flatten=</span><span class="cn">TRUE</span>)</span>
-<span id="cb911-22"><a href="exkurs-web-scraping-und-apis.html#cb911-22" tabindex="-1"></a><span class="co"># Output überprüfen</span></span>
-<span id="cb911-23"><a href="exkurs-web-scraping-und-apis.html#cb911-23" tabindex="-1"></a><span class="fu">View</span>(api_lst)</span>
-<span id="cb911-24"><a href="exkurs-web-scraping-und-apis.html#cb911-24" tabindex="-1"></a><span class="fu">View</span>(api_lst<span class="sc">$</span>plays)</span>
-<span id="cb911-25"><a href="exkurs-web-scraping-und-apis.html#cb911-25" tabindex="-1"></a></span>
-<span id="cb911-26"><a href="exkurs-web-scraping-und-apis.html#cb911-26" tabindex="-1"></a><span class="co"># Sprechtexte weiblich und männlich codierter Charaktere aus allen Dramen eine:r bestimmten Autor:in abrufen</span></span>
-<span id="cb911-27"><a href="exkurs-web-scraping-und-apis.html#cb911-27" tabindex="-1"></a><span class="co"># Das Element plays in der Liste api_lst ist einen Dataframe: </span></span>
-<span id="cb911-28"><a href="exkurs-web-scraping-und-apis.html#cb911-28" tabindex="-1"></a>plays_df <span class="ot">&lt;-</span> api_lst<span class="sc">$</span>plays</span>
-<span id="cb911-29"><a href="exkurs-web-scraping-und-apis.html#cb911-29" tabindex="-1"></a></span>
-<span id="cb911-30"><a href="exkurs-web-scraping-und-apis.html#cb911-30" tabindex="-1"></a><span class="co"># Aufgrund der verschachtelten Struktur des plays_df Dataframes ist der direkte Zugriff auf die Metadaten zu den Dramen aber etwas umständlich</span></span>
-<span id="cb911-31"><a href="exkurs-web-scraping-und-apis.html#cb911-31" tabindex="-1"></a>plays_df<span class="sc">$</span>authors[[<span class="dv">1</span>]][<span class="st">&quot;name&quot;</span>]</span>
-<span id="cb911-32"><a href="exkurs-web-scraping-und-apis.html#cb911-32" tabindex="-1"></a></span>
-<span id="cb911-33"><a href="exkurs-web-scraping-und-apis.html#cb911-33" tabindex="-1"></a><span class="co"># Um den Zugriff zu erleichtern, kann die Spalte authors erst in mehrere Spalten &quot;entpackt&quot; werden: </span></span>
-<span id="cb911-34"><a href="exkurs-web-scraping-und-apis.html#cb911-34" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb911-35"><a href="exkurs-web-scraping-und-apis.html#cb911-35" tabindex="-1"></a>plays_df <span class="ot">&lt;-</span> <span class="fu">unnest</span>(plays_df, authors, <span class="at">names_sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb911-36"><a href="exkurs-web-scraping-und-apis.html#cb911-36" tabindex="-1"></a><span class="fu">View</span>(plays_df)</span>
-<span id="cb911-37"><a href="exkurs-web-scraping-und-apis.html#cb911-37" tabindex="-1"></a></span>
-<span id="cb911-38"><a href="exkurs-web-scraping-und-apis.html#cb911-38" tabindex="-1"></a><span class="co"># Jetzt können die Kurztitel der Dramen durch eine einfache bedingte Zugrffsoperation extrahiert werden. </span></span>
-<span id="cb911-39"><a href="exkurs-web-scraping-und-apis.html#cb911-39" tabindex="-1"></a><span class="co"># Aber Achtung: Wenn jedoch mehrere Autor:innen gelistet sind, dann wäre auch nach dem Entpacken der Direktzugriff noch nicht möglich und es wäre eine weitere Umformung notwendig. </span></span>
-<span id="cb911-40"><a href="exkurs-web-scraping-und-apis.html#cb911-40" tabindex="-1"></a>plays_selected <span class="ot">&lt;-</span> plays_df<span class="sc">$</span>name[plays_df<span class="sc">$</span>authors_shortname <span class="sc">==</span> <span class="st">&quot;Goethe&quot;</span>] <span class="co"># hier kann alternativ auch die Spalte authors_fullname oder authors_name verwendet werden</span></span>
-<span id="cb911-41"><a href="exkurs-web-scraping-und-apis.html#cb911-41" tabindex="-1"></a></span>
-<span id="cb911-42"><a href="exkurs-web-scraping-und-apis.html#cb911-42" tabindex="-1"></a><span class="co"># Alternativ zum Direktzugriff können erst die Namen aller Dramen aus ger-Dracor in einer neuen Variable gespeichert werden...</span></span>
-<span id="cb911-43"><a href="exkurs-web-scraping-und-apis.html#cb911-43" tabindex="-1"></a>plays <span class="ot">&lt;-</span> api_df<span class="sc">$</span>plays<span class="sc">$</span>name</span>
-<span id="cb911-44"><a href="exkurs-web-scraping-und-apis.html#cb911-44" tabindex="-1"></a>plays <span class="co">#überprüfen</span></span>
-<span id="cb911-45"><a href="exkurs-web-scraping-und-apis.html#cb911-45" tabindex="-1"></a><span class="co"># ... und dann kann mithilfe von Regex nach Dramen der gewählten Autor:in gefiltert werden. Als pattern wird dann die Variable author eingesetzt, die wir am Anfang erstellt haben.</span></span>
-<span id="cb911-46"><a href="exkurs-web-scraping-und-apis.html#cb911-46" tabindex="-1"></a>plays_selected <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="at">pattern=</span>author, plays, <span class="at">value=</span><span class="cn">TRUE</span>) </span>
-<span id="cb911-47"><a href="exkurs-web-scraping-und-apis.html#cb911-47" tabindex="-1"></a>plays_selected</span>
-<span id="cb911-48"><a href="exkurs-web-scraping-und-apis.html#cb911-48" tabindex="-1"></a></span>
-<span id="cb911-49"><a href="exkurs-web-scraping-und-apis.html#cb911-49" tabindex="-1"></a><span class="co"># URLs für die Abfrage vorbereiten</span></span>
-<span id="cb911-50"><a href="exkurs-web-scraping-und-apis.html#cb911-50" tabindex="-1"></a>full_urls <span class="ot">&lt;-</span> <span class="fu">paste0</span>(full_url, <span class="st">&quot;/plays/&quot;</span>, plays_selected, <span class="st">&quot;/spoken-text&quot;</span>)</span>
-<span id="cb911-51"><a href="exkurs-web-scraping-und-apis.html#cb911-51" tabindex="-1"></a>full_urls</span>
-<span id="cb911-52"><a href="exkurs-web-scraping-und-apis.html#cb911-52" tabindex="-1"></a></span>
-<span id="cb911-53"><a href="exkurs-web-scraping-und-apis.html#cb911-53" tabindex="-1"></a><span class="co"># Tatsächlich enthält der Dataframe plays_df in der Spalte uri bereits die komplett zusammengesetzten URLs zu den Dramen! </span></span>
-<span id="cb911-54"><a href="exkurs-web-scraping-und-apis.html#cb911-54" tabindex="-1"></a><span class="co"># Wir könnten uns die Arbeit also auch vereinfachen und einfach direkt die URLs aus dem Dataframe extrahieren: </span></span>
-<span id="cb911-55"><a href="exkurs-web-scraping-und-apis.html#cb911-55" tabindex="-1"></a>full_urls <span class="ot">&lt;-</span> plays_df<span class="sc">$</span>uri</span>
-<span id="cb911-56"><a href="exkurs-web-scraping-und-apis.html#cb911-56" tabindex="-1"></a></span>
-<span id="cb911-57"><a href="exkurs-web-scraping-und-apis.html#cb911-57" tabindex="-1"></a><span class="co"># neues Verzeichnis anlegen: in diesem Ordner werden die Textdateien gespeichert</span></span>
-<span id="cb911-58"><a href="exkurs-web-scraping-und-apis.html#cb911-58" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;spokentext_corpus&quot;</span>)</span>
-<span id="cb911-59"><a href="exkurs-web-scraping-und-apis.html#cb911-59" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/spokentext_corpus&quot;</span>))</span>
-<span id="cb911-60"><a href="exkurs-web-scraping-und-apis.html#cb911-60" tabindex="-1"></a></span>
-<span id="cb911-61"><a href="exkurs-web-scraping-und-apis.html#cb911-61" tabindex="-1"></a><span class="co"># API calls durchführen und Output speichern</span></span>
-<span id="cb911-62"><a href="exkurs-web-scraping-und-apis.html#cb911-62" tabindex="-1"></a><span class="co"># Zuerst ohne Angabe des codierten Geschlechts als Query-Parameter</span></span>
-<span id="cb911-63"><a href="exkurs-web-scraping-und-apis.html#cb911-63" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(full_urls)){</span>
-<span id="cb911-64"><a href="exkurs-web-scraping-und-apis.html#cb911-64" tabindex="-1"></a>  api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_urls[i])</span>
-<span id="cb911-65"><a href="exkurs-web-scraping-und-apis.html#cb911-65" tabindex="-1"></a>  spokentext <span class="ot">&lt;-</span> <span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb911-66"><a href="exkurs-web-scraping-und-apis.html#cb911-66" tabindex="-1"></a>  filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(plays_selected[i], <span class="st">&quot;.txt&quot;</span>)</span>
-<span id="cb911-67"><a href="exkurs-web-scraping-und-apis.html#cb911-67" tabindex="-1"></a>  <span class="fu">writeLines</span>(spokentext, filename)</span>
-<span id="cb911-68"><a href="exkurs-web-scraping-und-apis.html#cb911-68" tabindex="-1"></a>}</span>
-<span id="cb911-69"><a href="exkurs-web-scraping-und-apis.html#cb911-69" tabindex="-1"></a></span>
-<span id="cb911-70"><a href="exkurs-web-scraping-und-apis.html#cb911-70" tabindex="-1"></a><span class="co"># Mit query nach dem codierten Geschlecht</span></span>
-<span id="cb911-71"><a href="exkurs-web-scraping-und-apis.html#cb911-71" tabindex="-1"></a>gender_codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FEMALE&quot;</span>, <span class="st">&quot;MALE&quot;</span>, <span class="st">&quot;UNKNOWN&quot;</span>)</span>
-<span id="cb911-72"><a href="exkurs-web-scraping-und-apis.html#cb911-72" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(full_urls)){</span>
-<span id="cb911-73"><a href="exkurs-web-scraping-und-apis.html#cb911-73" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">seq_along</span>(gender_codes)){</span>
-<span id="cb911-74"><a href="exkurs-web-scraping-und-apis.html#cb911-74" tabindex="-1"></a>    api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_urls[i], <span class="at">query=</span><span class="fu">list</span>(<span class="at">gender=</span>gender_codes[j]))</span>
-<span id="cb911-75"><a href="exkurs-web-scraping-und-apis.html#cb911-75" tabindex="-1"></a>    spokentext <span class="ot">&lt;-</span> <span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb911-76"><a href="exkurs-web-scraping-und-apis.html#cb911-76" tabindex="-1"></a>    filename <span class="ot">&lt;-</span> <span class="fu">paste</span>(plays_selected[i], gender_codes[j], <span class="st">&quot;.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb911-77"><a href="exkurs-web-scraping-und-apis.html#cb911-77" tabindex="-1"></a>    <span class="fu">writeLines</span>(spokentext, filename)</span>
-<span id="cb911-78"><a href="exkurs-web-scraping-und-apis.html#cb911-78" tabindex="-1"></a>  }</span>
-<span id="cb911-79"><a href="exkurs-web-scraping-und-apis.html#cb911-79" tabindex="-1"></a>}</span>
-<span id="cb911-80"><a href="exkurs-web-scraping-und-apis.html#cb911-80" tabindex="-1"></a></span>
-<span id="cb911-81"><a href="exkurs-web-scraping-und-apis.html#cb911-81" tabindex="-1"></a><span class="fu">list.files</span>() <span class="co"># Dateien im Arbeitsverzeichnis auflisten</span></span></code></pre></div>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="exkurs-web-scraping-und-apis.html#cb865-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;httr&quot;</span>))</span>
+<span id="cb865-2"><a href="exkurs-web-scraping-und-apis.html#cb865-2" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb865-3"><a href="exkurs-web-scraping-und-apis.html#cb865-3" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
+<span id="cb865-4"><a href="exkurs-web-scraping-und-apis.html#cb865-4" tabindex="-1"></a></span>
+<span id="cb865-5"><a href="exkurs-web-scraping-und-apis.html#cb865-5" tabindex="-1"></a>corpusname <span class="ot">&lt;-</span> <span class="st">&quot;ger&quot;</span></span>
+<span id="cb865-6"><a href="exkurs-web-scraping-und-apis.html#cb865-6" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://dracor.org/api/v1&quot;</span></span>
+<span id="cb865-7"><a href="exkurs-web-scraping-und-apis.html#cb865-7" tabindex="-1"></a>author <span class="ot">&lt;-</span> <span class="st">&quot;goethe&quot;</span></span>
+<span id="cb865-8"><a href="exkurs-web-scraping-und-apis.html#cb865-8" tabindex="-1"></a></span>
+<span id="cb865-9"><a href="exkurs-web-scraping-und-apis.html#cb865-9" tabindex="-1"></a><span class="co"># Informationen zu allen Stücken aus dem deutschsprachigen DraCor Korpus abfragen</span></span>
+<span id="cb865-10"><a href="exkurs-web-scraping-und-apis.html#cb865-10" tabindex="-1"></a><span class="co"># Abfrage-URL für das ausgewählte Korpus vorbereiten</span></span>
+<span id="cb865-11"><a href="exkurs-web-scraping-und-apis.html#cb865-11" tabindex="-1"></a>full_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base_url, <span class="st">&quot;/corpora/&quot;</span>, corpusname)</span>
+<span id="cb865-12"><a href="exkurs-web-scraping-und-apis.html#cb865-12" tabindex="-1"></a>full_url <span class="co">#zum Überprüfen in der Konsole ausgeben lassen</span></span>
+<span id="cb865-13"><a href="exkurs-web-scraping-und-apis.html#cb865-13" tabindex="-1"></a><span class="co"># API call </span></span>
+<span id="cb865-14"><a href="exkurs-web-scraping-und-apis.html#cb865-14" tabindex="-1"></a>api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_url)</span>
+<span id="cb865-15"><a href="exkurs-web-scraping-und-apis.html#cb865-15" tabindex="-1"></a>?GET <span class="co">#Informationen zur Funktion GET anzeigen lassen</span></span>
+<span id="cb865-16"><a href="exkurs-web-scraping-und-apis.html#cb865-16" tabindex="-1"></a><span class="co"># API response ansehen</span></span>
+<span id="cb865-17"><a href="exkurs-web-scraping-und-apis.html#cb865-17" tabindex="-1"></a>api_response<span class="sc">$</span>status_code</span>
+<span id="cb865-18"><a href="exkurs-web-scraping-und-apis.html#cb865-18" tabindex="-1"></a>api_response<span class="sc">$</span>content</span>
+<span id="cb865-19"><a href="exkurs-web-scraping-und-apis.html#cb865-19" tabindex="-1"></a><span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb865-20"><a href="exkurs-web-scraping-und-apis.html#cb865-20" tabindex="-1"></a><span class="co"># API Antwort lesbar machen und in einer Liste speichern</span></span>
+<span id="cb865-21"><a href="exkurs-web-scraping-und-apis.html#cb865-21" tabindex="-1"></a>api_lst <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>), <span class="at">simplifyDataFrame =</span> <span class="cn">TRUE</span>, <span class="at">flatten=</span><span class="cn">TRUE</span>)</span>
+<span id="cb865-22"><a href="exkurs-web-scraping-und-apis.html#cb865-22" tabindex="-1"></a><span class="co"># Output überprüfen</span></span>
+<span id="cb865-23"><a href="exkurs-web-scraping-und-apis.html#cb865-23" tabindex="-1"></a><span class="fu">View</span>(api_lst)</span>
+<span id="cb865-24"><a href="exkurs-web-scraping-und-apis.html#cb865-24" tabindex="-1"></a><span class="fu">View</span>(api_lst<span class="sc">$</span>plays)</span>
+<span id="cb865-25"><a href="exkurs-web-scraping-und-apis.html#cb865-25" tabindex="-1"></a></span>
+<span id="cb865-26"><a href="exkurs-web-scraping-und-apis.html#cb865-26" tabindex="-1"></a><span class="co"># Sprechtexte weiblich und männlich codierter Charaktere aus allen Dramen eine:r bestimmten Autor:in abrufen</span></span>
+<span id="cb865-27"><a href="exkurs-web-scraping-und-apis.html#cb865-27" tabindex="-1"></a><span class="co"># Das Element plays in der Liste api_lst ist einen Dataframe: </span></span>
+<span id="cb865-28"><a href="exkurs-web-scraping-und-apis.html#cb865-28" tabindex="-1"></a>plays_df <span class="ot">&lt;-</span> api_lst<span class="sc">$</span>plays</span>
+<span id="cb865-29"><a href="exkurs-web-scraping-und-apis.html#cb865-29" tabindex="-1"></a></span>
+<span id="cb865-30"><a href="exkurs-web-scraping-und-apis.html#cb865-30" tabindex="-1"></a><span class="co"># Aufgrund der verschachtelten Struktur des plays_df Dataframes ist der direkte Zugriff auf die Metadaten zu den Dramen aber etwas umständlich</span></span>
+<span id="cb865-31"><a href="exkurs-web-scraping-und-apis.html#cb865-31" tabindex="-1"></a>plays_df<span class="sc">$</span>authors[[<span class="dv">1</span>]][<span class="st">&quot;name&quot;</span>]</span>
+<span id="cb865-32"><a href="exkurs-web-scraping-und-apis.html#cb865-32" tabindex="-1"></a></span>
+<span id="cb865-33"><a href="exkurs-web-scraping-und-apis.html#cb865-33" tabindex="-1"></a><span class="co"># Um den Zugriff zu erleichtern, kann die Spalte authors erst in mehrere Spalten &quot;entpackt&quot; werden: </span></span>
+<span id="cb865-34"><a href="exkurs-web-scraping-und-apis.html#cb865-34" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb865-35"><a href="exkurs-web-scraping-und-apis.html#cb865-35" tabindex="-1"></a>plays_df <span class="ot">&lt;-</span> <span class="fu">unnest</span>(plays_df, authors, <span class="at">names_sep=</span><span class="st">&quot;_&quot;</span>)</span>
+<span id="cb865-36"><a href="exkurs-web-scraping-und-apis.html#cb865-36" tabindex="-1"></a><span class="fu">View</span>(plays_df)</span>
+<span id="cb865-37"><a href="exkurs-web-scraping-und-apis.html#cb865-37" tabindex="-1"></a></span>
+<span id="cb865-38"><a href="exkurs-web-scraping-und-apis.html#cb865-38" tabindex="-1"></a><span class="co"># Jetzt können die Kurztitel der Dramen durch eine einfache bedingte Zugrffsoperation extrahiert werden. </span></span>
+<span id="cb865-39"><a href="exkurs-web-scraping-und-apis.html#cb865-39" tabindex="-1"></a><span class="co"># Aber Achtung: Wenn jedoch mehrere Autor:innen gelistet sind, dann wäre auch nach dem Entpacken der Direktzugriff noch nicht möglich und es wäre eine weitere Umformung notwendig. </span></span>
+<span id="cb865-40"><a href="exkurs-web-scraping-und-apis.html#cb865-40" tabindex="-1"></a>plays_selected <span class="ot">&lt;-</span> plays_df<span class="sc">$</span>name[plays_df<span class="sc">$</span>authors_shortname <span class="sc">==</span> <span class="st">&quot;Goethe&quot;</span>] <span class="co"># hier kann alternativ auch die Spalte authors_fullname oder authors_name verwendet werden</span></span>
+<span id="cb865-41"><a href="exkurs-web-scraping-und-apis.html#cb865-41" tabindex="-1"></a></span>
+<span id="cb865-42"><a href="exkurs-web-scraping-und-apis.html#cb865-42" tabindex="-1"></a><span class="co"># Alternativ zum Direktzugriff können erst die Namen aller Dramen aus ger-Dracor in einer neuen Variable gespeichert werden...</span></span>
+<span id="cb865-43"><a href="exkurs-web-scraping-und-apis.html#cb865-43" tabindex="-1"></a>plays <span class="ot">&lt;-</span> api_df<span class="sc">$</span>plays<span class="sc">$</span>name</span>
+<span id="cb865-44"><a href="exkurs-web-scraping-und-apis.html#cb865-44" tabindex="-1"></a>plays <span class="co">#überprüfen</span></span>
+<span id="cb865-45"><a href="exkurs-web-scraping-und-apis.html#cb865-45" tabindex="-1"></a><span class="co"># ... und dann kann mithilfe von Regex nach Dramen der gewählten Autor:in gefiltert werden. Als pattern wird dann die Variable author eingesetzt, die wir am Anfang erstellt haben.</span></span>
+<span id="cb865-46"><a href="exkurs-web-scraping-und-apis.html#cb865-46" tabindex="-1"></a>plays_selected <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="at">pattern=</span>author, plays, <span class="at">value=</span><span class="cn">TRUE</span>) </span>
+<span id="cb865-47"><a href="exkurs-web-scraping-und-apis.html#cb865-47" tabindex="-1"></a>plays_selected</span>
+<span id="cb865-48"><a href="exkurs-web-scraping-und-apis.html#cb865-48" tabindex="-1"></a></span>
+<span id="cb865-49"><a href="exkurs-web-scraping-und-apis.html#cb865-49" tabindex="-1"></a><span class="co"># URLs für die Abfrage vorbereiten</span></span>
+<span id="cb865-50"><a href="exkurs-web-scraping-und-apis.html#cb865-50" tabindex="-1"></a>full_urls <span class="ot">&lt;-</span> <span class="fu">paste0</span>(full_url, <span class="st">&quot;/plays/&quot;</span>, plays_selected, <span class="st">&quot;/spoken-text&quot;</span>)</span>
+<span id="cb865-51"><a href="exkurs-web-scraping-und-apis.html#cb865-51" tabindex="-1"></a>full_urls</span>
+<span id="cb865-52"><a href="exkurs-web-scraping-und-apis.html#cb865-52" tabindex="-1"></a></span>
+<span id="cb865-53"><a href="exkurs-web-scraping-und-apis.html#cb865-53" tabindex="-1"></a><span class="co"># Tatsächlich enthält der Dataframe plays_df in der Spalte uri bereits die komplett zusammengesetzten URLs zu den Dramen! </span></span>
+<span id="cb865-54"><a href="exkurs-web-scraping-und-apis.html#cb865-54" tabindex="-1"></a><span class="co"># Wir könnten uns die Arbeit also auch vereinfachen und einfach direkt die URLs aus dem Dataframe extrahieren: </span></span>
+<span id="cb865-55"><a href="exkurs-web-scraping-und-apis.html#cb865-55" tabindex="-1"></a>full_urls <span class="ot">&lt;-</span> plays_df<span class="sc">$</span>uri</span>
+<span id="cb865-56"><a href="exkurs-web-scraping-und-apis.html#cb865-56" tabindex="-1"></a></span>
+<span id="cb865-57"><a href="exkurs-web-scraping-und-apis.html#cb865-57" tabindex="-1"></a><span class="co"># neues Verzeichnis anlegen: in diesem Ordner werden die Textdateien gespeichert</span></span>
+<span id="cb865-58"><a href="exkurs-web-scraping-und-apis.html#cb865-58" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;spokentext_corpus&quot;</span>)</span>
+<span id="cb865-59"><a href="exkurs-web-scraping-und-apis.html#cb865-59" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/spokentext_corpus&quot;</span>))</span>
+<span id="cb865-60"><a href="exkurs-web-scraping-und-apis.html#cb865-60" tabindex="-1"></a></span>
+<span id="cb865-61"><a href="exkurs-web-scraping-und-apis.html#cb865-61" tabindex="-1"></a><span class="co"># API calls durchführen und Output speichern</span></span>
+<span id="cb865-62"><a href="exkurs-web-scraping-und-apis.html#cb865-62" tabindex="-1"></a><span class="co"># Zuerst ohne Angabe des codierten Geschlechts als Query-Parameter</span></span>
+<span id="cb865-63"><a href="exkurs-web-scraping-und-apis.html#cb865-63" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(full_urls)){</span>
+<span id="cb865-64"><a href="exkurs-web-scraping-und-apis.html#cb865-64" tabindex="-1"></a>  api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_urls[i])</span>
+<span id="cb865-65"><a href="exkurs-web-scraping-und-apis.html#cb865-65" tabindex="-1"></a>  spokentext <span class="ot">&lt;-</span> <span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb865-66"><a href="exkurs-web-scraping-und-apis.html#cb865-66" tabindex="-1"></a>  filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(plays_selected[i], <span class="st">&quot;.txt&quot;</span>)</span>
+<span id="cb865-67"><a href="exkurs-web-scraping-und-apis.html#cb865-67" tabindex="-1"></a>  <span class="fu">writeLines</span>(spokentext, filename)</span>
+<span id="cb865-68"><a href="exkurs-web-scraping-und-apis.html#cb865-68" tabindex="-1"></a>}</span>
+<span id="cb865-69"><a href="exkurs-web-scraping-und-apis.html#cb865-69" tabindex="-1"></a></span>
+<span id="cb865-70"><a href="exkurs-web-scraping-und-apis.html#cb865-70" tabindex="-1"></a><span class="co"># Mit query nach dem codierten Geschlecht</span></span>
+<span id="cb865-71"><a href="exkurs-web-scraping-und-apis.html#cb865-71" tabindex="-1"></a>gender_codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FEMALE&quot;</span>, <span class="st">&quot;MALE&quot;</span>, <span class="st">&quot;UNKNOWN&quot;</span>)</span>
+<span id="cb865-72"><a href="exkurs-web-scraping-und-apis.html#cb865-72" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(full_urls)){</span>
+<span id="cb865-73"><a href="exkurs-web-scraping-und-apis.html#cb865-73" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">seq_along</span>(gender_codes)){</span>
+<span id="cb865-74"><a href="exkurs-web-scraping-und-apis.html#cb865-74" tabindex="-1"></a>    api_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(full_urls[i], <span class="at">query=</span><span class="fu">list</span>(<span class="at">gender=</span>gender_codes[j]))</span>
+<span id="cb865-75"><a href="exkurs-web-scraping-und-apis.html#cb865-75" tabindex="-1"></a>    spokentext <span class="ot">&lt;-</span> <span class="fu">content</span>(api_response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb865-76"><a href="exkurs-web-scraping-und-apis.html#cb865-76" tabindex="-1"></a>    filename <span class="ot">&lt;-</span> <span class="fu">paste</span>(plays_selected[i], gender_codes[j], <span class="st">&quot;.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
+<span id="cb865-77"><a href="exkurs-web-scraping-und-apis.html#cb865-77" tabindex="-1"></a>    <span class="fu">writeLines</span>(spokentext, filename)</span>
+<span id="cb865-78"><a href="exkurs-web-scraping-und-apis.html#cb865-78" tabindex="-1"></a>  }</span>
+<span id="cb865-79"><a href="exkurs-web-scraping-und-apis.html#cb865-79" tabindex="-1"></a>}</span>
+<span id="cb865-80"><a href="exkurs-web-scraping-und-apis.html#cb865-80" tabindex="-1"></a></span>
+<span id="cb865-81"><a href="exkurs-web-scraping-und-apis.html#cb865-81" tabindex="-1"></a><span class="fu">list.files</span>() <span class="co"># Dateien im Arbeitsverzeichnis auflisten</span></span></code></pre></div>
 <div class="task">
 <p>Verständnisfrage:</p>
 <p>Das Projekt DraCor bietet neben der API auch ein eigenes R Paket, welches Nutzer:innen die Datenabfrage über die API erleichtern soll.</p>
@@ -492,8 +459,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="beispiel-web-scraping-wikisource" class="section level2 hasAnchor" number="11.2">
-<h2><span class="header-section-number">11.2</span> Beispiel Web Scraping: Wikisource<a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beispiel-web-scraping-wikisource" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Beispiel Web Scraping: Wikisource<a href="exkurs-web-scraping-und-apis.html#beispiel-web-scraping-wikisource" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Die Open Source - Volltextdatenbank <a href="https://wikisource.org/">Wikisource</a> stellt keine API bereit. Dafür ist der Aufbau der Seite unkompliziert und auch mit nur rudimentärem Verständnis von HTML intuitiv verständlich.</p>
 <p>Wir machen uns zunächst über die Nutzeroberfläche mit der Funktionalität der Website vertraut. Für uns sind zwei Seiten wichtig: Zum einen die <a href="https://de.wikisource.org/wiki/Kinder-_und_Hausm%C3%A4rchen">Übersichtsseite über alle Kinder- und Hausmärchen der Gebrüder Grimm</a>. Diese könnten wir verwenden, um die Links zu allen Märchenseiten zu extrahieren. Zum anderen die Seiten der einzelnen Märchen, hier zum Beispiel die <a href="https://de.wikisource.org/wiki/Katz_und_Maus_in_Gesellschaft_(1812)">Seite des Märchens “Katz und Maus in Gesellschaft”</a> in der Version von 1812. Beim Vergleich der verschiedenen Märchenseiten fällt auf, dass manche Märchenseiten einen Anhang haben und manche nicht.</p>
 <p>Anschließend wollen wir uns den Quelltext der beiden relevanten Seiten ansehen. Dazu öffnen wir die Seiten entweder in Firefox oder Chrome und öffnen die Entwicklertools:</p>
@@ -509,99 +476,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Zur Übung schreiben wir ein Skript, das den Fließtext aller Märchen der Gebrüder Grimm von der Seite wikisource.org extrahiert und als Plaintext-Datei im Arbeitsverzeichnis speichert.</p>
-<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="exkurs-web-scraping-und-apis.html#cb912-1" tabindex="-1"></a><span class="co"># Vorbereitung</span></span>
-<span id="cb912-2"><a href="exkurs-web-scraping-und-apis.html#cb912-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rvest&quot;</span>)</span>
-<span id="cb912-3"><a href="exkurs-web-scraping-und-apis.html#cb912-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringi&quot;</span>)</span>
-<span id="cb912-4"><a href="exkurs-web-scraping-und-apis.html#cb912-4" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb912-5"><a href="exkurs-web-scraping-und-apis.html#cb912-5" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
-<span id="cb912-6"><a href="exkurs-web-scraping-und-apis.html#cb912-6" tabindex="-1"></a></span>
-<span id="cb912-7"><a href="exkurs-web-scraping-und-apis.html#cb912-7" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://de.wikisource.org/wiki/Kinder-_und_Hausm%C3%A4rchen&quot;</span></span>
-<span id="cb912-8"><a href="exkurs-web-scraping-und-apis.html#cb912-8" tabindex="-1"></a></span>
-<span id="cb912-9"><a href="exkurs-web-scraping-und-apis.html#cb912-9" tabindex="-1"></a><span class="co"># Website HTML-Baum parsen und Links der einzelnen Märchen extrahieren</span></span>
-<span id="cb912-10"><a href="exkurs-web-scraping-und-apis.html#cb912-10" tabindex="-1"></a>suburls <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
-<span id="cb912-11"><a href="exkurs-web-scraping-und-apis.html#cb912-11" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> <span class="co"># bracket optional</span></span>
-<span id="cb912-12"><a href="exkurs-web-scraping-und-apis.html#cb912-12" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//div[1]/table[2]/tbody/tr/td[position()&gt;1]/a&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># position()&gt;1 filtert das erste &lt;td&gt; Element heraus</span></span>
-<span id="cb912-13"><a href="exkurs-web-scraping-und-apis.html#cb912-13" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb912-14"><a href="exkurs-web-scraping-und-apis.html#cb912-14" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;https://de.wikisource.org&quot;</span>, .) <span class="co"># . ist ein Platzhalter, es wird verwendet um die Reihenfolge der Funktionsargumente umzukehren </span></span>
-<span id="cb912-15"><a href="exkurs-web-scraping-und-apis.html#cb912-15" tabindex="-1"></a>suburls <span class="co"># überprüfen</span></span>
-<span id="cb912-16"><a href="exkurs-web-scraping-und-apis.html#cb912-16" tabindex="-1"></a></span>
-<span id="cb912-17"><a href="exkurs-web-scraping-und-apis.html#cb912-17" tabindex="-1"></a><span class="co"># Eine andere Möglichkeit, nicht benötigte Listenelemente herauszufiltern</span></span>
-<span id="cb912-18"><a href="exkurs-web-scraping-und-apis.html#cb912-18" tabindex="-1"></a><span class="co"># suburlsNew &lt;- suburlsNew[which(regexpr(&quot;\\d{4}&quot;, suburlsNew) &gt;=1)] </span></span>
-<span id="cb912-19"><a href="exkurs-web-scraping-und-apis.html#cb912-19" tabindex="-1"></a></span>
-<span id="cb912-20"><a href="exkurs-web-scraping-und-apis.html#cb912-20" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(suburls)) {    </span>
-<span id="cb912-21"><a href="exkurs-web-scraping-und-apis.html#cb912-21" tabindex="-1"></a>  </span>
-<span id="cb912-22"><a href="exkurs-web-scraping-und-apis.html#cb912-22" tabindex="-1"></a>  maerchen <span class="ot">&lt;-</span> suburls[i] </span>
-<span id="cb912-23"><a href="exkurs-web-scraping-und-apis.html#cb912-23" tabindex="-1"></a>  </span>
-<span id="cb912-24"><a href="exkurs-web-scraping-und-apis.html#cb912-24" tabindex="-1"></a>  <span class="co"># Text aus den paragraph-Elementen extrahieren (&lt;p&gt;&lt;/p&gt;)</span></span>
-<span id="cb912-25"><a href="exkurs-web-scraping-und-apis.html#cb912-25" tabindex="-1"></a>  maerchentext <span class="ot">&lt;-</span> maerchen <span class="sc">%&gt;%</span></span>
-<span id="cb912-26"><a href="exkurs-web-scraping-und-apis.html#cb912-26" tabindex="-1"></a>    <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb912-27"><a href="exkurs-web-scraping-und-apis.html#cb912-27" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//p[not(preceding::h2)]&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Alles nach dem &lt;h2&gt;-Tag ausschließen</span></span>
-<span id="cb912-28"><a href="exkurs-web-scraping-und-apis.html#cb912-28" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
-<span id="cb912-29"><a href="exkurs-web-scraping-und-apis.html#cb912-29" tabindex="-1"></a>  </span>
-<span id="cb912-30"><a href="exkurs-web-scraping-und-apis.html#cb912-30" tabindex="-1"></a>  <span class="co"># Dateinamen erstellen</span></span>
-<span id="cb912-31"><a href="exkurs-web-scraping-und-apis.html#cb912-31" tabindex="-1"></a>  <span class="co"># URLdecode dekodiert die URLs (z.B. %C3%A4 für ä) und gibt Umlaute aus. Diese können später jedoch </span></span>
-<span id="cb912-32"><a href="exkurs-web-scraping-und-apis.html#cb912-32" tabindex="-1"></a>  <span class="co"># Probleme verursachen, wenn die Dateien eingelesen werden sollen. Es ist deswegen empfehlenswert, </span></span>
-<span id="cb912-33"><a href="exkurs-web-scraping-und-apis.html#cb912-33" tabindex="-1"></a>  <span class="co"># Umlaute in Dateinamen zu vermeiden.</span></span>
-<span id="cb912-34"><a href="exkurs-web-scraping-und-apis.html#cb912-34" tabindex="-1"></a>  filename <span class="ot">&lt;-</span> suburls[i] <span class="sc">%&gt;%</span></span>
-<span id="cb912-35"><a href="exkurs-web-scraping-und-apis.html#cb912-35" tabindex="-1"></a>    <span class="fu">basename</span>() <span class="sc">%&gt;%</span> <span class="co"># Anfang der URL entfernen</span></span>
-<span id="cb912-36"><a href="exkurs-web-scraping-und-apis.html#cb912-36" tabindex="-1"></a>    <span class="fu">URLdecode</span>() <span class="sc">%&gt;%</span> <span class="co"># URL dekodieren</span></span>
-<span id="cb912-37"><a href="exkurs-web-scraping-und-apis.html#cb912-37" tabindex="-1"></a>    <span class="fu">stri_trans_general</span>(<span class="st">&quot;de-ASCII; Latin-ASCII&quot;</span>) <span class="co"># ä,ö,ü zu ae, oe, ue </span></span>
-<span id="cb912-38"><a href="exkurs-web-scraping-und-apis.html#cb912-38" tabindex="-1"></a>  </span>
-<span id="cb912-39"><a href="exkurs-web-scraping-und-apis.html#cb912-39" tabindex="-1"></a>  <span class="co"># Noch eine Möglichkeit, Dateinamen zu erstellen</span></span>
-<span id="cb912-40"><a href="exkurs-web-scraping-und-apis.html#cb912-40" tabindex="-1"></a>  <span class="co"># filename &lt;- substring(suburls[i], first = 32)</span></span>
-<span id="cb912-41"><a href="exkurs-web-scraping-und-apis.html#cb912-41" tabindex="-1"></a>  </span>
-<span id="cb912-42"><a href="exkurs-web-scraping-und-apis.html#cb912-42" tabindex="-1"></a>  <span class="co"># maerchentext in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern</span></span>
-<span id="cb912-43"><a href="exkurs-web-scraping-und-apis.html#cb912-43" tabindex="-1"></a>  <span class="fu">write.table</span>(maerchentext, </span>
-<span id="cb912-44"><a href="exkurs-web-scraping-und-apis.html#cb912-44" tabindex="-1"></a>              <span class="at">file =</span> <span class="fu">paste0</span>(filename, <span class="st">&quot;.txt&quot;</span>), </span>
-<span id="cb912-45"><a href="exkurs-web-scraping-und-apis.html#cb912-45" tabindex="-1"></a>              <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
-<span id="cb912-46"><a href="exkurs-web-scraping-und-apis.html#cb912-46" tabindex="-1"></a>              <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
-<span id="cb912-47"><a href="exkurs-web-scraping-und-apis.html#cb912-47" tabindex="-1"></a>              <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb912-48"><a href="exkurs-web-scraping-und-apis.html#cb912-48" tabindex="-1"></a>  </span>
-<span id="cb912-49"><a href="exkurs-web-scraping-und-apis.html#cb912-49" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="exkurs-web-scraping-und-apis.html#cb866-1" tabindex="-1"></a><span class="co"># Vorbereitung</span></span>
+<span id="cb866-2"><a href="exkurs-web-scraping-und-apis.html#cb866-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rvest&quot;</span>)</span>
+<span id="cb866-3"><a href="exkurs-web-scraping-und-apis.html#cb866-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringi&quot;</span>)</span>
+<span id="cb866-4"><a href="exkurs-web-scraping-und-apis.html#cb866-4" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb866-5"><a href="exkurs-web-scraping-und-apis.html#cb866-5" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
+<span id="cb866-6"><a href="exkurs-web-scraping-und-apis.html#cb866-6" tabindex="-1"></a></span>
+<span id="cb866-7"><a href="exkurs-web-scraping-und-apis.html#cb866-7" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://de.wikisource.org/wiki/Kinder-_und_Hausm%C3%A4rchen&quot;</span></span>
+<span id="cb866-8"><a href="exkurs-web-scraping-und-apis.html#cb866-8" tabindex="-1"></a></span>
+<span id="cb866-9"><a href="exkurs-web-scraping-und-apis.html#cb866-9" tabindex="-1"></a><span class="co"># Website HTML-Baum parsen und Links der einzelnen Märchen extrahieren</span></span>
+<span id="cb866-10"><a href="exkurs-web-scraping-und-apis.html#cb866-10" tabindex="-1"></a>suburls <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
+<span id="cb866-11"><a href="exkurs-web-scraping-und-apis.html#cb866-11" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> <span class="co"># bracket optional</span></span>
+<span id="cb866-12"><a href="exkurs-web-scraping-und-apis.html#cb866-12" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//div[1]/table[2]/tbody/tr/td[position()&gt;1]/a&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># position()&gt;1 filtert das erste &lt;td&gt; Element heraus</span></span>
+<span id="cb866-13"><a href="exkurs-web-scraping-und-apis.html#cb866-13" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb866-14"><a href="exkurs-web-scraping-und-apis.html#cb866-14" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;https://de.wikisource.org&quot;</span>, .) <span class="co"># . ist ein Platzhalter, es wird verwendet um die Reihenfolge der Funktionsargumente umzukehren </span></span>
+<span id="cb866-15"><a href="exkurs-web-scraping-und-apis.html#cb866-15" tabindex="-1"></a>suburls <span class="co"># überprüfen</span></span>
+<span id="cb866-16"><a href="exkurs-web-scraping-und-apis.html#cb866-16" tabindex="-1"></a></span>
+<span id="cb866-17"><a href="exkurs-web-scraping-und-apis.html#cb866-17" tabindex="-1"></a><span class="co"># Eine andere Möglichkeit, nicht benötigte Listenelemente herauszufiltern</span></span>
+<span id="cb866-18"><a href="exkurs-web-scraping-und-apis.html#cb866-18" tabindex="-1"></a><span class="co"># suburlsNew &lt;- suburlsNew[which(regexpr(&quot;\\d{4}&quot;, suburlsNew) &gt;=1)] </span></span>
+<span id="cb866-19"><a href="exkurs-web-scraping-und-apis.html#cb866-19" tabindex="-1"></a></span>
+<span id="cb866-20"><a href="exkurs-web-scraping-und-apis.html#cb866-20" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(suburls)) {    </span>
+<span id="cb866-21"><a href="exkurs-web-scraping-und-apis.html#cb866-21" tabindex="-1"></a>  </span>
+<span id="cb866-22"><a href="exkurs-web-scraping-und-apis.html#cb866-22" tabindex="-1"></a>  maerchen <span class="ot">&lt;-</span> suburls[i] </span>
+<span id="cb866-23"><a href="exkurs-web-scraping-und-apis.html#cb866-23" tabindex="-1"></a>  </span>
+<span id="cb866-24"><a href="exkurs-web-scraping-und-apis.html#cb866-24" tabindex="-1"></a>  <span class="co"># Text aus den paragraph-Elementen extrahieren (&lt;p&gt;&lt;/p&gt;)</span></span>
+<span id="cb866-25"><a href="exkurs-web-scraping-und-apis.html#cb866-25" tabindex="-1"></a>  maerchentext <span class="ot">&lt;-</span> maerchen <span class="sc">%&gt;%</span></span>
+<span id="cb866-26"><a href="exkurs-web-scraping-und-apis.html#cb866-26" tabindex="-1"></a>    <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb866-27"><a href="exkurs-web-scraping-und-apis.html#cb866-27" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//p[not(preceding::h2)]&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Alles nach dem &lt;h2&gt;-Tag ausschließen</span></span>
+<span id="cb866-28"><a href="exkurs-web-scraping-und-apis.html#cb866-28" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb866-29"><a href="exkurs-web-scraping-und-apis.html#cb866-29" tabindex="-1"></a>  </span>
+<span id="cb866-30"><a href="exkurs-web-scraping-und-apis.html#cb866-30" tabindex="-1"></a>  <span class="co"># Dateinamen erstellen</span></span>
+<span id="cb866-31"><a href="exkurs-web-scraping-und-apis.html#cb866-31" tabindex="-1"></a>  <span class="co"># URLdecode dekodiert die URLs (z.B. %C3%A4 für ä) und gibt Umlaute aus. Diese können später jedoch </span></span>
+<span id="cb866-32"><a href="exkurs-web-scraping-und-apis.html#cb866-32" tabindex="-1"></a>  <span class="co"># Probleme verursachen, wenn die Dateien eingelesen werden sollen. Es ist deswegen empfehlenswert, </span></span>
+<span id="cb866-33"><a href="exkurs-web-scraping-und-apis.html#cb866-33" tabindex="-1"></a>  <span class="co"># Umlaute in Dateinamen zu vermeiden.</span></span>
+<span id="cb866-34"><a href="exkurs-web-scraping-und-apis.html#cb866-34" tabindex="-1"></a>  filename <span class="ot">&lt;-</span> suburls[i] <span class="sc">%&gt;%</span></span>
+<span id="cb866-35"><a href="exkurs-web-scraping-und-apis.html#cb866-35" tabindex="-1"></a>    <span class="fu">basename</span>() <span class="sc">%&gt;%</span> <span class="co"># Anfang der URL entfernen</span></span>
+<span id="cb866-36"><a href="exkurs-web-scraping-und-apis.html#cb866-36" tabindex="-1"></a>    <span class="fu">URLdecode</span>() <span class="sc">%&gt;%</span> <span class="co"># URL dekodieren</span></span>
+<span id="cb866-37"><a href="exkurs-web-scraping-und-apis.html#cb866-37" tabindex="-1"></a>    <span class="fu">stri_trans_general</span>(<span class="st">&quot;de-ASCII; Latin-ASCII&quot;</span>) <span class="co"># ä,ö,ü zu ae, oe, ue </span></span>
+<span id="cb866-38"><a href="exkurs-web-scraping-und-apis.html#cb866-38" tabindex="-1"></a>  </span>
+<span id="cb866-39"><a href="exkurs-web-scraping-und-apis.html#cb866-39" tabindex="-1"></a>  <span class="co"># Noch eine Möglichkeit, Dateinamen zu erstellen</span></span>
+<span id="cb866-40"><a href="exkurs-web-scraping-und-apis.html#cb866-40" tabindex="-1"></a>  <span class="co"># filename &lt;- substring(suburls[i], first = 32)</span></span>
+<span id="cb866-41"><a href="exkurs-web-scraping-und-apis.html#cb866-41" tabindex="-1"></a>  </span>
+<span id="cb866-42"><a href="exkurs-web-scraping-und-apis.html#cb866-42" tabindex="-1"></a>  <span class="co"># maerchentext in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern</span></span>
+<span id="cb866-43"><a href="exkurs-web-scraping-und-apis.html#cb866-43" tabindex="-1"></a>  <span class="fu">write.table</span>(maerchentext, </span>
+<span id="cb866-44"><a href="exkurs-web-scraping-und-apis.html#cb866-44" tabindex="-1"></a>              <span class="at">file =</span> <span class="fu">paste0</span>(filename, <span class="st">&quot;.txt&quot;</span>), </span>
+<span id="cb866-45"><a href="exkurs-web-scraping-und-apis.html#cb866-45" tabindex="-1"></a>              <span class="at">quote=</span><span class="cn">FALSE</span>,</span>
+<span id="cb866-46"><a href="exkurs-web-scraping-und-apis.html#cb866-46" tabindex="-1"></a>              <span class="at">col.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb866-47"><a href="exkurs-web-scraping-und-apis.html#cb866-47" tabindex="-1"></a>              <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb866-48"><a href="exkurs-web-scraping-und-apis.html#cb866-48" tabindex="-1"></a>  </span>
+<span id="cb866-49"><a href="exkurs-web-scraping-und-apis.html#cb866-49" tabindex="-1"></a>}</span></code></pre></div>
 <p>Anfang des Semesters haben wir bereits besprochen, dass Schleifen und andere Kontrollstrukturen in Programmiersprachen wie Python eine große Rolle spielen, in R jedoch als weniger elegante Lösung gelten. In unserem ersten Wikisource-Scraper haben wir eine for-Schleife verwendet, um die Ausführung von unserem Code zu kontrollieren: Unsere Schleife ist über eine Liste von suburls iteriert und jedes Mal wurden Befehle aus dem Schleifenkörper ausgeführt. Während for-Schleifen und andere Kontrollstrukturen in Programmiersprachen wie Python sehr wichtig sind, ist R eigentlich nicht für diesen Programmierstil konzipiert. Das bedeutet, dass Schleifen zwar verwendet werden können, aber das resultiert oft in einer längeren Laufzeit und wird allgemein als eine weniger elegante Lösung angesehen.</p>
 <p>Der folgende Code illustriert, wie das Webscraping-Skript mithilfe von Funktionen vereinfacht werden kann. Dazu wird mehrfach die Funktion map() aus dem Paket purrr verwendet, um die Schleife zu ersetzen. Für mehr Informationen zu purrr und map() siehe die <a href="https://purrr.tidyverse.org/index.html">purrr-Dokumentationsseiten</a> und das <a href="https://modern-rstats.eu/functional-programming.html#functional-programming-with-purrr">Kapitel “Functional Programming”</a> aus Bruno Rodrigues’ Kurs “Modern R with the tidyverse”.</p>
-<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="exkurs-web-scraping-und-apis.html#cb913-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rvest&quot;</span>)</span>
-<span id="cb913-2"><a href="exkurs-web-scraping-und-apis.html#cb913-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringi&quot;</span>)</span>
-<span id="cb913-3"><a href="exkurs-web-scraping-und-apis.html#cb913-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</span>
-<span id="cb913-4"><a href="exkurs-web-scraping-und-apis.html#cb913-4" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb913-5"><a href="exkurs-web-scraping-und-apis.html#cb913-5" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
-<span id="cb913-6"><a href="exkurs-web-scraping-und-apis.html#cb913-6" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb913-7"><a href="exkurs-web-scraping-und-apis.html#cb913-7" tabindex="-1"></a></span>
-<span id="cb913-8"><a href="exkurs-web-scraping-und-apis.html#cb913-8" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://de.wikisource.org/wiki/Kinder-_und_Hausm%C3%A4rchen&quot;</span></span>
-<span id="cb913-9"><a href="exkurs-web-scraping-und-apis.html#cb913-9" tabindex="-1"></a></span>
-<span id="cb913-10"><a href="exkurs-web-scraping-und-apis.html#cb913-10" tabindex="-1"></a><span class="co"># HTML parsen und Links extrahieren</span></span>
-<span id="cb913-11"><a href="exkurs-web-scraping-und-apis.html#cb913-11" tabindex="-1"></a>suburls <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
-<span id="cb913-12"><a href="exkurs-web-scraping-und-apis.html#cb913-12" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> <span class="co"># Klammer optional</span></span>
-<span id="cb913-13"><a href="exkurs-web-scraping-und-apis.html#cb913-13" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//div[1]/table[2]/tbody/tr/td[position()&gt;1]/a&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb913-14"><a href="exkurs-web-scraping-und-apis.html#cb913-14" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb913-15"><a href="exkurs-web-scraping-und-apis.html#cb913-15" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;https://de.wikisource.org&quot;</span>, .)</span>
-<span id="cb913-16"><a href="exkurs-web-scraping-und-apis.html#cb913-16" tabindex="-1"></a><span class="fu">head</span>(suburls)</span>
-<span id="cb913-17"><a href="exkurs-web-scraping-und-apis.html#cb913-17" tabindex="-1"></a></span>
-<span id="cb913-18"><a href="exkurs-web-scraping-und-apis.html#cb913-18" tabindex="-1"></a><span class="co"># Text zwischen paragraph-tags (&lt;p&gt;&lt;/p&gt;) extrahieren</span></span>
-<span id="cb913-19"><a href="exkurs-web-scraping-und-apis.html#cb913-19" tabindex="-1"></a><span class="co"># map() nimmt eine Liste und eine Funktion als Input und wendet die Funktion auf jedes Listenelement an. </span></span>
-<span id="cb913-20"><a href="exkurs-web-scraping-und-apis.html#cb913-20" tabindex="-1"></a><span class="co"># In diesem Fall nimmt beispielsweise map(html_nodes, .. ) eine Liste HTML-Dokumente als Input und gibt eine Liste zurück, bei der jedes Element wiederum eine Liste von &lt;p&gt;-Elementen aus dem Input-HTML-Dokument enhält. </span></span>
-<span id="cb913-21"><a href="exkurs-web-scraping-und-apis.html#cb913-21" tabindex="-1"></a>maerchentexte <span class="ot">&lt;-</span> suburls <span class="sc">%&gt;%</span></span>
-<span id="cb913-22"><a href="exkurs-web-scraping-und-apis.html#cb913-22" tabindex="-1"></a>  <span class="fu">map</span>(read_html) <span class="sc">%&gt;%</span></span>
-<span id="cb913-23"><a href="exkurs-web-scraping-und-apis.html#cb913-23" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">xpath =</span> <span class="st">&quot;//p[not(preceding::h2)]&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb913-24"><a href="exkurs-web-scraping-und-apis.html#cb913-24" tabindex="-1"></a>  <span class="fu">map</span>(html_text) </span>
-<span id="cb913-25"><a href="exkurs-web-scraping-und-apis.html#cb913-25" tabindex="-1"></a><span class="fu">typeof</span>(maerchentexte) <span class="co"># output ist Liste von Listen</span></span>
-<span id="cb913-26"><a href="exkurs-web-scraping-und-apis.html#cb913-26" tabindex="-1"></a>maerchentexte[<span class="dv">1</span>]</span>
-<span id="cb913-27"><a href="exkurs-web-scraping-und-apis.html#cb913-27" tabindex="-1"></a></span>
-<span id="cb913-28"><a href="exkurs-web-scraping-und-apis.html#cb913-28" tabindex="-1"></a><span class="co"># Dateinamen erstellen, wieder mithilfe der map()-Funktion</span></span>
-<span id="cb913-29"><a href="exkurs-web-scraping-und-apis.html#cb913-29" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> suburls <span class="sc">%&gt;%</span></span>
-<span id="cb913-30"><a href="exkurs-web-scraping-und-apis.html#cb913-30" tabindex="-1"></a>  <span class="fu">map</span>(basename) <span class="sc">%&gt;%</span> <span class="co"># Anfang der URL entfernen</span></span>
-<span id="cb913-31"><a href="exkurs-web-scraping-und-apis.html#cb913-31" tabindex="-1"></a>  <span class="fu">map</span>(URLdecode) <span class="sc">%&gt;%</span> <span class="co"># URL dekodieren</span></span>
-<span id="cb913-32"><a href="exkurs-web-scraping-und-apis.html#cb913-32" tabindex="-1"></a>  <span class="fu">stri_trans_general</span>(<span class="st">&quot;de-ASCII; Latin-ASCII&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># ä,ö,ü zu ae, oe, ue konvertieren</span></span>
-<span id="cb913-33"><a href="exkurs-web-scraping-und-apis.html#cb913-33" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;.txt&quot;</span>) </span>
-<span id="cb913-34"><a href="exkurs-web-scraping-und-apis.html#cb913-34" tabindex="-1"></a><span class="fu">head</span>(filenames) </span>
-<span id="cb913-35"><a href="exkurs-web-scraping-und-apis.html#cb913-35" tabindex="-1"></a></span>
-<span id="cb913-36"><a href="exkurs-web-scraping-und-apis.html#cb913-36" tabindex="-1"></a></span>
-<span id="cb913-37"><a href="exkurs-web-scraping-und-apis.html#cb913-37" tabindex="-1"></a><span class="co"># Jedes Element der maerchentexte-Liste in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern. </span></span>
-<span id="cb913-38"><a href="exkurs-web-scraping-und-apis.html#cb913-38" tabindex="-1"></a><span class="co"># Die Funktion walk2() ist ähnlich wie map(), aber nimmt zwei Elemente anstatt nur einem sowie eine Funktion als Input. </span></span>
-<span id="cb913-39"><a href="exkurs-web-scraping-und-apis.html#cb913-39" tabindex="-1"></a><span class="co"># Sie greift parallel auf beide Listen zu und wendet die Funktion, in diesem Fall write.table() auf beide Listen an. </span></span>
-<span id="cb913-40"><a href="exkurs-web-scraping-und-apis.html#cb913-40" tabindex="-1"></a><span class="co"># Das heißt, dass in jedem Schritt ein Element maerchentexte[i] und ein Element filenames[i] an die Funktion übergeben wird. </span></span>
-<span id="cb913-41"><a href="exkurs-web-scraping-und-apis.html#cb913-41" tabindex="-1"></a><span class="co"># Beide Listen müssen deswegen dieselbe Länge haben. </span></span>
-<span id="cb913-42"><a href="exkurs-web-scraping-und-apis.html#cb913-42" tabindex="-1"></a><span class="fu">walk2</span>(maerchentexte, filenames, write.table, <span class="at">quote=</span>F, <span class="at">col.names=</span>F, <span class="at">row.names=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="exkurs-web-scraping-und-apis.html#cb867-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rvest&quot;</span>)</span>
+<span id="cb867-2"><a href="exkurs-web-scraping-und-apis.html#cb867-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringi&quot;</span>)</span>
+<span id="cb867-3"><a href="exkurs-web-scraping-und-apis.html#cb867-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</span>
+<span id="cb867-4"><a href="exkurs-web-scraping-und-apis.html#cb867-4" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb867-5"><a href="exkurs-web-scraping-und-apis.html#cb867-5" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
+<span id="cb867-6"><a href="exkurs-web-scraping-und-apis.html#cb867-6" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb867-7"><a href="exkurs-web-scraping-und-apis.html#cb867-7" tabindex="-1"></a></span>
+<span id="cb867-8"><a href="exkurs-web-scraping-und-apis.html#cb867-8" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://de.wikisource.org/wiki/Kinder-_und_Hausm%C3%A4rchen&quot;</span></span>
+<span id="cb867-9"><a href="exkurs-web-scraping-und-apis.html#cb867-9" tabindex="-1"></a></span>
+<span id="cb867-10"><a href="exkurs-web-scraping-und-apis.html#cb867-10" tabindex="-1"></a><span class="co"># HTML parsen und Links extrahieren</span></span>
+<span id="cb867-11"><a href="exkurs-web-scraping-und-apis.html#cb867-11" tabindex="-1"></a>suburls <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
+<span id="cb867-12"><a href="exkurs-web-scraping-und-apis.html#cb867-12" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> <span class="co"># Klammer optional</span></span>
+<span id="cb867-13"><a href="exkurs-web-scraping-und-apis.html#cb867-13" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&quot;//div[1]/table[2]/tbody/tr/td[position()&gt;1]/a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb867-14"><a href="exkurs-web-scraping-und-apis.html#cb867-14" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb867-15"><a href="exkurs-web-scraping-und-apis.html#cb867-15" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;https://de.wikisource.org&quot;</span>, .)</span>
+<span id="cb867-16"><a href="exkurs-web-scraping-und-apis.html#cb867-16" tabindex="-1"></a><span class="fu">head</span>(suburls)</span>
+<span id="cb867-17"><a href="exkurs-web-scraping-und-apis.html#cb867-17" tabindex="-1"></a></span>
+<span id="cb867-18"><a href="exkurs-web-scraping-und-apis.html#cb867-18" tabindex="-1"></a><span class="co"># Text zwischen paragraph-tags (&lt;p&gt;&lt;/p&gt;) extrahieren</span></span>
+<span id="cb867-19"><a href="exkurs-web-scraping-und-apis.html#cb867-19" tabindex="-1"></a><span class="co"># map() nimmt eine Liste und eine Funktion als Input und wendet die Funktion auf jedes Listenelement an. </span></span>
+<span id="cb867-20"><a href="exkurs-web-scraping-und-apis.html#cb867-20" tabindex="-1"></a><span class="co"># In diesem Fall nimmt beispielsweise map(html_nodes, .. ) eine Liste HTML-Dokumente als Input und gibt eine Liste zurück, bei der jedes Element wiederum eine Liste von &lt;p&gt;-Elementen aus dem Input-HTML-Dokument enhält. </span></span>
+<span id="cb867-21"><a href="exkurs-web-scraping-und-apis.html#cb867-21" tabindex="-1"></a>maerchentexte <span class="ot">&lt;-</span> suburls <span class="sc">%&gt;%</span></span>
+<span id="cb867-22"><a href="exkurs-web-scraping-und-apis.html#cb867-22" tabindex="-1"></a>  <span class="fu">map</span>(read_html) <span class="sc">%&gt;%</span></span>
+<span id="cb867-23"><a href="exkurs-web-scraping-und-apis.html#cb867-23" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">xpath =</span> <span class="st">&quot;//p[not(preceding::h2)]&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb867-24"><a href="exkurs-web-scraping-und-apis.html#cb867-24" tabindex="-1"></a>  <span class="fu">map</span>(html_text) </span>
+<span id="cb867-25"><a href="exkurs-web-scraping-und-apis.html#cb867-25" tabindex="-1"></a><span class="fu">typeof</span>(maerchentexte) <span class="co"># output ist Liste von Listen</span></span>
+<span id="cb867-26"><a href="exkurs-web-scraping-und-apis.html#cb867-26" tabindex="-1"></a>maerchentexte[<span class="dv">1</span>]</span>
+<span id="cb867-27"><a href="exkurs-web-scraping-und-apis.html#cb867-27" tabindex="-1"></a></span>
+<span id="cb867-28"><a href="exkurs-web-scraping-und-apis.html#cb867-28" tabindex="-1"></a><span class="co"># Dateinamen erstellen, wieder mithilfe der map()-Funktion</span></span>
+<span id="cb867-29"><a href="exkurs-web-scraping-und-apis.html#cb867-29" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> suburls <span class="sc">%&gt;%</span></span>
+<span id="cb867-30"><a href="exkurs-web-scraping-und-apis.html#cb867-30" tabindex="-1"></a>  <span class="fu">map</span>(basename) <span class="sc">%&gt;%</span> <span class="co"># Anfang der URL entfernen</span></span>
+<span id="cb867-31"><a href="exkurs-web-scraping-und-apis.html#cb867-31" tabindex="-1"></a>  <span class="fu">map</span>(URLdecode) <span class="sc">%&gt;%</span> <span class="co"># URL dekodieren</span></span>
+<span id="cb867-32"><a href="exkurs-web-scraping-und-apis.html#cb867-32" tabindex="-1"></a>  <span class="fu">stri_trans_general</span>(<span class="st">&quot;de-ASCII; Latin-ASCII&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># ä,ö,ü zu ae, oe, ue konvertieren</span></span>
+<span id="cb867-33"><a href="exkurs-web-scraping-und-apis.html#cb867-33" tabindex="-1"></a>  <span class="fu">stri_paste</span>(<span class="st">&quot;.txt&quot;</span>) </span>
+<span id="cb867-34"><a href="exkurs-web-scraping-und-apis.html#cb867-34" tabindex="-1"></a><span class="fu">head</span>(filenames) </span>
+<span id="cb867-35"><a href="exkurs-web-scraping-und-apis.html#cb867-35" tabindex="-1"></a></span>
+<span id="cb867-36"><a href="exkurs-web-scraping-und-apis.html#cb867-36" tabindex="-1"></a></span>
+<span id="cb867-37"><a href="exkurs-web-scraping-und-apis.html#cb867-37" tabindex="-1"></a><span class="co"># Jedes Element der maerchentexte-Liste in eine txt-Datei schreiben und im Arbeitsverzeichnis speichern. </span></span>
+<span id="cb867-38"><a href="exkurs-web-scraping-und-apis.html#cb867-38" tabindex="-1"></a><span class="co"># Die Funktion walk2() ist ähnlich wie map(), aber nimmt zwei Elemente anstatt nur einem sowie eine Funktion als Input. </span></span>
+<span id="cb867-39"><a href="exkurs-web-scraping-und-apis.html#cb867-39" tabindex="-1"></a><span class="co"># Sie greift parallel auf beide Listen zu und wendet die Funktion, in diesem Fall write.table() auf beide Listen an. </span></span>
+<span id="cb867-40"><a href="exkurs-web-scraping-und-apis.html#cb867-40" tabindex="-1"></a><span class="co"># Das heißt, dass in jedem Schritt ein Element maerchentexte[i] und ein Element filenames[i] an die Funktion übergeben wird. </span></span>
+<span id="cb867-41"><a href="exkurs-web-scraping-und-apis.html#cb867-41" tabindex="-1"></a><span class="co"># Beide Listen müssen deswegen dieselbe Länge haben. </span></span>
+<span id="cb867-42"><a href="exkurs-web-scraping-und-apis.html#cb867-42" tabindex="-1"></a><span class="fu">walk2</span>(maerchentexte, filenames, write.table, <span class="at">quote=</span>F, <span class="at">col.names=</span>F, <span class="at">row.names=</span>F)</span></code></pre></div>
 
 </div>
 </div>
@@ -610,8 +577,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="word-embeddings-und-ner.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exkurs-xml-tei-und-xpath.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pos-tagging-und-dependency-parsing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

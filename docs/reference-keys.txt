@@ -114,3 +114,6 @@ korpus-einlesen-und-preprocessing
 analyse-mit-pos-tags
 analyse-mit-dependency-relations
 fazit
+exkurs-web-scraping-und-apis
+beispiel-api-dracor
+beispiel-web-scraping-wikisource

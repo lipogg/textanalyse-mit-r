@@ -18,10 +18,10 @@ rmd_files: ["index.Rmd",
             "07-Textanalyse-2.Rmd", 
             "08-Textanalyse-3.Rmd",
             "09-UDPipe.Rmd", 
-            #"10-NER.Rmd", 
+            "10-NER.Rmd", 
             "11-Webscraping-APIs.Rmd",
-            #"12-XML-XPath.Rmd", 
-            #"12-XML-Beispiele.Rmd"
+            "12-XML-XPath.Rmd", 
+            "12-XML-Beispiele.Rmd"
             ]
 new_session: yes
 output_dir: "docs"

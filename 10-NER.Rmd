@@ -60,10 +60,13 @@ maerchen_corpus <- corpus(maerchen_alle) %>%
 
 - Nikhil Garg, Londa Schiebinger, Dan Jurafsky und James Zou (2018), Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes, https://www.pnas.org/doi/10.1073/pnas.1720347115.
 - Sandeep Soni, Lauren F. Klein und Jacob Eisenstein (2021). Abolitionist Networks. Modeling Language Change in Nineteenth-Century Activist Newspapers, https://doi.org/10.22148/001c.18841.
+- Francisco A Borja (2023), Mining for meaning. How text mining can uncover the French Liberal School’s key ideas, https://doi.org/10.1093/llc/fqad084.
 
 </details>
 
 ### Count-Based Word Embeddings mit Quanteda und PMI-Werten
+
+Zunächst schauen wir uns an, wie aus den bereits bekannten Quanteda Feature-Cooccurrence-Matrizen (FCM) Word Embeddings erstellt werden können. Dazu nutzen wir das bereits aus dem Kapitel "Textanalyse III" bekannte Assoziationsmaß Pointwise Mutual Information (PMI), um die Stärke der Assoziation zwischen Wörtern in der Feature Co-Occurrence Matrix zu gewichten. Auf dieser Basis reduzieren wir in einem zweiten Schritt die Dimensionen der Matrix, sodass wir dichte Wort-Vektoren, also Word Embeddings, erhalten. Zuletzt messen wir die semantische Ähnlichkeit von einigen Beispielwörtern aus dem Märchenkorpus anhand der Kosinusähnlichkeit ihrer Embedding-Vektoren. Für eine Erläuterung zur Kosinusähnlichkeit und zur Methode SVD (Singular Value Decomposition), die zur Umwandlung von spärlichen in dichte Matrizen verwendet wird, verweise ich auf die optionalen Abschnitte zum mathematischen Hintergrund am Ende dieses Abschnitts. 
 
 Code adaptiert von Stoltz/Taylor 2024, Mapping Texts, S. 210-214.
 
@@ -163,25 +166,32 @@ similarities %>%
 
 ```
 
+Für den mathematischen Hintergrund zu PMI verweise ich auf den Abschnitt [8.4.4.2 "Pointwise Mutual Information (PMI)"](https://lipogg.github.io/textanalyse-mit-r/textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi).
 
 <details>
 <summary><b>Mathematischer Hintergrund: SVD </b></summary>
 
-Folgt noch.
+SVD steht für Singular Value Decomposition. Es handelt sich dabei um eine Methode der sogenannten Matrixfaktorisierung. Eine Matrixfaktorisierung ist die Zerlegung einer Matrix in Teilmatrizen. 
 
-Für den mathematischen Hintergrund zu PMI verweise ich auf den Abschnitt [8.4.4.2 "Pointwise Mutual Information (PMI)"](https://lipogg.github.io/textanalyse-mit-r/textanalyse-iii-wortfrequenzanalysen.html#pointwise-mutual-information-pmi).
+Hintergrund folgt noch. 
+
 
 </details>
 <details>
 <summary><b>Mathematischer Hintergrund: Kosinusähnlichkeit </b></summary>
 
-Folgt noch.
+Hervorragende Erläuterungen zur Kosinusähnlichkeit bieten: 
+
+* Christopher Potts (2021). Vorlesungsmitschnitt "Natural Language Understanding", Abschnitt "Vector Comparison", Stanford University, https://www.youtube.com/watch?v=eKvbYOc2rOs.
+* Justin Grimmer, Margaret E. Roberts und Brandon M. Stewart (2022). Text as Data. A New Framework for Machine Learning and the Social Sciences, ch. 7: The Vector Space Model and Similarity Metrics, pp. 70-77.
+* Dustin S. Stoltz und Marshall A. Taylor (2024). Mapping Texts. Computational Text Analysis for the Social Sciences, ch. 4: Math Basics. Comparing Vectors, pp. 34-39. 
 
 </details>
 
 
-
 ### Prediction-Based Static Word Embeddings mit Quanteda und GloVe 
+
+Ein weiteres bekanntes Verfahren zur Erstellung von Word Embeddings ist GloVe (Global Vectors for Word Representation). Ähnlich wie die Count-basierten Word Embeddings im vorherigen Abschnitt baut GloVe auf der Idee auf, dass die statistische Information über das gemeinsame Vorkommen von Wörtern im gesamten Korpus genutzt werden kann, um die semantische Ähnlichkeit von Wörtern mathematisch zu modellieren. Ausgangspunkt ist auch wieder eine Kookkurrenzmatrix, in der gezählt wird, wie oft zwei Wörter innerhalb eines bestimmten Kontextfensters gemeinsam auftreten. Aber anders als bei dem im vorhergehenden Abschnitt dargestellten count-basierten Verfahren wird diese Matrix nicht direkt analysiert, sondern sie dient als Grundlage für ein Machine-Learning-Modell, das Word Embeddings für alle Wörter im Korpus "lernt". Für eine detaillierte Erläuterung verweise ich auf den optionalen Abschnitt "mathematischer Hintergrund" am Ende des Abschnitts. 
 
 Code nach https://quanteda.io/articles/pkgdown/replication/text2vec.html
 
@@ -235,7 +245,40 @@ Ein Beispiel zu Contextual Word Embeddings folgt noch.
 <details>
 <summary><b>Mathematischer Hintergrund: GloVe </b></summary>
 
-Folgt noch.
+Der Name GloVe verweist auf die Grundidee des Modells: In dem Forschungsartikel, in dem das Modell zum ersten Mal vorgestellt wurde, schreiben die Autor:innen, dass GloVe für "Global Vectors" steht,  "because the global corpus statistics are captured directly by the model" ([Pennington, Socher und Manning 2014](https://doi.org/10.3115/v1/D14-1162), S.2). Mit "global corpus statistics" ist im Grunde eine Kookkurrenzmatrix aller Wörter (oder "Features") im Korpus gemeint, in der die Anzahl der gemeinsamen Vorkommen von Wortpaaren innerhalb eines Kontextfensters von $m$ Wörtern erfasst ist. Kookkurrenzmatrizen kennt ihr bereits, im Quanteda-Kontext sind das die Feature Co-Occurrence Matrizen (FCM). GloVe nutzt aber nicht direkt diese Kookkurrenzmatrizen, um Word Embeddings zu erzeugen, wie es im vorhergehenden Abschnitt "Count-based Word Embeddings" der Fall war, sondern die Kookkurrenzstatistiken werden nur als Input für ein spezielles Regressionsmodell verwendet, also ein Modell, das auf der Grundlage von bekannten Werten für eine bestimmte Variable (Alter, Ausbildung,...) die wahrscheinlichsten Werte für eine andere, von dieser Variable abhängigen Variable (z.B. Einkommen) vorhersagt. Die Autor:innen bezeichnen GloVe selbst als ein "global log-bilinear regression model". Das erscheint auf den ersten Blick weit entfernt von Word Embeddings, tatsächlich sind die Word Embeddings aber die Parameter des Modells. Ziel des GloVe-Modells ist es, diese Parameter so bestimmen, dass die vorhergesagten Kookkurrenzen möglichst gut mit den tatsächlichen  Kookkurrenzhäufigkeiten in der Kookkurrenzmatrix übereinstimmen. Die Parameter werden durch einen Trainings- bzw. Optimierungsprozess geschätzt, der darin besteht, dass eine gewichtete Least-Squares-Kostenfunktion ("weighted least squares") mithilfe des sogenannten Gradientenverfahrens ("gradient descent") minimiert wird. Was bedeutet das? Nähern wir uns den Begriffen schrittweise an. 
+
+Statt wie bei einer "klassischen" Regression zum Beispiel das wahrscheinlichste Einkommen aus Alter und Ausbildung vorherzusagen, wird durch das hier verwendete Regressionsmodell vorhergesagt, wie oft ein Wort $k$ im Kontext von einem Wort $i$ vorkommt, also die Anzahl der Kookkurrenzen der beiden Wörter ("cooccurrence count", $X_{ik}$) in einer Kookkurrenzmatrix $X$. Genauer gesagt wird eigentlich der Logarithmus von dieser Anzahl vorhergesagt, also $\log(X_{ik})$. Und die Variablen, aus denen der Wert $\log(X_{ik})$ hervorgesagt wird, sind nicht Alter und Ausbildung, sondern die Embedding-Vektoren der beiden Wörter $i$ und $k$ ("word vectors") selbst, $w_i$ und $\tilde{w}_k$. Aus diesen beiden Vektoren wird das Skalarprodukt gebildet, $w_i^\top \tilde{w}_k$, das hier einfach durch die Multiplikation des transponierten Vektors $w_i$ mit dem Vektor $\tilde{w}_k$ berechnet wird ([dieses Video](https://www.youtube.com/watch?v=sQ1b3KaO_6Y) erklärt diese Operation im Detail). Das "Transponieren" haben wir bereits bei der Umformung von Matrizen kennengelernt und dazu die R-Funktion `t()` verwendet. Ganz genau gesagt wird also der Logarithmus der Anzahl der Kookkurrenzen aus dem Skalarprodukt der Embedding-Vektoren hervorgesagt. Das Skalarprodukt wird aber noch mit zwei Konstanten, den sogenannten Bias-Termen ("bias terms"), verrechnet. Das sind einfach Zahlen, die die Vorhersage verbessern sollen, und die uns erst einmal nicht weiter interessieren. Das Regressionsmodell sieht nach den bisherigen Ausführungen so aus: 
+
+$w_i^T \tilde{w}_k + b_i + \tilde{b}_k = \log(X_{ik})$
+
+Dieses Modell behandelt aber seltene und sehr häufige Kookkurrenzen genau gleich, obwohl sehr seltene Kookkurrenzen eigentlich nicht sehr informativ sind. Gleichzeitig sollte aber die Bedeutung von sehr häufigen Kookkurrenzen auch nicht überbewertet werden. Deswegen ergänzen die Autor:innen das Modell um eine spezielle Funktion ("weighting function", $f(X_{ij})$)), die bewirkt, dass sehr häufige und sehr seltene Kookkurrenzen "umgewichtet" werden, damit sie weder zu wenig noch zu viel Gewicht in der Berechnung haben. 
+
+Nun ist $log(X_{ik})$ aber ja bereits aus der Kookkurrenzmatrix für das Korpus bekannt und muss gar nicht wie in einer klassischen Regression vorhergesagt werden. Stattdessen ist das eigentliche Ziel, Embedding-Vektoren $w_i$ und $\tilde{w}_k$ zu finden, deren Skalarprodukt die reale Anzahl der Kookkurrenzen im Korpus möglichst genau vorhersagt. Wenn das Modell diese Vektoren "gut" geschätzt hat, dann wird die reale Kookkurrenzhäufigkeit ziemlich genau vorhergesagt, und dann ist die Differenz zwischen der Vorhersage $w_i^T \tilde{w}_k + b_i + \tilde{b}_k$ und den realen Kookkurrenzhäufigkeiten $log(X_{ik})$ für zwei Wörter $i$ und $k$ sehr klein. Um Vektoren zu finden, für die dieser Abstand so klein wie möglich ist, wird das Regressionsmodell als "least squares"-Problem umformuliert. Das Regressionsmodell, das wir vorhin aufgestellt haben, dient also eigentlich nur als Referenz, um einzuschätzen, wie "gut" die Vektoren sind. Die least squares-Methode beschreibt ein Vorgehen, bei dem die Summe der quadrierten Differenz zwischen den in dem  Regressionsmodell vorhergesagten Werten und den realen, in einem konkreten Datensatz beobachteten Werten minimiert wird. Für eine anschauliche Erklärung, warum das in diesem Kontext so gemacht wird, empfehle ich [dieses Video](https://www.youtube.com/watch?v=EuBBz3bI-aA). Mathematisch wird dieses durch die Gewichtungsfunktion $f(X_{ij})$ gewichtete "least squares" Modell also schlussendlich so formuliert: 
+
+$J = \sum_{i,j=1}^V f(X_{ij}) \left(w_i^\top \tilde{w}_j + b_i + \tilde{b}_j- \log X_{ij} \right)^2$
+
+Hierbei ist $X_{ij}$ die Kookkurrenzhäufigkeit von zwei beliebigen Wörtern $i$ und $j$, $w_i$ und $\tilde{w}_j$ sind die zu lernenden Vektoren, $b_i$ und $\tilde{b}j$ die Bias-Terme und $f(X{ij})$ die Gewichtungsfunktion, die, wie bereits erläutert, seltene und häufige Kookkurrenzen unterschiedlich stark berücksichtigt. Das Ergebnis dieser Berechnung wird quadriert und aufsummiert. Die Formel gilt jetzt also nicht mehr für zwei konkrete Wörter $i$ und $k$, sondern gesucht wird der Minimalwert über alle Wörter im Korpus hinweg. Solche Funktionen, die die Differenz zwischen Vorhersage und tatsächlichen Werten (oder "Zielwerten") über alle Werte (hier Wortpaare) hinweg beschreiben, werden auch **Kostenfunktionen ("cost function")** genannt. Der Ausdruck innerhalb der Summe, der die Differenz zwischen Vorhersage und tatsächlichen Werten für einzelne Werte (bzw. Wortpaare) beschreibt, wird auch **Verlustfunktion ("loss function)** genannt. Die konkrete Methode, die zur Minimierung der Funktion verwendet wird, ist das sogenannte Gradientenverfahren ("Gradient Descent"), aber das werden wir hier nicht vertiefen. Für uns reicht zu verstehen, dass mithilfe des Gradientenverfahrens die Kostenfunktion schrittweise minimiert wird. Dieser Minimierungsprozess wird beim Ausführen der Funktion `glove$fit_transform()` im Beispiel oben durch den Konsolen-Output registriert (`"## INFO  [17:48:55.374] epoch 1, loss 0.1953"`). Genau dieser Minimierungsprozess ist das, was beim maschinellen Lernen mit "Training" gemeint ist, und weil es dabei darum geht, durch eine gute Wahl der Embedding-Vektoren die bestmöglichen Vorhersage zu treffen, ist das Ziel dieses Prozesses die "Optimierung" des Modells. 
+
+Die GloVe-Kostenfunktion wird manchmal auch in leicht vereinfachter und allgemeiner Form angegeben:  
+
+$J(\theta) = \frac{1}{2} \sum_{i,j=1}^W f(P_{ij}) \left( u_i^T v_j - \log P_{ij} \right)^2$
+
+Das Grundprinzip ist dasselbe, nur, dass nicht mit der Anzahl der Kookkurrenzen von beliebigen Wörtern $i$ und $j$ direkt gerechnet wird, sondern mit der Wahrscheinlichkeit $P_{ij}$, dass $j$ im Kontext von $i$ vorkommt. Die Wahrscheinlichkeit berechnet sich dabei aus der Anzahl der Kookkurrenzen. Die Wahrscheinlichkeit, dass ein konkretes Wort $k$ im Kontext von $i$ vorkommt, berechnet sich beispielsweise mit $P_{ik}=P(k|i)={\frac {X_{ik}}{X_{i}}} = {\frac {X_{ik}}{\sum_{k}X_{ik}}}$, wobei $X_i= \sum_{k}X_{ik}$ die Gesamtzahl der Kontextwörter, die mit $i$ gemeinsam vorkommen, beschreibt. Vielleicht ist euch aufgefallen, dass die Größe des Kontextfensters $m$, für das die Kookkurrenzen bestimmt werden, sich in keiner der Formeln wiederfindet. Dabei handelt es sich deswegen um einen sogenannten "Hyperparameter", der außerhalb der mathematischen Formulierung festgelegt wird, aber dennoch Einfluss auf die Berechnung hat. 
+
+Eine Anmerkung zum Schluss: Zwar haben habe ich der Verständlichkeit halber hier immer von "vorhersagen" gesprochen, aber im Kontext des maschinellen Lernens spricht man eigentlich von "**approximieren**". Für uns sind diese Begrifflichkeiten nicht ganz so wichtig, aber wenn ihr in der Fachliteratur nachschlagt, werdet ihr häufig auf diesen Begriff stoßen. Es ist außerdem wichtig anzumerken, dass die Entwickler:innen des GloVe-Modells zwar von "Regression" sprechen, dass sie damit aber nicht dasselbe meinen wie eine statistische Regression, sondern nur den allgemeinen Ansatz, Zusammenhänge verschiedener Variablen zu modellieren.
+
+Zusammengefasst: Ziel des GloVe-Modells ist es, für jedes Wort einen Embedding-Vektor zu "lernen", sodass das Skalarprodukt der Vektoren zweier Wörter möglichst genau den Logarithmus der tatsächlichen Kookkurrenzhäufigkeit dieser beiden Wörter vorhersagt. Weil für die Vorhersage der Kookkurrenzen nur die "Rohdaten" aus dem Korpus selbst, und keine Zielwerte aus einem externen, bereits annotierten Korpus verwendet werden (wie es beispielsweise beim POS Tagging und Dependency Parsing der Fall war), gilt GloVe als Methode des sogenanneten **unsupervised machine learning**.
+
+Um die Mathematik hinter GloVe tiefergehend zu verstehen, braucht ihr allerdings ab diesem Punkt grundlegende Kenntnisse in Statistik und Wahrscheinlichkeitstheorie (Relative Häufigkeiten, Bedingte Wahrscheinlichkeit), linearer Algebra (Matrizen, Vektoren, Matrixoperationen, Skalarprodukt) und Analysis (Logarithmus, Ableitungen). Wenn ihr bereits grundlegende Vorkenntnisse in diesen Bereichen mitbringt, empfehle ich die folgenden Mitschnitte aus der Vorlesung "Natural Language Processing with Deep Learning" von Christopher Manning und Richard Socher zur Vertiefung: 
+
+* Lecture 2: Word Vectors, https://www.youtube.com/watch?v=ERibwqs9p38
+* Lecture 3: GloVe: Global Vectors for Word Representation, https://www.youtube.com/watch?v=ASn7ExxLZws
+
+Die Vorlesungen gehören zur [Lehrveranstaltung "Natural Language Processing with Deep Learning"](https://web.stanford.edu/class/cs224n/) an der Universität Stanford. 
+
+Begleitend empfehle ich die Lektüre des Forschungsartikels, in dem GloVe erstmals vorgestellt wurde: 
+
+* Jeffrey Pennington, Richard Socher, and Christopher Manning (2014),  GloVe: Global Vectors for Word Representation, https://doi.org/10.3115/v1/D14-1162.
 
 </details>
 
@@ -423,11 +466,11 @@ spacy_finalize()
 
 ## Vergleich und Ausblick
 
-Neben Spacyr und FlaiR gibt es noch weitere Pakete, die es erlauben, Named Entity Recognition in R durchzuführen. Dazu zählt zum Beispiel das Paket nametagger, das von demselben Personenkreis entwickelt wurde, die auch UDPipe entwickelt haben, und verschiedene Pakete, die es erlauben, das an der Universität Stanford entwickelte NER-System CoreNLP zu verwenden (laut [Dokumentationsseite](https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran) wird CoreNLP von den R Paketen [CleanNLP](https://github.com/statsmaths/cleanNLP), [NLP](https://cran.r-project.org/web/packages/NLP/) und [CoreNLP](https://cran.r-project.org/web/packages/coreNLP/) unterstützt). Das Paket CleanNLP  erlaubt, verschiedene Natural Language Processing Pipelines aus R heraus zu verwenden und diese in einem "Tidy" Datenformat abzubilden (mehr dazu [hier](https://arxiv.org/pdf/1703.09570.pdf)).
+Neben Spacyr und FlaiR gibt es noch weitere Pakete, die es erlauben, Named Entity Recognition in R durchzuführen. Dazu zählt zum Beispiel das Paket nametagger, das von demselben Personenkreis entwickelt wurde, die auch UDPipe entwickelt haben, und verschiedene Pakete, mit denen das an der Universität Stanford entwickelte NER-System CoreNLP verwendet werden kann (laut [Dokumentationsseite](https://stanfordnlp.github.io/CoreNLP/other-languages.html#r-cran) wird CoreNLP von den R Paketen [CleanNLP](https://github.com/statsmaths/cleanNLP), [NLP](https://cran.r-project.org/web/packages/NLP/) und [CoreNLP](https://cran.r-project.org/web/packages/coreNLP/) unterstützt). Das Paket CleanNLP  erlaubt, verschiedene Natural Language Processing Pipelines aus R heraus zu verwenden und diese in einem "Tidy" Datenformat abzubilden (mehr dazu [hier](https://arxiv.org/pdf/1703.09570.pdf)).
 
 Nametagger unterstützt aktuell nur NER für englischsprachige Dokumente (siehe [diesen Beitrag](https://bookdown.org/morleyjamesweston/MCM4TM/named-entity-recognition.html#basic-machine-learning-approaches) für ein Anwendungsbeispiel), und während CoreNLP für moderne deutschsprachige Texte [sehr gute Ergebnisse erzielt](https://github.com/MaviccPRP/ger_ner_evals), wurde gezeigt, dass Flair für historsiche Dokumente bessere Ergebnisse erreichen kann (zum Beispiel [hier](https://hal.science/hal-04056513/document) und [hier](https://digital.lib.washington.edu/researchworks/bitstream/handle/1773/44844/Holmes_washington_0250O_20778.pdf)).
 
-Aber für die Out-of-the-Box NER Modelle gilt genauso wie für die Modelle für das POS Tagging und Dependency Parsing: Auch, wenn in Einzelfällen Modelle, die auf modernen (Zeitungs-)texten trainiert sind, bei der NER historischer Dokumente brauchbare Ergebnisse liefern können, sind sie nicht für historische Dokumente und oft auch nicht für andere Textgattungen gemacht. Deswegen gibt es in den Digital Humanities zahlreiche Bestrebungen, eigene Modelle speziell zur Named Entity Recognition verschiedener historischer Textkorpora zu entwickeln. Ein paar Beispiele: 
+Aber für die Out-of-the-Box NER Modelle gilt genauso wie für die Modelle für das POS Tagging und Dependency Parsing: Auch, wenn manchmal Modelle, die auf modernen (Zeitungs-)texten trainiert sind, bei der NER historischer Dokumente brauchbare Ergebnisse liefern können, sind sie nicht für historische Dokumente und oft auch nicht für andere Textgattungen gemacht. Deswegen gibt es in den Digital Humanities zahlreiche Bestrebungen, eigene Modelle speziell zur Named Entity Recognition verschiedener historischer Textkorpora zu entwickeln. Ein paar Beispiele: 
 
 * https://openhumanitiesdata.metajnl.com/articles/10.5334/johd.48
 * https://arxiv.org/pdf/2205.15575.pdf 

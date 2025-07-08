@@ -183,6 +183,7 @@ Verständnisfragen:
 <details>
 <summary><b>Anwendungsbeispiele: Digitale Dramenanalyse</b></summary>
 
+- Monika Dabrowska und María Teresa Santa María Fernández (2024). Gender relations in Spanish theatre during the Silver Age. A quantitative comparison of works in the Spanish Drama Corpus, https://doi.org/10.1093/llc/fqae007.
 - Botond Szemes und Mihály Nagy (2024). Repetition and Innovation in Dramatic Texts. An Attempt to
 Measure the Degree of Novelty in Character’s Speech, https://jcls.io/article/id/3923/.
 - Jonah Lubin, Anke Detken und Frank Fischer (2024). Das "ureigenste theatralische Element" — Automatische Extraktion von Requisiten aus deutschsprachigen Dramentexten, https://zenodo.org/records/10698448.

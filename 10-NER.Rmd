@@ -381,7 +381,7 @@ marx_pers_plot <- ggplot(briefe_pers, aes(x = doc_id, y = entity)) +
   labs(x = "Brief", y = "Person")
 
 library(plotly)
-ggplotly(marx_pers_plot)
+ggplotly(marx_pers_plot, height=800)
 
 ```
 
@@ -449,7 +449,7 @@ marx_pers_plot <- ggplot(results_pers, aes(x = doc_id, y = entity)) +
   labs(x = "Brief", y = "Person")
 
 library(plotly)
-ggplotly(marx_pers_plot)
+ggplotly(marx_pers_plot, height=800)
 ```
 
 

@@ -99,6 +99,10 @@ Einige Digital Humanities Zeitschriften (für die eigene Recherche):
 * Journal of Cultural Analytics, https://culturalanalytics.org/
 * Journal of Computational Literary Studies, https://jcls.io/
 * Journal of Digital History, https://journalofdigitalhistory.org/ 
+* International Journal of Digital Humanities, https://link.springer.com/journal/42803
+* Digital Humanities Benelux Journal, https://journal.dhbenelux.org/
+* Digital Studies / Le champ numérique, https://www.digitalstudies.org/
+* Humanités Numériques, https://journals.openedition.org/revuehn/
 
 Volltextrepositorien mit Texten im Plaintext- oder XML-TEI-Format: 
 
@@ -128,6 +132,9 @@ Assoziiertes Projekt: https://www.distant-reading.net/
 * Digitale Sammlungen der Österreichischen Nationalbibliothek: https://labs.onb.ac.at/de/datasets/
 * Verzeichnis linguistischer Korpora (Daten zu den Korpora sind aber z.T. nicht mehr aktuell): https://www.lancaster.ac.uk/fass/projects/corpus/cbls/corpora.asp
 * Datendienst des Deutschen Literaturarchivs Marbach: https://www.dla-marbach.de/katalog/dla-dataplus/
+* The Hansard Corpus (linguistisch annotierte britische Parlamentsreden 1802-2023): https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=857509
+
+Sammlung tabellarischer Datensätze mit ausführlichen Erläuterungen zum Kontext der Daten und R-Programmierübungen: https://www.responsible-datasets-in-context.com/datasets.html
 
 Verschiedene Universitäten weltweit sammeln außerdem Datensätze und Forschungsdaten in eigenen Forschungsdatenrepositorien, zum Beispiel: 
 

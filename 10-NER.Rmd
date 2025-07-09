@@ -20,7 +20,7 @@ knitr::include_graphics("images/jurafsky-martin_vector_space.png")
 
 Quelle: Jurafsky/Martin 2024, S. 113. [Hier](https://www.youtube.com/watch?v=xtD47WHNhxk) in Videoform. 
 
-Abstrakt könnt ihr euch diesen Raum als einen "semantischen Raum" vorstellen, in dem alle Wörter in einem Korpus eine bestimmte Position haben, und deren Entfernung voneinander davon abhängt, wie viele Einträge in den Vektoren übereinstimmen. Diese Auffassung von Wörtern als Vektoren erlaubt es, die Ähnlichkeit von zwei Wörtern mithilfe von **Ähnlichkeitsmaßen** wie der **Kosinus-Ähnlichkeit (cosine similariy)** zu untersuchen ([hier](https://youtu.be/-_i9Cg81rXA) eine kurze Erläuterung im Videoformat). Dieses Maß geht davon aus, dass ähnliche Wörter in einem semantischen Raum nah beieinander liegen (Jurafsky 2022). "Ähnlichkeit" wird hier gemessen über die Richtung und den Winkel von zwei Vektoren zueinander: Wenn zwei Vektoren dieselbe Richtung haben und der Winkel zwsichen den Vektoren sehr klein sind, dann haben sie einen ähnlichen Kontext, und sind sich ähnlich.
+Abstrakt könnt ihr euch diesen Raum als einen "semantischen Raum" vorstellen, in dem alle Wörter in einem Korpus eine bestimmte Position haben, und deren Entfernung voneinander davon abhängt, wie viele Einträge in den Vektoren übereinstimmen. Diese Auffassung von Wörtern als Vektoren erlaubt es, die Ähnlichkeit von zwei Wörtern mithilfe von **Ähnlichkeitsmaßen** wie der **Kosinus-Ähnlichkeit (cosine similariy)** zu untersuchen ([hier](https://youtu.be/-_i9Cg81rXA) eine kurze Erläuterung im Videoformat). Dieses Maß geht davon aus, dass ähnliche Wörter in einem semantischen Raum nah beieinander liegen (Jurafsky 2022). "Ähnlichkeit" wird hier gemessen über die Richtung und den Winkel von zwei Vektoren zueinander: Wenn zwei Vektoren dieselbe Richtung haben und der Winkel zwsichen den Vektoren sehr klein ist, dann haben sie einen ähnlichen Kontext, und sind sich ähnlich.
 
 ## Word Embeddings
 
@@ -182,6 +182,7 @@ Hintergrund folgt noch.
 
 Hervorragende Erläuterungen zur Kosinusähnlichkeit bieten: 
 
+* Jan Jurafsky (2022). Video-Tutorial Cosine Similarity, Stanford University, https://www.youtube.com/watch?v=-_i9Cg81rXA.
 * Christopher Potts (2021). Vorlesungsmitschnitt "Natural Language Understanding", Abschnitt "Vector Comparison", Stanford University, https://www.youtube.com/watch?v=eKvbYOc2rOs.
 * Justin Grimmer, Margaret E. Roberts und Brandon M. Stewart (2022). Text as Data. A New Framework for Machine Learning and the Social Sciences, ch. 7: The Vector Space Model and Similarity Metrics, pp. 70-77.
 * Dustin S. Stoltz und Marshall A. Taylor (2024). Mapping Texts. Computational Text Analysis for the Social Sciences, ch. 4: Math Basics. Comparing Vectors, pp. 34-39. 
@@ -257,7 +258,7 @@ Nun ist $log(X_{ik})$ aber ja bereits aus der Kookkurrenzmatrix für das Korpus 
 
 $J = \sum_{i,j=1}^V f(X_{ij}) \left(w_i^\top \tilde{w}_j + b_i + \tilde{b}_j- \log X_{ij} \right)^2$
 
-Hierbei ist $X_{ij}$ die Kookkurrenzhäufigkeit von zwei beliebigen Wörtern $i$ und $j$, $w_i$ und $\tilde{w}_j$ sind die zu lernenden Vektoren, $b_i$ und $\tilde{b}j$ die Bias-Terme und $f(X{ij})$ die Gewichtungsfunktion, die, wie bereits erläutert, seltene und häufige Kookkurrenzen unterschiedlich stark berücksichtigt. Das Ergebnis dieser Berechnung wird quadriert und aufsummiert. Die Formel gilt jetzt also nicht mehr für zwei konkrete Wörter $i$ und $k$, sondern gesucht wird der Minimalwert über alle Wörter im Korpus hinweg. Solche Funktionen, die die Differenz zwischen Vorhersage und tatsächlichen Werten (oder "Zielwerten") über alle Werte (hier Wortpaare) hinweg beschreiben, werden auch **Kostenfunktionen ("cost function")** genannt. Der Ausdruck innerhalb der Summe, der die Differenz zwischen Vorhersage und tatsächlichen Werten für einzelne Werte (bzw. Wortpaare) beschreibt, wird auch **Verlustfunktion ("loss function)** genannt. Die konkrete Methode, die zur Minimierung der Funktion verwendet wird, ist das sogenannte Gradientenverfahren ("Gradient Descent"), aber das werden wir hier nicht vertiefen. Für uns reicht zu verstehen, dass mithilfe des Gradientenverfahrens die Kostenfunktion schrittweise minimiert wird. Dieser Minimierungsprozess wird beim Ausführen der Funktion `glove$fit_transform()` im Beispiel oben durch den Konsolen-Output registriert (`"## INFO  [17:48:55.374] epoch 1, loss 0.1953"`). Genau dieser Minimierungsprozess ist das, was beim maschinellen Lernen mit "Training" gemeint ist, und weil es dabei darum geht, durch eine gute Wahl der Embedding-Vektoren die bestmöglichen Vorhersage zu treffen, ist das Ziel dieses Prozesses die "Optimierung" des Modells. 
+Hierbei ist $X_{ij}$ die Kookkurrenzhäufigkeit von zwei beliebigen Wörtern $i$ und $j$, $w_i$ und $\tilde{w}_j$ sind die zu lernenden Vektoren, $b_i$ und $\tilde{b}j$ die Bias-Terme und $f(X{ij})$ die Gewichtungsfunktion, die, wie bereits erläutert, seltene und häufige Kookkurrenzen unterschiedlich stark berücksichtigt. Das Ergebnis dieser Berechnung wird quadriert und aufsummiert. Die Formel gilt jetzt also nicht mehr für zwei konkrete Wörter $i$ und $k$, sondern gesucht wird der Minimalwert über alle Wörter im Korpus hinweg. So eine Funktion, die die Differenz zwischen Vorhersage und tatsächlichen Werten (oder "Zielwerten") über alle Werte (hier Wortpaare) hinweg beschreibt, wird auch **Kostenfunktion ("cost function")** genannt. Der Ausdruck innerhalb der Summe, der die Differenz zwischen Vorhersage und tatsächlichen Werten für einzelne Werte (bzw. Wortpaare) beschreibt, wird auch **Verlustfunktion ("loss function")** genannt. Die konkrete Methode, die zur Minimierung der Funktion verwendet wird, ist das sogenannte Gradientenverfahren ("Gradient Descent"), aber das werden wir hier nicht vertiefen. Für uns reicht zu verstehen, dass mithilfe des Gradientenverfahrens die Kostenfunktion schrittweise minimiert wird. Dieser Minimierungsprozess wird beim Ausführen der Funktion `glove$fit_transform()` im Beispiel oben durch den Konsolen-Output registriert (`"## INFO  [17:48:55.374] epoch 1, loss 0.1953"`). Genau dieser Minimierungsprozess ist das, was beim maschinellen Lernen mit "Training" gemeint ist, und weil es dabei darum geht, durch eine gute Wahl der Embedding-Vektoren die bestmöglichen Vorhersage zu treffen, ist das Ziel dieses Prozesses die "Optimierung" des Modells. 
 
 Die GloVe-Kostenfunktion wird manchmal auch in leicht vereinfachter und allgemeiner Form angegeben:  
 
@@ -463,6 +464,87 @@ spacy_finalize()
 * Flair Dokumentationsseiten: https://flairnlp.github.io/docs/intro und  https://github.com/flairNLP/flair
 * Flair-Sprachmodelle: https://flairnlp.github.io/docs/tutorial-basics/tagging-entities#list-of-ner-models und  https://huggingface.co/flair/ner-german-large
 * ConLL 2003 Datensatz: https://huggingface.co/datasets/conll2003 und https://www.clips.uantwerpen.be/conll2003/ner/
+
+Die mithilfe von FlaiR oder Spacyr erkannten Entitäten können natürlich auch noch auf etwas elegantere Weise visualisiert werden. Eine Möglichkeit ist eine [Treemap](https://www.data-to-viz.com/graph/treemap.html), die in unserem Beispiel auf einen Blick zeigt, wie oft welche Ortsangabe in welchem Brief erwähnt wird ("nested treemap" links) und wie oft jede Ortsangabe insgesamt in allen Briefen vorkommt ("flat treemap" rechts). Um die Treemap zu erstellen, Dazu wollen wir den Code aus dem Abschnitt "Nested Layers in Treemap" in den  [Plotly-Dokumentationsseiten](https://plotly.com/r/treemaps/) anpassen. Dazu müssen wir unsere Input-Daten erst einmal in dieselbe Form bringen wie die beiden CSV-Tabellen, die zur Erstellung der Visualisierung in den Dokumentationsseiten verwendet werden:  
+
+```{r message=FALSE, warning=FALSE, attr.output='style="max-height: 200px;"'}
+
+# Tabelle mit Named Entities nach Ortsangaben filtern
+results_loc <- results_briefe[results_briefe$tag == "LOC",]
+results_loc
+
+# Inputdaten für "flat" treemap (rechts) vorbereiten 
+entity_counts <- as.data.frame(table(results_loc$entity))
+names(entity_counts) <- c("ids", "value")
+flattm_df <- entity_counts[entity_counts$value > 0, ]
+flattm_df$parents <- ""
+flattm_df$labels <- flattm_df$ids
+flattm_df
+
+# Inputdaten für "nested" treemap (links) vorbereiten 
+# Erste Ebene: Kacheln für die Briefe
+letters_unique <- unique(results_loc$doc_id)
+level_1 <- data.frame(ids=letters_unique,
+                      labels=letters_unique,
+                      parents="",
+                      value=0)
+
+# Zweite Ebene: Kacheln für Ortsangaben je Brief
+entity_per_letter <- as.data.frame(table(results_loc$doc_id, results_loc$entity))
+names(entity_per_letter) <- c("parents", "labels", "value")
+level_2 <- entity_per_letter[entity_per_letter$value > 0, ]
+level_2$ids <- paste0(level_2$parents, "/", level_2$labels)
+
+nestedtm_df <- rbind(level_1, level_2)
+nestedtm_df
+```
+
+Jetzt kann die eigentliche Visualisierung erstellt werden. Wir ergänzen dabei den Code aus den Dokumentationsseiten um die Zeilen `marker = list(colorscale="Reds")` und `marker = list(colorscale="Greys", reversescale =T)`, da die Kacheln per Default bunt sind, aber die bunte Farbe inhaltlich für unsere Daten keine Bedeutung hat. Der verschachtelten Treemap auf der linken Seite fügen wir außerdem mit der Zeile `values = nestedtm_df$value,` die Anzahl der erwähnten Ortsangaben je Brief hinzu, da diese Information für den Abgleich mit der Gesamtanzhal der erwähnten Ortsangaben wichtig ist:  
+
+```{r message=FALSE, warning=FALSE}
+library(plotly)
+
+# Plotly Treemap-Objekt für die "nested" treemap (links) erstellen
+fig <- plot_ly(
+  type = "treemap",
+  ids = nestedtm_df$ids,
+  labels = nestedtm_df$labels,
+  parents = nestedtm_df$parents,
+  values = nestedtm_df$value,
+  domain = list(column = 0),
+  marker = list(colorscale="Reds")
+)
+
+# Treemap-Objekt für die "flat" treemap (rechts) hinzufügen
+fig <- fig %>% add_trace(
+  type = "treemap",
+  ids = flattm_df$ids,
+  labels = flattm_df$labels,
+  parents = flattm_df$parents,
+  values = flattm_df$value,
+  maxdepth = 1,
+  domain = list(column = 1),
+  marker = list(colorscale="Greys", reversescale =T)
+)
+
+# Layout einstellen
+fig <- fig %>% layout(grid = list(columns = 2, rows = 1))
+
+# Fertige Visualisierung anzeigen lassen
+fig
+
+
+```
+
+:::task
+Verständnisfragen:
+
+- Wie könnte man die Ergebnisse der Named Entity Recognition noch visualisieren? Nutzt als Inspiration die Seite https://www.data-to-viz.com/
+- Überlegt euch eine Forschungsfrage, die mithilfe von Named Entities beantwortet werden könnte. 
+- Welches der beiden NER-Systeme würdet ihr verwenden, wenn ihr möglichst viele Kandidaten für Named Entities identifizieren wollt, die ihr später manuell überprüft?   
+
+:::
+
 
 ## Vergleich und Ausblick
 

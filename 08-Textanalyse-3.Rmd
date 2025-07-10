@@ -1278,7 +1278,7 @@ https://doi.org/10.1017/9780511783692.003
 
 ### Was bedeutet das gemeinsame Vorkommen zweier Wörter? {#interpretation}
 
-Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betrachtet. Aber wie auch bei einzelnen Wörtern sind auch die absoluten Häufigkeiten des gemeinsamen Vorkommens zweier Wörter schwierig zu interpretieren. Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen wir noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" häufig oder selten im Verhältnis zur Länge der Märchen und Größe des Korpus? Und, wenn es "häufig" ist, was bedeutet das? Die Bedeutung von Kookkurrenzen kann mathematisch aus verschiedenen Perspektiven betrachtet werden: aus einer statistischen bzw. frequentistischen Perspektive (Abschnitt "Kollokationen"), aus einer informationstheoretischen und wahrscheinlichkeitstheoretischen Perspektive (Abschnitt "Pointwise Mutual Information"), oder aus einer algebraischen Perspektive (kommt noch; Kapitel "Word Embeddings und NER"). 
+Bisher haben wir N-Gramme und Kookkurrenzen nur als absolute Häufigkeiten betrachtet. Aber wie auch bei einzelnen Wörtern sind auch die absoluten Häufigkeiten des gemeinsamen Vorkommens zweier Wörter schwierig zu interpretieren. Durch die Bestimmung der N-Gramme und der Kookkurrenzen wissen wir noch nicht: Ist das gemeinsame Vorkommen von Wörtern mit "schön" und "tochter" häufig oder selten im Verhältnis zur Länge der Märchen und Größe des Korpus? Und, wenn es "häufig" ist, was bedeutet das? Die Bedeutung von Kookkurrenzen kann mathematisch aus verschiedenen Perspektiven betrachtet werden: aus einer statistischen frequentistischen Perspektive (Abschnitt "Kollokationen"), aus einer informationstheoretischen Perspektive (Abschnitt "Pointwise Mutual Information"), oder aus einer algebraischen Perspektive (kommt noch; Kapitel "Word Embeddings und NER"). 
 
 
 #### Kollokationen
@@ -1628,7 +1628,7 @@ $z = \frac{\lambda}{\left[\sum_{i=1}^M n_i^{-1}\right]^{1/2}}$
 
 aus den Dokumentationsseiten der `textstat_collocations()`-Funktion beruht auf der Idee, dass der Standardfehler $\text{SE}(\lambda)$ durch die inversen beobachteten Häufigkeiten ($n_i^{-1}$) abgeschätzt werden kann.
 
-Nachdem wir in diesem Abschnitt etwas tiefer in den Hintergrund der berechneten Maße eingestiegen sind, seht ihr, dass die Unterscheidung zwischen "frequentistischen" und "wahrscheinlichkeitstheoretischen" Ansätzen bei der Analyse von Kookkurrenzen nicht immer eindeutig ist: auch dem hier vorgestellten frequentistischen Ansatz liegen in diesem Fall wahrscheinlichkeitstheoretische Annahmen zugrunde.  
+Nachdem wir in diesem Abschnitt etwas tiefer in den Hintergrund der berechneten Maße eingestiegen sind, seht ihr, dass auch dem hier vorgestellten frequentistischen Ansatz wahrscheinlichkeitstheoretische Annahmen zugrundeliegen.  
 
 
 </details>

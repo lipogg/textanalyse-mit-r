@@ -499,7 +499,7 @@ nestedtm_df <- rbind(level_1, level_2)
 nestedtm_df
 ```
 
-Jetzt kann die eigentliche Visualisierung erstellt werden. Wir ergänzen dabei den Code aus den Dokumentationsseiten um die Zeilen `marker = list(colorscale="Reds")` und `marker = list(colorscale="Greys", reversescale =T)`, da die Kacheln per Default bunt sind, aber die bunte Farbe inhaltlich für unsere Daten keine Bedeutung hat. Der verschachtelten Treemap auf der linken Seite fügen wir außerdem mit der Zeile `values = nestedtm_df$value,` die Anzahl der erwähnten Ortsangaben je Brief hinzu, da diese Information für den Abgleich mit der Gesamtanzhal der erwähnten Ortsangaben wichtig ist:  
+Jetzt kann die eigentliche Visualisierung erstellt werden. Wir ergänzen dabei den Code aus den Dokumentationsseiten um die Zeilen `marker = list(colorscale="Reds")` und `marker = list(colorscale="Reds", reversescale =T)`, da die Kacheln per Default bunt sind, aber die bunte Farbe inhaltlich für unsere Daten keine Bedeutung hat. Der verschachtelten Treemap auf der linken Seite fügen wir außerdem mit der Zeile `values = nestedtm_df$value,` die Anzahl der erwähnten Ortsangaben je Brief hinzu, da diese Information für den Abgleich mit der Gesamtanzhal der erwähnten Ortsangaben wichtig ist:  
 
 ```{r message=FALSE, warning=FALSE}
 library(plotly)
@@ -524,7 +524,7 @@ fig <- fig %>% add_trace(
   values = flattm_df$value,
   maxdepth = 1,
   domain = list(column = 1),
-  marker = list(colorscale="Greys", reversescale =T)
+  marker = list(colorscale="Reds")
 )
 
 # Layout einstellen

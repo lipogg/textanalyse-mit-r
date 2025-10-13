@@ -11,16 +11,20 @@ Hier findet ihr Informationen zu Teilnahmemodalitäten, Prüfungsleistungen und 
 **Leistungsschein:**
 
 * Wie Teilnahmeschein
-* Zusätzlich ein eigenständiges Projekt (ersetzt die Hausarbeit): Ihr plant und implementiert auf der Grundlage der Inhalte aus diesem Seminar ein kleines Digital Humanities Projekt. Im Laufe der Bearbeitung eurer Fragestellung erstellt ihr ein kleines Programmierportfolio mit allen Skripten, die ihr im Rahmen des Projekts erstellt habt. Das Portfolio sendet ihr als Zip-Ordner bis zum 30.09.2025 an l.poggel@fu-berlin.de. Die Anforderungen, Projektbeispiele und die Bewertungsgrundlage für das Portfolio besprechen wir rechtzeitig im Laufe des Semesters.
+* Zusätzlich ein eigenständiges Projekt (ersetzt die Hausarbeit): Ihr plant und implementiert auf der Grundlage der Inhalte aus diesem Seminar ein kleines Digital Humanities Projekt. Im Laufe der Bearbeitung eurer Fragestellung erstellt ihr ein kleines Programmierportfolio mit allen Skripten, die ihr im Rahmen des Projekts erstellt habt. Das Portfolio sendet ihr als Zip-Ordner bis zum 31.03.2026 an l.poggel@fu-berlin.de. Die Anforderungen, Projektbeispiele und die Bewertungsgrundlage für das Portfolio besprechen wir rechtzeitig im Laufe des Semesters.
 
 **Kommunikation:**
 
 Bei Fragen, Kritik oder falls ihr mal eine Sitzung nicht kommen könnt, schreibt mir eine E-Mail an l.poggel@fu-berlin.de. Um eine Sprechstunde zu vereinbaren, könnt ihr mich gern vor oder nach den Sitzungen ansprechen oder mir eine E-Mail schreiben.
 
+**Regelungen zur Nutzung von KI-Tools**
+
+KI-Tools dürfen in diesem Seminar bei der Bearbeitung der Übungsblätter und der Projektarbeit ausschließlich zum Debuggen verwendet werden. Bei der Projektarbeit könnt ihr für Anwendungen, die über die im Seminar besprochenen Themen hinausgehen, in manchen Fällen auch KI-Tools zur Unterstützung verwenden, ihr müsst dies aber vor der Abgabe mit mir absprechen und im Dokumentationstext nach den Vorgaben der Eigenständigkeitserklärung des Fachbereichs Philosophie und Geisteswissenschaften kenntlich machen. Die ausgefüllte und unterschriebene [Eigenständigkeitserklärung ist zusammen mit der Projektarbeit](https://www.geisteswissenschaften.fu-berlin.de/studium/downloadbereich/Eigenstaendigkeitserklaerungen/Eigenstaendigkeitserklaerung-HAUSARBEIT_07_2023.pdf) einzureichen. Bitte seid euch darüber bewusst, dass die Verwendung von KI-Tools ohne entsprechenden Hinweis einen Täuschungsversuch darstellt.
+
 **Bewertungskriterien für das Abschlussprojekt:** 
 
 * Umfang: Programmierportfolio, bestehend aus mindestens zwei verschiedenen R Skripten und einem Dokumentationstext, der die Fragestellung, das Korpus, den Forschungsstand und die gewählten Verfahren vorstellt und begründet, sowie die Ergebnisse in Bezug auf die Fragestellung auswertet und kritisch diskutiert. Der Umfang der Dokumentationstextes (exklusive Code) sollte 4-8 Seiten (ca. 1200-3000 Wörter) entsprechen.
-* Abgabefrist: 30.09.2025
+* Abgabefrist: 31.03.2026
 * Abgabeformat: Programmierportfolio als Zip-Ordner
 
 Beispielportfolio: 

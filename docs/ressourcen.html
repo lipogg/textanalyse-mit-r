@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Ressourcen | Textanalyse mit R für die Geisteswissenschaften</title>
+  <meta name="description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Ressourcen | Textanalyse mit R für die Geisteswissenschaften" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="lipogg/textanalyse-mit-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ressourcen | Textanalyse mit R für die Geisteswissenschaften" />
+  
+  <meta name="twitter:description" content="<p>This website is built using a minimal example of using the bookdown package to write a book. The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hilfe.html"/>
+<link rel="next" href="installation-und-setup.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logo.png" width="260"></a></li> 
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#%C3%BCber-diesen-kurs"><i class="fa fa-check"></i>Über diesen Kurs</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html"><i class="fa fa-check"></i>Warum R?</a>
+<ul>
+<li class="chapter" data-level="" data-path=""><a href="#was-ist-r-%C3%BCberhaupt"><i class="fa fa-check"></i>Was ist R überhaupt?</a></li>
+<li class="chapter" data-level="" data-path="warum-r.html"><a href="warum-r.html#r-thirst-traps"><i class="fa fa-check"></i>R Thirst Traps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="seminarplan.html"><a href="seminarplan.html"><i class="fa fa-check"></i>Seminarplan</a></li>
+<li class="chapter" data-level="" data-path="lernziele.html"><a href="lernziele.html"><i class="fa fa-check"></i>Lernziele</a></li>
+<li class="chapter" data-level="" data-path="organisatorisches.html"><a href="organisatorisches.html"><i class="fa fa-check"></i>Organisatorisches</a></li>
+<li class="chapter" data-level="" data-path="hilfe.html"><a href="hilfe.html"><i class="fa fa-check"></i>Hilfe!!</a></li>
+<li class="chapter" data-level="" data-path="ressourcen.html"><a href="ressourcen.html"><i class="fa fa-check"></i>Ressourcen</a></li>
+<li class="chapter" data-level="" data-path="installation-und-setup.html"><a href="installation-und-setup.html"><i class="fa fa-check"></i>Installation und Setup</a></li>
+<li class="chapter" data-level="" data-path="orientierung-im-rstudio.html"><a href="orientierung-im-rstudio.html"><i class="fa fa-check"></i>Orientierung im RStudio</a></li>
+<li class="chapter" data-level="1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html"><i class="fa fa-check"></i><b>1</b> R Basics I: Datentypen, Variablen und Operatoren</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#grundlegende-begriffe"><i class="fa fa-check"></i><b>1.1</b> Grundlegende Begriffe</a></li>
+<li class="chapter" data-level="1.2" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#style-guide"><i class="fa fa-check"></i><b>1.2</b> Style Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#kommentare"><i class="fa fa-check"></i><b>1.3</b> Kommentare</a></li>
+<li class="chapter" data-level="1.4" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#datentypen"><i class="fa fa-check"></i><b>1.4</b> Datentypen</a></li>
+<li class="chapter" data-level="1.5" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#operatoren"><i class="fa fa-check"></i><b>1.5</b> Operatoren</a></li>
+<li class="chapter" data-level="1.6" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#variablen"><i class="fa fa-check"></i><b>1.6</b> Variablen</a></li>
+<li class="chapter" data-level="1.7" data-path="00-ressourcen.html"><a href="#operatorpr%C3%A4zedenz"><i class="fa fa-check"></i><b>1.7</b> Operatorpräzedenz</a></li>
+<li class="chapter" data-level="" data-path="r-basics-i-datentypen-variablen-und-operatoren.html"><a href="r-basics-i-datentypen-variablen-und-operatoren.html#quellen"><i class="fa fa-check"></i>Quellen</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Textanalyse mit R für die Geisteswissenschaften</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ressourcen" class="section level1 unnumbered hasAnchor">
+<h1>Ressourcen<a href="ressourcen.html#ressourcen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Allgemein:</strong></p>
+<ul>
+<li>Offizielle R Handbücher: <a href="https://cran.r-project.org/manuals.html" class="uri">https://cran.r-project.org/manuals.html</a></li>
+<li>Wickham, Hadley, Çetinkaya-Rundel, Mine und Grolemund, Garrett (2023). R for Data Science (=Official Tidyverse Book): <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a></li>
+<li>Schmidt, Ben (ongoing). Humanities Data Fundamentals: <a href="https://hdf.benschmidt.org/R/" class="uri">https://hdf.benschmidt.org/R/</a></li>
+<li>Van Atteveldt, Wouter, Trilling, Damian und Arcila Calderón, Carlos (2022). Computational Analysis of Communication: <a href="https://cssbook.net/" class="uri">https://cssbook.net/</a></li>
+<li>Stoltz, Dustin S. und Taylor, Marshall A. (2024). Mapping Texts. Computational Text Analysis for the Social Sciences, <a href="https://global.oup.com/academic/product/mapping-texts-9780197756881" class="uri">https://global.oup.com/academic/product/mapping-texts-9780197756881</a></li>
+<li>Sammlung von R “Cheatsheets”: <a href="https://github.com/rstudio/cheatsheets/tree/main" class="uri">https://github.com/rstudio/cheatsheets/tree/main</a></li>
+</ul>
+<p><strong>Lehrbuch-Klassiker</strong> (für Grundlagen, bei speziellen Anwendungen zum Teil nicht mehr aktuell):</p>
+<ul>
+<li>Andresen, Melanie (2024). Computerlinguistische Methoden für die Digital Humanities, <a href="https://doi.org/10.24053/9783823395799" class="uri">https://doi.org/10.24053/9783823395799</a> (hervorragendes Lehrbuch vor allem zum theoretischen und mathematischen Hintergrund der verschiedenen Methoden)</li>
+<li>Arnold, Taylor und Tilton, Lauren (2024). Humanities Data in R. Exploring Networks, Geospatial Data, Images, and Text: <a href="https://doi.org/10.1007/978-3-031-62566-4" class="uri">https://doi.org/10.1007/978-3-031-62566-4</a></li>
+<li>Jockers, Matthew und Thalken, Rosamond (2020). Text Analysis with R for Students of Literature: <a href="https://doi.org/10.1007/978-3-030-39643-5" class="uri">https://doi.org/10.1007/978-3-030-39643-5</a></li>
+<li>Desagulier, Guillaume (2017). Corpus Linguistics and Statistics with R: <a href="https://doi.org/10.1007/978-3-319-64572-8" class="uri">https://doi.org/10.1007/978-3-319-64572-8</a></li>
+<li>Levshina, Natalia (2015). How to Do Linguistics with R: <a href="https://doi.org/10.1075/z.195" class="uri">https://doi.org/10.1075/z.195</a></li>
+</ul>
+<p><strong>Textanalyse mit Quanteda:</strong></p>
+<ul>
+<li>Offizielle Quanteda-Dokumentationsseiten: <a href="https://quanteda.io/" class="uri">https://quanteda.io/</a></li>
+<li>Offizielles Quanteda-Tutorial: <a href="https://tutorials.quanteda.io/" class="uri">https://tutorials.quanteda.io/</a></li>
+<li>Replikation des Codes aus Levshinas “Text Analysis with R for Students of Literature” mithilfe von Quanteda: <a href="https://quanteda.io/articles/pkgdown/replication/digital-humanities.html" class="uri">https://quanteda.io/articles/pkgdown/replication/digital-humanities.html</a></li>
+<li>Video-Tutorial zu Preprocessing und Textanalyse mit R von Kasper Welbers: <a href="https://www.youtube.com/playlist?list=PL-i7GM-A1wBZYRYTpem7hNVHK3hSV_1It" class="uri">https://www.youtube.com/playlist?list=PL-i7GM-A1wBZYRYTpem7hNVHK3hSV_1It</a></li>
+<li>Kapitel 10: “Text as Data” aus “Computational Analysis of Communication”: <a href="https://cssbook.net/content/chapter10.html" class="uri">https://cssbook.net/content/chapter10.html</a></li>
+<li>Kapitel 6: “From Text to Numbers” aus “Mapping Texts”: <a href="https://global.oup.com/academic/product/mapping-texts-9780197756881" class="uri">https://global.oup.com/academic/product/mapping-texts-9780197756881</a></li>
+</ul>
+<p><strong>Datenvisualisierung mit ggplot2:</strong></p>
+<ul>
+<li>Healy, Kieran (2019). Data Visualization. A Practical Introduction, <a href="https://socviz.co/" class="uri">https://socviz.co/</a></li>
+<li>Wickham, Hadley (2016). ggplot2. Elegant Graphics for Data Analysis, <a href="https://ggplot2-book.org/" class="uri">https://ggplot2-book.org/</a></li>
+<li>ggplot2-Dokumentationsseiten: <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a>; <a href="https://ggplot2.tidyverse.org/articles/ggplot2.html" class="uri">https://ggplot2.tidyverse.org/articles/ggplot2.html</a></li>
+<li>Online-Tool das dabei hilft, eine passende Visualisierung zu finden, mit Links zu den Dokumentationsseiten geeigneter R Funktionen: <a href="https://www.data-to-viz.com/" class="uri">https://www.data-to-viz.com/</a></li>
+</ul>
+<p><strong>Statistik:</strong></p>
+<ul>
+<li>(grundlegend) Handl, Andreas und Kuhlenkasper, Torben (2018). Einführung in die Statistik. Theorie und Praxis mit R: <a href="https://doi.org/10.1007/978-3-662-56440-0" class="uri">https://doi.org/10.1007/978-3-662-56440-0</a></li>
+<li>(grundlegend) Gries, Stefan (2021). Statistics for Linguistics with R: <a href="https://doi.org/10.1515/9783110718256" class="uri">https://doi.org/10.1515/9783110718256</a></li>
+<li>(grundlegend) Blitzstein, Joe. Vorlesungsvideos, interaktiver Kurs und Buch Statistics 110: Probability, <a href="https://projects.iq.harvard.edu/stat110/home" class="uri">https://projects.iq.harvard.edu/stat110/home</a></li>
+<li>(fortgeschritten) Kroonenberg, Pieter (2021). Multivariate Humanities: <a href="https://doi.org/10.1007/978-3-030-69150-9" class="uri">https://doi.org/10.1007/978-3-030-69150-9</a></li>
+<li>(fortgeschritten) Handl, Andreas und Kuhlenkasper, Torben (2017). Multivariate Analysemethoden. Theorie und Praxis mit R: <a href="https://doi.org/10.1007/978-3-662-54754-0" class="uri">https://doi.org/10.1007/978-3-662-54754-0</a></li>
+</ul>
+<p><strong>Hintergrund Preprocessing und Natural Language Processing</strong> (POS Tagging, Dependency Parsing, NER,…):</p>
+<ul>
+<li>Jurafsky, Daniel und Martin, James H. (2025). Speech and Language Processing, <a href="https://web.stanford.edu/~jurafsky/slp3/" class="uri">https://web.stanford.edu/~jurafsky/slp3/</a> (insbesondere Kapitel 2, 8, 17, 18).</li>
+<li>Andresen, Melanie (2024). Computerlinguistische Methoden für die Digital Humanities, <a href="https://doi.org/10.24053/9783823395799" class="uri">https://doi.org/10.24053/9783823395799</a></li>
+<li>Grimmer, Justin, Roberts, Margaret E. und Stewart, Brandon M. (2022), Text as Data. A New Framework for Machine Learning and the Social Sciences, <a href="https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9960725495502883" class="uri">https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9960725495502883</a></li>
+<li>Biemann, Chris, Heyer, Gerhard und Quasthoff, Uwe (2013). Wissensrohstoff Text. Eine Einführung in das Text Mining, <a href="https://doi.org/10.1007/978-3-658-35969-0" class="uri">https://doi.org/10.1007/978-3-658-35969-0</a> (insbesondere Kapitel 1, 2).</li>
+</ul>
+<p><strong>Theorie</strong> (wird fortlaufend ergänzt):</p>
+<ul>
+<li>Gius, Evelyn und Jacke, Janina (2022). <em>Are Computational Literary Studies Structuralist?</em>, in: Journal of Cultural Analytics 7, no. 4, <a href="https://doi.org/10.22148/001c.46662" class="uri">https://doi.org/10.22148/001c.46662</a>. <mark>(Woche 1)</mark></li>
+<li>Pichler, Axel und Reiter, Nils (2021), <em>Zur Operationalisierung literaturwissenschaftlicher Begriffe in der algorithmischen Textanalyse</em>, in: Journal of Literary Theory 15, no. 1-2, <a href="https://doi.org/10.1515/jlt-2021-2008" class="uri">https://doi.org/10.1515/jlt-2021-2008</a>. <mark>(W1)</mark></li>
+<li>Bhattacharyya, Sayan (2021). <em>Text Analysis for Thought in the Black Atlantic</em>, in: Kelly Baker Josephs und Roopika Risam, The Digital Black Atlantic, pp. 77-83, <a href="https://muse.jhu.edu/book/84470" class="uri">https://muse.jhu.edu/book/84470</a>. <mark>(W1)</mark></li>
+<li>Stoltz, Dustin und Taylor, Marshall (2024). <em>Mapping Texts</em>. S. XIII und Ch. 1: Text in Context, <a href="https://doi.org/10.1093/oso/9780197756874.001.0001" class="uri">https://doi.org/10.1093/oso/9780197756874.001.0001</a>. <mark>(W1)</mark></li>
+<li>Pichler, Axel und Reiter, Nils (2022). <em>From Concepts to Texts and Back: Operationalization as a Core Activity of Digital Humanities</em>, <a href="https://culturalanalytics.org/article/57195" class="uri">https://culturalanalytics.org/article/57195</a></li>
+<li>Risam, Roopika (2019). <em>New Digital Worlds. Postcolonial Digital Humanities in Theory, Praxis, and Pedagogy.</em> Ch. 1: The Stakes of Postcolonial Digital Humanities (insb. Abschnitt World Making in Digital Humanities), <a href="https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9961448530002883" class="uri">https://fu-berlin.primo.exlibrisgroup.com/permalink/49KOBV_FUB/1v1tp5h/alma9961448530002883</a>.</li>
+<li>Bubenhofer, Noah und Scharloth, Joachim (2013). <em>Korpuslinguistische Diskursanalyse</em>, in: Ulrike Hanna Meinhof, Martin Reisigl und Ingo Warnke (Hrsg.), Diskurslinguistik im Spannungsfeld von Deskription und Kritik, S. 147-167. <a href="https://doi.org/10.1524/9783050061047.147" class="uri">https://doi.org/10.1524/9783050061047.147</a></li>
+<li>Bode, Katherine (2017), <em>The Equivalence of “Close” and “Distant” Reading; or, Toward a New Object for Data-Rich Literary History</em>,
+<a href="https://doi.org/10.1215/00267929-3699787" class="uri">https://doi.org/10.1215/00267929-3699787</a>.</li>
+<li>Kleymann, Rabea (2022). <em>Datendiffraktion: Von Mixed zu Entangled Methods in den Digital Humanities</em>, <a href="https://doi.org/10.17175/sb005_008" class="uri">https://doi.org/10.17175/sb005_008</a>.</li>
+<li>Alessandro Lenci und Magnus Sahlgren (2023). <em>Distributional Semantics, Ch. 1: From Usage to Meaning. The Foundations of Distributional Semantics</em>, pp. 3-25, <a href="https://doi.org/10.1017/9780511783692.002" class="uri">https://doi.org/10.1017/9780511783692.002</a> <mark>(Woche 9)</mark></li>
+<li>Eve, Martin Paul (2022). <em>The Digital Humanities and Literary Studies.</em> Introduction, <a href="https://doi.org/10.1093/oso/9780198850489.003.0001" class="uri">https://doi.org/10.1093/oso/9780198850489.003.0001</a> (für Skeptiker:innen)</li>
+<li>Bond, Sarah, Long, Hoyt und Underwood, Ted (2017). <em>‘Digital’ Is Not the Opposite of ‘Humanities’</em>, <a href="https://www.chronicle.com/article/digital-is-not-the-opposite-of-humanities/" class="uri">https://www.chronicle.com/article/digital-is-not-the-opposite-of-humanities/</a>. (für Skeptiker:innen)</li>
+</ul>
+<p>Glossar der Zeitschrift für digitale Geisteswissenschaften (mit Beiträgen zu Theorie, Operationalisierung, Daten, …): <a href="https://zfdg.de/wp_2023_001" class="uri">https://zfdg.de/wp_2023_001</a>.</p>
+<p><strong>Literaturhinweise zu den verschiedenen Analysemethoden findet ihr in den optionalen ausklappbaren Abschnitten im jeweiligen Kapitel.</strong></p>
+<p><strong>Einige Digital Humanities Zeitschriften</strong> (für die eigene Recherche):</p>
+<ul>
+<li>Zeitschrift für digitale Geisteswissenschaften, <a href="https://zfdg.de/" class="uri">https://zfdg.de/</a></li>
+<li>Digital Scholarship in the Humanities, <a href="https://academic.oup.com/dsh" class="uri">https://academic.oup.com/dsh</a></li>
+<li>Digital Humanities Quarterly, <a href="https://www.digitalhumanities.org/dhq/" class="uri">https://www.digitalhumanities.org/dhq/</a></li>
+<li>Journal of Cultural Analytics, <a href="https://culturalanalytics.org/" class="uri">https://culturalanalytics.org/</a></li>
+<li>Journal of Computational Literary Studies, <a href="https://jcls.io/" class="uri">https://jcls.io/</a></li>
+<li>Journal of Digital History, <a href="https://journalofdigitalhistory.org/" class="uri">https://journalofdigitalhistory.org/</a></li>
+<li>International Journal of Digital Humanities, <a href="https://link.springer.com/journal/42803" class="uri">https://link.springer.com/journal/42803</a></li>
+<li>Digital Humanities Benelux Journal, <a href="https://journal.dhbenelux.org/" class="uri">https://journal.dhbenelux.org/</a></li>
+<li>Digital Studies / Le champ numérique, <a href="https://www.digitalstudies.org/" class="uri">https://www.digitalstudies.org/</a></li>
+<li>Humanités Numériques, <a href="https://journals.openedition.org/revuehn/" class="uri">https://journals.openedition.org/revuehn/</a></li>
+</ul>
+<p><strong>Volltextrepositorien mit Texten im Plaintext- oder XML-TEI-Format</strong>:</p>
+<ul>
+<li><a href="https://wikisource.org/" class="uri">https://wikisource.org/</a> (Plaintext, PDF, eBook-Formate)</li>
+<li><a href="https://www.projekt-gutenberg.org/" class="uri">https://www.projekt-gutenberg.org/</a> (Volltexte nur online, zum Download ist Webscraping erforderlich)</li>
+<li><a href="https://gutenberg.org" class="uri">https://gutenberg.org</a> (Plaintext, HTML, eBook-Formate)</li>
+<li><a href="https://textgridrep.org/" class="uri">https://textgridrep.org/</a> (XML-TEI, Bildformate)</li>
+<li><a href="https://archive.org/" class="uri">https://archive.org/</a> (Volltexte im Plaintextformat aber häufig mittels OCR erstellt und in fragwürdiger Qualität)</li>
+</ul>
+<p><strong>Datensätze und Korpora für die Textanalyse</strong> (wird fortlaufend ergänzt):</p>
+<ul>
+<li>Korpora, Editionen und Repositorien im Text+ Registry: <a href="https://registry.text-plus.org/" class="uri">https://registry.text-plus.org/</a></li>
+<li>Datensätze im Social Sciences and Humanities Open Marketplace: <a href="https://marketplace.sshopencloud.eu/search?categories=dataset" class="uri">https://marketplace.sshopencloud.eu/search?categories=dataset</a></li>
+<li>Datensätze im Hamburger Zentrum für Sprachkorpora: <a href="https://www.fdr.uni-hamburg.de/communities/hzsk/" class="uri">https://www.fdr.uni-hamburg.de/communities/hzsk/</a></li>
+<li>Links zu historischen Textkorpora in der Perseus Digital Library: <a href="https://www.perseus.tufts.edu/hopper/collections" class="uri">https://www.perseus.tufts.edu/hopper/collections</a></li>
+<li>Links zu verschiedenen Listen von DH Korpora und Datensätzen (unter “Resources for finding humanities data”): <a href="https://cdh.princeton.edu/programs/humanities-data-new/" class="uri">https://cdh.princeton.edu/programs/humanities-data-new/</a>; <a href="https://guides.lib.ua.edu/datasources/humanities" class="uri">https://guides.lib.ua.edu/datasources/humanities</a></li>
+<li>Journal of Open Humanities Data, <a href="https://openhumanitiesdata.metajnl.com/articles" class="uri">https://openhumanitiesdata.metajnl.com/articles</a></li>
+<li>Deutsches Textarchiv: <a href="https://www.deutschestextarchiv.de/download" class="uri">https://www.deutschestextarchiv.de/download</a></li>
+<li>European Literary Text Collection (ELTeC): <a href="https://github.com/COST-ELTeC/ELTeC" class="uri">https://github.com/COST-ELTeC/ELTeC</a>
+Download über Github, z.B. für die deutschen Texte: <a href="https://github.com/COST-ELTeC/ELTeC-deu" class="uri">https://github.com/COST-ELTeC/ELTeC-deu</a>
+Assoziiertes Projekt: <a href="https://www.distant-reading.net/" class="uri">https://www.distant-reading.net/</a></li>
+<li>DraCor (europäische Dramen in vielen verschiedenen Sprachen): <a href="https://dracor.org/" class="uri">https://dracor.org/</a></li>
+<li>SlaveVoyages Datenbank: <a href="https://www.slavevoyages.org/american/downloads#intra-american-database-downloads/0/en/" class="uri">https://www.slavevoyages.org/american/downloads#intra-american-database-downloads/0/en/</a></li>
+<li>Digitale Sammlung Deutscher Kolonialismus: <a href="https://www.deutschestextarchiv.de/dsdk/" class="uri">https://www.deutschestextarchiv.de/dsdk/</a></li>
+<li>HathiTrust derived datasets: <a href="https://analytics.hathitrust.org/deriveddatasets" class="uri">https://analytics.hathitrust.org/deriveddatasets</a>; <a href="https://htrc.atlassian.net/wiki/spaces/COM/pages/43287791/HTRC+Derived+Datasets" class="uri">https://htrc.atlassian.net/wiki/spaces/COM/pages/43287791/HTRC+Derived+Datasets</a></li>
+<li>Somar Social Media Archive: <a href="https://socialmediaarchive.org/" class="uri">https://socialmediaarchive.org/</a></li>
+<li>Digitale Sammlungen der Österreichischen Nationalbibliothek: <a href="https://labs.onb.ac.at/de/datasets/" class="uri">https://labs.onb.ac.at/de/datasets/</a></li>
+<li>Verzeichnis linguistischer Korpora (Daten zu den Korpora sind aber z.T. nicht mehr aktuell): <a href="https://www.lancaster.ac.uk/fass/projects/corpus/cbls/corpora.asp" class="uri">https://www.lancaster.ac.uk/fass/projects/corpus/cbls/corpora.asp</a></li>
+<li>Datendienst des Deutschen Literaturarchivs Marbach: <a href="https://www.dla-marbach.de/katalog/dla-dataplus/" class="uri">https://www.dla-marbach.de/katalog/dla-dataplus/</a></li>
+<li>The Hansard Corpus (linguistisch annotierte britische Parlamentsreden 1802-2023): <a href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=857509" class="uri">https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=857509</a></li>
+<li>Verzeichnis wissenschaftliche Sammlungen an Hochschulen und Universitäten: <a href="https://portal.wissenschaftliche-sammlungen.de/" class="uri">https://portal.wissenschaftliche-sammlungen.de/</a></li>
+<li>Verzeichnis kulturwissenschaftlicher Datensätze: <a href="https://nfdi4culture.de/resources/repositories.html" class="uri">https://nfdi4culture.de/resources/repositories.html</a></li>
+<li>Datensätze der Australian Research Data Commons: <a href="https://ardc.edu.au/researcher/accelerate-your-hass-and-indigenous-research/" class="uri">https://ardc.edu.au/researcher/accelerate-your-hass-and-indigenous-research/</a></li>
+</ul>
+<p>Sammlung tabellarischer Datensätze mit ausführlichen Erläuterungen zum Kontext der Daten und R-Programmierübungen: <a href="https://www.responsible-datasets-in-context.com/datasets.html" class="uri">https://www.responsible-datasets-in-context.com/datasets.html</a></p>
+<p>Verschiedene Universitäten weltweit sammeln außerdem Datensätze und Forschungsdaten in eigenen Forschungsdatenrepositorien, zum Beispiel:</p>
+<ul>
+<li>Harvard Dataverse (aktuell mit Stand Feb. 2025 37.000 Datensätze für das Thema “Arts and Humanities”), <a href="https://dataverse.harvard.edu/" class="uri">https://dataverse.harvard.edu/</a></li>
+<li>Heidelberg Open Research Data (heiDATA; kleine Sammlung von Volltexten und XML-TEI-Editionen von Forschungsprojekten an der Uni Heidelberg, z.B. digitale Editionen der Kaiserchronik, des Maltechnik-Notizbuchs von Hans Emmenegger, der Korrespondenz von Nicodemus Frischlin, Index zu Artikeln der chinesischen Zeitschrift Shenbao, Metadaten zu allen Werken von Abou Naddara, uvm.), <a href="https://heidata.uni-heidelberg.de/dataverse/root" class="uri">https://heidata.uni-heidelberg.de/dataverse/root</a></li>
+<li>Einen Überblick über weitere solche “Dataverses” findet ihr unter <a href="https://dataverse.org/" class="uri">https://dataverse.org/</a></li>
+</ul>
+<p>Zuletzt arbeiten auch außeruniversitäre Forschungsinstitute und die Akademien der Wissenschaften in den verschiedenen Bundesländern an digitalen Editionen und anderen Forschungsprojekten:</p>
+<ul>
+<li>Edition Humboldt Digital an der Berlin-Brandenburgischen Akademie der Wissenschaften: <a href="https://edition-humboldt.de/" class="uri">https://edition-humboldt.de/</a></li>
+<li>Digitale Reiseberichte der Frühen Neuzeit in Sachsen an der Sächsischen Akademie der Wissenschaften : <a href="https://reise.isgv.de/" class="uri">https://reise.isgv.de/</a></li>
+<li>Forschungsprojekte an der Akademie der Wissenschaften und der Literatur Mainz: <a href="https://lod.academy/site/projects" class="uri">https://lod.academy/site/projects</a></li>
+<li>Digitale Ressourcen des Max Planck Instituts für Wissenschaftsgeschichte (darunter z.B. auch eine Sammlung frühneuzeitlicher Rezepte und eine Datenbank mit Metadaten zu Büchern in chinesischen öffentlichen Einrichtungen des 14. bis 21. Jahrhunderts): <a href="https://www.mpiwg-berlin.mpg.de/de/publikationen-ressourcen/digitale-ressourcen" class="uri">https://www.mpiwg-berlin.mpg.de/de/publikationen-ressourcen/digitale-ressourcen</a></li>
+</ul>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hilfe.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="installation-und-setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

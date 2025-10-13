@@ -2,7 +2,7 @@
 title: "Textanalyse mit R für die Geisteswissenschaften"
 author: |
   | **Lisa Poggel**
-  | **SoSe 2025**
+  | **WiSe 2025/26**
   | **Freie Universität Berlin**
 site: bookdown::bookdown_site
 documentclass: book

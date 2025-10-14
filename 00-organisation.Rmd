@@ -5,7 +5,7 @@ Hier findet ihr Informationen zu Teilnahmemodalitäten, Prüfungsleistungen und 
 **Teilnahmeschein:**
 
 * Aktive Teilnahme: n-2 Sitzungen 
-* Wöchentliche Übungsaufgaben: Lösungen Montagabend vor jeder Stunde an mich schicken (l.poggel@fu-berlin.de). Übungen schicke ich euch per Mail jede Woche Mittwoch.
+* Wöchentliche Übungsaufgaben: Lösungen Montagabend vor jeder Stunde an mich schicken (l.poggel@fu-berlin.de). Die Übungen findet ihr [hier](https://github.com/lipogg/textanalyse-mit-r-aufgaben). Die Aufgaben werden in Form interaktiver Tutorials direkt im RStudio bearbeitet. Damit die Tutorials im RStudio erscheinen, müssen sie erst wie in der Installationsanleitung beschrieben  installiert werden. 
 * Ein Kahoot-Quiz erstellen und moderieren. Login über [https://kahoot.com/](https://kahoot.com/)
 
 **Leistungsschein:**

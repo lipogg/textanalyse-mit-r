@@ -303,8 +303,10 @@ Bei der Benennung von Variablen sollten bestimmte **Regeln und die Konventionen*
 - Variablennamen dürfen kein Leerzeichen enthalten (Regel!).
 - Variablennamen dürfen keine Sonderzeichen außer Punkte und Unterstriche enthalten (Regel!).
 - Zwei Wörter oder ein Wort und eine Zahl können mit Unterstrich, Punkt, oder camelCase getrennt werden. Wickhams Empfehlung ist hier die Verwendung des Unterstrichs.
-- Variablen dürfen nicht mit einer Zahl oder einem Unterstrich anfangen (Regel!). 
-- R ist "case sensitive", das heißt: die Variable `baum` ist nicht dasselbe wie die Variable `Baum`! Wickham empfiehlt, alle Variablennamen klein zu schreiben. 
+- Variablen dürfen nicht mit einer Zahl oder einem Unterstrich anfangen (Regel!).
+- Variablennamen sollten möglichst gut beschreiben, wofür sie Platzhalter sind, und sie sollten weder zu allgemein ("zahl", ein einzelner Buchstabe wie "m") noch zu spezifisch sein ("acht" für die Zahl 8). Einen guten Variablennamen zu finden, ist nicht immer ganz einfach. 
+- R ist "case sensitive", das heißt: die Variable `baum` ist nicht dasselbe wie die Variable `Baum`! 
+- Variablennamen sollten laut Styleguide klein geschrieben werden 
 - Mit dem Zuweisungsoperator `<-` bzw. `=` kann ein Wert einem Namen zugewiesen werden. `<-` und `=` sind gleichbedeutend; Wickham empfiehlt aber die Verwendung des Operators `<-`.  
 
 Beim Ausführen einer Zuweisung wird nichts auf dem Bildschirm (auf der Rstudio Konsole) ausgegeben. Nach der Zuweisung können Werte, die einer Variable zugeordnet sind, mithilfe der Funktion `print()` auf dem Bildschirm ausgegeben werden. Alternativ kann auch einfach der Variablennamen erneut eingegeben und ausgeführt werden. 
